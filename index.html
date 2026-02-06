@@ -2,7 +2,7 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Rescue Response | Animal Welfare Rapid Alert</title>
+<title>Rapid Response Labs | Animal Welfare Rapid Alert</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -41,12 +41,12 @@
             height: 100%;
             pointer-events: none;
             z-index: 50;
-            opacity: 0.03;
-            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDS7ArABx8bvxQrXYPtk2nz6nUnw8dPU5s6Az8xi6KUwUP68sGq1K2fQKZYH933JrSNNINDPzUDtXfjaSTye3bL0drCHJ1zT7CAfAciWFPB2xY9278385jLXG0whViVABYTVlHwQSwhXClohqKNc4ndsGAndJwR5sm4hrI1uZi-gf3OX0thx-vFCMigeXLwyFrpV1k4XeOLxQIlOws8-sp-GSIf0_kfZoU_mSSiMZpatYxUgei3EEM2DWA7NB6eO8JH39W40UFmyU4);
+            opacity: 0.04;
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCEz5SQGvk9uUEsmZsQYnlmObtFnrkjdKL5piSVyqtOxmFPCe_YFl-UNO9pWmq0tBVEUpkHhP5YUCcIl2B1ebBu5Gp3GQyREpsBE4hGkM_rxQR6sgfmVD_IxnLKB0kKjy_nF0guMjTp2Hab7I-ovBnYVAteRPDMxfk4tFmvbBtW-DmtgOXkSAg34FWaWoFEM5Pgy45NKfBN73_kmh3Hokgn5E0TaDZnxYZ94Zb05ZpCemgbyaGqjI21FeXUeySMjBhse8JIKU-o6P0)
         }
         .wireframe-grid {
             background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
         }
         .nav-link::after {
             content: "";
@@ -56,22 +56,21 @@
             bottom: -2px;
             left: 0;
             background-color: white;
-            transition: width 0.3s ease;
+            transition: width 0.3s ease
         }
         .nav-link:hover::after {
-            width: 100%;
+            width: 100%
         }
         .sos-button-3d {
             background: radial-gradient(circle at 35% 35%, #ff4d4d, #b30000);
-            box-shadow: 
-                0 15px 35px rgba(255, 59, 48, 0.4),
-                inset 0 -10px 15px rgba(0,0,0,0.5),
-                inset 0 10px 15px rgba(255,255,255,0.4),
-                0 20px 40px -10px rgba(0,0,0,0.8);
-            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 15px 35px rgba(255, 59, 48, 0.4), inset 0 -10px 15px rgba(0, 0, 0, 0.5), inset 0 10px 15px rgba(255, 255, 255, 0.4), 0 20px 40px -10px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1)
         }
         .sos-button-glow {
-            box-shadow: 0 0 100px 20px rgba(255, 59, 48, 0.2);
+            box-shadow: 0 0 100px 20px rgba(255, 59, 48, 0.2)
+        }
+        .monochrome-grain {
+            filter: grayscale(1) contrast(1.2) brightness(0.8)
         }
     </style>
 </head>
@@ -83,7 +82,7 @@
 <div class="w-10 h-10 border border-white flex items-center justify-center bg-white">
 <span class="material-symbols-outlined text-black text-xl">pets</span>
 </div>
-<span class="font-display text-sm tracking-tighter uppercase font-bold text-white">Rapid Response Team</span>
+<span class="font-display text-sm tracking-tighter uppercase font-bold text-white">Volunteer Response Team</span>
 </div>
 <div class="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.2em] font-bold opacity-60">
 <a class="relative nav-link" href="#problem">The Need</a>
@@ -109,7 +108,7 @@
                 HELP. WHEN<br/>SECONDS<br/><span class="text-secondary opacity-30 italic">MATTER.</span>
 </h1>
 <p class="text-lg md:text-xl text-secondary max-w-md mb-12 leading-relaxed font-medium">
-                A community-driven platform for animal emergencies. Broadcast instant alerts to nearby responders and volunteers in real-time.
+                A community-driven platform for animal emergencies. Broadcast instant alerts to nearby community volunteers in real-time.
             </p>
 <div class="flex flex-wrap gap-6 items-center">
 <div class="flex group cursor-pointer">
@@ -126,17 +125,18 @@
 <div class="relative w-full aspect-square border border-white/5 flex items-center justify-center p-12">
 <div class="w-full h-full border border-white/10 relative overflow-hidden bg-black/40">
 <div class="absolute inset-0 flex items-center justify-center">
-<img alt="Technical wireframe map and animal silhouettes" class="w-full h-full object-contain opacity-40 mix-blend-screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnkFmb1CV_gtepgJIezPfUecv1vTNKlfT5VfCaNehKZRZciivg6f4KictLGZ4f3zDXyJr4X2p6VMZSivKbD6x5vmNPMNTJ3DtisnBJU4-zkrGnGYSstp7EB6JcwBHlySxTKgy0mtwZLbXhJB_U6jzLwsKw-5EVe6FP4FG9RisCwdazQTRyFqqaMWxt_FVfXcdCICC38tXKlJrSf_oG3NpWr72-ynsFcDt7ORoUjn8SW4NSlZtJjBC5-DLML3Rm9rrRtot12lcqf9Y"/>
+<img alt="Dramatic monochrome portrait of a rescue dog looking at camera" class="w-full h-full object-cover monochrome-grain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCBVYPXarfBi-llCGEsaR5c5iVwhuaT4evgLaGpTBAmQf4r7fpC8DYeRPzwBdIhL8Fv5lg3JSo6LZMHC-ahViw5NjBWmJ8A8h_8b7WzilYYqD-lMhWF9Gr0iQssH1B4MxMW__DxnEjSR9KGEgul5aqYbZRqMVAyN9BLBHrviXED0c6STeKdn3Yh40nDDYqYKuw40SAw96jywBkFGM0m3d8vGNT7hlPMp8lMzcx6X8pMHw2AQ1k617y_9s"/>
+<div class="absolute inset-0 bg-black/40 mix-blend-multiply"></div>
 </div>
-<div class="absolute top-4 left-4 font-mono text-[9px] text-white/40 uppercase tracking-widest">
+<div class="absolute top-4 left-4 font-mono text-[9px] text-white/40 uppercase tracking-widest bg-black/60 p-2 backdrop-blur-sm">
+                        Subject_Analysis: Active<br/>
+                        Status: Alert_Triggered
                     </div>
 <div class="absolute bottom-4 right-4 flex flex-col items-end gap-1">
 <div class="w-32 h-1 bg-white/10">
 <div class="w-2/3 h-full bg-accent"></div>
 </div>
-</div>
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-<div class="w-64 h-64 border border-white/10 rounded-full animate-ping opacity-20"></div>
+<span class="font-mono text-[8px] opacity-40">COMMUNITY SIGNAL: STABLE</span>
 </div>
 </div>
 </div>
@@ -144,7 +144,7 @@
 </div>
 <div class="absolute bottom-12 left-0 w-full border-y border-white/5 bg-white/[0.02] backdrop-blur-sm py-4">
 <div class="max-w-7xl mx-auto px-6 flex justify-center items-center text-[10px] font-mono uppercase tracking-[0.3em] opacity-40">
-<span>Active Responders: 12,503</span>
+<span>Active Volunteers: 12,503</span>
 </div>
 </div>
 </header>
@@ -168,7 +168,7 @@
 <div class="bg-black p-8 group">
 <span class="material-symbols-outlined text-accent mb-6 font-light text-3xl">location_disabled</span>
 <h4 class="font-black text-sm uppercase tracking-wider mb-4">Blind Spots</h4>
-<p class="text-xs text-secondary leading-relaxed font-medium">Rescuers often lack exact coordinates, leading to critical delays in locating the animal.</p>
+<p class="text-xs text-secondary leading-relaxed font-medium">Volunteers often lack exact coordinates, leading to critical delays in locating the animal.</p>
 </div>
 </div>
 </div>
@@ -192,13 +192,13 @@
 </div>
 <div class="lg:w-1/2">
 <h2 class="text-5xl md:text-7xl font-[900] tracking-tighter uppercase mb-8">One Tap. <span class="text-secondary opacity-30">Instant Help.</span></h2>
-<p class="text-secondary text-xl mb-8 font-medium">Our real-time alert system connects the animal directly to a network of active community responders and specialized volunteers.</p>
+<p class="text-secondary text-xl mb-8 font-medium">Our real-time alert system connects the animal directly to a network of active community volunteers.</p>
 <div class="p-8 border border-white/10 bg-black/40">
 <div class="flex items-center gap-6 mb-4">
 <span class="material-symbols-outlined text-accent text-3xl">emergency</span>
 <h4 class="text-sm uppercase tracking-widest font-black">Direct Intervention</h4>
 </div>
-<p class="text-xs text-secondary leading-relaxed font-medium">Once triggered, your alert is instantly visible to all qualified responders within your immediate vicinity, ensuring the fastest possible arrival on scene.</p>
+<p class="text-xs text-secondary leading-relaxed font-medium">Once triggered, your alert is instantly visible to all qualified volunteers within your immediate vicinity, ensuring the fastest possible arrival on scene.</p>
 </div>
 </div>
 </div>
@@ -223,48 +223,33 @@
 <div class="flex flex-col items-center text-center">
 <div class="w-16 h-16 border border-white/10 flex items-center justify-center mb-8 font-mono text-2xl font-bold text-white/20">03</div>
 <h3 class="font-[900] uppercase tracking-widest text-sm mb-4">Broadcast</h3>
-<p class="text-[11px] text-secondary font-black leading-relaxed">Location and details are pushed to all nearby units.</p>
+<p class="text-[11px] text-secondary font-black leading-relaxed">Location and details are pushed to all nearby volunteers.</p>
 </div>
 <div class="flex flex-col items-center text-center">
 <div class="w-16 h-16 border border-white/10 flex items-center justify-center mb-8 font-mono text-2xl font-bold text-white/20">04</div>
 <h3 class="font-[900] uppercase tracking-widest text-sm mb-4">Help Dispatched</h3>
-<p class="text-[11px] text-secondary font-black leading-relaxed">The system connects with the nearest available responder to ensure the fastest possible assistance.</p>
+<p class="text-[11px] text-secondary font-black leading-relaxed">The system connects with the nearest available volunteer to ensure the fastest possible assistance.</p>
 </div>
 </div>
 </div>
 </section>
 <section class="py-32 border-t border-white/10">
 <div class="max-w-7xl mx-auto px-6">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border border-white/10">
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group border border-white/10">
 <span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">emergency_share</span>
 <h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">SOS Alerts</h3>
-<p class="text-secondary text-[11px] font-black leading-relaxed uppercase tracking-wider">High-priority notification system that bypasses do-not-disturb settings for registered responders.</p>
+<p class="text-secondary text-[11px] font-black leading-relaxed uppercase tracking-wider">High-priority notification system that bypasses do-not-disturb settings for registered volunteers.</p>
 </div>
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group">
+<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group border border-white/10">
 <span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">my_location</span>
 <h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">Live Location</h3>
 <p class="text-secondary text-[11px] font-black leading-relaxed uppercase tracking-wider">Sub-meter accuracy tracking for precise rescue operations in complex urban environments.</p>
 </div>
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group">
-<span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">radar</span>
-<h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">Nearby Awareness</h3>
-<p class="text-secondary text-[11px] font-black leading-relaxed uppercase tracking-wider">Visual radar of all active community units and volunteers within a 10km radius.</p>
-</div>
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group">
-<span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">signal_cellular_alt_1_bar</span>
-<h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">Low Data Mode</h3>
-<p class="text-secondary text-[11px] font-black leading-relaxed uppercase tracking-wider">Optimized communication protocols designed to function even in 2G/EDGE network conditions.</p>
-</div>
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group">
+<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group border border-white/10">
 <span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">encrypted</span>
 <h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">Total Privacy</h3>
 <p class="text-secondary text-[11px] font-black leading-relaxed uppercase tracking-wider">Encrypted data transmission ensuring reporter safety and animal case confidentiality.</p>
-</div>
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group">
-<span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">history_edu</span>
-<h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">Incident Log</h3>
-<p class="text-secondary text-[11px] font-black leading-relaxed uppercase tracking-wider">Automated documentation of all rescue steps for medical and care follow-up.</p>
 </div>
 </div>
 </div>
@@ -276,8 +261,8 @@
 <h2 class="text-5xl md:text-6xl font-[950] tracking-tighter uppercase mb-12 leading-[1.1]">Who We<br/>Support</h2>
 <div class="space-y-6">
 <div class="p-6 border-l border-white/20 bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-default">
-<p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2 font-display">01 Rescuers</p>
-<p class="text-sm font-medium opacity-60">Essential tools for community responders to manage incident flows and coordination.</p>
+<p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2 font-display">01 Volunteers</p>
+<p class="text-sm font-medium opacity-60">Essential tools for community volunteers to manage incident flows and coordination.</p>
 </div>
 <div class="p-6 border-l border-white/20 bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-default">
 <p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2 font-display">02 Pet Owners</p>
@@ -291,23 +276,17 @@
 </div>
 <div class="lg:w-2/3 grid grid-cols-2 gap-4">
 <div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative group overflow-hidden">
-<img alt="High-tech map visualization" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPBle0W3h3psfdSv2wf7ekIL4FUfbbjxSTuK3K9yQMsM0EKJ1dCz6B_3DfqxzcimYHkFW4S9dP-0Rag-WaNVZXImc26sp0vGvi_Q33fZUlw4ZIru_KJlwDxHBJBtq1v1k53BiSH2IpLGkgkmzhwSYbYqGcR4da9l_6rXU6VAPGc4k_BAr-7r-DH4UCww_sc0i9DhXdgq7iYjxQcUJ_OZazTGLLm53CcheRuVrUA9-TCwXgi3NC8-hM2sdmlK0QfSIIZdPhTYGHiDU"/>
+<img alt="Indian community volunteers providing water and food to street animals in a high-contrast urban setting" class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXY-LWBigVMQGIMb5WMvCvTweZYPsyOEaJTUTRmNDEdPJGo0cd2fFJ4LDHzDfykZASg-vl8d-CInRtVJ6_MeaoyGRMfSfqGuEME4yVcLwTORSMb8TBgLfWWImWFPD4k1LyWKtRH9I6QAhrG5W--RGqDJOafiqz_t2_oRST42B4zQfPeJmKJQaag9v0rFBF6-aCrhGdj1jhttCy1zZVbQk6UdbXOnjU2WYORhJwUgalB8HIFZkZCXmz5IukxIe8BTLr8R0exYe8I4U"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
 <div class="absolute inset-0 flex items-end p-8">
-<span class="text-[10px] font-mono uppercase tracking-widest bg-black/80 px-3 py-1 font-bold">Field_Log_Viewer</span>
+<span class="text-[10px] font-mono uppercase tracking-widest bg-black/80 px-3 py-1 font-bold">FIELD_OPERATIONS</span>
 </div>
 </div>
 <div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative group overflow-hidden mt-12">
-<div class="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent"></div>
-<div class="absolute inset-0 flex items-center justify-center p-12">
-<div class="w-full h-full border border-white/5 relative flex flex-col justify-center gap-4 p-6">
-<div class="w-full h-1 bg-white/10"></div>
-<div class="w-2/3 h-1 bg-white/10"></div>
-<div class="w-full h-1 bg-accent/40"></div>
-<div class="w-1/2 h-1 bg-white/10"></div>
-</div>
-</div>
+<img alt="A pet being comforted by its owner, showing empathy and bond" class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOonndoMgNUyAKL2RxhycIDWn0Jk-Acg9pG5m6bVFE6PqX81HLXbB3LYxXWiadpSDNdlQCr2p5xiyAf7t5DJ4FV-A2AbjkxiaT5RBoyQedta9PBCEz-oAFuhKCAzv7aNsaaHetFwjYu-LXQPTI7xu4pPzmc5ntmUDpNrhfvzPZBBcEHQ9c2lF0EfcPPWpoBA4Ilxh8PidbyeJWvpJ6vGXKsHUkYjQuQq1MLkAXNaq6lc9tNx4kaEkX8Z8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
 <div class="absolute inset-0 flex items-end p-8">
-<span class="text-[10px] font-mono uppercase tracking-widest bg-black/80 px-3 py-1 font-bold">Metric_Analysis_Grid</span>
+<span class="text-[10px] font-mono uppercase tracking-widest bg-black/80 px-3 py-1 font-bold">CARE_COORDINATION</span>
 </div>
 </div>
 </div>
@@ -321,7 +300,7 @@
 <div class="flex flex-col md:flex-row justify-center gap-4">
 <div class="flex group cursor-pointer self-center">
 <div class="bg-black text-white px-12 py-6 font-black uppercase tracking-[0.3em] text-sm group-hover:bg-zinc-900 transition-colors flex items-center justify-center">
-                    Join the Network
+                    Join the Volunteer Network
                 </div>
 <div class="bg-black text-white p-6 border-l border-white/20 group-hover:bg-zinc-900 transition-colors flex items-center justify-center">
 <span class="material-symbols-outlined text-sm">arrow_forward</span>
@@ -343,10 +322,10 @@
 <div class="w-10 h-10 border border-white flex items-center justify-center bg-white">
 <span class="material-symbols-outlined text-black text-xl">pets</span>
 </div>
-<span class="font-display text-sm tracking-tighter uppercase font-black">Rapid Response Team</span>
+<span class="font-display text-sm tracking-tighter uppercase font-black">Volunteer Response Team</span>
 </div>
 <p class="text-secondary text-sm max-w-sm font-medium">
-                    A community-driven initiative using real-time coordination to eliminate response latency in animal welfare emergencies.
+                    A community-driven initiative using real-time coordination to eliminate response latency in animal welfare emergencies powered by volunteers.
                 </p>
 </div>
 <div>
@@ -370,11 +349,8 @@
 <div class="text-[10px] font-mono uppercase tracking-[0.4em] opacity-40">
                 SECURE ACCESS • PRIVACY ENSURED
             </div>
-<p class="text-[10px] font-mono uppercase tracking-[0.2em] opacity-40">© 2026 Rescue Response. Community Initiative.</p>
+<p class="text-[10px] font-mono uppercase tracking-[0.2em] opacity-40">© 2026 RAPIDRESPONSE LABS. COMMUNITY INITIATIVE POWERED BY VOLUNTEERS.</p>
 <div class="flex gap-8 text-[10px] font-mono uppercase tracking-[0.2em] opacity-40">
-<a class="hover:text-white transition-colors" href="#">Twitter/X</a>
-<a class="hover:text-white transition-colors" href="#">GitHub</a>
-<a class="hover:text-white transition-colors" href="#">Discord</a>
 </div>
 </div>
 </div>
