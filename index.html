@@ -59,7 +59,6 @@
 <body class="bg-background-dark text-gray-100 font-display overflow-x-hidden">
   <div class="grain-overlay"></div>
 
-  <!-- NAV -->
   <nav class="fixed w-full top-0 z-40 border-b border-white/10 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -78,13 +77,11 @@
     </div>
   </nav>
 
-<!-- HERO -->
 <header class="relative min-h-screen flex items-center pt-24">
   <div class="absolute inset-0 wireframe-grid opacity-60"></div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
 
-    <!-- LEFT -->
     <div class="text-center lg:text-left">
       <div class="font-mono text-[10px] uppercase tracking-[0.4em] mb-4">
         Where Empathy Meets Action
@@ -99,80 +96,49 @@
         A community-driven platform for animal emergencies. Broadcast instant alerts to nearby community volunteers in real-time.
       </p>
 
-<!-- DOWNLOAD BUTTONS -->
-<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+      <!-- DOWNLOAD BUTTONS (FIXED) -->
+      <div class="flex flex-wrap justify-center lg:justify-start gap-4 max-w-md mx-auto lg:mx-0">
 
-  <!-- ANDROID -->
-  <a href="https://tinyurl.com/RRT-Android"
-     target="_blank"
-     class="flex">
+        <!-- ANDROID -->
+        <a href="https://tinyurl.com/RRT-Android" target="_blank" class="flex">
+          <div class="bg-white text-black h-[56px] px-12 border border-black flex items-center justify-center">
+            <span class="uppercase text-xs font-bold tracking-[0.2em] translate-x-[0.1em] inline-block">
+              DOWNLOAD
+            </span>
+          </div>
+          <div class="bg-white h-[56px] w-[56px] border-y border-r border-black flex items-center justify-center">
+            <img src="https://img.icons8.com/?size=100&id=yhLahGmmkw2c&format=png&color=000000"
+                 alt="Android"
+                 class="w-5 h-5 object-contain"/>
+          </div>
+        </a>
 
-    <!-- Text block -->
-    <div class="bg-white text-black h-[56px] px-12
-                border border-black
-                flex items-center justify-center">
-      <span class="uppercase text-xs font-bold tracking-[0.2em]
-                   translate-x-[0.1em] inline-block">
-        DOWNLOAD
-      </span>
+        <!-- IOS -->
+        <a href="#" target="_blank" class="flex">
+          <div class="bg-white text-black h-[56px] px-12 border border-black flex items-center justify-center">
+            <span class="uppercase text-xs font-bold tracking-[0.2em] translate-x-[0.1em] inline-block">
+              DOWNLOAD
+            </span>
+          </div>
+          <div class="bg-white h-[56px] w-[56px] border-y border-r border-black flex items-center justify-center">
+            <img src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000"
+                 alt="iOS"
+                 class="w-5 h-5 object-contain"/>
+          </div>
+        </a>
+
+      </div>
     </div>
 
-    <!-- Icon block -->
-    <div class="bg-white h-[56px] w-[56px]
-                border-y border-r border-black
-                flex items-center justify-center">
-      <img
-        src="https://img.icons8.com/?size=100&id=yhLahGmmkw2c&format=png&color=000000"
-        alt="Android"
-        class="w-5 h-5 object-contain"
-      />
-    </div>
-  </a>
-
-  <!-- IOS -->
-  <a href="#"
-     target="_blank"
-     class="flex">
-
-    <!-- Text block -->
-    <div class="bg-white text-black h-[56px] px-12
-                border border-black
-                flex items-center justify-center">
-      <span class="uppercase text-xs font-bold tracking-[0.2em]
-                   translate-x-[0.1em] inline-block">
-        DOWNLOAD
-      </span>
-    </div>
-
-    <!-- Icon block -->
-    <div class="bg-white h-[56px] w-[56px]
-                border-y border-r border-black
-                flex items-center justify-center">
-      <img
-        src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000"
-        alt="iOS"
-        class="w-5 h-5 object-contain"
-      />
-    </div>
-  </a>
-
-</div>
-
-    </div>
-
-    <!-- RIGHT (UNCHANGED IMAGE) -->
     <div class="hidden lg:block">
-      <img
-        class="w-full h-full object-cover grayscale"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCBVYPXarfBi-llCGEsaR5c5iVwhuaT4evgLaGpTBAmQf4r7fpC8DYeRPzwBdIhL8Fv5lg3JSo6LZMHC-ahViw5NjBWmJ8A8h_8b7WzilYYqD-lMhWF9Gr0iQssH1B4MxMW__DxnEjSR9KGEgul5aqYbZRqMVAyN9BLBHrviXED0c6STeKdn3Yh40nDDYqYKuw40SAw96jywBkFGM0m3d8vGNT7hlPMp8lMzcx6X8pMHw2AQ1k617y_9s"
-        alt="Rescue dog"
-      />
+      <img class="w-full h-full object-cover grayscale"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCBVYPXarfBi-llCGEsaR5c5iVwhuaT4evgLaGpTBAmQf4r7fpC8DYeRPzwBdIhL8Fv5lg3JSo6LZMHC-ahViw5NjBWmJ8A8h_8b7WzilYYqD-lMhWF9Gr0iQssH1B4MxMW__DxnEjSR9KGEgul5aqYbZRqMVAyN9BLBHrviXED0c6STeKdn3Yh40nDDYqYKuw40SAw96jywBkFGM0m3d8vGNT7hlPMp8lMzcx6X8pMHw2AQ1k617y_9s"
+           alt="Rescue dog"/>
     </div>
 
   </div>
 </header>
 
-<!-- PROBLEM -->
 <section class="py-20 sm:py-28 md:py-32 border-t border-white/10" id="problem">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
@@ -209,13 +175,12 @@
   </div>
 </section>
 
-<!-- SOLUTION -->
 <section class="py-20 sm:py-28 md:py-32 bg-white/5" id="solution">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex flex-col lg:flex-row gap-16 items-center">
 
-      <div class="lg:w-1/2 w-full">
-        <div class="aspect-video border border-white/10 bg-black flex items-center justify-center">
+      <div class="lg:w-1/2 w-full flex justify-center">
+        <div class="w-full max-w-lg aspect-video border border-white/10 bg-black flex items-center justify-center">
           <div class="sos-button-glow rounded-full p-6">
             <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full sos-button-3d flex items-center justify-center">
               <span class="text-white text-4xl font-black">SOS</span>
@@ -227,7 +192,7 @@
         </p>
       </div>
 
-      <div class="lg:w-1/2">
+      <div class="lg:w-1/2 w-full">
         <h2 class="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
           One Tap. <span class="text-secondary opacity-30">Instant Help.</span>
         </h2>
@@ -251,7 +216,47 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<section class="py-20 sm:py-28 md:py-32 bg-white/5" id="solution">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col lg:flex-row gap-16 items-center">
+
+      <div class="lg:w-1/2 w-full flex justify-center">
+        <div class="w-full max-w-lg aspect-video border border-white/10 bg-black flex items-center justify-center">
+          <div class="sos-button-glow rounded-full p-6">
+            <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full sos-button-3d flex items-center justify-center">
+              <span class="text-white text-4xl font-black">SOS</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-secondary text-[11px] uppercase tracking-widest font-black mt-6 text-center">
+          Press and hold for 3s to send alert
+        </p>
+      </div>
+
+      <div class="lg:w-1/2 w-full">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
+          One Tap. <span class="text-secondary opacity-30">Instant Help.</span>
+        </h2>
+        <p class="text-secondary text-base sm:text-xl mb-8">
+          Our real-time alert system connects the animal directly to a network of active community volunteers.
+        </p>
+
+        <div class="p-6 sm:p-8 border border-white/10 bg-black/40">
+          <div class="flex items-center gap-4 mb-3">
+            <span class="material-symbols-outlined text-accent text-3xl">emergency</span>
+            <h4 class="uppercase tracking-widest font-black text-sm">Direct Intervention</h4>
+          </div>
+          <p class="text-xs text-secondary">
+            Once triggered, your alert is instantly visible to all the volunteers within your district,
+            ensuring the fastest possible arrival on scene.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section class="py-20 sm:py-28 md:py-32" id="how-it-works">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -306,7 +311,6 @@
   </div>
 </section>
 
-<!-- AUDIENCE -->
 <section class="py-20 sm:py-28 md:py-32" id="audience">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex flex-col lg:flex-row gap-16">
@@ -348,19 +352,15 @@
 
       <div class="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative overflow-hidden">
-          <img
-            class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale contrast-125 brightness-75"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXY-LWBigVMQGIMb5WMvCvTweZYPsyOEaJTUTRmNDEdPJGo0cd2fFJ4LDHzDfykZASg-vl8d-CInRtVJ6_MeaoyGRMfSfqGuEME4yVcLwTORSMb8TBgLfWWImWFPD4k1LyWKtRH9I6QAhrG5W--RGqDJOafiqz_t2_oRST42B4zQfPeJmKJQaag9v0rFBF6-aCrhGdj1jhttCy1zZVbQk6UdbXOnjU2WYORhJwUgalB8HIFZkZCXmz5IukxIe8BTLr8R0exYe8I4U"
-            alt="Community volunteers"
-          />
+          <img class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale contrast-125 brightness-75"
+               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXY-LWBigVMQGIMb5WMvCvTweZYPsyOEaJTUTRmNDEdPJGo0cd2fFJ4LDHzDfykZASg-vl8d-CInRtVJ6_MeaoyGRMfSfqGuEME4yVcLwTORSMb8TBgLfWWImWFPD4k1LyWKtRH9I6QAhrG5W--RGqDJOafiqz_t2_oRST42B4zQfPeJmKJQaag9v0rFBF6-aCrhGdj1jhttCy1zZVbQk6UdbXOnjU2WYORhJwUgalB8HIFZkZCXmz5IukxIe8BTLr8R0exYe8I4U"
+               alt="Community volunteers"/>
         </div>
 
         <div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative overflow-hidden sm:mt-12">
-          <img
-            class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOonndoMgNUyAKL2RxhycIDWn0Jk-Acg9pG5m6bVFE6PqX81HLXbB3LYxXWiadpSDNdlQCr2p5xiyAf7t5DJ4FV-A2AbjkxiaT5RBoyQedta9PBCEz-oAFuhKCAzv7aNsaaHetFwjYu-LXQPTI7xu4pPzmc5ntmUDpNrhfvzPZBBcEHQ9c2lF0EfcPPWpoBA4Ilxh8PidbyeJWvpJ6vGXKsHUkYjQuQq1MLkAXNaq6lc9tNx4kaEkX8Z8"
-            alt="Pet care"
-          />
+          <img class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale"
+               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOonndoMgNUyAKL2RxhycIDWn0Jk-Acg9pG5m6bVFE6PqX81HLXbB3LYxXWiadpSDNdlQCr2p5xiyAf7t5DJ4FV-A2AbjkxiaT5RBoyQedta9PBCEz-oAFuhKCAzv7aNsaaHetFwjYu-LXQPTI7xu4pPzmc5ntmUDpNrhfvzPZBBcEHQ9c2lF0EfcPPWpoBA4Ilxh8PidbyeJWvpJ6vGXKsHUkYjQuQq1MLkAXNaq6lc9tNx4kaEkX8Z8"
+               alt="Pet care"/>
         </div>
       </div>
 
@@ -368,30 +368,16 @@
   </div>
 </section>
 
-<!-- FINAL CTA -->
 <section class="bg-white text-black text-center relative overflow-hidden flex items-center justify-center py-28 sm:py-36">
   <div class="absolute inset-0 wireframe-grid opacity-10 pointer-events-none"></div>
 
   <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 flex flex-col items-center justify-center">
-    <h2 class="text-4xl sm:text-5xl md:text-7xl font-[950] tracking-[-0.05em] uppercase mb-0 leading-[0.9]">
+    <h2 class="text-4xl sm:text-5xl md:text-7xl font-[950] tracking-[-0.05em] uppercase leading-[0.9]">
       Every Second<br/>Counts for Them
     </h2>
-
-    <div class="flex justify-center hidden">
-      <div class="flex w-full sm:w-auto">
-        <div class="bg-black text-white px-8 sm:px-12 py-5 sm:py-6 font-black uppercase tracking-[0.3em] text-xs sm:text-sm
-                    flex items-center justify-center w-full">
-          Join the Volunteer Network
-        </div>
-        <div class="bg-black text-white p-5 sm:p-6 border-l border-white/20 flex items-center justify-center">
-          <span class="material-symbols-outlined text-sm">arrow_forward</span>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="py-12 sm:py-20 border-t border-white/10 bg-black">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
