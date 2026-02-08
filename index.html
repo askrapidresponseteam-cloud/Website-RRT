@@ -1,382 +1,242 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Rapid Response Labs | Animal Welfare Rapid Alert</title>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
 <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#FFFFFF",
-              accent: "#FF3B30",
-              "background-light": "#F8F8F8",
-              "background-dark": "#0A0A0B",
-              secondary: "#8E8E93",
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-              mono: ["JetBrains Mono", "monospace"],
-            },
-            borderRadius: {
-              DEFAULT: "4px",
-              pill: "9999px",
-            },
-          },
-        },
-      };
-    </script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#FFFFFF",
+        accent: "#FF3B30",
+        "background-dark": "#0A0A0B",
+        secondary: "#8E8E93",
+      },
+      fontFamily: {
+        display: ["Inter", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
+      },
+    },
+  },
+};
+</script>
+
 <style type="text/tailwindcss">
-        .grain-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0.04;
-            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCEz5SQGvk9uUEsmZsQYnlmObtFnrkjdKL5piSVyqtOxmFPCe_YFl-UNO9pWmq0tBVEUpkHhP5YUCcIl2B1ebBu5Gp3GQyREpsBE4hGkM_rxQR6sgfmVD_IxnLKB0kKjy_nF0guMjTp2Hab7I-ovBnYVAteRPDMxfk4tFmvbBtW-DmtgOXkSAg34FWaWoFEM5Pgy45NKfBN73_kmh3Hokgn5E0TaDZnxYZ94Zb05ZpCemgbyaGqjI21FeXUeySMjBhse8JIKU-o6P0)
-        }
-        .wireframe-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
-        }
-        .nav-link::after {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
-            left: 0;
-            background-color: white;
-            transition: width 0.3s ease
-        }
-        .nav-link:hover::after {
-            width: 100%
-        }
-        .sos-button-3d {
-            background: radial-gradient(circle at 35% 35%, #ff4d4d, #b30000);
-            box-shadow: 0 15px 35px rgba(255, 59, 48, 0.4), inset 0 -10px 15px rgba(0, 0, 0, 0.5), inset 0 10px 15px rgba(255, 255, 255, 0.4), 0 20px 40px -10px rgba(0, 0, 0, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1)
-        }
-        .sos-button-glow {
-            box-shadow: 0 0 100px 20px rgba(255, 59, 48, 0.2)
-        }
-        .monochrome-grain {
-            filter: grayscale(1) contrast(1.2) brightness(0.8)
-        }
-    </style>
+.grain-overlay{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.04;background-image:url(https://lh3.googleusercontent.com/aida-public/AB6AXuCEz5SQGvk9uUEsmZsQYnlmObtFnrkjdKL5piSVyqtOxmFPCe_YFl-UNO9pWmq0tBVEUpkHhP5YUCcIl2B1ebBu5Gp3GQyREpsBE4hGkM_rxQR6sgfmVD_IxnLKB0kKjy_nF0guMjTp2Hab7I-ovBnYVAteRPDMxfk4tFmvbBtW-DmtgOXkSAg34FWaWoFEM5Pgy45NKfBN73_kmh3Hokgn5E0TaDZnxYZ94Zb05ZpCemgbyaGqjI21FeXUeySMjBhse8JIKU-o6P0)}
+.wireframe-grid{background-size:40px 40px;background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px)}
+.sos-button-3d{background:radial-gradient(circle at 35% 35%,#ff4d4d,#b30000);box-shadow:0 15px 35px rgba(255,59,48,.4),inset 0 -10px 15px rgba(0,0,0,.5),inset 0 10px 15px rgba(255,255,255,.4)}
+</style>
 </head>
-<body class="bg-background-dark text-gray-100 font-display selection:bg-white selection:text-black overflow-x-hidden">
+
+<body class="bg-background-dark text-gray-100 font-display overflow-x-hidden selection:bg-white selection:text-black">
 <div class="grain-overlay"></div>
+
 <nav class="fixed w-full top-0 z-40 border-b border-white/10 backdrop-blur-md">
-<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 border border-white flex items-center justify-center bg-white">
-<span class="material-symbols-outlined text-black text-xl">pets</span>
-</div>
-<span class="font-display text-sm tracking-tighter uppercase font-bold text-white">Rapid Response Team</span>
-</div>
-<div class="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.2em] font-bold opacity-60">
-<a class="relative nav-link" href="#problem">The Need</a>
-<a class="relative nav-link" href="#solution">The Solution</a>
-<a class="relative nav-link" href="#how-it-works">Protocol</a>
-<a class="relative nav-link" href="#audience">Community</a>
-</div>
-<div class="flex items-center gap-4">
-<button class="hidden px-5 py-2 text-[10px] uppercase tracking-widest border border-white/20 hover:border-white transition-all rounded-none font-bold">
-                Join Now
-            </button>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 sm:w-10 sm:h-10 bg-white flex items-center justify-center">
+        <span class="material-symbols-outlined text-black">pets</span>
+      </div>
+      <span class="text-xs sm:text-sm uppercase font-bold">Rapid Response Team</span>
+    </div>
+
+    <div class="hidden md:flex gap-8 text-[11px] uppercase tracking-[0.2em] opacity-60 font-bold">
+      <a href="#problem">The Need</a>
+      <a href="#solution">The Solution</a>
+      <a href="#how-it-works">Protocol</a>
+      <a href="#audience">Community</a>
+    </div>
+  </div>
 </nav>
-<header class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-<div class="absolute inset-0 wireframe-grid pointer-events-none opacity-60"></div>
-<div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div>
-<div class="mb-8">
-<div class="font-mono text-[11px] uppercase tracking-[0.4em] font-black text-white mb-4">Where Empathy Meets Action</div>
-</div>
-<h1 class="text-6xl md:text-[5.5rem] font-[900] tracking-tighter leading-[0.9] mb-8 uppercase">
-                HELP. WHEN<br/>SECONDS<br/><span class="text-secondary opacity-30 italic">MATTER.</span>
-</h1>
-<p class="text-lg md:text-xl text-secondary max-w-md mb-12 leading-relaxed font-medium">
-                A community-driven platform for animal emergencies. Broadcast instant alerts to nearby community volunteers in real-time.
-            </p>
-<div class="flex flex-wrap gap-6 items-center">
-<a href="https://tinyurl.com/RRT-Android"
-   target="_blank"
-   class="flex group cursor-pointer">
 
-  <!-- Text -->
-  <div class="bg-white text-black px-10 py-5 font-bold uppercase tracking-[0.2em] text-xs
-              border border-black
-              group-hover:bg-gray-100
-              transition-colors flex items-center justify-center">
-    Download
+<header class="relative min-h-screen flex items-center pt-24 sm:pt-28">
+<div class="absolute inset-0 wireframe-grid opacity-60"></div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+
+<div class="text-center lg:text-left">
+  <div class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.4em] mb-4">
+    Where Empathy Meets Action
   </div>
 
-  <!-- Icon -->
-  <div class="bg-white text-black p-5
-              border-y border-r border-black
-              group-hover:bg-gray-100
-              transition-colors flex items-center justify-center">
-    <span class="material-symbols-outlined">android</span>
+  <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-black leading-[1] uppercase mb-6">
+    HELP. WHEN<br/>SECONDS<br/>
+    <span class="text-secondary opacity-30 italic">MATTER.</span>
+  </h1>
+
+  <p class="text-base sm:text-lg text-secondary max-w-md mx-auto lg:mx-0 mb-10">
+    A community-driven platform for animal emergencies. Broadcast instant alerts to nearby community volunteers in real-time.
+  </p>
+
+  <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+    <a href="https://tinyurl.com/RRT-Android" target="_blank" class="flex w-full sm:w-auto justify-center">
+      <div class="bg-white text-black px-10 py-5 uppercase text-xs tracking-[0.2em] font-bold border border-black">
+        Download
+      </div>
+      <div class="bg-white text-black p-5 border-y border-r border-black">
+        <span class="material-symbols-outlined">android</span>
+      </div>
+    </a>
   </div>
-</a>
 </div>
+
+<div class="hidden lg:block relative">
+  <img class="w-full h-full object-cover grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCBVYPXarfBi-llCGEsaR5c5iVwhuaT4evgLaGpTBAmQf4r7fpC8DYeRPzwBdIhL8Fv5lg3JSo6LZMHC-ahViw5NjBWmJ8A8h_8b7WzilYYqD-lMhWF9Gr0iQssH1B4MxMW__DxnEjSR9KGEgul5aqYbZRqMVAyN9BLBHrviXED0c6STeKdn3Yh40nDDYqYKuw40SAw96jywBkFGM0m3d8vGNT7hlPMp8lMzcx6X8pMHw2AQ1k617y_9s"/>
 </div>
-<div class="relative hidden lg:block">
-<div class="relative w-full aspect-square border border-black/5 flex items-center justify-center p-12">
-<div class="w-full h-full border border-black/10 relative overflow-hidden bg-black/40">
-<div class="absolute inset-0 flex items-center justify-center">
-<img alt="Dramatic monochrome portrait of a rescue dog looking at camera" class="w-full h-full object-cover monochrome-grain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCBVYPXarfBi-llCGEsaR5c5iVwhuaT4evgLaGpTBAmQf4r7fpC8DYeRPzwBdIhL8Fv5lg3JSo6LZMHC-ahViw5NjBWmJ8A8h_8b7WzilYYqD-lMhWF9Gr0iQssH1B4MxMW__DxnEjSR9KGEgul5aqYbZRqMVAyN9BLBHrviXED0c6STeKdn3Yh40nDDYqYKuw40SAw96jywBkFGM0m3d8vGNT7hlPMp8lMzcx6X8pMHw2AQ1k617y_9s"/>
-<div class="absolute inset-0 bg-black/40 mix-blend-multiply"></div>
-</div>
-<div class="absolute top-4 left-4 font-mono text-[9px] text-white/40 uppercase tracking-widest bg-black/60 p-2 backdrop-blur-sm">
-                    </div>
-<div class="absolute bottom-4 right-4 flex flex-col items-end gap-1 hidden">
-<div class="w-32 h-1 bg-white/10">
-<div class="w-2/3 h-full bg-accent"></div>
-</div>
-<span class="font-mono text-[8px] opacity-40">COMMUNITY SIGNAL: STABLE</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="absolute bottom-12 left-0 w-full border-y border-white/5 bg-white/[0.02] backdrop-blur-sm py-4">
-<div class="max-w-7xl mx-auto px-6 flex justify-center items-center text-[10px] font-mono uppercase tracking-[0.3em] opacity-40">
-</div>
+
 </div>
 </header>
-<section class="py-32 border-t border-white/10 relative" id="problem">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-end">
-<div>
-<h2 class="text-5xl md:text-7xl font-[900] tracking-tighter uppercase mb-8">
-                    Emergencies Don’t<br/>Give Warnings
-                </h2>
-<p class="text-secondary mb-12 max-w-md font-medium text-lg">
-                    Every minute without intervention decreases the survival rate by 15% in acute trauma cases. Traditional reporting is too slow.
-                </p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
-<div class="bg-black p-8 group">
-<span class="material-symbols-outlined text-accent mb-6 font-light text-3xl">timer_off</span>
-<h4 class="font-black text-sm uppercase tracking-wider mb-4">Response Lag</h4>
-<p class="text-xs text-secondary leading-relaxed font-medium">Traditional emergency reporting can involve long wait times, especially in high-density areas.</p>
-</div>
-<div class="bg-black p-8 group">
-<span class="material-symbols-outlined text-accent mb-6 font-light text-3xl">location_disabled</span>
-<h4 class="font-black text-sm uppercase tracking-wider mb-4">Blind Spots</h4>
-<p class="text-xs text-secondary leading-relaxed font-medium">Incomplete or unclear location details can slow down on-ground response.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="py-32 relative bg-white/5 overflow-hidden" id="solution">
-<div class="max-w-7xl mx-auto px-6">
-<div class="flex flex-col lg:flex-row gap-20 items-center">
-<div class="lg:w-1/2">
-<div class="aspect-video w-full border border-white/10 bg-[#080808] p-8 flex flex-col items-center justify-center relative overflow-hidden group">
-<div class="relative z-10 flex flex-col items-center">
-<div class="sos-button-glow rounded-full p-6">
-<div class="w-36 h-36 rounded-full sos-button-3d flex items-center justify-center cursor-pointer active:translate-y-1 transition-all duration-75">
-<span class="text-white text-4xl font-[950] tracking-tighter">SOS</span>
-</div>
-</div>
-<p class="text-secondary text-[11px] uppercase tracking-widest font-black mt-8 text-center">Press and hold for 3s to send alert</p>
-</div>
-<div class="absolute inset-0 wireframe-grid opacity-20 pointer-events-none"></div>
-</div>
-</div>
-<div class="lg:w-1/2">
-<h2 class="text-5xl md:text-7xl font-[900] tracking-tighter uppercase mb-8">One Tap. <span class="text-secondary opacity-30">Instant Help.</span></h2>
-<p class="text-secondary text-xl mb-8 font-medium">Our real-time alert system connects the animal directly to a network of active community volunteers.</p>
-<div class="p-8 border border-white/10 bg-black/40">
-<div class="flex items-center gap-6 mb-4">
-<span class="material-symbols-outlined text-accent text-3xl">emergency</span>
-<h4 class="text-sm uppercase tracking-widest font-black">Direct Intervention</h4>
-</div>
-<p class="text-xs text-secondary leading-relaxed font-medium">Once triggered, your alert is instantly visible to all the volunteers within your district, ensuring the fastest possible arrival on scene.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="py-32 relative" id="how-it-works">
-<div class="max-w-7xl mx-auto px-6">
-<div class="text-center mb-24">
-<h2 class="text-5xl md:text-6xl font-[900] tracking-tighter uppercase">Standard Response Protocol</h2>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
-<div class="flex flex-col items-center text-center">
-<div class="w-16 h-16 border border-white/10 flex items-center justify-center mb-8 font-mono text-2xl font-bold text-white/20">01</div>
-<h3 class="font-[900] uppercase tracking-widest text-sm mb-4">Open</h3>
-<p class="text-[11px] text-secondary font-black leading-relaxed">Open the app when an animal needs help or when someone caring for an animal feels unsafe.
-</p>
-</div>
-<div class="flex flex-col items-center text-center">
-<div class="w-16 h-16 border border-white/10 flex items-center justify-center mb-8 font-mono text-2xl font-bold text-white/20">02</div>
-<h3 class="font-[900] uppercase tracking-widest text-sm mb-4">Tap</h3>
-<p class="text-[11px] text-secondary font-black leading-relaxed">Trigger the SOS signal with a single sustained press.</p>
-</div>
-<div class="flex flex-col items-center text-center">
-<div class="w-16 h-16 border border-white/10 flex items-center justify-center mb-8 font-mono text-2xl font-bold text-white/20">03</div>
-<h3 class="font-[900] uppercase tracking-widest text-sm mb-4">Broadcast</h3>
-<p class="text-[11px] text-secondary font-black leading-relaxed">Location and contact number is pushed to all the volunteers within the district.</p>
-</div>
-<div class="flex flex-col items-center text-center">
-<div class="w-16 h-16 border border-white/10 flex items-center justify-center mb-8 font-mono text-2xl font-bold text-white/20">04</div>
-<h3 class="font-[900] uppercase tracking-widest text-sm mb-4">Community Alerted</h3>
-<p class="text-[11px] text-secondary font-black leading-relaxed"> SOS requests appear on the app’s alert screen, enabling volunteers to call and navigate to those in need.</p>
-</div>
-</div>
-</div>
-</section>
-<section class="py-32 border-t border-white/10">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group border border-white/10">
-<span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">emergency_share</span>
-<h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">SOS Alerts</h3>
-<p class="text-secondary text-[11px] font-black leading-relaxed capitalise tracking-wider">SOS Notifications Are Shared With Nearby Registered Volunteers, Along With Location And Brief User-Provided Context.</p>
-</div>
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group border border-white/10">
-<span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">my_location</span>
-<h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">Live Location</h3>
-<p class="text-secondary text-[11px] font-black leading-relaxed capitalize tracking-wider">Location Is Shared During An Active SOS To Help Responders Understand Where Assistance May Be Needed.</p>
-</div>
-<div class="bg-black p-12 hover:bg-zinc-900 transition-all duration-500 group border border-white/10">
-<span class="material-symbols-outlined text-4xl font-extralight mb-12 opacity-50 group-hover:opacity-100 transition-opacity">encrypted</span>
-<h3 class="text-xl font-[950] mb-4 uppercase tracking-tighter">Time-Limited Visibility</h3>
-<p class="text-secondary text-[11px] font-black leading-relaxed capitalise tracking-wider">User Phone Number And Location Are Visible Only While An SOS Alert Is Active.</p>
-</div>
-</div>
-</div>
-</section>
-<section class="py-32 relative overflow-hidden" id="audience">
-<div class="max-w-7xl mx-auto px-6">
-<div class="flex flex-col lg:flex-row gap-20">
-<div class="lg:w-1/3">
-<h2 class="text-5xl md:text-6xl font-[950] tracking-tighter uppercase mb-12 leading-[1.1]">Who We<br/>Support</h2>
-<div class="space-y-6">
-<div class="p-6 border-l border-white/20 bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-default">
-<p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2 font-display">01 Volunteers</p>
-<p class="text-sm font-medium opacity-60">Essential tools for community volunteers to manage incident flows and coordination.</p>
-</div>
-<div class="p-6 border-l border-white/20 bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-default">
-<p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2 font-display">02 Pet Owners</p>
-<p class="text-sm font-medium opacity-60">Peace of mind knowing help is one tap away if your animal faces a crisis.</p>
-</div>
-<div class="p-6 border-l border-white/20 bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-default">
-<p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2 font-display">03 Animal Lovers</p>
-<p class="text-sm font-medium opacity-60">Empowering everyday citizens to take action when they spot an animal in distress.</p>
-</div>
-</div>
-</div>
-<div class="lg:w-2/3 grid grid-cols-2 gap-4">
-<div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative group overflow-hidden">
-<img alt="Indian community volunteers providing water and food to street animals in a high-contrast urban setting" class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXY-LWBigVMQGIMb5WMvCvTweZYPsyOEaJTUTRmNDEdPJGo0cd2fFJ4LDHzDfykZASg-vl8d-CInRtVJ6_MeaoyGRMfSfqGuEME4yVcLwTORSMb8TBgLfWWImWFPD4k1LyWKtRH9I6QAhrG5W--RGqDJOafiqz_t2_oRST42B4zQfPeJmKJQaag9v0rFBF6-aCrhGdj1jhttCy1zZVbQk6UdbXOnjU2WYORhJwUgalB8HIFZkZCXmz5IukxIe8BTLr8R0exYe8I4U"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-<div class="absolute inset-0 flex items-end p-8">
-<span class="text-[10px] font-mono uppercase tracking-widest bg-black/80 px-3 py-1 font-bold">FIELD_OPERATIONS</span>
-</div>
-</div>
-<div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative group overflow-hidden mt-12">
-<img alt="A pet being comforted by its owner, showing empathy and bond" class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOonndoMgNUyAKL2RxhycIDWn0Jk-Acg9pG5m6bVFE6PqX81HLXbB3LYxXWiadpSDNdlQCr2p5xiyAf7t5DJ4FV-A2AbjkxiaT5RBoyQedta9PBCEz-oAFuhKCAzv7aNsaaHetFwjYu-LXQPTI7xu4pPzmc5ntmUDpNrhfvzPZBBcEHQ9c2lF0EfcPPWpoBA4Ilxh8PidbyeJWvpJ6vGXKsHUkYjQuQq1MLkAXNaq6lc9tNx4kaEkX8Z8"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-<div class="absolute inset-0 flex items-end p-8">
-<span class="text-[10px] font-mono uppercase tracking-widest bg-black/80 px-3 py-1 font-bold">CARE_COORDINATION</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="py-40 bg-white text-black text-center relative overflow-hidden">
-<div class="absolute inset-0 wireframe-grid opacity-10 pointer-events-none"></div>
-<div class="max-w-4xl mx-auto px-6 relative z-10">
-<h2 class="text-6xl md:text-[7rem] font-[950] tracking-[-0.05em] uppercase mb-16 leading-[0.85]">Every Second<br/>Counts for Them</h2>
-<div class="flex flex-col md:flex-row justify-center gap-4">
-<div class="flex group cursor-pointer self-center">
-<div class="bg-black text-white px-12 py-6 font-black uppercase tracking-[0.3em] text-sm group-hover:bg-zinc-900 transition-colors flex items-center justify-center">
-                    Join the Volunteer Network
-                </div>
-<div class="bg-black text-white p-6 border-l border-white/20 group-hover:bg-zinc-900 transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined text-sm">arrow_forward</span>
-</div>
-</div>
-</div>
-<div class="mt-16 flex justify-center gap-12 opacity-30 grayscale items-center">
-<img alt="Partner Logo" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGnDU8l03NlXZjQuzQsrXi9AgMaYKZp8W_VSWwihMw2XgduaJ5P6HwS4_Qn98x2TpAiE244j5FdbT8U1YDqrtqdFOiCM2RMPr1NSXLPE0TM0k1wr3DiM3GPWgD5mgldzmZ3PB2WRgvMkwrGY5qOIpgm31Gpp4GnB5YxWPhPdHo_8YvNwaWzNX1ZgdpYTpO_txGHUAIa93nFgD5kN3-fDiGbnFCECXpmC1R1fydme55SpOpJmYHUWBhWrNk3HIeFcwBRgIxB3XuutM"/>
-<img alt="Partner Logo" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq0Etx-VbQ0LXuY2uOendagimydCEcUiBGOe329vk9LunqU27qLPp5V8q3F7E8zNUs-2tNc93TPZFyg0rGVcqf9CYMvDF_B_4y9gJNmdO_46VrrA72V2tz-sOxoQ5SMEPzoMHwBbhtBJZQJrtW481piw3TSLM6_WppipYl-QCJvrjMZq5sH4FWxk00K241MZ_MVkq6pBOmkbpesTD8sfnzKpNt8YAIJJiNARa8OkqChjd1oV0Oaya8WIN7BPq9lCNq_vN7fQG_3_c"/>
-<img alt="Partner Logo" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAN0MlgwFZNN_VmpVwWKQKvo_BkKsVl0zF8GAySL1Nbt4V9OjwvlVDxhoGiD3ajXJyJrb7UoYmenMXh95FN5huP6P55M8Ge0JayySGaawG0i8mKtEiGuKCZroublnXYJt0Gqxyhm4XD0vuHGATptOro0XjKEc684pgDyj0vLGgCWNhsZg_Y0KPmB0-VbB-Gk_iievzLlpxSm4anS3ktptq2anMQI5HzjS_HmoRMpwgJh5LDRPhHj3T0ooUvNHezIMfa6fmVlG4Hug"/>
-</div>
-</div>
-</section>
-<footer class="py-12 sm:py-20 border-t border-white/10 bg-black">
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-20">
-<div class="col-span-1 sm:col-span-2">
-<div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-<div class="w-8 h-8 sm:w-10 sm:h-10 border border-white flex items-center justify-center bg-white flex-shrink-0">
-<span class="material-symbols-outlined text-black text-lg sm:text-xl">pets</span>
-</div>
-<span class="font-display text-xs sm:text-sm tracking-tighter uppercase font-black">Rapid Response Team</span>
-</div>
-<p class="text-secondary text-xs sm:text-sm max-w-sm font-medium">
-                    A community-driven initiative using real-time coordination to eliminate response latency in animal welfare emergencies powered by volunteers.
-                </p>
-</div>
-</div>
+<!-- PROBLEM -->
+<section class="py-20 sm:py-28 md:py-32 border-t border-white/10" id="problem">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+      <div>
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
+          Emergencies Don’t<br/>Give Warnings
+        </h2>
+        <p class="text-secondary max-w-md text-base sm:text-lg">
+          Every minute without intervention decreases the survival rate by 15% in acute trauma cases. Traditional reporting is too slow.
+        </p>
+      </div>
 
-<!-- Bottom Legal Strip -->
-<div class="mt-10 sm:mt-16 pt-6 border-t border-white/10">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-[10px] tracking-[0.3em] uppercase text-gray-500 font-mono">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+        <div class="bg-black p-8">
+          <span class="material-symbols-outlined text-accent text-3xl mb-4">timer_off</span>
+          <h4 class="uppercase text-sm font-black mb-2 tracking-wider">Response Lag</h4>
+          <p class="text-xs text-secondary">Traditional emergency reporting can involve long wait times, especially in high-density areas.</p>
+        </div>
 
-<!-- Left -->
-<div class="max-w-md leading-relaxed tracking-normal text-[9px] md:text-[10px]">
-  This platform is an independent, community-driven initiative and is not affiliated with, operated by, or endorsed by any government authority.
-</div>
-
-<!-- Right -->
-<div class="text-center md:text-right">
-  © 2026 RapidResponse Labs. Community Initiative Powered by Volunteers.
-</div>
+        <div class="bg-black p-8">
+          <span class="material-symbols-outlined text-accent text-3xl mb-4">location_disabled</span>
+          <h4 class="uppercase text-sm font-black mb-2 tracking-wider">Blind Spots</h4>
+          <p class="text-xs text-secondary">Incomplete or unclear location details can slow down on-ground response.</p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-</div>
-</footer>
+<!-- SOLUTION -->
+<section class="py-20 sm:py-28 md:py-32 bg-white/5" id="solution">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col lg:flex-row gap-16 items-center">
+      <div class="lg:w-1/2 w-full">
+        <div class="aspect-video border border-white/10 bg-black flex items-center justify-center">
+          <div class="sos-button-glow rounded-full p-6">
+            <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full sos-button-3d flex items-center justify-center">
+              <span class="text-white text-4xl font-black">SOS</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-secondary text-[11px] uppercase tracking-widest font-black mt-6 text-center">
+          Press and hold for 3s to send alert
+        </p>
+      </div>
 
-<script>
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const hamburgerIcon = document.getElementById('hamburger-icon');
-  const mobileMenu = document.getElementById('mobile-menu');
+      <div class="lg:w-1/2">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
+          One Tap. <span class="text-secondary opacity-30">Instant Help.</span>
+        </h2>
+        <p class="text-secondary text-base sm:text-xl mb-8">
+          Our real-time alert system connects the animal directly to a network of active community volunteers.
+        </p>
 
-  hamburgerBtn.addEventListener('click', function() {
-    mobileMenu.classList.toggle('open');
-    if (mobileMenu.classList.contains('open')) {
-      hamburgerIcon.textContent = 'close';
-    } else {
-      hamburgerIcon.textContent = 'menu';
-    }
-  });
+        <div class="p-6 sm:p-8 border border-white/10 bg-black/40">
+          <div class="flex items-center gap-4 mb-3">
+            <span class="material-symbols-outlined text-accent text-3xl">emergency</span>
+            <h4 class="uppercase tracking-widest font-black text-sm">Direct Intervention</h4>
+          </div>
+          <p class="text-xs text-secondary">
+            Once triggered, your alert is instantly visible to all the volunteers within your district, ensuring the fastest possible arrival on scene.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function closeMobileMenu() {
-    mobileMenu.classList.remove('open');
-    hamburgerIcon.textContent = 'menu';
-  }
-</script>
-</body>
-</html>
+<!-- HOW IT WORKS -->
+<section class="py-20 sm:py-28 md:py-32" id="how-it-works">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-20">
+      Standard Response Protocol
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
+      <div class="text-center">
+        <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">01</div>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Open</h3>
+        <p class="text-[11px] text-secondary">Open the app when an animal needs help or when someone caring for an animal feels unsafe.</p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">02</div>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Tap</h3>
+        <p class="text-[11px] text-secondary">Trigger the SOS signal with a single sustained press.</p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">03</div>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Broadcast</h3>
+        <p class="text-[11px] text-secondary">Location and contact number is pushed to all the volunteers within the district.</p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">04</div>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Community Alerted</h3>
+        <p class="text-[11px] text-secondary">SOS requests appear on the app’s alert screen, enabling volunteers to call and navigate to those in need.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="py-20 sm:py-28 md:py-32" id="audience">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col lg:flex-row gap-16">
+      <div class="lg:w-1/3">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-10 leading-tight">
+          Who We<br/>Support
+        </h2>
+
+        <div class="space-y-6">
+          <div class="p-6 border-l border-white/20 bg-white/[0.02]">
+            <p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2">01 Volunteers</p>
+            <p class="text-sm opacity-60">Essential tools for community volunteers to manage incident flows and coordination.</p>
+          </div>
+
+          <div class="p-6 border-l border-white/20 bg-white/[0.02]">
+            <p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2">02 Pet Owners</p>
+            <p class="text-sm opacity-60">Peace of mind knowing help is one tap away if your animal faces a crisis.</p>
+          </div>
+
+          <div class="p-6 border-l border-white/20 bg-white/[0.02]">
+            <p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2">03 Animal Lovers</p>
+            <p class="text-sm opacity-60">Empowering everyday citizens to take action when they spot an animal in distress.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative overflow-hidden">
+          <img class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXY-LWBigVMQGIMb5WMvCvTweZYPsyOEaJTUTRmNDEdPJGo0cd2fFJ4LDHzDfykZASg-vl8d-CInRtVJ6_MeaoyGRMfSfqGuEME4yVcLwTORSMb8TBgLfWWImWFPD4k1LyWKtRH9I6QAhrG5W--RGqDJOafiqz_t2_oRST42B4zQfPeJmKJQaag9v0rFBF6-aCrhGdj1jhttCy1zZVbQk6UdbXOnjU2WYORhJwUgalB8HIFZkZCXmz5IukxIe8BTLr8R0exYe8I4U"/>
+        </div>
+
+        <div class="aspect-[4/5] bg-zinc-900 border border-white/10 relative overflow-hidden sm:mt-12">
+          <img class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOonndoMgNUyAKL2RxhycIDWn0Jk-Acg9pG5m6bVFE6PqX81HLXbB3LYxXWiadpSDNdlQCr2p5xiyAf7t5DJ4FV-A2AbjkxiaT5RBoyQedta9PBCEz-oAFuhKCAzv7aNsaaHetFwjYu-LXQPTI7xu4pPzmc5ntmUDpNrhfvzPZBBcEHQ9c2lF0EfcPPWpoBA4Ilxh8PidbyeJWvpJ6vGXKsHUkYjQuQq1MLkAXNaq6lc9tNx4kaEkX8Z8"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
