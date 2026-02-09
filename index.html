@@ -59,7 +59,7 @@
 <body class="bg-background-dark text-gray-100 font-display overflow-x-hidden">
   <div class="grain-overlay"></div>
 
-  <nav class="fixed w-full top-0 z-40 border-b border-white/10 backdrop-blur-md">
+  <nav class="fixed w-full top-0 z-40 border-b border-white/10 backdrop-blur-md text-white transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 sm:w-10 sm:h-10 bg-white flex items-center justify-center">
@@ -406,6 +406,49 @@
 
   </div>
 </footer>
+</footer>
+
+<!-- AUTO NAV COLOR SWITCH -->
+<script>
+  const nav = document.querySelector("nav");
+
+  function updateNavbar() {
+
+    // Find the white section (CTA section)
+    const lightSection = document.querySelector(".bg-white");
+
+    if (!lightSection) return;
+
+    const rect = lightSection.getBoundingClientRect();
+
+    if (rect.top <= 80 && rect.bottom >= 80) {
+      // On light background
+      nav.classList.add("bg-white/90", "text-black");
+      nav.classList.remove("text-white", "border-white/10");
+
+      nav.querySelectorAll("a, span").forEach(el => {
+        el.classList.add("text-black");
+        el.classList.remove("text-white");
+      });
+
+    } else {
+      // On dark background
+      nav.classList.remove("bg-white/90", "text-black");
+      nav.classList.add("text-white", "border-white/10");
+
+      nav.querySelectorAll("a, span").forEach(el => {
+        el.classList.add("text-white");
+        el.classList.remove("text-black");
+      });
+    }
+  }
+
+  window.addEventListener("scroll", updateNavbar);
+  window.addEventListener("load", updateNavbar);
+</script>
+
+</body>
+</html>
 
 </body>
 </html>
