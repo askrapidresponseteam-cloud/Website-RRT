@@ -65,7 +65,9 @@
         <div class="w-9 h-9 sm:w-10 sm:h-10 bg-white flex items-center justify-center">
           <span class="material-symbols-outlined text-black">pets</span>
         </div>
-        <span class="text-xs sm:text-sm uppercase font-bold">Rapid Response Team</span>
+        <span class="brand-text text-xs sm:text-sm uppercase font-bold">
+  Rapid Response Team
+</span>
       </div>
 
       <div class="hidden md:flex gap-8 text-[11px] uppercase tracking-[0.2em] opacity-60 font-bold">
@@ -432,7 +434,7 @@
       nav.classList.add("bg-white/90", "text-black");
       nav.classList.remove("text-white", "border-white/10");
 
-      nav.querySelectorAll("a, span").forEach(el => {
+      nav.querySelectorAll("a, span:not(.material-symbols-outlined)").forEach(el => {
         el.classList.add("text-black");
         el.classList.remove("text-white");
       });
