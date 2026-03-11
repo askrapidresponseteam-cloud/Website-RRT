@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rapid Response App | Volunteer Network for Animal Emergencies</title>
+  <title>Rapid Response Labs | Animal Welfare Rapid Alert</title>
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
 
@@ -55,38 +55,26 @@
         inset 0 -10px 15px rgba(0,0,0,.5),
         inset 0 10px 15px rgba(255,255,255,.4);
     }
-
-    /* NEW: Better link styling */
-
-    .rrt-link{
-      border-bottom:1px solid rgba(255,255,255,.35);
-      padding-bottom:2px;
-      transition:all .2s ease;
-    }
-
-    .rrt-link:hover{
-      border-color:white;
-      opacity:1;
-    }
-
   </style>
 </head>
 
 <body class="bg-background-dark text-gray-100 font-display overflow-x-hidden">
 
 <div class="grain-overlay"></div>
+
 <nav class="fixed w-full top-0 z-40 border-b border-white/10 backdrop-blur-md text-white transition-all duration-300">
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
 
     <div class="flex items-center gap-3">
 
+      <!-- LOGO -->
       <div class="logo-box w-9 h-9 sm:w-10 sm:h-10 bg-black border border-white/20 flex items-center justify-center transition-colors duration-300">
         <span class="material-symbols-outlined text-white">pets</span>
       </div>
 
       <span class="brand-text text-xs sm:text-sm uppercase font-bold">
-        Rapid Response App
+        Rapid Response Team
       </span>
 
     </div>
@@ -95,7 +83,7 @@
 
       <a href="#problem">The Need</a>
       <a href="#solution">The Solution</a>
-      <a href="#how-it-works">How It Works</a>
+      <a href="#how-it-works">Protocol</a>
       <a href="#audience">Community</a>
 
       <a href="#support"
@@ -108,6 +96,7 @@
   </div>
 
 </nav>
+
 <header class="relative min-h-screen flex items-center pt-24">
   <div class="absolute inset-0 wireframe-grid opacity-60"></div>
 
@@ -115,73 +104,107 @@
 
     <div class="text-center lg:text-left">
       <div class="font-mono text-[10px] uppercase tracking-[0.4em] mb-4">
-        A Volunteer Coordination Network
+        Where Empathy Meets Action
       </div>
 
       <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-black leading-[1] uppercase mb-6">
-        SOS ALERTS<br/>FOR ANIMALS<br/>
-        <span class="text-secondary opacity-30 italic">IN YOUR DISTRICT</span>
+        HELP. WHEN<br/>SECONDS<br/>
+        <span class="text-secondary opacity-30 italic">MATTER.</span>
       </h1>
 
-      <p class="text-base sm:text-lg text-secondary max-w-md mx-auto lg:mx-0 mb-6">
-
-        The Rapid Response App connects people who want to help animals in the same district.
-
+      <p class="text-base sm:text-lg text-secondary max-w-md mx-auto lg:mx-0 mb-10">
+        A community-driven platform for animal emergencies. Broadcast instant alerts to nearby community volunteers in real-time.
       </p>
 
-      <p class="text-sm text-secondary max-w-md mx-auto lg:mx-0 mb-10">
+      <div class="flex flex-wrap justify-center lg:justify-start gap-4 max-w-md mx-auto lg:mx-0">
 
-        When someone raises an SOS, the alert is broadcast to volunteers in that district.
-        Volunteers who are available may contact the person who raised the alert.
+        <a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" class="flex">
+          <div class="bg-white text-black h-[56px] px-12 border border-black flex items-center justify-center">
+            <span class="uppercase text-xs font-bold tracking-[0.2em] translate-x-[0.1em] inline-block">
+              DOWNLOAD
+            </span>
+          </div>
+          <div class="bg-white h-[56px] w-[56px] border-y border-r border-black flex items-center justify-center">
+            <img src="https://img.icons8.com/?size=100&id=yhLahGmmkw2c&format=png&color=000000"
+                 alt="Android"
+                 class="w-5 h-5 object-contain"/>
+          </div>
+        </a>
 
-      </p>
+        <a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" class="flex">
+          <div class="bg-white text-black h-[56px] px-12 border border-black flex items-center justify-center">
+            <span class="uppercase text-xs font-bold tracking-[0.2em] translate-x-[0.1em] inline-block">
+              DOWNLOAD
+            </span>
+          </div>
+          <div class="bg-white h-[56px] w-[56px] border-y border-r border-black flex items-center justify-center">
+            <img src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000"
+                 alt="iOS"
+                 class="w-5 h-5 object-contain"/>
+          </div>
+        </a>
+           <!-- DEMO OPTIONS -->
 <div class="w-full mt-3 text-center lg:text-left">
 
   <p class="text-xs text-secondary">
-    New here? Learn how to set up and use the app.
+    New here? Learn how to set up and use the app in under a minute.
   </p>
 
-  <div class="flex flex-col sm:flex-row gap-3 mt-3">
+  <div class="flex flex-col sm:flex-row gap-3 mt-2">
 
+    <!-- iOS DEMO -->
     <a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview"
        target="_blank"
-       class="rrt-link text-xs font-semibold tracking-wide">
+       class="inline-flex items-center justify-center gap-1 text-white text-xs font-semibold tracking-wide border-b border-white/40 hover:border-white transition">
 
-       Watch iOS Demo
-       <span class="material-symbols-outlined text-[14px] align-middle">phone_iphone</span>
+       Watch iOS Demo →
+       <span class="material-symbols-outlined text-[14px]">phone_iphone</span>
 
     </a>
 
+    <!-- ANDROID DEMO -->
     <a href="https://drive.google.com/file/d/1jsseovdhhCvx6k0SMhIx2uwowkeElnfF/preview"
        target="_blank"
-       class="rrt-link text-xs font-semibold tracking-wide">
+       class="inline-flex items-center justify-center gap-1 text-white text-xs font-semibold tracking-wide border-b border-white/40 hover:border-white transition">
 
-       Watch Android Demo
-       <span class="material-symbols-outlined text-[14px] align-middle">android</span>
+       Watch Android Demo →
+       <span class="material-symbols-outlined text-[14px]">android</span>
 
     </a>
 
+    <!-- APP SETUP GUIDE -->
     <a href="https://drive.google.com/file/d/1infaiPzLyf7QI6W9c_HD4lGRrXnoxReP/preview"
        target="_blank"
-       class="rrt-link text-xs font-semibold tracking-wide">
+       class="inline-flex items-center justify-center gap-1 text-white text-xs font-semibold tracking-wide border-b border-white/40 hover:border-white transition">
 
-       App Setup Guide
-       <span class="material-symbols-outlined text-[14px] align-middle">description</span>
-
-    </a>
-
-    <a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview"
-       target="_blank"
-       class="rrt-link text-xs font-semibold tracking-wide">
-
-       How The App Works Guide
-       <span class="material-symbols-outlined text-[14px] align-middle">menu_book</span>
+       App Setup Guide →
+       <span class="material-symbols-outlined text-[14px]">description</span>
 
     </a>
+<!-- VIEW GUIDE ON HOW THE APP WORKS -->
+<a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview"
+   target="_blank"
+   class="inline-flex items-center justify-center gap-1 text-white text-xs font-semibold tracking-wide border-b border-white/40 hover:border-white transition">
 
+   View Guide On How The App Works →
+   <span class="material-symbols-outlined text-[14px]">menu_book</span>
+
+</a>
   </div>
 
 </div>
+      </div>
+    </div>
+
+    <div class="hidden lg:block">
+      <img class="w-full h-full object-cover grayscale"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCBVYPXarfBi-llCGEsaR5c5iVwhuaT4evgLaGpTBAmQf4r7fpC8DYeRPzwBdIhL8Fv5lg3JSo6LZMHC-ahViw5NjBWmJ8A8h_8b7WzilYYqD-lMhWF9Gr0iQssH1B4MxMW__DxnEjSR9KGEgul5aqYbZRqMVAyN9BLBHrviXED0c6STeKdn3Yh40nDDYqYKuw40SAw96jywBkFGM0m3d8vGNT7hlPMp8lMzcx6X8pMHw2AQ1k617y_9s"
+           alt="Rescue dog"/>
+    </div>
+
+  </div>
+</header>
+
 <section class="py-20 sm:py-28 md:py-32 border-t border-white/10" id="problem">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -189,13 +212,12 @@
 
       <div>
         <h2 class="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
-          Animal Emergencies<br/>Need Fast Coordination
+          Emergencies Don’t<br/>Give Warnings
         </h2>
 
         <p class="text-secondary max-w-md text-base sm:text-lg">
-          When an animal is injured or in danger, help often depends on how quickly nearby
-          people can coordinate and reach the location. Without a simple way to alert
-          nearby volunteers, valuable time can be lost.
+          Every minute without intervention decreases the survival rate by 15% in acute trauma cases.
+          Traditional reporting is too slow.
         </p>
       </div>
 
@@ -203,19 +225,17 @@
 
         <div class="bg-black p-8">
           <span class="material-symbols-outlined text-accent text-3xl mb-4">timer_off</span>
-          <h4 class="uppercase text-sm font-black tracking-wider mb-2">Delayed Coordination</h4>
+          <h4 class="uppercase text-sm font-black tracking-wider mb-2">Response Lag</h4>
           <p class="text-xs text-secondary">
-            People often rely on scattered phone calls, WhatsApp groups, or social media posts.
-            These methods can take time and may not reach someone nearby quickly.
+            Traditional emergency reporting can involve long wait times, especially in high-density areas.
           </p>
         </div>
 
         <div class="bg-black p-8">
           <span class="material-symbols-outlined text-accent text-3xl mb-4">location_disabled</span>
-          <h4 class="uppercase text-sm font-black tracking-wider mb-2">Location Confusion</h4>
+          <h4 class="uppercase text-sm font-black tracking-wider mb-2">Blind Spots</h4>
           <p class="text-xs text-secondary">
-            When an emergency is reported without precise location details,
-            responders may struggle to find the exact spot where help is needed.
+            Incomplete or unclear location details can slow down on-ground response.
           </p>
         </div>
 
@@ -225,6 +245,7 @@
 
   </div>
 </section>
+
 <section class="py-20 sm:py-28 md:py-32 bg-white/5" id="solution">
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -247,7 +268,7 @@
 
         <p class="text-secondary text-[11px] uppercase tracking-widest font-black
                   mt-8 sm:mt-10 text-center max-w-xs">
-          Press and hold for 3 seconds to raise an SOS alert
+          Press and hold for 3s to send alert
         </p>
 
       </div>
@@ -255,27 +276,23 @@
       <div class="lg:w-1/2 w-full">
 
         <h2 class="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
-          A District-Level<br/>
-          <span class="text-secondary opacity-30">Volunteer Network</span>
+          One Tap. <span class="text-secondary opacity-30">Instant Help.</span>
         </h2>
 
         <p class="text-secondary text-base sm:text-xl mb-8">
-          The Rapid Response App allows anyone to quickly alert animal lovers
-          and volunteers in the same district when an animal is injured,
-          missing, or in distress.
+          Our real-time alert system instantly notifies a network of nearby community volunteers about the situation.
         </p>
 
         <div class="p-6 sm:p-8 border border-white/10 bg-black/40">
 
           <div class="flex items-center gap-4 mb-3">
             <span class="material-symbols-outlined text-accent text-3xl">emergency</span>
-            <h4 class="uppercase tracking-widest font-black text-sm">Instant District Alerts</h4>
+            <h4 class="uppercase tracking-widest font-black text-sm">Direct Intervention</h4>
           </div>
 
           <p class="text-xs text-secondary">
-            Once an SOS is raised, the alert becomes visible to all Rapid Response App
-            users in the same district. Volunteers who see the alert and are able to help
-            can contact the person who raised the SOS and coordinate assistance.
+            Once triggered, your alert is instantly visible to all the volunteers within your district,
+            ensuring the fastest possible arrival on scene.
           </p>
 
         </div>
@@ -287,32 +304,31 @@
   </div>
 
 </section>
+
 <section class="py-20 sm:py-28 md:py-32" id="how-it-works">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
     <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16 sm:mb-20">
-      How The App Works
+      Standard Response Protocol
     </h2>
-
 <div class="text-center mb-16">
 
   <p class="text-secondary text-sm max-w-xl mx-auto mb-6">
-    The Rapid Response App is a coordination network for animal emergencies.
-    When someone raises an SOS alert, volunteers within the same district
-    can see the alert and choose to respond if they are available.
+    Learn how the Rapid Response Team (RRT) app coordinates emergency help
+    for animals through a real-time community alert network.
   </p>
 
-</div>
 
+</div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
 
       <div class="text-center">
         <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">
           01
         </div>
-        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Raise SOS</h3>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Open</h3>
         <p class="text-[11px] text-secondary">
-          Open the app and press the SOS button if an animal needs urgent help.
+          Open the app when an animal needs help or when someone caring for an animal feels unsafe.
         </p>
       </div>
 
@@ -320,10 +336,9 @@
         <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">
           02
         </div>
-        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Location Shared</h3>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Tap</h3>
         <p class="text-[11px] text-secondary">
-          The alert includes your phone number, the exact GPS location,
-          and a short description of the situation.
+          Trigger the SOS signal with a single sustained press.
         </p>
       </div>
 
@@ -331,10 +346,9 @@
         <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">
           03
         </div>
-        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">District Alert</h3>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Broadcast</h3>
         <p class="text-[11px] text-secondary">
-          The SOS alert becomes visible to Rapid Response App users
-          within the same district.
+          Location and contact number is pushed to all the volunteers within the district.
         </p>
       </div>
 
@@ -342,10 +356,10 @@
         <div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center mb-6 font-mono text-2xl text-white/20">
           04
         </div>
-        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Volunteers Respond</h3>
+        <h3 class="uppercase font-black text-sm mb-2 tracking-widest">Community Alerted</h3>
         <p class="text-[11px] text-secondary">
-          Volunteers who are nearby and available may contact the person
-          who raised the alert to coordinate help.
+          SOS requests appear on the app’s alert screen, enabling volunteers to call and navigate
+          to those in need.
         </p>
       </div>
 
@@ -353,90 +367,7 @@
 
   </div>
 </section>
-<section class="py-20 sm:py-28 md:py-32 border-t border-white/10">
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-    <h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16 sm:mb-20">
-      What The App Is
-      <span class="text-secondary opacity-30">& What It Is Not</span>
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-
-      <!-- WHAT THE APP IS -->
-
-      <div class="border border-white/10 bg-black/40 p-8">
-
-        <h3 class="uppercase font-black tracking-widest text-sm mb-6">
-          What The App Is
-        </h3>
-
-        <ul class="space-y-4 text-sm text-secondary">
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">check_circle</span>
-            A volunteer coordination network for animal emergencies.
-          </li>
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">check_circle</span>
-            A way to alert animal lovers and volunteers in the same district.
-          </li>
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">check_circle</span>
-            A tool that shares GPS location and contact information during emergencies.
-          </li>
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">check_circle</span>
-            A platform that allows volunteers nearby to respond if they are available.
-          </li>
-
-        </ul>
-
-      </div>
-
-      <!-- WHAT THE APP IS NOT -->
-
-      <div class="border border-white/10 bg-black/40 p-8">
-
-        <h3 class="uppercase font-black tracking-widest text-sm mb-6">
-          What The App Is Not
-        </h3>
-
-        <ul class="space-y-4 text-sm text-secondary">
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">cancel</span>
-            The app does not come with a rescue team.
-          </li>
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">cancel</span>
-            Raising an SOS does not guarantee help will arrive.
-          </li>
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">cancel</span>
-            The platform does not operate shelters or animal rescue services.
-          </li>
-
-          <li class="flex gap-3">
-            <span class="material-symbols-outlined text-accent text-lg">cancel</span>
-            The network is built by volunteers and grows stronger as more people join.
-          </li>
-
-        </ul>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
 <section class="py-20 sm:py-28 md:py-32" id="audience">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -445,7 +376,7 @@
       <div class="lg:w-1/3">
 
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-10 leading-tight">
-          Who Uses<br/>The Network
+          Who We<br/>Support
         </h2>
 
         <div class="space-y-6">
@@ -455,38 +386,25 @@
               01 Volunteers
             </p>
             <p class="text-sm font-medium opacity-60">
-              Individuals who are willing to help animals in distress and respond
-              when an SOS alert appears in their district.
+              For community volunteers to reach out to one another for help and coordination.
             </p>
           </div>
 
           <div class="p-6 border-l border-white/20 bg-white/[0.02]">
             <p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2">
-              02 Animal Feeders
+              02 Pet Owners
             </p>
             <p class="text-sm font-medium opacity-60">
-              Community feeders who look after street animals and may need help
-              during medical emergencies or difficult situations.
+              Peace of mind knowing lookout is one tap away if your pet goes missing or faces a crisis.
             </p>
           </div>
 
           <div class="p-6 border-l border-white/20 bg-white/[0.02]">
             <p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2">
-              03 Pet Owners
+              03 Animal Lovers
             </p>
             <p class="text-sm font-medium opacity-60">
-              Pet owners who may require urgent assistance if a pet goes missing,
-              gets injured, or faces an unexpected emergency.
-            </p>
-          </div>
-
-          <div class="p-6 border-l border-white/20 bg-white/[0.02]">
-            <p class="text-[10px] uppercase tracking-[0.3em] font-black text-accent mb-2">
-              04 Animal Lovers
-            </p>
-            <p class="text-sm font-medium opacity-60">
-              Anyone who cares about animals and wants to help when they see
-              an alert in their district.
+              Empowering everyday citizens to take action when they spot an animal in distress.
             </p>
           </div>
 
@@ -514,6 +432,7 @@
 
   </div>
 </section>
+
 <section class="bg-white text-black text-center relative overflow-hidden flex items-center justify-center py-28 sm:py-36">
 
   <div class="absolute inset-0 wireframe-grid opacity-10 pointer-events-none"></div>
@@ -527,7 +446,6 @@
   </div>
 
 </section>
-
 
 <footer class="py-12 sm:py-20 border-t border-white/10 bg-black">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -543,14 +461,14 @@
           </div>
 
           <span class="text-xs sm:text-sm uppercase font-black tracking-tighter">
-            Rapid Response App
+            Rapid Response Team
           </span>
 
         </div>
 
         <p class="text-secondary text-xs sm:text-sm max-w-sm font-medium">
-          A community-driven initiative that enables people to coordinate and respond
-          faster during animal emergencies using a district-based volunteer network.
+          A community-driven initiative using real-time coordination to eliminate response latency
+          in animal welfare emergencies powered by volunteers.
         </p>
 
         <div id="support" class="mt-6 text-xs sm:text-sm text-secondary font-medium space-y-1">
@@ -585,12 +503,12 @@
                   text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-gray-500 font-mono">
 
         <div class="max-w-md leading-relaxed tracking-normal text-center md:text-left">
-          This platform is an independent, community-driven initiative and is not affiliated with,
-          operated by, or endorsed by any government authority or official rescue service.
+          This platform is an independent, not-for-profit, community-driven initiative and is not affiliated with,
+          operated by, or endorsed by any government authority.
         </div>
 
         <div class="text-center md:text-right">
-          © 2026 RapidResponse Labs. Volunteer-Powered Community Initiative.
+          © 2026 RapidResponse Labs. Community Initiative Powered by Volunteers.
         </div>
 
       </div>
@@ -600,7 +518,7 @@
   </div>
 </footer>
 
-
+<!-- AUTO NAV COLOR SWITCH -->
 <script>
 
 const nav = document.querySelector("nav");
@@ -652,4 +570,7 @@ window.addEventListener("load", updateNavbar);
 
 </body>
 </html>
+
+
+
 
