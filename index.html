@@ -1,4 +1,91 @@
-<body class="text-gray-100 font-mono tracking-wide overflow-x-hidden">
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rapid Response App | Animal Emergency Network</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<script>
+tailwind.config = {
+darkMode: "class",
+theme: {
+extend: {
+colors:{
+accent:"#FF3B30",
+secondary:"#8E8E93",
+background:"#0A0A0B"
+},
+fontFamily:{
+display:["Inter","sans-serif"],
+mono:["JetBrains Mono","monospace"]
+}
+}
+}
+}
+</script>
+
+<style type="text/tailwindcss">
+
+body{
+background:#0A0A0B;
+}
+
+.grid-bg{
+background-size:40px 40px;
+background-image:
+linear-gradient(to right, rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
+}
+
+.link-clean{
+border-bottom:1px solid rgba(255,255,255,.35);
+padding-bottom:2px;
+transition:all .2s ease;
+}
+
+.link-clean:hover{
+border-color:white;
+}
+@keyframes sosPulse{
+
+0%{
+transform:scale(1);
+filter:drop-shadow(0 0 20px rgba(255,0,0,0.35));
+}
+
+50%{
+transform:scale(1.05);
+filter:drop-shadow(0 0 35px rgba(255,0,0,0.55));
+}
+
+100%{
+transform:scale(1);
+filter:drop-shadow(0 0 20px rgba(255,0,0,0.35));
+}
+
+}
+
+.sos-pulse{
+animation:sosPulse 2.5s ease-in-out infinite;
+}
+</style>
+
+</head>
+
+
+<body class="text-gray-100 font-display overflow-x-hidden">
 
 
 <!-- NAVBAR -->
@@ -13,7 +100,7 @@
 <span class="material-symbols-outlined">pets</span>
 </div>
 
-<span class="font-display text-xs sm:text-sm uppercase font-bold tracking-wide">
+<span class="text-xs sm:text-sm uppercase font-bold tracking-wide">
 Rapid Response
 </span>
 
@@ -31,6 +118,9 @@ Rapid Response
 </div>
 
 </nav>
+
+
+
 <!-- HERO -->
 
 <header class="min-h-screen flex items-center pt-20 relative">
@@ -43,13 +133,13 @@ Rapid Response
 
 <div class="text-center lg:text-left">
 
-<div class="text-[10px] uppercase tracking-[0.4em] mb-4 opacity-70">
+<div class="text-[10px] uppercase tracking-[0.4em] font-mono mb-4 opacity-70">
 
 Where Empathy Meets Action
 
 </div>
 
-<h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[5.2rem] font-black leading-[1] uppercase mb-6">
+<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[5.2rem] font-black leading-[1] uppercase mb-6">
 
 HELP. WHEN<br/>
 SECONDS<br/>
@@ -74,7 +164,7 @@ when an animal needs urgent help.
 
 <a href="https://play.google.com/store/apps/details?id=com.rrt.sos"
 target="_blank"
-class="font-display bg-white text-black px-10 py-4 text-xs uppercase font-bold tracking-widest flex items-center justify-center gap-3">
+class="bg-white text-black px-10 py-4 text-xs uppercase font-bold tracking-widest flex items-center justify-center gap-3">
 
 <span>Download</span>
 
@@ -88,7 +178,7 @@ alt="Android">
 
 <a href="https://apps.apple.com/in/app/rapid-response/id6758672498"
 target="_blank"
-class="font-display border border-white px-10 py-4 text-xs uppercase font-bold tracking-widest flex items-center justify-center gap-3">
+class="border border-white px-10 py-4 text-xs uppercase font-bold tracking-widest flex items-center justify-center gap-3">
 
 <span>Download</span>
 
@@ -180,14 +270,14 @@ src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCB
 
 <div>
 
-<h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-6">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-6">
 
 When An Animal<br>
 Needs Help
 
 </h2>
 
-<p class="text-secondary max-w-md leading-relaxed">
+<p class="font-mono text-secondary max-w-md leading-relaxed">
 
 This is how things usually happen today.
 
@@ -214,7 +304,7 @@ But the right person rarely sees it in time.
 timer_off
 </span>
 
-<h4 class="font-display font-bold uppercase text-sm mb-2">
+<h4 class="font-bold uppercase text-sm mb-2">
 Slow Alerts
 </h4>
 
@@ -235,7 +325,7 @@ Messages take time to reach the right people.
 location_disabled
 </span>
 
-<h4 class="font-display font-bold uppercase text-sm mb-2">
+<h4 class="font-bold uppercase text-sm mb-2">
 Unclear Location
 </h4>
 
@@ -256,7 +346,7 @@ Volunteers may struggle to find the exact place.
 group_off
 </span>
 
-<h4 class="font-display font-bold uppercase text-sm mb-2">
+<h4 class="font-bold uppercase text-sm mb-2">
 Disconnected Volunteers
 </h4>
 
@@ -277,7 +367,7 @@ People willing to help often never see the alert.
 warning
 </span>
 
-<h4 class="font-display font-bold uppercase text-sm mb-2">
+<h4 class="font-bold uppercase text-sm mb-2">
 Time Lost
 </h4>
 
@@ -309,8 +399,8 @@ Every minute without help can worsen injuries.
 <div class="flex flex-col items-center justify-center h-full relative">
 
 <!-- TITLE -->
-<h3 class="font-display text-xs uppercase tracking-[0.25em] text-secondary mb-4 text-center lg:text-left">
-Here is an Overview
+<h3 class="text-xs uppercase tracking-[0.25em] text-secondary mb-4 text-center lg:text-left">
+  Here is an Overview
 </h3>
 
 <!-- GLOW -->
@@ -339,7 +429,7 @@ playsinline
 
 <div>
 
-<h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-6">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-6">
 
 A Network<br>
 Of Nearby Volunteers
@@ -365,7 +455,7 @@ and coordinate help.
 notifications_active
 </span>
 
-<h4 class="font-display uppercase font-bold text-sm tracking-widest">
+<h4 class="uppercase font-bold text-sm tracking-widest">
 
 District Alert System
 
@@ -396,7 +486,7 @@ and a short description so nearby volunteers can respond quickly.
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<h2 class="font-display text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
+<h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
 
 How The Network Works
 
@@ -409,13 +499,13 @@ How The Network Works
 
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl mb-6">
+<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
 
 01
 
 </div>
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
 
 Raise SOS
 
@@ -436,13 +526,13 @@ when an animal needs urgent help.
 
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl mb-6">
+<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
 
 02
 
 </div>
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
 
 Location Shared
 
@@ -463,13 +553,13 @@ GPS location and a short description.
 
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl mb-6">
+<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
 
 03
 
 </div>
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
 
 District Alert
 
@@ -490,13 +580,13 @@ district can see the alert.
 
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl mb-6">
+<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
 
 04
 
 </div>
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
 
 Volunteer Responds
 
@@ -517,13 +607,13 @@ can call and coordinate help.
 </div>
 
 </section>
-<!-- SECTION : WHY MORE VOLUNTEERS MATTER -->
+  <!-- SECTION : WHY MORE VOLUNTEERS MATTER -->
 
 <section class="py-20 sm:py-28 bg-white/5">
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<h2 class="font-display text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
+<h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
 
 Why More Volunteers Matter
 
@@ -536,7 +626,7 @@ Why More Volunteers Matter
 
 <div class="border border-white/10 p-8 bg-black/40">
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-6 text-accent">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-6 text-accent">
 
 District With Many Volunteers
 
@@ -568,7 +658,7 @@ Someone nearby is likely to respond and coordinate help.
 
 <div class="border border-white/10 p-8 bg-black/40">
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-6 text-secondary">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-6 text-secondary">
 
 District With Few Volunteers
 
@@ -622,7 +712,7 @@ Every new volunteer increases the chances that an animal in distress receives he
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<h2 class="font-display text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
+<h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
 
 What The App Is<br>
 <span class="text-secondary opacity-40">& What It Is Not</span>
@@ -637,7 +727,7 @@ What The App Is<br>
 
 <div class="border border-white/10 bg-black/40 p-8">
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-6">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-6">
 
 What The App Is
 
@@ -674,7 +764,7 @@ A platform where volunteers can respond if available.
 
 <div class="border border-white/10 bg-black/40 p-8">
 
-<h3 class="font-display uppercase text-sm font-bold tracking-widest mb-6">
+<h3 class="uppercase text-sm font-bold tracking-widest mb-6">
 
 What The App Is Not
 
@@ -725,7 +815,7 @@ The app does not connect to a team that can directly rescue, transport, or reloc
 
 <div>
 
-<h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-10">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-10">
 
 Who Uses<br>
 The Network
@@ -833,7 +923,7 @@ src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOo
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6">
 
-<h2 class="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tight">
+<h2 class="text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tight">
 
 Every Second<br>
 Counts For Them
@@ -843,6 +933,9 @@ Counts For Them
 </div>
 
 </section>
+
+
+
 <!-- FOOTER -->
 
 <footer class="py-16 sm:py-20 border-t border-white/10">
@@ -866,7 +959,7 @@ pets
 
 </div>
 
-<span class="font-display uppercase font-bold text-sm tracking-wide">
+<span class="uppercase font-bold text-sm tracking-wide">
 
 Rapid Response App
 
@@ -889,7 +982,7 @@ A community-driven initiative that connects volunteers so people nearby can coor
 
 <div id="support">
 
-<p class="font-display uppercase tracking-widest text-[11px] font-bold mb-4">
+<p class="uppercase tracking-widest text-[11px] font-bold mb-4">
 
 Support
 
@@ -941,3 +1034,9 @@ This platform is an independent community initiative and is not affiliated with,
 </div>
 
 </footer>
+
+
+</body>
+</html>
+
+
