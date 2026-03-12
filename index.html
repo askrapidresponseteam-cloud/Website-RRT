@@ -395,17 +395,33 @@ Every minute without help can worsen injuries.
 
 <!-- LEFT VISUAL -->
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center relative">
 
-<div class="w-full flex items-center justify-center relative">
-<div class="rounded-full p-6">
+<!-- GLOW BACKGROUND -->
+<div class="absolute w-[420px] h-[420px] bg-red-500/10 blur-[120px] rounded-full"></div>
 
-<img
-src="rrt-screen.jpg"
-class="w-[280px] sm:w-[320px] mx-auto rounded-[28px] shadow-[0_40px_90px_rgba(0,0,0,0.8)]"
-alt="Rapid Response SOS Screen">
+<!-- PHONE FRAME -->
+<div class="relative border border-white/10 bg-black p-3 rounded-[36px] shadow-[0_40px_120px_rgba(0,0,0,0.9)]">
+
+<video
+class="w-[280px] sm:w-[320px] rounded-[28px]"
+autoplay
+loop
+muted
+playsinline
+>
+
+<source src="sos-demo.mp4" type="video/mp4">
+
+</video>
 
 </div>
+
+<p class="text-secondary text-xs uppercase tracking-widest mt-10 text-center">
+
+Press and hold for 3 seconds to send alert
+
+</p>
 
 </div>
 
