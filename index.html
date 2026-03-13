@@ -12,7 +12,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 
-<!-- HINDI FONT -->
+<!-- Hindi Font -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -65,11 +65,6 @@ backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.05);
 }
 
-.link-clean{
-border-bottom:1px solid rgba(255,255,255,.35);
-padding-bottom:2px;
-}
-
 .sos-ripple{
 position:relative;
 }
@@ -98,9 +93,27 @@ linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
 </style>
 
 </head>
-
 <body class="font-sans">
 
+<script>
+function setLang(lang){
+
+document.querySelectorAll('[data-lang]').forEach(el=>{
+el.style.display='none'
+})
+
+document.querySelectorAll('[data-lang="'+lang+'"]').forEach(el=>{
+el.style.display=''
+})
+
+document.documentElement.lang = lang
+
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+setLang('en')
+})
+</script>
 <div class="relative flex min-h-screen flex-col overflow-x-hidden">
 
 <header class="fixed top-0 left-0 right-0 z-[100] px-6 md:px-20 py-8 flex items-center justify-between bg-black/40 backdrop-blur-xl">
@@ -121,70 +134,50 @@ Rapid Response
 
 <a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#problem">
 
-<span class="lang-en">Need</span>
-<span class="lang-hi font-hindi hidden">आवश्यकता</span>
+<span data-lang="en">Need</span>
+<span data-lang="hi" class="font-hindi">समस्या</span>
 
 </a>
 
 <a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#solution">
 
-<span class="lang-en">Solution</span>
-<span class="lang-hi font-hindi hidden">समाधान</span>
+<span data-lang="en">Solution</span>
+<span data-lang="hi" class="font-hindi">समाधान</span>
 
 </a>
 
 <a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#how">
 
-<span class="lang-en">How It Works</span>
-<span class="lang-hi font-hindi hidden">यह कैसे काम करता है</span>
+<span data-lang="en">How it Works</span>
+<span data-lang="hi" class="font-hindi">कैसे काम करता है</span>
 
 </a>
 
 <a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#community">
 
-<span class="lang-en">Community</span>
-<span class="lang-hi font-hindi hidden">समुदाय</span>
+<span data-lang="en">Community</span>
+<span data-lang="hi" class="font-hindi">कम्युनिटी</span>
 
 </a>
 
 </nav>
 
-<!-- LANGUAGE TOGGLE -->
 
-<div class="flex items-center gap-3 text-[10px] font-bold tracking-cred uppercase">
+<div class="flex items-center gap-3 text-xs font-bold">
 
-<button onclick="setLang('en')" class="text-white/60 hover:text-white">
+<button onclick="setLang('en')" class="text-white/70 hover:text-white">
 EN
 </button>
 
 <span class="text-white/30">|</span>
 
-<button onclick="setLang('hi')" class="text-white/60 hover:text-white font-hindi">
+<button onclick="setLang('hi')" class="text-white/70 hover:text-white font-hindi">
 हिंदी
 </button>
 
 </div>
 
 </header>
-
-<script>
-
-function setLang(lang){
-
-document.querySelectorAll('.lang-en').forEach(el=>{
-el.style.display = (lang === 'en') ? '' : 'none'
-})
-
-document.querySelectorAll('.lang-hi').forEach(el=>{
-el.style.display = (lang === 'hi') ? '' : 'none'
-})
-
-document.documentElement.lang = lang
-
-}
-
-</script>
-
 <section class="hero-bg relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20 text-center overflow-hidden">
 
 <div class="absolute inset-0 grid-bg opacity-40"></div>
@@ -195,8 +188,13 @@ document.documentElement.lang = lang
 
 <span class="text-primary font-mono tracking-[0.4em] text-[10px] uppercase mb-8 block">
 
-<span class="lang-en">Where Empathy Meets Action</span>
-<span class="lang-hi font-hindi hidden">जहाँ संवेदनशीलता और कार्य मिलते हैं</span>
+<span data-lang="en">
+Where Empathy Meets Action
+</span>
+
+<span data-lang="hi" class="font-hindi">
+जहाँ संवेदना सिर्फ भावना नहीं — कार्रवाई बनती है
+</span>
 
 </span>
 
@@ -205,14 +203,14 @@ document.documentElement.lang = lang
 
 <h1 class="cred-gradient-text text-6xl md:text-9xl font-black tracking-tightx leading-[0.9] mb-12 uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 HELP. WHEN<br/>SECONDS<br/>
 <span class="text-white/30 italic">MATTER.</span>
 </span>
 
-<span class="lang-hi font-hindi hidden">
-मदद। जब<br/>सेकंड<br/>
-<span class="text-white/30 italic">महत्वपूर्ण हों।</span>
+<span data-lang="hi" class="font-hindi">
+मदद। जब<br/>हर सेकंड<br/>
+<span class="text-white/30 italic">की कीमत होती है।</span>
 </span>
 
 </h1>
@@ -222,14 +220,14 @@ HELP. WHEN<br/>SECONDS<br/>
 
 <p class="text-white/50 text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-16 font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 A community network that connects nearby volunteers
 when an animal needs urgent help.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एक सामुदायिक नेटवर्क जो पास के स्वयंसेवकों को जोड़ता है
-जब किसी जानवर को तुरंत मदद की आवश्यकता होती है।
+<span data-lang="hi" class="font-hindi">
+यह एक कम्युनिटी नेटवर्क है जो आसपास के लोगों को जोड़ता है
+ताकि किसी घायल या मुसीबत में फँसे जानवर को तुरंत मदद मिल सके।
 </span>
 
 </p>
@@ -250,8 +248,8 @@ class="w-[18px] h-[18px]"
 
 <span class="w-px h-4 bg-black/30"></span>
 
-<span class="lang-en">Download</span>
-<span class="lang-hi font-hindi hidden">डाउनलोड करें</span>
+<span data-lang="en">Download</span>
+<span data-lang="hi" class="font-hindi">डाउनलोड करें</span>
 
 </a>
 
@@ -267,8 +265,8 @@ class="w-[18px] h-[18px]"
 
 <span class="w-px h-4 bg-black/30"></span>
 
-<span class="lang-en">Download</span>
-<span class="lang-hi font-hindi hidden">डाउनलोड करें</span>
+<span data-lang="en">Download</span>
+<span data-lang="hi" class="font-hindi">डाउनलोड करें</span>
 
 </a>
 
@@ -279,13 +277,16 @@ class="w-[18px] h-[18px]"
 
 <p class="text-sm md:text-base text-white/70 font-medium tracking-wide mb-6">
 
-<span class="lang-en">Learn how the app works</span>
-<span class="lang-hi font-hindi hidden">ऐप कैसे काम करता है जानें</span>
+<span data-lang="en">
+Learn how the app works
+</span>
+
+<span data-lang="hi" class="font-hindi">
+ऐप कैसे काम करता है देखें
+</span>
 
 </p>
 
-
-<!-- VIDEO LINKS -->
 
 <div class="flex flex-wrap justify-center gap-x-14 gap-y-6 mt-4">
 
@@ -294,8 +295,8 @@ class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred up
 
 <span class="material-symbols-outlined text-sm">play_circle</span>
 
-<span class="lang-en">IOS Demo</span>
-<span class="lang-hi font-hindi hidden">आईओएस डेमो</span>
+<span data-lang="en">IOS Demo</span>
+<span data-lang="hi" class="font-hindi">आईओएस डेमो</span>
 
 </a>
 
@@ -304,8 +305,8 @@ class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred up
 
 <span class="material-symbols-outlined text-sm">play_circle</span>
 
-<span class="lang-en">Android Demo</span>
-<span class="lang-hi font-hindi hidden">एंड्रॉइड डेमो</span>
+<span data-lang="en">Android Demo</span>
+<span data-lang="hi" class="font-hindi">एंड्रॉयड डेमो</span>
 
 </a>
 
@@ -314,8 +315,8 @@ class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred up
 
 <span class="material-symbols-outlined text-sm">settings</span>
 
-<span class="lang-en">Setup Guide</span>
-<span class="lang-hi font-hindi hidden">सेटअप गाइड</span>
+<span data-lang="en">Setup Guide</span>
+<span data-lang="hi" class="font-hindi">सेटअप गाइड</span>
 
 </a>
 
@@ -324,8 +325,8 @@ class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred up
 
 <span class="material-symbols-outlined text-sm">info</span>
 
-<span class="lang-en">How The App Works</span>
-<span class="lang-hi font-hindi hidden">ऐप कैसे काम करता है</span>
+<span data-lang="en">How the App Works</span>
+<span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है</span>
 
 </a>
 
@@ -346,29 +347,29 @@ class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred up
   
 <span class="text-primary font-bold tracking-cred text-[10px] uppercase mb-6 block">
 
-<span class="lang-en">The Need</span>
-<span class="lang-hi font-hindi hidden">आवश्यकता</span>
+<span data-lang="en">The Need</span>
+<span data-lang="hi" class="font-hindi">असल समस्या</span>
 
 </span>
 
 <h2 class="text-white text-5xl md:text-7xl font-black tracking-tight leading-tight mb-10 uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 When An Animal<br>
 Needs Help
 </span>
 
-<span class="lang-hi font-hindi hidden">
+<span data-lang="hi" class="font-hindi">
 जब किसी जानवर को<br>
-मदद की ज़रूरत हो
+मदद चाहिए होती है
 </span>
 
 </h2>
 
 <p class="text-white/40 text-lg leading-relaxed max-w-lg font-light">
 
-<span class="lang-en">
-This is how things usually happen today - 
+<span data-lang="en">
+This is how things usually happen today —
 <br><br>
 Someone notices an injured animal.  
 Messages go out on WhatsApp.  
@@ -377,14 +378,14 @@ Calls are made. Photos get forwarded.
 But the right person rarely sees it in time.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-आज आमतौर पर चीज़ें ऐसे ही होती हैं —
+<span data-lang="hi" class="font-hindi">
+आज आमतौर पर यही होता है —
 <br><br>
-कोई व्यक्ति घायल जानवर को देखता है।  
-व्हाट्सएप पर संदेश भेजे जाते हैं।  
-कॉल किए जाते हैं। तस्वीरें आगे भेजी जाती हैं।
+किसी को सड़क पर घायल जानवर दिखता है।  
+व्हाट्सऐप पर मैसेज भेजे जाते हैं।  
+कॉल की जाती है। फोटो आगे भेजी जाती है।
 <br><br>
-लेकिन सही व्यक्ति तक यह सूचना अक्सर समय पर नहीं पहुँचती।
+लेकिन सही इंसान तक खबर अक्सर देर से पहुँचती है।
 </span>
 
 </p>
@@ -397,8 +398,6 @@ But the right person rarely sees it in time.
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-
-
 <!-- CARD 1 -->
 
 <div class="p-12 glass-card group hover:bg-white/5 transition-all">
@@ -409,19 +408,19 @@ timer_off
 
 <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
 
-<span class="lang-en">Slow Alerts</span>
-<span class="lang-hi font-hindi hidden">धीमी सूचनाएँ</span>
+<span data-lang="en">Slow Alerts</span>
+<span data-lang="hi" class="font-hindi">अलर्ट देर से पहुँचते हैं</span>
 
 </h4>
 
 <p class="text-white/40 text-sm leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 Messages take time to reach the right people.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-संदेश सही लोगों तक पहुँचने में समय लेते हैं।
+<span data-lang="hi" class="font-hindi">
+मैसेज सही लोगों तक पहुँचने में काफी समय लग जाता है।
 </span>
 
 </p>
@@ -440,19 +439,19 @@ location_disabled
 
 <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
 
-<span class="lang-en">Unclear Location</span>
-<span class="lang-hi font-hindi hidden">स्थान स्पष्ट नहीं</span>
+<span data-lang="en">Unclear Location</span>
+<span data-lang="hi" class="font-hindi">लोकेशन साफ़ नहीं मिलती</span>
 
 </h4>
 
 <p class="text-white/40 text-sm leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 Volunteers may struggle to find the exact place.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-स्वयंसेवकों को सही स्थान ढूँढने में कठिनाई हो सकती है।
+<span data-lang="hi" class="font-hindi">
+मदद करने वाले लोगों को सही जगह ढूँढने में परेशानी होती है।
 </span>
 
 </p>
@@ -471,19 +470,19 @@ group_off
 
 <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
 
-<span class="lang-en">Disconnected Volunteers</span>
-<span class="lang-hi font-hindi hidden">जुड़ाव की कमी</span>
+<span data-lang="en">Disconnected Volunteers</span>
+<span data-lang="hi" class="font-hindi">मदद करने वाले लोगों तक खबर नहीं पहुँचती</span>
 
 </h4>
 
 <p class="text-white/40 text-sm leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 People willing to help often never see the alert.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-मदद करने के इच्छुक लोग अक्सर यह सूचना देख ही नहीं पाते।
+<span data-lang="hi" class="font-hindi">
+जो लोग मदद करना चाहते हैं उन्हें अक्सर यह अलर्ट दिखता ही नहीं।
 </span>
 
 </p>
@@ -502,26 +501,24 @@ warning
 
 <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
 
-<span class="lang-en">Time Lost</span>
-<span class="lang-hi font-hindi hidden">समय की हानि</span>
+<span data-lang="en">Time Lost</span>
+<span data-lang="hi" class="font-hindi">कीमती समय निकल जाता है</span>
 
 </h4>
 
 <p class="text-white/40 text-sm leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 Every minute without help can worsen injuries.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-मदद के बिना बीतने वाला हर मिनट चोट को और गंभीर बना सकता है।
+<span data-lang="hi" class="font-hindi">
+हर मिनट की देरी से जानवर की हालत और खराब हो सकती है।
 </span>
 
 </p>
 
 </div>
-
-
 
 </div>
 
@@ -540,21 +537,21 @@ Every minute without help can worsen injuries.
   
 <span class="text-primary font-bold tracking-cred text-[10px] uppercase mb-6 block">
 
-<span class="lang-en">The Solution</span>
-<span class="lang-hi font-hindi hidden">समाधान</span>
+<span data-lang="en">The Solution</span>
+<span data-lang="hi" class="font-hindi">हमारा तरीका</span>
 
 </span>
 
 <h2 class="cred-gradient-text text-5xl md:text-8xl font-black tracking-tight leading-none uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 One Tap.<br/>
 Instant Help.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एक टैप।<br/>
-तुरंत मदद।
+<span data-lang="hi" class="font-hindi">
+बस एक टैप<br/>
+और मदद का अलर्ट
 </span>
 
 </h2>
@@ -572,30 +569,28 @@ Instant Help.
 
 <div class="inline-block border border-primary/30 px-4 py-1 text-primary text-[9px] font-black tracking-cred uppercase">
 
-<span class="lang-en">Here is an Overview</span>
-<span class="lang-hi font-hindi hidden">यह एक संक्षिप्त परिचय है</span>
+<span data-lang="en">Overview</span>
+<span data-lang="hi" class="font-hindi">कैसे काम करता है</span>
 
 </div>
 
-
 <h4 class="text-4xl md:text-5xl font-black text-white leading-tight uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 A Network<br>
 Of Nearby Volunteers
 </span>
 
-<span class="lang-hi font-hindi hidden">
-पास के स्वयंसेवकों<br>
-का एक नेटवर्क
+<span data-lang="hi" class="font-hindi">
+आसपास मौजूद<br>
+मदद करने वाले लोग
 </span>
 
 </h4>
 
-
 <p class="text-white/40 text-lg leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 The Rapid Response App instantly broadcasts an alert
 to volunteers within the same district.
 <br><br>
@@ -603,18 +598,18 @@ Anyone nearby who is available can see the alert
 and coordinate help.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-रैपिड रिस्पॉन्स ऐप तुरंत उसी जिले के
-स्वयंसेवकों को एक अलर्ट भेजता है।
+<span data-lang="hi" class="font-hindi">
+रैपिड रिस्पॉन्स ऐप एक SOS अलर्ट तुरंत
+उसी जिले में मौजूद लोगों तक भेज देता है।
 <br><br>
-जो भी पास में उपलब्ध होता है
-वह इस अलर्ट को देखकर मदद समन्वित कर सकता है।
+जो भी पास में होता है और मदद कर सकता है
+वह तुरंत कॉल करके मदद का इंतज़ाम कर सकता है।
 </span>
 
 </p>
 
 
-<!-- DISTRICT ALERT CARD -->
+<!-- ALERT CARD -->
 
 <div class="glass-card p-8 mt-6">
 
@@ -626,8 +621,8 @@ notifications_active
 
 <h4 class="uppercase font-bold text-sm tracking-widest">
 
-<span class="lang-en">District Alert System</span>
-<span class="lang-hi font-hindi hidden">जिला अलर्ट प्रणाली</span>
+<span data-lang="en">District Alert System</span>
+<span data-lang="hi" class="font-hindi">जिला अलर्ट सिस्टम</span>
 
 </h4>
 
@@ -635,15 +630,15 @@ notifications_active
 
 <p class="text-sm text-white/40 leading-relaxed">
 
-<span class="lang-en">
+<span data-lang="en">
 Alerts include the caller’s phone number, GPS location
 and a short description so nearby volunteers can respond quickly.
 </span>
 
-<span class="lang-hi font-hindi hidden">
+<span data-lang="hi" class="font-hindi">
 अलर्ट में कॉल करने वाले का फोन नंबर,
-जीपीएस स्थान और एक छोटा विवरण शामिल होता है
-ताकि पास के स्वयंसेवक तुरंत प्रतिक्रिया दे सकें।
+लोकेशन और छोटा सा विवरण होता है
+ताकि आसपास के लोग जल्दी मदद कर सकें।
 </span>
 
 </p>
@@ -658,26 +653,19 @@ and a short description so nearby volunteers can respond quickly.
 
 <div class="relative w-64 h-64 md:w-96 md:h-96 flex items-center justify-center">
 
-
-<!-- OUTER RINGS -->
-
 <div class="absolute inset-0 border border-white/5 rounded-full"></div>
 
 <div class="absolute inset-8 border border-white/10 rounded-full"></div>
 
 <div class="absolute inset-16 border border-white/20 rounded-full"></div>
 
-
-<!-- SOS BUTTON -->
-
 <button class="sos-ripple relative z-10 w-40 h-40 bg-primary rounded-full flex items-center justify-center shadow-[0_0_80px_rgba(255,59,48,0.4)] active:scale-95 transition-transform">
 
-<span class="text-white font-black text-3xl tracking-tight bold">
+<span class="text-white font-black text-3xl tracking-tight">
 SOS
 </span>
 
 </button>
-
 
 </div>
 
@@ -690,27 +678,27 @@ SOS
 
 <div class="max-w-7xl mx-auto">
 
-<!-- SECTION HEADER -->
+<!-- HEADER -->
 
 <div class="flex flex-col gap-6 mb-24 text-center">
 
 <span class="text-primary font-bold tracking-cred text-[10px] uppercase block">
 
-<span class="lang-en">Protocol</span>
-<span class="lang-hi font-hindi hidden">प्रक्रिया</span>
+<span data-lang="en">Protocol</span>
+<span data-lang="hi" class="font-hindi">कैसे काम करता है</span>
 
 </span>
 
 <h3 class="text-white text-5xl md:text-7xl font-black tracking-tight uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 How The Network<br/>
 Works
 </span>
 
-<span class="lang-hi font-hindi hidden">
-नेटवर्क कैसे<br/>
-काम करता है
+<span data-lang="hi" class="font-hindi">
+नेटवर्क<br/>
+कैसे चलता है
 </span>
 
 </h3>
@@ -719,11 +707,9 @@ Works
 
 
 
-<!-- STEPS GRID -->
+<!-- STEPS -->
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-
 
 <!-- STEP 1 -->
 
@@ -732,26 +718,26 @@ Works
 <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
 01
 </span>
-  
+
 <div>
 
 <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
 
-<span class="lang-en">Raise SOS</span>
-<span class="lang-hi font-hindi hidden">एसओएस भेजें</span>
+<span data-lang="en">Raise SOS</span>
+<span data-lang="hi" class="font-hindi">SOS भेजें</span>
 
 </h4>
 
 <p class="text-white/40 text-xs leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 Open the app and press the SOS button
 when an animal needs urgent help.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-जब किसी जानवर को तुरंत मदद की आवश्यकता हो
-तो ऐप खोलें और एसओएस बटन दबाएँ।
+<span data-lang="hi" class="font-hindi">
+जब किसी जानवर को तुरंत मदद चाहिए
+तो ऐप खोलकर SOS बटन दबाएँ।
 </span>
 
 </p>
@@ -774,21 +760,21 @@ when an animal needs urgent help.
 
 <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
 
-<span class="lang-en">Location Shared</span>
-<span class="lang-hi font-hindi hidden">स्थान साझा</span>
+<span data-lang="en">Location Shared</span>
+<span data-lang="hi" class="font-hindi">लोकेशन साथ भेजी जाती है</span>
 
 </h4>
 
 <p class="text-white/40 text-xs leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 The alert includes your phone number,
 GPS location and a short description.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-अलर्ट में आपका फोन नंबर,
-जीपीएस स्थान और एक छोटा विवरण शामिल होता है।
+<span data-lang="hi" class="font-hindi">
+अलर्ट के साथ आपका नंबर,
+लोकेशन और छोटा सा विवरण भेजा जाता है।
 </span>
 
 </p>
@@ -811,21 +797,21 @@ GPS location and a short description.
 
 <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
 
-<span class="lang-en">District Alert</span>
-<span class="lang-hi font-hindi hidden">जिला अलर्ट</span>
+<span data-lang="en">District Alert</span>
+<span data-lang="hi" class="font-hindi">जिले में अलर्ट फैलता है</span>
 
 </h4>
 
 <p class="text-white/40 text-xs leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 All Rapid Response users in the same
 district can see the alert.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-उसी जिले के सभी रैपिड रिस्पॉन्स उपयोगकर्ता
-इस अलर्ट को देख सकते हैं।
+<span data-lang="hi" class="font-hindi">
+उसी जिले में ऐप इस्तेमाल करने वाले
+सभी लोगों को यह अलर्ट दिखता है।
 </span>
 
 </p>
@@ -848,21 +834,21 @@ district can see the alert.
 
 <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
 
-<span class="lang-en">Volunteer Responds</span>
-<span class="lang-hi font-hindi hidden">स्वयंसेवक प्रतिक्रिया देता है</span>
+<span data-lang="en">Volunteer Responds</span>
+<span data-lang="hi" class="font-hindi">पास का कोई व्यक्ति कॉल करता है</span>
 
 </h4>
 
 <p class="text-white/40 text-xs leading-relaxed font-light">
 
-<span class="lang-en">
+<span data-lang="en">
 Nearby volunteers who are available
 can call and coordinate help.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-पास के उपलब्ध स्वयंसेवक
-कॉल करके मदद का समन्वय कर सकते हैं।
+<span data-lang="hi" class="font-hindi">
+जो भी पास में उपलब्ध होता है
+वह कॉल करके मदद का इंतज़ाम करता है।
 </span>
 
 </p>
@@ -871,37 +857,34 @@ can call and coordinate help.
 
 </div>
 
-
-
 </div>
 
 </div>
 
 </section>
-
 <section class="px-6 md:px-20 py-40 bg-white/5">
 
 <div class="max-w-7xl mx-auto">
 
-<!-- SECTION HEADER -->
+<!-- HEADER -->
 
 <div class="text-center mb-24">
 
 <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
 
-<span class="lang-en">Network Effect</span>
-<span class="lang-hi font-hindi hidden">नेटवर्क प्रभाव</span>
+<span data-lang="en">Network Effect</span>
+<span data-lang="hi" class="font-hindi">जितने ज़्यादा लोग जुड़ेंगे</span>
 
 </span>
 
 <h2 class="text-white text-5xl md:text-7xl font-black tracking-tight uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 Why More Volunteers Matter
 </span>
 
-<span class="lang-hi font-hindi hidden">
-अधिक स्वयंसेवक क्यों महत्वपूर्ण हैं
+<span data-lang="hi" class="font-hindi">
+उतनी जल्दी मदद पहुँचती है
 </span>
 
 </h2>
@@ -909,23 +892,23 @@ Why More Volunteers Matter
 </div>
 
 
-<!-- COMPARISON GRID -->
+<!-- GRID -->
 
 <div class="grid md:grid-cols-2 gap-12">
 
 
-<!-- DISTRICT WITH MANY VOLUNTEERS -->
+<!-- MANY VOLUNTEERS -->
 
 <div class="glass-card p-12">
 
 <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-primary">
 
-<span class="lang-en">
+<span data-lang="en">
 District With Many Volunteers
 </span>
 
-<span class="lang-hi font-hindi hidden">
-ऐसा जिला जहाँ कई स्वयंसेवक हों
+<span data-lang="hi" class="font-hindi">
+जिस जिले में ज़्यादा लोग ऐप इस्तेमाल करते हैं
 </span>
 
 </h3>
@@ -938,12 +921,12 @@ District With Many Volunteers
 group
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 Many people in the district have the app installed.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-जिले में कई लोगों के पास यह ऐप इंस्टॉल है।
+<span data-lang="hi" class="font-hindi">
+उस जिले में काफी लोगों के फोन में ऐप इंस्टॉल होता है।
 </span>
 
 </li>
@@ -955,12 +938,12 @@ Many people in the district have the app installed.
 notifications
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 The SOS alert reaches many nearby volunteers instantly.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एसओएस अलर्ट तुरंत कई पास के स्वयंसेवकों तक पहुँच जाता है।
+<span data-lang="hi" class="font-hindi">
+SOS अलर्ट तुरंत आसपास के कई लोगों तक पहुँच जाता है।
 </span>
 
 </li>
@@ -972,12 +955,12 @@ The SOS alert reaches many nearby volunteers instantly.
 call
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 Someone nearby is likely to respond and coordinate help.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-पास का कोई व्यक्ति प्रतिक्रिया देकर मदद का समन्वय कर सकता है।
+<span data-lang="hi" class="font-hindi">
+आसपास से कोई न कोई तुरंत कॉल करके मदद शुरू कर देता है।
 </span>
 
 </li>
@@ -987,18 +970,19 @@ Someone nearby is likely to respond and coordinate help.
 </div>
 
 
-<!-- DISTRICT WITH FEW VOLUNTEERS -->
+
+<!-- FEW VOLUNTEERS -->
 
 <div class="glass-card p-12">
 
 <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-white/60">
 
-<span class="lang-en">
+<span data-lang="en">
 District With Few Volunteers
 </span>
 
-<span class="lang-hi font-hindi hidden">
-ऐसा जिला जहाँ कम स्वयंसेवक हों
+<span data-lang="hi" class="font-hindi">
+जिस जिले में बहुत कम लोग ऐप इस्तेमाल करते हैं
 </span>
 
 </h3>
@@ -1011,12 +995,12 @@ District With Few Volunteers
 person_off
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 Very few people in the district are using the app.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-जिले में बहुत कम लोग इस ऐप का उपयोग कर रहे हैं।
+<span data-lang="hi" class="font-hindi">
+उस जिले में बहुत कम लोग ऐप इस्तेमाल कर रहे होते हैं।
 </span>
 
 </li>
@@ -1028,12 +1012,12 @@ Very few people in the district are using the app.
 notifications_off
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 The SOS alert may be seen by only a small number of volunteers.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एसओएस अलर्ट शायद केवल कुछ ही स्वयंसेवकों को दिखाई दे।
+<span data-lang="hi" class="font-hindi">
+SOS अलर्ट शायद सिर्फ कुछ ही लोगों तक पहुँचता है।
 </span>
 
 </li>
@@ -1045,12 +1029,12 @@ The SOS alert may be seen by only a small number of volunteers.
 schedule
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 Help may take longer or may not arrive.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-मदद देर से पहुँच सकती है या शायद बिल्कुल न पहुँचे।
+<span data-lang="hi" class="font-hindi">
+मदद देर से पहुँच सकती है — या शायद बिल्कुल नहीं।
 </span>
 
 </li>
@@ -1063,22 +1047,23 @@ Help may take longer or may not arrive.
 
 
 
-<!-- NETWORK MESSAGE -->
+<!-- BOTTOM MESSAGE -->
 
 <div class="mt-24 text-center max-w-2xl mx-auto">
 
 <p class="text-white/40 text-lg leading-relaxed">
 
-<span class="lang-en">
+<span data-lang="en">
 The Rapid Response App works best when more people in a district join the network.
 Every new volunteer increases the chances that an animal in distress receives help quickly.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-रैपिड रिस्पॉन्स ऐप तब सबसे बेहतर काम करता है
-जब किसी जिले में अधिक लोग इस नेटवर्क से जुड़ते हैं।
-हर नया स्वयंसेवक इस संभावना को बढ़ाता है
-कि किसी संकट में फँसे जानवर को जल्दी मदद मिल सके।
+<span data-lang="hi" class="font-hindi">
+यह ऐप तब सबसे अच्छा काम करता है
+जब एक ही जिले में ज़्यादा लोग इससे जुड़ते हैं।
+<br><br>
+हर नया व्यक्ति जुड़ने से यह संभावना बढ़ती है
+कि किसी घायल जानवर को जल्दी मदद मिल सके।
 </span>
 
 </p>
@@ -1092,27 +1077,27 @@ Every new volunteer increases the chances that an animal in distress receives he
 
 <div class="max-w-7xl mx-auto">
 
-<!-- SECTION HEADER -->
+<!-- HEADER -->
 
 <div class="text-center mb-28">
 
 <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
 
-<span class="lang-en">Platform Clarity</span>
-<span class="lang-hi font-hindi hidden">प्लेटफ़ॉर्म स्पष्टता</span>
+<span data-lang="en">Platform Clarity</span>
+<span data-lang="hi" class="font-hindi">यह ऐप क्या है</span>
 
 </span>
 
 <h2 class="text-white text-5xl md:text-7xl font-black tracking-tight uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 What The App Is<br>
 <span class="text-white/30">& What It Is Not</span>
 </span>
 
-<span class="lang-hi font-hindi hidden">
-यह ऐप क्या है<br>
-<span class="text-white/30">और क्या नहीं है</span>
+<span data-lang="hi" class="font-hindi">
+यह ऐप क्या करता है<br>
+<span class="text-white/30">और क्या नहीं करता</span>
 </span>
 
 </h2>
@@ -1121,11 +1106,9 @@ What The App Is<br>
 
 
 
-<!-- TWO COLUMN GRID -->
+<!-- GRID -->
 
 <div class="grid md:grid-cols-2 gap-12">
-
-
 
 <!-- WHAT IT IS -->
 
@@ -1133,8 +1116,8 @@ What The App Is<br>
 
 <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-primary">
 
-<span class="lang-en">What The App Is</span>
-<span class="lang-hi font-hindi hidden">यह ऐप क्या है</span>
+<span data-lang="en">What The App Is</span>
+<span data-lang="hi" class="font-hindi">यह ऐप क्या है</span>
 
 </h3>
 
@@ -1146,12 +1129,12 @@ What The App Is<br>
 check_circle
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 A coordination network for animal emergencies.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-जानवरों की आपात स्थितियों के लिए एक समन्वय नेटवर्क।
+<span data-lang="hi" class="font-hindi">
+जानवरों की इमरजेंसी में लोगों को जोड़ने वाला नेटवर्क।
 </span>
 
 </li>
@@ -1163,12 +1146,12 @@ A coordination network for animal emergencies.
 check_circle
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 A way to alert nearby volunteers in your district.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-अपने जिले के पास के स्वयंसेवकों को सूचित करने का एक तरीका।
+<span data-lang="hi" class="font-hindi">
+अपने जिले में आसपास मौजूद लोगों को अलर्ट भेजने का तरीका।
 </span>
 
 </li>
@@ -1180,12 +1163,12 @@ A way to alert nearby volunteers in your district.
 check_circle
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 A tool that shares GPS location and contact number.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एक उपकरण जो जीपीएस स्थान और संपर्क नंबर साझा करता है।
+<span data-lang="hi" class="font-hindi">
+एक ऐसा सिस्टम जो लोकेशन और नंबर शेयर करता है।
 </span>
 
 </li>
@@ -1197,12 +1180,12 @@ A tool that shares GPS location and contact number.
 check_circle
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 A platform where volunteers can respond if available.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एक ऐसा प्लेटफ़ॉर्म जहाँ उपलब्ध होने पर स्वयंसेवक प्रतिक्रिया दे सकते हैं।
+<span data-lang="hi" class="font-hindi">
+एक प्लेटफॉर्म जहाँ उपलब्ध लोग मदद के लिए प्रतिक्रिया दे सकते हैं।
 </span>
 
 </li>
@@ -1219,8 +1202,8 @@ A platform where volunteers can respond if available.
 
 <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-white/60">
 
-<span class="lang-en">What The App Is Not</span>
-<span class="lang-hi font-hindi hidden">यह ऐप क्या नहीं है</span>
+<span data-lang="en">What The App Is Not</span>
+<span data-lang="hi" class="font-hindi">यह ऐप क्या नहीं है</span>
 
 </h3>
 
@@ -1232,12 +1215,12 @@ A platform where volunteers can respond if available.
 cancel
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 The app does not come with a rescue team.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-इस ऐप के साथ कोई बचाव टीम नहीं आती।
+<span data-lang="hi" class="font-hindi">
+यह ऐप खुद कोई रेस्क्यू टीम नहीं चलाता।
 </span>
 
 </li>
@@ -1249,12 +1232,12 @@ The app does not come with a rescue team.
 cancel
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 Raising an SOS does not guarantee help.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एसओएस भेजने से मदद की गारंटी नहीं मिलती।
+<span data-lang="hi" class="font-hindi">
+SOS भेजने से मदद की गारंटी नहीं होती।
 </span>
 
 </li>
@@ -1266,12 +1249,12 @@ Raising an SOS does not guarantee help.
 cancel
 </span>
 
-<span class="lang-en">
+<span data-lang="en">
 The platform does not operate shelters.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-यह प्लेटफ़ॉर्म आश्रय स्थल संचालित नहीं करता।
+<span data-lang="hi" class="font-hindi">
+यह प्लेटफॉर्म किसी शेल्टर को नहीं चलाता।
 </span>
 
 </li>
@@ -1283,12 +1266,12 @@ The platform does not operate shelters.
 cancel
 </span>
 
-<span class="lang-en">
-The app does not connect to a team that can directly rescue, transport, or relocate animals.
+<span data-lang="en">
+The app does not directly rescue or transport animals.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-यह ऐप ऐसी टीम से नहीं जुड़ा है जो सीधे बचाव, परिवहन या जानवरों का स्थानांतरण कर सके।
+<span data-lang="hi" class="font-hindi">
+यह ऐप खुद जाकर जानवरों को रेस्क्यू या ट्रांसपोर्ट नहीं करता।
 </span>
 
 </li>
@@ -1296,8 +1279,6 @@ The app does not connect to a team that can directly rescue, transport, or reloc
 </ul>
 
 </div>
-
-
 
 </div>
 
@@ -1308,27 +1289,27 @@ The app does not connect to a team that can directly rescue, transport, or reloc
 
 <div class="max-w-7xl mx-auto">
 
-<!-- SECTION HEADER -->
+<!-- HEADER -->
 
 <div class="text-center mb-32">
 
 <span class="text-primary font-bold tracking-cred text-[10px] uppercase mb-6 block">
 
-<span class="lang-en">Community</span>
-<span class="lang-hi font-hindi hidden">समुदाय</span>
+<span data-lang="en">Community</span>
+<span data-lang="hi" class="font-hindi">कौन लोग इसका इस्तेमाल करते हैं</span>
 
 </span>
 
 <h3 class="text-white text-5xl md:text-7xl font-black tracking-tight uppercase">
 
-<span class="lang-en">
+<span data-lang="en">
 Who Uses<br>
 The Network
 </span>
 
-<span class="lang-hi font-hindi hidden">
-कौन उपयोग करता है<br>
-इस नेटवर्क का
+<span data-lang="hi" class="font-hindi">
+इस नेटवर्क को<br>
+कौन इस्तेमाल करता है
 </span>
 
 </h3>
@@ -1342,7 +1323,7 @@ The Network
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
 
-<!-- LEFT TEXT LIST -->
+<!-- LEFT TEXT -->
 
 <div class="space-y-10">
 
@@ -1353,20 +1334,20 @@ The Network
 
 <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
-<span class="lang-en">01 Volunteers</span>
-<span class="lang-hi font-hindi hidden">01 स्वयंसेवक</span>
+<span data-lang="en">01 Volunteers</span>
+<span data-lang="hi" class="font-hindi">01 मदद करने वाले लोग</span>
 
 </p>
 
 <p class="text-white/40 text-sm leading-relaxed">
 
-<span class="lang-en">
+<span data-lang="en">
 People who want to help animals and respond when alerts appear in their district.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-वे लोग जो जानवरों की मदद करना चाहते हैं
-और अपने जिले में अलर्ट आने पर प्रतिक्रिया देते हैं।
+<span data-lang="hi" class="font-hindi">
+ऐसे लोग जो जानवरों की मदद करना चाहते हैं
+और अपने जिले में अलर्ट आते ही प्रतिक्रिया देते हैं।
 </span>
 
 </p>
@@ -1380,20 +1361,20 @@ People who want to help animals and respond when alerts appear in their district
 
 <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
-<span class="lang-en">02 Animal Feeders</span>
-<span class="lang-hi font-hindi hidden">02 पशु आहार देने वाले</span>
+<span data-lang="en">02 Animal Feeders</span>
+<span data-lang="hi" class="font-hindi">02 जानवरों को खाना खिलाने वाले लोग</span>
 
 </p>
 
 <p class="text-white/40 text-sm leading-relaxed">
 
-<span class="lang-en">
+<span data-lang="en">
 Community feeders who may need help during medical emergencies.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-समुदाय में जानवरों को खाना खिलाने वाले लोग
-जिन्हें चिकित्सकीय आपात स्थिति में मदद की आवश्यकता हो सकती है।
+<span data-lang="hi" class="font-hindi">
+वे लोग जो इलाके के जानवरों को खाना खिलाते हैं
+और मेडिकल इमरजेंसी में मदद चाहते हैं।
 </span>
 
 </p>
@@ -1407,20 +1388,20 @@ Community feeders who may need help during medical emergencies.
 
 <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
-<span class="lang-en">03 Pet Owners</span>
-<span class="lang-hi font-hindi hidden">03 पालतू पशु मालिक</span>
+<span data-lang="en">03 Pet Owners</span>
+<span data-lang="hi" class="font-hindi">03 पालतू जानवरों के मालिक</span>
 
 </p>
 
 <p class="text-white/40 text-sm leading-relaxed">
 
-<span class="lang-en">
+<span data-lang="en">
 Pet owners who may require urgent assistance when a pet is injured or missing.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-पालतू जानवरों के मालिक जिन्हें
-पालतू के घायल या खो जाने पर तुरंत मदद की आवश्यकता हो सकती है।
+<span data-lang="hi" class="font-hindi">
+वे लोग जिनके पालतू जानवर घायल हो जाएँ
+या अचानक गायब हो जाएँ और तुरंत मदद चाहिए।
 </span>
 
 </p>
@@ -1434,20 +1415,20 @@ Pet owners who may require urgent assistance when a pet is injured or missing.
 
 <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
-<span class="lang-en">04 Animal Lovers</span>
-<span class="lang-hi font-hindi hidden">04 पशु प्रेमी</span>
+<span data-lang="en">04 Animal Lovers</span>
+<span data-lang="hi" class="font-hindi">04 जानवरों से प्यार करने वाले लोग</span>
 
 </p>
 
 <p class="text-white/40 text-sm leading-relaxed">
 
-<span class="lang-en">
+<span data-lang="en">
 Anyone who wants to help animals when they see an alert nearby.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-कोई भी व्यक्ति जो पास में अलर्ट देखने पर
-जानवरों की मदद करना चाहता है।
+<span data-lang="hi" class="font-hindi">
+कोई भी व्यक्ति जो आसपास अलर्ट देखकर
+मदद करना चाहता है।
 </span>
 
 </p>
@@ -1458,7 +1439,7 @@ Anyone who wants to help animals when they see an alert nearby.
 
 
 
-<!-- RIGHT IMAGE GRID -->
+<!-- IMAGE GRID -->
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
@@ -1494,7 +1475,7 @@ src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOo
   
 <div class="max-w-7xl mx-auto bg-primary py-32 px-12 md:px-24 text-center relative overflow-hidden">
   
-<!-- BACKGROUND WATERMARK -->
+<!-- BACKGROUND ICON -->
 
 <div class="absolute inset-0 opacity-5 pointer-events-none grayscale">
 
@@ -1504,21 +1485,20 @@ pets
 
 </div>
 
-
 <!-- CONTENT -->
 
 <div class="relative z-10">
 
 <h2 class="text-white text-6xl md:text-9xl font-black tracking-tight leading-[0.85] uppercase mb-12">
 
-<span class="lang-en">
+<span data-lang="en">
 Every Second<br>
 Counts For Them
 </span>
 
-<span class="lang-hi font-hindi hidden">
-हर सेकंड<br>
-उनके लिए महत्वपूर्ण है
+<span data-lang="hi" class="font-hindi">
+उनके लिए<br>
+हर सेकंड मायने रखता है
 </span>
 
 </h2>
@@ -1528,15 +1508,16 @@ Counts For Them
 </div>
 
 </section>
+
+
+
 <footer class="bg-black text-white/40 px-6 md:px-20 py-24 border-t border-white/5" id="support">
 
 <div class="max-w-7xl mx-auto">
 
-
-<!-- MAIN GRID -->
+<!-- GRID -->
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-20 mb-24">
-
 
 <!-- LEFT -->
 
@@ -1561,14 +1542,13 @@ Rapid Response
 
 <p class="text-sm leading-relaxed font-light max-w-md">
 
-<span class="lang-en">
+<span data-lang="en">
 A community-driven initiative that connects volunteers so people nearby can coordinate help during animal emergencies.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-एक समुदाय-आधारित पहल जो स्वयंसेवकों को जोड़ती है
-ताकि पास के लोग जानवरों की आपात स्थितियों के दौरान
-मदद का समन्वय कर सकें।
+<span data-lang="hi" class="font-hindi">
+यह एक कम्युनिटी पहल है जो लोगों को जोड़ती है
+ताकि आसपास के लोग मिलकर जानवरों की इमरजेंसी में मदद कर सकें।
 </span>
 
 </p>
@@ -1577,25 +1557,25 @@ A community-driven initiative that connects volunteers so people nearby can coor
 
 
 
-<!-- RIGHT SUPPORT -->
+<!-- SUPPORT -->
 
 <div>
 
 <h4 class="text-white font-black text-[10px] tracking-cred uppercase mb-8">
 
-<span class="lang-en">Support</span>
-<span class="lang-hi font-hindi hidden">सहायता</span>
+<span data-lang="en">Support</span>
+<span data-lang="hi" class="font-hindi">संपर्क</span>
 
 </h4>
 
 <p class="text-sm mb-2">
 
-<span class="lang-en">
+<span data-lang="en">
 For questions or assistance contact:
 </span>
 
-<span class="lang-hi font-hindi hidden">
-प्रश्न या सहायता के लिए संपर्क करें:
+<span data-lang="hi" class="font-hindi">
+किसी भी सवाल या मदद के लिए संपर्क करें:
 </span>
 
 </p>
@@ -1609,12 +1589,12 @@ ask@rapid-response.in
 
 <p class="text-xs text-white/30 mt-3">
 
-<span class="lang-en">
+<span data-lang="en">
 We usually respond within 24–48 hours.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-हम सामान्यतः 24–48 घंटों के भीतर उत्तर देते हैं।
+<span data-lang="hi" class="font-hindi">
+हम आमतौर पर 24–48 घंटों में जवाब देते हैं।
 </span>
 
 </p>
@@ -1625,7 +1605,7 @@ We usually respond within 24–48 hours.
 
 
 
-<!-- LEGAL SECTION -->
+<!-- LEGAL -->
 
 <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
 
@@ -1633,14 +1613,13 @@ We usually respond within 24–48 hours.
 
 <p class="text-[10px] leading-relaxed text-white/30">
 
-<span class="lang-en">
+<span data-lang="en">
 This platform is an independent community initiative and is not affiliated with, operated by, or endorsed by any government authority.
 </span>
 
-<span class="lang-hi font-hindi hidden">
-यह प्लेटफ़ॉर्म एक स्वतंत्र सामुदायिक पहल है
-और किसी भी सरकारी प्राधिकरण से संबद्ध,
-संचालित या अनुमोदित नहीं है।
+<span data-lang="hi" class="font-hindi">
+यह प्लेटफॉर्म एक स्वतंत्र कम्युनिटी पहल है
+और किसी भी सरकारी संस्था से जुड़ा हुआ नहीं है।
 </span>
 
 </p>
@@ -1658,24 +1637,10 @@ This platform is an independent community initiative and is not affiliated with,
 </div>
 
 </footer>
-<!-- LANGUAGE SCRIPT GOES HERE -->
 
-<script>
-function setLang(lang){
 
-document.querySelectorAll('.lang-en').forEach(el=>{
-el.style.display = (lang === 'en') ? '' : 'none'
-})
 
-document.querySelectorAll('.lang-hi').forEach(el=>{
-el.style.display = (lang === 'hi') ? '' : 'none'
-})
-
-document.documentElement.lang = lang
-
-}
-</script>
+</div>
 
 </body>
 </html>
-
