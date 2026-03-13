@@ -90,7 +90,13 @@ background-image:
 linear-gradient(to right, rgba(255,255,255,.03) 1px, transparent 1px),
 linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
 }
-
+.phone-glow{
+position:absolute;
+width:420px;
+height:420px;
+background:radial-gradient(circle, rgba(255,59,48,0.25) 0%, rgba(0,0,0,0) 70%);
+filter:blur(80px);
+}
 </style>
 
 </head>
@@ -652,21 +658,13 @@ and a short description so nearby volunteers can respond quickly.
 
 <!-- RIGHT VISUAL -->
 
-<div class="relative w-64 h-64 md:w-96 md:h-96 flex items-center justify-center">
+<div class="flex justify-center items-center">
 
-<div class="absolute inset-0 border border-white/5 rounded-full"></div>
-
-<div class="absolute inset-8 border border-white/10 rounded-full"></div>
-
-<div class="absolute inset-16 border border-white/20 rounded-full"></div>
-
-<button class="sos-ripple relative z-10 w-40 h-40 bg-primary rounded-full flex items-center justify-center shadow-[0_0_80px_rgba(255,59,48,0.4)] active:scale-95 transition-transform">
-
-<span class="text-white font-black text-3xl tracking-tight">
-SOS
-</span>
-
-</button>
+<img 
+src="phone.png"
+alt="Rapid Response SOS Screen"
+class="w-[340px] md:w-[420px] drop-shadow-[0_40px_80px_rgba(0,0,0,0.6)]"
+/>
 
 </div>
 
