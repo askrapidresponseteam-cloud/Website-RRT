@@ -11,8 +11,8 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet">
+
 <!-- Hindi Font -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
@@ -29,7 +29,7 @@ background: "#000000",
 surface: "#0a0a0a"
 },
 fontFamily: {
-sans: ["Noto Sans Devanagari","Inter","system-ui","sans-serif"],
+sans: ["Inter","system-ui","sans-serif"],
 mono: ["JetBrains Mono","monospace"],
 hindi: ["Noto Sans Devanagari","sans-serif"]
 },
@@ -133,34 +133,32 @@ Rapid Response
 
 <nav class="hidden lg:flex items-center gap-12">
 
-<a class="text-white/60 hover:text-white transition-colors" href="#problem">
-<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">
-Need
-</span>
-<span data-lang="hi" class="font-hindi text-sm font-medium">
-समस्या
-</span>
+<a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#problem">
+
+<span data-lang="en">Need</span>
+<span data-lang="hi" class="font-hindi">समस्या</span>
+
 </a>
 
-<a class="text-white/60 hover:text-white transition-colors" href="#solution">
+<a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#solution">
+
+<span data-lang="en">Solution</span>
+<span data-lang="hi" class="font-hindi">समाधान</span>
+
 </a>
 
-<a class="text-white/60 hover:text-white transition-colors" href="#how">
-<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">
-How It Works
-</span>
-<span data-lang="hi" class="font-hindi text-sm font-medium">
-कैसे काम करता है
-</span>
+<a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#how">
+
+<span data-lang="en">How it Works</span>
+<span data-lang="hi" class="font-hindi">कैसे काम करता है</span>
+
 </a>
 
-<a class="text-white/60 hover:text-white transition-colors" href="#community">
-<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">
-Community
-</span>
-<span data-lang="hi" class="font-hindi text-sm font-medium">
-समुदाय
-</span>
+<a class="text-white/40 text-[10px] font-bold tracking-cred hover:text-white uppercase" href="#community">
+
+<span data-lang="en">Community</span>
+<span data-lang="hi" class="font-hindi">कम्युनिटी</span>
+
 </a>
 
 </nav>
@@ -189,14 +187,14 @@ EN
 
 <!-- TAGLINE -->
 
-<span class="text-primary text-sm font-semibold mb-8 block">
-  
+<span class="text-primary font-mono tracking-[0.4em] text-[10px] uppercase mb-8 block">
+
 <span data-lang="en">
 Where Empathy Meets Action
 </span>
 
 <span data-lang="hi" class="font-hindi">
-जहाँ संवेदना सिर्फ भावना नहीं - कार्रवाई बनती है
+जहाँ संवेदना सिर्फ भावना नहीं — कार्रवाई बनती है
 </span>
 
 </span>
@@ -204,7 +202,7 @@ Where Empathy Meets Action
 
 <!-- MAIN HEADLINE -->
 
-<h1 class="cred-gradient-text text-5xl md:text-7xl font-bold leading-[1.25] mb-12 text-center max-w-4xl mx-auto">
+<h1 class="cred-gradient-text text-6xl md:text-8xl font-black tracking-tightx leading-[1.05] mb-12 text-center break-words">
   
 <span data-lang="en">
 HELP. WHEN<br/>SECONDS<br/>
@@ -213,7 +211,7 @@ HELP. WHEN<br/>SECONDS<br/>
 
 <span data-lang="hi" class="font-hindi">
 मदद। जब<br/>हर सेकंड<br/>
-<span class="text-white/30 ">की कीमत होती है।</span>
+<span class="text-white/30 italic">की कीमत होती है।</span>
 </span>
 
 </h1>
@@ -372,7 +370,7 @@ Needs Help
 <p class="text-white/40 text-lg leading-relaxed max-w-lg font-light">
 
 <span data-lang="en">
-This is how things usually happen today -
+This is how things usually happen today —
 <br><br>
 Someone notices an injured animal.  
 Messages go out on WhatsApp.  
@@ -382,7 +380,7 @@ But the right person rarely sees it in time.
 </span>
 
 <span data-lang="hi" class="font-hindi">
-आज आमतौर पर यही होता है -
+आज आमतौर पर यही होता है —
 <br><br>
 किसी को सड़क पर घायल जानवर दिखता है।  
 व्हाट्सऐप पर मैसेज भेजे जाते हैं।  
@@ -530,8 +528,8 @@ Every minute without help can worsen injuries.
 </div>
 
 </section>
-<section id="solution" class="px-6 md:px-20 py-40 bg-white/5">
-  
+<section id="solution" class="px-6 md:px-20 py-40 bg-white/5 flex items-center min-h-screen">
+
 <div class="max-w-7xl mx-auto">
 
 <!-- SECTION HEADER -->
@@ -541,19 +539,7 @@ Every minute without help can worsen injuries.
 <span class="text-primary font-bold tracking-cred text-[10px] uppercase mb-6 block">
 
 <span data-lang="en">The Solution</span>
-<span data-lang="hi" class="font-hindi">समाधान</span>
-
-</span>
-
-<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">
-Solution
-</span>
-
-<span data-lang="hi" class="font-hindi text-sm font-medium">
-समाधान
-</span>
-
-</a>
+<span data-lang="hi" class="font-hindi">हमारा तरीका</span>
 
 </span>
 
@@ -1049,7 +1035,7 @@ Help may take longer or may not arrive.
 </span>
 
 <span data-lang="hi" class="font-hindi">
-मदद देर से पहुँच सकती है - या शायद बिल्कुल नहीं।
+मदद देर से पहुँच सकती है — या शायद बिल्कुल नहीं।
 </span>
 
 </li>
