@@ -19,13 +19,13 @@
 
 <script>
 tailwind.config = {
-darkMode: "class",
-theme: {
-extend: {
+darkMode:"class",
+theme:{
+extend:{
 colors:{
 accent:"#FF3B30",
 secondary:"#8E8E93",
-background:"#0A0A0B"
+background:"#000000"
 },
 fontFamily:{
 display:["Inter","sans-serif"],
@@ -36,63 +36,45 @@ mono:["JetBrains Mono","monospace"]
 }
 </script>
 
-<style type="text/tailwindcss">
+<style>
 
 body{
-background:#0A0A0B;
+background:#000;
+color:#fff;
+font-family:Inter;
 }
 
 .grid-bg{
 background-size:40px 40px;
 background-image:
-linear-gradient(to right, rgba(255,255,255,.03) 1px, transparent 1px),
-linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
+linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+}
+
+.glass{
+background:rgba(255,255,255,0.02);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,0.06);
 }
 
 .link-clean{
 border-bottom:1px solid rgba(255,255,255,.35);
 padding-bottom:2px;
-transition:all .2s ease;
 }
 
-.link-clean:hover{
-border-color:white;
-}
-@keyframes sosPulse{
-
-0%{
-transform:scale(1);
-filter:drop-shadow(0 0 20px rgba(255,0,0,0.35));
-}
-
-50%{
-transform:scale(1.05);
-filter:drop-shadow(0 0 35px rgba(255,0,0,0.55));
-}
-
-100%{
-transform:scale(1);
-filter:drop-shadow(0 0 20px rgba(255,0,0,0.35));
-}
-
-}
-
-.sos-pulse{
-animation:sosPulse 2.5s ease-in-out infinite;
-}
 </style>
 
 </head>
 
 
-<body class="text-gray-100 font-display overflow-x-hidden">
+<body class="overflow-x-hidden">
 
 
 <!-- NAVBAR -->
 
-<nav class="fixed top-0 w-full border-b border-white/10 backdrop-blur-lg z-40">
+<nav class="fixed top-0 w-full border-b border-white/10 backdrop-blur-xl bg-black/40 z-50">
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
 <div class="flex items-center gap-3">
 
@@ -100,13 +82,13 @@ animation:sosPulse 2.5s ease-in-out infinite;
 <span class="material-symbols-outlined">pets</span>
 </div>
 
-<span class="text-xs sm:text-sm uppercase font-bold tracking-wide">
+<span class="text-xs uppercase font-bold tracking-widest">
 Rapid Response
 </span>
 
 </div>
 
-<div class="hidden md:flex gap-8 text-xs uppercase tracking-widest opacity-60">
+<div class="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.2em] text-white/60">
 
 <a href="#problem">Need</a>
 <a href="#solution">Solution</a>
@@ -123,23 +105,22 @@ Rapid Response
 
 <!-- HERO -->
 
-<header class="min-h-screen flex items-center pt-20 relative">
+<header class="min-h-screen flex items-center pt-24 relative">
 
 <div class="absolute inset-0 grid-bg"></div>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+<div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center relative z-10">
 
-<!-- LEFT -->
 
-<div class="text-center lg:text-left">
+<div>
 
-<div class="text-[10px] uppercase tracking-[0.4em] font-mono mb-4 opacity-70">
+<div class="text-[10px] uppercase tracking-[0.4em] font-mono mb-6 text-white/60">
 
 Where Empathy Meets Action
 
 </div>
 
-<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[5.2rem] font-black leading-[1] uppercase mb-6">
+<h1 class="text-6xl md:text-7xl lg:text-[5.5rem] font-black leading-[0.95] uppercase mb-8">
 
 HELP. WHEN<br/>
 SECONDS<br/>
@@ -150,7 +131,7 @@ MATTER.
 
 </h1>
 
-<p class="text-secondary max-w-md mx-auto lg:mx-0 mb-10">
+<p class="text-secondary max-w-md mb-12">
 
 A community network that connects nearby volunteers
 when an animal needs urgent help.
@@ -158,9 +139,7 @@ when an animal needs urgent help.
 </p>
 
 
-<!-- DOWNLOAD BUTTONS -->
-
-<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
+<div class="flex flex-col sm:flex-row gap-4 mb-10">
 
 <a href="https://play.google.com/store/apps/details?id=com.rrt.sos"
 target="_blank"
@@ -171,8 +150,7 @@ class="bg-white text-black px-10 py-4 text-xs uppercase font-bold tracking-wides
 <span class="w-px h-4 bg-black/30"></span>
 
 <img src="https://img.icons8.com/?size=100&id=yhLahGmmkw2c&format=png&color=000000"
-class="w-4 h-4"
-alt="Android">
+class="w-4 h-4">
 
 </a>
 
@@ -185,8 +163,7 @@ class="border border-white px-10 py-4 text-xs uppercase font-bold tracking-wides
 <span class="w-px h-4 bg-white/40"></span>
 
 <img src="https://img.icons8.com/?size=100&id=ZS86z3goveDT&format=png&color=000000"
-class="w-4 h-4"
-alt="Apple">
+class="w-4 h-4">
 
 </a>
 
@@ -194,17 +171,13 @@ alt="Apple">
 
 
 
-<!-- DEMO LINKS -->
-
-<div>
-
 <p class="text-xs text-secondary mb-3">
 
 Learn how the app works
 
 </p>
 
-<div class="flex flex-wrap gap-4 justify-center lg:justify-start text-xs">
+<div class="flex flex-wrap gap-6 text-xs">
 
 <a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview"
 target="_blank"
@@ -242,15 +215,11 @@ How The App Works
 
 </div>
 
-</div>
 
-
-
-<!-- RIGHT HERO IMAGE -->
 
 <div class="hidden lg:block">
 
-<img class="w-full h-full object-cover grayscale"
+<img class="w-full grayscale"
 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCBVYPXarfBi-llCGEsaR5c5iVwhuaT4evgLaGpTBAmQf4r7fpC8DYeRPzwBdIhL8Fv5lg3JSo6LZMHC-ahViw5NjBWmJ8A8h_8b7WzilYYqD-lMhWF9Gr0iQssH1B4MxMW__DxnEjSR9KGEgul5aqYbZRqMVAyN9BLBHrviXED0c6STeKdn3Yh40nDDYqYKuw40SAw96jywBkFGM0m3d8vGNT7hlPMp8lMzcx6X8pMHw2AQ1k617y_9s">
 
 </div>
@@ -258,26 +227,28 @@ src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh1U94V30fz9cU_vDtrXCB
 </div>
 
 </header>
-<!-- SECTION 2 : THE NEED -->
 
-<section id="problem" class="py-20 sm:py-28 border-t border-white/10">
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<div class="grid lg:grid-cols-2 gap-16 items-center">
-  
-<!-- LEFT TEXT -->
+<!-- SECTION : THE NEED -->
+
+<section id="problem" class="py-32 border-t border-white/10">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<div class="grid lg:grid-cols-2 gap-24 items-center">
+
 
 <div>
 
-<h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-6">
+<h2 class="text-5xl font-black uppercase mb-8">
 
 When An Animal<br>
 Needs Help
 
 </h2>
 
-<p class="font-Inter text-secondary max-w-md leading-relaxed">
+<p class="text-secondary max-w-md leading-relaxed">
 
 This is how things usually happen today - 
 
@@ -292,89 +263,56 @@ But the right person rarely sees it in time.
 </div>
 
 
-<!-- RIGHT GRID -->
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="grid grid-cols-2 gap-6">
 
-<!-- CARD -->
-
-<div class="border border-white/10 p-6">
-
-<span class="material-symbols-outlined text-accent text-3xl mb-4">
-timer_off
-</span>
+<div class="glass p-8">
 
 <h4 class="font-bold uppercase text-sm mb-2">
 Slow Alerts
 </h4>
 
 <p class="text-xs text-secondary">
-
 Messages take time to reach the right people.
-
 </p>
 
 </div>
 
 
-<!-- CARD -->
-
-<div class="border border-white/10 p-6">
-
-<span class="material-symbols-outlined text-accent text-3xl mb-4">
-location_disabled
-</span>
+<div class="glass p-8">
 
 <h4 class="font-bold uppercase text-sm mb-2">
 Unclear Location
 </h4>
 
 <p class="text-xs text-secondary">
-
 Volunteers may struggle to find the exact place.
-
 </p>
 
 </div>
 
 
-<!-- CARD -->
-
-<div class="border border-white/10 p-6">
-
-<span class="material-symbols-outlined text-accent text-3xl mb-4">
-group_off
-</span>
+<div class="glass p-8">
 
 <h4 class="font-bold uppercase text-sm mb-2">
 Disconnected Volunteers
 </h4>
 
 <p class="text-xs text-secondary">
-
 People willing to help often never see the alert.
-
 </p>
 
 </div>
 
 
-<!-- CARD -->
-
-<div class="border border-white/10 p-6">
-
-<span class="material-symbols-outlined text-accent text-3xl mb-4">
-warning
-</span>
+<div class="glass p-8">
 
 <h4 class="font-bold uppercase text-sm mb-2">
 Time Lost
 </h4>
 
 <p class="text-xs text-secondary">
-
 Every minute without help can worsen injuries.
-
 </p>
 
 </div>
@@ -386,34 +324,19 @@ Every minute without help can worsen injuries.
 </div>
 
 </section>
-<!-- SECTION 3 : THE SOLUTION -->
 
-<section id="solution" class="pt-14 pb-20 sm:pt-16 sm:pb-28 bg-white/5">
-  
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<div class="grid lg:grid-cols-2 gap-16 items-center">
-  
-<!-- LEFT VISUAL -->
 
-<div class="flex flex-col items-center justify-center h-full relative">
+<!-- SOLUTION -->
 
-<!-- TITLE -->
-<h3 class="text-xs uppercase tracking-[0.25em] text-secondary mb-4 text-center lg:text-left">
-  Here is an Overview
-</h3>
+<section id="solution" class="py-32 bg-white/5">
 
-<!-- GLOW -->
-<div class="absolute w-[420px] h-[420px] bg-red-500/10 blur-[120px] rounded-full"></div>
+<div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-24 items-center">
 
-<!-- PHONE FRAME -->
-<div class="relative border border-white/10 bg-black p-3 rounded-[36px] shadow-[0_40px_120px_rgba(0,0,0,0.9)]">
+<div class="flex justify-center">
 
-<video
-class="w-[280px] sm:w-[320px] rounded-[28px] object-cover"
-controls
-playsinline
->
+<video class="w-[320px] rounded-2xl border border-white/10"
+controls>
 
 <source src="sos-demo.mp4" type="video/mp4">
 
@@ -421,22 +344,18 @@ playsinline
 
 </div>
 
-</div>
 
-
-
-<!-- RIGHT CONTENT -->
 
 <div>
 
-<h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-6">
+<h2 class="text-5xl font-black uppercase mb-8">
 
 A Network<br>
 Of Nearby Volunteers
 
 </h2>
 
-<p class="text-secondary mb-8 max-w-md">
+<p class="text-secondary mb-10 max-w-md">
 
 The Rapid Response App instantly broadcasts an alert
 to volunteers within the same district.
@@ -447,21 +366,13 @@ and coordinate help.
 </p>
 
 
-<div class="border border-white/10 p-6 bg-black/40">
+<div class="glass p-8">
 
-<div class="flex items-center gap-4 mb-3">
-
-<span class="material-symbols-outlined text-accent text-3xl">
-notifications_active
-</span>
-
-<h4 class="uppercase font-bold text-sm tracking-widest">
+<h4 class="uppercase font-bold text-sm mb-3">
 
 District Alert System
 
 </h4>
-
-</div>
 
 <p class="text-xs text-secondary">
 
@@ -474,44 +385,38 @@ and a short description so nearby volunteers can respond quickly.
 
 </div>
 
-
-</div>
-
 </div>
 
 </section>
-<!-- SECTION 4 : HOW IT WORKS -->
 
-<section id="how" class="py-20 sm:py-28">
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
+<!-- HOW IT WORKS -->
+
+<section id="how" class="py-32">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<h2 class="text-center text-5xl font-black uppercase mb-20">
 
 How The Network Works
 
 </h2>
 
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
-
-<!-- STEP 1 -->
+<div class="grid md:grid-cols-4 gap-16 text-center">
 
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
+<div class="text-white/20 text-4xl font-mono mb-6">01</div>
 
-01
-
-</div>
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold mb-2">
 
 Raise SOS
 
 </h3>
 
-<p class="text-xs text-secondary max-w-[180px] mx-auto">
+<p class="text-xs text-secondary">
 
 Open the app and press the SOS button
 when an animal needs urgent help.
@@ -522,23 +427,17 @@ when an animal needs urgent help.
 
 
 
-<!-- STEP 2 -->
-
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
+<div class="text-white/20 text-4xl font-mono mb-6">02</div>
 
-02
-
-</div>
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold mb-2">
 
 Location Shared
 
 </h3>
 
-<p class="text-xs text-secondary max-w-[180px] mx-auto">
+<p class="text-xs text-secondary">
 
 The alert includes your phone number,
 GPS location and a short description.
@@ -549,23 +448,17 @@ GPS location and a short description.
 
 
 
-<!-- STEP 3 -->
-
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
+<div class="text-white/20 text-4xl font-mono mb-6">03</div>
 
-03
-
-</div>
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold mb-2">
 
 District Alert
 
 </h3>
 
-<p class="text-xs text-secondary max-w-[180px] mx-auto">
+<p class="text-xs text-secondary">
 
 All Rapid Response users in the same
 district can see the alert.
@@ -576,23 +469,17 @@ district can see the alert.
 
 
 
-<!-- STEP 4 -->
-
 <div>
 
-<div class="w-16 h-16 mx-auto border border-white/10 flex items-center justify-center text-white/30 text-xl font-mono mb-6">
+<div class="text-white/20 text-4xl font-mono mb-6">04</div>
 
-04
-
-</div>
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-2">
+<h3 class="uppercase text-sm font-bold mb-2">
 
 Volunteer Responds
 
 </h3>
 
-<p class="text-xs text-secondary max-w-[180px] mx-auto">
+<p class="text-xs text-secondary">
 
 Nearby volunteers who are available
 can call and coordinate help.
@@ -601,336 +488,24 @@ can call and coordinate help.
 
 </div>
 
-
 </div>
 
 </div>
 
 </section>
-  <!-- SECTION : WHY MORE VOLUNTEERS MATTER -->
 
-<section class="py-20 sm:py-28 bg-white/5">
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-<h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
+<!-- FINAL CTA -->
 
-Why More Volunteers Matter
+<section class="bg-white text-black py-32 text-center">
 
-</h2>
-
-
-<div class="grid md:grid-cols-2 gap-12">
-
-<!-- DISTRICT WITH MANY VOLUNTEERS -->
-
-<div class="border border-white/10 p-8 bg-black/40">
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-6 text-accent">
-
-District With Many Volunteers
-
-</h3>
-
-<ul class="space-y-4 text-sm text-secondary">
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">group</span>
-Many people in the district have the app installed.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">notifications</span>
-The SOS alert reaches many nearby volunteers instantly.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">call</span>
-Someone nearby is likely to respond and coordinate help.
-</li>
-
-</ul>
-
-</div>
-
-
-<!-- DISTRICT WITH FEW VOLUNTEERS -->
-
-<div class="border border-white/10 p-8 bg-black/40">
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-6 text-secondary">
-
-District With Few Volunteers
-
-</h3>
-
-<ul class="space-y-4 text-sm text-secondary">
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined">person_off</span>
-Very few people in the district are using the app.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined">notifications_off</span>
-The SOS alert may be seen by only a small number of volunteers.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined">schedule</span>
-Help may take longer or may not arrive.
-</li>
-
-</ul>
-
-</div>
-
-
-</div>
-
-
-<!-- NETWORK MESSAGE -->
-
-<div class="mt-16 text-center max-w-2xl mx-auto">
-
-<p class="text-secondary">
-
-The Rapid Response App works best when more people in a district join the network.
-Every new volunteer increases the chances that an animal in distress receives help quickly.
-
-</p>
-
-</div>
-
-
-</div>
-
-</section>
-<!-- SECTION 5 : WHAT THE APP IS -->
-
-<section class="py-20 sm:py-28 border-t border-white/10">
-
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-<h2 class="text-center text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-16">
-
-What The App Is<br>
-<span class="text-secondary opacity-40">& What It Is Not</span>
-
-</h2>
-
-
-<div class="grid md:grid-cols-2 gap-10">
-
-
-<!-- WHAT IT IS -->
-
-<div class="border border-white/10 bg-black/40 p-8">
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-6">
-
-What The App Is
-
-</h3>
-
-<ul class="space-y-5 text-sm text-secondary">
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">check_circle</span>
-A coordination network for animal emergencies.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">check_circle</span>
-A way to alert nearby volunteers in your district.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">check_circle</span>
-A tool that shares GPS location and contact number.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">check_circle</span>
-A platform where volunteers can respond if available.
-</li>
-
-</ul>
-
-</div>
-
-
-<!-- WHAT IT IS NOT -->
-
-<div class="border border-white/10 bg-black/40 p-8">
-
-<h3 class="uppercase text-sm font-bold tracking-widest mb-6">
-
-What The App Is Not
-
-</h3>
-
-<ul class="space-y-5 text-sm text-secondary">
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">cancel</span>
-The app does not come with a rescue team.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">cancel</span>
-Raising an SOS does not guarantee help.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">cancel</span>
-The platform does not operate shelters.
-</li>
-
-<li class="flex gap-3">
-<span class="material-symbols-outlined text-accent">cancel</span>
-The app does not connect to a team that can directly rescue, transport, or relocate animals.
-</li>
-
-</ul>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<!-- SECTION 6 : COMMUNITY -->
-
-<section id="community" class="py-20 sm:py-28">
-
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-<div class="grid lg:grid-cols-2 gap-16 items-start">
-
-
-<!-- LEFT TEXT -->
-
-<div>
-
-<h2 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase mb-10">
-
-Who Uses<br>
-The Network
-
-</h2>
-
-
-<div class="space-y-6">
-
-<div class="border-l border-white/20 pl-6">
-
-<p class="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-2">
-01 Volunteers
-</p>
-
-<p class="text-sm text-secondary">
-
-People who want to help animals and respond when alerts appear in their district.
-
-</p>
-
-</div>
-
-
-<div class="border-l border-white/20 pl-6">
-
-<p class="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-2">
-02 Animal Feeders
-</p>
-
-<p class="text-sm text-secondary">
-
-Community feeders who may need help during medical emergencies.
-
-</p>
-
-</div>
-
-
-<div class="border-l border-white/20 pl-6">
-
-<p class="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-2">
-03 Pet Owners
-</p>
-
-<p class="text-sm text-secondary">
-
-Pet owners who may require urgent assistance when a pet is injured or missing.
-
-</p>
-
-</div>
-
-
-<div class="border-l border-white/20 pl-6">
-
-<p class="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-2">
-04 Animal Lovers
-</p>
-
-<p class="text-sm text-secondary">
-
-Anyone who wants to help animals when they see an alert nearby.
-
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-
-<!-- RIGHT VISUAL -->
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-<div class="aspect-[4/5] border border-white/10 overflow-hidden">
-
-<img class="w-full h-full object-cover grayscale opacity-70"
-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXY-LWBigVMQGIMb5WMvCvTweZYPsyOEaJTUTRmNDEdPJGo0cd2fFJ4LDHzDfykZASg-vl8d-CInRtVJ6_MeaoyGRMfSfqGuEME4yVcLwTORSMb8TBgLfWWImWFPD4k1LyWKtRH9I6QAhrG5W--RGqDJOafiqz_t2_oRST42B4zQfPeJmKJQaag9v0rFBF6-aCrhGdj1jhttCy1zZVbQk6UdbXOnjU2WYORhJwUgalB8HIFZkZCXmz5IukxIe8BTLr8R0exYe8I4U">
-
-</div>
-
-
-<div class="aspect-[4/5] border border-white/10 overflow-hidden sm:mt-12">
-
-<img class="w-full h-full object-cover grayscale opacity-70"
-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOonndoMgNUyAKL2RxhycIDWn0Jk-Acg9pG5m6bVFE6PqX81HLXbB3LYxXWiadpSDNdlQCr2p5xiyAf7t5DJ4FV-A2AbjkxiaT5RBoyQedta9PBCEz-oAFuhKCAzv7aNsaaHetFwjYu-LXQPTI7xu4pPzmc5ntmUDpNrhfvzPZBBcEHQ9c2lF0EfcPPWpoBA4Ilxh8PidbyeJWvpJ6vGXKsHUkYjQuQq1MLkAXNaq6lc9tNx4kaEkX8Z8">
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- SECTION 7 : FINAL CTA -->
-
-<section class="bg-white text-black text-center relative overflow-hidden flex items-center justify-center py-24 sm:py-32">
-
-<div class="max-w-4xl mx-auto px-4 sm:px-6">
-
-<h2 class="text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tight">
+<h2 class="text-6xl font-black uppercase leading-[0.9]">
 
 Every Second<br>
 Counts For Them
 
 </h2>
-
-</div>
 
 </section>
 
@@ -938,35 +513,17 @@ Counts For Them
 
 <!-- FOOTER -->
 
-<footer class="py-16 sm:py-20 border-t border-white/10">
+<footer class="py-20 border-t border-white/10">
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-<div class="grid md:grid-cols-2 gap-12 items-start">
-
-
-<!-- LEFT -->
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
 
 <div>
 
-<div class="flex items-center gap-3 mb-6">
-
-<div class="w-10 h-10 border border-white flex items-center justify-center">
-
-<span class="material-symbols-outlined">
-pets
-</span>
-
-</div>
-
-<span class="uppercase font-bold text-sm tracking-wide">
+<h3 class="uppercase font-bold mb-4">
 
 Rapid Response App
 
-</span>
-
-</div>
-
+</h3>
 
 <p class="text-secondary text-sm max-w-sm">
 
@@ -977,12 +534,9 @@ A community-driven initiative that connects volunteers so people nearby can coor
 </div>
 
 
+<div>
 
-<!-- RIGHT -->
-
-<div id="support">
-
-<p class="uppercase tracking-widest text-[11px] font-bold mb-4">
+<p class="uppercase text-[11px] font-bold mb-4">
 
 Support
 
@@ -995,7 +549,7 @@ For questions or assistance contact:
 </p>
 
 <a href="mailto:ask@rapid-response.in"
-class="text-white font-semibold hover:underline">
+class="text-white font-semibold">
 
 ask@rapid-response.in
 
@@ -1011,32 +565,9 @@ We usually respond within 24–48 hours.
 
 </div>
 
-
-
-<!-- LEGAL -->
-
-<div class="mt-16 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] uppercase tracking-widest text-gray-500">
-
-<div class="max-w-md text-center md:text-left normal-case tracking-normal">
-
-This platform is an independent community initiative and is not affiliated with, operated by, or endorsed by any government authority.
-
-</div>
-
-<div>
-
-© 2026 RapidResponse Labs
-
-</div>
-
-</div>
-
-</div>
-
 </footer>
 
 
 </body>
 </html>
-
 
