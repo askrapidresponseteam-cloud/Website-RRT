@@ -172,6 +172,10 @@ setLang('en')
     <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Community</span>
     <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कम्युनिटी</span>
   </a>
+    <a class="text-white/40 hover:text-white transition-colors" href="#faq">
+  <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">FAQ</span>
+  <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">सवाल</span>
+</a>
 </nav>
 
     <!-- RIGHT -->
@@ -1474,7 +1478,149 @@ src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOo
 </div>
 
 </section>
+
+<section id="faq" class="px-6 md:px-20 py-40 border-t border-white/5 bg-black">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-20">
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
+        <span data-lang="en">FAQ</span>
+        <span data-lang="hi" class="font-hindi">अक्सर पूछे जाने वाले सवाल</span>
+      </span>
+
+      <h2 class="text-white text-5xl md:text-7xl font-black tracking-tight uppercase mb-6">
+        <span data-lang="en">
+          Search<br>
+          <span class="text-white/30">Questions & Answers</span>
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          सवाल खोजें<br>
+          <span class="text-white/30">और जवाब पाएँ</span>
+        </span>
+      </h2>
+
+      <p class="text-white/40 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+        <span data-lang="en">Type a keyword to find the most relevant answer.</span>
+        <span data-lang="hi" class="font-hindi">सही जवाब पाने के लिए कोई कीवर्ड टाइप करें।</span>
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-16">
+      <div class="glass-card border border-white/10 h-20 px-6 md:px-8 flex items-center gap-4">
+        <span class="material-symbols-outlined text-white/30 text-3xl">search</span>
+        <input
+          id="faqSearch"
+          type="text"
+          placeholder="Search by keyword..."
+          class="w-full bg-transparent text-white placeholder:text-white/25 text-lg md:text-xl font-medium border-none outline-none focus:ring-0"
+        />
+      </div>
+    </div>
+
+    <div id="faqResults" class="max-w-4xl mx-auto space-y-6">
+
+      <div class="faq-item glass-card p-8 hidden" data-keywords="rapid response team app what is app community sos alert urgent help district">
+        <h3 class="text-white text-xl md:text-2xl font-black tracking-tight mb-4">
+          <span data-lang="en">What is the Rapid Response Team app?</span>
+          <span data-lang="hi" class="font-hindi">Rapid Response Team ऐप क्या है?</span>
+        </h3>
+        <p class="text-white/50 text-sm md:text-base leading-relaxed">
+          <span data-lang="en">
+            Rapid Response Team is a community-based SOS alert app that helps connect people who need urgent help with nearby people in the same district who may be able to respond quickly.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            Rapid Response Team एक कम्युनिटी-आधारित SOS अलर्ट ऐप है जो तुरंत मदद चाहने वाले लोगों को उसी जिले के पास मौजूद लोगों से जोड़ता है, ताकि जल्दी मदद मिल सके।
+          </span>
+        </p>
+      </div>
+
+      <div class="faq-item glass-card p-8 hidden" data-keywords="how does the app work working alert sent district respond response how it works">
+        <h3 class="text-white text-xl md:text-2xl font-black tracking-tight mb-4">
+          <span data-lang="en">How does the app work?</span>
+          <span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है?</span>
+        </h3>
+        <p class="text-white/50 text-sm md:text-base leading-relaxed">
+          <span data-lang="en">
+            When a user raises an SOS alert, the alert is sent to people in that district through the app. Those who receive the alert can view it and decide whether they want to respond. If someone chooses to respond, they can take action based on the situation.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            जब कोई यूज़र SOS अलर्ट भेजता है, तो ऐप उस जिले के लोगों तक अलर्ट पहुँचाता है। जिन्हें अलर्ट मिलता है, वे उसे देखकर तय कर सकते हैं कि वे प्रतिक्रिया देना चाहते हैं या नहीं। अगर कोई प्रतिक्रिया देना चुनता है, तो वह स्थिति के अनुसार कार्रवाई कर सकता है।
+          </span>
+        </p>
+      </div>
+
+      <div class="faq-item glass-card p-8 hidden" data-keywords="rescue team automatic central team send rescue automatically">
+        <h3 class="text-white text-xl md:text-2xl font-black tracking-tight mb-4">
+          <span data-lang="en">Does the app send a rescue team automatically?</span>
+          <span data-lang="hi" class="font-hindi">क्या ऐप अपने आप कोई रेस्क्यू टीम भेजता है?</span>
+        </h3>
+        <p class="text-white/50 text-sm md:text-base leading-relaxed">
+          <span data-lang="en">
+            No. The app does not send a central rescue team. It works by alerting people in the network so that nearby users can step in and help.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            नहीं। यह ऐप कोई केंद्रीय रेस्क्यू टीम नहीं भेजता। यह नेटवर्क में मौजूद लोगों को अलर्ट करता है ताकि पास के यूज़र आगे आकर मदद कर सकें।
+          </span>
+        </p>
+      </div>
+
+      <div class="faq-item glass-card p-8 hidden" data-keywords="who receives sos alert who gets alert users district push notification">
+        <h3 class="text-white text-xl md:text-2xl font-black tracking-tight mb-4">
+          <span data-lang="en">Who receives an SOS alert?</span>
+          <span data-lang="hi" class="font-hindi">SOS अलर्ट किसे मिलता है?</span>
+        </h3>
+        <p class="text-white/50 text-sm md:text-base leading-relaxed">
+          <span data-lang="en">
+            SOS alerts are sent to all the users present within the same district through a push notification triggered by the app.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            SOS अलर्ट ऐप द्वारा ट्रिगर की गई पुश नोटिफिकेशन के माध्यम से उसी जिले में मौजूद सभी यूज़र्स को भेजे जाते हैं।
+          </span>
+        </p>
+      </div>
+
+      <div class="faq-item glass-card p-8 hidden" data-keywords="why district only local relevant faster response nearby">
+        <h3 class="text-white text-xl md:text-2xl font-black tracking-tight mb-4">
+          <span data-lang="en">Why is the alert sent only within the district?</span>
+          <span data-lang="hi" class="font-hindi">अलर्ट केवल जिले के भीतर ही क्यों भेजा जाता है?</span>
+        </h3>
+        <p class="text-white/50 text-sm md:text-base leading-relaxed">
+          <span data-lang="en">
+            This helps keep alerts locally relevant and increases the chances of a faster response from someone nearby.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            इससे अलर्ट स्थानीय रूप से प्रासंगिक रहते हैं और पास के किसी व्यक्ति से जल्दी प्रतिक्रिया मिलने की संभावना बढ़ती है।
+          </span>
+        </p>
+      </div>
+
+      <div class="faq-item glass-card p-8 hidden" data-keywords="who can use app anyone user volunteer district onboarding usage rules">
+        <h3 class="text-white text-xl md:text-2xl font-black tracking-tight mb-4">
+          <span data-lang="en">Who can use the app?</span>
+          <span data-lang="hi" class="font-hindi">यह ऐप कौन इस्तेमाल कर सकता है?</span>
+        </h3>
+        <p class="text-white/50 text-sm md:text-base leading-relaxed">
+          <span data-lang="en">
+            Anyone who wants to raise an SOS alert or help respond to alerts in their district can use the app, subject to the app’s onboarding and usage rules.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            जो कोई भी SOS अलर्ट भेजना चाहता है या अपने जिले में आने वाले अलर्ट पर मदद करना चाहता है, वह ऐप के onbोर्डिंग और उपयोग नियमों के अधीन इस ऐप का उपयोग कर सकता है।
+          </span>
+        </p>
+      </div>
+
+    </div>
+
+    <div id="faqMessage" class="max-w-4xl mx-auto text-center mt-10 text-white/30 text-sm md:text-base">
+      <span data-lang="en">Start typing to see the most relevant answer.</span>
+      <span data-lang="hi" class="font-hindi">सबसे सही जवाब देखने के लिए टाइप करना शुरू करें।</span>
+    </div>
+
+  </div>
+</section>
+
 <section class="px-6 md:px-20 py-40 flex items-center justify-center min-h-screen">
+
   
 <div class="max-w-7xl mx-auto bg-primary py-32 px-12 md:px-24 text-center relative overflow-hidden">
   
@@ -1644,6 +1790,60 @@ This platform is an independent community initiative and is not affiliated with,
 
 
 </div>
+</div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const faqSearch = document.getElementById("faqSearch");
+  const faqItems = document.querySelectorAll(".faq-item");
+  const faqMessage = document.getElementById("faqMessage");
+
+  if (!faqSearch) return;
+
+  faqSearch.addEventListener("input", function () {
+    const query = this.value.toLowerCase().trim();
+
+    faqItems.forEach(item => {
+      item.style.display = "none";
+    });
+
+    if (query === "") {
+      faqMessage.innerHTML = `
+        <span data-lang="en">Start typing to see the most relevant answer.</span>
+        <span data-lang="hi" class="font-hindi">सबसे सही जवाब देखने के लिए टाइप करना शुरू करें।</span>
+      `;
+      setLang(document.documentElement.lang || 'en');
+      faqMessage.style.display = "block";
+      return;
+    }
+
+    let matches = [];
+
+    faqItems.forEach(item => {
+      const keywords = (item.dataset.keywords || "").toLowerCase();
+      const text = item.innerText.toLowerCase();
+
+      if (keywords.includes(query) || text.includes(query)) {
+        matches.push(item);
+      }
+    });
+
+    if (matches.length > 0) {
+      matches[0].style.display = "block";
+      faqMessage.style.display = "none";
+    } else {
+      faqMessage.innerHTML = `
+        <span data-lang="en">No relevant answer found.</span>
+        <span data-lang="hi" class="font-hindi">कोई संबंधित जवाब नहीं मिला।</span>
+      `;
+      setLang(document.documentElement.lang || 'en');
+      faqMessage.style.display = "block";
+    }
+  });
+});
+</script>
+
+</body>
+</html>
 </body>
 </html>
