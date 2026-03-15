@@ -1285,158 +1285,2479 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!faqSearch || !faqResults || !faqMessage) return;
 
-  const faqData = [
+const faqData = [
+  {
+    keywords: "rapid response team app what is app animal welfare sos help emergency",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="rapid response team app what is app animal welfare sos help emergency">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What is the Rapid Response Team app?</span>
+          <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम ऐप क्या है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Rapid Response Team is a community-based SOS alert app built for the animal welfare ecosystem. It helps connect people facing urgent animal welfare-related situations with other registered users in the same district who may be able to respond quickly and assist.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            रैपिड रिस्पॉन्स टीम एक कम्युनिटी-आधारित SOS अलर्ट ऐप है, जिसे पशु कल्याण से जुड़ी आपात स्थितियों के लिए बनाया गया है। यह ऐप एक ही जिले के पंजीकृत उपयोगकर्ताओं को जोड़ता है ताकि ज़रूरत पड़ने पर जल्दी सहायता मिल सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "main purpose app purpose why app exists objective",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="main purpose app purpose why app exists objective">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What is the main purpose of the app?</span>
+          <span data-lang="hi" class="font-hindi">ऐप का मुख्य उद्देश्य क्या है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The app is meant to quickly connect people facing urgent animal welfare situations with nearby registered users in the same district who may be able to help, respond, coordinate, or guide.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            इस ऐप का उद्देश्य पशु कल्याण से जुड़ी तात्कालिक परिस्थितियों में लोगों को उसी जिले के पंजीकृत उपयोगकर्ताओं से जल्दी जोड़ना है ताकि समय पर सहायता, समन्वय या मार्गदर्शन मिल सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "how does app work sos alert district users response",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="how does app work sos alert district users response">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">How does the app work?</span>
+          <span data-lang="hi" class="font-hindi">यह ऐप कैसे काम करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            A registered user can raise an SOS alert during an urgent animal welfare situation. That alert is then shared with other registered users in the same district, so those who are available can respond or coordinate quickly.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            कोई पंजीकृत उपयोगकर्ता पशु कल्याण से जुड़ी तात्कालिक स्थिति में SOS अलर्ट भेज सकता है। यह अलर्ट उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं तक पहुँचता है, ताकि उपलब्ध लोग जल्दी प्रतिक्रिया दे सकें।
+          </span>
+        </p>
+      </div>
+    `
+  }
     {
-      keywords: "what is rapid response team app rapid response app animal welfare emergency app",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="what is rapid response team app rapid response app animal welfare emergency app">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">What is the Rapid Response app?</span>
-            <span data-lang="hi" class="font-hindi">Rapid Response ऐप क्या है?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">Rapid Response is a community-based SOS alert app built for the animal welfare ecosystem. It helps connect people facing urgent animal welfare-related situations with other registered users in the same district who may be able to respond quickly and assist.</span>
-            <span data-lang="hi" class="font-hindi">Rapid Response एक कम्युनिटी-आधारित SOS अलर्ट ऐप है, जो पशु कल्याण से जुड़ी आपात स्थितियों में मदद के लिए बनाया गया है। यह उसी जिले में मौजूद पंजीकृत उपयोगकर्ताओं से लोगों को जोड़ता है, ताकि जो मदद कर सकें वे जल्दी प्रतिक्रिया दे सकें।</span>
-          </p>
-        </div>
-      `
-    },
+    keywords: "who can use app eligible users volunteers feeders pet owners animal lovers",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="who can use app eligible users volunteers feeders pet owners animal lovers">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Who can use the app?</span>
+          <span data-lang="hi" class="font-hindi">यह ऐप कौन इस्तेमाल कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The app can be used by animal feeders, rescuers, volunteers, pet owners, and anyone who wants to support animals during urgent situations.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            यह ऐप जानवरों को खाना खिलाने वाले लोगों, रेस्क्यू करने वालों, वॉलंटियर्स, पालतू जानवर रखने वालों और ऐसे किसी भी व्यक्ति द्वारा इस्तेमाल किया जा सकता है जो आपात स्थिति में जानवरों की मदद करना चाहता हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "do i need to register registration required sign up account",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="do i need to register registration required sign up account">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Do I need to register before using the app?</span>
+          <span data-lang="hi" class="font-hindi">क्या ऐप इस्तेमाल करने से पहले रजिस्टर करना ज़रूरी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. You need to complete registration before using the app, so your details can be linked properly and alerts can work as intended.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। ऐप इस्तेमाल करने से पहले रजिस्ट्रेशन पूरा करना ज़रूरी है, ताकि आपकी जानकारी सही तरह से जुड़ सके और अलर्ट ठीक से काम कर सकें।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "how do i register signup create account name number district",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="how do i register signup create account name number district">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">How do I register on the app?</span>
+          <span data-lang="hi" class="font-hindi">मैं ऐप पर रजिस्टर कैसे करूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            After downloading the app, enter your basic details such as your name, phone number, and district, then complete the registration process as shown in the app.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            ऐप डाउनलोड करने के बाद अपना नाम, फोन नंबर और जिला जैसी बुनियादी जानकारी भरें, फिर ऐप में दिए गए चरणों के अनुसार रजिस्ट्रेशन पूरा करें।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can anyone raise sos who can send alert raise sos emergency",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can anyone raise sos who can send alert raise sos emergency">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can any registered user raise an SOS?</span>
+          <span data-lang="hi" class="font-hindi">क्या कोई भी पंजीकृत उपयोगकर्ता SOS भेज सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Any registered user can raise an SOS when they are facing an urgent animal welfare-related situation and need quick support or coordination.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। कोई भी पंजीकृत उपयोगकर्ता पशु कल्याण से जुड़ी तात्कालिक स्थिति में SOS भेज सकता है, जब उसे तुरंत सहायता या समन्वय की ज़रूरत हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "who receives sos alert same district district users volunteers responders",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="who receives sos alert same district district users volunteers responders">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Who receives an SOS alert?</span>
+          <span data-lang="hi" class="font-hindi">SOS अलर्ट किसे मिलता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            An SOS alert is shared with other registered users in the same district, so people nearby or within that district can see it and respond if they are available.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            SOS अलर्ट उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं तक पहुँचता है, ताकि आसपास या उसी जिले के लोग उसे देखकर उपलब्ध होने पर सहायता कर सकें।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does sos go to all users entire district everyone in district broadcast",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does sos go to all users entire district everyone in district broadcast">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the SOS go to all users in the district?</span>
+          <span data-lang="hi" class="font-hindi">क्या SOS जिले के सभी उपयोगकर्ताओं तक जाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The alert is intended to be visible to registered users within the same district, helping the message reach people who are most relevant to that area.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            यह अलर्ट उसी जिले के पंजीकृत उपयोगकर्ताओं तक पहुँचने के लिए बनाया गया है, ताकि संदेश उसी क्षेत्र से जुड़े लोगों तक पहुँचे।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "what details are shared in sos phone number gps location description",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="what details are shared in sos phone number gps location description">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What details are shared in an SOS alert?</span>
+          <span data-lang="hi" class="font-hindi">SOS अलर्ट में कौन-कौन सी जानकारी साझा होती है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            An SOS alert may include the sender’s phone number, GPS location, and a short description, so responders can understand the situation and coordinate faster.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            SOS अलर्ट में भेजने वाले का फोन नंबर, जीपीएस लोकेशन और एक छोटा विवरण शामिल हो सकता है, ताकि मदद करने वाले लोग स्थिति समझकर जल्दी समन्वय कर सकें।
+          </span>
+        </p>
+      </div>
+    `
+  }
+  {
+    keywords: "can responders call sender phone number contact caller coordinate faster",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can responders call sender phone number contact caller coordinate faster">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can responders call the sender directly?</span>
+          <span data-lang="hi" class="font-hindi">क्या जवाब देने वाले लोग भेजने वाले को सीधे कॉल कर सकते हैं?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Since the sender’s phone number is shared in the SOS alert, responders may call directly to coordinate faster when needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। क्योंकि SOS अलर्ट में भेजने वाले का फोन नंबर साझा होता है, इसलिए ज़रूरत पड़ने पर जवाब देने वाले लोग सीधे कॉल करके जल्दी समन्वय कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can responders chat sender in app chat feature communication",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can responders chat sender in app chat feature communication">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can responders chat with the sender in the app?</span>
+          <span data-lang="hi" class="font-hindi">क्या जवाब देने वाले लोग ऐप में भेजने वाले से चैट कर सकते हैं?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            If chat is enabled for that SOS flow, responders may be able to communicate through the app while the SOS is active.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            अगर उस SOS प्रक्रिया में चैट सुविधा सक्षम है, तो जवाब देने वाले लोग SOS सक्रिय रहने तक ऐप के भीतर बातचीत कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i cancel sos stop alert end sos withdraw",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i cancel sos stop alert end sos withdraw">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I cancel an SOS after raising it?</span>
+          <span data-lang="hi" class="font-hindi">क्या SOS भेजने के बाद मैं उसे रद्द कर सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. You can cancel an SOS anytime, ideally once help has been found or the issue is resolved.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। आप किसी भी समय SOS रद्द कर सकते हैं, खासकर तब जब मदद मिल चुकी हो या समस्या हल हो गई हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does sos auto expire auto end 60 minutes one hour timeout",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does sos auto expire auto end 60 minutes one hour timeout">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does an SOS expire automatically?</span>
+          <span data-lang="hi" class="font-hindi">क्या SOS अपने आप समाप्त हो जाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. If the sender does not stop it manually, the SOS will automatically expire after 60 minutes.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यदि भेजने वाला इसे मैन्युअली बंद नहीं करता, तो SOS 60 मिनट बाद अपने आप समाप्त हो जाएगा।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is help guaranteed guaranteed rescue assured response",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is help guaranteed guaranteed rescue assured response">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does raising an SOS guarantee help?</span>
+          <span data-lang="hi" class="font-hindi">क्या SOS भेजने से मदद मिलना तय हो जाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            No. Raising an SOS increases the chance of reaching available people, but help is not guaranteed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            नहीं। SOS भेजने से उपलब्ध लोगों तक बात पहुँचने की संभावना बढ़ती है, लेकिन मदद मिलना तय नहीं होता।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app have its own rescue team official team staff",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app have its own rescue team official team staff">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app have its own rescue team?</span>
+          <span data-lang="hi" class="font-hindi">क्या इस ऐप की अपनी रेस्क्यू टीम है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            No. The app is a coordination platform and does not come with its own rescue team.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            नहीं। यह ऐप एक समन्वय मंच है और इसकी अपनी अलग रेस्क्यू टीम नहीं है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app rescue transport animals directly direct rescue pickup ambulance",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app rescue transport animals directly direct rescue pickup ambulance">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app directly rescue or transport animals?</span>
+          <span data-lang="hi" class="font-hindi">क्या ऐप सीधे जानवरों का रेस्क्यू या ट्रांसपोर्ट करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            No. The app itself does not directly rescue or transport animals. It helps people connect and coordinate.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            नहीं। ऐप खुद सीधे जानवरों का रेस्क्यू या ट्रांसपोर्ट नहीं करता। यह लोगों को जोड़ने और समन्वय में मदद करता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app operate shelters shelter home facility run shelter",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app operate shelters shelter home facility run shelter">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the platform operate animal shelters?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह प्लेटफॉर्म पशु शेल्टर चलाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            No. The platform does not operate shelters. Its role is to help connect people during urgent situations.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            नहीं। यह प्लेटफॉर्म शेल्टर नहीं चलाता। इसका काम तात्कालिक स्थितियों में लोगों को जोड़ने में मदद करना है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "why more users matter more volunteers network effect district better help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="why more users matter more volunteers network effect district better help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Why does the app work better when more people join?</span>
+          <span data-lang="hi" class="font-hindi">जब ज़्यादा लोग जुड़ते हैं तो ऐप बेहतर क्यों काम करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The more registered users there are in a district, the higher the chance that someone nearby will see the alert and respond quickly.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            किसी जिले में जितने ज़्यादा पंजीकृत उपयोगकर्ता होंगे, उतनी ही संभावना बढ़ेगी कि कोई पास का व्यक्ति अलर्ट देखकर जल्दी प्रतिक्रिया दे सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "what happens if very few people use app in district low users low volunteers",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="what happens if very few people use app in district low users low volunteers">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What happens if very few people in my district use the app?</span>
+          <span data-lang="hi" class="font-hindi">अगर मेरे जिले में बहुत कम लोग ऐप इस्तेमाल करते हों तो क्या होगा?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            If very few people in the district are using the app, the SOS may be seen by fewer users, which can reduce the chance of getting a quick response.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            अगर जिले में बहुत कम लोग ऐप इस्तेमाल कर रहे हों, तो SOS कम लोगों तक पहुँचेगा, जिससे जल्दी प्रतिक्रिया मिलने की संभावना कम हो सकती है।
+          </span>
+        </p>
+      </div>
+    `
+  },
     {
-      keywords: "how does the app work how it works working",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="how does the app work how it works working">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">How does the app work?</span>
-            <span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">A user raises an SOS through the app. The alert includes the sender’s phone number, GPS location, and short description, and is shown to registered users within the same district. Anyone available can respond and coordinate help.</span>
-            <span data-lang="hi" class="font-hindi">कोई उपयोगकर्ता ऐप में SOS उठाता है। उस अलर्ट में भेजने वाले का फोन नंबर, GPS लोकेशन और छोटा विवरण शामिल होता है, और यह उसी जिले के पंजीकृत उपयोगकर्ताओं को दिखाया जाता है। जो उपलब्ध हों, वे प्रतिक्रिया देकर मदद समन्वित कर सकते हैं।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "register signup sign up create account",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="register signup sign up create account">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">How do I register?</span>
-            <span data-lang="hi" class="font-hindi">मैं रजिस्टर कैसे करूँ?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">Download the app, enter your name and phone number, complete the OTP verification, and get started. Registration is simple and takes only a short time.</span>
-            <span data-lang="hi" class="font-hindi">ऐप डाउनलोड करें, अपना नाम और फोन नंबर दर्ज करें, OTP सत्यापन पूरा करें, और शुरू करें। रजिस्ट्रेशन आसान है और बहुत कम समय लेता है।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "who receives sos sos alert district",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="who receives sos sos alert district">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">Who receives an SOS alert?</span>
-            <span data-lang="hi" class="font-hindi">SOS अलर्ट किसे मिलता है?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">The SOS is shown to registered Rapid Response users in the same district as the sender.</span>
-            <span data-lang="hi" class="font-hindi">SOS उसी जिले के पंजीकृत Rapid Response उपयोगकर्ताओं को दिखाया जाता है जहाँ से अलर्ट भेजा गया है।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "location gps exact place",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="location gps exact place">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">Does the alert include location?</span>
-            <span data-lang="hi" class="font-hindi">क्या अलर्ट में लोकेशन शामिल होती है?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">Yes. The alert includes GPS location so responders can better understand where help is needed.</span>
-            <span data-lang="hi" class="font-hindi">हाँ। अलर्ट में GPS लोकेशन शामिल होती है, ताकि मदद करने वाले समझ सकें कि सहायता कहाँ चाहिए।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "call sender phone number responders call",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="call sender phone number responders call">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">Can responders call the sender?</span>
-            <span data-lang="hi" class="font-hindi">क्या मदद करने वाले भेजने वाले को कॉल कर सकते हैं?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">Yes. The sender’s phone number is shared in the SOS alert so responders can call and coordinate faster if needed.</span>
-            <span data-lang="hi" class="font-hindi">हाँ। SOS अलर्ट में भेजने वाले का फोन नंबर साझा किया जाता है, ताकि जरूरत पड़ने पर मदद करने वाले जल्दी कॉल करके समन्वय कर सकें।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "chat responder chat feature",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="chat responder chat feature">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">Is chat available?</span>
-            <span data-lang="hi" class="font-hindi">क्या चैट सुविधा उपलब्ध है?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">Chat may be available depending on the current app version and feature rollout. It is meant to help responders coordinate while an SOS is active.</span>
-            <span data-lang="hi" class="font-hindi">चैट सुविधा ऐप के मौजूदा संस्करण और फीचर रोलआउट पर निर्भर कर सकती है। इसका उद्देश्य सक्रिय SOS के दौरान मदद समन्वित करना है।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "cancel sos stop sos expire",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="cancel sos stop sos expire">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">Can I cancel an SOS?</span>
-            <span data-lang="hi" class="font-hindi">क्या मैं SOS रद्द कर सकता हूँ?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">Yes. You can stop the SOS once help is found or the issue is resolved. It may also expire automatically based on the app’s SOS timing rules.</span>
-            <span data-lang="hi" class="font-hindi">हाँ। मदद मिल जाने या समस्या हल हो जाने पर आप SOS रोक सकते हैं। ऐप के नियमों के अनुसार यह अपने-आप भी समाप्त हो सकता है।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "guarantee help sure help rescue team",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="guarantee help sure help rescue team">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">Does raising an SOS guarantee help?</span>
-            <span data-lang="hi" class="font-hindi">क्या SOS भेजने से मदद मिलना तय है?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">No. The app helps alert nearby people in the same district, but help depends on who is available and able to respond at that time.</span>
-            <span data-lang="hi" class="font-hindi">नहीं। ऐप उसी जिले के लोगों तक अलर्ट पहुँचाने में मदद करता है, लेकिन सहायता इस बात पर निर्भर करती है कि उस समय कौन उपलब्ध है और प्रतिक्रिया दे सकता है।</span>
-          </p>
-        </div>
-      `
-    },
-    {
-      keywords: "free cost charges paid",
-      html: `
-        <div class="faq-item glass-card p-8" data-keywords="free cost charges paid">
-          <h3 class="text-white text-xl font-bold mb-3">
-            <span data-lang="en">Is the app free to use?</span>
-            <span data-lang="hi" class="font-hindi">क्या ऐप इस्तेमाल करने के लिए मुफ्त है?</span>
-          </h3>
-          <p class="text-white/40 leading-relaxed">
-            <span data-lang="en">Please refer to the app store listing or current app information for the latest details on pricing and availability.</span>
-            <span data-lang="hi" class="font-hindi">मूल्य और उपलब्धता की ताज़ा जानकारी के लिए कृपया ऐप स्टोर लिस्टिंग या मौजूदा ऐप जानकारी देखें।</span>
-          </p>
-        </div>
-      `
-    }
-  ];
+    keywords: "can i use app for injured stray dog cat bird animal emergency",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i use app for injured stray dog cat bird animal emergency">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I use the app if I find an injured stray animal?</span>
+          <span data-lang="hi" class="font-hindi">अगर मुझे कोई घायल आवारा जानवर मिले तो क्या मैं यह ऐप इस्तेमाल कर सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. If you come across an urgent animal welfare situation such as an injured stray animal, you can raise an SOS through the app so people in your district may see it and respond.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। अगर आपको कोई घायल आवारा जानवर मिले या पशु कल्याण से जुड़ी कोई तात्कालिक स्थिति हो, तो आप ऐप के माध्यम से SOS भेज सकते हैं, ताकि आपके जिले के लोग उसे देखकर मदद के लिए आगे आ सकें।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i use app for missing pet lost dog lost cat missing animal",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i use app for missing pet lost dog lost cat missing animal">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I use the app if my pet goes missing?</span>
+          <span data-lang="hi" class="font-hindi">अगर मेरा पालतू जानवर खो जाए तो क्या मैं यह ऐप इस्तेमाल कर सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. If your pet goes missing and you need urgent local help, the app may help you quickly alert registered users in your district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। अगर आपका पालतू जानवर खो जाए और आपको जल्दी स्थानीय मदद चाहिए, तो यह ऐप आपके जिले के पंजीकृत उपयोगकर्ताओं तक जल्दी अलर्ट पहुँचाने में मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can feeder use app animal feeder street dog feeder community feeder",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can feeder use app animal feeder street dog feeder community feeder">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can animal feeders use this app?</span>
+          <span data-lang="hi" class="font-hindi">क्या जानवरों को खाना खिलाने वाले लोग यह ऐप इस्तेमाल कर सकते हैं?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Animal feeders can use the app whenever they face an urgent situation and need quick support, coordination, or guidance.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जानवरों को खाना खिलाने वाले लोग किसी तात्कालिक स्थिति में यह ऐप इस्तेमाल कर सकते हैं, जब उन्हें जल्दी सहायता, समन्वय या मार्गदर्शन की ज़रूरत हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can volunteers respond if available how respond volunteers nearby",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can volunteers respond if available how respond volunteers nearby">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can volunteers respond only if they are available?</span>
+          <span data-lang="hi" class="font-hindi">क्या वॉलंटियर्स तभी जवाब देते हैं जब वे उपलब्ध हों?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app allows people who are available and willing to help to respond when they see an alert.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। ऐप में वही लोग प्रतिक्रिया दे सकते हैं जो उस समय उपलब्ध हों और मदद करने के इच्छुक हों।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "do i need location gps permission allow location access",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="do i need location gps permission allow location access">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Do I need to allow location access in the app?</span>
+          <span data-lang="hi" class="font-hindi">क्या मुझे ऐप में लोकेशन एक्सेस देना होगा?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes, location access is important because SOS alerts may include GPS details to help others understand where assistance is needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ, लोकेशन एक्सेस महत्वपूर्ण है क्योंकि SOS अलर्ट में जीपीएस जानकारी शामिल हो सकती है, जिससे दूसरों को समझने में मदद मिलती है कि सहायता कहाँ चाहिए।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "why is phone number shared in sos alert contact coordination",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="why is phone number shared in sos alert contact coordination">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Why is the sender’s phone number shared in the SOS?</span>
+          <span data-lang="hi" class="font-hindi">SOS में भेजने वाले का फोन नंबर क्यों साझा किया जाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The sender’s phone number is shared so responders can contact the sender directly and coordinate faster when urgent help is needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            भेजने वाले का फोन नंबर इसलिए साझा किया जाता है ताकि जवाब देने वाले लोग सीधे संपर्क कर सकें और तात्कालिक स्थिति में जल्दी समन्वय हो सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i describe situation in sos message short description details",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i describe situation in sos message short description details">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I add a short description while raising an SOS?</span>
+          <span data-lang="hi" class="font-hindi">क्या SOS भेजते समय मैं छोटा विवरण जोड़ सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. A short description can help responders understand the situation better and coordinate more effectively.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। एक छोटा विवरण मदद करने वाले लोगों को स्थिति बेहतर समझने और अधिक प्रभावी समन्वय करने में मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app only for one district district based how district works",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app only for one district district based how district works">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app based on district-level alerts?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप जिला-स्तर के अलर्ट पर काम करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is designed so that SOS alerts are shared with registered users within the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप इस तरह बनाया गया है कि SOS अलर्ट उसी जिले के पंजीकृत उपयोगकर्ताओं तक पहुँचें।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can people outside district receive sos other district another district",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can people outside district receive sos other district another district">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Do people outside my district receive my SOS?</span>
+          <span data-lang="hi" class="font-hindi">क्या मेरे जिले के बाहर के लोग मेरा SOS देखेंगे?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The app is designed to share SOS alerts within the same district, so the alert is primarily meant for registered users in that district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            यह ऐप SOS अलर्ट को उसी जिले के भीतर साझा करने के लिए बनाया गया है, इसलिए अलर्ट मुख्य रूप से उसी जिले के पंजीकृत उपयोगकर्ताओं के लिए होता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app free free to use cost charges fee",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app free free to use cost charges fee">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app free to use?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप इस्तेमाल करने के लिए मुफ्त है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            If the app is offered without any usage fee on the store, users can install and use it as provided. Any specific pricing or charges, if applicable, would be shown officially in the app or store listing.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            अगर ऐप स्टोर पर बिना किसी उपयोग शुल्क के उपलब्ध है, तो उपयोगकर्ता इसे उसी रूप में इंस्टॉल और इस्तेमाल कर सकते हैं। यदि कोई विशेष शुल्क लागू हो, तो वह आधिकारिक रूप से ऐप या स्टोर लिस्टिंग में दिखाया जाएगा।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "how do i download app play store app store install",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="how do i download app play store app store install">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">How do I download the app?</span>
+          <span data-lang="hi" class="font-hindi">मैं ऐप कैसे डाउनलोड करूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            You can download the app from the Google Play Store or the Apple App Store, depending on your device.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            आप अपने डिवाइस के अनुसार Google Play Store या Apple App Store से ऐप डाउनलोड कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "what details do i need for registration name phone number district",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="what details do i need for registration name phone number district">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What details do I need to register?</span>
+          <span data-lang="hi" class="font-hindi">रजिस्ट्रेशन के लिए मुझे कौन-कौन सी जानकारी देनी होगी?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Registration typically requires basic details such as your name, phone number, and district so the app can associate your account with the right area.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            रजिस्ट्रेशन के लिए आमतौर पर आपका नाम, फोन नंबर और जिला जैसी बुनियादी जानकारी चाहिए होती है, ताकि आपका अकाउंट सही क्षेत्र से जुड़ सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "why district selection important district registration area users",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="why district selection important district registration area users">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Why is district selection important during registration?</span>
+          <span data-lang="hi" class="font-hindi">रजिस्ट्रेशन के समय जिला चुनना क्यों ज़रूरी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            District selection is important because SOS alerts are designed to be shared with registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            जिला चुनना इसलिए ज़रूरी है क्योंकि SOS अलर्ट उसी जिले के पंजीकृत उपयोगकर्ताओं तक पहुँचाने के लिए बनाए गए हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i use app to help others respond to alerts volunteer support",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i use app to help others respond to alerts volunteer support">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I use the app to help others and not just raise SOS alerts?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं ऐप का उपयोग सिर्फ SOS भेजने के लिए नहीं, बल्कि दूसरों की मदद के लिए भी कर सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is also meant for people who want to respond to alerts and help others when urgent animal welfare situations arise in their district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उन लोगों के लिए भी है जो अपने जिले में पशु कल्याण से जुड़ी तात्कालिक स्थितियों में दूसरों के अलर्ट देखकर मदद करना चाहते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "when should i raise sos urgent situation emergency when to use",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="when should i raise sos urgent situation emergency when to use">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">When should I raise an SOS?</span>
+          <span data-lang="hi" class="font-hindi">मुझे SOS कब भेजना चाहिए?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            You should raise an SOS when you are facing an urgent animal welfare-related situation and need timely support, coordination, or local help.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            जब आप पशु कल्याण से जुड़ी किसी तात्कालिक स्थिति का सामना कर रहे हों और समय पर सहायता, समन्वय या स्थानीय मदद की ज़रूरत हो, तब आपको SOS भेजना चाहिए।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i raise sos for someone else another person another animal case",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i raise sos for someone else another person another animal case">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I raise an SOS for an animal even if it is not my own pet?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं किसी जानवर के लिए SOS भेज सकता हूँ, भले ही वह मेरा पालतू जानवर न हो?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. You can raise an SOS for any urgent animal welfare-related situation, including cases involving stray or community animals.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। आप किसी भी तात्कालिक पशु कल्याण स्थिति के लिए SOS भेज सकते हैं, चाहे मामला आवारा या सामुदायिक जानवर से जुड़ा हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "what is app not meant for misuse non urgent unrelated cases",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="what is app not meant for misuse non urgent unrelated cases">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What kind of situations is the app not meant for?</span>
+          <span data-lang="hi" class="font-hindi">यह ऐप किन स्थितियों के लिए नहीं बनाया गया है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The app is meant for urgent animal welfare-related situations and should not be used for unrelated, non-animal, or non-urgent matters.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            यह ऐप पशु कल्याण से जुड़ी तात्कालिक स्थितियों के लिए बनाया गया है और इसका उपयोग असंबंधित, गैर-पशु, या गैर-तात्कालिक मामलों के लिए नहीं किया जाना चाहिए।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can nearby people coordinate help after seeing sos",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can nearby people coordinate help after seeing sos">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can nearby users coordinate help after seeing an SOS?</span>
+          <span data-lang="hi" class="font-hindi">क्या आसपास के उपयोगकर्ता SOS देखने के बाद मदद का समन्वय कर सकते हैं?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Users who see the alert and are available may coordinate help by contacting the sender and taking the next steps as needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जो उपयोगकर्ता अलर्ट देखते हैं और उपलब्ध होते हैं, वे भेजने वाले से संपर्क करके और आवश्यक अगले कदम उठाकर मदद का समन्वय कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help community animals stray animals local feeders rescuers",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help community animals stray animals local feeders rescuers">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app useful for community and stray animal situations?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप सामुदायिक और आवारा जानवरों से जुड़ी स्थितियों में उपयोगी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is useful for urgent situations involving community or stray animals where timely local coordination may help.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप सामुदायिक या आवारा जानवरों से जुड़ी तात्कालिक स्थितियों में उपयोगी है, जहाँ समय पर स्थानीय समन्वय मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "why should i share app spread word more people join district",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="why should i share app spread word more people join district">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Why should I share the app with others in my district?</span>
+          <span data-lang="hi" class="font-hindi">मुझे अपने जिले के अन्य लोगों के साथ यह ऐप क्यों साझा करना चाहिए?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Sharing the app helps grow the local network. The more people who join in a district, the better the chance that an SOS will be seen and responded to quickly.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            ऐप को साझा करने से स्थानीय नेटवर्क मजबूत होता है। किसी जिले में जितने ज़्यादा लोग जुड़ेंगे, उतनी ही संभावना होगी कि SOS जल्दी देखा जाए और उस पर प्रतिक्रिया मिले।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i raise sos anytime 24x7 day night emergency",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i raise sos anytime 24x7 day night emergency">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I raise an SOS at any time?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं किसी भी समय SOS भेज सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. If you are facing an urgent animal welfare-related situation, you can raise an SOS whenever needed through the app.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। अगर आप पशु कल्याण से जुड़ी किसी तात्कालिक स्थिति का सामना कर रहे हैं, तो आप ज़रूरत पड़ने पर किसी भी समय ऐप के माध्यम से SOS भेज सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "what if nobody responds no response no one available",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="what if nobody responds no response no one available">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What if nobody responds to my SOS?</span>
+          <span data-lang="hi" class="font-hindi">अगर मेरे SOS पर कोई जवाब न दे तो क्या होगा?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Since the app depends on registered users in the district being available, there may be situations where no one is able to respond. That is why growing the network in each district is important.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            क्योंकि यह ऐप जिले के पंजीकृत और उपलब्ध उपयोगकर्ताओं पर निर्भर करता है, कुछ स्थितियों में ऐसा हो सकता है कि कोई जवाब न दे पाए। इसलिए हर जिले में नेटवर्क का बढ़ना बहुत महत्वपूर्ण है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i use app only to receive alerts not raise sos",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i use app only to receive alerts not raise sos">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I use the app only to receive alerts and help others?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं ऐप का उपयोग सिर्फ अलर्ट पाने और दूसरों की मदद करने के लिए कर सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. You may choose to stay on the app so you can see alerts in your district and respond whenever you are available to help.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। आप ऐप पर रहकर अपने जिले के अलर्ट देख सकते हैं और जब भी उपलब्ध हों, दूसरों की मदद के लिए प्रतिक्रिया दे सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app useful for first response immediate coordination urgent help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app useful for first response immediate coordination urgent help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app meant for quick first-level coordination?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तुरंत शुरुआती स्तर के समन्वय के लिए बनाया गया है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is designed to help with quick first-level coordination by connecting the sender with registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप तुरंत शुरुआती स्तर के समन्वय में मदद करने के लिए बनाया गया है, ताकि भेजने वाला उसी जिले के पंजीकृत उपयोगकर्ताओं से जल्दी जुड़ सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app connect nearby people local support same district help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app connect nearby people local support same district help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help connect people for local support?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप स्थानीय सहायता के लिए लोगों को जोड़ने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is built to connect people within the same district so local support and coordination can happen faster during urgent situations.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उसी जिले के लोगों को जोड़ने के लिए बनाया गया है, ताकि तात्कालिक स्थितियों में स्थानीय सहायता और समन्वय जल्दी हो सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can pet owners use app emergency injured pet lost pet urgent support",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can pet owners use app emergency injured pet lost pet urgent support">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can pet owners use the app during urgent situations?</span>
+          <span data-lang="hi" class="font-hindi">क्या पालतू जानवर रखने वाले लोग तात्कालिक स्थिति में यह ऐप इस्तेमाल कर सकते हैं?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Pet owners can use the app when they need urgent help, coordination, or local support related to their pet.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। पालतू जानवर रखने वाले लोग अपने पालतू से जुड़ी तात्कालिक स्थिति में जल्दी मदद, समन्वय या स्थानीय सहायता के लिए यह ऐप इस्तेमाल कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can animal lovers join even if not rescuer feeder owner",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can animal lovers join even if not rescuer feeder owner">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can animal lovers join even if they are not rescuers or feeders?</span>
+          <span data-lang="hi" class="font-hindi">क्या पशु प्रेमी लोग जुड़ सकते हैं, भले ही वे रेस्क्यूअर या फीडर न हों?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Anyone who wants to support animals and respond when possible can join and use the app.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। कोई भी व्यक्ति जो जानवरों की मदद करना चाहता है और अवसर मिलने पर प्रतिक्रिया दे सकता है, वह जुड़कर यह ऐप इस्तेमाल कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app depend on community participation people joining network",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app depend on community participation people joining network">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app depend on community participation?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप कम्युनिटी की भागीदारी पर निर्भर करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app works as a community-driven network, so more participation from people in each district improves its usefulness.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप एक कम्युनिटी-आधारित नेटवर्क की तरह काम करता है, इसलिए हर जिले में लोगों की ज़्यादा भागीदारी इसकी उपयोगिता बढ़ाती है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app be shared with friends family volunteers feeders district groups",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app be shared with friends family volunteers feeders district groups">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I share the app with friends, family, and local animal helpers?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं यह ऐप दोस्तों, परिवार और स्थानीय पशु-सेवकों के साथ साझा कर सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Sharing the app with more people in your district can strengthen the network and improve the chances of faster responses.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। अपने जिले के ज़्यादा लोगों के साथ यह ऐप साझा करने से नेटवर्क मजबूत होता है और तेज़ प्रतिक्रिया मिलने की संभावना बढ़ती है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "what is core idea of app fast local connection urgent animal welfare",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="what is core idea of app fast local connection urgent animal welfare">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">What is the core idea behind the app?</span>
+          <span data-lang="hi" class="font-hindi">इस ऐप का मूल विचार क्या है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The core idea is to create a fast local support network for urgent animal welfare situations by connecting people within the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            इसका मूल विचार यह है कि पशु कल्याण से जुड़ी तात्कालिक स्थितियों के लिए एक तेज़ स्थानीय सहायता नेटवर्क बनाया जाए, जो एक ही जिले के लोगों को जोड़े।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i use app when i need urgent local guidance animal welfare help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i use app when i need urgent local guidance animal welfare help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I use the app when I need urgent local guidance for an animal welfare situation?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं किसी पशु कल्याण स्थिति में तुरंत स्थानीय मार्गदर्शन चाहिए हो तो यह ऐप इस्तेमाल कर सकता हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app can help you connect with registered users in your district who may be able to guide, respond, or coordinate in urgent situations.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप आपको आपके जिले के पंजीकृत उपयोगकर्ताओं से जोड़ सकता है, जो तात्कालिक स्थिति में मार्गदर्शन, प्रतिक्रिया या समन्वय में मदद कर सकें।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app useful when time matters urgent response fast support",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app useful when time matters urgent response fast support">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app useful in situations where every minute matters?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप उन स्थितियों में उपयोगी है जहाँ हर मिनट महत्वपूर्ण होता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is designed for urgent animal welfare situations where quick visibility and fast coordination can make a difference.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप पशु कल्याण से जुड़ी तात्कालिक स्थितियों के लिए बनाया गया है, जहाँ जल्दी जानकारी पहुँचाना और तेज़ समन्वय फर्क ला सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can i keep app installed to help whenever alerts come",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can i keep app installed to help whenever alerts come">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I keep the app installed so I can help whenever alerts appear?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं ऐप इंस्टॉल रख सकता हूँ ताकि अलर्ट आने पर जब संभव हो मदद कर सकूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Keeping the app installed allows you to stay connected to the district network and respond whenever you are available.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। ऐप इंस्टॉल रखकर आप अपने जिले के नेटवर्क से जुड़े रह सकते हैं और जब उपलब्ध हों तब प्रतिक्रिया दे सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app help reduce delay in reaching right people",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app help reduce delay in reaching right people">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help reduce delays in reaching the right people?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप सही लोगों तक पहुँचने में होने वाली देरी कम करने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. One of the main purposes of the app is to reduce delays by quickly sharing urgent alerts with registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। इस ऐप का एक मुख्य उद्देश्य यही है कि तात्कालिक अलर्ट को उसी जिले के पंजीकृत उपयोगकर्ताओं तक जल्दी पहुँचाकर देरी कम की जाए।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app replace whatsapp groups calls forwards",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app replace whatsapp groups calls forwards">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app offer a more direct option than scattered messages and forwards?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप इधर-उधर फैले मैसेज और फॉरवर्ड की तुलना में अधिक सीधा तरीका देता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is built to provide a more direct district-level alert flow instead of depending only on scattered messages, calls, or forwards.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप केवल इधर-उधर के मैसेज, कॉल या फॉरवर्ड पर निर्भर रहने के बजाय जिला-स्तर पर अधिक सीधा अलर्ट सिस्टम देने के लिए बनाया गया है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help connect people who are already willing to help animals",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help connect people who are already willing to help animals">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app connect people who are already willing to help animals?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप उन लोगों को जोड़ सकता है जो पहले से जानवरों की मदद करना चाहते हैं?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app helps connect animal lovers, feeders, volunteers, rescuers, and pet owners through a shared district-based network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप पशु प्रेमियों, फीडर्स, वॉलंटियर्स, रेस्क्यू करने वालों और पालतू जानवर रखने वालों को एक साझा जिला-आधारित नेटवर्क के माध्यम से जोड़ता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "what if i want to help but cannot respond every time",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="what if i want to help but cannot respond every time">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can I still join even if I may not be able to respond every time?</span>
+          <span data-lang="hi" class="font-hindi">क्या मैं जुड़ सकता हूँ, भले ही मैं हर बार प्रतिक्रिया न दे पाऊँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. You can still join the network. People respond when they are available, and every additional user strengthens the district network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। आप फिर भी नेटवर्क से जुड़ सकते हैं। लोग अपनी उपलब्धता के अनुसार प्रतिक्रिया देते हैं, और हर नया उपयोगकर्ता जिले के नेटवर्क को मजबूत बनाता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app be useful for both seeking help and offering help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app be useful for both seeking help and offering help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app useful both for seeking help and offering help?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप मदद माँगने और मदद देने — दोनों के लिए उपयोगी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. A user may raise an SOS when help is needed, and may also respond to others’ alerts when available.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जब ज़रूरत हो तब उपयोगकर्ता SOS भेज सकता है, और जब उपलब्ध हो तब दूसरों के अलर्ट पर प्रतिक्रिया भी दे सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app create local animal help network district based ecosystem",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app create local animal help network district based ecosystem">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help build a local animal-help network in each district?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप हर जिले में स्थानीय पशु-सहायता नेटवर्क बनाने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is intended to strengthen district-level animal welfare support by connecting more registered users within each district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप हर जिले में अधिक पंजीकृत उपयोगकर्ताओं को जोड़कर जिला-स्तर पर पशु कल्याण सहायता नेटवर्क को मजबूत करने के लिए बनाया गया है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "why should more people keep using app over time",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="why should more people keep using app over time">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Why is it important that more people continue using the app over time?</span>
+          <span data-lang="hi" class="font-hindi">यह क्यों ज़रूरी है कि समय के साथ ज़्यादा लोग ऐप का उपयोग करते रहें?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Continued usage helps keep the district network active. The more active users there are, the better the chances of faster visibility and timely responses.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            लगातार उपयोग से जिले का नेटवर्क सक्रिय बना रहता है। जितने ज़्यादा सक्रिय उपयोगकर्ता होंगे, उतनी ही जल्दी अलर्ट दिखने और समय पर प्रतिक्रिया मिलने की संभावना बढ़ेगी।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "who can benefit from using rapid response team app",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="who can benefit from using rapid response team app">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Who can benefit from using the Rapid Response Team app?</span>
+          <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम ऐप का उपयोग करने से किन लोगों को लाभ हो सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Animal feeders, rescuers, pet owners, volunteers, and anyone who may need or offer urgent district-level animal welfare help can benefit from using the app.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            पशुओं को खाना खिलाने वाले, रेस्क्यू करने वाले, पालतू जानवरों के मालिक, वॉलंटियर्स, और वे सभी लोग जिन्हें तत्काल जिला-स्तरीय पशु कल्याण सहायता चाहिए या जो सहायता देना चाहते हैं, इस ऐप से लाभ उठा सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app only for emergencies or also for staying connected",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app only for emergencies or also for staying connected">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app only for emergencies, or also for staying connected to a local support network?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप केवल आपात स्थितियों के लिए है, या स्थानीय सहायता नेटवर्क से जुड़े रहने के लिए भी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            While it is primarily built for urgent animal welfare situations, it also helps users stay connected to a district-level support network that may be useful when needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            यद्यपि यह मुख्य रूप से तात्कालिक पशु कल्याण स्थितियों के लिए बनाया गया है, यह उपयोगकर्ताओं को जिला-स्तर के सहायता नेटवर्क से जुड़े रहने में भी मदद करता है, जो आवश्यकता पड़ने पर उपयोगी हो सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can local communities become stronger through this app",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can local communities become stronger through this app">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can local animal welfare communities become stronger through this app?</span>
+          <span data-lang="hi" class="font-hindi">क्या इस ऐप के माध्यम से स्थानीय पशु कल्याण समुदाय अधिक मजबूत बन सकते हैं?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. As more users register and stay active in the same district, the local animal welfare support network can become stronger and more responsive.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जैसे-जैसे एक ही जिले में अधिक उपयोगकर्ता पंजीकरण करते हैं और सक्रिय रहते हैं, स्थानीय पशु कल्याण सहायता नेटवर्क अधिक मजबूत और अधिक प्रतिक्रियाशील बन सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can one person use app for different kinds of animal welfare situations",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can one person use app for different kinds of animal welfare situations">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can one person use the app for different kinds of animal welfare situations?</span>
+          <span data-lang="hi" class="font-hindi">क्या एक व्यक्ति इस ऐप का उपयोग पशु कल्याण से जुड़ी अलग-अलग प्रकार की स्थितियों में कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is meant to support urgent animal welfare-related situations in general, as long as quick district-level visibility and possible help are needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप सामान्य रूप से उन तात्कालिक पशु कल्याण स्थितियों के लिए है, जहाँ जिला-स्तर पर जल्दी जानकारी पहुँचाना और संभावित मदद ज़रूरी हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app help people act faster together locally",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app help people act faster together locally">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help people act faster together at the local level?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप स्थानीय स्तर पर लोगों को मिलकर अधिक तेज़ी से कार्य करने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By connecting registered users within the same district, the app supports quicker local coordination when urgent help may be needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। एक ही जिले के पंजीकृत उपयोगकर्ताओं को जोड़कर, यह ऐप ऐसी परिस्थितियों में स्थानीय स्तर पर तेज़ समन्वय में मदद करता है जहाँ तत्काल सहायता की आवश्यकता हो सकती है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app be useful even if i am not rescuer or ngo",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app be useful even if i am not rescuer or ngo">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app still be useful even if I am not part of a rescue group or NGO?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तब भी उपयोगी हो सकता है यदि मैं किसी रेस्क्यू ग्रुप या NGO का हिस्सा नहीं हूँ?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is for registered users in the animal welfare ecosystem and is not limited only to formal groups or organizations.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप पशु कल्याण तंत्र से जुड़े पंजीकृत उपयोगकर्ताओं के लिए है और केवल औपचारिक समूहों या संगठनों तक सीमित नहीं है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "why does district based model matter in this app",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="why does district based model matter in this app">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Why does the district-based model matter in this app?</span>
+          <span data-lang="hi" class="font-hindi">इस ऐप में जिला-आधारित मॉडल क्यों महत्वपूर्ण है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            The district-based model helps make alerts more locally relevant, improves the chances of timely visibility, and supports faster coordination among nearby registered users.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            जिला-आधारित मॉडल अलर्ट को स्थानीय रूप से अधिक प्रासंगिक बनाता है, समय पर जानकारी पहुँचने की संभावना बढ़ाता है, और पास के पंजीकृत उपयोगकर्ताओं के बीच तेज़ समन्वय में मदद करता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app work better as more people in district join",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app work better as more people in district join">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app become more effective as more people in a district join?</span>
+          <span data-lang="hi" class="font-hindi">क्या किसी जिले में अधिक लोगों के जुड़ने पर यह ऐप और अधिक प्रभावी हो जाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. A larger active user base within the district can improve reach, visibility, and the chances that someone may be available to respond.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जिले में अधिक सक्रिय उपयोगकर्ता होने से पहुँच, दृश्यता, और यह संभावना बढ़ जाती है कि कोई न कोई प्रतिक्रिया देने के लिए उपलब्ध हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help during confusion when one does not know whom to contact",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help during confusion when one does not know whom to contact">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help in situations where someone does not know whom to contact?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप ऐसी स्थिति में मदद कर सकता है जब किसी को पता न हो कि किससे संपर्क करना चाहिए?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app can help by sending the alert to registered users in the same district, instead of depending on a person already knowing the right contact.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप अलर्ट को उसी जिले के पंजीकृत उपयोगकर्ताओं तक भेजकर मदद कर सकता है, बजाय इसके कि किसी व्यक्ति को पहले से सही संपर्क पता होना ज़रूरी हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app support both regular users and active volunteers",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app support both regular users and active volunteers">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app support both regular users and highly active volunteers?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप सामान्य उपयोगकर्ताओं और बहुत सक्रिय वॉलंटियर्स — दोनों का समर्थन कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app can be useful for people who may need help occasionally, as well as for users who actively want to respond and support others in their district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उन लोगों के लिए भी उपयोगी है जिन्हें कभी-कभी मदद चाहिए होती है, और उन उपयोगकर्ताओं के लिए भी जो सक्रिय रूप से प्रतिक्रिया देकर अपने जिले में दूसरों की सहायता करना चाहते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app be useful for someone who may need urgent help unexpectedly",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app be useful for someone who may need urgent help unexpectedly">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app be useful for someone who may unexpectedly need urgent help?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप ऐसे व्यक्ति के लिए उपयोगी हो सकता है जिसे अचानक तत्काल मदद की ज़रूरत पड़ जाए?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. If an urgent animal welfare-related situation arises unexpectedly, the app can help the user quickly alert registered people in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यदि अचानक पशु कल्याण से जुड़ी कोई तात्कालिक स्थिति पैदा हो जाए, तो यह ऐप उपयोगकर्ता को उसी जिले के पंजीकृत लोगों तक जल्दी अलर्ट पहुँचाने में मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app reduce dependency on random forwards and scattered messages",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app reduce dependency on random forwards and scattered messages">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app reduce dependence on random forwards and scattered messages?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप इधर-उधर भेजे गए बेतरतीब फ़ॉरवर्ड्स और बिखरे संदेशों पर निर्भरता कम करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of depending only on scattered calls or forwarded messages, the app provides a more direct way to alert registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। केवल बिखरे हुए कॉल्स या फ़ॉरवर्ड किए गए संदेशों पर निर्भर रहने के बजाय, यह ऐप उसी जिले के पंजीकृत उपयोगकर्ताओं तक अलर्ट पहुँचाने का अधिक सीधा तरीका देता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app improve visibility of urgent situations locally",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app improve visibility of urgent situations locally">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app improve local visibility of urgent situations?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक स्थितियों की स्थानीय दृश्यता बेहतर कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By routing the alert within the same district, the app can make urgent animal welfare situations visible to more relevant nearby users.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। एक ही जिले के भीतर अलर्ट भेजकर, यह ऐप तात्कालिक पशु कल्याण स्थितियों को अधिक प्रासंगिक और नज़दीकी उपयोगकर्ताओं तक पहुँचा सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is this app meant only for experts in animal welfare",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is this app meant only for experts in animal welfare">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is this app meant only for experts in animal welfare?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप केवल पशु कल्याण विशेषज्ञों के लिए ही है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            No. The app is not limited only to experts. It can also be useful for ordinary registered users who may need help or may be willing to support animal welfare situations in their district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            नहीं। यह ऐप केवल विशेषज्ञों तक सीमित नहीं है। यह सामान्य पंजीकृत उपयोगकर्ताओं के लिए भी उपयोगी हो सकता है जिन्हें मदद चाहिए हो या जो अपने जिले में पशु कल्याण से जुड़ी स्थितियों में सहायता करना चाहते हों।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app create a faster local support chain",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app create a faster local support chain">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help create a faster local support chain?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तेज़ स्थानीय सहायता श्रृंखला बनाने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. It helps create a quicker support chain by allowing urgent alerts to reach registered users within the same district without unnecessary delay.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह तात्कालिक अलर्ट को बिना अनावश्यक देरी के उसी जिले के पंजीकृत उपयोगकर्ताओं तक पहुँचाकर तेज़ सहायता श्रृंखला बनाने में मदद करता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app be helpful even if user only needs guidance or coordination",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app be helpful even if user only needs guidance or coordination">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app be helpful even if a user mainly needs guidance or coordination?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तब भी उपयोगी हो सकता है जब किसी उपयोगकर्ता को मुख्य रूप से मार्गदर्शन या समन्वय की ज़रूरत हो?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is useful not only where direct help may come, but also where someone in the district may guide, respond, or help coordinate the next steps.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप केवल सीधे मदद मिलने की स्थिति में ही नहीं, बल्कि तब भी उपयोगी है जब जिले में कोई व्यक्ति मार्गदर्शन दे सके, प्रतिक्रिया दे सके, या अगले कदमों का समन्वय कर सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help build district wise readiness for animal emergencies",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help build district wise readiness for animal emergencies">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help build district-wise readiness for animal emergencies?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप पशु आपात स्थितियों के लिए जिला-स्तरीय तत्परता बनाने में मदद कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. As more registered users exist within a district, the app can support a more prepared and reachable local response network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जैसे-जैसे किसी जिले में अधिक पंजीकृत उपयोगकर्ता जुड़ते हैं, यह ऐप अधिक तैयार और अधिक सुलभ स्थानीय प्रतिक्रिया नेटवर्क बनाने में मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can one district become more responsive over time through app usage",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can one district become more responsive over time through app usage">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can a district become more responsive over time through app usage?</span>
+          <span data-lang="hi" class="font-hindi">क्या ऐप के उपयोग से समय के साथ कोई जिला अधिक प्रतिक्रियाशील बन सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. If more people in the district register and remain active, the network may gradually become stronger, more visible, and more responsive.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यदि जिले में अधिक लोग पंजीकरण करते हैं और सक्रिय रहते हैं, तो नेटवर्क समय के साथ अधिक मजबूत, अधिक दिखाई देने वाला और अधिक प्रतिक्रियाशील बन सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app support urgent outreach without needing a big organization",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app support urgent outreach without needing a big organization">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app support urgent outreach even without a big organization behind the user?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप उपयोगकर्ता के पीछे किसी बड़े संगठन के बिना भी तात्कालिक पहुँच का समर्थन करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. A registered user can still use the platform to send urgent district-level alerts even if they are acting as an individual and not through a large organization.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। कोई पंजीकृत उपयोगकर्ता, चाहे वह किसी बड़े संगठन के माध्यम से काम न कर रहा हो, फिर भी व्यक्तिगत रूप से इस प्लेटफॉर्म का उपयोग करके तत्काल जिला-स्तरीय अलर्ट भेज सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app useful because it connects people who may otherwise never find each other",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app useful because it connects people who may otherwise never find each other">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app useful because it connects people who may otherwise never find each other in time?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप इसलिए उपयोगी है क्योंकि यह ऐसे लोगों को जोड़ता है जो अन्यथा समय पर एक-दूसरे तक नहीं पहुँच पाते?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. One of the app’s key benefits is that it helps connect urgent situations with relevant registered users in the same district who may otherwise not know about them in time.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। इस ऐप का एक मुख्य लाभ यह है कि यह तात्कालिक स्थितियों को उसी जिले के प्रासंगिक पंजीकृत उपयोगकर्ताओं से जोड़ता है, जिन्हें अन्यथा समय पर इसकी जानकारी नहीं मिल पाती।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app help create quicker awareness in same district",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app help create quicker awareness in same district">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help create quicker awareness within the same district?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप एक ही जिले में जल्दी जानकारी पहुँचाने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is designed to quickly make urgent animal welfare situations visible to registered users within the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप पशु कल्याण से जुड़ी तात्कालिक स्थितियों की जानकारी एक ही जिले के पंजीकृत उपयोगकर्ताओं तक जल्दी पहुँचाने के लिए बनाया गया है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help when urgent help is needed but contacts are limited",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help when urgent help is needed but contacts are limited">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help when urgent help is needed but personal contacts are limited?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तब मदद कर सकता है जब तत्काल सहायता चाहिए हो लेकिन व्यक्तिगत संपर्क सीमित हों?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of relying only on a small personal contact circle, the app allows alerts to reach other registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। केवल सीमित व्यक्तिगत संपर्कों पर निर्भर रहने के बजाय, यह ऐप अलर्ट को उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं तक पहुँचने देता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is district level coordination one of the core strengths of app",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is district level coordination one of the core strengths of app">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is district-level coordination one of the core strengths of the app?</span>
+          <span data-lang="hi" class="font-hindi">क्या जिला-स्तरीय समन्वय इस ऐप की मुख्य ताकतों में से एक है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. A core strength of the app is that it helps connect urgent situations to registered users at the district level for quicker local visibility.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। इस ऐप की एक मुख्य ताकत यह है कि यह तात्कालिक स्थितियों को जिला-स्तर पर पंजीकृत उपयोगकर्ताओं से जोड़ता है ताकि स्थानीय स्तर पर जल्दी जानकारी पहुँच सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app support people who want to help but do not know where help is needed",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app support people who want to help but do not know where help is needed">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app support people who want to help but do not know where help is needed?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप उन लोगों की मदद कर सकता है जो सहायता करना चाहते हैं लेकिन नहीं जानते कि कहाँ ज़रूरत है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app can make urgent situations visible to registered users who are willing to help but may otherwise not know when or where support is needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप तात्कालिक स्थितियों की जानकारी ऐसे पंजीकृत उपयोगकर्ताओं तक पहुँचा सकता है जो मदद करना चाहते हैं, लेकिन अन्यथा उन्हें यह पता नहीं चल पाता कि कब और कहाँ सहायता की ज़रूरत है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app make local response more organized than scattered outreach",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app make local response more organized than scattered outreach">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app make local response more organized than scattered outreach?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप बिखरे हुए संपर्क प्रयासों की तुलना में स्थानीय प्रतिक्रिया को अधिक व्यवस्थित बनाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. It offers a more structured district-level alert flow than depending only on scattered messages, calls, or forwards.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। केवल बिखरे हुए संदेशों, कॉल्स या फ़ॉरवर्ड्स पर निर्भर रहने की बजाय, यह ऐप जिला-स्तर पर अधिक व्यवस्थित अलर्ट प्रवाह देता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app be useful to both those seeking help and those offering help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app be useful to both those seeking help and those offering help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app be useful to both those seeking help and those offering help?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप मदद चाहने वालों और मदद देने वालों — दोनों के लिए उपयोगी हो सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The platform is useful for people who need urgent assistance and also for registered users who want to respond or support others.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह प्लेटफॉर्म उन लोगों के लिए भी उपयोगी है जिन्हें तत्काल सहायता चाहिए, और उन पंजीकृत उपयोगकर्ताओं के लिए भी जो दूसरों की मदद या समर्थन करना चाहते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app become more valuable as local participation grows",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app become more valuable as local participation grows">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app become more valuable as local participation grows?</span>
+          <span data-lang="hi" class="font-hindi">क्या स्थानीय भागीदारी बढ़ने पर यह ऐप अधिक मूल्यवान हो जाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The more active users there are in a district, the more useful the app can become for visibility, coordination, and possible response.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। किसी जिले में जितने अधिक सक्रिय उपयोगकर्ता होंगे, यह ऐप दृश्यता, समन्वय और संभावित प्रतिक्रिया के लिए उतना ही अधिक उपयोगी बन सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app designed to improve chances of timely attention",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app designed to improve chances of timely attention">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app designed to improve the chances of timely attention?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप समय पर ध्यान मिलने की संभावना बढ़ाने के लिए बनाया गया है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By quickly sending district-level alerts to registered users, the app is designed to improve the chances that urgent situations are noticed sooner.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। पंजीकृत उपयोगकर्ताओं तक जिला-स्तरीय अलर्ट जल्दी पहुँचाकर, यह ऐप इस संभावना को बढ़ाने के लिए बनाया गया है कि तात्कालिक स्थितियों पर जल्दी ध्यान जाए।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help individuals feel less isolated during urgent situations",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help individuals feel less isolated during urgent situations">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help individuals feel less isolated during urgent situations?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक स्थितियों में लोगों को कम अकेला महसूस करने में मदद कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app can help by connecting the user to a wider district-level network instead of leaving them to handle the situation entirely alone.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उपयोगकर्ता को पूरी स्थिति अकेले संभालने के बजाय एक व्यापक जिला-स्तरीय नेटवर्क से जोड़कर मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app create a local bridge between urgent need and available people",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app create a local bridge between urgent need and available people">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app create a local bridge between urgent need and available people?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक ज़रूरत और उपलब्ध लोगों के बीच स्थानीय पुल का काम करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. One of the app’s main roles is to connect urgent animal welfare situations with registered users in the same district who may be available to respond.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। इस ऐप की मुख्य भूमिकाओं में से एक है तात्कालिक पशु कल्याण स्थितियों को उसी जिले के उन पंजीकृत उपयोगकर्ताओं से जोड़ना जो प्रतिक्रिया देने के लिए उपलब्ध हो सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help turn local willingness into actual response",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help turn local willingness into actual response">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help turn local willingness into actual response?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप स्थानीय मदद की इच्छा को वास्तविक प्रतिक्रिया में बदलने में मदद कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By making urgent situations visible to registered users in the same district, the app can help convert willingness to help into actual local response.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। तात्कालिक स्थितियों को उसी जिले के पंजीकृत उपयोगकर्ताओं तक पहुँचाकर, यह ऐप मदद की इच्छा को वास्तविक स्थानीय प्रतिक्रिया में बदलने में मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app useful when urgent support is needed beyond one's own circle",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app useful when urgent support is needed beyond one's own circle">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app useful when urgent support is needed beyond one’s own circle?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तब उपयोगी है जब तत्काल सहायता अपनी निजी पहचान से बाहर चाहिए होती है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app helps extend urgent outreach beyond a user’s immediate personal circle by reaching other registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उपयोगकर्ता के निजी संपर्क दायरे से बाहर भी तत्काल पहुँच बनाने में मदद करता है, क्योंकि यह अलर्ट उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं तक पहुँचाता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app support quicker district level awareness without manual forwarding",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app support quicker district level awareness without manual forwarding">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app support quicker district-level awareness without manual forwarding?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप बिना मैन्युअल फ़ॉरवर्डिंग के जिला-स्तर पर तेज़ जानकारी पहुँचा सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of depending only on people manually forwarding messages, the app directly pushes visibility to registered users within the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। लोगों द्वारा मैन्युअल रूप से संदेश आगे भेजने पर निर्भर रहने के बजाय, यह ऐप उसी जिले के पंजीकृत उपयोगकर्ताओं तक सीधे जानकारी पहुँचाता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app strengthen local preparedness through user participation",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app strengthen local preparedness through user participation">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app strengthen local preparedness through user participation?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप उपयोगकर्ता भागीदारी के माध्यम से स्थानीय तैयारी को मजबूत करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The more people participate within a district, the stronger and more prepared the local support network can become over time.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। किसी जिले में जितने अधिक लोग भाग लेते हैं, समय के साथ स्थानीय सहायता नेटवर्क उतना ही अधिक मजबूत और तैयार बन सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help surface urgent cases to relevant nearby users",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help surface urgent cases to relevant nearby users">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help surface urgent cases to relevant nearby users?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक मामलों को प्रासंगिक नज़दीकी उपयोगकर्ताओं तक पहुँचा सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Because the alert is district-based, it is more likely to become visible to nearby registered users for whom the situation may be more relevant.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। क्योंकि अलर्ट जिला-आधारित होता है, इसलिए उसके नज़दीकी पंजीकृत उपयोगकर्ताओं तक पहुँचने की संभावना अधिक होती है, जिनके लिए वह स्थिति अधिक प्रासंगिक हो सकती है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app beneficial for both occasional and frequent users",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app beneficial for both occasional and frequent users">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app beneficial for both occasional and frequent users?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप कभी-कभी उपयोग करने वालों और बार-बार उपयोग करने वालों — दोनों के लिए लाभकारी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. It can help both people who may need help only occasionally and users who actively stay available to support urgent cases in their district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह उन लोगों के लिए भी उपयोगी है जिन्हें केवल कभी-कभी मदद की ज़रूरत पड़ सकती है, और उन उपयोगकर्ताओं के लिए भी जो अपने जिले में तात्कालिक मामलों में सक्रिय रूप से सहायता देना चाहते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app create a more responsive local ecosystem over time",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app create a more responsive local ecosystem over time">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app create a more responsive local ecosystem over time?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप समय के साथ अधिक प्रतिक्रियाशील स्थानीय तंत्र बना सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. As local participation increases, the district network can gradually become more responsive, connected, and dependable.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जैसे-जैसे स्थानीय भागीदारी बढ़ती है, जिले का नेटवर्क धीरे-धीरे अधिक प्रतिक्रियाशील, अधिक जुड़ा हुआ और अधिक भरोसेमंद बन सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app reduce the need to already know the right helper",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app reduce the need to already know the right helper">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app reduce the need to already know the right person to contact?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप पहले से सही व्यक्ति का संपर्क जानने की आवश्यकता को कम करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of requiring the sender to already know the right person, the app shares the alert across registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। भेजने वाले को पहले से सही व्यक्ति का संपर्क जानना ज़रूरी होने के बजाय, यह ऐप अलर्ट को उसी जिले के पंजीकृत उपयोगकर्ताओं में साझा करता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help make urgent situations less dependent on chance visibility",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help make urgent situations less dependent on chance visibility">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app make urgent situations less dependent on chance visibility?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक स्थितियों को संयोगवश दिख जाने पर कम निर्भर बना सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of depending only on whether the right person happens to see a post or message, the app sends an alert directly within the district network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह केवल इस संयोग पर निर्भर नहीं रहता कि सही व्यक्ति किसी पोस्ट या संदेश को देख ले; बल्कि ऐप जिले के नेटवर्क के भीतर सीधे अलर्ट भेजता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app support a more connected district level animal welfare network",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app support a more connected district level animal welfare network">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app support a more connected district-level animal welfare network?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप अधिक जुड़ा हुआ जिला-स्तरीय पशु कल्याण नेटवर्क बनाने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By bringing registered users in the same district onto one alert-based platform, the app supports a more connected local animal welfare network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। एक ही जिले के पंजीकृत उपयोगकर्ताओं को एक अलर्ट-आधारित प्लेटफॉर्म पर जोड़कर, यह ऐप अधिक जुड़ा हुआ स्थानीय पशु कल्याण नेटवर्क बनाने में मदद करता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app improve local coordination without needing everyone in one group",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app improve local coordination without needing everyone in one group">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app improve local coordination without needing everyone in one group?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप बिना सभी लोगों को एक ही समूह में जोड़े स्थानीय समन्वय बेहतर बना सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of depending on one common group, the app allows urgent alerts to reach registered users in the same district through a dedicated alert system.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। एक ही सामान्य समूह पर निर्भर रहने के बजाय, यह ऐप एक समर्पित अलर्ट सिस्टम के माध्यम से उसी जिले के पंजीकृत उपयोगकर्ताओं तक तात्कालिक सूचना पहुँचाता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app useful for creating quicker district level visibility",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app useful for creating quicker district level visibility">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app useful for creating quicker district-level visibility?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप जिला-स्तर पर जल्दी दृश्यता बनाने के लिए उपयोगी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is built to quickly make urgent animal welfare situations visible to relevant registered users within the district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप जिले के भीतर प्रासंगिक पंजीकृत उपयोगकर्ताओं तक तात्कालिक पशु कल्याण स्थितियों की जानकारी जल्दी पहुँचाने के लिए बनाया गया है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help when immediate support may come from nearby strangers in network",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help when immediate support may come from nearby strangers in network">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help when immediate support may come from nearby people not personally known to the user?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तब मदद कर सकता है जब तत्काल सहायता ऐसे नज़दीकी लोगों से मिल सकती हो जिन्हें उपयोगकर्ता व्यक्तिगत रूप से नहीं जानता?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app can help connect the situation with other registered users in the district, including people the sender may not personally know.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप स्थिति को जिले के अन्य पंजीकृत उपयोगकर्ताओं तक पहुँचा सकता है, जिनमें ऐसे लोग भी शामिल हो सकते हैं जिन्हें भेजने वाला व्यक्तिगत रूप से नहीं जानता।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app support a more direct path from urgent need to possible help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app support a more direct path from urgent need to possible help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app support a more direct path from urgent need to possible help?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक ज़रूरत से संभावित सहायता तक अधिक सीधा मार्ग प्रदान करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By sending alerts directly across the district network, the app creates a more direct route from urgent need to possible local response.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जिले के नेटवर्क में सीधे अलर्ट भेजकर, यह ऐप तात्कालिक ज़रूरत से संभावित स्थानीय प्रतिक्रिया तक अधिक सीधा रास्ता बनाता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app support local action even when formal systems are not immediately available",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app support local action even when formal systems are not immediately available">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app support local action even when formal systems are not immediately available?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तब भी स्थानीय कार्रवाई में मदद कर सकता है जब औपचारिक व्यवस्था तुरंत उपलब्ध न हो?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. It helps users reach a district-level community network that may respond, guide, or coordinate when formal support is not immediately accessible.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह उपयोगकर्ताओं को जिला-स्तरीय कम्युनिटी नेटवर्क तक पहुँचने में मदद करता है, जो प्रतिक्रिया दे सकता है, मार्गदर्शन कर सकता है, या समन्वय कर सकता है, जब औपचारिक सहायता तुरंत उपलब्ध न हो।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app become stronger as more districts build active user bases",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app become stronger as more districts build active user bases">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app become stronger as districts build active user bases?</span>
+          <span data-lang="hi" class="font-hindi">क्या जिलों में सक्रिय उपयोगकर्ता आधार बनने पर यह ऐप और मजबूत होता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The platform can become stronger as more districts develop active registered user networks that improve local reach and responsiveness.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जैसे-जैसे अधिक जिलों में सक्रिय पंजीकृत उपयोगकर्ता नेटवर्क बनते हैं, प्लेटफॉर्म स्थानीय पहुँच और प्रतिक्रिया क्षमता के साथ और मजबूत हो सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help create better local readiness before crisis happens",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help create better local readiness before crisis happens">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help create better local readiness before a crisis happens?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप संकट आने से पहले बेहतर स्थानीय तैयारी बनाने में मदद कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. When more users are already registered and connected within a district, the local network may be better prepared when urgent situations arise.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जब किसी जिले में अधिक उपयोगकर्ता पहले से पंजीकृत और जुड़े होते हैं, तो तात्कालिक स्थिति आने पर स्थानीय नेटवर्क बेहतर तैयार हो सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app meant to improve chances that someone nearby notices the situation",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app meant to improve chances that someone nearby notices the situation">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app meant to improve the chances that someone nearby notices the situation?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप इस संभावना को बढ़ाने के लिए है कि आसपास का कोई व्यक्ति स्थिति को नोटिस करे?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Because alerts are shared within the district, the app improves the chances that nearby registered users may see the situation sooner.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। क्योंकि अलर्ट जिले के भीतर साझा किए जाते हैं, यह ऐप इस संभावना को बढ़ाता है कि आसपास के पंजीकृत उपयोगकर्ता स्थिति को जल्दी देख सकें।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help bring more structure to district wise emergency communication",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help bring more structure to district wise emergency communication">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app bring more structure to district-wise emergency communication?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप जिला-स्तरीय आपात संचार में अधिक संरचना ला सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. It provides a more structured district-based communication path than depending only on informal calls, chats, and forwards.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। केवल अनौपचारिक कॉल्स, चैट्स और फ़ॉरवर्ड्स पर निर्भर रहने की बजाय, यह ऐप जिला-आधारित संचार का अधिक संरचित मार्ग देता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help connect urgent local need with available goodwill",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help connect urgent local need with available goodwill">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help connect urgent local need with available goodwill?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप स्थानीय तात्कालिक ज़रूरत को उपलब्ध सद्भावना और मदद की इच्छा से जोड़ सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app helps connect urgent animal welfare situations with registered people in the district who may be willing to respond or support.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप तात्कालिक पशु कल्याण स्थितियों को जिले के उन पंजीकृत लोगों से जोड़ता है जो प्रतिक्रिया देने या सहायता करने की इच्छा रखते हों।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app help improve chances of district wide awareness during urgent cases",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app help improve chances of district wide awareness during urgent cases">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help improve the chances of district-wide awareness during urgent cases?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक मामलों में पूरे जिले में जानकारी पहुँचने की संभावना बढ़ाता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By sharing alerts with registered users in the same district, the app improves the chances that urgent situations become known more widely and quickly at the local level.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। एक ही जिले के पंजीकृत उपयोगकर्ताओं के साथ अलर्ट साझा करके, यह ऐप इस संभावना को बढ़ाता है कि तात्कालिक स्थितियों की जानकारी स्थानीय स्तर पर अधिक व्यापक और जल्दी फैल सके।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help users reach a relevant local network faster",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help users reach a relevant local network faster">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help users reach a relevant local network faster?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप उपयोगकर्ताओं को प्रासंगिक स्थानीय नेटवर्क तक जल्दी पहुँचने में मदद कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is designed to help users quickly reach registered people in the same district who may be able to respond, guide, or coordinate.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उपयोगकर्ताओं को उसी जिले के पंजीकृत लोगों तक जल्दी पहुँचाने के लिए बनाया गया है, जो प्रतिक्रिया दे सकते हैं, मार्गदर्शन कर सकते हैं, या समन्वय कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app reduce the delay caused by searching manually for help",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app reduce the delay caused by searching manually for help">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app reduce delays caused by manually searching for help?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप मदद ढूँढने के लिए मैन्युअल खोज से होने वाली देरी को कम करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of manually contacting people one by one, the app lets a registered user alert the district network more directly and quickly.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। लोगों से एक-एक करके संपर्क करने के बजाय, यह ऐप पंजीकृत उपयोगकर्ता को जिले के नेटवर्क तक अधिक सीधे और जल्दी अलर्ट पहुँचाने देता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help make local support more reachable in urgent moments",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help make local support more reachable in urgent moments">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help make local support more reachable during urgent moments?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक क्षणों में स्थानीय सहायता को अधिक सुलभ बना सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By connecting urgent cases to registered users in the same district, the app helps make possible local support more reachable when time matters.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। तात्कालिक मामलों को उसी जिले के पंजीकृत उपयोगकर्ताओं से जोड़कर, यह ऐप समय महत्वपूर्ण होने पर संभावित स्थानीय सहायता को अधिक सुलभ बनाता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app helpful for building a district wise community response habit",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app helpful for building a district wise community response habit">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app helpful for building a district-wise community response habit?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप जिला-स्तर पर सामुदायिक प्रतिक्रिया की आदत बनाने में मददगार है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. As more users engage with the platform in the same district, it can support a stronger culture of local awareness and response over time.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जैसे-जैसे एक ही जिले में अधिक उपयोगकर्ता इस प्लेटफॉर्म से जुड़ते और सक्रिय रहते हैं, समय के साथ यह स्थानीय जागरूकता और प्रतिक्रिया की संस्कृति को मजबूत कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help even when a user has no organized support system around them",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help even when a user has no organized support system around them">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help even when a user has no organized support system around them?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तब भी मदद कर सकता है जब उपयोगकर्ता के आसपास कोई संगठित सहायता व्यवस्था न हो?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Even without a personally organized support system, a registered user can still use the app to reach the wider district-level network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। व्यक्तिगत रूप से कोई संगठित सहायता व्यवस्था न होने पर भी, पंजीकृत उपयोगकर्ता इस ऐप के माध्यम से व्यापक जिला-स्तरीय नेटवर्क तक पहुँच सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app support practical district based communication during emergencies",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app support practical district based communication during emergencies">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app support practical district-based communication during emergencies?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप आपात स्थितियों में व्यावहारिक जिला-आधारित संचार का समर्थन करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is built to support practical local communication by routing urgent alerts to registered users in the same district.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उसी जिले के पंजीकृत उपयोगकर्ताओं तक तात्कालिक अलर्ट पहुँचाकर व्यावहारिक स्थानीय संचार का समर्थन करने के लिए बनाया गया है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app make it easier for willing people to notice where help is needed",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app make it easier for willing people to notice where help is needed">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app make it easier for willing people to notice where help is needed?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप मदद करने की इच्छा रखने वाले लोगों के लिए यह जानना आसान बनाता है कि कहाँ सहायता चाहिए?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. It helps by making urgent situations visible to registered users who are ready to support but may not otherwise know where help is needed.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह तात्कालिक स्थितियों को उन पंजीकृत उपयोगकर्ताओं तक दृश्यमान बनाता है जो मदद करना चाहते हैं, लेकिन अन्यथा उन्हें पता नहीं चल पाता कि कहाँ सहायता की ज़रूरत है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app support local response possibilities without promising outcomes",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app support local response possibilities without promising outcomes">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app support local response possibilities without promising outcomes?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप परिणाम की गारंटी दिए बिना स्थानीय प्रतिक्रिया की संभावनाओं का समर्थन करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is built to improve visibility and coordination possibilities within the district, while actual response still depends on who is available.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप जिले के भीतर दृश्यता और समन्वय की संभावनाएँ बेहतर बनाने के लिए बनाया गया है, जबकि वास्तविक प्रतिक्रिया इस बात पर निर्भर करती है कि कौन उपलब्ध है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help urgent situations reach beyond accidental discovery",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help urgent situations reach beyond accidental discovery">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help urgent situations get noticed beyond accidental discovery?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक स्थितियों को केवल संयोग से दिख जाने से आगे बढ़ाकर नोटिस करवाने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Rather than relying only on someone accidentally seeing a message or post, the app actively shares the alert within the district network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। केवल इस पर निर्भर रहने के बजाय कि कोई संयोग से संदेश या पोस्ट देख ले, यह ऐप जिले के नेटवर्क के भीतर सक्रिय रूप से अलर्ट साझा करता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is rapid response app useful for district level emergency visibility",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is rapid response app useful for district level emergency visibility">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the Rapid Response app useful for district-level emergency visibility?</span>
+          <span data-lang="hi" class="font-hindi">क्या रैपिड रिस्पॉन्स ऐप जिला-स्तर की आपात जानकारी पहुँचाने में उपयोगी है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is designed to make urgent animal welfare situations visible to registered users across the same district as quickly as possible.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप पशु कल्याण से जुड़ी तात्कालिक स्थितियों की जानकारी उसी जिले के पंजीकृत उपयोगकर्ताओं तक यथासंभव जल्दी पहुँचाने के लिए बनाया गया है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help users during urgent confusion and lack of contacts",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help users during urgent confusion and lack of contacts">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help during urgent situations when someone is confused and lacks the right contacts?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप ऐसी तात्कालिक स्थिति में मदद कर सकता है जब कोई व्यक्ति घबराहट में हो और उसके पास सही संपर्क न हों?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of depending on already knowing the right person, the app helps alert registered users in the same district who may be able to respond or guide.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। सही व्यक्ति का संपर्क पहले से जानने पर निर्भर रहने के बजाय, यह ऐप उसी जिले के पंजीकृत उपयोगकर्ताओं तक अलर्ट पहुँचाने में मदद करता है, जो प्रतिक्रिया दे सकते हैं या मार्गदर्शन कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app support local support discovery in urgent moments",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app support local support discovery in urgent moments">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app support discovering local support during urgent moments?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक समय में स्थानीय सहायता खोजने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app helps users reach a district-level network of registered people who may be available to help, respond, or coordinate.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप उपयोगकर्ताओं को जिले के पंजीकृत लोगों के नेटवर्क तक पहुँचने में मदद करता है, जहाँ कोई मदद करने, प्रतिक्रिया देने या समन्वय करने के लिए उपलब्ध हो सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app create more consistent local awareness of urgent animal welfare needs",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app create more consistent local awareness of urgent animal welfare needs">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app create more consistent local awareness of urgent animal welfare needs?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप पशु कल्याण की तात्कालिक ज़रूरतों के बारे में अधिक लगातार स्थानीय जागरूकता बना सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. By using a district-based alert model, the app supports more consistent visibility than relying only on scattered informal communication.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जिला-आधारित अलर्ट मॉडल का उपयोग करके, यह ऐप केवल बिखरे हुए अनौपचारिक संचार पर निर्भर रहने की तुलना में अधिक लगातार दृश्यता देता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "is app valuable for linking nearby availability with urgent need",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="is app valuable for linking nearby availability with urgent need">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Is the app valuable for linking nearby availability with urgent need?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप आसपास उपलब्ध लोगों को तात्कालिक ज़रूरत से जोड़ने में मूल्यवान है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. One of the app’s key benefits is connecting urgent situations with registered users in the same district who may be available to act.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। इस ऐप का एक मुख्य लाभ यह है कि यह तात्कालिक स्थितियों को उसी जिले के उन पंजीकृत उपयोगकर्ताओं से जोड़ता है जो कार्रवाई करने के लिए उपलब्ध हो सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help ordinary people participate in local animal welfare response",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help ordinary people participate in local animal welfare response">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help ordinary people participate in local animal welfare response?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप सामान्य लोगों को स्थानीय पशु कल्याण प्रतिक्रिया में भाग लेने में मदद कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The platform is not limited to formal experts alone and can help ordinary registered users become part of a local support network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह प्लेटफॉर्म केवल औपचारिक विशेषज्ञों तक सीमित नहीं है और सामान्य पंजीकृत उपयोगकर्ताओं को भी स्थानीय सहायता नेटवर्क का हिस्सा बनने में मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app support a more active district level culture of helping",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app support a more active district level culture of helping">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app support a more active district-level culture of helping?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप जिला-स्तर पर मदद की अधिक सक्रिय संस्कृति बनाने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. As more registered users join and stay active, the app can support a stronger local culture of awareness, readiness, and response.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जैसे-जैसे अधिक पंजीकृत उपयोगकर्ता जुड़ते और सक्रिय रहते हैं, यह ऐप स्थानीय स्तर पर जागरूकता, तैयारी और प्रतिक्रिया की मजबूत संस्कृति बनाने में मदद कर सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app reduce the role of luck in urgent cases being noticed",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app reduce the role of luck in urgent cases being noticed">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app reduce the role of luck in urgent cases being noticed?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक मामलों के नोटिस होने में केवल किस्मत पर निर्भरता कम कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. Instead of relying mainly on chance discovery through posts or forwards, the app actively sends alerts across the district network.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। पोस्ट या फ़ॉरवर्ड के माध्यम से संयोगवश जानकारी मिलने पर मुख्य रूप से निर्भर रहने के बजाय, यह ऐप जिले के नेटवर्क में सक्रिय रूप से अलर्ट भेजता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "can app help local communities respond better over time",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="can app help local communities respond better over time">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Can the app help local communities respond better over time?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप समय के साथ स्थानीय समुदायों को बेहतर प्रतिक्रिया देने में मदद कर सकता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. As the district user base becomes more active and connected, the local network can gradually become better at noticing and responding to urgent situations.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। जैसे-जैसे जिले का उपयोगकर्ता आधार अधिक सक्रिय और जुड़ा हुआ बनता है, स्थानीय नेटवर्क तात्कालिक स्थितियों को नोटिस करने और प्रतिक्रिया देने में धीरे-धीरे बेहतर हो सकता है।
+          </span>
+        </p>
+      </div>
+    `
+  },
+  {
+    keywords: "does app help connect urgent animal welfare situations with possible local action",
+    html: `
+      <div class="faq-item glass-card p-8" data-keywords="does app help connect urgent animal welfare situations with possible local action">
+        <h3 class="text-white text-xl font-bold mb-3">
+          <span data-lang="en">Does the app help connect urgent animal welfare situations with possible local action?</span>
+          <span data-lang="hi" class="font-hindi">क्या यह ऐप तात्कालिक पशु कल्याण स्थितियों को संभावित स्थानीय कार्रवाई से जोड़ने में मदद करता है?</span>
+        </h3>
+        <p class="text-white/40 leading-relaxed">
+          <span data-lang="en">
+            Yes. The app is built to connect urgent situations with registered district-level users who may be able to respond, support, or guide the next steps.
+          </span>
+          <span data-lang="hi" class="font-hindi">
+            हाँ। यह ऐप तात्कालिक स्थितियों को जिले के पंजीकृत उपयोगकर्ताओं से जोड़ने के लिए बनाया गया है, जो प्रतिक्रिया दे सकते हैं, सहायता कर सकते हैं, या अगले कदमों का मार्गदर्शन कर सकते हैं।
+          </span>
+        </p>
+      </div>
+    `
+  },
+];
+  
 
   function renderResults(matches) {
     faqResults.innerHTML = "";
