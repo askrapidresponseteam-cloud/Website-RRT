@@ -1969,7 +1969,10 @@ menu
   </div>
 
 </footer>
+</footer>
+
 <script>
+
 /* -----------------------------
 CRED STYLE MOBILE MENU
 ------------------------------ */
@@ -2002,210 +2005,45 @@ document.body.style.overflow="";
 }
 
 mobileBtn.addEventListener("click",openMenu);
-
 closeMenu.addEventListener("click",closeMobileMenu);
-
 mobileOverlay.addEventListener("click",closeMobileMenu);
 
 mobileLinks.forEach(link=>{
 link.addEventListener("click",closeMobileMenu);
 });
-/* -----------------------------
-HEADER SCROLL EFFECT
------------------------------- */
+
+
+/* HEADER SCROLL */
 
 const header = document.getElementById("mainHeader");
 
 window.addEventListener("scroll",()=>{
 
 if(window.scrollY > 50){
-
 header.classList.add("bg-black/80");
-
 }
 else{
-
 header.classList.remove("bg-black/80");
-
 }
 
 });
 
 
-/* -----------------------------
-SCROLL ANIMATIONS
------------------------------- */
+/* SCROLL ANIMATION */
 
 const fadeEls = document.querySelectorAll(".fade-up");
 
 const observer = new IntersectionObserver((entries)=>{
 
 entries.forEach(entry=>{
-
 if(entry.isIntersecting){
-
 entry.target.classList.add("show");
-
 }
-
 });
 
-},{
-threshold:0.15
-});
+},{threshold:0.15});
 
 fadeEls.forEach(el=>observer.observe(el));
-
-
-/* -----------------------------
-FAQ SEARCH
------------------------------- */
-
-const faqSearch = document.getElementById("faqSearch");
-const faqResults = document.getElementById("faqResults");
-const faqMessage = document.getElementById("faqMessage");
-const chips = document.querySelectorAll(".faq-chip");
-
-if(!faqSearch || !faqResults) return;
-
-
-/* FAQ DATA */
-
-const faqData = [
-
-{
-keywords:"what is the rapid response team app",
-html:`
-<div class="faq-item glass-card p-8" data-keywords="what is the rapid response team app">
-
-<h3 class="text-white text-xl font-bold mb-3">
-<span data-lang="en">What is the Rapid Response Team app?</span>
-<span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम ऐप क्या है?</span>
-</h3>
-
-<p class="text-white/40 leading-relaxed">
-
-<span data-lang="en">
-Rapid Response Team is a community-based SOS alert app built for the animal welfare ecosystem.
-It helps connect people facing urgent animal welfare-related situations with other registered users
-in the same district who may be able to respond quickly and assist.
-</span>
-
-<span data-lang="hi" class="font-hindi">
-रैपिड रिस्पॉन्स टीम एक कम्युनिटी-आधारित एसओएस अलर्ट ऐप है,
-जिसे पशु कल्याण तंत्र के लिए बनाया गया है।
-यह ऐप पशु कल्याण से जुड़ी तात्कालिक परिस्थितियों का सामना कर रहे लोगों को
-उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं से जोड़ने में मदद करता है।
-</span>
-
-</p>
-
-</div>
-`
-},
-
-{
-keywords:"how does the app work",
-html:`
-<div class="faq-item glass-card p-8" data-keywords="how does the app work">
-
-<h3 class="text-white text-xl font-bold mb-3">
-
-<span data-lang="en">How does the app work?</span>
-<span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है?</span>
-
-</h3>
-
-<p class="text-white/40 leading-relaxed">
-
-<span data-lang="en">
-With one tap a user can raise an SOS alert through the app.
-That alert is sent to all registered users within the same district.
-Users who receive the alert can decide whether they want to respond and help.
-</span>
-
-<span data-lang="hi" class="font-hindi">
-सिर्फ एक टैप से उपयोगकर्ता एसओएस अलर्ट भेज सकता है।
-यह अलर्ट उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को भेजा जाता है।
-जो उपयोगकर्ता अलर्ट देखते हैं वे स्थिति के अनुसार मदद कर सकते हैं।
-</span>
-
-</p>
-
-</div>
-`
-}
-
-];
-
-
-/* SEARCH FUNCTION */
-
-function renderFaq(keyword){
-
-faqResults.innerHTML="";
-
-const filtered = faqData.filter(faq =>
-faq.keywords.includes(keyword.toLowerCase())
-);
-
-if(filtered.length === 0){
-
-faqMessage.style.display="block";
-return;
-
-}
-
-faqMessage.style.display="none";
-
-filtered.forEach(item=>{
-
-faqResults.insertAdjacentHTML("beforeend",item.html);
-
-});
-
-setLang(document.documentElement.lang);
-
-}
-
-
-/* INPUT SEARCH */
-
-faqSearch.addEventListener("input", function(){
-
-const keyword = this.value.trim();
-
-if(keyword.length === 0){
-
-faqResults.innerHTML="";
-faqMessage.style.display="block";
-return;
-
-}
-
-renderFaq(keyword);
-
-});
-
-
-/* CHIP SEARCH */
-
-chips.forEach(chip=>{
-
-chip.addEventListener("click",()=>{
-
-const keyword = chip.dataset.keyword;
-
-faqSearch.value = keyword;
-
-renderFaq(keyword);
-
-});
-
-});
-
-});
-
 
 </script>
 
