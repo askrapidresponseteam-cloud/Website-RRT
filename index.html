@@ -1969,6 +1969,7 @@ menu
   </div>
 
 </footer>
+<script>
 function attachFaqToggle(){
 
   const items = document.querySelectorAll(".faq-item");
@@ -3426,12 +3427,10 @@ const faqMessage = document.getElementById("faqMessage");
 function renderFAQs(list){
   faqResults.innerHTML = "";
 setLang(document.documentElement.lang);
-attachFaqToggle();
   if(list.length === 0){
     faqMessage.style.display = "block";
     return;
   }
-function attachFaqToggle(){
 
   const items = document.querySelectorAll(".faq-item");
 
@@ -3464,7 +3463,7 @@ function attachFaqToggle(){
   list.forEach(item=>{
   faqResults.innerHTML += item.html;
 });
-
+attachFaqToggle();
 // 🔥 ADD THIS LINE
 setLang(document.documentElement.lang);
 }
@@ -3571,7 +3570,6 @@ entry.target.classList.add("show");
 fadeEls.forEach(el=>observer.observe(el));
 
 </script>
-
 </div>
 </body>
 </html>
