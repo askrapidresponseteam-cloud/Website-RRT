@@ -1979,21 +1979,38 @@ FAQ DATA (ADD HERE)
 const faqData = [
 {
   keywords: "what is the rapid response team app",
-  html: `
-    <div class="faq-item glass-card p-8" data-keywords="what is the rapid response team app">
-      <h3 class="text-white text-xl font-bold mb-3">
-        <span data-lang="en">What is the Rapid Response Team app?</span>
-        <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम ऐप क्या है?</span>
-      </h3>
-      <p class="text-white/40 leading-relaxed">
-        <span data-lang="en">
-          Rapid Response Team is a community-based SOS alert app built for the animal welfare ecosystem. It helps connect people facing urgent animal welfare-related situations with other registered users in the same district who may be able to respond quickly and assist.
-        </span>
-        <span data-lang="hi" class="font-hindi">
-          रैपिड रिस्पॉन्स टीम एक कम्युनिटी-आधारित एसओएस अलर्ट ऐप है, जिसे पशु कल्याण तंत्र के लिए बनाया गया है। यह ऐप पशु कल्याण से जुड़ी तात्कालिक परिस्थितियों का सामना कर रहे लोगों को उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं से जोड़ने में मदद करता है, जो जल्दी प्रतिक्रिया देकर सहायता कर सकते हैं।
-        </span>
-      </p>
-    </div>
+html: `
+<div class="faq-item border-b border-white/10 py-6 cursor-pointer">
+
+  <div class="flex items-center justify-between">
+    <h4 class="text-white font-semibold text-lg">
+
+      <span data-lang="en">What is the Rapid Response app?</span>
+      <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स ऐप क्या है?</span>
+
+    </h4>
+
+    <span class="material-symbols-outlined text-white/40 faq-icon transition-transform duration-300">
+      add
+    </span>
+  </div>
+
+  <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+    <p class="text-white/40 text-sm mt-4 leading-relaxed">
+
+      <span data-lang="en">
+        It connects nearby volunteers during animal emergencies.
+      </span>
+
+      <span data-lang="hi" class="font-hindi">
+        यह ऐप जानवरों की इमरजेंसी में आसपास के लोगों को जोड़ता है।
+      </span>
+
+    </p>
+  </div>
+
+</div>
+`
   `
 },
 {
@@ -3390,7 +3407,34 @@ function renderFAQs(list){
     faqMessage.style.display = "block";
     return;
   }
+function attachFaqToggle(){
 
+  const items = document.querySelectorAll(".faq-item");
+
+  items.forEach(item => {
+
+    item.addEventListener("click", () => {
+
+      const answer = item.querySelector(".faq-answer");
+      const icon = item.querySelector(".faq-icon");
+
+      const isOpen = answer.style.maxHeight && answer.style.maxHeight !== "0px";
+
+      // close all
+      document.querySelectorAll(".faq-answer").forEach(a => a.style.maxHeight = null);
+      document.querySelectorAll(".faq-icon").forEach(i => i.style.transform = "rotate(0deg)");
+
+      // open clicked
+      if(!isOpen){
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        icon.style.transform = "rotate(45deg)";
+      }
+
+    });
+
+  });
+
+}
   faqMessage.style.display = "none";
 
   list.forEach(item=>{
