@@ -191,10 +191,16 @@ transform:translateY(0);
   <div class="relative flex min-h-screen flex-col overflow-x-hidden">
 
 
-<!-- MOBILE MENU -->
+<!-- MOBILE MENU OVERLAY -->
+
+<div id="mobileMenuOverlay"
+class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+
+<!-- MOBILE MENU PANEL -->
 
 <div id="mobileMenu"
-class="fixed inset-0 bg-black z-[90] hidden flex flex-col items-center justify-center gap-10 text-lg">
+class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
 
 <a href="#problem" class="mobile-link text-white">Need</a>
 <a href="#solution" class="mobile-link text-white">Solution</a>
@@ -212,8 +218,6 @@ close
 </button>
 
 </div>
-
-
 
 <header id="mainHeader"
 class="fixed top-0 left-0 right-0 z-[100] bg-black/40 backdrop-blur-xl transition-all duration-300">
@@ -285,9 +289,10 @@ EN
 
 <!-- MOBILE MENU BUTTON -->
 
-<button id="mobileMenuBtn" class="lg:hidden text-white ml-2">
+<button id="mobileMenuBtn"
+class="lg:hidden text-white ml-2 relative w-8 h-8 flex items-center justify-center">
 
-<span class="material-symbols-outlined text-2xl">
+<span class="material-symbols-outlined text-2xl transition-all duration-300">
 menu
 </span>
 
@@ -1964,35 +1969,46 @@ menu
   </div>
 
 </footer>
-<script>
-
-document.addEventListener("DOMContentLoaded", function(){
-
 /* -----------------------------
-MOBILE MENU
+CRED STYLE MOBILE MENU
 ------------------------------ */
 
 const mobileBtn = document.getElementById("mobileMenuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
+const mobileOverlay = document.getElementById("mobileMenuOverlay");
 const closeMenu = document.getElementById("closeMenu");
+const mobileLinks = document.querySelectorAll(".mobile-link");
 
-if(mobileBtn){
-mobileBtn.addEventListener("click",()=>{
+function openMenu(){
 
-mobileMenu.classList.remove("hidden");
+mobileMenu.classList.remove("translate-x-full");
+mobileOverlay.classList.remove("opacity-0","pointer-events-none");
+mobileOverlay.classList.add("opacity-100");
 
-});
+document.body.style.overflow="hidden";
+
 }
 
-if(closeMenu){
-closeMenu.addEventListener("click",()=>{
+function closeMobileMenu(){
 
-mobileMenu.classList.add("hidden");
+mobileMenu.classList.add("translate-x-full");
 
-});
+mobileOverlay.classList.remove("opacity-100");
+mobileOverlay.classList.add("opacity-0","pointer-events-none");
+
+document.body.style.overflow="";
+
 }
 
+mobileBtn.addEventListener("click",openMenu);
 
+closeMenu.addEventListener("click",closeMobileMenu);
+
+mobileOverlay.addEventListener("click",closeMobileMenu);
+
+mobileLinks.forEach(link=>{
+link.addEventListener("click",closeMobileMenu);
+});
 /* -----------------------------
 HEADER SCROLL EFFECT
 ------------------------------ */
