@@ -3376,6 +3376,58 @@ const faqData = [
 }
 ];
 /* -----------------------------
+FAQ LOGIC (ADD HERE)
+------------------------------ */
+
+const faqSearch = document.getElementById("faqSearch");
+const faqResults = document.getElementById("faqResults");
+const faqMessage = document.getElementById("faqMessage");
+
+function renderFAQs(list){
+  faqResults.innerHTML = "";
+
+  if(list.length === 0){
+    faqMessage.style.display = "block";
+    return;
+  }
+
+  faqMessage.style.display = "none";
+
+  list.forEach(item=>{
+    faqResults.innerHTML += item.html;
+  });
+}
+
+faqSearch.addEventListener("input", (e)=>{
+  const value = e.target.value.toLowerCase();
+
+  if(!value){
+    faqResults.innerHTML = "";
+    faqMessage.style.display = "block";
+    return;
+  }
+
+  const filtered = faqData.filter(item =>
+    item.keywords.includes(value)
+  );
+
+  renderFAQs(filtered);
+});
+
+document.querySelectorAll(".faq-chip").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const keyword = btn.dataset.keyword.toLowerCase();
+
+    faqSearch.value = keyword;
+
+    const filtered = faqData.filter(item =>
+      item.keywords.includes(keyword)
+    );
+
+    renderFAQs(filtered);
+  });
+});
+/* -----------------------------
 CRED STYLE MOBILE MENU
 ------------------------------ */
 
