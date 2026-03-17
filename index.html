@@ -3394,8 +3394,11 @@ function renderFAQs(list){
   faqMessage.style.display = "none";
 
   list.forEach(item=>{
-    faqResults.innerHTML += item.html;
-  });
+  faqResults.innerHTML += item.html;
+});
+
+// 🔥 ADD THIS LINE
+setLang(document.documentElement.lang);
 }
 
 faqSearch.addEventListener("input", (e)=>{
