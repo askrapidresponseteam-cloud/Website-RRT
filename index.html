@@ -1972,28 +1972,7 @@ menu
 <script>
 function attachFaqToggle(){
 
-  const items = document.querySelectorAll(".faq-item");
 
-  items.forEach(item => {
-
-    item.addEventListener("click", () => {
-
-      const answer = item.querySelector(".faq-answer");
-      const icon = item.querySelector(".faq-icon");
-
-      const isOpen = answer.style.maxHeight && answer.style.maxHeight !== "0px";
-
-      document.querySelectorAll(".faq-answer").forEach(a => a.style.maxHeight = null);
-      document.querySelectorAll(".faq-icon").forEach(i => i.style.transform = "rotate(0deg)");
-
-      if(!isOpen){
-        answer.style.maxHeight = answer.scrollHeight + "px";
-        icon.style.transform = "rotate(45deg)";
-      }
-
-    });
-
-  });
 
 }
 </script>
@@ -3426,45 +3405,23 @@ const faqResults = document.getElementById("faqResults");
 const faqMessage = document.getElementById("faqMessage");
 
 function renderFAQs(list){
+
   faqResults.innerHTML = "";
-setLang(document.documentElement.lang);
+  setLang(document.documentElement.lang);
+
   if(list.length === 0){
     faqMessage.style.display = "block";
     return;
   }
 
-  const items = document.querySelectorAll(".faq-item");
-
-  items.forEach(item => {
-
-    item.addEventListener("click", () => {
-
-      const answer = item.querySelector(".faq-answer");
-      const icon = item.querySelector(".faq-icon");
-
-      const isOpen = answer.style.maxHeight && answer.style.maxHeight !== "0px";
-
-      // close all
-      document.querySelectorAll(".faq-answer").forEach(a => a.style.maxHeight = null);
-      document.querySelectorAll(".faq-icon").forEach(i => i.style.transform = "rotate(0deg)");
-
-      // open clicked
-      if(!isOpen){
-        answer.style.maxHeight = answer.scrollHeight + "px";
-        icon.style.transform = "rotate(45deg)";
-      }
-
-    });
-
-  });
-
-}
   faqMessage.style.display = "none";
 
   list.forEach(item=>{
-  faqResults.innerHTML += item.html;
-});
-attachFaqToggle();
+    faqResults.innerHTML += item.html;
+  });
+
+  attachFaqToggle();
+}
 // 🔥 ADD THIS LINE
 setLang(document.documentElement.lang);
 }
