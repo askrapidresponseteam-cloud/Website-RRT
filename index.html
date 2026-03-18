@@ -149,7 +149,18 @@ transition:all 0.8s ease;
 opacity:1;
 transform:translateY(0);
 }
+[data-lang] {
+  display: none;
+}
 
+html[lang="en"] [data-lang="en"] {
+  display: inline;
+}
+
+html[lang="hi"] [data-lang="hi"] {
+  display: inline;
+}
+  
 </style>
 
 </head>
@@ -169,14 +180,6 @@ transform:translateY(0);
     }
 
     function setLang(lang){
-      document.querySelectorAll('[data-lang]').forEach(el=>{
-        el.style.display='none';
-      });
-
-      document.querySelectorAll('[data-lang="'+lang+'"]').forEach(el=>{
-        el.style.display='';
-      });
-
       document.documentElement.lang = lang;
       updateFaqPlaceholder(lang);
     }
@@ -3424,7 +3427,6 @@ function renderFAQs(list){
 }
 // 🔥 ADD THIS LINE
 setLang(document.documentElement.lang);
-}
 
 faqSearch.addEventListener("input", (e)=>{
   const value = e.target.value.toLowerCase();
