@@ -151,18 +151,24 @@ transform:translateY(0);
 }
 [data-lang] {
   display: none !important;
-  width: 100%;
 }
 
-/* EN */
 html[lang="en"] [data-lang="en"] {
   display: block !important;
 }
 
-/* HI */
 html[lang="hi"] [data-lang="hi"] {
   display: block !important;
 }
+
+html[lang="en"] [data-lang="en"] {
+  display: initial;
+}
+
+html[lang="hi"] [data-lang="hi"] {
+  display: initial;
+}
+  
 </style>
 
 </head>
@@ -314,7 +320,7 @@ menu
       <div class="relative z-10 max-w-6xl mx-auto">
 
         <!-- TAGLINE -->
-        <span class="text-primary font-mono tracking-[0.35em] text-[11px] uppercase mb-8 block opacity-80">
+        <span class="text-primary font-mono tracking-[0.4em] text-[10px] uppercase mb-8 block">
           <span data-lang="en">Where Empathy Meets Action</span>
           <span data-lang="hi" class="font-hindi">जहाँ संवेदना काम बन जाती है</span>
         </span>
@@ -323,7 +329,7 @@ menu
         <h1 class="cred-gradient-text mb-12 text-center break-words">
 
           <span data-lang="en"
-class="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-[-0.02em] leading-[0.98] uppercase">
+          class="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.05] uppercase">
 
             HELP. WHEN<br/>
             SECONDS<br/>
@@ -335,7 +341,7 @@ class="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-[-
           </span>
 
           <span data-lang="hi"
-class="font-hindi block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.22] tracking-[0.01em]">
+          class="font-hindi block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.12]">
 
             मदद। जब<br/>
             हर सेकंड<br/>
@@ -352,14 +358,15 @@ class="font-hindi block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black 
         <p class="text-white/50 text-base md:text-lg mx-auto mb-16 font-light">
 
           <span data-lang="en"
-class="block max-w-xl mx-auto leading-[1.6] tracking-[0.01em]">
+          class="block max-w-xl mx-auto leading-relaxed">
+
           A community network that connects nearby volunteers
           when an animal needs urgent help.
 
           </span>
 
           <span data-lang="hi"
-class="font-hindi block max-w-2xl mx-auto leading-[1.75] tracking-[0.01em]">
+          class="font-hindi block max-w-2xl mx-auto leading-[1.6]">
 
           यह एक ऐसा नेटवर्क है जो आसपास के लोगों को जोड़ता है,
           ताकि किसी जानवर को तुरंत मदद चाहिए हो तो जल्दी सहायता पहुँच सके।
