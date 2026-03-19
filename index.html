@@ -150,7 +150,15 @@ opacity:1;
 transform:translateY(0);
 }
 [data-lang] {
-  display: none;
+  display: none !important;
+}
+
+html[lang="en"] [data-lang="en"] {
+  display: block !important;
+}
+
+html[lang="hi"] [data-lang="hi"] {
+  display: block !important;
 }
 
 html[lang="en"] [data-lang="en"] {
