@@ -72,14 +72,30 @@ tightx:"-0.05em"
 </script>
 
 <style>
+:root {
+  --bg: #000000;
+  --text: #ffffff;
+  --text-muted: rgba(255,255,255,0.4);
+  --card: rgba(255,255,255,0.02);
+  --border: rgba(255,255,255,0.05);
+  --grid: rgba(255,255,255,0.03);
+}
 
+html.light {
+  --bg: #f8f9fb;
+  --text: #0a0a0a;
+  --text-muted: rgba(0,0,0,0.5);
+  --card: rgba(0,0,0,0.03);
+  --border: rgba(0,0,0,0.08);
+  --grid: rgba(0,0,0,0.05);
+}
 html{
 scroll-behavior:smooth;
 }
 
 body{
-background:#000;
-color:#fff;
+background:var(--bg);
+color:var(--text);
 -webkit-font-smoothing:antialiased;
 overflow-x:hidden;
 }
@@ -87,17 +103,23 @@ overflow-x:hidden;
 .hero-bg{
 background: radial-gradient(circle at 50% -20%, #1a1a1a 0%, #000000 70%);
 }
+html.light .hero-bg{
+background: radial-gradient(circle at 50% -20%, #ffffff 0%, #eaeef3 70%);
+}
 
 .cred-gradient-text{
 background:linear-gradient(180deg,#FFFFFF 0%,rgba(255,255,255,0.5) 100%);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
+html.light .cred-gradient-text{
+background:linear-gradient(180deg,#000000 0%,rgba(0,0,0,0.4) 100%);
+}
 
 .glass-card{
-background:rgba(255,255,255,0.02);
+background:var(--card);
 backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,0.05);
+border:1px solid var(--border);
 }
 
 .sos-ripple{
@@ -121,8 +143,8 @@ animation:ripple 3s linear infinite;
 .grid-bg{
 background-size:40px 40px;
 background-image:
-linear-gradient(to right, rgba(255,255,255,.03) 1px, transparent 1px),
-linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
+linear-gradient(to right, var(--grid) 1px, transparent 1px),
+linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
 }
 
 .phone-glow{
@@ -211,16 +233,16 @@ class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-event
 <!-- MOBILE MENU PANEL -->
 
 <div id="mobileMenu"
-class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
+class="fixed top-0 right-0 h-full w-[320px] bg-[color:var(--bg)] z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
 
-<a href="#problem" class="mobile-link text-white">Need</a>
-<a href="#solution" class="mobile-link text-white">Solution</a>
-<a href="#how" class="mobile-link text-white">How it Works</a>
-<a href="#community" class="mobile-link text-white">Community</a>
-<a href="#faq" class="mobile-link text-white">FAQ</a>
+<a href="#problem" class="mobile-link text-[color:var(--text)]">Need</a>
+<a href="#solution" class="mobile-link text-[color:var(--text)]">Solution</a>
+<a href="#how" class="mobile-link text-[color:var(--text)]">How it Works</a>
+<a href="#community" class="mobile-link text-[color:var(--text)]">Community</a>
+<a href="#faq" class="mobile-link text-[color:var(--text)]">FAQ</a>
 
 <button id="closeMenu"
-class="absolute top-8 right-8 text-white">
+class="absolute top-8 right-8 text-[color:var(--text)]">
 
 <span class="material-symbols-outlined text-3xl">
 close
@@ -231,7 +253,7 @@ close
 </div>
 
 <header id="mainHeader"
-class="fixed top-0 left-0 right-0 z-[100] bg-black/40 backdrop-blur-xl transition-all duration-300">
+class="fixed top-0 left-0 right-0 z-[100] bg-[color:var(--bg)]/40 backdrop-blur-xl transition-all duration-300">
 
 <div class="relative max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 py-6 flex items-center justify-between">
 
@@ -239,11 +261,11 @@ class="fixed top-0 left-0 right-0 z-[100] bg-black/40 backdrop-blur-xl transitio
 
 <div class="flex items-center gap-3">
 
-<div class="w-9 h-9 border border-white/20 flex items-center justify-center">
+<div class="w-9 h-9 border bg-[color:var(--card)] flex items-center justify-center">
 <span class="material-symbols-outlined text-primary">pets</span>
 </div>
 
-<h2 class="text-white text-sm font-black tracking-cred uppercase">
+<h2 class="text-[color:var(--text)] text-sm font-black tracking-cred uppercase">
 Rapid Response
 </h2>
 
@@ -254,27 +276,27 @@ Rapid Response
 
 <nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
 
-<a class="text-white/40 hover:text-white transition-colors" href="#problem">
+<a class="text-[color:var(--text)]/40 hover:text-[color:var(--text)] transition-colors" href="#problem">
 <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Need</span>
 <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">ज़रूरत</span>
 </a>
 
-<a class="text-white/40 hover:text-white transition-colors" href="#solution">
+<a class="text-[color:var(--text)]/40 hover:text-[color:var(--text)] transition-colors" href="#solution">
 <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Solution</span>
 <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">हल</span>
 </a>
 
-<a class="text-white/40 hover:text-white transition-colors" href="#how">
+<a class="text-[color:var(--text)]/40 hover:text-[color:var(--text)] transition-colors" href="#how">
 <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">How it Works</span>
 <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कैसे चलता है</span>
 </a>
 
-<a class="text-white/40 hover:text-white transition-colors" href="#community">
+<a class="text-[color:var(--text)]/40 hover:text-[color:var(--text)] transition-colors" href="#community">
 <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Community</span>
 <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">लोग</span>
 </a>
 
-<a class="text-white/40 hover:text-white transition-colors" href="#faq">
+<a class="text-[color:var(--text)]/40 hover:text-[color:var(--text)] transition-colors" href="#faq">
 <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">FAQ</span>
 <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">सवाल-जवाब</span>
 </a>
@@ -287,21 +309,24 @@ Rapid Response
 
 <div class="flex items-center gap-4 text-xs font-bold">
 
-<button onclick="setLang('en')" class="text-white/70 hover:text-white">
+<button onclick="setLang('en')" class="text-[color:var(--text-muted)] hover:text-[color:var(--text)]">
 EN
 </button>
+  
+<span class="text-[color:var(--text-muted)] opacity-50">|</span>
 
-<span class="text-white/30">|</span>
-
-<button onclick="setLang('hi')" class="text-white/70 hover:text-white font-hindi">
+<button onclick="setLang('hi')" class="text-[color:var(--text)]/70 hover:text-[color:var(--text)] font-hindi">
 हिंदी
+</button>
+<button onclick="toggleTheme()" class="ml-4 text-[color:var(--text)]/70 hover:text-[color:var(--text)]">
+  <span id="themeIcon" class="material-symbols-outlined">light_mode</span>
 </button>
 
 
 <!-- MOBILE MENU BUTTON -->
 
 <button id="mobileMenuBtn"
-class="lg:hidden text-white ml-2 relative w-8 h-8 flex items-center justify-center">
+class="lg:hidden text-[color:var(--text)] ml-2 relative w-8 h-8 flex items-center justify-center">
 
 <span class="material-symbols-outlined text-2xl transition-all duration-300">
 menu
@@ -334,7 +359,7 @@ menu
             HELP. WHEN<br/>
             SECONDS<br/>
 
-            <span class="text-white/30 italic">
+            <span class="text-[color:var(--text)]/30 italic">
             MATTER.
             </span>
 
@@ -346,7 +371,7 @@ menu
             मदद। जब<br/>
             हर सेकंड<br/>
 
-            <span class="text-white/30 italic">
+            <span class="text-[color:var(--text)]/30 italic">
             बहुत मायने रखता है।
             </span>
 
@@ -355,7 +380,7 @@ menu
         </h1>
 
         <!-- SUBTEXT -->
-        <p class="text-white/50 text-base md:text-lg mx-auto mb-16 font-light">
+        <p class="text-[color:var(--text-muted)] opacity-70 text-base md:text-lg mx-auto mb-16 font-light">
 
           <span data-lang="en"
           class="block max-w-xl mx-auto leading-relaxed">
@@ -382,7 +407,7 @@ menu
           <a href="https://play.google.com/store/apps/details?id=com.rrt.sos"
           target="_blank"
           aria-label="Download Android App"
-          class="w-56 bg-white text-black h-14 flex items-center justify-center gap-3 font-black text-xs tracking-cred uppercase hover:invert transition-all">
+          class="w-56 bg-[color:var(--text)] text-[color:var(--bg)] h-14 flex items-center justify-center gap-3 font-black text-xs tracking-cred uppercase hover:invert transition-all">
 
           <img
           loading="lazy"
@@ -390,7 +415,7 @@ menu
           class="w-[18px] h-[18px]"
           />
 
-          <span class="w-px h-4 bg-black/30"></span>
+          <span class="w-px h-4 bg-[color:var(--text)]/30"></span>
 
           <span data-lang="en">Download</span>
           <span data-lang="hi" class="font-hindi">डाउनलोड करें</span>
@@ -409,7 +434,7 @@ menu
           class="w-[18px] h-[18px]"
           />
 
-          <span class="w-px h-4 bg-black/30"></span>
+          <span class="w-px h-4 bg-[color:var(--text)]/30"></span>
 
           <span data-lang="en">Download</span>
           <span data-lang="hi" class="font-hindi">डाउनलोड करें</span>
@@ -421,7 +446,7 @@ menu
 
         <!-- LEARN SECTION -->
 
-        <p class="text-sm md:text-base text-white/70 font-medium tracking-wide mb-6">
+        <p class="text-sm md:text-base text-[color:var(--text-muted)] font-medium tracking-wide mb-6">
 
           <span data-lang="en">
           Learn how the app works
@@ -436,7 +461,7 @@ menu
         <div class="flex flex-wrap justify-center gap-x-14 gap-y-6 mt-4">
 
           <a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview"
-          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+          class="text-[color:var(--text)]/70 hover:text-[color:var(--text)] text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
 
           <span class="material-symbols-outlined text-sm">play_circle</span>
 
@@ -447,7 +472,7 @@ menu
 
 
           <a href="https://drive.google.com/file/d/1jsseovdhhCvx6k0SMhIx2uwowkeElnfF/preview"
-          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+          class="text-[color:var(--text)]/70 hover:text-[color:var(--text)] text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
 
           <span class="material-symbols-outlined text-sm">play_circle</span>
 
@@ -458,7 +483,7 @@ menu
 
 
           <a href="https://drive.google.com/file/d/1infaiPzLyf7QI6W9c_HD4lGRrXnoxReP/preview"
-          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+          class="text-[color:var(--text)]/70 hover:text-[color:var(--text)] text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
 
           <span class="material-symbols-outlined text-sm">settings</span>
 
@@ -469,7 +494,7 @@ menu
 
 
           <a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview"
-          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+          class="text-[color:var(--text)]/70 hover:text-[color:var(--text)] text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
 
           <span class="material-symbols-outlined text-sm">info</span>
 
@@ -482,7 +507,7 @@ menu
 
       </div>
     </section>
-    <section id="problem" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 fade-up">
+    <section id="problem" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t bg-[color:var(--card)] fade-up">
 
   <div class="max-w-7xl mx-auto">
 
@@ -500,7 +525,7 @@ menu
         </span>
 
 
-        <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight mb-10 uppercase">
+        <h2 class="text-[color:var(--text)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight mb-10 uppercase">
 
           <span data-lang="en">
 
@@ -519,7 +544,7 @@ menu
         </h2>
 
 
-        <p class="text-white/40 text-base md:text-lg leading-relaxed max-w-lg font-light">
+        <p class="text-[color:var(--text)]/40 text-base md:text-lg leading-relaxed max-w-lg font-light">
 
           <span data-lang="en">
 
@@ -565,7 +590,7 @@ menu
 
         <!-- CARD 1 -->
 
-        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+        <div class="p-8 md:p-12 glass-card group hover:bg-[color:var(--card)] transition-all">
 
           <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
 
@@ -573,14 +598,14 @@ menu
 
           </span>
 
-          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+          <h4 class="text-[color:var(--text)] font-bold text-xl mb-4 tracking-tight uppercase">
 
           <span data-lang="en">Slow Alerts</span>
           <span data-lang="hi" class="font-hindi">अलर्ट देर से पहुँचता है</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
           <span data-lang="en">
           Messages take time to reach the right people.
@@ -598,7 +623,7 @@ menu
 
         <!-- CARD 2 -->
 
-        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+        <div class="p-8 md:p-12 glass-card group hover:bg-[color:var(--card)] transition-all">
 
           <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
 
@@ -606,14 +631,14 @@ menu
 
           </span>
 
-          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+          <h4 class="text-[color:var(--text)] font-bold text-xl mb-4 tracking-tight uppercase">
 
           <span data-lang="en">Unclear Location</span>
           <span data-lang="hi" class="font-hindi">जगह साफ़ पता नहीं चलती</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
           <span data-lang="en">
           Volunteers may struggle to find the exact place.
@@ -631,7 +656,7 @@ menu
 
         <!-- CARD 3 -->
 
-        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+        <div class="p-8 md:p-12 glass-card group hover:bg-[color:var(--card)] transition-all">
 
           <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
 
@@ -639,14 +664,14 @@ menu
 
           </span>
 
-          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+          <h4 class="text-[color:var(--text)] font-bold text-xl mb-4 tracking-tight uppercase">
 
           <span data-lang="en">Disconnected Volunteers</span>
           <span data-lang="hi" class="font-hindi">मदद करने वालों तक खबर नहीं पहुँचती</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
           <span data-lang="en">
           People willing to help often never see the alert.
@@ -664,7 +689,7 @@ menu
 
         <!-- CARD 4 -->
 
-        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+        <div class="p-8 md:p-12 glass-card group hover:bg-[color:var(--card)] transition-all">
 
           <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
 
@@ -672,14 +697,14 @@ menu
 
           </span>
 
-          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+          <h4 class="text-[color:var(--text)] font-bold text-xl mb-4 tracking-tight uppercase">
 
           <span data-lang="en">Time Lost</span>
           <span data-lang="hi" class="font-hindi">कीमती समय निकल जाता है</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
           <span data-lang="en">
           Every minute without help can worsen injuries.
@@ -700,7 +725,7 @@ menu
   </div>
 
 </section>
-<section id="solution" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 bg-white/5 flex items-center min-h-screen fade-up">
+<section id="solution" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 bg-[color:var(--card)] flex items-center min-h-screen fade-up">
 
   <div class="max-w-7xl mx-auto">
 
@@ -743,7 +768,7 @@ menu
         </div>
 
 
-        <h4 class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight uppercase">
+        <h4 class="text-3xl sm:text-4xl md:text-5xl font-black text-[color:var(--text)] leading-tight uppercase">
 
           <span data-lang="en">
           A Network<br>
@@ -758,7 +783,7 @@ menu
         </h4>
 
 
-        <p class="text-white/40 text-base md:text-lg leading-relaxed font-light">
+        <p class="text-[color:var(--text)]/40 text-base md:text-lg leading-relaxed font-light">
 
           <span data-lang="en">
 
@@ -806,7 +831,7 @@ menu
           </div>
 
 
-          <p class="text-sm text-white/40 leading-relaxed">
+          <p class="text-sm text-[color:var(--text)]/40 leading-relaxed">
 
             <span data-lang="en">
 
@@ -864,7 +889,7 @@ menu
 
       </span>
 
-      <h3 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+      <h3 class="text-[color:var(--text)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
 
         <span data-lang="en">
         How The Network<br/>
@@ -888,20 +913,20 @@ menu
 
       <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
 
-        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        <span class="text-[color:var(--text)]/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
         01
         </span>
 
         <div>
 
-          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+          <h4 class="text-[color:var(--text)] text-xl font-bold uppercase tracking-tight mb-4">
 
             <span data-lang="en">Raise SOS</span>
             <span data-lang="hi" class="font-hindi">SOS भेजें</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
             <span data-lang="en">
             Open the app and press the SOS button
@@ -925,20 +950,20 @@ menu
 
       <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
 
-        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        <span class="text-[color:var(--text)]/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
         02
         </span>
 
         <div>
 
-          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+          <h4 class="text-[color:var(--text)] text-xl font-bold uppercase tracking-tight mb-4">
 
             <span data-lang="en">Location Shared</span>
             <span data-lang="hi" class="font-hindi">लोकेशन साथ जाती है</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
             <span data-lang="en">
             The alert includes your phone number,
@@ -962,20 +987,20 @@ menu
 
       <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
 
-        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        <span class="text-[color:var(--text)]/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
         03
         </span>
 
         <div>
 
-          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+          <h4 class="text-[color:var(--text)] text-xl font-bold uppercase tracking-tight mb-4">
 
             <span data-lang="en">District Alert</span>
             <span data-lang="hi" class="font-hindi">जिले भर में अलर्ट जाता है</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
             <span data-lang="en">
             All Rapid Response users in the same
@@ -999,20 +1024,20 @@ menu
 
       <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
 
-        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        <span class="text-[color:var(--text)]/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
         04
         </span>
 
         <div>
 
-          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+          <h4 class="text-[color:var(--text)] text-xl font-bold uppercase tracking-tight mb-4">
 
             <span data-lang="en">Volunteer Responds</span>
             <span data-lang="hi" class="font-hindi">कोई मदद के लिए आगे आता है</span>
 
           </h4>
 
-          <p class="text-white/40 text-sm leading-relaxed font-light">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed font-light">
 
             <span data-lang="en">
             Nearby volunteers who are available
@@ -1035,7 +1060,7 @@ menu
   </div>
 
 </section>
-<section class="px-6 md:px-12 lg:px-20 py-32 md:py-40 bg-white/5 fade-up">
+<section class="px-6 md:px-12 lg:px-20 py-32 md:py-40 bg-[color:var(--card)] fade-up">
 
   <div class="max-w-7xl mx-auto">
 
@@ -1048,7 +1073,7 @@ menu
 
       </span>
 
-      <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+      <h2 class="text-[color:var(--text)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
 
         <span data-lang="en">
         Why More Volunteers Matter
@@ -1082,7 +1107,7 @@ menu
 
         </h3>
 
-        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+        <ul class="space-y-6 text-sm text-[color:var(--text)]/40 leading-relaxed">
 
           <li class="flex gap-4">
 
@@ -1146,7 +1171,7 @@ menu
 
       <div class="glass-card p-8 md:p-12">
 
-        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-white/60">
+        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-[color:var(--text)]/60">
 
           <span data-lang="en">
           District With Few Volunteers
@@ -1158,7 +1183,7 @@ menu
 
         </h3>
 
-        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+        <ul class="space-y-6 text-sm text-[color:var(--text)]/40 leading-relaxed">
 
           <li class="flex gap-4">
 
@@ -1222,7 +1247,7 @@ menu
 
     <div class="mt-20 md:mt-24 text-center max-w-2xl mx-auto">
 
-      <p class="text-white/40 text-base md:text-lg leading-relaxed">
+      <p class="text-[color:var(--text)]/40 text-base md:text-lg leading-relaxed">
 
         <span data-lang="en">
 
@@ -1253,7 +1278,7 @@ menu
   </div>
 
 </section>
-<section class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 fade-up">
+<section class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t bg-[color:var(--card)] fade-up">
 
   <div class="max-w-7xl mx-auto">
 
@@ -1266,16 +1291,16 @@ menu
 
       </span>
 
-      <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+      <h2 class="text-[color:var(--text)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
 
         <span data-lang="en">
         What The App Is<br>
-        <span class="text-white/30">& What It Is Not</span>
+        <span class="text-[color:var(--text)]/30">& What It Is Not</span>
         </span>
 
         <span data-lang="hi" class="font-hindi">
         यह ऐप क्या है<br>
-        <span class="text-white/30">और क्या नहीं है</span>
+        <span class="text-[color:var(--text)]/30">और क्या नहीं है</span>
         </span>
 
       </h2>
@@ -1297,7 +1322,7 @@ menu
 
         </h3>
 
-        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+        <ul class="space-y-6 text-sm text-[color:var(--text)]/40 leading-relaxed">
 
           <li class="flex gap-4">
 
@@ -1379,14 +1404,14 @@ menu
 
       <div class="glass-card p-8 md:p-12">
 
-        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-white/60">
+        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-[color:var(--text)]/60">
 
           <span data-lang="en">What The App Is Not</span>
           <span data-lang="hi" class="font-hindi">यह ऐप क्या नहीं करता</span>
 
         </h3>
 
-        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+        <ul class="space-y-6 text-sm text-[color:var(--text)]/40 leading-relaxed">
 
           <li class="flex gap-4">
 
@@ -1480,7 +1505,7 @@ menu
 
       </span>
 
-      <h3 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+      <h3 class="text-[color:var(--text)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
 
         <span data-lang="en">
         Who Uses<br>
@@ -1507,7 +1532,7 @@ menu
 
         <!-- Volunteers -->
 
-        <div class="border-l border-white/20 pl-8">
+        <div class="border-l bg-[color:var(--card)] pl-8">
 
           <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
@@ -1516,7 +1541,7 @@ menu
 
           </p>
 
-          <p class="text-white/40 text-sm leading-relaxed">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed">
 
             <span data-lang="en">
             People who want to help animals and respond when alerts appear in their district.
@@ -1535,7 +1560,7 @@ menu
 
         <!-- Feeders -->
 
-        <div class="border-l border-white/20 pl-8">
+        <div class="border-l bg-[color:var(--card)] pl-8">
 
           <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
@@ -1544,7 +1569,7 @@ menu
 
           </p>
 
-          <p class="text-white/40 text-sm leading-relaxed">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed">
 
             <span data-lang="en">
             Community feeders who may need help during medical emergencies.
@@ -1563,7 +1588,7 @@ menu
 
         <!-- Pet Owners -->
 
-        <div class="border-l border-white/20 pl-8">
+        <div class="border-l bg-[color:var(--card)] pl-8">
 
           <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
@@ -1572,7 +1597,7 @@ menu
 
           </p>
 
-          <p class="text-white/40 text-sm leading-relaxed">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed">
 
             <span data-lang="en">
             Pet owners who may require urgent assistance when a pet is injured or missing.
@@ -1591,7 +1616,7 @@ menu
 
         <!-- Animal Lovers -->
 
-        <div class="border-l border-white/20 pl-8">
+        <div class="border-l bg-[color:var(--card)] pl-8">
 
           <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
 
@@ -1600,7 +1625,7 @@ menu
 
           </p>
 
-          <p class="text-white/40 text-sm leading-relaxed">
+          <p class="text-[color:var(--text)]/40 text-sm leading-relaxed">
 
             <span data-lang="en">
             Anyone who wants to help animals when they see an alert nearby.
@@ -1655,7 +1680,7 @@ menu
   </div>
 
 </section>
-<section id="faq" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 bg-black fade-up">
+<section id="faq" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t bg-[color:var(--card)] bg-black fade-up">
 
   <div class="max-w-6xl mx-auto">
 
@@ -1670,11 +1695,11 @@ menu
 
       </span>
 
-      <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase mb-6">
+      <h2 class="text-[color:var(--text)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase mb-6">
 
         <span data-lang="en">
         Search<br>
-        <span class="text-white/30">Questions</span>
+        <span class="text-[color:var(--text)]/30">Questions</span>
         </span>
 
         <span data-lang="hi" class="font-hindi">
@@ -1683,7 +1708,7 @@ menu
 
       </h2>
 
-      <p class="text-white/40 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+      <p class="text-[color:var(--text)]/40 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
 
         <span data-lang="en">
         Type a keyword to find answers instantly.
@@ -1703,9 +1728,9 @@ menu
 
     <div class="max-w-4xl mx-auto mb-12 md:mb-14">
 
-      <div class="glass-card border border-white/10 h-16 md:h-20 px-6 md:px-8 flex items-center gap-4">
+      <div class="glass-card border bg-[color:var(--card)] h-16 md:h-20 px-6 md:px-8 flex items-center gap-4">
 
-        <span class="material-symbols-outlined text-white/30 text-3xl">
+        <span class="material-symbols-outlined text-[color:var(--text)]/30 text-3xl">
         search
         </span>
 
@@ -1713,7 +1738,7 @@ menu
         id="faqSearch"
         type="text"
         placeholder="Search by keyword..."
-        class="w-full bg-transparent text-white placeholder:text-white/25 text-base md:text-xl font-medium border-none outline-none focus:ring-0"
+        class="w-full bg-transparent text-[color:var(--text)] placeholder:text-[color:var(--text)]/25 text-base md:text-xl font-medium border-none outline-none focus:ring-0"
         />
 
       </div>
@@ -1726,27 +1751,27 @@ menu
 
     <div class="max-w-4xl mx-auto mb-14 md:mb-16 flex flex-wrap gap-3 justify-center">
 
-      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      <button class="faq-chip px-4 py-2 border bg-[color:var(--card)] text-xs text-[color:var(--text)]/70 hover:bg-white/10 transition"
       data-keyword="sos">
       SOS
       </button>
 
-      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      <button class="faq-chip px-4 py-2 border bg-[color:var(--card)] text-xs text-[color:var(--text)]/70 hover:bg-white/10 transition"
       data-keyword="location">
       Location
       </button>
 
-      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      <button class="faq-chip px-4 py-2 border bg-[color:var(--card)] text-xs text-[color:var(--text)]/70 hover:bg-white/10 transition"
       data-keyword="chat">
       Chat
       </button>
 
-      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      <button class="faq-chip px-4 py-2 border bg-[color:var(--card)] text-xs text-[color:var(--text)]/70 hover:bg-white/10 transition"
       data-keyword="district">
       District
       </button>
 
-      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      <button class="faq-chip px-4 py-2 border bg-[color:var(--card)] text-xs text-[color:var(--text)]/70 hover:bg-white/10 transition"
       data-keyword="register">
       Register
       </button>
@@ -1759,7 +1784,7 @@ menu
 
     <div class="max-w-4xl mx-auto mb-14 md:mb-16 text-center">
 
-      <p class="text-xs uppercase tracking-cred text-white/30 mb-6">
+      <p class="text-xs uppercase tracking-cred text-[color:var(--text)]/30 mb-6">
 
         <span data-lang="en">
         Popular Questions
@@ -1773,27 +1798,27 @@ menu
 
       <div class="flex flex-wrap gap-4 justify-center text-sm">
 
-        <button class="faq-chip text-white/70 hover:text-white"
+        <button class="faq-chip text-[color:var(--text)]/70 hover:text-[color:var(--text)]"
         data-keyword="how does the app work">
         How does the app work?
         </button>
 
-        <button class="faq-chip text-white/70 hover:text-white"
+        <button class="faq-chip text-[color:var(--text)]/70 hover:text-[color:var(--text)]"
         data-keyword="register">
         How do I register?
         </button>
 
-        <button class="faq-chip text-white/70 hover:text-white"
+        <button class="faq-chip text-[color:var(--text)]/70 hover:text-[color:var(--text)]"
         data-keyword="sos alert">
         Who receives an SOS?
         </button>
 
-        <button class="faq-chip text-white/70 hover:text-white"
+        <button class="faq-chip text-[color:var(--text)]/70 hover:text-[color:var(--text)]"
         data-keyword="call sender">
         Can responders call?
         </button>
 
-        <button class="faq-chip text-white/70 hover:text-white"
+        <button class="faq-chip text-[color:var(--text)]/70 hover:text-[color:var(--text)]"
         data-keyword="cancel sos">
         Can I cancel an SOS?
         </button>
@@ -1813,7 +1838,7 @@ menu
     <!-- EMPTY / HELP MESSAGE -->
 
     <div id="faqMessage"
-    class="max-w-4xl mx-auto text-center mt-10 text-white/30 text-sm md:text-base">
+    class="max-w-4xl mx-auto text-center mt-10 text-[color:var(--text)]/30 text-sm md:text-base">
 
       <span data-lang="en">
       Start typing a keyword like <b>SOS</b>, <b>location</b>, <b>chat</b> or <b>district</b>.
@@ -1829,9 +1854,9 @@ menu
 
     <!-- STILL NEED HELP -->
 
-    <div class="max-w-4xl mx-auto text-center mt-16 md:mt-20 border-t border-white/10 pt-10 md:pt-12">
+    <div class="max-w-4xl mx-auto text-center mt-16 md:mt-20 border-t bg-[color:var(--card)] pt-10 md:pt-12">
 
-      <p class="text-white/40 text-sm mb-3">
+      <p class="text-[color:var(--text)]/40 text-sm mb-3">
 
         <span data-lang="en">
         Still need help?
@@ -1844,7 +1869,7 @@ menu
       </p>
 
       <a href="mailto:ask@rapid-response.in"
-      class="text-white font-semibold hover:underline text-sm">
+      class="text-[color:var(--text)] font-semibold hover:underline text-sm">
 
       ask@rapid-response.in
 
@@ -1855,7 +1880,7 @@ menu
   </div>
 
 </section>
-<footer class="bg-black text-white/40 px-6 md:px-12 lg:px-20 py-20 md:py-24 border-t border-white/5" id="support">
+<footer class="bg-black text-[color:var(--text)]/40 px-6 md:px-12 lg:px-20 py-20 md:py-24 border-t bg-[color:var(--card)]" id="support">
 
   <div class="max-w-7xl mx-auto">
 
@@ -1865,7 +1890,7 @@ menu
 
       <div class="flex flex-col gap-8">
 
-        <div class="flex items-center gap-3 text-white">
+        <div class="flex items-center gap-3 text-[color:var(--text)]">
 
           <div class="w-10 h-10 border border-white flex items-center justify-center">
 
@@ -1904,7 +1929,7 @@ menu
 
       <div>
 
-        <h4 class="text-white font-black text-[10px] tracking-cred uppercase mb-8">
+        <h4 class="text-[color:var(--text)] font-black text-[10px] tracking-cred uppercase mb-8">
 
           <span data-lang="en">Support</span>
           <span data-lang="hi" class="font-hindi">सहायता</span>
@@ -1924,13 +1949,13 @@ menu
         </p>
 
         <a href="mailto:ask@rapid-response.in"
-        class="text-white font-semibold hover:underline">
+        class="text-[color:var(--text)] font-semibold hover:underline">
 
         ask@rapid-response.in
 
         </a>
 
-        <p class="text-xs text-white/30 mt-3">
+        <p class="text-xs text-[color:var(--text)]/30 mt-3">
 
           <span data-lang="en">
           We usually respond within 24–48 hours.
@@ -1948,11 +1973,11 @@ menu
 
 
 
-    <div class="pt-10 md:pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10">
+    <div class="pt-10 md:pt-12 border-t bg-[color:var(--card)] flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10">
 
       <div class="max-w-xl text-center md:text-left">
 
-        <p class="text-[10px] leading-relaxed text-white/30">
+        <p class="text-[10px] leading-relaxed text-[color:var(--text)]/30">
 
           <span data-lang="en">
           This platform is an independent community initiative and is not affiliated with, operated by, or endorsed by any government authority.
@@ -1996,23 +2021,23 @@ const faqData = [
 {
   keywords: "what is the rapid response team app",
 html: `
-<div class="faq-item border-b border-white/10 py-6 cursor-pointer">
+<div class="faq-item border-b bg-[color:var(--card)] py-6 cursor-pointer">
 
   <div class="flex items-center justify-between">
-    <h4 class="text-white font-semibold text-lg">
+    <h4 class="text-[color:var(--text)] font-semibold text-lg">
 
       <span data-lang="en">What is the Rapid Response app?</span>
       <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स ऐप क्या है?</span>
 
     </h4>
 
-    <span class="material-symbols-outlined text-white/40 faq-icon transition-transform duration-300">
+    <span class="material-symbols-outlined text-[color:var(--text)]/40 faq-icon transition-transform duration-300">
       add
     </span>
   </div>
 
   <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
-    <p class="text-white/40 text-sm mt-4 leading-relaxed">
+    <p class="text-[color:var(--text)]/40 text-sm mt-4 leading-relaxed">
 
       <span data-lang="en">
         It connects nearby volunteers during animal emergencies.
@@ -2032,11 +2057,11 @@ html: `
   keywords: "what is the main purpose of the app",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what is the main purpose of the app">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What is the main purpose of the app?</span>
         <span data-lang="hi" class="font-hindi">ऐप का मुख्य उद्देश्य क्या है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           The main purpose of the app is to quickly connect people facing urgent animal welfare-related situations with other registered users in the same district who may be able to help, respond, coordinate, or support the situation in time.
         </span>
@@ -2051,11 +2076,11 @@ html: `
   keywords: "what kind of platform is rapid response team",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what kind of platform is rapid response team">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What kind of platform is Rapid Response Team?</span>
         <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम किस प्रकार का प्लेटफ़ॉर्म है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Rapid Response Team is a community-based, district-level SOS alert and coordination platform built for the animal welfare ecosystem.
         </span>
@@ -2070,11 +2095,11 @@ html: `
   keywords: "is the app linked to any government department",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="is the app linked to any government department">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Is the app linked to any government department?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप किसी सरकारी विभाग से जुड़ा हुआ है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app is an independent community initiative and is not affiliated with, operated by, or endorsed by any government authority.
         </span>
@@ -2089,11 +2114,11 @@ html: `
   keywords: "does the app work like a government emergency helpline",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="does the app work like a government emergency helpline">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Does the app work like a government emergency helpline?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप सरकारी आपातकालीन हेल्पलाइन की तरह काम करता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app does not function like a government emergency helpline. It is a community-based alert and coordination platform for animal welfare-related urgent situations.
         </span>
@@ -2108,11 +2133,11 @@ html: `
   keywords: "does the app send a rescue team automatically",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="does the app send a rescue team automatically">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Does the app send a rescue team automatically?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप अपने आप कोई रेस्क्यू टीम भेजता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app does not send a central rescue team automatically. It works as a community response network by sending SOS alerts to registered users in the district, so that nearby people may step in and help.
         </span>
@@ -2127,11 +2152,11 @@ html: `
   keywords: "what is the core idea behind the app",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what is the core idea behind the app">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What is the core idea behind the app?</span>
         <span data-lang="hi" class="font-hindi">ऐप के पीछे मूल विचार क्या है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           The core idea behind the app is to create a district-level animal welfare support network where one urgent alert can quickly reach all other registered users in that district.
         </span>
@@ -2146,11 +2171,11 @@ html: `
   keywords: "does the app create a shared support network",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="does the app create a shared support network">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Does the app create a shared support network?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप एक साझा सहायता नेटवर्क बनाता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. The app creates a district-based support network by connecting registered users through SOS alerts related to urgent animal welfare situations.
         </span>
@@ -2165,11 +2190,11 @@ html: `
   keywords: "why does the app depend on community participation",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="why does the app depend on community participation">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Why does the app depend on community participation?</span>
         <span data-lang="hi" class="font-hindi">यह ऐप सामुदायिक भागीदारी पर क्यों निर्भर करता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           The app depends on community participation because it does not operate as a central rescue team. It works by sending alerts to registered users in the district, so the strength of the response depends on how many people are present, active, and willing to help.
         </span>
@@ -2184,11 +2209,11 @@ html: `
   keywords: "will the app work better if more people in the district install it",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="will the app work better if more people in the district install it">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Will the app work better if more people in the district install it?</span>
         <span data-lang="hi" class="font-hindi">क्या जिले में अधिक लोग ऐप इंस्टॉल करें तो यह बेहतर काम करेगा?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. The more registered users there are in a district, the greater the chance that an alert will be seen by someone relevant, available, and close enough to help.
         </span>
@@ -2203,11 +2228,11 @@ html: `
   keywords: "why is having more registered users in a district important",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="why is having more registered users in a district important">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Why is having more registered users in a district important?</span>
         <span data-lang="hi" class="font-hindi">किसी जिले में अधिक पंजीकृत उपयोगकर्ताओं का होना क्यों महत्वपूर्ण है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Having more registered users in a district improves the chances that an SOS will be seen by someone who is nearby, available, and relevant to the situation, which can improve the possibility of timely support.
         </span>
@@ -2222,11 +2247,11 @@ html: `
   keywords: "why is district-level alerting useful",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="why is district-level alerting useful">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Why is district-level alerting useful?</span>
         <span data-lang="hi" class="font-hindi">जिला-स्तरीय अलर्टिंग क्यों उपयोगी है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           District-level alerting helps keep the alert focused within a local geography, making it more relevant to people who may actually know the area, be nearby, or be in a position to assist.
         </span>
@@ -2241,11 +2266,11 @@ html: `
   keywords: "why is the alert sent only within the district",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="why is the alert sent only within the district">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Why is the alert sent only within the district?</span>
         <span data-lang="hi" class="font-hindi">अलर्ट केवल जिले के भीतर ही क्यों भेजा जाता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           The alert is sent within the district to keep it locally relevant and improve the chances of a faster response from someone nearby who may actually be able to help.
         </span>
@@ -2260,11 +2285,11 @@ html: `
   keywords: "how does the app work",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="how does the app work">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">How does the app work?</span>
         <span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           With just one tap, a user can raise an SOS alert through the app. That alert is sent to all registered users within the same district. Users who receive the alert can view it and decide whether they want to respond and help based on the situation.
         </span>
@@ -2279,11 +2304,11 @@ html: `
   keywords: "who receives an sos alert",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="who receives an sos alert">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Who receives an SOS alert?</span>
         <span data-lang="hi" class="font-hindi">एसओएस अलर्ट किसे प्राप्त होता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           SOS alerts are sent to all registered users within the same district through the app.
         </span>
@@ -2298,11 +2323,11 @@ html: `
   keywords: "can local knowledge make a difference in an sos case",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can local knowledge make a difference in an sos case">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can local knowledge make a difference in an SOS case?</span>
         <span data-lang="hi" class="font-hindi">क्या स्थानीय जानकारी किसी एसओएस मामले में फर्क डाल सकती है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. Someone who knows the area, the local animals, nearby clinics, common feeding spots, or the ground reality of that location may be able to contribute useful support even without changing the app flow.
         </span>
@@ -2317,11 +2342,11 @@ html: `
   keywords: "can a person still be useful even if they are not a rescuer",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can a person still be useful even if they are not a rescuer">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can a person still be useful even if they are not a rescuer?</span>
         <span data-lang="hi" class="font-hindi">यदि कोई व्यक्ति रेस्क्यूअर नहीं है, तब भी क्या वह उपयोगी हो सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. A person may still be helpful by guiding the sender, sharing local context, helping coordinate, offering transport support, providing medical direction, or responding in another practical way depending on the situation.
         </span>
@@ -2336,11 +2361,11 @@ html: `
   keywords: "does the app only help when someone physically goes to the spot",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="does the app only help when someone physically goes to the spot">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Does the app only help when someone physically goes to the spot?</span>
         <span data-lang="hi" class="font-hindi">क्या ऐप केवल तभी मदद करता है जब कोई व्यक्ति मौके पर शारीरिक रूप से जाए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. Help may come in different forms depending on the situation. In some cases, someone may physically reach the spot. In other cases, support may happen through calling, guiding, coordinating, or sharing useful local information.
         </span>
@@ -2355,11 +2380,11 @@ html: `
   keywords: "can i respond even if i cannot go to the location physically",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i respond even if i cannot go to the location physically">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I respond even if I cannot go to the location physically?</span>
         <span data-lang="hi" class="font-hindi">यदि मैं शारीरिक रूप से उस स्थान पर नहीं जा सकता, तब भी क्या मैं प्रतिक्रिया दे सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. A person may still be able to help even without going to the location physically. For example, they may guide the sender, share local contacts, help coordinate by phone, or provide useful information connected to the situation.
         </span>
@@ -2374,11 +2399,11 @@ html: `
   keywords: "what happens after someone responds",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what happens after someone responds">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What happens after someone responds?</span>
         <span data-lang="hi" class="font-hindi">जब कोई प्रतिक्रिया देता है, उसके बाद क्या होता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           If one or more responders or volunteers in the district want to connect with you regarding the alert, they can initiate chat through the app. Once chat is initiated, it becomes bi-directional, allowing both sides to communicate during the active SOS period.
         </span>
@@ -2393,11 +2418,11 @@ html: `
   keywords: "can responders call the sender directly",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can responders call the sender directly">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can responders call the sender directly?</span>
         <span data-lang="hi" class="font-hindi">क्या रेस्पॉन्डर सीधे प्रेषक को कॉल कर सकते हैं?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. Responders may directly call the sender because the sender’s mobile number is included in the SOS alert. This can help people coordinate faster in urgent situations.
         </span>
@@ -2412,11 +2437,11 @@ html: `
   keywords: "can multiple people respond to the same alert",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can multiple people respond to the same alert">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can multiple people respond to the same alert?</span>
         <span data-lang="hi" class="font-hindi">क्या एक ही अलर्ट पर कई लोग प्रतिक्रिया दे सकते हैं?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. Since the alert goes to all registered users in the district, one or multiple users may choose to respond, initiate chat, or call the sender, depending on the situation.
         </span>
@@ -2431,11 +2456,11 @@ html: `
   keywords: "can i see who viewed my alert",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i see who viewed my alert">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I see who viewed my alert?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं देख सकता हूँ कि मेरे अलर्ट को किसने देखा?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           The app currently shows how many users have viewed your alert. The main purpose is to help the sender understand whether the SOS has been seen by people in the district.
         </span>
@@ -2450,11 +2475,11 @@ html: `
   keywords: "as a sender what will i see after initiating an alert",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="as a sender what will i see after initiating an alert">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">As a sender, what will I see after initiating an alert?</span>
         <span data-lang="hi" class="font-hindi">प्रेषक के रूप में, अलर्ट शुरू करने के बाद मुझे क्या दिखाई देगा?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           After you raise an alert, you will be able to see how many users have viewed it. If one or more responders or volunteers from your district want to connect with you, they can initiate chat. Once chat is initiated, it becomes two-way, allowing both sides to communicate. For privacy reasons, only responders or volunteers can start the chat. If no one initiates chat, the chat option will not appear.
         </span>
@@ -2469,11 +2494,11 @@ html: `
   keywords: "can anyone start chat with me after i send an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can anyone start chat with me after i send an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can anyone start chat with me after I send an SOS?</span>
         <span data-lang="hi" class="font-hindi">क्या मेरे एसओएस भेजने के बाद कोई भी मेरे साथ चैट शुरू कर सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. For privacy reasons, the sender cannot start the chat first through the SOS flow. Only responders or volunteers who receive the alert and choose to connect can initiate chat. Once they start chat, it becomes two-way.
         </span>
@@ -2488,11 +2513,11 @@ html: `
   keywords: "can i start chat with a responder first",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i start chat with a responder first">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I start chat with a responder first?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं पहले किसी रेस्पॉन्डर के साथ चैट शुरू कर सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. Chat initiation is restricted to responders or volunteers only. The sender can reply only after a responder has first initiated the conversation.
         </span>
@@ -2507,11 +2532,11 @@ html: `
   keywords: "for how long can one chat",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="for how long can one chat">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">For how long can one chat?</span>
         <span data-lang="hi" class="font-hindi">चैट कितनी देर तक की जा सकती है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Chat is available only for as long as the SOS alert remains active. Since an SOS stays active for a maximum of 60 minutes, the chat remains active only during that period. Once the SOS expires, no further conversation is possible.
           <br><br>
@@ -2530,11 +2555,11 @@ html: `
   keywords: "is chat available forever",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="is chat available forever">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Is chat available forever?</span>
         <span data-lang="hi" class="font-hindi">क्या चैट हमेशा के लिए उपलब्ध रहती है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. Chat is available only while the SOS remains active. Since an SOS stays active for a maximum of 60 minutes, new messages can be exchanged only during that active period. After that, the chat thread may remain visible for reference, but no further messages can be sent.
         </span>
@@ -2549,11 +2574,11 @@ html: `
   keywords: "what happens to the alert after 60 minutes",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what happens to the alert after 60 minutes">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What happens to the alert after 60 minutes?</span>
         <span data-lang="hi" class="font-hindi">60 मिनट के बाद अलर्ट का क्या होता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           After 60 minutes, the SOS automatically expires if it has not already been stopped manually by the sender. Once expired, the alert is no longer active, and chat connected to that SOS also becomes inactive for new communication.
         </span>
@@ -2568,11 +2593,11 @@ html: `
   keywords: "what happens if i do not stop the sos myself",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what happens if i do not stop the sos myself">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What happens if I do not stop the SOS myself?</span>
         <span data-lang="hi" class="font-hindi">यदि मैं खुद एसओएस को बंद नहीं करूँ तो क्या होगा?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           If you do not stop the SOS manually, it will automatically expire after 60 minutes. Once it expires, the alert is no longer active and chat related to that SOS also becomes inactive.
         </span>
@@ -2587,11 +2612,11 @@ html: `
   keywords: "can i cancel an sos after raising it",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i cancel an sos after raising it">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I cancel an SOS after raising it?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं एसओएस भेजने के बाद उसे रद्द कर सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. The sender can stop or cancel the SOS at any time, ideally once help has been found or the issue has been resolved. If the sender does not stop it manually, the SOS will automatically expire after 60 minutes.
         </span>
@@ -2606,11 +2631,11 @@ html: `
   keywords: "can i raise another sos after cancelling one",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i raise another sos after cancelling one">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I raise another SOS after cancelling one?</span>
         <span data-lang="hi" class="font-hindi">क्या एक एसओएस रद्द करने के बाद मैं दूसरा एसओएस भेज सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. If you have cancelled or stopped an earlier SOS, you can raise a new SOS again whenever needed. The new SOS will be treated as a fresh alert and will be sent to all registered users in your district through the app.
         </span>
@@ -2625,11 +2650,11 @@ html: `
   keywords: "can i edit an alert after sending it",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i edit an alert after sending it">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I edit an alert after sending it?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं अलर्ट भेजने के बाद उसे संपादित कर सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. Once an SOS alert has been sent, it cannot be edited. If the message needs to be changed or corrected, the sender will need to stop the existing alert and raise a new SOS with the updated message.
         </span>
@@ -2644,11 +2669,11 @@ html: `
   keywords: "can i correct a wrong message after sending an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i correct a wrong message after sending an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I correct a wrong message after sending an SOS?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं एसओएस भेजने के बाद गलत संदेश को सुधार सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. Once an SOS has been sent, the message cannot be edited. If you entered a wrong or incomplete message, you will need to stop the current SOS and raise a fresh one with the corrected details.
         </span>
@@ -2663,11 +2688,11 @@ html: `
   keywords: "what information is included in an sos alert",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what information is included in an sos alert">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What information is included in an SOS alert?</span>
         <span data-lang="hi" class="font-hindi">एक एसओएस अलर्ट में कौन-सी जानकारी शामिल होती है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Each SOS alert contains the sender’s name, mobile number, GPS coordinates captured at the time the SOS is sent, and the short message entered by the sender describing the incident.
           <br><br>
@@ -2686,11 +2711,11 @@ html: `
   keywords: "what details should i enter while raising an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what details should i enter while raising an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What details should I enter while raising an SOS?</span>
         <span data-lang="hi" class="font-hindi">एसओएस भेजते समय मुझे कौन-से विवरण दर्ज करने चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           While raising an SOS, you should enter a short message clearly describing what the incident is, in a few words. The message should help others quickly understand the situation and location. For example:
           <br><br>
@@ -2721,11 +2746,11 @@ html: `
   keywords: "what is a good example of an sos message",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what is a good example of an sos message">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What is a good example of an SOS message?</span>
         <span data-lang="hi" class="font-hindi">एसओएस संदेश का अच्छा उदाहरण क्या है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           A good SOS message is short and specific. Examples include:
           <br><br>
@@ -2752,11 +2777,11 @@ html: `
   keywords: "what makes an sos message effective",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what makes an sos message effective">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What makes an SOS message effective?</span>
         <span data-lang="hi" class="font-hindi">किस बात से एक एसओएस संदेश प्रभावी बनता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           An effective SOS message is short, direct, and specific. It should quickly tell others what has happened and where, without unnecessary detail or long explanation.
         </span>
@@ -2771,11 +2796,11 @@ html: `
   keywords: "should i write a long explanation in the sos message",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="should i write a long explanation in the sos message">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Should I write a long explanation in the SOS message?</span>
         <span data-lang="hi" class="font-hindi">क्या मुझे एसओएस संदेश में लंबा विवरण लिखना चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The SOS message should ideally be brief and clear. A long explanation may slow understanding, whereas a short and specific message helps others immediately grasp the urgency.
         </span>
@@ -2790,11 +2815,11 @@ html: `
   keywords: "what should i avoid while writing the sos message",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what should i avoid while writing the sos message">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What should I avoid while writing the SOS message?</span>
         <span data-lang="hi" class="font-hindi">एसओएस संदेश लिखते समय मुझे किन चीज़ों से बचना चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           You should avoid long explanations, vague wording, jokes, spam, false alerts, or unclear messages. The SOS message should be short, clear, specific, and focused on the actual urgent situation so that others can quickly understand what has happened.
         </span>
@@ -2809,11 +2834,11 @@ html: `
   keywords: "can i send multiple sos alerts at the same time",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i send multiple sos alerts at the same time">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I send multiple SOS alerts at the same time?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं एक ही समय पर कई एसओएस अलर्ट भेज सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. Only one SOS alert can be active at a time from a user. If a user needs to send another SOS, the existing active SOS must first be stopped or allowed to expire before a new one can be raised.
         </span>
@@ -2828,11 +2853,11 @@ html: `
   keywords: "why is only one sos allowed at a time",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="why is only one sos allowed at a time">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Why is only one SOS allowed at a time?</span>
         <span data-lang="hi" class="font-hindi">एक समय पर केवल एक ही एसओएस की अनुमति क्यों है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Only one SOS is allowed at a time so that the alert remains clear, focused, and manageable. This helps avoid confusion, prevents overlapping active alerts from the same user, and makes it easier for registered users in the district to understand and respond to the current urgent situation.
         </span>
@@ -2847,11 +2872,11 @@ html: `
   keywords: "can the app be misused for fake or false alerts",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can the app be misused for fake or false alerts">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can the app be misused for fake or false alerts?</span>
         <span data-lang="hi" class="font-hindi">क्या इस ऐप का उपयोग झूठे या फर्जी अलर्ट के लिए किया जा सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           The app is meant only for genuine urgent situations related to animal welfare. It should not be used for fake alerts, spam, jokes, harassment, or any misleading use. If users are found to be misusing the app, and such misuse is reported by others through the feedback form, the concerned users may be blocked after investigation.
         </span>
@@ -2866,11 +2891,11 @@ html: `
   keywords: "what should i do before sending an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what should i do before sending an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What should I do before sending an SOS?</span>
         <span data-lang="hi" class="font-hindi">एसओएस भेजने से पहले मुझे क्या करना चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Before sending an SOS, you should make sure the situation is genuinely urgent, keep your message short and clear, and describe the incident in a way that helps others quickly understand what has happened and where support may be needed.
         </span>
@@ -2885,11 +2910,11 @@ html: `
   keywords: "what should i do after sending an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what should i do after sending an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What should I do after sending an SOS?</span>
         <span data-lang="hi" class="font-hindi">एसओएस भेजने के बाद मुझे क्या करना चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           After sending an SOS, you should stay alert, watch for responses, and be available in case a responder initiates chat or calls you. Since your mobile number is shared in the alert, you should also be ready to coordinate clearly if someone contacts you.
         </span>
@@ -2904,11 +2929,11 @@ html: `
   keywords: "can i use the app without helping others",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i use the app without helping others">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I use the app without helping others?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं दूसरों की मदद किए बिना भी ऐप का उपयोग कर सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. A person may install the app for awareness, emergency use, or to stay connected to the animal welfare network in their district. However, the platform works best when more registered users are willing to respond whenever they are genuinely able to help.
         </span>
@@ -2923,11 +2948,11 @@ html: `
   keywords: "do i have to respond to every sos i receive",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="do i have to respond to every sos i receive">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Do I have to respond to every SOS I receive?</span>
         <span data-lang="hi" class="font-hindi">क्या मुझे हर प्राप्त एसओएस पर प्रतिक्रिया देना आवश्यक है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. Receiving an SOS does not mean you are required to respond to every alert. Users can view the alert and decide based on the situation, their availability, their location, and whether they are actually in a position to help.
         </span>
@@ -2942,11 +2967,11 @@ html: `
   keywords: "do i need special training to use the app",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="do i need special training to use the app">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Do I need special training to use the app?</span>
         <span data-lang="hi" class="font-hindi">क्या ऐप का उपयोग करने के लिए मुझे विशेष प्रशिक्षण की आवश्यकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. You do not need special training to use the app. The app is simple to use — you can raise an SOS when needed or respond if you are able to help. At the same time, users should act responsibly and only do what they are comfortable, safe, and reasonably capable of doing.
         </span>
@@ -2961,11 +2986,11 @@ html: `
   keywords: "what should a user keep in mind while using the app",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what should a user keep in mind while using the app">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What should a user keep in mind while using the app?</span>
         <span data-lang="hi" class="font-hindi">ऐप का उपयोग करते समय उपयोगकर्ता को किन बातों का ध्यान रखना चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           A user should use the app responsibly, only for genuine urgent animal welfare-related situations, keep the SOS message short and clear, and avoid any fake, misleading, or non-serious use.
         </span>
@@ -2980,11 +3005,11 @@ html: `
   keywords: "can users be blocked for misuse",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can users be blocked for misuse">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can users be blocked for misuse?</span>
         <span data-lang="hi" class="font-hindi">क्या दुरुपयोग के लिए उपयोगकर्ताओं को ब्लॉक किया जा सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. If users are found to be misusing the app, and such misuse is reported by others through the feedback form, the concerned users may be blocked after investigation.
         </span>
@@ -2999,11 +3024,11 @@ html: `
   keywords: "is money involved in using the app for help",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="is money involved in using the app for help">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Is money involved in using the app for help?</span>
         <span data-lang="hi" class="font-hindi">क्या मदद के लिए ऐप का उपयोग करने में पैसे शामिल हैं?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app is intended as a support and coordination platform for animal welfare as a service, with no money involved.
         </span>
@@ -3018,11 +3043,11 @@ html: `
   keywords: "who can use the app",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="who can use the app">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Who can use the app?</span>
         <span data-lang="hi" class="font-hindi">इस ऐप का उपयोग कौन कर सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Anyone interested in animal welfare can use the app. Users can download and install the app, enter their full name and mobile number, and get started. With one tap, they can raise an SOS alert that goes out to volunteers, or help respond to alerts in their district.
         </span>
@@ -3037,11 +3062,11 @@ html: `
   keywords: "can the app be used only by rescuers",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can the app be used only by rescuers">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can the app be used only by rescuers?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप केवल रेस्क्यूअर्स द्वारा ही उपयोग किया जा सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app is not limited to rescuers alone. It is meant for the wider animal welfare ecosystem, because even though the app flow remains the same — one user raises an SOS and that alert goes to all other registered users in the same district — different kinds of people can still make a meaningful difference based on who they are, what they know, and what support they are able to offer.
           <br><br>
@@ -3064,11 +3089,11 @@ html: `
   keywords: "can i use the app even if i am not from an ngo or rescue group",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i use the app even if i am not from an ngo or rescue group">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I use the app even if I am not from an NGO or rescue group?</span>
         <span data-lang="hi" class="font-hindi">यदि मैं किसी एनजीओ या रेस्क्यू समूह से नहीं हूँ, तब भी क्या मैं ऐप का उपयोग कर सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. You do not need to belong to an NGO or rescue group to use the app. Anyone interested in supporting animal welfare and using the platform responsibly may use it.
         </span>
@@ -3083,11 +3108,11 @@ html: `
   keywords: "can i use the app only when i personally need help",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i use the app only when i personally need help">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I use the app only when I personally need help?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं ऐप का उपयोग केवल तब कर सकता हूँ जब मुझे व्यक्तिगत रूप से मदद चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app can be used both by someone raising an SOS and by someone who wants to remain available to respond to alerts in their district whenever they are able to support.
         </span>
@@ -3102,11 +3127,11 @@ html: `
   keywords: "what do i need to do to register",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what do i need to do to register">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What do I need to do to register?</span>
         <span data-lang="hi" class="font-hindi">पंजीकरण के लिए मुझे क्या करना होगा?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           To register, tap Get Started, agree to the Terms and Conditions, and enter your name and mobile number. Once that is done, you will reach the home screen, where the SOS button is available and the app is ready to use.
         </span>
@@ -3121,11 +3146,11 @@ html: `
   keywords: "what do i need to enter while joining the app",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what do i need to enter while joining the app">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What do I need to enter while joining the app?</span>
         <span data-lang="hi" class="font-hindi">ऐप से जुड़ते समय मुझे क्या दर्ज करना होगा?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           To get started, a user needs to enter their full name and mobile number during onboarding.
         </span>
@@ -3140,11 +3165,11 @@ html: `
   keywords: "does the app require a long signup process",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="does the app require a long signup process">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Does the app require a long signup process?</span>
         <span data-lang="hi" class="font-hindi">क्या इस ऐप में साइनअप की लंबी प्रक्रिया है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The onboarding is simple. A user needs to enter their full name and mobile number to get started with the app.
         </span>
@@ -3159,11 +3184,11 @@ html: `
   keywords: "is the app difficult to use",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="is the app difficult to use">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Is the app difficult to use?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप उपयोग करने में कठिन है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app is designed to be simple to use. A user can get onboarded with basic details and raise an SOS with a short message when needed.
         </span>
@@ -3178,11 +3203,11 @@ html: `
   keywords: "can i use the app for animals other than dogs",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i use the app for animals other than dogs">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I use the app for animals other than dogs?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं इस ऐप का उपयोग कुत्तों के अलावा अन्य जानवरों के लिए भी कर सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. The app is for any and all animals. It can be used for urgent animal welfare-related situations involving dogs, cats, cattle, birds, puppies, kittens, or any other animal where timely support may be needed.
         </span>
@@ -3197,11 +3222,11 @@ html: `
   keywords: "is the app only for animal emergencies",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="is the app only for animal emergencies">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Is the app only for animal emergencies?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप केवल पशु आपात स्थितियों के लिए है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           No. The app is meant for the broader animal welfare ecosystem and can be used by anyone involved in, or willing to support, animal welfare as a service, with no money involved. This includes feeders, animal welfare volunteers, rescuers, NGOs, veterinarians, lawyers, caretakers, foster providers, transport helpers, and others who may be able to assist in animal welfare-related situations within their district.
           <br><br>
@@ -3220,11 +3245,11 @@ html: `
   keywords: "what kind of situations should i use the app for",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what kind of situations should i use the app for">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What kind of situations should I use the app for?</span>
         <span data-lang="hi" class="font-hindi">मुझे ऐप का उपयोग किन परिस्थितियों में करना चाहिए?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           The app should be used for genuine urgent situations related to animal welfare or allied support. It should not be used for spam, false alerts, jokes, or non-urgent matters.
         </span>
@@ -3239,11 +3264,11 @@ html: `
   keywords: "can the app be useful in both rescue and non-rescue urgent animal welfare cases",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can the app be useful in both rescue and non-rescue urgent animal welfare cases">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can the app be useful in both rescue and non-rescue urgent animal welfare cases?</span>
         <span data-lang="hi" class="font-hindi">क्या यह ऐप रेस्क्यू और गैर-रेस्क्यू दोनों प्रकार के तात्कालिक पशु कल्याण मामलों में उपयोगी हो सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. The app can be useful not only in direct rescue situations but also in other urgent animal welfare-related matters where timely support, coordination, guidance, transport, or intervention may be needed.
         </span>
@@ -3258,11 +3283,11 @@ html: `
   keywords: "can i use the app for an injured animal on the road",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i use the app for an injured animal on the road">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I use the app for an injured animal on the road?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं सड़क पर घायल पशु के लिए इस ऐप का उपयोग कर सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. If you come across an injured animal and immediate support is needed, you can raise an SOS through the app with a short and clear message describing the situation and location.
         </span>
@@ -3277,11 +3302,11 @@ html: `
   keywords: "can the app help in cases of abandoned puppies or kittens",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can the app help in cases of abandoned puppies or kittens">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can the app help in cases of abandoned puppies or kittens?</span>
         <span data-lang="hi" class="font-hindi">क्या छोड़े गए पिल्लों या बिल्ली के बच्चों के मामलों में यह ऐप मदद कर सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. If the situation is urgent, such as abandoned puppies or kittens needing immediate support, the app may be used to alert registered users in the district who may be able to assist, guide, or coordinate help.
         </span>
@@ -3296,11 +3321,11 @@ html: `
   keywords: "what happens when i raise an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what happens when i raise an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What happens when I raise an SOS?</span>
         <span data-lang="hi" class="font-hindi">जब मैं एसओएस भेजता हूँ, तब क्या होता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Once you raise an SOS, the alert is sent to all registered users in your district through the app. Those users can view the alert and decide whether they want to respond, initiate chat, call, or otherwise assist based on the situation.
         </span>
@@ -3315,11 +3340,11 @@ html: `
   keywords: "how do i raise an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="how do i raise an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">How do I raise an SOS?</span>
         <span data-lang="hi" class="font-hindi">मैं एसओएस कैसे भेजूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Open the app and tap the SOS option. Once submitted, your alert is sent to all registered users in your district through the app.
         </span>
@@ -3334,11 +3359,11 @@ html: `
   keywords: "what details do other users receive when i send an sos",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="what details do other users receive when i send an sos">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">What details do other users receive when I send an SOS?</span>
         <span data-lang="hi" class="font-hindi">जब मैं एसओएस भेजता हूँ, तब अन्य उपयोगकर्ताओं को कौन-कौन से विवरण मिलते हैं?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Other registered users in the same district receive the sender’s name, mobile number, GPS coordinates captured at the time of the alert, and the short incident message entered by the sender.
         </span>
@@ -3353,11 +3378,11 @@ html: `
   keywords: "why is location important",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="why is location important">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Why is location important?</span>
         <span data-lang="hi" class="font-hindi">लोकेशन क्यों महत्वपूर्ण है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Location is important because it helps registered users in the district understand where the incident has happened and whether they are close enough to assist or coordinate support.
         </span>
@@ -3372,11 +3397,11 @@ html: `
   keywords: "can i raise an sos without location",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can i raise an sos without location">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can I raise an SOS without location?</span>
         <span data-lang="hi" class="font-hindi">क्या मैं लोकेशन के बिना एसओएस भेज सकता हूँ?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           When an SOS is sent, the app automatically captures the sender’s location and includes the GPS coordinates in the alert. This is not live tracking. It is only the location captured at the time the SOS is raised, so that responders and volunteers in the district can understand where the incident is happening.
         </span>
@@ -3391,11 +3416,11 @@ html: `
   keywords: "can the app help in cases of abandoned puppies or kittens",
   html: `
     <div class="faq-item glass-card p-8" data-keywords="can the app help in cases of abandoned puppies or kittens">
-      <h3 class="text-white text-xl font-bold mb-3">
+      <h3 class="text-[color:var(--text)] text-xl font-bold mb-3">
         <span data-lang="en">Can the app help in cases of abandoned puppies or kittens?</span>
         <span data-lang="hi" class="font-hindi">क्या छोड़े गए पिल्लों या बिल्ली के बच्चों के मामलों में यह ऐप मदद कर सकता है?</span>
       </h3>
-      <p class="text-white/40 leading-relaxed">
+      <p class="text-[color:var(--text)]/40 leading-relaxed">
         <span data-lang="en">
           Yes. If the situation is urgent, such as abandoned puppies or kittens needing immediate support, the app may be used to alert registered users in the district who may be able to assist, guide, or coordinate help.
         </span>
@@ -3512,7 +3537,7 @@ const header = document.getElementById("mainHeader");
 window.addEventListener("scroll",()=>{
 
 if(window.scrollY > 50){
-header.classList.add("bg-black/80");
+header.classList.add("bg-[color:var(--bg)]/80");
 }
 else{
 header.classList.remove("bg-black/80");
@@ -3536,7 +3561,32 @@ entry.target.classList.add("show");
 },{threshold:0.15});
 
 fadeEls.forEach(el=>observer.observe(el));
+function toggleTheme(){
+  const html = document.documentElement;
 
+  if(html.classList.contains("light")){
+    html.classList.remove("light");
+    html.classList.add("dark");
+    localStorage.setItem("theme","dark");
+    document.getElementById("themeIcon").innerText = "light_mode";
+  } else {
+    html.classList.remove("dark");
+    html.classList.add("light");
+    localStorage.setItem("theme","light");
+    document.getElementById("themeIcon").innerText = "dark_mode";
+  }
+}
+
+// persist theme on reload
+document.addEventListener("DOMContentLoaded", ()=>{
+  const saved = localStorage.getItem("theme");
+
+  if(saved === "light"){
+    document.documentElement.classList.remove("dark");
+    document.documentElement.classList.add("light");
+    document.getElementById("themeIcon").innerText = "dark_mode";
+  }
+});
 </script>
 </div>
 </body>
