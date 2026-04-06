@@ -1,0 +1,3869 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Rapid Response | Animal Emergency Network</title>
+
+<meta name="description"
+content="Rapid Response is a community network that connects nearby volunteers when animals need urgent help."/>
+
+<meta property="og:title"
+content="Rapid Response | Animal Emergency Network"/>
+
+<meta property="og:description"
+content="SOS alerts connecting volunteers during animal emergencies."/>
+
+<meta property="og:type"
+content="website"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V773DF2W0N"></script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-V773DF2W0N');
+</script>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<script>
+
+tailwind.config = {
+darkMode:"class",
+theme:{
+extend:{
+colors:{
+primary:"#ff3b30",
+background:"#000000",
+surface:"#0a0a0a"
+},
+fontFamily:{
+sans:["Inter","system-ui","sans-serif"],
+mono:["JetBrains Mono","monospace"],
+hindi:["Noto Sans Devanagari","sans-serif"]
+},
+letterSpacing:{
+cred:"0.2em",
+tightx:"-0.05em"
+}
+}
+}
+}
+
+</script>
+
+<style>
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#000;
+color:#fff;
+-webkit-font-smoothing:antialiased;
+overflow-x:hidden;
+}
+
+.hero-bg{
+background: radial-gradient(circle at 50% -20%, #1a1a1a 0%, #000000 70%);
+}
+
+.cred-gradient-text{
+background:linear-gradient(180deg,#FFFFFF 0%,rgba(255,255,255,0.5) 100%);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.glass-card{
+background:rgba(255,255,255,0.02);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.05);
+}
+
+.sos-ripple{
+position:relative;
+}
+
+.sos-ripple::before{
+content:'';
+position:absolute;
+inset:-10px;
+border:1px solid rgba(255,59,48,0.3);
+border-radius:50%;
+animation:ripple 3s linear infinite;
+}
+
+@keyframes ripple{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(1.5);opacity:0;}
+}
+
+.grid-bg{
+background-size:40px 40px;
+background-image:
+linear-gradient(to right, rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
+}
+
+.phone-glow{
+position:absolute;
+width:420px;
+height:420px;
+background:radial-gradient(circle, rgba(255,59,48,0.25) 0%, rgba(0,0,0,0) 70%);
+filter:blur(80px);
+}
+
+.font-hindi{
+line-height:1.7;
+letter-spacing:0.01em;
+font-family:"Noto Sans Devanagari","sans-serif";
+}
+
+.fade-up{
+opacity:0;
+transform:translateY(40px);
+transition:all 0.8s ease;
+}
+
+.fade-up.show{
+opacity:1;
+transform:translateY(0);
+}
+/* LIGHT MODE */
+.light body {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+}
+.light header *, .light nav *, .light section *, .light footer * {
+  color: #0a0a0a !important;
+  -webkit-text-fill-color: #0a0a0a !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+.light .text-primary, .light [class*="text-primary"] {
+  color: #ff3b30 !important; -webkit-text-fill-color: #ff3b30 !important;
+}
+.light .text-green-500 { color: #16a34a !important; -webkit-text-fill-color: #16a34a !important; }
+.light .text-green-400 { color: #15803d !important; -webkit-text-fill-color: #15803d !important; }
+.light .text-red-500   { color: #dc2626 !important; -webkit-text-fill-color: #dc2626 !important; }
+.light [class*="text-white/10"] { color: rgba(0,0,0,0.08) !important; -webkit-text-fill-color: rgba(0,0,0,0.08) !important; }
+.light [class*="white/40"] { color: rgba(0,0,0,0.5) !important; -webkit-text-fill-color: rgba(0,0,0,0.5) !important; }
+.light [class*="white/30"] { color: rgba(0,0,0,0.4) !important; -webkit-text-fill-color: rgba(0,0,0,0.4) !important; }
+.light [class*="white/50"] { color: rgba(0,0,0,0.6) !important; -webkit-text-fill-color: rgba(0,0,0,0.6) !important; }
+.light [class*="white/70"] { color: rgba(0,0,0,0.7) !important; -webkit-text-fill-color: rgba(0,0,0,0.7) !important; }
+.light [class*="white/60"] { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; }
+.light .cred-gradient-text {
+  background: linear-gradient(180deg, #0a0a0a 0%, rgba(0,0,0,0.38) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+.light section, .light [class*="bg-black"], .light [class*="bg-surface"] { background: #ffffff !important; }
+.light section:nth-child(even), .light [class*="bg-white/5"] { background: #f8f8f8 !important; }
+.light #mainHeader { background: rgba(255,255,255,0.97) !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
+.light #mobileMenu { background: #ffffff !important; }
+.light .glass-card { background: rgba(0,0,0,0.025) !important; border: 1px solid rgba(0,0,0,0.08) !important; }
+.light [class*="hover:bg-white/5"]:hover { background: rgba(0,0,0,0.04) !important; }
+.light [class*="hover:border-primary/40"]:hover { border-color: rgba(255,59,48,0.4) !important; }
+.light .group:hover .group-hover\:text-yellow-400 {
+  color: #ca8a04 !important;
+  -webkit-text-fill-color: #ca8a04 !important;
+}
+.light #faqSearch { color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
+.light #faqSearch::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
+.light .faq-chip { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
+.light .faq-chip:hover { background: rgba(0,0,0,0.05) !important; color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
+.light .hero-bg { background: radial-gradient(circle at 50% -20%, #efefef 0%, #ffffff 70%) !important; }
+.light .grid-bg { background-image: linear-gradient(to right,rgba(0,0,0,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,0,0,.05) 1px,transparent 1px) !important; }
+.light .phone-glow { background: radial-gradient(circle,rgba(255,59,48,0.1) 0%,rgba(255,255,255,0) 70%) !important; }
+.light footer { background: #f5f5f5 !important; }
+.light #legalChatBox { background: #f9f9f9 !important; border-color: rgba(0,0,0,0.08) !important; }
+.light #legalInput { color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
+.light #legalInput::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
+.light .legal-chip { color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
+.light .legal-chip:hover { background: rgba(0,0,0,0.04) !important; color: #0a0a0a !important; }
+.light .bg-white.text-black { background: #111 !important; }
+.light .bg-white.text-black * { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+.light .text-yellow-400\/70 { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; }
+
+[data-lang] {
+  display: none !important;
+}
+
+html[lang="en"] [data-lang="en"] {
+  display: block !important;
+}
+
+html[lang="hi"] [data-lang="hi"] {
+  display: block !important;
+}
+
+html[lang="en"] [data-lang="en"] {
+  display: initial;
+}
+
+html[lang="hi"] [data-lang="hi"] {
+  display: initial;
+}
+  
+</style>
+
+</head>
+
+<body class="font-sans">
+  <script>
+
+    function updateFaqPlaceholder(lang) {
+      const faqSearch = document.getElementById("faqSearch");
+      if (!faqSearch) return;
+
+      if (lang === "hi") {
+        faqSearch.placeholder = "कोई शब्द लिखकर जवाब खोजें...";
+      } else {
+        faqSearch.placeholder = "Search by keyword...";
+      }
+    }
+
+    function setLang(lang){
+      document.documentElement.lang = lang;
+      updateFaqPlaceholder(lang);
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      setLang('en');
+    });
+
+  </script>
+
+
+  <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+
+
+<!-- MOBILE MENU OVERLAY -->
+
+<div id="mobileMenuOverlay"
+class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+
+<!-- MOBILE MENU PANEL -->
+
+<div id="mobileMenu"
+class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
+
+<a href="#problem" class="mobile-link text-white">Need</a>
+<a href="#solution" class="mobile-link text-white">Solution</a>
+<a href="#how" class="mobile-link text-white">How it Works</a>
+<a href="#community" class="mobile-link text-white">Community</a>
+<a href="#faq" class="mobile-link text-white">FAQ</a>
+
+<button id="closeMenu"
+class="absolute top-8 right-8 text-white">
+
+<span class="material-symbols-outlined text-3xl">
+close
+</span>
+
+</button>
+
+</div>
+
+<header id="mainHeader"
+class="fixed top-0 left-0 right-0 z-[100] bg-black/40 backdrop-blur-xl transition-all duration-300">
+
+<div class="relative max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 py-6 flex items-center justify-between">
+
+<!-- LEFT -->
+
+<div class="flex items-center gap-3">
+
+<div class="w-9 h-9 border border-white/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">pets</span>
+</div>
+
+<h2 class="text-white text-sm font-black tracking-cred uppercase">
+Rapid Response
+</h2>
+
+</div>
+
+
+<!-- DESKTOP NAV -->
+
+<nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
+
+<a class="text-white/40 hover:text-white transition-colors" href="#problem">
+<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Need</span>
+<span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">ज़रूरत</span>
+</a>
+
+<a class="text-white/40 hover:text-white transition-colors" href="#solution">
+<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Solution</span>
+<span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">हल</span>
+</a>
+
+<a class="text-white/40 hover:text-white transition-colors" href="#how">
+<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">How it Works</span>
+<span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कैसे चलता है</span>
+</a>
+
+<a class="text-white/40 hover:text-white transition-colors" href="#community">
+<span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Community</span>
+<span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">लोग</span>
+</a>
+
+<a class="text-white/40 hover:text-white transition-colors" href="#faq">
+  <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">FAQ</span>
+  <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">सवाल-जवाब</span>
+</a>
+<a class="text-white/40 hover:text-white transition-colors" href="#legal">
+  <span data-lang="en" class="text-[10px] font-bold tracking-cred uppercase">Legal Help</span>
+  <span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कानूनी मदद</span>
+</a>
+</nav>
+
+
+
+<!-- RIGHT SIDE -->
+
+<div class="flex items-center gap-4 text-xs font-bold">
+<button onclick="toggleMode()" id="modeBtn"
+class="text-white/70 hover:text-white text-xs font-bold mr-2">
+☀️
+</button>
+<button onclick="setLang('en')" class="text-white/70 hover:text-white">
+EN
+</button>
+
+<span class="text-white/30">|</span>
+
+<button onclick="setLang('hi')" class="text-white/70 hover:text-white font-hindi">
+हिंदी
+</button>
+
+
+<!-- MOBILE MENU BUTTON -->
+
+<button id="mobileMenuBtn"
+class="lg:hidden text-white ml-2 relative w-8 h-8 flex items-center justify-center">
+
+<span class="material-symbols-outlined text-2xl transition-all duration-300">
+menu
+</span>
+
+</button>
+
+</div>
+
+</div>
+
+</header>
+    <section class="hero-bg relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20 text-center fade-up">
+      <div class="absolute inset-0 grid-bg opacity-40"></div>
+
+      <div class="relative z-10 max-w-6xl mx-auto">
+
+        <!-- TAGLINE -->
+        <span class="text-primary font-mono tracking-[0.4em] text-[10px] uppercase mb-8 block">
+          <span data-lang="en">Where Empathy Meets Action</span>
+          <span data-lang="hi" class="font-hindi">जहाँ संवेदना काम बन जाती है</span>
+        </span>
+
+        <!-- MAIN HEADLINE -->
+        <h1 class="cred-gradient-text mb-12 text-center break-words">
+
+          <span data-lang="en"
+          class="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.05] uppercase">
+
+            HELP. WHEN<br/>
+            SECONDS<br/>
+
+            <span class="text-white/30 italic">
+            MATTER.
+            </span>
+
+          </span>
+
+          <span data-lang="hi"
+          class="font-hindi block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.12]">
+
+            मदद। जब<br/>
+            हर सेकंड<br/>
+
+            <span class="text-white/30 italic">
+            बहुत मायने रखता है।
+            </span>
+
+          </span>
+
+        </h1>
+
+        <!-- SUBTEXT -->
+        <p class="text-white/50 text-base md:text-lg mx-auto mb-16 font-light">
+
+          <span data-lang="en"
+          class="block max-w-xl mx-auto leading-relaxed">
+
+          A community network that connects nearby volunteers
+          when an animal needs urgent help.
+
+          </span>
+
+          <span data-lang="hi"
+          class="font-hindi block max-w-2xl mx-auto leading-[1.6]">
+
+          यह एक ऐसा नेटवर्क है जो आसपास के लोगों को जोड़ता है,
+          ताकि किसी जानवर को तुरंत मदद चाहिए हो तो जल्दी सहायता पहुँच सके।
+
+          </span>
+
+        </p>
+
+        <!-- DOWNLOAD BUTTONS -->
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20">
+
+          <a href="https://play.google.com/store/apps/details?id=com.rrt.sos"
+          target="_blank"
+          aria-label="Download Android App"
+          class="w-56 bg-white text-black h-14 flex items-center justify-center gap-3 font-black text-xs tracking-cred uppercase hover:invert transition-all">
+
+          <img
+          loading="lazy"
+          src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000"
+          class="w-[18px] h-[18px]"
+          />
+
+          <span class="w-px h-4 bg-black/30"></span>
+
+          <span data-lang="en">Download</span>
+          <span data-lang="hi" class="font-hindi">डाउनलोड करें</span>
+
+          </a>
+
+
+          <a href="https://apps.apple.com/in/app/rapid-response/id6758672498"
+          target="_blank"
+          aria-label="Download iOS App"
+          class="w-56 bg-white text-black h-14 flex items-center justify-center gap-3 font-black text-xs tracking-cred uppercase hover:invert transition-all">
+
+          <img
+          loading="lazy"
+          src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000"
+          class="w-[18px] h-[18px]"
+          />
+
+          <span class="w-px h-4 bg-black/30"></span>
+
+          <span data-lang="en">Download</span>
+          <span data-lang="hi" class="font-hindi">डाउनलोड करें</span>
+
+          </a>
+
+        </div>
+
+
+        <!-- LEARN SECTION -->
+
+        <p class="text-sm md:text-base text-white/70 font-medium tracking-wide mb-6">
+
+          <span data-lang="en">
+          Learn how the app works
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          जानिए ऐप कैसे काम करता है
+          </span>
+
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-x-14 gap-y-6 mt-4">
+
+          <a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview"
+          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+
+          <span class="material-symbols-outlined text-sm">play_circle</span>
+
+          <span data-lang="en">IOS Demo</span>
+          <span data-lang="hi" class="font-hindi">आईओएस डेमो</span>
+
+          </a>
+
+
+          <a href="https://drive.google.com/file/d/1jsseovdhhCvx6k0SMhIx2uwowkeElnfF/preview"
+          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+
+          <span class="material-symbols-outlined text-sm">play_circle</span>
+
+          <span data-lang="en">Android Demo</span>
+          <span data-lang="hi" class="font-hindi">एंड्रॉयड डेमो</span>
+
+          </a>
+
+
+          <a href="https://drive.google.com/file/d/1infaiPzLyf7QI6W9c_HD4lGRrXnoxReP/preview"
+          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+
+          <span class="material-symbols-outlined text-sm">settings</span>
+
+          <span data-lang="en">Setup Guide</span>
+          <span data-lang="hi" class="font-hindi">सेटअप गाइड</span>
+
+          </a>
+
+
+          <a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview"
+          class="text-white/70 hover:text-white text-[11px] font-semibold tracking-cred uppercase flex items-center gap-3 transition-all">
+
+          <span class="material-symbols-outlined text-sm">info</span>
+
+          <span data-lang="en">How the App Works</span>
+          <span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है</span>
+
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+    <section id="problem" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 fade-up">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
+
+      <!-- LEFT TEXT -->
+
+      <div class="flex flex-col justify-center h-full">
+
+        <span class="text-primary font-bold tracking-cred text-[10px] uppercase mb-6 block">
+
+          <span data-lang="en">The Need</span>
+          <span data-lang="hi" class="font-hindi">असल ज़रूरत</span>
+
+        </span>
+
+
+        <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight mb-10 uppercase">
+
+          <span data-lang="en">
+
+          When An Animal<br>
+          Needs Help
+
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+
+          जब किसी जानवर को<br>
+          मदद की ज़रूरत पड़ती है
+
+          </span>
+
+        </h2>
+
+
+        <p class="text-white/40 text-base md:text-lg leading-relaxed max-w-lg font-light">
+
+          <span data-lang="en">
+
+          This is how things usually happen today -
+          <br><br>
+
+          Someone notices an injured animal.
+          Messages go out on WhatsApp.
+          Calls are made. Photos get forwarded.
+
+          <br><br>
+
+          But the right person rarely sees it in time.
+
+          </span>
+
+
+          <span data-lang="hi" class="font-hindi">
+
+          आज ज़्यादातर यही होता है -
+          <br><br>
+
+          किसी को सड़क पर घायल जानवर दिखता है।
+          फिर व्हाट्सऐप पर मैसेज जाते हैं।
+          फोन किए जाते हैं। फोटो आगे भेजी जाती हैं।
+
+          <br><br>
+
+          लेकिन सही आदमी तक खबर अक्सर समय पर पहुँचती ही नहीं।
+
+          </span>
+
+        </p>
+
+      </div>
+
+
+
+      <!-- RIGHT GRID -->
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+
+
+        <!-- CARD 1 -->
+
+        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+
+          <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
+
+          timer_off
+
+          </span>
+
+          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+
+          <span data-lang="en">Slow Alerts</span>
+          <span data-lang="hi" class="font-hindi">अलर्ट देर से पहुँचता है</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+          <span data-lang="en">
+          Messages take time to reach the right people.
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          सही लोगों तक बात पहुँचने में काफी देर लग जाती है।
+          </span>
+
+          </p>
+
+        </div>
+
+
+
+        <!-- CARD 2 -->
+
+        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+
+          <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
+
+          location_disabled
+
+          </span>
+
+          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+
+          <span data-lang="en">Unclear Location</span>
+          <span data-lang="hi" class="font-hindi">जगह साफ़ पता नहीं चलती</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+          <span data-lang="en">
+          Volunteers may struggle to find the exact place.
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          मदद करने वालों को सही जगह ढूँढने में दिक्कत होती है।
+          </span>
+
+          </p>
+
+        </div>
+
+
+
+        <!-- CARD 3 -->
+
+        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+
+          <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
+
+          group_off
+
+          </span>
+
+          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+
+          <span data-lang="en">Disconnected Volunteers</span>
+          <span data-lang="hi" class="font-hindi">मदद करने वालों तक खबर नहीं पहुँचती</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+          <span data-lang="en">
+          People willing to help often never see the alert.
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          जो लोग मदद करना चाहते हैं, उन्हें कई बार अलर्ट दिखता ही नहीं।
+          </span>
+
+          </p>
+
+        </div>
+
+
+
+        <!-- CARD 4 -->
+
+        <div class="p-8 md:p-12 glass-card group hover:bg-white/5 transition-all">
+
+          <span class="material-symbols-outlined text-primary text-4xl mb-10 block group-hover:scale-110 transition-transform">
+
+          warning
+
+          </span>
+
+          <h4 class="text-white font-bold text-xl mb-4 tracking-tight uppercase">
+
+          <span data-lang="en">Time Lost</span>
+          <span data-lang="hi" class="font-hindi">कीमती समय निकल जाता है</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+          <span data-lang="en">
+          Every minute without help can worsen injuries.
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          मदद में हर मिनट की देरी से जानवर की हालत और बिगड़ सकती है।
+          </span>
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section id="solution" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 bg-white/5 flex items-center min-h-screen fade-up">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-20 md:mb-24">
+
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase mb-6 block">
+
+        <span data-lang="en">The Solution</span>
+        <span data-lang="hi" class="font-hindi">हमारा हल</span>
+
+      </span>
+
+      <h2 class="cred-gradient-text text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
+
+        <span data-lang="en">
+        One Tap.<br/>
+        Instant Help.
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        बस एक टैप,<br/>
+        और मदद का अलर्ट
+        </span>
+
+      </h2>
+
+    </div>
+
+
+
+    <div class="max-w-6xl mx-auto glass-card p-8 md:p-16 lg:p-24 grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-20">
+
+      <div class="flex-1 space-y-8">
+
+        <div class="inline-block border border-primary/30 px-4 py-1 text-primary text-[9px] font-black tracking-cred uppercase">
+
+          <span data-lang="en">Overview</span>
+          <span data-lang="hi" class="font-hindi">एक नज़र में</span>
+
+        </div>
+
+
+        <h4 class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight uppercase">
+
+          <span data-lang="en">
+          A Network<br>
+          Of Nearby Volunteers
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          आसपास मौजूद<br>
+          मदद करने वाले लोग
+          </span>
+
+        </h4>
+
+
+        <p class="text-white/40 text-base md:text-lg leading-relaxed font-light">
+
+          <span data-lang="en">
+
+          The Rapid Response App instantly broadcasts an alert
+          to volunteers within the same district.
+
+          <br><br>
+
+          Anyone nearby who is available can see the alert
+          and coordinate help.
+
+          </span>
+
+
+          <span data-lang="hi" class="font-hindi">
+
+          Rapid Response ऐप उसी जिले में दर्ज सभी लोगों तक
+          SOS अलर्ट तुरंत पहुँचा देता है।
+
+          <br><br>
+
+          जो भी आसपास है और मदद कर सकता है,
+          वह अलर्ट देखकर आगे आ सकता है।
+
+          </span>
+
+        </p>
+
+
+        <div class="glass-card p-6 md:p-8 mt-6">
+
+          <div class="flex items-center gap-4 mb-4">
+
+            <span class="material-symbols-outlined text-primary text-3xl">
+            notifications_active
+            </span>
+
+            <h4 class="uppercase font-bold text-sm tracking-widest">
+
+              <span data-lang="en">District Alert System</span>
+              <span data-lang="hi" class="font-hindi">जिला अलर्ट सिस्टम</span>
+
+            </h4>
+
+          </div>
+
+
+          <p class="text-sm text-white/40 leading-relaxed">
+
+            <span data-lang="en">
+
+            Alerts include the caller’s phone number, GPS location
+            and a short description so nearby volunteers can respond quickly.
+
+            </span>
+
+
+            <span data-lang="hi" class="font-hindi">
+
+            अलर्ट में भेजने वाले का फोन नंबर, जीपीएस लोकेशन
+            और छोटा सा संदेश होता है,
+
+            ताकि पास के लोग जल्दी समझकर मदद कर सकें।
+
+            </span>
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="relative flex justify-center items-center">
+
+        <div class="phone-glow"></div>
+
+        <img
+        loading="lazy"
+        src="Phone.png"
+        alt="Rapid Response SOS Screen"
+        class="relative w-[220px] sm:w-[260px] md:w-[300px] lg:w-[340px] xl:w-[360px] drop-shadow-[0_40px_100px_rgba(0,0,0,0.7)]"
+        />
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section id="how" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 fade-up">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="flex flex-col gap-6 mb-20 md:mb-24 text-center">
+
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase block">
+
+        <span data-lang="en">Protocol</span>
+        <span data-lang="hi" class="font-hindi">काम करने का तरीका</span>
+
+      </span>
+
+      <h3 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+
+        <span data-lang="en">
+        How The Network<br/>
+        Works
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        यह नेटवर्क<br/>
+        कैसे काम करता है
+        </span>
+
+      </h3>
+
+    </div>
+
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- STEP 1 -->
+
+      <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
+
+        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        01
+        </span>
+
+        <div>
+
+          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+
+            <span data-lang="en">Raise SOS</span>
+            <span data-lang="hi" class="font-hindi">SOS भेजें</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+            <span data-lang="en">
+            Open the app and press the SOS button
+            when an animal needs urgent help.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            जब किसी जानवर को तुरंत मदद चाहिए हो,
+            तब ऐप खोलकर SOS बटन दबाएँ।
+            </span>
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- STEP 2 -->
+
+      <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
+
+        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        02
+        </span>
+
+        <div>
+
+          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+
+            <span data-lang="en">Location Shared</span>
+            <span data-lang="hi" class="font-hindi">लोकेशन साथ जाती है</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+            <span data-lang="en">
+            The alert includes your phone number,
+            GPS location and a short description.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            अलर्ट के साथ आपका नंबर,
+            जीपीएस लोकेशन और छोटा सा संदेश जाता है।
+            </span>
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- STEP 3 -->
+
+      <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
+
+        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        03
+        </span>
+
+        <div>
+
+          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+
+            <span data-lang="en">District Alert</span>
+            <span data-lang="hi" class="font-hindi">जिले भर में अलर्ट जाता है</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+            <span data-lang="en">
+            All Rapid Response users in the same
+            district can see the alert.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            उसी जिले में दर्ज सभी लोगों को
+            यह अलर्ट दिखता है।
+            </span>
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- STEP 4 -->
+
+      <div class="p-8 md:p-10 lg:p-12 glass-card flex flex-col gap-10 group hover:border-primary/40 transition-colors">
+
+        <span class="text-white/10 group-hover:text-yellow-400 transition-all duration-300 font-black text-6xl tracking-tight">
+        04
+        </span>
+
+        <div>
+
+          <h4 class="text-white text-xl font-bold uppercase tracking-tight mb-4">
+
+            <span data-lang="en">Volunteer Responds</span>
+            <span data-lang="hi" class="font-hindi">कोई मदद के लिए आगे आता है</span>
+
+          </h4>
+
+          <p class="text-white/40 text-sm leading-relaxed font-light">
+
+            <span data-lang="en">
+            Nearby volunteers who are available
+            can call and coordinate help.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            जो लोग उपलब्ध होते हैं,
+            वे कॉल या चैट करके मदद जुटा सकते हैं।
+            </span>
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section class="px-6 md:px-12 lg:px-20 py-32 md:py-40 bg-white/5 fade-up">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-20 md:mb-24">
+
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
+
+        <span data-lang="en">Network Effect</span>
+        <span data-lang="hi" class="font-hindi">जितने ज़्यादा लोग जुड़ेंगे</span>
+
+      </span>
+
+      <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+
+        <span data-lang="en">
+        Why More Volunteers Matter
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        उतनी जल्दी मदद पहुँचेगी
+        </span>
+
+      </h2>
+
+    </div>
+
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+
+      <!-- MANY VOLUNTEERS -->
+
+      <div class="glass-card p-8 md:p-12">
+
+        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-green-500">
+
+          <span data-lang="en">
+          District With Many Volunteers
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          जहाँ ज़्यादा लोग जुड़े हों
+          </span>
+
+        </h3>
+
+        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-green-500">
+            group
+            </span>
+
+            <span data-lang="en">
+            Many people in the district have the app installed.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            उस जिले में कई लोगों के फोन में ऐप होता है।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-green-500">
+            notifications
+            </span>
+
+            <span data-lang="en">
+            The SOS alert reaches many nearby volunteers instantly.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            SOS अलर्ट तुरंत आसपास के कई लोगों तक पहुँच जाता है।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-green-500">
+            call
+            </span>
+
+            <span data-lang="en">
+            Someone nearby is likely to respond and coordinate help.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            पास से कोई न कोई जल्दी मदद के लिए आगे आ जाता है।
+            </span>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+
+
+      <!-- FEW VOLUNTEERS -->
+
+      <div class="glass-card p-8 md:p-12">
+
+        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-red-500">
+
+          <span data-lang="en">
+          District With Few Volunteers
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          जहाँ बहुत कम लोग जुड़े हों
+          </span>
+
+        </h3>
+
+        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-red-500">
+            person_off
+            </span>
+
+            <span data-lang="en">
+            Very few people in the district are using the app.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            उस जिले में बहुत कम लोग यह ऐप चला रहे होते हैं।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-red-500">
+            notifications_off
+            </span>
+
+            <span data-lang="en">
+            The SOS alert may be seen by only a small number of volunteers.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            SOS अलर्ट शायद बहुत कम लोगों तक ही पहुँचे।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-red-500">
+            schedule
+            </span>
+
+            <span data-lang="en">
+            Help may take longer or may not arrive.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            मदद देर से मिले, या कभी-कभी मिले ही नहीं।
+            </span>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="mt-20 md:mt-24 text-center max-w-2xl mx-auto">
+
+      <p class="text-white/40 text-base md:text-lg leading-relaxed">
+
+        <span data-lang="en">
+
+        The Rapid Response App works best when more people in a district join the network.
+
+        Every new volunteer increases the chances that an animal in distress receives help quickly.
+
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+
+        यह ऐप तब सबसे अच्छा काम करता है,
+
+        जब एक ही जिले में ज़्यादा लोग इससे जुड़ते हैं।
+
+        <br><br>
+
+        हर नया जुड़ने वाला व्यक्ति
+
+        किसी मुसीबत में फँसे जानवर तक जल्दी मदद पहुँचने की संभावना बढ़ाता है।
+
+        </span>
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+<section class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 fade-up">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-24 md:mb-28">
+
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
+
+        <span data-lang="en">Platform Clarity</span>
+        <span data-lang="hi" class="font-hindi">ऐप की साफ़ समझ</span>
+
+      </span>
+
+      <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+
+        <span data-lang="en">
+        What The App Is<br>
+        <span class="text-white/30">& What It Is Not</span>
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        यह ऐप क्या है<br>
+        <span class="text-white/30">और क्या नहीं है</span>
+        </span>
+
+      </h2>
+
+    </div>
+
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+
+      <!-- WHAT THE APP IS -->
+
+      <div class="glass-card p-8 md:p-12">
+
+        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-green-500">
+
+          <span data-lang="en">What The App Is</span>
+          <span data-lang="hi" class="font-hindi">यह ऐप क्या करता है</span>
+
+        </h3>
+
+        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-green-400">
+            check_circle
+            </span>
+
+            <span data-lang="en">
+            A coordination network for animal emergencies.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            जानवरों से जुड़ी इमरजेंसी में लोगों को जोड़ने वाला नेटवर्क।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-green-400">
+            check_circle
+            </span>
+
+            <span data-lang="en">
+            A way to alert nearby volunteers in your district.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            अपने जिले के लोगों तक जल्दी अलर्ट पहुँचाने का तरीका।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-green-400">
+            check_circle
+            </span>
+
+            <span data-lang="en">
+            A tool that shares GPS location and contact number.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            एक ऐसा जरिया जो जीपीएस लोकेशन और नंबर साझा करता है।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-green-400">
+            check_circle
+            </span>
+
+            <span data-lang="en">
+            A platform where volunteers can respond if available.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            एक ऐसा मंच जहाँ उपलब्ध लोग चाहें तो मदद के लिए आगे आ सकते हैं।
+            </span>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+
+
+      <!-- WHAT THE APP IS NOT -->
+
+      <div class="glass-card p-8 md:p-12">
+
+        <h3 class="uppercase text-sm font-bold tracking-widest mb-10 text-red-500">
+
+          <span data-lang="en">What The App Is Not</span>
+          <span data-lang="hi" class="font-hindi">यह ऐप क्या नहीं करता</span>
+
+        </h3>
+
+        <ul class="space-y-6 text-sm text-white/40 leading-relaxed">
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-primary">
+            cancel
+            </span>
+
+            <span data-lang="en">
+            The app does not come with a rescue team.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            यह ऐप अपनी कोई रेस्क्यू टीम साथ नहीं लाता।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-primary">
+            cancel
+            </span>
+
+            <span data-lang="en">
+            Raising an SOS does not guarantee help.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            SOS भेजने से मदद मिलना तय नहीं हो जाता।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-primary">
+            cancel
+            </span>
+
+            <span data-lang="en">
+            The platform does not operate shelters.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            यह प्लेटफॉर्म किसी शेल्टर को नहीं चलाता।
+            </span>
+
+          </li>
+
+
+
+          <li class="flex gap-4">
+
+            <span class="material-symbols-outlined text-primary">
+            cancel
+            </span>
+
+            <span data-lang="en">
+            The app does not directly rescue or transport animals.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            यह ऐप खुद जाकर जानवरों का रेस्क्यू या ट्रांसपोर्ट नहीं करता।
+            </span>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section id="community" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 bg-surface fade-up">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-24 md:mb-32">
+
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase mb-6 block">
+
+        <span data-lang="en">Community</span>
+        <span data-lang="hi" class="font-hindi">कौन लोग इसका इस्तेमाल करते हैं</span>
+
+      </span>
+
+      <h3 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+
+        <span data-lang="en">
+        Who Uses<br>
+        The Network
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        इस नेटवर्क को<br>
+        कौन इस्तेमाल करता है
+        </span>
+
+      </h3>
+
+    </div>
+
+
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+
+
+      <!-- TEXT COLUMN -->
+
+      <div class="space-y-10">
+
+        <!-- Volunteers -->
+
+        <div class="border-l border-white/20 pl-8">
+
+          <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
+
+            <span data-lang="en">01 Volunteers</span>
+            <span data-lang="hi" class="font-hindi">01 मदद के लिए आगे आने वाले लोग</span>
+
+          </p>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+
+            <span data-lang="en">
+            People who want to help animals and respond when alerts appear in their district.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            ऐसे लोग जो जानवरों की मदद करना चाहते हैं
+            और अपने जिले में अलर्ट आते ही प्रतिक्रिया दे सकते हैं।
+            </span>
+
+          </p>
+
+        </div>
+
+
+
+        <!-- Feeders -->
+
+        <div class="border-l border-white/20 pl-8">
+
+          <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
+
+            <span data-lang="en">02 Animal Feeders</span>
+            <span data-lang="hi" class="font-hindi">02 जानवरों को खाना खिलाने वाले लोग</span>
+
+          </p>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+
+            <span data-lang="en">
+            Community feeders who may need help during medical emergencies.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            ऐसे लोग जो इलाके के जानवरों को खाना खिलाते हैं
+            और ज़रूरत पड़ने पर मदद माँग सकते हैं।
+            </span>
+
+          </p>
+
+        </div>
+
+
+
+        <!-- Pet Owners -->
+
+        <div class="border-l border-white/20 pl-8">
+
+          <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
+
+            <span data-lang="en">03 Pet Owners</span>
+            <span data-lang="hi" class="font-hindi">03 पालतू जानवर रखने वाले लोग</span>
+
+          </p>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+
+            <span data-lang="en">
+            Pet owners who may require urgent assistance when a pet is injured or missing.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            वे लोग जिनके पालतू जानवर घायल हो जाएँ
+            या अचानक गुम हो जाएँ और तुरंत मदद चाहिए हो।
+            </span>
+
+          </p>
+
+        </div>
+
+
+
+        <!-- Animal Lovers -->
+
+        <div class="border-l border-white/20 pl-8">
+
+          <p class="text-[10px] uppercase tracking-cred font-bold text-primary mb-2">
+
+            <span data-lang="en">04 Animal Lovers</span>
+            <span data-lang="hi" class="font-hindi">04 जानवरों से लगाव रखने वाले लोग</span>
+
+          </p>
+
+          <p class="text-white/40 text-sm leading-relaxed">
+
+            <span data-lang="en">
+            Anyone who wants to help animals when they see an alert nearby.
+            </span>
+
+            <span data-lang="hi" class="font-hindi">
+            कोई भी इंसान जो आसपास अलर्ट देखकर
+            मदद करना चाहता हो।
+            </span>
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- IMAGE COLUMN -->
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+        <div class="relative aspect-[4/5] overflow-hidden">
+
+          <img
+          loading="lazy"
+          class="absolute inset-0 w-full h-full object-cover grayscale opacity-60 hover:scale-105 hover:opacity-80 transition-all duration-700"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXY-LWBigVMQGIMb5WMvCvTweZYPsyOEaJTUTRmNDEdPJGo0cd2fFJ4LDHzDfykZASg-vl8d-CInRtVJ6_MeaoyGRMfSfqGuEME4yVcLwTORSMb8TBgLfWWImWFPD4k1LyWKtRH9I6QAhrG5W--RGqDJOafiqz_t2_oRST42B4zQfPeJmKJQaag9v0rFBF6-aCrhGdj1jhttCy1zZVbQk6UdbXOnjU2WYORhJwUgalB8HIFZkZCXmz5IukxIe8BTLr8R0exYe8I4U"
+          >
+
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
+        </div>
+
+
+        <div class="relative aspect-[4/5] overflow-hidden sm:mt-12">
+
+          <img
+          loading="lazy"
+          class="absolute inset-0 w-full h-full object-cover grayscale opacity-60 hover:scale-105 hover:opacity-80 transition-all duration-700"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBALzM31YaVDkq7LOs79zcOonndoMgNUyAKL2RxhycIDWn0Jk-Acg9pG5m6bVFE6PqX81HLXbB3LYxXWiadpSDNdlQCr2p5xiyAf7t5DJ4FV-A2AbjkxiaT5RBoyQedta9PBCEz-oAFuhKCAzv7aNsaaHetFwjYu-LXQPTI7xu4pPzmc5ntmUDpNrhfvzPZBBcEHQ9c2lF0EfcPPWpoBA4Ilxh8PidbyeJWvpJ6vGXKsHUkYjQuQq1MLkAXNaq6lc9tNx4kaEkX8Z8"
+          >
+
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section id="faq" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 bg-black fade-up">
+
+  <div class="max-w-6xl mx-auto">
+
+    <!-- HEADER -->
+
+    <div class="text-center mb-16 md:mb-20">
+
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
+
+        <span data-lang="en">FAQ</span>
+        <span data-lang="hi" class="font-hindi">सवाल-जवाब</span>
+
+      </span>
+
+      <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase mb-6">
+
+        <span data-lang="en">
+        Search<br>
+        <span class="text-white/30">Questions</span>
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        सवाल खोजें
+        </span>
+
+      </h2>
+
+      <p class="text-white/40 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+
+        <span data-lang="en">
+        Type a keyword to find answers instantly.
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        जवाब पाने के लिए कोई शब्द लिखिए।
+        </span>
+
+      </p>
+
+    </div>
+
+
+
+    <!-- SEARCH BAR -->
+
+    <div class="max-w-4xl mx-auto mb-12 md:mb-14">
+
+      <div class="glass-card border border-white/10 h-16 md:h-20 px-6 md:px-8 flex items-center gap-4">
+
+        <span class="material-symbols-outlined text-white/30 text-3xl">
+        search
+        </span>
+
+        <input
+        id="faqSearch"
+        type="text"
+        placeholder="Search by keyword..."
+        class="w-full bg-transparent text-white placeholder:text-white/25 text-base md:text-xl font-medium border-none outline-none focus:ring-0"
+        />
+
+      </div>
+
+    </div>
+
+
+
+    <!-- QUICK SEARCH CHIPS -->
+
+    <div class="max-w-4xl mx-auto mb-14 md:mb-16 flex flex-wrap gap-3 justify-center">
+
+      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      data-keyword="sos">
+      SOS
+      </button>
+
+      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      data-keyword="location">
+      Location
+      </button>
+
+      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      data-keyword="chat">
+      Chat
+      </button>
+
+      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      data-keyword="district">
+      District
+      </button>
+
+      <button class="faq-chip px-4 py-2 border border-white/10 text-xs text-white/70 hover:bg-white/10 transition"
+      data-keyword="register">
+      Register
+      </button>
+
+    </div>
+
+
+
+    <!-- POPULAR QUESTIONS -->
+
+    <div class="max-w-4xl mx-auto mb-14 md:mb-16 text-center">
+
+      <p class="text-xs uppercase tracking-cred text-white/30 mb-6">
+
+        <span data-lang="en">
+        Popular Questions
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        लोकप्रिय सवाल
+        </span>
+
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center text-sm">
+
+        <button class="faq-chip text-white/70 hover:text-white"
+        data-keyword="how does the app work">
+        How does the app work?
+        </button>
+
+        <button class="faq-chip text-white/70 hover:text-white"
+        data-keyword="register">
+        How do I register?
+        </button>
+
+        <button class="faq-chip text-white/70 hover:text-white"
+        data-keyword="sos alert">
+        Who receives an SOS?
+        </button>
+
+        <button class="faq-chip text-white/70 hover:text-white"
+        data-keyword="call sender">
+        Can responders call?
+        </button>
+
+        <button class="faq-chip text-white/70 hover:text-white"
+        data-keyword="cancel sos">
+        Can I cancel an SOS?
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- RESULTS -->
+
+    <div id="faqResults" class="max-w-4xl mx-auto space-y-6"></div>
+
+
+
+    <!-- EMPTY / HELP MESSAGE -->
+
+    <div id="faqMessage"
+    class="max-w-4xl mx-auto text-center mt-10 text-white/30 text-sm md:text-base">
+
+      <span data-lang="en">
+      Start typing a keyword like <b>SOS</b>, <b>location</b>, <b>chat</b> or <b>district</b>.
+      </span>
+
+      <span data-lang="hi" class="font-hindi">
+      कोई शब्द लिखकर जवाब खोजें।
+      </span>
+
+    </div>
+
+
+
+    <!-- STILL NEED HELP -->
+
+    <div class="max-w-4xl mx-auto text-center mt-16 md:mt-20 border-t border-white/10 pt-10 md:pt-12">
+
+      <p class="text-white/40 text-sm mb-3">
+
+        <span data-lang="en">
+        Still need help?
+        </span>
+
+        <span data-lang="hi" class="font-hindi">
+        और मदद चाहिए?
+        </span>
+
+      </p>
+
+      <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
+
+    </div>
+
+  </div>
+
+</section>
+<section id="legal" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 bg-black fade-up">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 md:mb-20">
+      <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
+        <span data-lang="en">Legal Assistant</span>
+        <span data-lang="hi" class="font-hindi">कानूनी सहायता</span>
+      </span>
+      <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase mb-6">
+        <span data-lang="en">Know Your<br><span class="text-white/30">Rights</span></span>
+        <span data-lang="hi" class="font-hindi">अपने अधिकार<br><span class="text-white/30">जानें</span></span>
+      </h2>
+      <p class="text-white/40 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+        <span data-lang="en">Ask any question about animal welfare law in India. Get answers with exact laws, sections, and steps to take.</span>
+        <span data-lang="hi" class="font-hindi">भारत में पशु कल्याण कानून के बारे में कोई भी सवाल पूछें।</span>
+      </p>
+    </div>
+    <div class="max-w-4xl mx-auto mb-10 border border-yellow-500/20 bg-yellow-500/5 p-4 text-center">
+      <p class="text-yellow-400/70 text-xs">
+        <span data-lang="en">⚖️ Legal information only — not a substitute for advice from a qualified lawyer.</span>
+        <span data-lang="hi" class="font-hindi">⚖️ केवल कानूनी जानकारी — किसी योग्य वकील की सलाह का विकल्प नहीं।</span>
+      </p>
+    </div>
+    <div class="max-w-4xl mx-auto mb-8 flex flex-wrap gap-3 justify-center">
+      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
+        <span data-lang="en">ABC centre not functioning. What to do?</span>
+        <span data-lang="hi" class="font-hindi">ABC केंद्र काम नहीं कर रहा। क्या करें?</span>
+      </button>
+      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
+        <span data-lang="en">Dog died after ABC centre released it. What action?</span>
+        <span data-lang="hi" class="font-hindi">ABC केंद्र से छोड़े कुत्ते की मृत्यु हो गई। क्या करें?</span>
+      </button>
+      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
+        <span data-lang="en">Hospital wants to remove dogs I feed. Is this legal?</span>
+        <span data-lang="hi" class="font-hindi">अस्पताल मेरे खिलाए कुत्तों को हटाना चाहता है। क्या यह कानूनी है?</span>
+      </button>
+      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
+        <span data-lang="en">I was attacked while feeding dogs. What are my rights?</span>
+        <span data-lang="hi" class="font-hindi">कुत्तों को खाना खिलाते समय मुझ पर हमला हुआ।</span>
+      </button>
+    </div>
+    <div class="max-w-4xl mx-auto">
+      <div id="legalChatBox" class="glass-card p-6 min-h-[300px] max-h-[500px] overflow-y-auto mb-4 space-y-4">
+        <div class="flex gap-3">
+          <div class="w-7 h-7 border border-primary/40 flex items-center justify-center flex-shrink-0 mt-1">
+            <span class="material-symbols-outlined text-primary text-sm">balance</span>
+          </div>
+          <div class="text-white/60 text-sm leading-relaxed">
+            <span data-lang="en">Hello. I am your Animal Welfare Legal Assistant. Ask me anything about animal welfare laws, ABC centres, or your rights. I will give you exact laws and steps to take.</span>
+            <span data-lang="hi" class="font-hindi">नमस्ते। मैं आपका पशु कल्याण कानूनी सहायक हूँ।</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <div class="glass-card flex-1 flex items-center px-5 h-14 border border-white/10">
+          <input id="legalInput" type="text" placeholder="Ask your legal question..."
+            class="w-full bg-transparent text-white placeholder:text-white/25 text-sm border-none outline-none focus:ring-0" />
+        </div>
+        <button id="legalBtn" onclick="sendLegalQuestion()"
+          class="w-14 h-14 bg-primary flex items-center justify-center hover:bg-red-600 transition flex-shrink-0">
+          <span class="material-symbols-outlined text-white text-xl">send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+  
+<footer class="bg-black text-white/40 px-6 md:px-12 lg:px-20 py-20 md:py-24 border-t border-white/5" id="support">
+
+  <div class="max-w-7xl mx-auto">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 mb-16 md:mb-24">
+
+      <!-- LEFT -->
+
+      <div class="flex flex-col gap-8">
+
+        <div class="flex items-center gap-3 text-white">
+
+          <div class="w-10 h-10 border border-white flex items-center justify-center">
+
+            <span class="material-symbols-outlined text-primary">
+            pets
+            </span>
+
+          </div>
+
+          <h2 class="text-sm font-black tracking-cred uppercase">
+          Rapid Response
+          </h2>
+
+        </div>
+
+
+
+        <p class="text-sm leading-relaxed font-light max-w-md">
+
+          <span data-lang="en">
+          A community-driven initiative that connects volunteers so people nearby can coordinate help during animal emergencies.
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          यह एक कम्युनिटी आधारित पहल है जो लोगों को जोड़ती है,
+          ताकि आसपास के लोग मिलकर जानवरों से जुड़ी इमरजेंसी में मदद कर सकें।
+          </span>
+
+        </p>
+
+      </div>
+
+
+
+      <!-- SUPPORT -->
+
+      <div>
+
+        <h4 class="text-white font-black text-[10px] tracking-cred uppercase mb-8">
+
+          <span data-lang="en">Support</span>
+          <span data-lang="hi" class="font-hindi">सहायता</span>
+
+        </h4>
+
+        <p class="text-sm mb-2">
+
+          <span data-lang="en">
+          For questions or assistance contact:
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          किसी भी सवाल या मदद के लिए यहाँ संपर्क करें:
+          </span>
+
+        </p>
+
+        <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
+
+        <p class="text-xs text-white/30 mt-3">
+
+          <span data-lang="en">
+          We usually respond within 24–48 hours.
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          हम आमतौर पर 24–48 घंटों के भीतर जवाब देते हैं।
+          </span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="pt-10 md:pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10">
+
+      <div class="max-w-xl text-center md:text-left">
+
+        <p class="text-[10px] leading-relaxed text-white/30">
+
+          <span data-lang="en">
+          This platform is an independent community initiative and is not affiliated with, operated by, or endorsed by any government authority.
+          </span>
+
+          <span data-lang="hi" class="font-hindi">
+          यह प्लेटफॉर्म एक स्वतंत्र कम्युनिटी पहल है
+          और किसी भी सरकारी संस्था से जुड़ा, चलाया गया या अनुमोदित नहीं है।
+          </span>
+
+        </p>
+
+      </div>
+
+
+
+      <p class="text-[10px] font-bold tracking-cred uppercase">
+
+      © 2026 RapidResponse Labs
+
+      </p>
+
+    </div>
+
+  </div>
+
+</footer>
+<script>
+function attachFaqToggle(){
+
+
+
+}
+</script>
+
+<script>
+/* -----------------------------
+FAQ DATA (ADD HERE)
+------------------------------ */
+const faqData = [
+{
+  keywords: "what is the rapid response team app",
+html: `
+<div class="faq-item border-b border-white/10 py-6 cursor-pointer">
+
+  <div class="flex items-center justify-between">
+    <h4 class="text-white font-semibold text-lg">
+
+      <span data-lang="en">What is the Rapid Response app?</span>
+      <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स ऐप क्या है?</span>
+
+    </h4>
+
+    <span class="material-symbols-outlined text-white/40 faq-icon transition-transform duration-300">
+      add
+    </span>
+  </div>
+
+  <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+    <p class="text-white/40 text-sm mt-4 leading-relaxed">
+
+      <span data-lang="en">
+        It connects nearby volunteers during animal emergencies.
+      </span>
+
+      <span data-lang="hi" class="font-hindi">
+        यह ऐप जानवरों की इमरजेंसी में आसपास के लोगों को जोड़ता है।
+      </span>
+
+    </p>
+  </div>
+
+</div>
+`
+},
+{
+  keywords: "what is the main purpose of the app",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what is the main purpose of the app">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What is the main purpose of the app?</span>
+        <span data-lang="hi" class="font-hindi">ऐप का मुख्य उद्देश्य क्या है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          The main purpose of the app is to quickly connect people facing urgent animal welfare-related situations with other registered users in the same district who may be able to help, respond, coordinate, or support the situation in time.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          इस ऐप का मुख्य उद्देश्य पशु कल्याण से जुड़ी तात्कालिक परिस्थितियों का सामना कर रहे लोगों को उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं से जल्दी जोड़ना है, जो समय पर मदद, प्रतिक्रिया, समन्वय या अन्य प्रकार का समर्थन दे सकते हों।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what kind of platform is rapid response team",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what kind of platform is rapid response team">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What kind of platform is Rapid Response Team?</span>
+        <span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम किस प्रकार का प्लेटफ़ॉर्म है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Rapid Response Team is a community-based, district-level SOS alert and coordination platform built for the animal welfare ecosystem.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          रैपिड रिस्पॉन्स टीम एक कम्युनिटी-आधारित, जिला-स्तरीय एसओएस अलर्ट और समन्वय प्लेटफ़ॉर्म है, जिसे पशु कल्याण तंत्र के लिए बनाया गया है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "is the app linked to any government department",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="is the app linked to any government department">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Is the app linked to any government department?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप किसी सरकारी विभाग से जुड़ा हुआ है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app is an independent community initiative and is not affiliated with, operated by, or endorsed by any government authority.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। यह ऐप एक स्वतंत्र सामुदायिक पहल है और किसी भी सरकारी प्राधिकरण से संबद्ध, संचालित या अनुमोदित नहीं है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "does the app work like a government emergency helpline",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="does the app work like a government emergency helpline">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Does the app work like a government emergency helpline?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप सरकारी आपातकालीन हेल्पलाइन की तरह काम करता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app does not function like a government emergency helpline. It is a community-based alert and coordination platform for animal welfare-related urgent situations.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। यह ऐप सरकारी आपातकालीन हेल्पलाइन की तरह काम नहीं करता। यह पशु कल्याण से जुड़ी तात्कालिक परिस्थितियों के लिए एक कम्युनिटी-आधारित अलर्ट और समन्वय प्लेटफ़ॉर्म है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "does the app send a rescue team automatically",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="does the app send a rescue team automatically">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Does the app send a rescue team automatically?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप अपने आप कोई रेस्क्यू टीम भेजता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app does not send a central rescue team automatically. It works as a community response network by sending SOS alerts to registered users in the district, so that nearby people may step in and help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। यह ऐप अपने आप कोई केंद्रीय रेस्क्यू टीम नहीं भेजता। यह जिले के पंजीकृत उपयोगकर्ताओं को एसओएस अलर्ट भेजकर एक कम्युनिटी रिस्पॉन्स नेटवर्क की तरह काम करता है, ताकि आसपास के लोग आगे आकर मदद कर सकें।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what is the core idea behind the app",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what is the core idea behind the app">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What is the core idea behind the app?</span>
+        <span data-lang="hi" class="font-hindi">ऐप के पीछे मूल विचार क्या है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          The core idea behind the app is to create a district-level animal welfare support network where one urgent alert can quickly reach all other registered users in that district.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          इस ऐप के पीछे मूल विचार एक जिला-स्तरीय पशु कल्याण सहायता नेटवर्क बनाना है, जहाँ एक तात्कालिक अलर्ट उसी जिले के अन्य सभी पंजीकृत उपयोगकर्ताओं तक जल्दी पहुँच सके।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "does the app create a shared support network",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="does the app create a shared support network">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Does the app create a shared support network?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप एक साझा सहायता नेटवर्क बनाता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. The app creates a district-based support network by connecting registered users through SOS alerts related to urgent animal welfare situations.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यह ऐप तात्कालिक पशु कल्याण स्थितियों से जुड़े एसओएस अलर्ट के माध्यम से पंजीकृत उपयोगकर्ताओं को जोड़कर एक जिला-आधारित सहायता नेटवर्क बनाता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "why does the app depend on community participation",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="why does the app depend on community participation">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Why does the app depend on community participation?</span>
+        <span data-lang="hi" class="font-hindi">यह ऐप सामुदायिक भागीदारी पर क्यों निर्भर करता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          The app depends on community participation because it does not operate as a central rescue team. It works by sending alerts to registered users in the district, so the strength of the response depends on how many people are present, active, and willing to help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          यह ऐप सामुदायिक भागीदारी पर इसलिए निर्भर करता है क्योंकि यह किसी केंद्रीय रेस्क्यू टीम की तरह काम नहीं करता। यह जिले के पंजीकृत उपयोगकर्ताओं को अलर्ट भेजकर काम करता है, इसलिए प्रतिक्रिया की ताकत इस बात पर निर्भर करती है कि कितने लोग मौजूद हैं, सक्रिय हैं और मदद करने के इच्छुक हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "will the app work better if more people in the district install it",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="will the app work better if more people in the district install it">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Will the app work better if more people in the district install it?</span>
+        <span data-lang="hi" class="font-hindi">क्या जिले में अधिक लोग ऐप इंस्टॉल करें तो यह बेहतर काम करेगा?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. The more registered users there are in a district, the greater the chance that an alert will be seen by someone relevant, available, and close enough to help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। किसी जिले में जितने अधिक पंजीकृत उपयोगकर्ता होंगे, उतनी ही अधिक संभावना होगी कि अलर्ट किसी ऐसे व्यक्ति द्वारा देखा जाए जो प्रासंगिक हो, उपलब्ध हो और मदद करने के लिए पर्याप्त पास में हो।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "why is having more registered users in a district important",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="why is having more registered users in a district important">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Why is having more registered users in a district important?</span>
+        <span data-lang="hi" class="font-hindi">किसी जिले में अधिक पंजीकृत उपयोगकर्ताओं का होना क्यों महत्वपूर्ण है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Having more registered users in a district improves the chances that an SOS will be seen by someone who is nearby, available, and relevant to the situation, which can improve the possibility of timely support.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          किसी जिले में अधिक पंजीकृत उपयोगकर्ताओं के होने से इस बात की संभावना बढ़ जाती है कि एसओएस किसी ऐसे व्यक्ति को दिखाई दे जो पास में हो, उपलब्ध हो और स्थिति से संबंधित हो, जिससे समय पर सहायता मिलने की संभावना बेहतर हो सकती है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "why is district-level alerting useful",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="why is district-level alerting useful">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Why is district-level alerting useful?</span>
+        <span data-lang="hi" class="font-hindi">जिला-स्तरीय अलर्टिंग क्यों उपयोगी है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          District-level alerting helps keep the alert focused within a local geography, making it more relevant to people who may actually know the area, be nearby, or be in a position to assist.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          जिला-स्तरीय अलर्टिंग अलर्ट को स्थानीय भौगोलिक क्षेत्र के भीतर केंद्रित रखने में मदद करती है, जिससे यह उन लोगों के लिए अधिक प्रासंगिक बनता है जो वास्तव में उस क्षेत्र को जानते हों, पास में हों या सहायता करने की स्थिति में हों।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "why is the alert sent only within the district",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="why is the alert sent only within the district">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Why is the alert sent only within the district?</span>
+        <span data-lang="hi" class="font-hindi">अलर्ट केवल जिले के भीतर ही क्यों भेजा जाता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          The alert is sent within the district to keep it locally relevant and improve the chances of a faster response from someone nearby who may actually be able to help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          अलर्ट जिले के भीतर ही इसलिए भेजा जाता है ताकि वह स्थानीय रूप से प्रासंगिक बना रहे और किसी पास के ऐसे व्यक्ति से तेज प्रतिक्रिया मिलने की संभावना बढ़े जो वास्तव में मदद कर सके।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "how does the app work",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="how does the app work">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">How does the app work?</span>
+        <span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          With just one tap, a user can raise an SOS alert through the app. That alert is sent to all registered users within the same district. Users who receive the alert can view it and decide whether they want to respond and help based on the situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          केवल एक टैप से उपयोगकर्ता ऐप के माध्यम से एसओएस अलर्ट भेज सकता है। यह अलर्ट उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को भेजा जाता है। अलर्ट प्राप्त करने वाले उपयोगकर्ता उसे देख सकते हैं और स्थिति के आधार पर तय कर सकते हैं कि वे प्रतिक्रिया देना और सहायता करना चाहते हैं या नहीं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "who receives an sos alert",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="who receives an sos alert">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Who receives an SOS alert?</span>
+        <span data-lang="hi" class="font-hindi">एसओएस अलर्ट किसे प्राप्त होता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          SOS alerts are sent to all registered users within the same district through the app.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          एसओएस अलर्ट ऐप के माध्यम से उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को भेजे जाते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can local knowledge make a difference in an sos case",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can local knowledge make a difference in an sos case">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can local knowledge make a difference in an SOS case?</span>
+        <span data-lang="hi" class="font-hindi">क्या स्थानीय जानकारी किसी एसओएस मामले में फर्क डाल सकती है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. Someone who knows the area, the local animals, nearby clinics, common feeding spots, or the ground reality of that location may be able to contribute useful support even without changing the app flow.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। कोई व्यक्ति जो उस क्षेत्र, स्थानीय जानवरों, पास के क्लीनिकों, सामान्य फीडिंग स्थानों या उस जगह की वास्तविक स्थिति को जानता हो, वह ऐप के फ्लो को बदले बिना भी उपयोगी सहायता दे सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can a person still be useful even if they are not a rescuer",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can a person still be useful even if they are not a rescuer">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can a person still be useful even if they are not a rescuer?</span>
+        <span data-lang="hi" class="font-hindi">यदि कोई व्यक्ति रेस्क्यूअर नहीं है, तब भी क्या वह उपयोगी हो सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. A person may still be helpful by guiding the sender, sharing local context, helping coordinate, offering transport support, providing medical direction, or responding in another practical way depending on the situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। कोई व्यक्ति प्रेषक को मार्गदर्शन देकर, स्थानीय जानकारी साझा करके, समन्वय में मदद करके, परिवहन सहायता देकर, चिकित्सीय दिशा बताकर या स्थिति के अनुसार किसी अन्य व्यावहारिक तरीके से उपयोगी हो सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "does the app only help when someone physically goes to the spot",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="does the app only help when someone physically goes to the spot">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Does the app only help when someone physically goes to the spot?</span>
+        <span data-lang="hi" class="font-hindi">क्या ऐप केवल तभी मदद करता है जब कोई व्यक्ति मौके पर शारीरिक रूप से जाए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. Help may come in different forms depending on the situation. In some cases, someone may physically reach the spot. In other cases, support may happen through calling, guiding, coordinating, or sharing useful local information.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। स्थिति के अनुसार मदद अलग-अलग रूपों में मिल सकती है। कुछ मामलों में कोई व्यक्ति मौके पर शारीरिक रूप से पहुँच सकता है। अन्य मामलों में सहायता कॉल करके, मार्गदर्शन देकर, समन्वय करके या उपयोगी स्थानीय जानकारी साझा करके मिल सकती है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i respond even if i cannot go to the location physically",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i respond even if i cannot go to the location physically">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I respond even if I cannot go to the location physically?</span>
+        <span data-lang="hi" class="font-hindi">यदि मैं शारीरिक रूप से उस स्थान पर नहीं जा सकता, तब भी क्या मैं प्रतिक्रिया दे सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. A person may still be able to help even without going to the location physically. For example, they may guide the sender, share local contacts, help coordinate by phone, or provide useful information connected to the situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। कोई व्यक्ति शारीरिक रूप से स्थान पर जाए बिना भी मदद कर सकता है। उदाहरण के लिए, वह प्रेषक का मार्गदर्शन कर सकता है, स्थानीय संपर्क साझा कर सकता है, फोन पर समन्वय में मदद कर सकता है या स्थिति से जुड़ी उपयोगी जानकारी दे सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what happens after someone responds",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what happens after someone responds">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What happens after someone responds?</span>
+        <span data-lang="hi" class="font-hindi">जब कोई प्रतिक्रिया देता है, उसके बाद क्या होता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          If one or more responders or volunteers in the district want to connect with you regarding the alert, they can initiate chat through the app. Once chat is initiated, it becomes bi-directional, allowing both sides to communicate during the active SOS period.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          यदि जिले में एक या अधिक रेस्पॉन्डर या वॉलंटियर अलर्ट के संबंध में आपसे जुड़ना चाहते हैं, तो वे ऐप के माध्यम से चैट शुरू कर सकते हैं। एक बार चैट शुरू हो जाने पर, यह दो-तरफ़ा हो जाती है, जिससे सक्रिय एसओएस अवधि के दौरान दोनों पक्ष संवाद कर सकते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can responders call the sender directly",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can responders call the sender directly">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can responders call the sender directly?</span>
+        <span data-lang="hi" class="font-hindi">क्या रेस्पॉन्डर सीधे प्रेषक को कॉल कर सकते हैं?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. Responders may directly call the sender because the sender’s mobile number is included in the SOS alert. This can help people coordinate faster in urgent situations.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। रेस्पॉन्डर सीधे प्रेषक को कॉल कर सकते हैं क्योंकि एसओएस अलर्ट में प्रेषक का मोबाइल नंबर शामिल होता है। इससे तात्कालिक परिस्थितियों में लोग तेज़ी से समन्वय कर सकते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can multiple people respond to the same alert",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can multiple people respond to the same alert">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can multiple people respond to the same alert?</span>
+        <span data-lang="hi" class="font-hindi">क्या एक ही अलर्ट पर कई लोग प्रतिक्रिया दे सकते हैं?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. Since the alert goes to all registered users in the district, one or multiple users may choose to respond, initiate chat, or call the sender, depending on the situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। क्योंकि अलर्ट जिले के सभी पंजीकृत उपयोगकर्ताओं तक जाता है, इसलिए स्थिति के अनुसार एक या कई उपयोगकर्ता प्रतिक्रिया देना, चैट शुरू करना या प्रेषक को कॉल करना चुन सकते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i see who viewed my alert",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i see who viewed my alert">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I see who viewed my alert?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं देख सकता हूँ कि मेरे अलर्ट को किसने देखा?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          The app currently shows how many users have viewed your alert. The main purpose is to help the sender understand whether the SOS has been seen by people in the district.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          ऐप फिलहाल यह दिखाता है कि आपके अलर्ट को कितने उपयोगकर्ताओं ने देखा है। इसका मुख्य उद्देश्य प्रेषक को यह समझने में मदद करना है कि एसओएस को जिले के लोगों ने देखा है या नहीं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "as a sender what will i see after initiating an alert",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="as a sender what will i see after initiating an alert">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">As a sender, what will I see after initiating an alert?</span>
+        <span data-lang="hi" class="font-hindi">प्रेषक के रूप में, अलर्ट शुरू करने के बाद मुझे क्या दिखाई देगा?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          After you raise an alert, you will be able to see how many users have viewed it. If one or more responders or volunteers from your district want to connect with you, they can initiate chat. Once chat is initiated, it becomes two-way, allowing both sides to communicate. For privacy reasons, only responders or volunteers can start the chat. If no one initiates chat, the chat option will not appear.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          अलर्ट भेजने के बाद आप देख पाएँगे कि उसे कितने उपयोगकर्ताओं ने देखा है। यदि आपके जिले के एक या अधिक रेस्पॉन्डर या वॉलंटियर आपसे जुड़ना चाहते हैं, तो वे चैट शुरू कर सकते हैं। एक बार चैट शुरू हो जाने पर, यह दो-तरफ़ा हो जाती है, जिससे दोनों पक्ष संवाद कर सकते हैं। गोपनीयता कारणों से केवल रेस्पॉन्डर या वॉलंटियर ही चैट शुरू कर सकते हैं। यदि कोई चैट शुरू नहीं करता, तो चैट विकल्प दिखाई नहीं देगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can anyone start chat with me after i send an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can anyone start chat with me after i send an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can anyone start chat with me after I send an SOS?</span>
+        <span data-lang="hi" class="font-hindi">क्या मेरे एसओएस भेजने के बाद कोई भी मेरे साथ चैट शुरू कर सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. For privacy reasons, the sender cannot start the chat first through the SOS flow. Only responders or volunteers who receive the alert and choose to connect can initiate chat. Once they start chat, it becomes two-way.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। गोपनीयता कारणों से प्रेषक एसओएस फ्लो के माध्यम से पहले चैट शुरू नहीं कर सकता। केवल वे रेस्पॉन्डर या वॉलंटियर जो अलर्ट प्राप्त करते हैं और जुड़ना चाहते हैं, चैट शुरू कर सकते हैं। उनके चैट शुरू करने के बाद यह दो-तरफ़ा हो जाती है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i start chat with a responder first",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i start chat with a responder first">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I start chat with a responder first?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं पहले किसी रेस्पॉन्डर के साथ चैट शुरू कर सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. Chat initiation is restricted to responders or volunteers only. The sender can reply only after a responder has first initiated the conversation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। चैट शुरू करने की अनुमति केवल रेस्पॉन्डर या वॉलंटियर को है। प्रेषक केवल तभी उत्तर दे सकता है जब कोई रेस्पॉन्डर पहले बातचीत शुरू कर चुका हो।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "for how long can one chat",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="for how long can one chat">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">For how long can one chat?</span>
+        <span data-lang="hi" class="font-hindi">चैट कितनी देर तक की जा सकती है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Chat is available only for as long as the SOS alert remains active. Since an SOS stays active for a maximum of 60 minutes, the chat remains active only during that period. Once the SOS expires, no further conversation is possible.
+          <br><br>
+          However, the chat thread will still remain visible under the Chat tab for reference, even after the SOS has expired. It becomes inactive, and no new messages can be sent once the SOS is no longer active.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          चैट केवल उतनी देर तक उपलब्ध रहती है, जितनी देर तक एसओएस अलर्ट सक्रिय रहता है। क्योंकि एक एसओएस अधिकतम 60 मिनट तक सक्रिय रहता है, इसलिए चैट भी केवल उसी अवधि तक सक्रिय रहती है। एसओएस समाप्त होने के बाद आगे बातचीत संभव नहीं होती।
+          <br><br>
+          फिर भी, एसओएस समाप्त होने के बाद भी चैट थ्रेड संदर्भ के लिए चैट टैब में दिखाई देता रहेगा। वह निष्क्रिय हो जाएगा, और एसओएस सक्रिय न रहने पर कोई नया संदेश नहीं भेजा जा सकेगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "is chat available forever",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="is chat available forever">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Is chat available forever?</span>
+        <span data-lang="hi" class="font-hindi">क्या चैट हमेशा के लिए उपलब्ध रहती है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. Chat is available only while the SOS remains active. Since an SOS stays active for a maximum of 60 minutes, new messages can be exchanged only during that active period. After that, the chat thread may remain visible for reference, but no further messages can be sent.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। चैट केवल तब तक उपलब्ध रहती है जब तक एसओएस सक्रिय रहता है। क्योंकि एक एसओएस अधिकतम 60 मिनट तक सक्रिय रहता है, इसलिए नए संदेश केवल उसी सक्रिय अवधि में भेजे जा सकते हैं। उसके बाद चैट थ्रेड संदर्भ के लिए दिखाई दे सकता है, लेकिन आगे कोई संदेश नहीं भेजा जा सकेगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what happens to the alert after 60 minutes",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what happens to the alert after 60 minutes">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What happens to the alert after 60 minutes?</span>
+        <span data-lang="hi" class="font-hindi">60 मिनट के बाद अलर्ट का क्या होता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          After 60 minutes, the SOS automatically expires if it has not already been stopped manually by the sender. Once expired, the alert is no longer active, and chat connected to that SOS also becomes inactive for new communication.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          60 मिनट के बाद, यदि प्रेषक ने एसओएस को पहले से मैन्युअली बंद नहीं किया है, तो वह अपने आप समाप्त हो जाता है। समाप्त होने के बाद अलर्ट सक्रिय नहीं रहता, और उस एसओएस से जुड़ी चैट भी नए संवाद के लिए निष्क्रिय हो जाती है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what happens if i do not stop the sos myself",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what happens if i do not stop the sos myself">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What happens if I do not stop the SOS myself?</span>
+        <span data-lang="hi" class="font-hindi">यदि मैं खुद एसओएस को बंद नहीं करूँ तो क्या होगा?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          If you do not stop the SOS manually, it will automatically expire after 60 minutes. Once it expires, the alert is no longer active and chat related to that SOS also becomes inactive.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          यदि आप एसओएस को मैन्युअली बंद नहीं करते हैं, तो वह 60 मिनट बाद अपने आप समाप्त हो जाएगा। उसके समाप्त होने के बाद अलर्ट सक्रिय नहीं रहेगा और उससे जुड़ी चैट भी निष्क्रिय हो जाएगी।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i cancel an sos after raising it",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i cancel an sos after raising it">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I cancel an SOS after raising it?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं एसओएस भेजने के बाद उसे रद्द कर सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. The sender can stop or cancel the SOS at any time, ideally once help has been found or the issue has been resolved. If the sender does not stop it manually, the SOS will automatically expire after 60 minutes.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। प्रेषक किसी भी समय एसओएस को रोक या रद्द कर सकता है, आदर्श रूप से तब जब सहायता मिल गई हो या स्थिति का समाधान हो गया हो। यदि प्रेषक उसे मैन्युअली बंद नहीं करता, तो एसओएस 60 मिनट बाद अपने आप समाप्त हो जाएगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i raise another sos after cancelling one",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i raise another sos after cancelling one">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I raise another SOS after cancelling one?</span>
+        <span data-lang="hi" class="font-hindi">क्या एक एसओएस रद्द करने के बाद मैं दूसरा एसओएस भेज सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. If you have cancelled or stopped an earlier SOS, you can raise a new SOS again whenever needed. The new SOS will be treated as a fresh alert and will be sent to all registered users in your district through the app.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यदि आपने पहले का एसओएस रद्द या बंद कर दिया है, तो आवश्यकता पड़ने पर आप नया एसओएस फिर से भेज सकते हैं। नए एसओएस को एक ताज़ा अलर्ट माना जाएगा और यह ऐप के माध्यम से आपके जिले के सभी पंजीकृत उपयोगकर्ताओं को भेजा जाएगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i edit an alert after sending it",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i edit an alert after sending it">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I edit an alert after sending it?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं अलर्ट भेजने के बाद उसे संपादित कर सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. Once an SOS alert has been sent, it cannot be edited. If the message needs to be changed or corrected, the sender will need to stop the existing alert and raise a new SOS with the updated message.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। एक बार एसओएस अलर्ट भेज दिए जाने के बाद उसे संपादित नहीं किया जा सकता। यदि संदेश बदलना या सुधारना हो, तो प्रेषक को वर्तमान अलर्ट रोकना होगा और अपडेटेड संदेश के साथ नया एसओएस भेजना होगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i correct a wrong message after sending an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i correct a wrong message after sending an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I correct a wrong message after sending an SOS?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं एसओएस भेजने के बाद गलत संदेश को सुधार सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. Once an SOS has been sent, the message cannot be edited. If you entered a wrong or incomplete message, you will need to stop the current SOS and raise a fresh one with the corrected details.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। एक बार एसओएस भेज दिए जाने के बाद संदेश को संपादित नहीं किया जा सकता। यदि आपने गलत या अधूरा संदेश दर्ज किया है, तो आपको वर्तमान एसओएस रोकना होगा और सही विवरण के साथ नया एसओएस भेजना होगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what information is included in an sos alert",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what information is included in an sos alert">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What information is included in an SOS alert?</span>
+        <span data-lang="hi" class="font-hindi">एक एसओएस अलर्ट में कौन-सी जानकारी शामिल होती है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Each SOS alert contains the sender’s name, mobile number, GPS coordinates captured at the time the SOS is sent, and the short message entered by the sender describing the incident.
+          <br><br>
+          The GPS coordinates are shared only as the location of the incident at the time the alert is raised. The app does not live track the sender’s movement through the SOS alert.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          प्रत्येक एसओएस अलर्ट में प्रेषक का नाम, मोबाइल नंबर, एसओएस भेजे जाने के समय कैप्चर किए गए जीपीएस कोऑर्डिनेट्स, और घटना का विवरण बताने वाला प्रेषक द्वारा दर्ज किया गया छोटा संदेश शामिल होता है।
+          <br><br>
+          जीपीएस कोऑर्डिनेट्स केवल उसी समय की घटना-स्थल लोकेशन के रूप में साझा किए जाते हैं जब अलर्ट भेजा जाता है। ऐप एसओएस अलर्ट के माध्यम से प्रेषक की गतिविधि का लाइव ट्रैक नहीं करता।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what details should i enter while raising an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what details should i enter while raising an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What details should I enter while raising an SOS?</span>
+        <span data-lang="hi" class="font-hindi">एसओएस भेजते समय मुझे कौन-से विवरण दर्ज करने चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          While raising an SOS, you should enter a short message clearly describing what the incident is, in a few words. The message should help others quickly understand the situation and location. For example:
+          <br><br>
+          injured dog found near Sharada College gate<br>
+          sick cow found near Koramangala signal<br>
+          puppies abandoned near bus stand<br>
+          feeder facing harassment while feeding<br>
+          dog hit by vehicle near temple road
+          <br><br>
+          The idea is to keep the message short, clear, and specific so that registered users in the district can immediately understand the nature of the alert.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          एसओएस भेजते समय आपको कुछ शब्दों में एक छोटा संदेश दर्ज करना चाहिए, जो स्पष्ट रूप से बताए कि घटना क्या है। संदेश ऐसा होना चाहिए जिससे अन्य लोग स्थिति और स्थान को जल्दी समझ सकें। उदाहरण:
+          <br><br>
+          शारदा कॉलेज गेट के पास घायल कुत्ता मिला<br>
+          कोरमंगला सिग्नल के पास बीमार गाय मिली<br>
+          बस स्टैंड के पास पिल्ले छोड़े गए<br>
+          फीडिंग करते समय फीडर को परेशान किया जा रहा है<br>
+          मंदिर रोड के पास वाहन से कुत्ता टकराया
+          <br><br>
+          विचार यह है कि संदेश छोटा, स्पष्ट और विशिष्ट रहे ताकि जिले के पंजीकृत उपयोगकर्ता अलर्ट की प्रकृति को तुरंत समझ सकें।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what is a good example of an sos message",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what is a good example of an sos message">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What is a good example of an SOS message?</span>
+        <span data-lang="hi" class="font-hindi">एसओएस संदेश का अच्छा उदाहरण क्या है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          A good SOS message is short and specific. Examples include:
+          <br><br>
+          injured dog found near Sharada College gate<br>
+          puppies abandoned near bus stand<br>
+          dog hit by vehicle near temple road<br>
+          feeder facing harassment while feeding<br>
+          animal needs urgent transport near city market
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          एक अच्छा एसओएस संदेश छोटा और विशिष्ट होता है। उदाहरण:
+          <br><br>
+          शारदा कॉलेज गेट के पास घायल कुत्ता मिला<br>
+          बस स्टैंड के पास पिल्ले छोड़े गए<br>
+          मंदिर रोड के पास वाहन से कुत्ता टकराया<br>
+          फीडिंग करते समय फीडर को परेशान किया जा रहा है<br>
+          सिटी मार्केट के पास पशु के लिए तुरंत परिवहन चाहिए
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what makes an sos message effective",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what makes an sos message effective">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What makes an SOS message effective?</span>
+        <span data-lang="hi" class="font-hindi">किस बात से एक एसओएस संदेश प्रभावी बनता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          An effective SOS message is short, direct, and specific. It should quickly tell others what has happened and where, without unnecessary detail or long explanation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          एक प्रभावी एसओएस संदेश छोटा, सीधा और विशिष्ट होता है। उसमें बिना अनावश्यक विवरण या लंबी व्याख्या के, जल्दी से यह स्पष्ट होना चाहिए कि क्या हुआ है और कहाँ हुआ है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "should i write a long explanation in the sos message",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="should i write a long explanation in the sos message">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Should I write a long explanation in the SOS message?</span>
+        <span data-lang="hi" class="font-hindi">क्या मुझे एसओएस संदेश में लंबा विवरण लिखना चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The SOS message should ideally be brief and clear. A long explanation may slow understanding, whereas a short and specific message helps others immediately grasp the urgency.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। एसओएस संदेश आदर्श रूप से छोटा और स्पष्ट होना चाहिए। लंबा विवरण समझने की गति को धीमा कर सकता है, जबकि छोटा और विशिष्ट संदेश दूसरों को तुरंत तात्कालिकता समझने में मदद करता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what should i avoid while writing the sos message",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what should i avoid while writing the sos message">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What should I avoid while writing the SOS message?</span>
+        <span data-lang="hi" class="font-hindi">एसओएस संदेश लिखते समय मुझे किन चीज़ों से बचना चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          You should avoid long explanations, vague wording, jokes, spam, false alerts, or unclear messages. The SOS message should be short, clear, specific, and focused on the actual urgent situation so that others can quickly understand what has happened.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          आपको लंबे विवरण, अस्पष्ट शब्दों, मज़ाक, स्पैम, झूठे अलर्ट या अस्पष्ट संदेशों से बचना चाहिए। एसओएस संदेश छोटा, स्पष्ट, विशिष्ट और वास्तविक तात्कालिक स्थिति पर केंद्रित होना चाहिए, ताकि अन्य लोग जल्दी समझ सकें कि क्या हुआ है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i send multiple sos alerts at the same time",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i send multiple sos alerts at the same time">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I send multiple SOS alerts at the same time?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं एक ही समय पर कई एसओएस अलर्ट भेज सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. Only one SOS alert can be active at a time from a user. If a user needs to send another SOS, the existing active SOS must first be stopped or allowed to expire before a new one can be raised.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। एक उपयोगकर्ता की ओर से एक समय पर केवल एक ही एसओएस अलर्ट सक्रिय हो सकता है। यदि उपयोगकर्ता को दूसरा एसओएस भेजना हो, तो पहले वर्तमान सक्रिय एसओएस को बंद करना होगा या उसके समाप्त होने देना होगा, तभी नया एसओएस भेजा जा सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "why is only one sos allowed at a time",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="why is only one sos allowed at a time">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Why is only one SOS allowed at a time?</span>
+        <span data-lang="hi" class="font-hindi">एक समय पर केवल एक ही एसओएस की अनुमति क्यों है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Only one SOS is allowed at a time so that the alert remains clear, focused, and manageable. This helps avoid confusion, prevents overlapping active alerts from the same user, and makes it easier for registered users in the district to understand and respond to the current urgent situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          एक समय पर केवल एक ही एसओएस की अनुमति इसलिए है ताकि अलर्ट स्पष्ट, केंद्रित और प्रबंधनीय बना रहे। इससे भ्रम से बचाव होता है, एक ही उपयोगकर्ता के कई सक्रिय अलर्ट एक-दूसरे पर ओवरलैप नहीं करते, और जिले के पंजीकृत उपयोगकर्ताओं के लिए वर्तमान तात्कालिक स्थिति को समझना और उस पर प्रतिक्रिया देना आसान होता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can the app be misused for fake or false alerts",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can the app be misused for fake or false alerts">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can the app be misused for fake or false alerts?</span>
+        <span data-lang="hi" class="font-hindi">क्या इस ऐप का उपयोग झूठे या फर्जी अलर्ट के लिए किया जा सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          The app is meant only for genuine urgent situations related to animal welfare. It should not be used for fake alerts, spam, jokes, harassment, or any misleading use. If users are found to be misusing the app, and such misuse is reported by others through the feedback form, the concerned users may be blocked after investigation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          यह ऐप केवल पशु कल्याण से जुड़ी वास्तविक तात्कालिक परिस्थितियों के लिए है। इसका उपयोग झूठे अलर्ट, स्पैम, मज़ाक, उत्पीड़न या किसी भी भ्रामक उद्देश्य के लिए नहीं किया जाना चाहिए। यदि उपयोगकर्ताओं द्वारा ऐप के दुरुपयोग की पुष्टि होती है और ऐसा दुरुपयोग दूसरों द्वारा फीडबैक फॉर्म के माध्यम से रिपोर्ट किया जाता है, तो जाँच के बाद संबंधित उपयोगकर्ताओं को ब्लॉक किया जा सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what should i do before sending an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what should i do before sending an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What should I do before sending an SOS?</span>
+        <span data-lang="hi" class="font-hindi">एसओएस भेजने से पहले मुझे क्या करना चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Before sending an SOS, you should make sure the situation is genuinely urgent, keep your message short and clear, and describe the incident in a way that helps others quickly understand what has happened and where support may be needed.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          एसओएस भेजने से पहले आपको सुनिश्चित करना चाहिए कि स्थिति वास्तव में तात्कालिक है, आपका संदेश छोटा और स्पष्ट हो, और घटना का वर्णन इस तरह किया गया हो कि अन्य लोग जल्दी समझ सकें कि क्या हुआ है और कहाँ सहायता की आवश्यकता हो सकती है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what should i do after sending an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what should i do after sending an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What should I do after sending an SOS?</span>
+        <span data-lang="hi" class="font-hindi">एसओएस भेजने के बाद मुझे क्या करना चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          After sending an SOS, you should stay alert, watch for responses, and be available in case a responder initiates chat or calls you. Since your mobile number is shared in the alert, you should also be ready to coordinate clearly if someone contacts you.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          एसओएस भेजने के बाद आपको सतर्क रहना चाहिए, प्रतिक्रियाओं पर नज़र रखनी चाहिए, और यदि कोई रेस्पॉन्डर चैट शुरू करे या आपको कॉल करे तो उपलब्ध रहना चाहिए। चूँकि आपका मोबाइल नंबर अलर्ट में साझा होता है, इसलिए यदि कोई आपसे संपर्क करे तो आपको स्पष्ट रूप से समन्वय करने के लिए भी तैयार रहना चाहिए।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i use the app without helping others",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i use the app without helping others">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I use the app without helping others?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं दूसरों की मदद किए बिना भी ऐप का उपयोग कर सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. A person may install the app for awareness, emergency use, or to stay connected to the animal welfare network in their district. However, the platform works best when more registered users are willing to respond whenever they are genuinely able to help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। कोई व्यक्ति जागरूकता, आपातकालीन उपयोग, या अपने जिले के पशु कल्याण नेटवर्क से जुड़े रहने के लिए ऐप इंस्टॉल कर सकता है। हालांकि, यह प्लेटफ़ॉर्म तब सबसे अच्छा काम करता है जब अधिक पंजीकृत उपयोगकर्ता वास्तव में सक्षम होने पर प्रतिक्रिया देने के लिए तैयार हों।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "do i have to respond to every sos i receive",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="do i have to respond to every sos i receive">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Do I have to respond to every SOS I receive?</span>
+        <span data-lang="hi" class="font-hindi">क्या मुझे हर प्राप्त एसओएस पर प्रतिक्रिया देना आवश्यक है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. Receiving an SOS does not mean you are required to respond to every alert. Users can view the alert and decide based on the situation, their availability, their location, and whether they are actually in a position to help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। एसओएस प्राप्त होने का यह अर्थ नहीं है कि आपको हर अलर्ट पर प्रतिक्रिया देनी ही होगी। उपयोगकर्ता स्थिति, अपनी उपलब्धता, अपनी लोकेशन, और क्या वे वास्तव में मदद करने की स्थिति में हैं या नहीं, इसके आधार पर निर्णय ले सकते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "do i need special training to use the app",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="do i need special training to use the app">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Do I need special training to use the app?</span>
+        <span data-lang="hi" class="font-hindi">क्या ऐप का उपयोग करने के लिए मुझे विशेष प्रशिक्षण की आवश्यकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. You do not need special training to use the app. The app is simple to use - you can raise an SOS when needed or respond if you are able to help. At the same time, users should act responsibly and only do what they are comfortable, safe, and reasonably capable of doing.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। ऐप का उपयोग करने के लिए आपको किसी विशेष प्रशिक्षण की आवश्यकता नहीं है। ऐप उपयोग में सरल है - आवश्यकता होने पर आप एसओएस भेज सकते हैं या यदि आप मदद कर सकते हैं तो प्रतिक्रिया दे सकते हैं। साथ ही, उपयोगकर्ताओं को जिम्मेदारी से काम करना चाहिए और केवल वही करना चाहिए जो उनके लिए सुरक्षित, सहज और व्यावहारिक रूप से संभव हो।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what should a user keep in mind while using the app",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what should a user keep in mind while using the app">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What should a user keep in mind while using the app?</span>
+        <span data-lang="hi" class="font-hindi">ऐप का उपयोग करते समय उपयोगकर्ता को किन बातों का ध्यान रखना चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          A user should use the app responsibly, only for genuine urgent animal welfare-related situations, keep the SOS message short and clear, and avoid any fake, misleading, or non-serious use.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          उपयोगकर्ता को ऐप का उपयोग जिम्मेदारी से करना चाहिए, केवल पशु कल्याण से जुड़ी वास्तविक तात्कालिक परिस्थितियों के लिए, एसओएस संदेश को छोटा और स्पष्ट रखना चाहिए, और किसी भी झूठे, भ्रामक या गैर-गंभीर उपयोग से बचना चाहिए।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can users be blocked for misuse",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can users be blocked for misuse">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can users be blocked for misuse?</span>
+        <span data-lang="hi" class="font-hindi">क्या दुरुपयोग के लिए उपयोगकर्ताओं को ब्लॉक किया जा सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. If users are found to be misusing the app, and such misuse is reported by others through the feedback form, the concerned users may be blocked after investigation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यदि उपयोगकर्ताओं द्वारा ऐप के दुरुपयोग की पुष्टि होती है, और ऐसा दुरुपयोग दूसरों द्वारा फीडबैक फॉर्म के माध्यम से रिपोर्ट किया जाता है, तो जाँच के बाद संबंधित उपयोगकर्ताओं को ब्लॉक किया जा सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "is money involved in using the app for help",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="is money involved in using the app for help">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Is money involved in using the app for help?</span>
+        <span data-lang="hi" class="font-hindi">क्या मदद के लिए ऐप का उपयोग करने में पैसे शामिल हैं?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app is intended as a support and coordination platform for animal welfare as a service, with no money involved.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। यह ऐप पशु कल्याण के लिए एक सहायता और समन्वय प्लेटफ़ॉर्म के रूप में बनाया गया है, जिसमें किसी भी प्रकार के पैसे शामिल नहीं हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "who can use the app",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="who can use the app">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Who can use the app?</span>
+        <span data-lang="hi" class="font-hindi">इस ऐप का उपयोग कौन कर सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Anyone interested in animal welfare can use the app. Users can download and install the app, enter their full name and mobile number, and get started. With one tap, they can raise an SOS alert that goes out to volunteers, or help respond to alerts in their district.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          पशु कल्याण में रुचि रखने वाला कोई भी व्यक्ति इस ऐप का उपयोग कर सकता है। उपयोगकर्ता ऐप डाउनलोड और इंस्टॉल कर सकते हैं, अपना पूरा नाम और मोबाइल नंबर दर्ज कर सकते हैं, और शुरुआत कर सकते हैं। केवल एक टैप से वे एसओएस अलर्ट भेज सकते हैं, जो वॉलंटियर्स तक जाता है, या अपने जिले के अलर्ट्स पर प्रतिक्रिया देने में मदद कर सकते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can the app be used only by rescuers",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can the app be used only by rescuers">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can the app be used only by rescuers?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप केवल रेस्क्यूअर्स द्वारा ही उपयोग किया जा सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app is not limited to rescuers alone. It is meant for the wider animal welfare ecosystem, because even though the app flow remains the same - one user raises an SOS and that alert goes to all other registered users in the same district - different kinds of people can still make a meaningful difference based on who they are, what they know, and what support they are able to offer.
+          <br><br>
+          For example, suppose a user raises an SOS saying: “dog hit by vehicle near temple road”. That alert goes to everyone else in the district. A rescuer may be able to physically go to the spot. But even if a rescuer is not immediately available, a feeder from that area may recognise the dog and know that it usually stays near a certain lane or shop, which helps confirm the exact area and situation. A transport helper may be able to arrange or provide quick movement of the injured dog to a clinic. A veterinarian who sees the alert may advise whether the dog needs immediate handling, bleeding control, urgent transport, or minimal movement until help arrives. An NGO volunteer may guide the sender on whom to contact locally or how to manage the case until the animal is moved. A caretaker or local volunteer may reach the place faster than anyone else because they are already nearby. If the situation becomes difficult on the ground, another person receiving the alert may simply call the sender and help coordinate clearly and calmly.
+          <br><br>
+          So the SOS flow does not become a chain and does not change. One sender still raises one alert, and that alert still goes to everyone else in the district. The difference is that the people receiving it may each be able to contribute something useful based on the exact situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। यह ऐप केवल रेस्क्यूअर्स तक सीमित नहीं है। यह व्यापक पशु कल्याण तंत्र के लिए बनाया गया है, क्योंकि भले ही ऐप का फ्लो वही रहता है - एक उपयोगकर्ता एसओएस भेजता है और वह अलर्ट उसी जिले के अन्य सभी पंजीकृत उपयोगकर्ताओं तक जाता है - फिर भी अलग-अलग प्रकार के लोग इस आधार पर सार्थक योगदान दे सकते हैं कि वे कौन हैं, क्या जानते हैं, और किस प्रकार की सहायता दे सकते हैं।
+          <br><br>
+          उदाहरण के लिए, मान लीजिए कोई उपयोगकर्ता एसओएस भेजता है: “मंदिर रोड के पास वाहन से कुत्ता टकराया”। यह अलर्ट जिले के सभी अन्य उपयोगकर्ताओं तक जाता है। एक रेस्क्यूअर शायद मौके पर शारीरिक रूप से जा सके। लेकिन यदि रेस्क्यूअर तुरंत उपलब्ध न हो, तो उस क्षेत्र का कोई फीडर उस कुत्ते को पहचान सकता है और जान सकता है कि वह आमतौर पर किस गली या दुकान के पास रहता है, जिससे सही क्षेत्र और स्थिति की पुष्टि करने में मदद मिलती है। कोई ट्रांसपोर्ट हेल्पर घायल कुत्ते को क्लिनिक तक जल्दी पहुँचाने की व्यवस्था कर सकता है। कोई पशु चिकित्सक अलर्ट देखकर यह सलाह दे सकता है कि कुत्ते को तुरंत संभालना चाहिए, रक्तस्राव रोकना चाहिए, तुरंत ले जाना चाहिए, या मदद पहुँचने तक कम से कम हिलाना चाहिए। कोई एनजीओ वॉलंटियर प्रेषक को यह बता सकता है कि स्थानीय रूप से किससे संपर्क करना है या पशु को शिफ्ट किए जाने तक स्थिति को कैसे संभालना है। कोई केयरटेकर या स्थानीय वॉलंटियर पहले पहुँच सकता है क्योंकि वह पहले से ही पास में हो। यदि ज़मीनी स्थिति कठिन हो जाए, तो अलर्ट प्राप्त करने वाला कोई अन्य व्यक्ति प्रेषक को कॉल करके स्पष्ट और शांत तरीके से समन्वय में मदद कर सकता है।
+          <br><br>
+          इसलिए एसओएस फ्लो किसी चेन में नहीं बदलता और न ही बदलता है। एक प्रेषक अभी भी एक ही अलर्ट भेजता है, और वह अलर्ट अभी भी जिले के बाकी सभी लोगों तक जाता है। अंतर सिर्फ इतना है कि उसे प्राप्त करने वाले लोग स्थिति के अनुसार अलग-अलग प्रकार से उपयोगी योगदान दे सकते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i use the app even if i am not from an ngo or rescue group",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i use the app even if i am not from an ngo or rescue group">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I use the app even if I am not from an NGO or rescue group?</span>
+        <span data-lang="hi" class="font-hindi">यदि मैं किसी एनजीओ या रेस्क्यू समूह से नहीं हूँ, तब भी क्या मैं ऐप का उपयोग कर सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. You do not need to belong to an NGO or rescue group to use the app. Anyone interested in supporting animal welfare and using the platform responsibly may use it.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। ऐप का उपयोग करने के लिए आपका किसी एनजीओ या रेस्क्यू समूह से जुड़ा होना आवश्यक नहीं है। पशु कल्याण में सहायता करने और प्लेटफ़ॉर्म का जिम्मेदारी से उपयोग करने में रुचि रखने वाला कोई भी व्यक्ति इसका उपयोग कर सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i use the app only when i personally need help",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i use the app only when i personally need help">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I use the app only when I personally need help?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं ऐप का उपयोग केवल तब कर सकता हूँ जब मुझे व्यक्तिगत रूप से मदद चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app can be used both by someone raising an SOS and by someone who wants to remain available to respond to alerts in their district whenever they are able to support.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। ऐप का उपयोग एसओएस भेजने वाले व्यक्ति द्वारा भी किया जा सकता है और ऐसे व्यक्ति द्वारा भी, जो अपने जिले में आने वाले अलर्ट्स पर जब भी संभव हो प्रतिक्रिया देने के लिए उपलब्ध रहना चाहता हो।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what do i need to do to register",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what do i need to do to register">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What do I need to do to register?</span>
+        <span data-lang="hi" class="font-hindi">पंजीकरण के लिए मुझे क्या करना होगा?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          To register, tap Get Started, agree to the Terms and Conditions, and enter your name and mobile number. Once that is done, you will reach the home screen, where the SOS button is available and the app is ready to use.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          पंजीकरण के लिए Get Started पर टैप करें, Terms and Conditions से सहमत हों, और अपना नाम तथा मोबाइल नंबर दर्ज करें। इसके बाद आप होम स्क्रीन पर पहुँच जाएँगे, जहाँ एसओएस बटन उपलब्ध होगा और ऐप उपयोग के लिए तैयार रहेगा।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what do i need to enter while joining the app",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what do i need to enter while joining the app">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What do I need to enter while joining the app?</span>
+        <span data-lang="hi" class="font-hindi">ऐप से जुड़ते समय मुझे क्या दर्ज करना होगा?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          To get started, a user needs to enter their full name and mobile number during onboarding.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          शुरुआत करने के लिए, उपयोगकर्ता को ऑनबोर्डिंग के दौरान अपना पूरा नाम और मोबाइल नंबर दर्ज करना होता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "does the app require a long signup process",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="does the app require a long signup process">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Does the app require a long signup process?</span>
+        <span data-lang="hi" class="font-hindi">क्या इस ऐप में साइनअप की लंबी प्रक्रिया है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The onboarding is simple. A user needs to enter their full name and mobile number to get started with the app.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। ऑनबोर्डिंग सरल है। ऐप शुरू करने के लिए उपयोगकर्ता को केवल अपना पूरा नाम और मोबाइल नंबर दर्ज करना होता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "is the app difficult to use",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="is the app difficult to use">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Is the app difficult to use?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप उपयोग करने में कठिन है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app is designed to be simple to use. A user can get onboarded with basic details and raise an SOS with a short message when needed.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। यह ऐप उपयोग में सरल होने के लिए डिज़ाइन किया गया है। उपयोगकर्ता बुनियादी विवरण देकर ऑनबोर्ड हो सकता है और आवश्यकता पड़ने पर छोटे संदेश के साथ एसओएस भेज सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i use the app for animals other than dogs",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i use the app for animals other than dogs">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I use the app for animals other than dogs?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं इस ऐप का उपयोग कुत्तों के अलावा अन्य जानवरों के लिए भी कर सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. The app is for any and all animals. It can be used for urgent animal welfare-related situations involving dogs, cats, cattle, birds, puppies, kittens, or any other animal where timely support may be needed.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यह ऐप किसी भी और सभी जानवरों के लिए है। इसका उपयोग कुत्तों, बिल्लियों, मवेशियों, पक्षियों, पिल्लों, बिल्ली के बच्चों या किसी भी अन्य जानवर से जुड़ी तात्कालिक पशु कल्याण परिस्थितियों में किया जा सकता है, जहाँ समय पर सहायता की आवश्यकता हो।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "is the app only for animal emergencies",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="is the app only for animal emergencies">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Is the app only for animal emergencies?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप केवल पशु आपात स्थितियों के लिए है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          No. The app is meant for the broader animal welfare ecosystem and can be used by anyone involved in, or willing to support, animal welfare as a service, with no money involved. This includes feeders, animal welfare volunteers, rescuers, NGOs, veterinarians, lawyers, caretakers, foster providers, transport helpers, and others who may be able to assist in animal welfare-related situations within their district.
+          <br><br>
+          The app can be used not only for animal distress cases, but also for urgent situations connected to animal welfare work. For example, a street dog may be injured and need immediate help, puppies may be abandoned, an animal may need urgent transport, or a feeder may be harassed or threatened while carrying out feeding activity. It can also be used when legal, medical, rescue, or on-ground support is urgently needed in an animal welfare-related situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          नहीं। यह ऐप व्यापक पशु कल्याण तंत्र के लिए है और इसका उपयोग कोई भी व्यक्ति कर सकता है जो पशु कल्याण से जुड़ा है या उसे बिना किसी पैसे के सेवा के रूप में समर्थन देना चाहता है। इसमें फीडर्स, पशु कल्याण स्वयंसेवक, रेस्क्यूअर्स, एनजीओ, पशु चिकित्सक, वकील, केयरटेकर, फॉस्टर प्रदाता, ट्रांसपोर्ट हेल्पर्स और अन्य लोग शामिल हैं, जो अपने जिले में पशु कल्याण से जुड़ी परिस्थितियों में सहायता कर सकते हैं।
+          <br><br>
+          यह ऐप केवल पशु संकट मामलों के लिए ही नहीं, बल्कि पशु कल्याण कार्य से जुड़ी अन्य तात्कालिक परिस्थितियों के लिए भी उपयोग किया जा सकता है। उदाहरण के लिए, कोई सड़क का कुत्ता घायल हो सकता है और उसे तुरंत मदद चाहिए हो, पिल्ले छोड़े गए हों, किसी पशु को तुरंत परिवहन की आवश्यकता हो, या फीडिंग गतिविधि करते समय किसी फीडर को परेशान या धमकाया जा रहा हो। जब किसी पशु कल्याण-संबंधित स्थिति में कानूनी, चिकित्सीय, रेस्क्यू या ऑन-ग्राउंड सहायता की तत्काल आवश्यकता हो, तब भी इसका उपयोग किया जा सकता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what kind of situations should i use the app for",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what kind of situations should i use the app for">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What kind of situations should I use the app for?</span>
+        <span data-lang="hi" class="font-hindi">मुझे ऐप का उपयोग किन परिस्थितियों में करना चाहिए?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          The app should be used for genuine urgent situations related to animal welfare or allied support. It should not be used for spam, false alerts, jokes, or non-urgent matters.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          ऐप का उपयोग पशु कल्याण या उससे जुड़े सहायक मामलों की वास्तविक तात्कालिक परिस्थितियों के लिए किया जाना चाहिए। इसका उपयोग स्पैम, झूठे अलर्ट, मज़ाक या गैर-तात्कालिक मामलों के लिए नहीं किया जाना चाहिए।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can the app be useful in both rescue and non-rescue urgent animal welfare cases",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can the app be useful in both rescue and non-rescue urgent animal welfare cases">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can the app be useful in both rescue and non-rescue urgent animal welfare cases?</span>
+        <span data-lang="hi" class="font-hindi">क्या यह ऐप रेस्क्यू और गैर-रेस्क्यू दोनों प्रकार के तात्कालिक पशु कल्याण मामलों में उपयोगी हो सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. The app can be useful not only in direct rescue situations but also in other urgent animal welfare-related matters where timely support, coordination, guidance, transport, or intervention may be needed.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यह ऐप केवल सीधे रेस्क्यू मामलों में ही नहीं, बल्कि अन्य तात्कालिक पशु कल्याण-संबंधित परिस्थितियों में भी उपयोगी हो सकता है, जहाँ समय पर सहायता, समन्वय, मार्गदर्शन, परिवहन या हस्तक्षेप की आवश्यकता हो सकती है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i use the app for an injured animal on the road",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i use the app for an injured animal on the road">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I use the app for an injured animal on the road?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं सड़क पर घायल पशु के लिए इस ऐप का उपयोग कर सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. If you come across an injured animal and immediate support is needed, you can raise an SOS through the app with a short and clear message describing the situation and location.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यदि आपको कोई घायल पशु दिखाई देता है और तत्काल सहायता की आवश्यकता है, तो आप स्थिति और स्थान का छोटा व स्पष्ट संदेश लिखकर ऐप के माध्यम से एसओएस भेज सकते हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can the app help in cases of abandoned puppies or kittens",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can the app help in cases of abandoned puppies or kittens">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can the app help in cases of abandoned puppies or kittens?</span>
+        <span data-lang="hi" class="font-hindi">क्या छोड़े गए पिल्लों या बिल्ली के बच्चों के मामलों में यह ऐप मदद कर सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. If the situation is urgent, such as abandoned puppies or kittens needing immediate support, the app may be used to alert registered users in the district who may be able to assist, guide, or coordinate help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यदि स्थिति तात्कालिक है, जैसे छोड़े गए पिल्लों या बिल्ली के बच्चों को तुरंत सहायता की आवश्यकता हो, तो ऐप का उपयोग जिले के पंजीकृत उपयोगकर्ताओं को अलर्ट भेजने के लिए किया जा सकता है, जो सहायता, मार्गदर्शन या समन्वय कर सकें।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what happens when i raise an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what happens when i raise an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What happens when I raise an SOS?</span>
+        <span data-lang="hi" class="font-hindi">जब मैं एसओएस भेजता हूँ, तब क्या होता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Once you raise an SOS, the alert is sent to all registered users in your district through the app. Those users can view the alert and decide whether they want to respond, initiate chat, call, or otherwise assist based on the situation.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          जैसे ही आप एसओएस भेजते हैं, वह अलर्ट ऐप के माध्यम से आपके जिले के सभी पंजीकृत उपयोगकर्ताओं को भेज दिया जाता है। वे उपयोगकर्ता अलर्ट देख सकते हैं और स्थिति के आधार पर तय कर सकते हैं कि वे प्रतिक्रिया देना, चैट शुरू करना, कॉल करना या किसी अन्य तरीके से सहायता करना चाहते हैं या नहीं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "how do i raise an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="how do i raise an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">How do I raise an SOS?</span>
+        <span data-lang="hi" class="font-hindi">मैं एसओएस कैसे भेजूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Open the app and tap the SOS option. Once submitted, your alert is sent to all registered users in your district through the app.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          ऐप खोलें और एसओएस विकल्प पर टैप करें। सबमिट करते ही आपका अलर्ट ऐप के माध्यम से आपके जिले के सभी पंजीकृत उपयोगकर्ताओं को भेज दिया जाता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "what details do other users receive when i send an sos",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="what details do other users receive when i send an sos">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">What details do other users receive when I send an SOS?</span>
+        <span data-lang="hi" class="font-hindi">जब मैं एसओएस भेजता हूँ, तब अन्य उपयोगकर्ताओं को कौन-कौन से विवरण मिलते हैं?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Other registered users in the same district receive the sender’s name, mobile number, GPS coordinates captured at the time of the alert, and the short incident message entered by the sender.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          उसी जिले के अन्य पंजीकृत उपयोगकर्ताओं को प्रेषक का नाम, मोबाइल नंबर, अलर्ट भेजे जाने के समय कैप्चर किए गए जीपीएस कोऑर्डिनेट्स, और प्रेषक द्वारा दर्ज किया गया छोटा घटना-संदेश प्राप्त होता है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "why is location important",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="why is location important">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Why is location important?</span>
+        <span data-lang="hi" class="font-hindi">लोकेशन क्यों महत्वपूर्ण है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Location is important because it helps registered users in the district understand where the incident has happened and whether they are close enough to assist or coordinate support.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          लोकेशन महत्वपूर्ण है क्योंकि इससे जिले के पंजीकृत उपयोगकर्ताओं को यह समझने में मदद मिलती है कि घटना कहाँ हुई है और क्या वे सहायता या समन्वय के लिए पर्याप्त रूप से पास हैं।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can i raise an sos without location",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can i raise an sos without location">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can I raise an SOS without location?</span>
+        <span data-lang="hi" class="font-hindi">क्या मैं लोकेशन के बिना एसओएस भेज सकता हूँ?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          When an SOS is sent, the app automatically captures the sender’s location and includes the GPS coordinates in the alert. This is not live tracking. It is only the location captured at the time the SOS is raised, so that responders and volunteers in the district can understand where the incident is happening.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          जब एसओएस भेजा जाता है, तो ऐप स्वतः प्रेषक की लोकेशन कैप्चर करता है और अलर्ट में जीपीएस कोऑर्डिनेट्स शामिल करता है। यह लाइव ट्रैकिंग नहीं है। यह केवल वही लोकेशन है जो एसओएस भेजते समय कैप्चर की जाती है, ताकि जिले के रेस्पॉन्डर और वॉलंटियर्स समझ सकें कि घटना कहाँ हो रही है।
+        </span>
+      </p>
+    </div>
+  `
+},
+{
+  keywords: "can the app help in cases of abandoned puppies or kittens",
+  html: `
+    <div class="faq-item glass-card p-8" data-keywords="can the app help in cases of abandoned puppies or kittens">
+      <h3 class="text-white text-xl font-bold mb-3">
+        <span data-lang="en">Can the app help in cases of abandoned puppies or kittens?</span>
+        <span data-lang="hi" class="font-hindi">क्या छोड़े गए पिल्लों या बिल्ली के बच्चों के मामलों में यह ऐप मदद कर सकता है?</span>
+      </h3>
+      <p class="text-white/40 leading-relaxed">
+        <span data-lang="en">
+          Yes. If the situation is urgent, such as abandoned puppies or kittens needing immediate support, the app may be used to alert registered users in the district who may be able to assist, guide, or coordinate help.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          हाँ। यदि स्थिति तात्कालिक है, जैसे छोड़े गए पिल्लों या बिल्ली के बच्चों को तुरंत सहायता की आवश्यकता हो, तो ऐप का उपयोग जिले के पंजीकृत उपयोगकर्ताओं को अलर्ट भेजने के लिए किया जा सकता है, जो सहायता, मार्गदर्शन या समन्वय कर सकें।
+        </span>
+      </p>
+    </div>
+  `
+}
+];
+/* -----------------------------
+FAQ LOGIC (ADD HERE)
+------------------------------ */
+
+const faqSearch = document.getElementById("faqSearch");
+const faqResults = document.getElementById("faqResults");
+const faqMessage = document.getElementById("faqMessage");
+
+function renderFAQs(list){
+
+  faqResults.innerHTML = "";
+  setLang(document.documentElement.lang);
+
+  if(list.length === 0){
+    faqMessage.style.display = "block";
+    return;
+  }
+
+  faqMessage.style.display = "none";
+
+  list.forEach(item=>{
+    faqResults.innerHTML += item.html;
+  });
+
+  attachFaqToggle();
+}
+// 🔥 ADD THIS LINE
+setLang(document.documentElement.lang);
+
+faqSearch.addEventListener("input", (e)=>{
+  const value = e.target.value.toLowerCase();
+
+  if(!value){
+    faqResults.innerHTML = "";
+    faqMessage.style.display = "block";
+    return;
+  }
+
+  const filtered = faqData.filter(item =>
+    item.keywords.includes(value)
+  );
+
+  renderFAQs(filtered);
+});
+
+document.querySelectorAll(".faq-chip").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const keyword = btn.dataset.keyword.toLowerCase();
+
+    faqSearch.value = keyword;
+
+    const filtered = faqData.filter(item =>
+      item.keywords.includes(keyword)
+    );
+
+    renderFAQs(filtered);
+  });
+});
+/* -----------------------------
+CRED STYLE MOBILE MENU
+------------------------------ */
+
+const mobileBtn = document.getElementById("mobileMenuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const mobileOverlay = document.getElementById("mobileMenuOverlay");
+const closeMenu = document.getElementById("closeMenu");
+const mobileLinks = document.querySelectorAll(".mobile-link");
+
+function openMenu(){
+
+mobileMenu.classList.remove("translate-x-full");
+mobileOverlay.classList.remove("opacity-0","pointer-events-none");
+mobileOverlay.classList.add("opacity-100");
+
+document.body.style.overflow="hidden";
+
+}
+
+function closeMobileMenu(){
+
+mobileMenu.classList.add("translate-x-full");
+
+mobileOverlay.classList.remove("opacity-100");
+mobileOverlay.classList.add("opacity-0","pointer-events-none");
+
+document.body.style.overflow="";
+
+}
+
+mobileBtn.addEventListener("click",openMenu);
+closeMenu.addEventListener("click",closeMobileMenu);
+mobileOverlay.addEventListener("click",closeMobileMenu);
+
+mobileLinks.forEach(link=>{
+link.addEventListener("click",closeMobileMenu);
+});
+
+
+/* HEADER SCROLL */
+
+const header = document.getElementById("mainHeader");
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY > 50){
+header.classList.add("bg-black/80");
+}
+else{
+header.classList.remove("bg-black/80");
+}
+
+});
+
+
+/* SCROLL ANIMATION */
+
+const fadeEls = document.querySelectorAll(".fade-up");
+
+const observer = new IntersectionObserver((entries)=>{
+
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+
+},{threshold:0.15});
+
+fadeEls.forEach(el=>observer.observe(el));
+function toggleMode(){
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('modeBtn').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('mode', isLight ? 'light' : 'dark');
+}
+const savedMode = localStorage.getItem('mode');
+if(savedMode === 'light') {
+  document.documentElement.classList.add('light');
+  document.addEventListener('DOMContentLoaded', function(){
+    const btn = document.getElementById('modeBtn');
+    if(btn) btn.textContent = '🌙';
+  });
+}
+function fillLegal(btn) {
+  const lang = document.documentElement.lang || 'en';
+  const spans = btn.querySelectorAll('[data-lang]');
+  let text = '';
+  spans.forEach(s => {
+    if (s.getAttribute('data-lang') === lang) text = s.textContent.trim();
+  });
+  if (!text) text = btn.querySelector('[data-lang="en"]').textContent.trim();
+  document.getElementById('legalInput').value = text;
+}
+
+function addLegalMsg(text, role) {
+  const box = document.getElementById('legalChatBox');
+  const div = document.createElement('div');
+  div.className = 'flex gap-3';
+  const icon = document.createElement('div');
+  icon.className = 'w-7 h-7 flex items-center justify-center flex-shrink-0 mt-1 border';
+  if (role === 'user') {
+    icon.className += ' border-white/20';
+    icon.innerHTML = '<span class="material-symbols-outlined text-white/40 text-sm">person</span>';
+  } else {
+    icon.className += ' border-primary/40';
+    icon.innerHTML = '<span class="material-symbols-outlined text-primary text-sm">balance</span>';
+  }
+  const bubble = document.createElement('div');
+  bubble.className = role === 'user'
+    ? 'text-white/80 text-sm leading-relaxed'
+    : 'text-white/60 text-sm leading-relaxed whitespace-pre-wrap';
+  bubble.textContent = text;
+  div.appendChild(icon);
+  div.appendChild(bubble);
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return bubble;
+}
+
+async function sendLegalQuestion() {
+  const input = document.getElementById('legalInput');
+  const btn = document.getElementById('legalBtn');
+  const question = input.value.trim();
+  if (!question) return;
+  const lang = document.documentElement.lang || 'en';
+  addLegalMsg(question, 'user');
+  input.value = '';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined text-white text-xl">hourglass_empty</span>';
+  const thinkingBubble = addLegalMsg('Reviewing applicable laws...', 'bot');
+  try {
+    const res = await fetch('https://rapidresponse-animal-welfare-assistant.hf.space/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question, language: lang })
+    });
+    const data = await res.json();
+    thinkingBubble.textContent = data.answer;
+  } catch (e) {
+    thinkingBubble.textContent = 'Sorry, something went wrong. Please try again.';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<span class="material-symbols-outlined text-white text-xl">send</span>';
+  document.getElementById('legalChatBox').scrollTop = document.getElementById('legalChatBox').scrollHeight;
+}
+
+document.getElementById('legalInput').addEventListener('keydown', function(e) {
+ /* LIGHT MODE */
+.light body {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+}
+
+/* Nuclear: force all text dark */
+.light header *,
+.light nav *,
+.light section *,
+.light footer * {
+  color: #0a0a0a !important;
+  -webkit-text-fill-color: #0a0a0a !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+/* Restore brand red */
+.light .text-primary,
+.light [class*="text-primary"] {
+  color: #ff3b30 !important;
+  -webkit-text-fill-color: #ff3b30 !important;
+}
+
+/* Restore semantic colours */
+.light .text-green-500 { color: #16a34a !important; -webkit-text-fill-color: #16a34a !important; }
+.light .text-green-400 { color: #15803d !important; -webkit-text-fill-color: #15803d !important; }
+.light .text-red-500   { color: #dc2626 !important; -webkit-text-fill-color: #dc2626 !important; }
+.light .text-yellow-400\/70 { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; }
+
+/* CRITICAL: Restore step number hover animation */
+.light .group:hover .group-hover\:text-yellow-400,
+.light [class*="group-hover:text-yellow-400"] {
+  color: rgba(0,0,0,0.08) !important;
+  -webkit-text-fill-color: rgba(0,0,0,0.08) !important;
+  transition: color 0.3s, -webkit-text-fill-color 0.3s !important;
+}
+.light .group:hover [class*="group-hover\:text-yellow-400"] {
+  color: #ca8a04 !important;
+  -webkit-text-fill-color: #ca8a04 !important;
+}
+
+/* Step numbers default: very faint */
+.light [class*="text-white/10"] {
+  color: rgba(0,0,0,0.08) !important;
+  -webkit-text-fill-color: rgba(0,0,0,0.08) !important;
+}
+
+/* Muted text levels */
+.light [class*="white/40"] { color: rgba(0,0,0,0.5) !important; -webkit-text-fill-color: rgba(0,0,0,0.5) !important; }
+.light [class*="white/30"] { color: rgba(0,0,0,0.4) !important; -webkit-text-fill-color: rgba(0,0,0,0.4) !important; }
+.light [class*="white/50"] { color: rgba(0,0,0,0.6) !important; -webkit-text-fill-color: rgba(0,0,0,0.6) !important; }
+.light [class*="white/70"] { color: rgba(0,0,0,0.7) !important; -webkit-text-fill-color: rgba(0,0,0,0.7) !important; }
+.light [class*="white/60"] { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; }
+
+/* Gradient headline — RIGHTS visible */
+.light .cred-gradient-text {
+  background: linear-gradient(180deg, #0a0a0a 0%, rgba(0,0,0,0.38) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Backgrounds */
+.light section,
+.light [class*="bg-black"],
+.light [class*="bg-surface"] {
+  background: #ffffff !important;
+}
+.light section:nth-child(even),
+.light [class*="bg-white/5"] {
+  background: #f8f8f8 !important;
+}
+
+/* Header */
+.light #mainHeader {
+  background: rgba(255,255,255,0.97) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+/* Mobile menu */
+.light #mobileMenu { background: #ffffff !important; }
+
+/* Cards */
+.light .glass-card {
+  background: rgba(0,0,0,0.025) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+.light [class*="hover:bg-white/5"]:hover { background: rgba(0,0,0,0.04) !important; }
+
+/* Step cards border on hover */
+.light [class*="hover:border-primary/40"]:hover { border-color: rgba(255,59,48,0.4) !important; }
+
+/* FAQ */
+.light #faqSearch {
+  color: #0a0a0a !important;
+  -webkit-text-fill-color: #0a0a0a !important;
+}
+.light #faqSearch::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
+.light .faq-chip { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
+.light .faq-chip:hover { background: rgba(0,0,0,0.05) !important; color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
+
+/* Hero */
+.light .hero-bg { background: radial-gradient(circle at 50% -20%, #efefef 0%, #ffffff 70%) !important; }
+.light .grid-bg {
+  background-image: linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px) !important;
+}
+.light .phone-glow { background: radial-gradient(circle, rgba(255,59,48,0.1) 0%, rgba(255,255,255,0) 70%) !important; }
+
+/* Footer */
+.light footer { background: #f5f5f5 !important; }
+
+/* Legal */
+.light #legalChatBox { background: #f9f9f9 !important; border-color: rgba(0,0,0,0.08) !important; }
+.light #legalInput { color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
+.light #legalInput::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
+.light .legal-chip { color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
+.light .legal-chip:hover { background: rgba(0,0,0,0.04) !important; color: #0a0a0a !important; }
+
+/* Download buttons */
+.light .bg-white.text-black { background: #111 !important; }
+.light .bg-white.text-black * { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+
+ 
+if (e.key === 'Enter') sendLegalQuestion();
+});
+
+const _origSetLang = window.setLang;
+window.setLang = function(lang) {
+  _origSetLang(lang);
+  const inp = document.getElementById('legalInput');
+  if (!inp) return;
+  inp.placeholder = lang === 'hi' ? 'अपना कानूनी सवाल पूछें...' : 'Ask your legal question...';
+};
+
+</script>
+</div>
+</body>
+</html>
