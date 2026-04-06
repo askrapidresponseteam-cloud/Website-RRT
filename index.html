@@ -149,6 +149,40 @@ transition:all 0.8s ease;
 opacity:1;
 transform:translateY(0);
 }
+.light body{
+background:#f5f5f5;
+color:#111;
+}
+.light .glass-card{
+background:rgba(0,0,0,0.04);
+border:1px solid rgba(0,0,0,0.08);
+}
+.light header{
+background:rgba(255,255,255,0.8) !important;
+}
+.light .text-white{color:#111 !important;}
+.light .text-white\/40{color:rgba(0,0,0,0.4) !important;}
+.light .text-white\/50{color:rgba(0,0,0,0.5) !important;}
+.light .text-white\/60{color:rgba(0,0,0,0.6) !important;}
+.light .text-white\/70{color:rgba(0,0,0,0.7) !important;}
+.light .text-white\/30{color:rgba(0,0,0,0.3) !important;}
+.light .bg-white\/5{background:rgba(0,0,0,0.03) !important;}
+.light .border-white\/5{border-color:rgba(0,0,0,0.05) !important;}
+.light .border-white\/10{border-color:rgba(0,0,0,0.1) !important;}
+.light .border-white\/20{border-color:rgba(0,0,0,0.2) !important;}
+.light .cred-gradient-text{
+background:linear-gradient(180deg,#111 0%,rgba(0,0,0,0.4) 100%);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+.light .hero-bg{
+background:radial-gradient(circle at 50% -20%,#e5e5e5 0%,#f5f5f5 70%);
+}
+.light .grid-bg{
+background-image:
+linear-gradient(to right,rgba(0,0,0,.04) 1px,transparent 1px),
+linear-gradient(to bottom,rgba(0,0,0,.04) 1px,transparent 1px);
+}
 [data-lang] {
   display: none !important;
 }
@@ -289,7 +323,10 @@ Rapid Response
 <!-- RIGHT SIDE -->
 
 <div class="flex items-center gap-4 text-xs font-bold">
-
+<button onclick="toggleMode()" id="modeBtn"
+class="text-white/70 hover:text-white text-xs font-bold mr-2">
+☀️
+</button>
 <button onclick="setLang('en')" class="text-white/70 hover:text-white">
 EN
 </button>
@@ -3603,6 +3640,19 @@ entry.target.classList.add("show");
 },{threshold:0.15});
 
 fadeEls.forEach(el=>observer.observe(el));
+function toggleMode(){
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('modeBtn').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('mode', isLight ? 'light' : 'dark');
+}
+const savedMode = localStorage.getItem('mode');
+if(savedMode === 'light') {
+  document.documentElement.classList.add('light');
+  document.addEventListener('DOMContentLoaded', function(){
+    const btn = document.getElementById('modeBtn');
+    if(btn) btn.textContent = '🌙';
+  });
+}
 function fillLegal(btn) {
   const lang = document.documentElement.lang || 'en';
   const spans = btn.querySelectorAll('[data-lang]');
