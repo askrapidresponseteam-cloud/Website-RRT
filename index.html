@@ -140,68 +140,61 @@ font-family:"Noto Sans Devanagari","sans-serif";
 }
 
 .fade-up{
-opacity:1;
+opacity:0;
+transform:translateY(40px);
+transition:all 0.8s ease;
 }
 
 .fade-up.show{
 opacity:1;
 transform:translateY(0);
 }
-/* LIGHT MODE */
-.light body {
-  background: #ffffff !important;
-  color: #0a0a0a !important;
+.light body{
+background:#ffffff;
+color:#0a0a0a;
 }
-.light header *, .light nav *, .light section *, .light footer * {
-  color: #0a0a0a !important;
-  -webkit-text-fill-color: #0a0a0a !important;
-  border-color: rgba(0,0,0,0.1) !important;
+.light .glass-card{
+background:rgba(0,0,0,0.04) !important;
+border:1px solid rgba(0,0,0,0.1) !important;
 }
-.light .text-primary, .light [class*="text-primary"] {
-  color: #ff3b30 !important; -webkit-text-fill-color: #ff3b30 !important;
+.light #mainHeader{
+background:rgba(255,255,255,0.97) !important;
+border-bottom:1px solid rgba(0,0,0,0.08) !important;
 }
-.light .text-green-500 { color: #16a34a !important; -webkit-text-fill-color: #16a34a !important; }
-.light .text-green-400 { color: #15803d !important; -webkit-text-fill-color: #15803d !important; }
-.light .text-red-500   { color: #dc2626 !important; -webkit-text-fill-color: #dc2626 !important; }
-.light [class*="text-white/10"] { color: rgba(0,0,0,0.08) !important; -webkit-text-fill-color: rgba(0,0,0,0.08) !important; }
-.light [class*="white/40"] { color: rgba(0,0,0,0.5) !important; -webkit-text-fill-color: rgba(0,0,0,0.5) !important; }
-.light [class*="white/30"] { color: rgba(0,0,0,0.4) !important; -webkit-text-fill-color: rgba(0,0,0,0.4) !important; }
-.light [class*="white/50"] { color: rgba(0,0,0,0.6) !important; -webkit-text-fill-color: rgba(0,0,0,0.6) !important; }
-.light [class*="white/70"] { color: rgba(0,0,0,0.7) !important; -webkit-text-fill-color: rgba(0,0,0,0.7) !important; }
-.light [class*="white/60"] { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; }
-.light .cred-gradient-text {
-  background: linear-gradient(180deg, #0a0a0a 0%, rgba(0,0,0,0.38) 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+.light *{color:#0a0a0a;}
+.light .text-primary{color:#ff3b30 !important;}
+.light .text-green-500{color:#16a34a !important;}
+.light .text-red-500{color:#dc2626 !important;}
+.light .text-green-400{color:#16a34a !important;}
+.light .text-yellow-400\/70{color:#b45309 !important;}
+.light section{background:#ffffff !important;}
+.light section.bg-surface, .light [class*="bg-surface"]{background:#f8f8f8 !important;}
+.light [class*="bg-white\/5"]{background:rgba(0,0,0,0.02) !important;}
+.light [class*="bg-black"]:not(#mobileMenu):not(#mobileMenuOverlay):not(.bg-primary){background:#ffffff !important;}
+.light [class*="border-white"]{border-color:rgba(0,0,0,0.1) !important;}
+.light footer{background:#f8f8f8 !important;}
+.light #mobileMenu{background:#ffffff !important;}
+.light .mobile-link{color:#0a0a0a !important;}
+.light .faq-chip{color:#333 !important; border-color:rgba(0,0,0,0.15) !important;}
+.light .faq-chip:hover{background:rgba(0,0,0,0.06) !important; color:#0a0a0a !important;}
+.light .faq-item.glass-card{background:#f8f8f8 !important;}
+.light #legalChatBox{background:#f8f8f8 !important;}
+.light #legalInput{color:#0a0a0a !important;}
+.light .legal-chip{color:#333 !important; border-color:rgba(0,0,0,0.15) !important;}
+.light .legal-chip:hover{background:rgba(0,0,0,0.06) !important;}
+.light .cred-gradient-text{
+background:linear-gradient(180deg,#0a0a0a 0%,rgba(0,0,0,0.45) 100%);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
-.light section, .light [class*="bg-black"], .light [class*="bg-surface"] { background: #ffffff !important; }
-.light section:nth-child(even), .light [class*="bg-white/5"] { background: #f8f8f8 !important; }
-.light #mainHeader { background: rgba(255,255,255,0.97) !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
-.light #mobileMenu { background: #ffffff !important; }
-.light .glass-card { background: rgba(0,0,0,0.025) !important; border: 1px solid rgba(0,0,0,0.08) !important; }
-.light [class*="hover:bg-white/5"]:hover { background: rgba(0,0,0,0.04) !important; }
-.light [class*="hover:border-primary/40"]:hover { border-color: rgba(255,59,48,0.4) !important; }
-.light .group:hover .group-hover\:text-yellow-400 {
-  color: #ca8a04 !important;
-  -webkit-text-fill-color: #ca8a04 !important;
+.light .hero-bg{
+background:radial-gradient(circle at 50% -20%,#f0f0f0 0%,#ffffff 70%);
 }
-.light #faqSearch { color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
-.light #faqSearch::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
-.light .faq-chip { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
-.light .faq-chip:hover { background: rgba(0,0,0,0.05) !important; color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
-.light .hero-bg { background: radial-gradient(circle at 50% -20%, #efefef 0%, #ffffff 70%) !important; }
-.light .grid-bg { background-image: linear-gradient(to right,rgba(0,0,0,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,0,0,.05) 1px,transparent 1px) !important; }
-.light .phone-glow { background: radial-gradient(circle,rgba(255,59,48,0.1) 0%,rgba(255,255,255,0) 70%) !important; }
-.light footer { background: #f5f5f5 !important; }
-.light #legalChatBox { background: #f9f9f9 !important; border-color: rgba(0,0,0,0.08) !important; }
-.light #legalInput { color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
-.light #legalInput::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
-.light .legal-chip { color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
-.light .legal-chip:hover { background: rgba(0,0,0,0.04) !important; color: #0a0a0a !important; }
-.light .bg-white.text-black { background: #111 !important; }
-.light .bg-white.text-black * { color: #fff !important; -webkit-text-fill-color: #fff !important; }
-.light .text-yellow-400\/70 { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; }
-
+.light .grid-bg{
+background-image:
+linear-gradient(to right,rgba(0,0,0,.05) 1px,transparent 1px),
+linear-gradient(to bottom,rgba(0,0,0,.05) 1px,transparent 1px);
+}
 [data-lang] {
   display: none !important;
 }
@@ -257,48 +250,29 @@ html[lang="hi"] [data-lang="hi"] {
 
 <!-- MOBILE MENU OVERLAY -->
 
-<div id="mobileMenuOverlay" onclick="closeMobileMenu()"
+<div id="mobileMenuOverlay"
 class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
 
 <!-- MOBILE MENU PANEL -->
 
 <div id="mobileMenu"
-class="fixed top-0 right-0 h-full w-[300px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col">
+class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
 
-  <!-- MENU HEADER -->
-  <div class="flex items-center justify-between px-8 pt-8 pb-6 border-b border-white/5">
-    <div class="flex items-center gap-3">
-      <span class="material-symbols-outlined text-primary text-sm">pets</span>
-      <span class="text-white text-xs font-black tracking-cred uppercase">Rapid Response</span>
-    </div>
-    <button id="closeMenu" onclick="closeMobileMenu()" class="w-8 h-8 flex items-center justify-center border border-white/10 text-white hover:border-white/30 transition-all">
-      <span class="material-symbols-outlined text-xl">close</span>
-    </button>
-  </div>
+<a href="#problem" class="mobile-link text-white">Need</a>
+<a href="#solution" class="mobile-link text-white">Solution</a>
+<a href="#how" class="mobile-link text-white">How it Works</a>
+<a href="#community" class="mobile-link text-white">Community</a>
+<a href="#faq" class="mobile-link text-white">FAQ</a>
 
-  <!-- NAV LINKS -->
-  <div class="flex flex-col px-8 pt-8 gap-1 flex-1">
-    <a href="#problem" class="mobile-link text-white/60 hover:text-white text-sm font-bold tracking-cred uppercase py-3 border-b border-white/5 transition-colors">Need</a>
-    <a href="#solution" class="mobile-link text-white/60 hover:text-white text-sm font-bold tracking-cred uppercase py-3 border-b border-white/5 transition-colors">Solution</a>
-    <a href="#how" class="mobile-link text-white/60 hover:text-white text-sm font-bold tracking-cred uppercase py-3 border-b border-white/5 transition-colors">How it Works</a>
-    <a href="#community" class="mobile-link text-white/60 hover:text-white text-sm font-bold tracking-cred uppercase py-3 border-b border-white/5 transition-colors">Community</a>
-    <a href="#faq" class="mobile-link text-white/60 hover:text-white text-sm font-bold tracking-cred uppercase py-3 border-b border-white/5 transition-colors">FAQ</a>
-    <a href="#legal" class="mobile-link text-primary hover:text-red-400 text-sm font-bold tracking-cred uppercase py-3 border-b border-white/5 transition-colors">Legal Help ⚖️</a>
-  </div>
+<button id="closeMenu"
+class="absolute top-8 right-8 text-white">
 
-  <!-- BOTTOM: LANG + MODE -->
-  <div class="px-8 py-6 border-t border-white/5 flex items-center justify-between">
-    <div class="flex items-center gap-4">
-      <button onclick="setLang('en')" class="text-white/50 hover:text-white text-xs font-bold tracking-widest uppercase transition-colors">EN</button>
-      <span class="text-white/20">|</span>
-      <button onclick="setLang('hi')" class="text-white/50 hover:text-white font-hindi text-sm transition-colors">हिंदी</button>
-    </div>
-    <button onclick="toggleMode()" id="modeBtnMobile"
-      class="w-8 h-8 flex items-center justify-center border border-white/10 hover:border-white/30 transition-all text-sm">
-      ☀️
-    </button>
-  </div>
+<span class="material-symbols-outlined text-3xl">
+close
+</span>
+
+</button>
 
 </div>
 
@@ -360,29 +334,32 @@ Rapid Response
 
 <!-- RIGHT SIDE -->
 
-<div class="flex items-center gap-5 text-xs font-bold">
+<div class="flex items-center gap-4 text-xs font-bold">
+<button onclick="toggleMode()" id="modeBtn"
+class="text-white/70 hover:text-white text-xs font-bold mr-2">
+☀️
+</button>
+<button onclick="setLang('en')" class="text-white/70 hover:text-white">
+EN
+</button>
 
-  <!-- LANG TOGGLE -->
-  <div class="hidden sm:flex items-center gap-3">
-    <button onclick="setLang('en')" class="text-white/50 hover:text-white transition-colors tracking-widest text-[10px] uppercase">EN</button>
-    <span class="text-white/20">|</span>
-    <button onclick="setLang('hi')" class="text-white/50 hover:text-white transition-colors font-hindi text-xs">हिंदी</button>
-  </div>
+<span class="text-white/30">|</span>
 
-  <!-- DIVIDER -->
-  <span class="hidden sm:block w-px h-4 bg-white/10"></span>
+<button onclick="setLang('hi')" class="text-white/70 hover:text-white font-hindi">
+हिंदी
+</button>
 
-  <!-- MODE TOGGLE -->
-  <button onclick="toggleMode()" id="modeBtn"
-    class="w-8 h-8 flex items-center justify-center border border-white/10 hover:border-white/30 transition-all text-sm">
-    ☀️
-  </button>
 
-  <!-- MOBILE MENU BUTTON -->
-  <button id="mobileMenuBtn" onclick="openMenu()"
-    class="lg:hidden flex items-center justify-center w-8 h-8 border border-white/10 hover:border-white/30 transition-all">
-    <span class="material-symbols-outlined text-xl text-white">menu</span>
-  </button>
+<!-- MOBILE MENU BUTTON -->
+
+<button id="mobileMenuBtn"
+class="lg:hidden text-white ml-2 relative w-8 h-8 flex items-center justify-center">
+
+<span class="material-symbols-outlined text-2xl transition-all duration-300">
+menu
+</span>
+
+</button>
 
 </div>
 
@@ -1918,7 +1895,7 @@ Rapid Response
 
       </p>
 
-      <a href="/cdn-cgi/l/email-protection#7f1e0c143f0d1e0f161b520d1a0c0f10110c1a511611" class="text-white font-semibold hover:underline"><span class="__cf_email__" data-cfemail="f594869eb58794859c91d8879086859a9b8690db9c9b">[email&#160;protected]</span></a>
+      <a href="mailto:ask@rapid-response.in" class="text-primary font-semibold hover:underline">ask@rapid-response.in</a>
 
     </div>
 
@@ -1947,7 +1924,7 @@ Rapid Response
         <span data-lang="hi" class="font-hindi">⚖️ केवल कानूनी जानकारी — किसी योग्य वकील की सलाह का विकल्प नहीं।</span>
       </p>
     </div>
-    <div class="max-w-4xl mx-auto mb-8 flex flex-wrap gap-2 md:gap-3 justify-center px-2">
+    <div class="max-w-4xl mx-auto mb-8 flex flex-wrap gap-3 justify-center">
       <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
         <span data-lang="en">ABC centre not functioning. What to do?</span>
         <span data-lang="hi" class="font-hindi">ABC केंद्र काम नहीं कर रहा। क्या करें?</span>
@@ -1966,7 +1943,7 @@ Rapid Response
       </button>
     </div>
     <div class="max-w-4xl mx-auto">
-      <div id="legalChatBox" class="glass-card p-6 min-h-[380px] max-h-[520px] md:max-h-[600px] overflow-y-auto mb-4 space-y-6" id_scroll="legalScroll">
+      <div id="legalChatBox" class="glass-card p-6 min-h-[300px] max-h-[500px] overflow-y-auto mb-4 space-y-4">
         <div class="flex gap-3">
           <div class="w-7 h-7 border border-primary/40 flex items-center justify-center flex-shrink-0 mt-1">
             <span class="material-symbols-outlined text-primary text-sm">balance</span>
@@ -1977,13 +1954,13 @@ Rapid Response
           </div>
         </div>
       </div>
-      <div class="flex gap-2 md:gap-3">
-        <div class="flex-1 flex items-center px-4 md:px-5 h-12 md:h-14 border border-white/10 bg-white/5 rounded-none">
+      <div class="flex gap-3">
+        <div class="glass-card flex-1 flex items-center px-5 h-14 border border-white/10">
           <input id="legalInput" type="text" placeholder="Ask your legal question..."
             class="w-full bg-transparent text-white placeholder:text-white/25 text-sm border-none outline-none focus:ring-0" />
         </div>
         <button id="legalBtn" onclick="sendLegalQuestion()"
-          class="w-12 h-12 md:w-14 md:h-14 bg-primary flex items-center justify-center hover:bg-red-600 transition flex-shrink-0">
+          class="w-14 h-14 bg-primary flex items-center justify-center hover:bg-red-600 transition flex-shrink-0">
           <span class="material-symbols-outlined text-white text-xl">send</span>
         </button>
       </div>
@@ -2059,7 +2036,7 @@ Rapid Response
 
         </p>
 
-        <a href="/cdn-cgi/l/email-protection#1f7e6c745f6d7e6f767b326d7a6c6f70716c7a317671" class="text-white font-semibold hover:underline"><span class="__cf_email__" data-cfemail="e180928aa19380918885cc938492918e8f9284cf888f">[email&#160;protected]</span></a>
+        <a href="mailto:ask@rapid-response.in" class="text-primary font-semibold hover:underline">ask@rapid-response.in</a>
 
         <p class="text-xs text-white/30 mt-3">
 
@@ -2111,7 +2088,7 @@ Rapid Response
   </div>
 
 </footer>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function attachFaqToggle(){
 
 
@@ -3664,48 +3641,20 @@ entry.target.classList.add("show");
 }
 });
 
-},{threshold:0.01});
-setTimeout(()=>{document.querySelectorAll(".fade-up").forEach(e=>e.classList.add("show"));},100);
+},{threshold:0.15});
 
 fadeEls.forEach(el=>observer.observe(el));
-window.openMenu = function(){
-  document.getElementById("mobileMenu").classList.remove("translate-x-full");
-  document.getElementById("mobileMenuOverlay").classList.remove("opacity-0","pointer-events-none");
-  document.getElementById("mobileMenuOverlay").classList.add("opacity-100");
-  document.body.style.overflow="hidden";
-};
-window.closeMobileMenu = function(){
-  document.getElementById("mobileMenu").classList.add("translate-x-full");
-  document.getElementById("mobileMenuOverlay").classList.remove("opacity-100");
-  document.getElementById("mobileMenuOverlay").classList.add("opacity-0","pointer-events-none");
-  document.body.style.overflow="";
-};
-window.toggleMode = function(){
-  const html = document.documentElement;
-  const isLight = !html.classList.contains('light');
-  if(isLight){
-    html.classList.add('light');
-    html.classList.remove('dark');
-  } else {
-    html.classList.remove('light');
-    html.classList.add('dark');
-  }
-  const icon = isLight ? '🌙' : '☀️';
-  ['modeBtn','modeBtnMobile'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.textContent = icon;
-  });
+function toggleMode(){
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('modeBtn').textContent = isLight ? '🌙' : '☀️';
   localStorage.setItem('mode', isLight ? 'light' : 'dark');
-};
+}
 const savedMode = localStorage.getItem('mode');
 if(savedMode === 'light') {
   document.documentElement.classList.add('light');
-  document.documentElement.classList.remove('dark');
   document.addEventListener('DOMContentLoaded', function(){
-    ['modeBtn','modeBtnMobile'].forEach(id => {
-      const el = document.getElementById(id);
-      if(el) el.textContent = '🌙';
-    });
+    const btn = document.getElementById('modeBtn');
+    if(btn) btn.textContent = '🌙';
   });
 }
 function fillLegal(btn) {
@@ -3763,139 +3712,26 @@ async function sendLegalQuestion() {
     });
     const data = await res.json();
     thinkingBubble.textContent = data.answer;
-    // Scroll so the START of the answer is visible, not the end
-    thinkingBubble.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (e) {
     thinkingBubble.textContent = 'Sorry, something went wrong. Please try again.';
-    thinkingBubble.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   btn.disabled = false;
   btn.innerHTML = '<span class="material-symbols-outlined text-white text-xl">send</span>';
+  document.getElementById('legalChatBox').scrollTop = document.getElementById('legalChatBox').scrollHeight;
 }
 
 document.getElementById('legalInput').addEventListener('keydown', function(e) {
- /* LIGHT MODE */
-.light body {
-  background: #ffffff !important;
-  color: #0a0a0a !important;
-}
+  if (e.key === 'Enter') sendLegalQuestion();
+});
 
-/* Nuclear: force all text dark */
-.light header *,
-.light nav *,
-.light section *,
-.light footer * {
-  color: #0a0a0a !important;
-  -webkit-text-fill-color: #0a0a0a !important;
-  border-color: rgba(0,0,0,0.1) !important;
-}
+const _origSetLang = window.setLang;
+window.setLang = function(lang) {
+  _origSetLang(lang);
+  const inp = document.getElementById('legalInput');
+  if (!inp) return;
+  inp.placeholder = lang === 'hi' ? 'अपना कानूनी सवाल पूछें...' : 'Ask your legal question...';
+};
 
-/* Restore brand red */
-.light .text-primary,
-.light [class*="text-primary"] {
-  color: #ff3b30 !important;
-  -webkit-text-fill-color: #ff3b30 !important;
-}
-
-/* Restore semantic colours */
-.light .text-green-500 { color: #16a34a !important; -webkit-text-fill-color: #16a34a !important; }
-.light .text-green-400 { color: #15803d !important; -webkit-text-fill-color: #15803d !important; }
-.light .text-red-500   { color: #dc2626 !important; -webkit-text-fill-color: #dc2626 !important; }
-.light .text-yellow-400\/70 { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; }
-
-/* CRITICAL: Restore step number hover animation */
-.light .group:hover .group-hover\:text-yellow-400,
-.light [class*="group-hover:text-yellow-400"] {
-  color: rgba(0,0,0,0.08) !important;
-  -webkit-text-fill-color: rgba(0,0,0,0.08) !important;
-  transition: color 0.3s, -webkit-text-fill-color 0.3s !important;
-}
-.light .group:hover [class*="group-hover\:text-yellow-400"] {
-  color: #ca8a04 !important;
-  -webkit-text-fill-color: #ca8a04 !important;
-}
-
-/* Step numbers default: very faint */
-.light [class*="text-white/10"] {
-  color: rgba(0,0,0,0.08) !important;
-  -webkit-text-fill-color: rgba(0,0,0,0.08) !important;
-}
-
-/* Muted text levels */
-.light [class*="white/40"] { color: rgba(0,0,0,0.5) !important; -webkit-text-fill-color: rgba(0,0,0,0.5) !important; }
-.light [class*="white/30"] { color: rgba(0,0,0,0.4) !important; -webkit-text-fill-color: rgba(0,0,0,0.4) !important; }
-.light [class*="white/50"] { color: rgba(0,0,0,0.6) !important; -webkit-text-fill-color: rgba(0,0,0,0.6) !important; }
-.light [class*="white/70"] { color: rgba(0,0,0,0.7) !important; -webkit-text-fill-color: rgba(0,0,0,0.7) !important; }
-.light [class*="white/60"] { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; }
-
-/* Gradient headline — RIGHTS visible */
-.light .cred-gradient-text {
-  background: linear-gradient(180deg, #0a0a0a 0%, rgba(0,0,0,0.38) 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-/* Backgrounds */
-.light section,
-.light [class*="bg-black"],
-.light [class*="bg-surface"] {
-  background: #ffffff !important;
-}
-.light section:nth-child(even),
-.light [class*="bg-white/5"] {
-  background: #f8f8f8 !important;
-}
-
-/* Header */
-.light #mainHeader {
-  background: rgba(255,255,255,0.97) !important;
-  border-bottom: 1px solid rgba(0,0,0,0.08) !important;
-}
-
-/* Mobile menu */
-.light #mobileMenu { background: #ffffff !important; }
-
-/* Cards */
-.light .glass-card {
-  background: rgba(0,0,0,0.025) !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-}
-.light [class*="hover:bg-white/5"]:hover { background: rgba(0,0,0,0.04) !important; }
-
-/* Step cards border on hover */
-.light [class*="hover:border-primary/40"]:hover { border-color: rgba(255,59,48,0.4) !important; }
-
-/* FAQ */
-.light #faqSearch {
-  color: #0a0a0a !important;
-  -webkit-text-fill-color: #0a0a0a !important;
-}
-.light #faqSearch::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
-.light .faq-chip { color: rgba(0,0,0,0.65) !important; -webkit-text-fill-color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
-.light .faq-chip:hover { background: rgba(0,0,0,0.05) !important; color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
-
-/* Hero */
-.light .hero-bg { background: radial-gradient(circle at 50% -20%, #efefef 0%, #ffffff 70%) !important; }
-.light .grid-bg {
-  background-image: linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px) !important;
-}
-.light .phone-glow { background: radial-gradient(circle, rgba(255,59,48,0.1) 0%, rgba(255,255,255,0) 70%) !important; }
-
-/* Footer */
-.light footer { background: #f5f5f5 !important; }
-
-/* Legal */
-.light #legalChatBox { background: #f9f9f9 !important; border-color: rgba(0,0,0,0.08) !important; }
-.light #legalInput { color: #0a0a0a !important; -webkit-text-fill-color: #0a0a0a !important; }
-.light #legalInput::placeholder { color: rgba(0,0,0,0.35) !important; -webkit-text-fill-color: rgba(0,0,0,0.35) !important; }
-.light .legal-chip { color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.12) !important; }
-.light .legal-chip:hover { background: rgba(0,0,0,0.04) !important; color: #0a0a0a !important; }
-
-/* Download buttons */
-.light .bg-white.text-black { background: #111 !important; }
-.light .bg-white.text-black * { color: #fff !important; -webkit-text-fill-color: #fff !important; }
-
- 
 </script>
 </div>
 </body>
