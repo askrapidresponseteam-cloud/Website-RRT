@@ -4039,7 +4039,17 @@ async function sendLegalQuestion() {
 document.getElementById('legalInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') sendLegalQuestion();
 });
+function fillLegal(el){
+  const title = el.querySelector('p.text-white');
+  
+  if(title){
+    document.getElementById('legalInput').value = title.innerText.trim();
+  } else {
+    document.getElementById('legalInput').value = el.innerText.trim();
+  }
 
+  document.getElementById('legalInput').focus();
+}
 const _origSetLang = window.setLang;
 window.setLang = function(lang) {
   _origSetLang(lang);
