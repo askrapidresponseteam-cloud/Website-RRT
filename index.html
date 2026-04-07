@@ -293,7 +293,45 @@ html[lang="en"] [data-lang="en"] {
 html[lang="hi"] [data-lang="hi"] {
   display: initial;
 }
-  
+html[lang="hi"] [data-lang="hi"] {
+  display: initial;
+}
+
+#legalChatBox::-webkit-scrollbar{
+  width:6px;
+}
+
+#legalChatBox::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+#legalChatBox::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.12);
+}
+
+#legalChatBox::-webkit-scrollbar-thumb:hover{
+  background:rgba(255,255,255,0.22);
+}
+
+.light #legalChatBox::-webkit-scrollbar-thumb{
+  background:rgba(0,0,0,0.15);
+}
+
+.light #legalChatBox{
+  background:linear-gradient(to bottom,#ffffff 0%,#f7f7f7 100%) !important;
+}
+
+.light .legal-chip{
+  background:#ffffff !important;
+}
+
+.light .legal-chip p.text-white{
+  color:#111111 !important;
+}
+
+.light .legal-chip p.text-white\/40{
+  color:rgba(17,17,17,0.55) !important;
+}
 </style>
 
 </head>
@@ -1992,67 +2030,256 @@ menu
 
 </section>
 <section id="legal" class="px-6 md:px-12 lg:px-20 py-32 md:py-40 border-t border-white/5 bg-black fade-up">
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- HEADER -->
     <div class="text-center mb-16 md:mb-20">
       <span class="text-primary font-bold tracking-cred text-[10px] uppercase block mb-6">
         <span data-lang="en">Legal Assistant</span>
         <span data-lang="hi" class="font-hindi">कानूनी सहायता</span>
       </span>
+
       <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase mb-6">
-        <span data-lang="en">Know Your<br><span class="text-white/30">Rights</span></span>
-        <span data-lang="hi" class="font-hindi">अपने अधिकार<br><span class="text-white/30">जानें</span></span>
+        <span data-lang="en">
+          Know Your<br><span class="text-white/30">Rights</span>
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          अपने अधिकार<br><span class="text-white/30">जानें</span>
+        </span>
       </h2>
+
       <p class="text-white/40 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-        <span data-lang="en">Ask any question about animal welfare law in India. Get answers with exact laws, sections, and steps to take.</span>
-        <span data-lang="hi" class="font-hindi">भारत में पशु कल्याण कानून के बारे में कोई भी सवाल पूछें।</span>
+        <span data-lang="en">
+          Ask any question about animal welfare law in India. Get answers with exact laws, sections, complaint process and next steps.
+        </span>
+        <span data-lang="hi" class="font-hindi">
+          भारत में पशु कल्याण कानून, शिकायत प्रक्रिया और अधिकारों से जुड़े सवाल पूछें।
+        </span>
       </p>
     </div>
-    <div class="max-w-4xl mx-auto mb-10 border border-yellow-500/20 bg-yellow-500/5 p-4 text-center">
-      <p class="text-yellow-400/70 text-xs">
-        <span data-lang="en">⚖️ Legal information only - not a substitute for advice from a qualified lawyer.</span>
-        <span data-lang="hi" class="font-hindi">⚖️ केवल कानूनी जानकारी - किसी योग्य वकील की सलाह का विकल्प नहीं।</span>
-      </p>
-    </div>
-    <div class="max-w-4xl mx-auto mb-8 flex flex-wrap gap-3 justify-center">
-      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
-        <span data-lang="en">ABC centre not functioning. What to do?</span>
-        <span data-lang="hi" class="font-hindi">ABC केंद्र काम नहीं कर रहा। क्या करें?</span>
-      </button>
-      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
-        <span data-lang="en">Dog died after ABC centre released it. What action?</span>
-        <span data-lang="hi" class="font-hindi">ABC केंद्र से छोड़े कुत्ते की मृत्यु हो गई। क्या करें?</span>
-      </button>
-      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
-        <span data-lang="en">Hospital wants to remove dogs I feed. Is this legal?</span>
-        <span data-lang="hi" class="font-hindi">अस्पताल मेरे खिलाए कुत्तों को हटाना चाहता है। क्या यह कानूनी है?</span>
-      </button>
-      <button onclick="fillLegal(this)" class="legal-chip px-4 py-2 border border-white/10 text-xs text-white/60 hover:bg-white/10 hover:text-white transition">
-        <span data-lang="en">I was attacked while feeding dogs. What are my rights?</span>
-        <span data-lang="hi" class="font-hindi">कुत्तों को खाना खिलाते समय मुझ पर हमला हुआ।</span>
-      </button>
-    </div>
-    <div class="max-w-4xl mx-auto">
-      <div id="legalChatBox" class="glass-card p-6 min-h-[300px] max-h-[500px] overflow-y-auto mb-4 space-y-4">
-        <div class="flex gap-3">
-          <div class="w-7 h-7 border border-primary/40 flex items-center justify-center flex-shrink-0 mt-1">
-            <span class="material-symbols-outlined text-primary text-sm">balance</span>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start">
+
+      <!-- LEFT SIDEBAR -->
+      <div class="glass-card border border-white/10 p-6 lg:sticky lg:top-28 overflow-hidden relative">
+
+        <div class="absolute top-0 left-0 w-[2px] h-full bg-primary"></div>
+
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <p class="text-[10px] tracking-cred uppercase text-primary font-bold mb-2">
+              Legal AI
+            </p>
+            <h3 class="text-white text-lg font-bold uppercase tracking-tight">
+              Animal Rights Desk
+            </h3>
           </div>
-          <div class="text-white/60 text-sm leading-relaxed">
-            <span data-lang="en">Hello. I am your Animal Welfare Legal Assistant. Ask me anything about animal welfare laws, ABC centres, or your rights. I will give you exact laws and steps to take.</span>
-            <span data-lang="hi" class="font-hindi">नमस्ते। मैं आपका पशु कल्याण कानूनी सहायक हूँ।</span>
+
+          <div class="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-green-400">
+            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            Active
           </div>
         </div>
-      </div>
-      <div class="flex gap-3">
-        <div class="glass-card flex-1 flex items-center px-5 h-14 border border-white/10">
-          <input id="legalInput" type="text" placeholder="Ask your legal question..."
-            class="w-full bg-transparent text-white placeholder:text-white/25 text-sm border-none outline-none focus:ring-0" />
+
+        <div class="border border-yellow-500/20 bg-yellow-500/5 p-4 mb-6">
+          <p class="text-yellow-400/80 text-xs leading-relaxed">
+            <span data-lang="en">
+              ⚖️ Legal information only. Not a substitute for advice from a qualified lawyer.
+            </span>
+            <span data-lang="hi" class="font-hindi">
+              ⚖️ केवल कानूनी जानकारी। यह किसी योग्य वकील की सलाह का विकल्प नहीं है।
+            </span>
+          </p>
         </div>
-        <button id="legalBtn" onclick="sendLegalQuestion()"
-          class="w-14 h-14 bg-primary flex items-center justify-center hover:bg-red-600 transition flex-shrink-0">
-          <span class="material-symbols-outlined text-white text-xl">send</span>
-        </button>
+
+        <div class="space-y-3 mb-8">
+          <div class="flex items-center gap-3 text-sm text-white/70">
+            <span class="material-symbols-outlined text-primary text-lg">pets</span>
+            <span>Dog Feeding Rights</span>
+          </div>
+
+          <div class="flex items-center gap-3 text-sm text-white/70">
+            <span class="material-symbols-outlined text-primary text-lg">gavel</span>
+            <span>ABC Rules & Complaints</span>
+          </div>
+
+          <div class="flex items-center gap-3 text-sm text-white/70">
+            <span class="material-symbols-outlined text-primary text-lg">warning</span>
+            <span>Cruelty & FIR Sections</span>
+          </div>
+
+          <div class="flex items-center gap-3 text-sm text-white/70">
+            <span class="material-symbols-outlined text-primary text-lg">location_city</span>
+            <span>Hospital & RWA Issues</span>
+          </div>
+
+          <div class="flex items-center gap-3 text-sm text-white/70">
+            <span class="material-symbols-outlined text-primary text-lg">policy</span>
+            <span>Municipal & Police Action</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-[10px] uppercase tracking-cred text-white/30 mb-4">
+            Popular Topics
+          </p>
+
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-2 border border-white/10 text-xs text-white/50">
+              PCA Act
+            </span>
+            <span class="px-3 py-2 border border-white/10 text-xs text-white/50">
+              ABC Rules 2023
+            </span>
+            <span class="px-3 py-2 border border-white/10 text-xs text-white/50">
+              FIR Drafting
+            </span>
+            <span class="px-3 py-2 border border-white/10 text-xs text-white/50">
+              BNS Sections
+            </span>
+          </div>
+        </div>
+
       </div>
+
+      <!-- RIGHT CHAT AREA -->
+      <div class="glass-card border border-white/10 overflow-hidden">
+
+        <!-- CHAT HEADER -->
+        <div class="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-white/[0.02]">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 border border-primary/30 bg-primary/10 flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary">balance</span>
+            </div>
+
+            <div>
+              <h3 class="text-white text-sm font-bold uppercase tracking-[0.25em]">
+                Legal AI Desk
+              </h3>
+              <p class="text-white/40 text-xs mt-1">
+                Animal welfare law • ABC rules • FIR guidance
+              </p>
+            </div>
+          </div>
+
+          <div class="hidden md:flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-green-400">
+            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            AI ACTIVE
+          </div>
+        </div>
+
+        <!-- PROMPT CARDS -->
+        <div class="p-6 border-b border-white/10">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+            <button onclick="fillLegal(this)" class="legal-chip group border border-white/10 bg-white/[0.02] hover:border-primary/30 hover:bg-primary/[0.04] transition-all p-4 text-left">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-lg mt-0.5">pets</span>
+                <div>
+                  <p class="text-white text-sm font-medium">ABC centre not functioning</p>
+                  <p class="text-white/40 text-xs mt-1">Know the complaint process and exact rules.</p>
+                </div>
+              </div>
+            </button>
+
+            <button onclick="fillLegal(this)" class="legal-chip group border border-white/10 bg-white/[0.02] hover:border-primary/30 hover:bg-primary/[0.04] transition-all p-4 text-left">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-lg mt-0.5">warning</span>
+                <div>
+                  <p class="text-white text-sm font-medium">Dog died after ABC release</p>
+                  <p class="text-white/40 text-xs mt-1">Understand liability, FIR and evidence.</p>
+                </div>
+              </div>
+            </button>
+
+            <button onclick="fillLegal(this)" class="legal-chip group border border-white/10 bg-white/[0.02] hover:border-primary/30 hover:bg-primary/[0.04] transition-all p-4 text-left">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-lg mt-0.5">local_hospital</span>
+                <div>
+                  <p class="text-white text-sm font-medium">Hospital removing dogs</p>
+                  <p class="text-white/40 text-xs mt-1">Know your feeding rights and legal remedies.</p>
+                </div>
+              </div>
+            </button>
+
+            <button onclick="fillLegal(this)" class="legal-chip group border border-white/10 bg-white/[0.02] hover:border-primary/30 hover:bg-primary/[0.04] transition-all p-4 text-left">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-lg mt-0.5">gavel</span>
+                <div>
+                  <p class="text-white text-sm font-medium">Attacked while feeding dogs</p>
+                  <p class="text-white/40 text-xs mt-1">Know your police complaint and protection rights.</p>
+                </div>
+              </div>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- CHAT BODY -->
+        <div id="legalChatBox" class="p-6 min-h-[420px] max-h-[520px] overflow-y-auto bg-gradient-to-b from-transparent to-white/[0.01]">
+
+          <!-- WELCOME CARD -->
+          <div class="border border-primary/20 bg-primary/[0.04] p-5 mb-6">
+            <div class="flex gap-4">
+              <div class="w-12 h-12 border border-primary/30 bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-primary">balance</span>
+              </div>
+
+              <div>
+                <h4 class="text-white font-semibold text-base mb-2">
+                  <span data-lang="en">Ask Any Legal Question</span>
+                  <span data-lang="hi" class="font-hindi">कोई भी कानूनी सवाल पूछें</span>
+                </h4>
+
+                <p class="text-white/50 text-sm leading-relaxed mb-4">
+                  <span data-lang="en">
+                    I can help with animal cruelty complaints, ABC centres, dog feeding disputes, police complaints, FIR drafting and municipal issues.
+                  </span>
+                  <span data-lang="hi" class="font-hindi">
+                    मैं पशु क्रूरता, ABC केंद्र, पुलिस शिकायत और अधिकारों से जुड़े सवालों में मदद कर सकता हूँ।
+                  </span>
+                </p>
+
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 border border-white/10 text-[10px] uppercase tracking-wide text-white/50">PCA Act</span>
+                  <span class="px-3 py-1 border border-white/10 text-[10px] uppercase tracking-wide text-white/50">ABC Rules 2023</span>
+                  <span class="px-3 py-1 border border-white/10 text-[10px] uppercase tracking-wide text-white/50">BNS Sections</span>
+                  <span class="px-3 py-1 border border-white/10 text-[10px] uppercase tracking-wide text-white/50">Police Complaints</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- INPUT BAR -->
+        <div class="p-4 border-t border-white/10 bg-white/[0.02]">
+          <div class="glass-card border border-white/10 px-3 py-2 flex items-center gap-3">
+
+            <button class="w-10 h-10 flex items-center justify-center text-white/30 hover:text-white transition">
+              <span class="material-symbols-outlined">attach_file</span>
+            </button>
+
+            <input
+              id="legalInput"
+              type="text"
+              placeholder="Ask your legal question..."
+              class="flex-1 bg-transparent text-white placeholder:text-white/25 text-sm border-none outline-none focus:ring-0"
+            />
+
+            <button
+              id="legalBtn"
+              onclick="sendLegalQuestion()"
+              class="w-12 h-12 bg-primary flex items-center justify-center hover:bg-red-600 transition shadow-[0_0_30px_rgba(255,59,48,0.35)] flex-shrink-0"
+            >
+              <span class="material-symbols-outlined text-white text-xl">north_east</span>
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </section>
