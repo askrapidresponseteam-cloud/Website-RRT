@@ -573,13 +573,9 @@ class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-event
 <!-- MOBILE MENU PANEL -->
 <div id="mobileMenu"
 class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
-<a href="/#problem" class="mobile-link text-white">Need</a>
-<a href="/#solution" class="mobile-link text-white">Solution</a>
 <a href="/#how" class="mobile-link text-white">How it Works</a>
-<a href="/#community" class="mobile-link text-white">Community</a>
 <a href="/#faq" class="mobile-link text-white">FAQ</a>
 <a href="/#legal" class="mobile-link text-white">Legal Desk</a>
-<a href="/#support" class="mobile-link text-white">Support</a>
 <a href="/report" class="mobile-link text-primary font-bold">Report Incident</a>
 <button type="button" id="closeMenu" class="absolute top-8 right-8 text-white">
   <span class="material-symbols-outlined text-3xl">close</span>
@@ -596,10 +592,7 @@ class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full tr
     <h2 class="text-white text-sm font-black tracking-cred uppercase">Rapid Response</h2>
   </a>
   <nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
-    <a class="text-white/40 hover:text-white transition-colors" href="/#problem"><span class="text-[10px] font-bold tracking-cred uppercase">Need</span></a>
-    <a class="text-white/40 hover:text-white transition-colors" href="/#solution"><span class="text-[10px] font-bold tracking-cred uppercase">Solution</span></a>
     <a class="text-white/40 hover:text-white transition-colors" href="/#how"><span class="text-[10px] font-bold tracking-cred uppercase">How it Works</span></a>
-    <a class="text-white/40 hover:text-white transition-colors" href="/#community"><span class="text-[10px] font-bold tracking-cred uppercase">Community</span></a>
     <a class="text-white/40 hover:text-white transition-colors" href="/#faq"><span class="text-[10px] font-bold tracking-cred uppercase">FAQ</span></a>
     <a class="text-white/40 hover:text-white transition-colors" href="/#legal"><span class="text-[10px] font-bold tracking-cred uppercase">Legal Desk</span></a>
     <a class="text-primary border border-primary/40 px-3 py-1 text-[10px] font-bold tracking-cred uppercase hover:bg-primary hover:text-white transition-all" href="/report">Report</a>
@@ -925,50 +918,40 @@ class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full tr
 </div>
 
 <!-- FOOTER -->
-<footer class="bg-black text-white/40 px-6 md:px-12 lg:px-20 py-20 md:py-24 border-t border-white/5" id="support">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 mb-16 md:mb-24">
-      <div class="flex flex-col gap-8">
-        <div class="flex items-center gap-3 text-white">
-          <div class="w-10 h-10 border border-white flex items-center justify-center">
-            <span class="material-symbols-outlined text-primary">pets</span>
-          </div>
-          <h2 class="text-sm font-black tracking-cred uppercase">Rapid Response</h2>
-        </div>
-        <p class="text-sm leading-relaxed font-light max-w-md">
-          <span data-lang="en">A community-driven initiative that connects volunteers so people nearby can coordinate help during animal emergencies.</span>
-          <span data-lang="hi" class="font-hindi">यह एक कम्युनिटी आधारित पहल है जो लोगों को जोड़ती है, ताकि आसपास के लोग मिलकर जानवरों से जुड़ी इमरजेंसी में मदद कर सकें।</span>
-        </p>
-      </div>
-      <div>
-        <h4 class="text-white font-black text-[10px] tracking-cred uppercase mb-8">
-          <span data-lang="en">Support</span>
-          <span data-lang="hi" class="font-hindi">सहायता</span>
-        </h4>
-        <p class="text-sm mb-2">
-          <span data-lang="en">For questions or assistance contact:</span>
-          <span data-lang="hi" class="font-hindi">किसी भी सवाल या मदद के लिए यहाँ संपर्क करें:</span>
-        </p>
-        <a href="mailto:ask@rapid-response.in" class="text-primary font-semibold hover:underline">ask@rapid-response.in</a>
-        <p class="text-xs text-white/30 mt-3">
-          <span data-lang="en">We usually respond within 24-48 hours.</span>
-          <span data-lang="hi" class="font-hindi">हम आमतौर पर 24-48 घंटों के भीतर जवाब देते हैं।</span>
-        </p>
-      </div>
-    </div>
-    <div class="pt-10 md:pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10">
-      <div class="max-w-xl text-center md:text-left">
-        <p class="text-[10px] leading-relaxed text-white/30">
-          <span data-lang="en">This platform is an independent community initiative and is not affiliated with, operated by, or endorsed by any government authority.</span>
-          <span data-lang="hi" class="font-hindi">यह प्लेटफॉर्म एक स्वतंत्र कम्युनिटी पहल है और किसी भी सरकारी संस्था से जुड़ा, चलाया गया या अनुमोदित नहीं है।</span>
-        </p>
-      </div>
-      <p class="text-[10px] font-bold tracking-cred uppercase">© 2026 RapidResponse Labs</p>
-    </div>
+<footer class="px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-white/5" id="support">
+<div class="max-w-5xl mx-auto text-center">
+<div class="flex items-center justify-center gap-3 mb-5">
+  <div class="w-8 h-8 border border-white/10 flex items-center justify-center">
+    <span class="material-symbols-outlined text-primary text-sm">pets</span>
   </div>
+  <h2 class="text-[11px] font-black tracking-cred uppercase text-white">Rapid Response</h2>
+</div>
+<p class="text-white/25 text-sm leading-relaxed max-w-md mx-auto font-light mb-8">
+  <span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span>
+  <span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span>
+</p>
+<div style="background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);" class="inline-flex flex-col items-center px-10 py-6 mb-10">
+  <h4 class="text-white text-[10px] font-bold tracking-cred uppercase mb-2">
+    <span data-lang="en">Support</span>
+    <span data-lang="hi" class="font-hindi tracking-normal text-xs">सहायता</span>
+  </h4>
+  <a href="/cdn-cgi/l/email-protection#0e6f7d654e7c6f7e676a237c6b7d7e61607d6b206760" class="text-primary text-sm font-semibold hover:underline"><span class="__cf_email__" data-cfemail="90f1e3fbd0e2f1e0f9f4bde2f5e3e0fffee3f5bef9fe">[email&#160;protected]</span></a>
+  <p class="text-white/20 text-[10px] mt-1.5">
+    <span data-lang="en">We respond within 24–48 hours.</span>
+    <span data-lang="hi" class="font-hindi">24–48 घंटों में जवाब मिलता है।</span>
+  </p>
+</div>
+<div class="pt-8 border-t border-white/5">
+  <p class="text-[9px] text-white/15 max-w-lg mx-auto leading-relaxed mb-3">
+    <span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span>
+    <span data-lang="hi" class="font-hindi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
+  </p>
+  <p class="text-[9px] font-bold tracking-cred uppercase text-white/15">© 2026 RapidResponse Labs</p>
+</div>
+</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1zcw1EaVAtjCmCCvLnnSqpRcugiVv4JBmo7UO2uJALHEsb833PgMZL6IkPLc4J2kEYA/exec";
 
 /* ═══════════════════════════════════════════
@@ -2317,7 +2300,7 @@ window.addEventListener('scroll',function(){
   var h=document.getElementById('mainHeader');
   if(!h) return;
   if(window.scrollY>10){
-    h.style.background=isLight?'rgba(255,255,255,0.97)':'rgba(0,0,0,0.92)';
+    isLight?'rgba(255,255,255,0.97)':'rgba(0,0,0,0.92)';
     h.style.borderBottom=isLight?'1px solid rgba(0,0,0,0.08)':'1px solid rgba(255,255,255,0.06)';
   } else {
     h.style.background='';
