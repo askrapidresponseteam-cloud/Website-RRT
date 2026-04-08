@@ -1,2312 +1,337 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-tailwind.config={darkMode:"class",theme:{extend:{colors:{primary:"#ff3b30"},fontFamily:{hindi:["Noto Sans Devanagari","sans-serif"]},letterSpacing:{cred:"0.2em"}}}}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NXXTRFLM');</script>
+<!-- End Google Tag Manager -->
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Report an Incident | Rapid Response</title>
+<title>Rapid Response | Animal Emergency Network</title>
+<meta name="description" content="Rapid Response is a community network that connects nearby volunteers when animals need urgent help."/>
+<meta property="og:title" content="Rapid Response | Animal Emergency Network"/>
+<meta property="og:description" content="SOS alerts connecting volunteers during animal emergencies."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V773DF2W0N"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-V773DF2W0N');
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{primary:"#ff3b30",background:"#000000",surface:"#0a0a0a"},fontFamily:{sans:["Inter","system-ui","sans-serif"],mono:["JetBrains Mono","monospace"],hindi:["Noto Sans Devanagari","sans-serif"]},letterSpacing:{cred:"0.2em",tightx:"-0.05em"}}}}
+</script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;font-size:16px;}
-body{background:#000;color:#fff;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;}
-
-/* LAYOUT */
-.max-w{max-width:720px;margin:0 auto;}
-.px{padding-left:24px;padding-right:24px;}
-
+html{scroll-behavior:smooth}
+body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.hero-bg{background:radial-gradient(ellipse 80% 60% at 50% -10%,#111 0%,#000 100%)}
+.cred-gradient-text{background:linear-gradient(180deg,#FFFFFF 0%,rgba(255,255,255,0.4) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.glass-card{background:rgba(255,255,255,0.02);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.06)}
+.premium-card{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);transition:all 0.5s cubic-bezier(0.16,1,0.3,1)}
+.premium-card:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,59,48,0.15);transform:translateY(-2px)}
+.grid-bg{background-size:60px 60px;background-image:linear-gradient(to right,rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.02) 1px,transparent 1px)}
+.phone-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(255,59,48,0.18) 0%,transparent 70%);filter:blur(100px)}
+.font-hindi{line-height:1.7;letter-spacing:0.01em;font-family:"Noto Sans Devanagari",sans-serif}
+.fade-up{opacity:0;transform:translateY(30px);transition:all 0.9s cubic-bezier(0.16,1,0.3,1)}
+.fade-up.show{opacity:1;transform:translateY(0)}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06) 50%,transparent);max-width:900px;margin:0 auto}
+#legalChatBox::-webkit-scrollbar{width:4px}
+#legalChatBox::-webkit-scrollbar-track{background:transparent}
+#legalChatBox::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:4px}
+[data-lang]{display:none !important}
+html[lang="en"] [data-lang="en"]{display:initial !important}
+html[lang="hi"] [data-lang="hi"]{display:initial !important}
+html[lang="en"] span[data-lang="en"],html[lang="en"] p[data-lang="en"],html[lang="en"] div[data-lang="en"]{display:block !important}
+html[lang="hi"] span[data-lang="hi"],html[lang="hi"] p[data-lang="hi"],html[lang="hi"] div[data-lang="hi"]{display:block !important}
+.light body{background:#ffffff;color:#111111}
+/* TEXT — boosted contrast for white bg. Dark-mode white/30 → light-mode needs ~0.65+ to be readable */
+.light .text-white{color:#111111 !important}
+.light .text-white\/90{color:rgba(0,0,0,0.9) !important}
+.light .text-white\/80{color:rgba(0,0,0,0.8) !important}
+.light .text-white\/70{color:rgba(0,0,0,0.72) !important}
+.light .text-white\/60{color:rgba(0,0,0,0.65) !important}
+.light .text-white\/50{color:rgba(0,0,0,0.6) !important}
+.light .text-white\/40{color:rgba(0,0,0,0.55) !important}
+.light .text-white\/35{color:rgba(0,0,0,0.52) !important}
+.light .text-white\/30{color:rgba(0,0,0,0.48) !important}
+.light .text-white\/25{color:rgba(0,0,0,0.42) !important}
+.light .text-white\/20{color:rgba(0,0,0,0.35) !important}
+.light .text-white\/15{color:rgba(0,0,0,0.28) !important}
+.light .text-white\/10{color:rgba(0,0,0,0.15) !important}
+.light .text-white\/8{color:rgba(0,0,0,0.1) !important}
+/* CARDS */
+.light .glass-card{background:#ffffff !important;border:1px solid rgba(0,0,0,0.08) !important;box-shadow:0 1px 10px rgba(0,0,0,0.04)}
+.light .premium-card{background:#f8f8f8 !important;border:1px solid rgba(0,0,0,0.08) !important;box-shadow:0 1px 6px rgba(0,0,0,0.03)}.light .premium-card:hover{background:#f3f3f3 !important;border-color:rgba(255,59,48,0.2) !important}
+/* HERO & GRADIENT TEXT — stronger fade endpoint */
+.light .hero-bg{background:linear-gradient(to bottom,#fafafa,#f2f2f2)}
+.light .cred-gradient-text{background:linear-gradient(180deg,#111111 0%,rgba(0,0,0,0.5) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+/* SECTIONS */
+.light section{background:#ffffff !important}
+.light .section-divider{background:linear-gradient(90deg,transparent,rgba(0,0,0,0.1) 50%,transparent)}
+.light .grid-bg{background-image:linear-gradient(to right,rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,0,0,.04) 1px,transparent 1px)}
 /* HEADER */
-header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
-.header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-box{width:36px;height:36px;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;}
-.logo-text{font-size:12px;font-weight:900;letter-spacing:0.2em;text-transform:uppercase;color:#fff;font-family:"Inter",system-ui,sans-serif;}
-.header-actions{display:flex;align-items:center;gap:12px;}
-.btn-lang{background:none;border:none;color:rgba(255,255,255,0.5);font-size:11px;font-weight:700;letter-spacing:0.1em;cursor:pointer;padding:6px 8px;transition:color 0.2s;}
-.btn-lang:hover,.btn-lang.active{color:#fff;}
-.btn-lang-sep{color:rgba(255,255,255,0.2);font-size:11px;}
-.btn-mode{width:36px;height:36px;border:1px solid rgba(255,255,255,0.15);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
-.btn-mode:hover{background:rgba(255,255,255,0.08);}
-.btn-back{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;padding:8px 12px;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s;}
-.btn-back:hover{color:#fff;border-color:rgba(255,255,255,0.3);}
-
-/* HERO */
-.hero{padding:128px 24px 60px;text-align:center;background:radial-gradient(circle at 50% 0%,#1a1a1a 0%,#000 65%);}
-.hero-tag{font-size:10px;font-weight:700;letter-spacing:0.35em;text-transform:uppercase;color:#ff3b30;display:block;margin-bottom:14px;}
-.hero h1{font-size:clamp(36px,7vw,72px);font-weight:900;letter-spacing:-0.03em;line-height:1.04;text-transform:uppercase;margin-bottom:16px;background:linear-gradient(180deg,#FFFFFF 0%,rgba(255,255,255,0.5) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Inter',system-ui,sans-serif;}
-.hero p{font-size:15px;color:rgba(255,255,255,0.4);max-width:420px;margin:0 auto;line-height:1.65;}
-
-/* FORM SECTION */
-.form-section{padding:48px 24px 80px;}
-.grid-bg-report{background-size:40px 40px;background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);}
-
-/* PROGRESS */
-.prog-wrap{max-width:720px;margin:0 auto 48px;}
-.prog-bar{height:1px;background:rgba(255,255,255,0.07);position:relative;}
-.prog-fill{position:absolute;top:0;left:0;height:100%;background:#ff3b30;transition:width 0.5s cubic-bezier(.4,0,.2,1);}
-
-/* STEPPER */
-.stepper{display:flex;align-items:flex-start;gap:0;margin-bottom:44px;}
-.step-item{display:flex;flex-direction:column;align-items:center;gap:5px;}
-.step-dot{width:32px;height:32px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.25);transition:all 0.3s;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
-.step-dot.active{border-color:#ff3b30;color:#ff3b30;background:rgba(255,59,48,0.1);}
-.step-dot.done{border-color:rgba(255,59,48,0.5);color:#ff3b30;background:rgba(255,59,48,0.08);cursor:pointer;}
-.step-dot.done:hover{background:rgba(255,59,48,0.18);}
-.step-lbl{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.22);font-family:'JetBrains Mono',monospace;white-space:nowrap;}
-.step-lbl.active{color:#ff3b30;}
-.step-line{flex:1;height:1px;background:rgba(255,255,255,0.07);margin-top:16px;transition:background 0.4s;}
-.step-line.done{background:rgba(255,59,48,0.35);}
-
-/* PANEL */
-.panel{display:none;}
-.panel.active{display:block;}
-
-/* TAG PILL */
-.tag-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,59,48,0.35);background:rgba(255,59,48,0.07);padding:5px 12px;font-size:9px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#ff3b30;margin-bottom:18px;font-family:'JetBrains Mono',monospace;}
-.pulse{width:7px;height:7px;background:#ff3b30;border-radius:50%;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
-
-/* PANEL TITLES */
-.panel-title{font-size:clamp(26px,5vw,40px);font-weight:900;letter-spacing:-0.03em;text-transform:uppercase;color:#fff;margin-bottom:10px;}
-.panel-sub{font-size:13px;color:rgba(255,255,255,0.38);margin-bottom:32px;line-height:1.6;}
-
-/* INCIDENT TYPE CHIPS */
-.chip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:28px;}
-.chip{border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);padding:14px 14px 14px 14px;cursor:pointer;transition:all 0.18s;position:relative;display:flex;flex-direction:column;gap:5px;}
-.chip:hover{border-color:rgba(255,255,255,0.16);background:rgba(255,255,255,0.05);}
-.chip.sel{border-color:#ff3b30;background:rgba(255,59,48,0.09);}
-.chip-check{position:absolute;top:10px;right:10px;width:14px;height:14px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:8px;color:transparent;transition:all 0.18s;font-weight:700;}
-.chip.sel .chip-check{border-color:#ff3b30;color:#ff3b30;background:rgba(255,59,48,0.15);}
-.chip-icon{font-size:20px;margin-bottom:2px;line-height:1;}
-.chip-name{font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#fff;line-height:1.3;padding-right:18px;}
-.chip-desc{font-size:11px;color:rgba(255,255,255,0.32);line-height:1.4;}
-.chip.sel .chip-name{color:#ff3b30;}
-
-/* SEVERITY BUTTONS */
-.sev-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
-.sev-btn{border:1px solid rgba(255,255,255,0.1);background:none;padding:10px 18px;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.38);cursor:pointer;transition:all 0.18s;font-family:'JetBrains Mono',monospace;}
-.sev-btn:hover{border-color:rgba(255,255,255,0.25);color:#fff;}
-.sev-btn.s-low.sel{border-color:#34c759;color:#34c759;background:rgba(52,199,89,0.09);}
-.sev-btn.s-med.sel{border-color:#ff9500;color:#ff9500;background:rgba(255,149,0,0.09);}
-.sev-btn.s-high.sel{border-color:#ff6b35;color:#ff6b35;background:rgba(255,107,53,0.09);}
-.sev-btn.s-crit.sel{border-color:#ff3b30;color:#fff;background:#ff3b30;}
-
-/* ANIMAL CHIPS */
-.animal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px;}
-@media(min-width:480px){.animal-grid{grid-template-columns:repeat(6,1fr);}}
-
-/* FORM FIELDS */
-.field{margin-bottom:20px;}
-.label{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.38);display:block;margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
-.input{width:100%;background:rgba(255,255,255,0.03) !important;border:1px solid rgba(255,255,255,0.09) !important;color:#fff;font-family:inherit;font-size:14px;padding:13px 16px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;border-radius:0;}
-.input:focus{border-color:rgba(255,59,48,0.55);outline:none;}
-.input::placeholder{color:rgba(255,255,255,0.22);font-size:13px;}
-select.input{display:none !important;}
-/* CUSTOM DROPDOWN */
-.cust-wrap{position:relative;width:100%;}
-.cust-btn{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);color:#fff;font-family:inherit;font-size:14px;padding:13px 40px 13px 16px;outline:none;cursor:pointer;transition:border-color 0.2s;display:flex;align-items:center;user-select:none;position:relative;min-height:48px;}
-.cust-btn:hover{border-color:rgba(255,255,255,0.16);}
-.cust-btn.open{border-color:rgba(255,59,48,0.55);}
-.cust-val{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;}
-.cust-val.ph{color:rgba(255,255,255,0.22);font-size:13px;}
-.cust-arrow{position:absolute;right:14px;top:50%;transform:translateY(-50%);transition:transform 0.2s;pointer-events:none;line-height:1;font-size:11px;color:rgba(255,255,255,0.35);}
-.cust-btn.open .cust-arrow{transform:translateY(-50%) scaleY(-1);}
-.cust-list{position:absolute;top:calc(100% + 3px);left:0;right:0;background:#161616;border:1px solid rgba(255,255,255,0.12);z-index:9999;max-height:230px;overflow-y:auto;display:none;box-shadow:0 12px 40px rgba(0,0,0,0.75);}
-.cust-list.open{display:block;}
-.cust-opt{padding:11px 16px;font-size:13px;color:rgba(255,255,255,0.7);cursor:pointer;transition:background 0.1s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cust-opt:hover{background:rgba(255,255,255,0.07);color:#fff;}
-.cust-opt.active{color:#ff3b30;background:rgba(255,59,48,0.09);font-weight:600;}
-.cust-opt.disabled{color:rgba(255,255,255,0.22);font-size:12px;cursor:default;padding:9px 16px;}
-.cust-opt.disabled:hover{background:transparent;}
-.cust-list::-webkit-scrollbar{width:3px;}
-.cust-list::-webkit-scrollbar-track{background:transparent;}
-.cust-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);}
-.grid-2{display:grid;grid-template-columns:1fr;gap:0;}
-@media(min-width:480px){.grid-2{grid-template-columns:1fr 1fr;gap:12px;}}
-.char-count{font-size:11px;color:rgba(255,255,255,0.22);text-align:right;margin-top:4px;font-family:'JetBrains Mono',monospace;}
-
-/* GEO BUTTON */
-.geo-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:1px dashed rgba(255,255,255,0.14);background:none;color:rgba(255,255,255,0.38);font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:13px 16px;cursor:pointer;transition:all 0.2s;margin-bottom:16px;font-family:'JetBrains Mono',monospace;}
-.geo-btn:hover{border-color:rgba(255,59,48,0.45);color:#ff3b30;}
-.geo-btn.got{border-style:solid;border-color:rgba(52,199,89,0.5);color:#34c759;background:rgba(52,199,89,0.05);}
-.geo-btn.err{border-style:solid;border-color:rgba(255,59,48,0.45);color:#ff3b30;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spinning{display:inline-block;animation:spin 0.8s linear infinite;}
-
-/* MEDIA / UPLOAD BUTTONS */
-.media-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
-.media-btn{display:flex;align-items:center;gap:8px;border:1px dashed rgba(255,255,255,0.12);background:rgba(255,255,255,0.02);padding:11px 15px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);cursor:pointer;transition:all 0.18s;font-family:'JetBrains Mono',monospace;}
-.media-btn:hover{border-color:rgba(255,255,255,0.22);color:#fff;}
-.media-btn.on{border-style:solid;border-color:rgba(255,59,48,0.5);color:#ff3b30;background:rgba(255,59,48,0.07);}
-.file-list{border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);padding:12px 14px;display:none;}
-.file-item{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
-.file-item:last-child{border-bottom:none;}
-.file-icon{font-size:14px;flex-shrink:0;}
-.file-name{font-size:12px;color:rgba(255,255,255,0.7);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.file-size{font-size:10px;color:rgba(255,255,255,0.28);font-family:'JetBrains Mono',monospace;flex-shrink:0;}
-
-/* DIVIDER */
-.divider{height:1px;background:rgba(255,255,255,0.07);margin:28px 0;}
-
-/* INFO BOX */
-.info-box{border:1px solid rgba(255,200,0,0.15);background:rgba(255,200,0,0.04);padding:14px 16px;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.65;margin-bottom:20px;}
-
-/* ANON TOGGLE */
-.anon-toggle{display:flex;align-items:flex-start;gap:14px;border:1px solid rgba(255,255,255,0.08);padding:16px 18px;background:rgba(255,255,255,0.02);cursor:pointer;transition:all 0.2s;user-select:none;}
-.anon-toggle:hover{border-color:rgba(255,255,255,0.15);}
-.anon-toggle.on{border-color:rgba(255,59,48,0.45);background:rgba(255,59,48,0.06);}
-.tog-track{width:36px;height:20px;border:1px solid rgba(255,255,255,0.18);position:relative;flex-shrink:0;margin-top:2px;transition:border-color 0.3s;}
-.tog-knob{position:absolute;top:2px;left:2px;width:14px;height:14px;background:rgba(255,255,255,0.28);transition:all 0.25s;}
-.anon-toggle.on .tog-track{border-color:#ff3b30;}
-.anon-toggle.on .tog-knob{left:18px;background:#ff3b30;}
-.anon-title{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#fff;margin-bottom:5px;}
-.anon-desc{font-size:12px;color:rgba(255,255,255,0.38);line-height:1.55;}
-.anon-badge{display:none;font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#ff3b30;border:1px solid rgba(255,59,48,0.35);padding:3px 8px;flex-shrink:0;font-family:'JetBrains Mono',monospace;margin-top:2px;}
-
-/* SECTION HEADING */
-.section-title{font-size:16px;font-weight:800;letter-spacing:-0.01em;text-transform:uppercase;color:#fff;margin-bottom:6px;}
-.section-sub{font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:20px;line-height:1.55;}
-
-/* BUTTONS */
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;}
-.btn-primary{height:50px;padding:0 28px;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;background:#ff3b30;color:#fff;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background 0.18s;font-family:'JetBrains Mono',monospace;}
-.btn-primary:hover{background:#d62f24;}
-.btn-primary:active{transform:scale(0.98);}
-.btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
-.btn-secondary{height:50px;padding:0 24px;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;background:none;color:rgba(255,255,255,0.38);border:1px solid rgba(255,255,255,0.12);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.18s;font-family:'JetBrains Mono',monospace;text-decoration:none;}
-.btn-secondary:hover{border-color:rgba(255,255,255,0.3);color:#fff;}
-
-/* SPINNER */
-.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.25);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:none;}
-
-/* REVIEW */
-.review-card{border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);padding:24px;margin-bottom:20px;}
-.rev-row{display:flex;align-items:flex-start;border-bottom:1px solid rgba(255,255,255,0.05);padding:10px 0;gap:14px;}
-.rev-row:last-child{border-bottom:none;}
-.rev-key{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);width:110px;flex-shrink:0;padding-top:2px;font-family:'JetBrains Mono',monospace;}
-.rev-val{font-size:13px;color:rgba(255,255,255,0.82);line-height:1.5;}
-.rev-val.crit{color:#ff3b30;font-weight:700;}
-.rev-val.safe{color:#34c759;}
-
-/* SUCCESS / ERROR */
-.state-icon{width:72px;height:72px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:32px;}
-.state-icon.ok{border:1px solid rgba(52,199,89,0.4);background:rgba(52,199,89,0.08);}
-.state-icon.fail{border:1px solid rgba(255,59,48,0.4);background:rgba(255,59,48,0.08);}
-.ref-id{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.28em;color:rgba(255,255,255,0.24);margin-bottom:28px;}
-
-/* FOOTER */
-footer{border-top:1px solid rgba(255,255,255,0.06);padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
-@media(min-width:640px){footer{flex-direction:row;justify-content:space-between;text-align:left;}}
-.foot-logo{display:flex;align-items:center;gap:10px;}
-.foot-text{font-size:11px;color:rgba(255,255,255,0.18);}
-.foot-link{font-size:10px;color:rgba(255,255,255,0.18);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;transition:color 0.2s;}
-.foot-link:hover{color:rgba(255,255,255,0.5);}
-
-/* LIGHT MODE - Tailwind class overrides (matches index.html exactly) */
-.light .text-white{color:#111111 !important;}
-.light .text-white\/90{color:rgba(17,17,17,0.9) !important;}
-.light .text-white\/80{color:rgba(17,17,17,0.8) !important;}
-.light .text-white\/70{color:rgba(17,17,17,0.72) !important;}
-.light .text-white\/60{color:rgba(17,17,17,0.62) !important;}
-.light .text-white\/50{color:rgba(17,17,17,0.55) !important;}
-.light .text-white\/40{color:rgba(17,17,17,0.45) !important;}
-.light .text-white\/30{color:rgba(17,17,17,0.32) !important;}
-.light .text-white\/20{color:rgba(17,17,17,0.2) !important;}
-.light #mainHeader{background:rgba(255,255,255,0.97)!important;border-bottom:1px solid rgba(0,0,0,0.08)!important;}
-.light [class*="bg-black"]:not(#mobileMenu):not(#mobileMenuOverlay):not(.bg-primary){background:#ffffff !important;}
-.light [class*="bg-white\/5"]{background:rgba(0,0,0,0.02) !important;}
-.light [class*="border-white"]{border-color:rgba(0,0,0,0.1) !important;}
-.light #mobileMenu{background:#ffffff !important;}
-.light .mobile-link{color:#0a0a0a !important;}
-.light .font-hindi{color:inherit;}
-.light footer{border-top-color:rgba(0,0,0,0.07)!important;background:#f8f8f8!important;}
-.light footer .text-white\/40{color:rgba(0,0,0,0.4)!important;}
-.light footer .text-white\/30{color:rgba(0,0,0,0.3)!important;}
-.light footer a.text-primary{color:#ff3b30!important;}
-.light footer h2{color:#0a0a0a!important;}
-
-/* LIGHT MODE - full contrast-safe */
-body.light{background:#f2f2f2;color:#0a0a0a;}
-/* header */
-body.light header{background:rgba(255,255,255,0.97);border-bottom:1px solid rgba(0,0,0,0.08);}
-body.light #mainHeader{background:rgba(255,255,255,0.97)!important;border-bottom:1px solid rgba(0,0,0,0.08)!important;}
-body.light .mobile-link{color:#0a0a0a!important;}
-body.light #mobileMenu{background:#ffffff!important;}
-body.light .logo-text{color:#0a0a0a;}
-body.light .logo-box{border-color:rgba(0,0,0,0.14);color:#ff3b30;}
-body.light .btn-mode{border-color:rgba(0,0,0,0.14);background:#fff;}
-body.light .btn-lang{color:rgba(0,0,0,0.5);}
-body.light .btn-lang:hover,body.light .btn-lang.active{color:#0a0a0a;}
-body.light .btn-lang-sep{color:rgba(0,0,0,0.22);}
-body.light .btn-back{border-color:rgba(0,0,0,0.14);color:rgba(0,0,0,0.5);}
-body.light .btn-back:hover{color:#0a0a0a;border-color:rgba(0,0,0,0.3);}
-/* hero */
-body.light .hero{background:radial-gradient(circle at 50% 0%,#e0e0e0 0%,#f2f2f2 65%);}
-body.light .hero h1{background:linear-gradient(180deg,#111 0%,rgba(17,17,17,0.5) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-body.light .hero p{color:rgba(0,0,0,0.55);}
-body.light .hero-tag{color:#ff3b30;}
-/* progress + stepper */
-body.light .prog-bar{background:rgba(0,0,0,0.1);}
-body.light .step-dot{border-color:rgba(0,0,0,0.15);color:rgba(0,0,0,0.35);background:#fff;}
-body.light .step-dot.active{border-color:#ff3b30;color:#ff3b30;background:rgba(255,59,48,0.07);}
-body.light .step-dot.done{border-color:rgba(255,59,48,0.5);color:#ff3b30;background:rgba(255,59,48,0.07);}
-body.light .step-line{background:rgba(0,0,0,0.1);}
-body.light .step-line.done{background:rgba(255,59,48,0.35);}
-body.light .step-lbl{color:rgba(0,0,0,0.35);}
-body.light .step-lbl.active{color:#ff3b30;}
-/* form section */
-body.light .form-section{background:#f2f2f2;}
-/* tag pill */
-body.light .tag-pill{border-color:rgba(255,59,48,0.4);background:rgba(255,59,48,0.07);color:#cc2a20;}
-body.light .pulse{background:#cc2a20;}
-/* panel titles */
-body.light .panel-title{color:#0a0a0a;}
-body.light .panel-sub{color:rgba(0,0,0,0.52);}
-/* chips - type + animal (including dynamically injected) */
-body.light .chip{border-color:rgba(0,0,0,0.11);background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
-body.light .chip:hover{border-color:rgba(0,0,0,0.22);background:#fafafa;}
-body.light .chip.sel{border-color:#ff3b30;background:rgba(255,59,48,0.06);}
-body.light .chip-check{border-color:rgba(0,0,0,0.14);color:transparent;}
-body.light .chip.sel .chip-check{border-color:#ff3b30;color:#ff3b30;background:rgba(255,59,48,0.1);}
-body.light .chip-name{color:#0a0a0a;}
-body.light .chip.sel .chip-name{color:#cc2a20;}
-body.light .chip-desc{color:rgba(0,0,0,0.5);}
-/* severity buttons */
-body.light .sev-btn{border-color:rgba(0,0,0,0.13);color:rgba(0,0,0,0.5);background:#fff;}
-body.light .sev-btn:hover{border-color:rgba(0,0,0,0.25);color:#0a0a0a;}
-/* all inputs, selects, textareas - including dynamic ones */
-body.light .input{background:#fff !important;border-color:rgba(0,0,0,0.13) !important;color:#0a0a0a;box-shadow:0 1px 2px rgba(0,0,0,0.04);}
-body.light .input:focus{border-color:rgba(255,59,48,0.6);box-shadow:0 0 0 3px rgba(255,59,48,0.08);}
-body.light .input::placeholder{color:rgba(0,0,0,0.32);}
-body.light .cust-btn{background:#fff;border-color:rgba(0,0,0,0.13);color:#0a0a0a;box-shadow:0 1px 2px rgba(0,0,0,0.05);}
-body.light .cust-btn:hover{border-color:rgba(0,0,0,0.22);}
-body.light .cust-btn.open{border-color:rgba(255,59,48,0.55);}
-body.light .cust-val.ph{color:rgba(0,0,0,0.32);}
-body.light .cust-arrow{color:rgba(0,0,0,0.4);}
-body.light .cust-list{background:#fff;border-color:rgba(0,0,0,0.12);box-shadow:0 12px 40px rgba(0,0,0,0.12);}
-body.light .cust-opt{color:rgba(0,0,0,0.7);}
-body.light .cust-opt:hover{background:rgba(0,0,0,0.04);color:#0a0a0a;}
-body.light .cust-opt.active{color:#cc2a20;background:rgba(255,59,48,0.06);}
-body.light .cust-opt.disabled{color:rgba(0,0,0,0.28);}
-body.light .label{color:rgba(0,0,0,0.52);}
-body.light .char-count{color:rgba(0,0,0,0.35);}
-/* dynamic fields injected by JS */
-body.light #dynamicStep2 .input,
-body.light #dynamicStep4 .input{background:#fff;border-color:rgba(0,0,0,0.13);color:#0a0a0a;}
-body.light #dynamicStep2 .label,
-body.light #dynamicStep4 .label{color:rgba(0,0,0,0.52);}
-body.light #dynamicStep2 .chip,
-body.light #dynamicStep4 .chip{border-color:rgba(0,0,0,0.11);background:#fff;}
-body.light #dynamicStep2 .chip.sel,
-body.light #dynamicStep4 .chip.sel{border-color:#ff3b30;background:rgba(255,59,48,0.06);}
-body.light #dynamicStep2 .chip-name{color:#0a0a0a;}
-body.light #dynamicStep2 .chip.sel .chip-name{color:#cc2a20;}
-/* geo button */
-body.light .geo-btn{border-color:rgba(0,0,0,0.16);color:rgba(0,0,0,0.52);background:#fff;}
-body.light .geo-btn:hover{border-color:rgba(255,59,48,0.5);color:#cc2a20;}
-body.light .geo-btn.got{border-color:rgba(52,199,89,0.6);color:#1a7a35;background:rgba(52,199,89,0.06);}
-body.light .geo-btn.err{border-color:rgba(255,59,48,0.5);color:#cc2a20;background:rgba(255,59,48,0.04);}
-/* info box */
-body.light .info-box{border-color:rgba(180,130,0,0.2);background:#fffbf0;color:rgba(0,0,0,0.6);}
-/* media / upload buttons */
-body.light .media-btn{border-color:rgba(0,0,0,0.14);background:#fff;color:rgba(0,0,0,0.5);box-shadow:0 1px 2px rgba(0,0,0,0.05);}
-body.light .media-btn:hover{border-color:rgba(0,0,0,0.26);color:#0a0a0a;}
-body.light .media-btn.on{border-color:rgba(255,59,48,0.55);color:#cc2a20;background:rgba(255,59,48,0.06);}
-/* file list */
-body.light .file-list{border-color:rgba(0,0,0,0.1);background:#fff;}
-body.light .file-item{border-bottom-color:rgba(0,0,0,0.06);}
-body.light .file-name{color:rgba(0,0,0,0.75);}
-body.light .file-size{color:rgba(0,0,0,0.4);}
-/* divider */
-body.light .divider{background:rgba(0,0,0,0.09);}
-/* section headings */
-body.light .section-title{color:#0a0a0a;}
-body.light .section-sub{color:rgba(0,0,0,0.52);}
-/* anon toggle */
-body.light .anon-toggle{border-color:rgba(0,0,0,0.11);background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
-body.light .anon-toggle:hover{border-color:rgba(0,0,0,0.2);}
-body.light .anon-toggle.on{border-color:rgba(255,59,48,0.5);background:rgba(255,59,48,0.04);}
-body.light .anon-title{color:#0a0a0a;}
-body.light .anon-desc{color:rgba(0,0,0,0.52);}
-body.light .anon-badge{color:#cc2a20;border-color:rgba(255,59,48,0.4);}
-body.light .tog-track{border-color:rgba(0,0,0,0.2);background:#ececec;}
-body.light .tog-knob{background:rgba(0,0,0,0.3);}
-body.light .anon-toggle.on .tog-track{border-color:#ff3b30;background:rgba(255,59,48,0.05);}
-body.light .anon-toggle.on .tog-knob{background:#ff3b30;}
-/* buttons */
-body.light .btn-secondary{border-color:rgba(0,0,0,0.16);color:rgba(0,0,0,0.55);background:#fff;}
-body.light .btn-secondary:hover{border-color:rgba(0,0,0,0.3);color:#0a0a0a;}
-/* review card */
-body.light .review-card{border-color:rgba(0,0,0,0.1);background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-body.light .rev-row{border-bottom-color:rgba(0,0,0,0.07);}
-body.light .rev-key{color:rgba(0,0,0,0.42);}
-body.light .rev-val{color:rgba(0,0,0,0.85);}
-body.light .rev-val.crit{color:#cc2a20;}
-body.light .rev-val.safe{color:#1a7a35;}
-/* success / error */
-body.light .state-icon.ok{border-color:rgba(52,199,89,0.5);background:rgba(52,199,89,0.08);}
-body.light .state-icon.fail{border-color:rgba(255,59,48,0.5);background:rgba(255,59,48,0.07);}
-body.light #panelSuccess p,body.light #panelError p{color:rgba(0,0,0,0.52);}
-body.light .panel-title{color:#0a0a0a;}
-body.light .ref-id{color:rgba(0,0,0,0.35);}
-/* footer */
-body.light footer{border-top-color:rgba(0,0,0,0.07)!important;background:#f8f8f8!important;}
-body.light footer .text-white{color:#0a0a0a!important;}
-body.light footer a.text-primary{color:#ff3b30!important;}
-body.light .foot-text{color:rgba(0,0,0,0.42);}
-body.light .foot-link{color:rgba(0,0,0,0.35);}
-body.light .foot-link:hover{color:rgba(0,0,0,0.7);}
-/* scrollbar in light */
-body.light ::-webkit-scrollbar{width:6px;}
-body.light ::-webkit-scrollbar-track{background:transparent;}
-body.light ::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);}
-
-
-[data-lang]{display:none !important;}
-html[lang="en"] [data-lang="en"]{display:initial !important;}
-html[lang="hi"] [data-lang="hi"]{display:initial !important;}
-
-/* MOBILE */
-html,body{overflow-x:hidden;}
-.hero{padding:110px 16px 48px;}
-.hero h1{font-size:clamp(2rem,9vw,5.5rem);}
-.hero p{font-size:14px;}
-.form-inner{padding:0 16px;}
-.panel-title{font-size:clamp(1.4rem,7vw,3rem);}
-.type-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
-@media(min-width:640px){.type-grid{grid-template-columns:repeat(3,1fr);}}
-.animal-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
-@media(min-width:480px){.animal-grid{grid-template-columns:repeat(6,1fr);}}
-.sev-btn{padding:10px 12px;font-size:10px;}
-.input{font-size:16px;}
-.grid-2{grid-template-columns:1fr;}
-@media(min-width:480px){.grid-2{grid-template-columns:1fr 1fr;gap:12px;}}
-.btn-primary,.btn-secondary{font-size:10px;}
-.rev-row{flex-direction:column;gap:4px;}
-@media(min-width:500px){.rev-row{flex-direction:row;gap:16px;}.rev-key{width:120px;}}
-.panel-title,.panel-sub,.rev-val,.anon-desc,.chip-desc,.info-box{overflow-wrap:break-word;word-break:break-word;}
-footer{padding:40px 16px;}
-
-/* ═══════════════════════════════════════════
-   INPUT / DROPDOWN VISIBILITY — DARK + LIGHT
-   ═══════════════════════════════════════════ */
-
-/* DARK MODE — all text inputs, textareas, selects, custom dropdowns */
-.input,
-textarea.input,
-input.input,
-.cust-btn,
-.cust-val,
-.cust-opt,
-select,
-option {
-  color: #ffffff;
-  caret-color: #ffffff;
-}
-.input::placeholder,
-textarea.input::placeholder {
-  color: rgba(255,255,255,0.32);
-}
-.input:focus,
-textarea.input:focus {
-  color: #ffffff;
-}
-/* Autofill — prevent white-on-white chrome override */
-.input:-webkit-autofill,
-.input:-webkit-autofill:hover,
-.input:-webkit-autofill:focus,
-textarea.input:-webkit-autofill,
-select:-webkit-autofill {
-  -webkit-text-fill-color: #ffffff !important;
-  transition: background-color 9999s ease-in-out 0s;
-  box-shadow: 0 0 0px 1000px rgba(255,255,255,0.03) inset !important;
-}
-/* Custom dropdown placeholder vs selected */
-.cust-val.ph { color: rgba(255,255,255,0.32); }
-.cust-val:not(.ph) { color: #ffffff; }
-
-/* Dynamic injected fields in step2/step4 */
-#dynamicStep2 .input,
-#dynamicStep2 textarea.input,
-#dynamicStep4 .input,
-#dynamicStep4 textarea.input,
-#dynamicStep2 .cust-btn,
-#dynamicStep4 .cust-btn,
-#dynamicStep2 .cust-val,
-#dynamicStep4 .cust-val,
-#dynamicStep2 .cust-opt,
-#dynamicStep4 .cust-opt {
-  color: #ffffff;
-  caret-color: #ffffff;
-}
-#dynamicStep2 .cust-val.ph,
-#dynamicStep4 .cust-val.ph { color: rgba(255,255,255,0.32); }
-#dynamicStep2 .cust-val:not(.ph),
-#dynamicStep4 .cust-val:not(.ph) { color: #ffffff; }
-
-/* Review values + file names */
-.rev-val { color: rgba(255,255,255,0.85); }
-.file-name { color: rgba(255,255,255,0.82); }
-
-/* Selection highlight */
-::selection { background: rgba(255,59,48,0.35); color: #fff; }
-
-/* ── LIGHT MODE OVERRIDES ── */
-body.light .input,
-body.light textarea.input,
-body.light input.input,
-body.light .cust-btn,
-body.light .cust-val,
-body.light .cust-opt,
-body.light select,
-body.light option {
-  color: #0a0a0a !important;
-  caret-color: #0a0a0a !important;
-}
-body.light .input::placeholder,
-body.light textarea.input::placeholder {
-  color: rgba(0,0,0,0.38) !important;
-}
-body.light .input:focus,
-body.light textarea.input:focus {
-  color: #0a0a0a !important;
-}
-body.light .input:-webkit-autofill,
-body.light .input:-webkit-autofill:hover,
-body.light .input:-webkit-autofill:focus,
-body.light textarea.input:-webkit-autofill,
-body.light select:-webkit-autofill {
-  -webkit-text-fill-color: #0a0a0a !important;
-  box-shadow: 0 0 0px 1000px #ffffff inset !important;
-}
-body.light .cust-val.ph { color: rgba(0,0,0,0.38) !important; }
-body.light .cust-val:not(.ph) { color: #0a0a0a !important; }
-body.light #dynamicStep2 .input,
-body.light #dynamicStep2 textarea.input,
-body.light #dynamicStep4 .input,
-body.light #dynamicStep4 textarea.input,
-body.light #dynamicStep2 .cust-btn,
-body.light #dynamicStep4 .cust-btn,
-body.light #dynamicStep2 .cust-val,
-body.light #dynamicStep4 .cust-val,
-body.light #dynamicStep2 .cust-opt,
-body.light #dynamicStep4 .cust-opt {
-  color: #0a0a0a !important;
-  caret-color: #0a0a0a !important;
-}
-body.light #dynamicStep2 .cust-val.ph,
-body.light #dynamicStep4 .cust-val.ph { color: rgba(0,0,0,0.38) !important; }
-body.light #dynamicStep2 .cust-val:not(.ph),
-body.light #dynamicStep4 .cust-val:not(.ph) { color: #0a0a0a !important; }
-body.light .rev-val { color: rgba(0,0,0,0.88) !important; }
-body.light .rev-val.crit { color: #cc2a20 !important; }
-body.light .rev-val.safe { color: #1a7a35 !important; }
-body.light .file-name { color: rgba(0,0,0,0.78) !important; }
-body.light ::selection { background: rgba(255,59,48,0.2); color: #0a0a0a; }
-
-/* ═══ TAILWIND FORMS PLUGIN OVERRIDE ═══ */
-[type='text'],[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],select,textarea{
-  background-color:transparent !important;
-  padding:13px 16px !important;
-  font-size:inherit !important;
-  line-height:1.5 !important;
-  border-radius:0 !important;
-}
-body.light [type='text'],body.light [type='email'],body.light [type='url'],body.light [type='password'],body.light [type='number'],body.light [type='date'],body.light [type='datetime-local'],body.light [type='month'],body.light [type='search'],body.light [type='tel'],body.light [type='time'],body.light [type='week'],body.light textarea{
-  background-color:#ffffff !important;
-  border-color:rgba(0,0,0,0.13) !important;
-}
-
-/* ═══ TOAST NOTIFICATION ═══ */
-.toast-container{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;width:92%;max-width:440px;}
-.toast{pointer-events:auto;display:flex;align-items:center;gap:10px;padding:14px 18px;font-size:13px;font-weight:600;line-height:1.45;border:1px solid;animation:toastIn 0.35s ease-out,toastOut 0.3s 3.2s ease-in forwards;font-family:'Inter',system-ui,sans-serif;}
-.toast-error{background:rgba(255,59,48,0.12);border-color:rgba(255,59,48,0.4);color:#ff6b5e;}
-.toast-success{background:rgba(52,199,89,0.12);border-color:rgba(52,199,89,0.4);color:#5cd97f;}
-.toast-warn{background:rgba(255,200,0,0.12);border-color:rgba(255,200,0,0.35);color:#e8c44a;}
-.toast-icon{font-size:16px;flex-shrink:0;line-height:1;}
-body.light .toast-error{background:rgba(255,59,48,0.08);color:#cc2a20;}
-body.light .toast-success{background:rgba(52,199,89,0.08);color:#1a7a35;}
-body.light .toast-warn{background:rgba(180,130,0,0.08);color:#8a6d00;}
-@keyframes toastIn{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
-@keyframes toastOut{from{opacity:1;}to{opacity:0;transform:translateY(-8px);}}
-
-/* ═══ HONEYPOT — invisible to humans ═══ */
-.hp-field{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;tab-index:-1;}
-
-/* ═══ EMAIL CONFIRM MODAL ═══ */
-.modal-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.2s ease-out;}
-.modal-box{background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);width:100%;max-width:400px;padding:28px 24px 22px;animation:modalIn 0.25s ease-out;}
-.modal-title{font-size:14px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#fff;margin-bottom:8px;font-family:'Inter',system-ui,sans-serif;}
-.modal-email{font-size:20px;font-weight:700;color:#ff3b30;word-break:break-all;margin:14px 0 18px;line-height:1.35;font-family:'JetBrains Mono',monospace;}
-.modal-hint{font-size:12px;color:rgba(255,255,255,0.38);margin-bottom:20px;line-height:1.5;}
-.modal-btns{display:flex;gap:10px;}
-.modal-btn{flex:1;height:44px;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'JetBrains Mono',monospace;transition:all 0.15s;}
-.modal-btn-confirm{background:#ff3b30;color:#fff;}
-.modal-btn-confirm:hover{background:#d62f24;}
-.modal-btn-edit{background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);}
-.modal-btn-edit:hover{border-color:rgba(255,255,255,0.3);color:#fff;}
-body.light .modal-box{background:#fff;border-color:rgba(0,0,0,0.12);box-shadow:0 20px 60px rgba(0,0,0,0.2);}
-body.light .modal-title{color:#0a0a0a;}
-body.light .modal-email{color:#cc2a20;}
-body.light .modal-hint{color:rgba(0,0,0,0.45);}
-body.light .modal-btn-edit{border-color:rgba(0,0,0,0.15);color:rgba(0,0,0,0.5);}
-body.light .modal-btn-edit:hover{border-color:rgba(0,0,0,0.3);color:#0a0a0a;}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-
+.light #mainHeader{background:rgba(255,255,255,0.97) !important;border-bottom:1px solid rgba(0,0,0,0.08) !important}
+/* STATUS COLORS — ensure visible on white */
+.light .text-primary{color:#e5342a !important}
+.light .text-green-500{color:#15803d !important}
+.light .text-green-400{color:#16a34a !important}
+.light .text-red-500{color:#dc2626 !important}
+/* BORDERS — more visible on white */
+.light [class*="border-white"]{border-color:rgba(0,0,0,0.1) !important}
+.light [class*="bg-white\/"]{background:rgba(0,0,0,0.025) !important}
+/* FOOTER & MOBILE */
+.light footer{background:#f9f9f9 !important}
+.light #mobileMenu{background:#ffffff !important}
+.light .mobile-link{color:#111111 !important}
+/* FAQ */
+.light .faq-chip{color:#444 !important;border-color:rgba(0,0,0,0.15) !important}
+.light .faq-chip:hover{background:rgba(0,0,0,0.05) !important;color:#111 !important}
+/* LEGAL */
+.light #legalChatBox{background:linear-gradient(to bottom,#ffffff,#f7f7f7) !important}
+.light #legalInput{color:#111111 !important}
+.light .legal-chip{background:#f9f9f9 !important;border-color:rgba(0,0,0,0.1) !important}
+.light .legal-chip p.text-white{color:#111111 !important}
+.light .legal-chip p.text-white\/40{color:rgba(0,0,0,0.55) !important}
+.light .legal-chip p.text-white\/25{color:rgba(0,0,0,0.45) !important}
+/* INPUTS */
+.light input,.light textarea{color:#111111 !important}
+.light input::placeholder,.light textarea::placeholder{color:rgba(0,0,0,0.4) !important}
+/* PHONE GLOW — softer in light mode */
+.light .phone-glow{background:radial-gradient(circle,rgba(255,59,48,0.08) 0%,transparent 70%) !important}
+/* DOWNLOAD BUTTONS — invert for light mode */
+.light .bg-white.text-black{background:#111111 !important;color:#ffffff !important}
+.light .bg-white.text-black:hover{filter:invert(0) !important;background:#333 !important}
+.light .bg-white.text-black .bg-black\/20{background:rgba(255,255,255,0.2) !important}
+/* HEADER SCROLL BG */
+.light .bg-black\/80{background:rgba(255,255,255,0.95) !important}
 </style>
 </head>
-<body>
-<div class="toast-container" id="toastBox"></div>
+<body class="font-sans">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXXTRFLM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>
+function updateFaqPlaceholder(lang){var f=document.getElementById("faqSearch");if(!f)return;f.placeholder=lang==="hi"?"कोई शब्द लिखकर जवाब खोजें...":"Search by keyword...";}
+function setLang(lang){document.documentElement.lang=lang;updateFaqPlaceholder(lang);}
+document.addEventListener("DOMContentLoaded",function(){setLang('en');});
+</script>
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
 
-<!-- MOBILE MENU OVERLAY -->
-<div id="mobileMenuOverlay"
-class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
-
-<!-- MOBILE MENU PANEL -->
-<div id="mobileMenu"
-class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
-<a href="/#how" class="mobile-link text-white">How it Works</a>
-<a href="/#faq" class="mobile-link text-white">FAQ</a>
-<a href="/#legal" class="mobile-link text-white">Legal Desk</a>
-<a href="/report" class="mobile-link text-primary font-bold">Report Incident</a>
-<button type="button" id="closeMenu" class="absolute top-8 right-8 text-white">
-  <span class="material-symbols-outlined text-3xl">close</span>
-</button>
+<!-- MOBILE MENU -->
+<div id="mobileMenuOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+<div id="mobileMenu" class="fixed top-0 right-0 h-full w-[300px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
+<a href="#how" class="mobile-link text-white">How it Works</a><a href="#clarity" class="mobile-link text-white">Clarity</a><a href="#faq" class="mobile-link text-white">FAQ</a><a href="#legal" class="mobile-link text-white">Legal Desk</a><a href="#support" class="mobile-link text-white">Support</a><a href="/report" class="mobile-link text-primary font-bold">Report Incident</a>
+<button id="closeMenu" class="absolute top-8 right-8 text-white"><span class="material-symbols-outlined text-3xl">close</span></button>
 </div>
 
 <!-- HEADER -->
-<header id="mainHeader" class="fixed top-0 left-0 right-0 z-[100] bg-black/40 backdrop-blur-xl transition-all duration-300">
-<div class="relative max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 py-6 flex items-center justify-between">
-  <a href="/" class="flex items-center gap-3" style="text-decoration:none;">
-    <div class="w-9 h-9 border border-white/20 flex items-center justify-center">
-      <span class="material-symbols-outlined text-primary">pets</span>
-    </div>
-    <h2 class="text-white text-sm font-black tracking-cred uppercase">Rapid Response</h2>
-  </a>
-  <nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
-    <a class="text-white/40 hover:text-white transition-colors" href="/#how"><span class="text-[10px] font-bold tracking-cred uppercase">How it Works</span></a>
-    <a class="text-white/40 hover:text-white transition-colors" href="/#faq"><span class="text-[10px] font-bold tracking-cred uppercase">FAQ</span></a>
-    <a class="text-white/40 hover:text-white transition-colors" href="/#legal"><span class="text-[10px] font-bold tracking-cred uppercase">Legal Desk</span></a>
-    <a class="text-primary border border-primary/40 px-3 py-1 text-[10px] font-bold tracking-cred uppercase hover:bg-primary hover:text-white transition-all" href="/report">Report</a>
-  </nav>
-  <div class="flex items-center gap-4 text-xs font-bold">
-    <button type="button" onclick="toggleMode()" id="modeBtn" class="w-10 h-10 border border-white/20 flex items-center justify-center text-lg hover:bg-white/10 transition mr-2">🌙</button>
-    <button type="button" onclick="setLang('en')" id="btnEN" class="text-white/70 hover:text-white">EN</button>
-    <span class="text-white/30">|</span>
-    <button type="button" onclick="setLang('hi')" id="btnHI" class="text-white/70 hover:text-white font-hindi">हिंदी</button>
-    <button type="button" id="mobileMenuBtn" class="lg:hidden text-white ml-2 relative w-8 h-8 flex items-center justify-center">
-      <span class="material-symbols-outlined text-2xl transition-all duration-300">menu</span>
-    </button>
-  </div>
+<header id="mainHeader" class="fixed top-0 left-0 right-0 z-[100] backdrop-blur-2xl transition-all duration-500">
+<div class="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 py-5 flex items-center justify-between">
+<div class="flex items-center gap-3"><div class="w-8 h-8 border border-white/15 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-lg">pets</span></div><h2 class="text-white text-[11px] font-black tracking-cred uppercase">Rapid Response</h2></div>
+<nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
+<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कैसे चलता है</span></a>
+<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="#faq"><span data-lang="en">FAQ</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">सवाल-जवाब</span></a>
+<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कानूनी मदद</span></a>
+<a class="text-primary hover:text-white transition-colors border border-primary/30 px-4 py-1.5 hover:bg-primary text-[10px] font-bold tracking-cred uppercase" href="/report"><span data-lang="en">Report</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">रिपोर्ट</span></a>
+</nav>
+<div class="flex items-center gap-4 text-xs font-bold">
+<button onclick="toggleMode()" id="modeBtn" class="w-9 h-9 border border-white/10 flex items-center justify-center text-sm hover:bg-white/5 transition">☀️</button>
+<button onclick="setLang('en')" class="text-white/50 hover:text-white text-[10px] tracking-wider">EN</button><span class="text-white/15">|</span><button onclick="setLang('hi')" class="text-white/50 hover:text-white font-hindi text-xs">हिंदी</button>
+<button id="mobileMenuBtn" class="lg:hidden text-white ml-2"><span class="material-symbols-outlined text-2xl">menu</span></button>
+</div>
 </div>
 </header>
 
-
-<!-- HERO -->
-<div class="hero grid-bg-report">
-  <span class="hero-tag" id="heroTag">Animal Emergency Network</span>
-  <h1 id="heroTitle">Report an<br/><span style="color:rgba(255,255,255,0.18);font-style:italic;">Incident</span></h1>
-  <p id="heroSub">Your report reaches our team directly. Your identity is protected and handled with care.</p>
+<!-- ══════ HERO ══════ -->
+<section class="hero-bg relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-24 text-center fade-up">
+<div class="absolute inset-0 grid-bg opacity-30"></div>
+<div class="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
+<span class="text-primary/80 font-mono tracking-[0.5em] text-[9px] uppercase mb-10 block"><span data-lang="en">Animal Emergency Network</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">जानवरों का आपातकालीन नेटवर्क</span></span>
+<h1 class="cred-gradient-text mb-8"><span data-lang="en" class="block text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-black tracking-tight leading-[0.95] uppercase">Help. When<br/>Seconds<br/><span class="text-white/20 italic">Matter.</span></span><span data-lang="hi" class="font-hindi block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1]">मदद। जब<br/>हर सेकंड<br/><span class="text-white/20 italic">बहुत मायने रखता है।</span></span></h1>
+<p class="text-white/35 text-base md:text-lg mx-auto mb-14 font-light max-w-lg leading-relaxed"><span data-lang="en">One tap connects you to nearby volunteers<br class="hidden sm:block"/> when an animal needs urgent help.</span><span data-lang="hi" class="font-hindi">एक टैप से आसपास के लोगों तक मदद की गुहार पहुँचती है।</span></p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+<a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" class="w-52 bg-white text-black h-12 flex items-center justify-center gap-3 font-black text-[10px] tracking-cred uppercase hover:invert transition-all"><img loading="lazy" src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000" class="w-4 h-4"/><span class="w-px h-3.5 bg-black/20"></span><span data-lang="en">Android</span><span data-lang="hi" class="font-hindi">एंड्रॉयड</span></a>
+<a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" class="w-52 bg-white text-black h-12 flex items-center justify-center gap-3 font-black text-[10px] tracking-cred uppercase hover:invert transition-all"><img loading="lazy" src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000" class="w-4 h-4"/><span class="w-px h-3.5 bg-black/20"></span><span data-lang="en">iPhone</span><span data-lang="hi" class="font-hindi">आईफोन</span></a>
 </div>
+<a href="/report" class="inline-flex items-center gap-2 text-primary/70 hover:text-primary text-[10px] font-bold tracking-cred uppercase transition-colors mb-16"><span class="material-symbols-outlined text-xs">report</span><span data-lang="en">Report Incident</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">घटना रिपोर्ट करें</span></a>
 
-<!-- FORM -->
-<div class="form-section">
-  <div class="max-w">
-
-    <!-- PROGRESS -->
-    <div class="prog-bar" style="margin-bottom:40px;"><div class="prog-fill" id="progFill" style="width:20%"></div></div>
-
-    <!-- STEPPER -->
-    <div class="stepper" id="stepper">
-      <div class="step-item">
-        <div class="step-dot active" id="sd1" onclick="stepClick(1)">1</div>
-        <div class="step-lbl active" id="sl1">Type</div>
-      </div>
-      <div class="step-line" id="line12"></div>
-      <div class="step-item">
-        <div class="step-dot" id="sd2" onclick="stepClick(2)">2</div>
-        <div class="step-lbl" id="sl2">Severity</div>
-      </div>
-      <div class="step-line" id="line23"></div>
-      <div class="step-item">
-        <div class="step-dot" id="sd3" onclick="stepClick(3)">3</div>
-        <div class="step-lbl" id="sl3">Location</div>
-      </div>
-      <div class="step-line" id="line34"></div>
-      <div class="step-item">
-        <div class="step-dot" id="sd4" onclick="stepClick(4)">4</div>
-        <div class="step-lbl" id="sl4">Details</div>
-      </div>
-      <div class="step-line" id="line45"></div>
-      <div class="step-item">
-        <div class="step-dot" id="sd5" onclick="stepClick(5)">5</div>
-        <div class="step-lbl" id="sl5">Review</div>
-      </div>
-    </div>
-
-    <!-- ═══ STEP 1: INCIDENT TYPE ═══ -->
-    <div class="panel active" id="panel1">
-      <div class="tag-pill"><span class="pulse"></span><span id="p1tag">Step 1 of 5</span></div>
-      <div class="panel-title" id="p1title">What happened?</div>
-      <div class="panel-sub" id="p1sub">Select the type of incident you witnessed.</div>
-      <div class="chip-grid" id="typeGrid">
-        <div class="chip" data-val="Feeder Harassment" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">🚨</div>
-          <div class="chip-name"><span data-en="Feeder Harassment" data-hi="फीडर उत्पीड़न">Feeder Harassment</span></div>
-          <div class="chip-desc"><span data-en="Threats against animal feeders" data-hi="पशु-भक्षकों को धमकी">Threats against animal feeders</span></div>
-        </div>
-        <div class="chip" data-val="Animal Cruelty" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">⚠️</div>
-          <div class="chip-name"><span data-en="Animal Cruelty" data-hi="पशु क्रूरता">Animal Cruelty</span></div>
-          <div class="chip-desc"><span data-en="Deliberate harm or abuse" data-hi="जानबूझकर नुकसान या दुर्व्यवहार">Deliberate harm or abuse</span></div>
-        </div>
-        <div class="chip" data-val="Shelter Negligence" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">🏚️</div>
-          <div class="chip-name"><span data-en="Shelter Negligence" data-hi="आश्रय लापरवाही">Shelter Negligence</span></div>
-          <div class="chip-desc"><span data-en="Inhumane shelter conditions" data-hi="अमानवीय आश्रय स्थिति">Inhumane shelter conditions</span></div>
-        </div>
-        <div class="chip" data-val="Illegal Transport" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">🚛</div>
-          <div class="chip-name"><span data-en="Illegal Transport" data-hi="अवैध परिवहन">Illegal Transport</span></div>
-          <div class="chip-desc"><span data-en="Trafficking or unlawful transport" data-hi="तस्करी या अवैध ढुलाई">Trafficking or unlawful transport</span></div>
-        </div>
-        <div class="chip" data-val="Poisoning" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">☠️</div>
-          <div class="chip-name"><span data-en="Poisoning" data-hi="जहर देना">Poisoning</span></div>
-          <div class="chip-desc"><span data-en="Deliberate poisoning" data-hi="जानबूझकर जहर देना">Deliberate poisoning</span></div>
-        </div>
-        <div class="chip" data-val="Abandonment" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">💔</div>
-          <div class="chip-name"><span data-en="Abandonment" data-hi="परित्याग">Abandonment</span></div>
-          <div class="chip-desc"><span data-en="Intentional desertion" data-hi="जानबूझकर छोड़ना">Intentional desertion</span></div>
-        </div>
-        <div class="chip" data-val="Illegal Breeding" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">🔒</div>
-          <div class="chip-name"><span data-en="Illegal Breeding" data-hi="अवैध प्रजनन">Illegal Breeding</span></div>
-          <div class="chip-desc"><span data-en="Unregistered breeding" data-hi="अपंजीकृत प्रजनन">Unregistered breeding</span></div>
-        </div>
-        <div class="chip" data-val="Vet Negligence" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">🏥</div>
-          <div class="chip-name"><span data-en="Vet Negligence" data-hi="पशु चिकित्सक लापरवाही">Vet Negligence</span></div>
-          <div class="chip-desc"><span data-en="Malpractice or refusal" data-hi="कुप्रचार या इनकार">Malpractice or refusal</span></div>
-        </div>
-        <div class="chip" data-val="Other" onclick="selType(this)">
-          <div class="chip-check">✓</div>
-          <div class="chip-icon">📋</div>
-          <div class="chip-name"><span data-en="Other" data-hi="अन्य">Other</span></div>
-          <div class="chip-desc"><span data-en="Not listed above" data-hi="ऊपर नहीं दिया गया">Not listed above</span></div>
-        </div>
-      </div>
-      <div id="otherTypeWrap" style="display:none;margin-bottom:24px;">
-        <label class="label"><span data-en="Describe the incident type" data-hi="घटना का प्रकार बताएं">Describe the incident type</span></label>
-        <input class="input" id="otherTypeText" placeholder="Please describe..." data-ph-en="Please describe..." data-ph-hi="कृपया बताएं..."/>
-      </div>
-      <div class="btn-row">
-        <button type="button" class="btn-primary" onclick="goTo(2)"><span data-en="Continue →" data-hi="जारी रखें →"><span data-en="Continue →" data-hi="जारी रखें →">Continue →</span></span></button>
-      </div>
-    </div>
-
-    <!-- ═══ STEP 2: DYNAMIC - changes based on incident type ═══ -->
-    <div class="panel" id="panel2">
-      <div class="tag-pill"><span class="pulse"></span><span id="p2tag">Step 2 of 5</span></div>
-      <div class="panel-title" id="p2title">How Urgent?</div>
-      <div class="panel-sub" id="p2sub">Rate the severity and give us a few more details.</div>
-
-      <!-- SEVERITY - always shown -->
-      <label class="label"><span data-en="Severity Level" data-hi="गंभीरता स्तर">Severity Level</span></label>
-      <div class="sev-row">
-        <button type="button" class="sev-btn s-low" onclick="selSev(this,'Low - Not Immediate')"><span data-en="Low" data-hi="कम">Low</span></button>
-        <button type="button" class="sev-btn s-med" onclick="selSev(this,'Medium - Needs Attention')"><span data-en="Medium" data-hi="मध्यम">Medium</span></button>
-        <button type="button" class="sev-btn s-high" onclick="selSev(this,'High - Urgent')"><span data-en="High - Urgent" data-hi="उच्च - तुरंत">High - Urgent</span></button>
-        <button type="button" class="sev-btn s-crit" onclick="selSev(this,'Critical - Immediate Danger')"><span data-en="Critical - Immediate Danger" data-hi="गंभीर - तत्काल खतरा">Critical - Immediate Danger</span></button>
-      </div>
-      <div class="info-box" style="margin-top:10px;margin-bottom:24px;"><span data-en="Critical = the animal or person is in immediate physical danger right now. Use High for urgent situations needing priority attention." data-hi="गंभीर = जानवर या व्यक्ति अभी तत्काल खतरे में है। प्राथमिकता वाली स्थितियों के लिए 'उच्च' चुनें।">Critical = the animal or person is in immediate physical danger right now. Use High for urgent situations needing priority attention.</span></div>
-
-      <!-- DYNAMIC CONTEXT SECTION - injected by renderDynamicStep2() -->
-      <div id="dynamicStep2"></div>
-
-      <div class="btn-row">
-        <button type="button" class="btn-secondary" onclick="goTo(1)"><span data-en="← Back" data-hi="← वापस">← Back</span></button>
-        <button type="button" class="btn-primary" onclick="goTo(3)"><span data-en="Continue →" data-hi="जारी रखें →">Continue →</span></button>
-      </div>
-    </div>
-
-    <!-- ═══ STEP 3: LOCATION ═══ -->
-    <div class="panel" id="panel3">
-      <div class="tag-pill"><span class="pulse"></span><span id="p3tag">Step 3 of 5</span></div>
-      <div class="panel-title" id="p3title">Where did it happen?</div>
-      <div class="panel-sub" id="p3sub">Location helps us connect the right responders in the district.</div>
-      <input type="hidden" id="geoLat"/>
-      <input type="hidden" id="geoLng"/>
-      <button type="button" class="geo-btn" id="geoBtn" onclick="captureGeo()">
-        <span id="geoIcon">📍</span>
-        <span id="geoLabel"><span data-en="Auto-detect my location" data-hi="मेरी लोकेशन स्वतः पहचानें">Auto-detect my location</span></span>
-      </button>
-      <div class="grid-2">
-        <div class="field">
-          <label class="label"><span data-en="State" data-hi="राज्य">State</span></label>
-          <select id="stateSelect" style="display:none">
-            <option value="">- Select State -</option>
-            <option value="Andhra Pradesh">Andhra Pradesh</option><option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Assam">Assam</option><option value="Bihar">Bihar</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Goa">Goa</option><option value="Gujarat">Gujarat</option><option value="Haryana">Haryana</option><option value="Himachal Pradesh">Himachal Pradesh</option><option value="Jharkhand">Jharkhand</option><option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option><option value="Madhya Pradesh">Madhya Pradesh</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Meghalaya">Meghalaya</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Odisha">Odisha</option><option value="Punjab">Punjab</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Tripura">Tripura</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="Uttarakhand">Uttarakhand</option><option value="West Bengal">West Bengal</option><option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option><option value="Chandigarh">Chandigarh</option><option value="Delhi">Delhi</option><option value="Jammu and Kashmir">Jammu and Kashmir</option><option value="Ladakh">Ladakh</option><option value="Lakshadweep">Lakshadweep</option><option value="Puducherry">Puducherry</option>
-          </select>
-          <div class="cust-wrap" id="stateWrap">
-            <div class="cust-btn" id="stateBtn" onclick="custToggle('stateBtn','stateList')">
-              <span class="cust-val ph" id="stateVal">- Select State -</span>
-              <span class="cust-arrow">▼</span>
-            </div>
-            <div class="cust-list" id="stateList"></div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label"><span data-en="District" data-hi="जिला">District</span></label>
-          <select id="districtSelect" style="display:none">
-            <option value="">- Select State First -</option>
-          </select>
-          <div class="cust-wrap" id="districtWrap">
-            <div class="cust-btn" id="districtBtn" onclick="custToggle('districtBtn','districtList')">
-              <span class="cust-val ph" id="districtVal">- Select State First -</span>
-              <span class="cust-arrow">▼</span>
-            </div>
-            <div class="cust-list" id="districtList"></div>
-          </div>
-        </div>
-      </div>
-      <div class="field">
-        <label class="label"><span data-en="Exact Area / Landmark / Address (Optional)" data-hi="लैंडमार्क / क्षेत्र (वैकल्पिक)">Exact Area / Landmark / Address (Optional)</span></label>
-        <input class="input" id="landmark" placeholder="e.g. Near SBI Bank, MG Road, Ward No. 5, apartment name, street..." data-ph-en="e.g. Near SBI Bank, MG Road, Ward No. 5, apartment name, street..." data-ph-hi="जैसे SBI बैंक के पास, MG रोड, वार्ड नं. 5..."/>
-      </div>
-      <div class="btn-row">
-        <button type="button" class="btn-secondary" onclick="goTo(2)"><span data-en="← Back" data-hi="← वापस">← Back</span></button>
-        <button type="button" class="btn-primary" onclick="goTo(4)"><span data-en="Continue →" data-hi="जारी रखें →">Continue →</span></button>
-      </div>
-    </div>
-
-    <!-- ═══ STEP 4: DETAILS + REPORTER ═══ -->
-    <div class="panel" id="panel4">
-      <div class="tag-pill"><span class="pulse"></span><span id="p4tag">Step 4 of 5</span></div>
-      <div class="panel-title" id="p4title">Tell Us More</div>
-      <div class="panel-sub" id="p4sub">Describe what happened and share your contact details.</div>
-
-      <!-- DYNAMIC CONTEXT QUESTIONS - injected by renderDynamicStep4() -->
-      <div id="dynamicStep4"></div>
-
-      <div class="field">
-        <label class="label" id="descLabel"><span data-en="Describe the incident" data-hi="घटना का विवरण">Describe the incident</span> <span style="color:#ff3b30;font-size:11px;">*</span></label>
-        <textarea class="input" id="desc" rows="5" placeholder="What did you witness?" data-ph-en="What did you witness? Include time, number of animals, names if known, any relevant context..." data-ph-hi="आपने क्या देखा? समय, जानवरों की संख्या, नाम यदि पता हो, कोई भी संदर्भ..." oninput="updChar()" style="resize:vertical;min-height:120px;"></textarea>
-        <div class="char-count"><span id="charCt">0</span> / 1000</div>
-      </div>
-      <div class="field">
-        <label class="label" id="accusedLabel"><span data-en="Accused / Organisation (if known)" data-hi="आरोपी / संस्था (यदि पता हो)">Accused / Organisation (if known)</span></label>
-        <input class="input" id="accused" placeholder="Name, RWA, shelter - leave blank if unknown" data-ph-en="Name, RWA, shelter - leave blank if unknown" data-ph-hi="नाम, RWA, आश्रय - अज्ञात हो तो खाली छोड़ें"/>
-      </div>
-
-      <!-- FILE UPLOADS -->
-      <div class="field">
-        <label class="label"><span data-en="Upload Evidence" data-hi="सबूत अपलोड करें">Upload Evidence</span></label>
-        <input type="file" id="filePhoto" accept="image/*,video/*" multiple style="display:none" onchange="handleFiles('filePhoto','mbPhoto','Photo/Video')"/>
-        <input type="file" id="fileDoc" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" multiple style="display:none" onchange="handleFiles('fileDoc','mbDoc','Document/FIR')"/>
-        <input type="file" id="fileVoice" accept="audio/*" multiple style="display:none" onchange="handleFiles('fileVoice','mbVoice','Voice Recording')"/>
-        <div class="media-row">
-          <div class="media-btn" id="mbPhoto" onclick="document.getElementById('filePhoto').click()"><span data-en="📷 Photo / Video" data-hi="📷 फोटो / वीडियो">📷 Photo / Video</span></div>
-          <div class="media-btn" id="mbDoc" onclick="document.getElementById('fileDoc').click()"><span data-en="📄 Document / FIR" data-hi="📄 दस्तावेज़ / एफआईआर">📄 Document / FIR</span></div>
-          <div class="media-btn" id="mbVoice" onclick="document.getElementById('fileVoice').click()"><span data-en="🎙️ Voice Recording" data-hi="🎙️ आवाज़ रिकॉर्डिंग">🎙️ Voice Recording</span></div>
-          <div class="media-btn" id="mbWitness" onclick="togWitness()"><span data-en="👁️ Eyewitness" data-hi="👁️ प्रत्यक्षदर्शी">👁️ Eyewitness</span></div>
-        </div>
-        <div class="file-list" id="fileList">
-          <div id="fileListInner"></div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- REPORTER INFO -->
-      <div class="section-title"><span data-en="Your Information" data-hi="आपकी जानकारी">Your Information</span></div>
-      <div class="section-sub"><span data-en="Required for follow-up and verification. Stored securely - never shared publicly or with the accused." data-hi="फॉलो-अप और सत्यापन के लिए आवश्यक। सुरक्षित रूप से संग्रहीत - कभी सार्वजनिक या आरोपी को नहीं बताया जाएगा।">Required for follow-up and verification. Stored securely - never shared publicly or with the accused.</span></div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label class="label"><span data-en="Your Name" data-hi="आपका नाम">Your Name</span> <span style="color:#ff3b30;">*</span></label>
-          <input class="input" id="repName" placeholder="Full name" data-ph-en="Full name" data-ph-hi="पूरा नाम"/>
-        </div>
-        <div class="field">
-          <label class="label"><span data-en="Phone Number" data-hi="फोन नंबर">Phone Number</span> <span style="color:#ff3b30;">*</span></label>
-          <input class="input" id="repPhone" placeholder="+91 00000 00000" type="tel" maxlength="15" oninput="formatPhone(this)"/>
-        </div>
-      </div>
-      <!-- Honeypot — bots see "website" field, humans cannot -->
-      <div class="hp-field" aria-hidden="true">
-        <label for="website">Website</label>
-        <input type="text" id="hpWebsite" name="website" autocomplete="off" tabindex="-1"/>
-      </div>
-      <div class="field">
-        <label class="label"><span data-en="Email Address" data-hi="ईमेल पता">Email Address</span> <span style="color:#ff3b30;">*</span></label>
-        <input class="input" id="repEmail" placeholder="you@example.com" data-ph-en="you@example.com" data-ph-hi="aap@udaaharan.com" type="email"/>
-      </div>
-
-      <!-- CONFIDENTIALITY TOGGLE -->
-      <div class="info-box" style="margin-bottom:14px;">
-        <span data-en="Your name and contact are always collected internally for follow-up and verification. They are never shared publicly." data-hi="आपका नाम और संपर्क विवरण फॉलो-अप और सत्यापन के लिए हमेशा आंतरिक रूप से एकत्र किया जाता है। इन्हें कभी सार्वजनिक नहीं किया जाता।">Your name and contact are always collected internally for follow-up and verification. They are never shared publicly.</span>
-      </div>
-      <div class="anon-toggle" id="anonToggle" onclick="togAnon()">
-        <div class="tog-track"><div class="tog-knob"></div></div>
-        <div style="flex:1;">
-          <div class="anon-title"><span data-en="Keep my identity confidential if escalated externally" data-hi="बाहरी एस्केलेशन में मेरी पहचान गोपनीय रखें">Keep my identity confidential if escalated externally</span></div>
-          <div class="anon-desc"><span data-en="Your details are used internally for follow-up only. If this report is shared with government bodies, animal welfare authorities, or any external party, your name will not be disclosed." data-hi="आपके विवरण का उपयोग केवल आंतरिक फॉलो-अप के लिए किया जाएगा। यदि यह रिपोर्ट सरकारी विभागों या बाहरी संस्थाओं को भेजी जाती है, तो आपका नाम नहीं बताया जाएगा।">Your details are used internally for follow-up only. If this report is shared with government bodies, animal welfare authorities, or any external party, your name will not be disclosed.</span></div>
-        </div>
-        <div class="anon-badge" id="anonBadge">ON</div>
-      </div>
-
-      <div class="btn-row">
-        <button type="button" class="btn-secondary" onclick="goTo(3)"><span data-en="← Back" data-hi="← वापस">← Back</span></button>
-        <button type="button" class="btn-primary" onclick="goTo(5)"><span data-en="Review Report →" data-hi="रिपोर्ट देखें →"><span data-en="Review Report →" data-hi="रिपोर्ट देखें →">Review Report →</span></span></button>
-      </div>
-    </div>
-
-    <!-- ═══ STEP 5: REVIEW ═══ -->
-    <div class="panel" id="panel5">
-      <div class="tag-pill"><span class="pulse"></span><span data-en="Step 5 of 5 - Review" data-hi="चरण 5 / 5 - समीक्षा">Step 5 of 5 - Review</span></div>
-      <div class="panel-title"><span data-en="Confirm &amp; Submit" data-hi="पुष्टि करें और सबमिट करें">Confirm &amp; Submit</span></div>
-      <div class="panel-sub"><span data-en="Review your report before submitting. Go back to edit anything." data-hi="सबमिट करने से पहले अपनी रिपोर्ट की समीक्षा करें। कुछ बदलना हो तो वापस जाएं।">Review your report before submitting. Go back to edit anything.</span></div>
-      <div class="review-card" id="reviewBlock"></div>
-      <div class="info-box"><span data-en="By submitting, you confirm the information is accurate to the best of your knowledge. False reports may result in restricted access." data-hi="सबमिट करके आप पुष्टि करते हैं कि जानकारी सही है। गलत रिपोर्ट पर एक्सेस प्रतिबंधित हो सकती है।">By submitting, you confirm the information is accurate to the best of your knowledge. False reports may result in restricted access.</span></div>
-      <div class="btn-row">
-        <button type="button" class="btn-secondary" onclick="goTo(4)"><span data-en="← Edit" data-hi="← संपादित करें"><span data-en="← Edit" data-hi="← संपादित करें">← Edit</span></span></button>
-        <button type="button" class="btn-primary" id="submitBtn" onclick="submitReport()">
-          <span class="spinner" id="spinner"></span>
-          <span id="submitLabel"><span data-en="Submit Report →" data-hi="रिपोर्ट सबमिट करें →"><span data-en="Submit Report →" data-hi="रिपोर्ट सबमिट करें →">Submit Report →</span></span></span>
-        </button>
-      </div>
-    </div>
-
-    <!-- SUCCESS -->
-    <div class="panel" id="panelSuccess" style="text-align:center;padding:40px 0 60px;">
-      <div class="state-icon ok" style="font-size:28px;">✓</div>
-      <div class="panel-title"><span data-en="Report Submitted" data-hi="रिपोर्ट सबमिट हुई">Report Submitted</span></div>
-      <p style="color:rgba(255,255,255,0.38);font-size:14px;max-width:360px;margin:12px auto 16px;line-height:1.6;"><span data-en="Your report has been received and logged securely. Our team will look into it." data-hi="आपकी घटना सुरक्षित दर्ज हो गई है। हमारी टीम 24 घंटे में समीक्षा करेगी।">Your report has been received and logged securely. Our team will look into it.</span></p>
-      <div class="ref-id" id="refNum"></div>
-      <div class="btn-row" style="justify-content:center;">
-        <a href="index.html" class="btn-secondary"><span data-en="🏠 Back to Home" data-hi="🏠 होम पर वापस">🏠 Back to Home</span></a>
-        <button type="button" class="btn-secondary" onclick="resetForm()"><span data-en="+ Report Another" data-hi="+ एक और रिपोर्ट">+ Report Another</span></button>
-      </div>
-    </div>
-
-    <!-- ERROR -->
-    <div class="panel" id="panelError" style="text-align:center;padding:40px 0 60px;">
-      <div class="state-icon fail" style="font-size:28px;">✗</div>
-      <div class="panel-title"><span data-en="Submission Failed" data-hi="सबमिशन विफल">Submission Failed</span></div>
-      <p style="color:rgba(255,255,255,0.38);font-size:14px;max-width:360px;margin:12px auto 28px;line-height:1.6;"><span data-en="Something went wrong. Please try again." data-hi="कुछ गलत हुआ। कृपया फिर से प्रयास करें।">Something went wrong. Please try again.</span></p>
-      <button type="button" class="btn-primary" onclick="goTo(5)"><span data-en="Try Again →" data-hi="फिर कोशिश करें →">Try Again →</span></button>
-    </div>
-
-  </div>
+<!-- LEARN CARD -->
+<div class="premium-card px-8 py-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+<span class="text-white/20 text-[9px] tracking-cred uppercase font-bold"><span data-lang="en">Learn</span><span data-lang="hi" class="font-hindi tracking-normal text-[10px]">जानें</span></span>
+<a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">play_circle</span><span data-lang="en">iOS Demo</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">आईओएस डेमो</span></a>
+<a href="https://drive.google.com/file/d/1jsseovdhhCvx6k0SMhIx2uwowkeElnfF/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">play_circle</span><span data-lang="en">Android Demo</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">एंड्रॉयड डेमो</span></a>
+<a href="https://drive.google.com/file/d/1infaiPzLyf7QI6W9c_HD4lGRrXnoxReP/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">settings</span><span data-lang="en">Setup Guide</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">सेटअप गाइड</span></a>
+<a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">info</span><span data-lang="en">How the App Works</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">ऐप कैसे काम करता है</span></a>
 </div>
+</div>
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-20"><span class="material-symbols-outlined text-white text-lg animate-bounce">expand_more</span></div>
+</section>
 
-<!-- FOOTER -->
-<footer class="px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-white/5" id="support">
+<!-- ══════ HOW IT WORKS ══════ -->
+<div class="section-divider"></div>
+<section id="how" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
 <div class="max-w-5xl mx-auto text-center">
-<div class="flex items-center justify-center gap-3 mb-5">
-  <div class="w-8 h-8 border border-white/10 flex items-center justify-center">
-    <span class="material-symbols-outlined text-primary text-sm">pets</span>
-  </div>
-  <h2 class="text-[11px] font-black tracking-cred uppercase text-white">Rapid Response</h2>
+<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">Protocol</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">काम करने का तरीका</span></span>
+<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase mb-6"><span data-lang="en">How The Network<br/><span class="text-white/20">Works</span></span><span data-lang="hi" class="font-hindi">यह नेटवर्क<br/><span class="text-white/20">कैसे काम करता है</span></span></h2>
+<p class="text-white/30 text-sm md:text-base max-w-xl mx-auto mb-20 leading-relaxed"><span data-lang="en">The Rapid Response App instantly broadcasts an alert to volunteers within the same district. Anyone nearby who is available can see the alert and coordinate help.</span><span data-lang="hi" class="font-hindi">Rapid Response ऐप उसी जिले में दर्ज सभी लोगों तक SOS अलर्ट तुरंत पहुँचा देता है। जो भी आसपास है और मदद कर सकता है, वह अलर्ट देखकर आगे आ सकता है।</span></p>
+
+<!-- PHONE -->
+<div class="relative flex justify-center items-center mb-20"><div class="phone-glow"></div><img loading="lazy" src="Phone.png" alt="Rapid Response SOS Screen" class="relative w-[220px] sm:w-[260px] md:w-[300px] drop-shadow-[0_60px_120px_rgba(0,0,0,0.6)]"/></div>
+
+<!-- 4-STEP CARDS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">01</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">Raise SOS</span><span data-lang="hi" class="font-hindi tracking-normal">SOS भेजें</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">Open the app and press the SOS button when an animal needs urgent help.</span><span data-lang="hi" class="font-hindi">जब किसी जानवर को तुरंत मदद चाहिए, ऐप खोलकर SOS बटन दबाएँ।</span></p></div>
+<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">02</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">Location Shared</span><span data-lang="hi" class="font-hindi tracking-normal">लोकेशन साथ जाती है</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">The alert includes your phone number, GPS location and a short description.</span><span data-lang="hi" class="font-hindi">अलर्ट के साथ आपका नंबर, GPS लोकेशन और छोटा सा संदेश जाता है।</span></p></div>
+<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">03</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">District Alert</span><span data-lang="hi" class="font-hindi tracking-normal">जिले भर में अलर्ट</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">All Rapid Response users in the same district can see the alert.</span><span data-lang="hi" class="font-hindi">उसी जिले में दर्ज सभी लोगों को यह अलर्ट दिखता है।</span></p></div>
+<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">04</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">Volunteer Responds</span><span data-lang="hi" class="font-hindi tracking-normal">कोई मदद के लिए आगे आता है</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">Nearby volunteers who are available can call and coordinate help.</span><span data-lang="hi" class="font-hindi">जो लोग उपलब्ध होते हैं, वे कॉल करके मदद जुटा सकते हैं।</span></p></div>
 </div>
-<p class="text-white/25 text-sm leading-relaxed max-w-md mx-auto font-light mb-8">
-  <span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span>
-  <span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span>
-</p>
-<div style="background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);" class="inline-flex flex-col items-center px-10 py-6 mb-10">
-  <h4 class="text-white text-[10px] font-bold tracking-cred uppercase mb-2">
-    <span data-lang="en">Support</span>
-    <span data-lang="hi" class="font-hindi tracking-normal text-xs">सहायता</span>
-  </h4>
-  <a href="/cdn-cgi/l/email-protection#0e6f7d654e7c6f7e676a237c6b7d7e61607d6b206760" class="text-primary text-sm font-semibold hover:underline"><span class="__cf_email__" data-cfemail="90f1e3fbd0e2f1e0f9f4bde2f5e3e0fffee3f5bef9fe">[email&#160;protected]</span></a>
-  <p class="text-white/20 text-[10px] mt-1.5">
-    <span data-lang="en">We respond within 24–48 hours.</span>
-    <span data-lang="hi" class="font-hindi">24–48 घंटों में जवाब मिलता है।</span>
-  </p>
+
+<div class="premium-card max-w-2xl mx-auto mt-10 p-8 text-center"><p class="text-white/30 text-sm leading-relaxed"><span data-lang="en">The app works best when more people in a district join the network. Every new volunteer increases the chances that an animal in distress receives help quickly.</span><span data-lang="hi" class="font-hindi">यह ऐप तब सबसे अच्छा काम करता है जब एक ही जिले में ज़्यादा लोग इससे जुड़ते हैं। हर नया व्यक्ति मदद पहुँचने की संभावना बढ़ाता है।</span></p></div>
 </div>
-<div class="pt-8 border-t border-white/5">
-  <p class="text-[9px] text-white/15 max-w-lg mx-auto leading-relaxed mb-3">
-    <span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span>
-    <span data-lang="hi" class="font-hindi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
-  </p>
-  <p class="text-[9px] font-bold tracking-cred uppercase text-white/15">© 2026 RapidResponse Labs</p>
+</section>
+
+<!-- ══════ WHAT THIS IS & ISN'T ══════ -->
+<div class="section-divider"></div>
+<section id="clarity" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
+<div class="max-w-5xl mx-auto text-center">
+<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">Platform Clarity</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">साफ़ समझ</span></span>
+<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-tight mb-20"><span data-lang="en">What This Is<br/><span class="text-white/20">&amp; What It Isn't</span></span><span data-lang="hi" class="font-hindi">यह क्या है<br/><span class="text-white/20">और क्या नहीं</span></span></h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+<div class="premium-card p-8 md:p-10 text-left space-y-5"><h3 class="uppercase text-[10px] font-bold tracking-cred text-green-500 mb-6 text-center"><span data-lang="en">What it is</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">यह क्या करता है</span></h3>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">A coordination network for animal emergencies</span><span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाला नेटवर्क</span></span></div>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">Alerts nearby volunteers in your district</span><span data-lang="hi" class="font-hindi">आपके जिले के लोगों तक अलर्ट पहुँचाता है</span></span></div>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">Shares GPS location and contact number</span><span data-lang="hi" class="font-hindi">GPS लोकेशन और नंबर साझा करता है</span></span></div>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">A platform where volunteers can respond if available</span><span data-lang="hi" class="font-hindi">एक ऐसा मंच जहाँ उपलब्ध लोग मदद कर सकते हैं</span></span></div>
 </div>
+<div class="premium-card p-8 md:p-10 text-left space-y-5"><h3 class="uppercase text-[10px] font-bold tracking-cred text-red-500 mb-6 text-center"><span data-lang="en">What it is not</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">यह क्या नहीं करता</span></h3>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">The app does not come with a rescue team</span><span data-lang="hi" class="font-hindi">अपनी कोई रेस्क्यू टीम नहीं लाता</span></span></div>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">Raising an SOS does not guarantee help</span><span data-lang="hi" class="font-hindi">SOS भेजने से मदद तय नहीं होती</span></span></div>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">Does not operate shelters or transport animals</span><span data-lang="hi" class="font-hindi">शेल्टर नहीं चलाता, ट्रांसपोर्ट नहीं करता</span></span></div>
+<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">Not affiliated with any government authority</span><span data-lang="hi" class="font-hindi">किसी सरकारी संस्था से जुड़ा नहीं है</span></span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ══════ FAQ ══════ -->
+<div class="section-divider"></div>
+<section id="faq" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
+<div class="max-w-4xl mx-auto text-center">
+<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">FAQ</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">सवाल-जवाब</span></span>
+<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase mb-4"><span data-lang="en">Questions</span><span data-lang="hi" class="font-hindi">सवाल खोजें</span></h2>
+<p class="text-white/30 text-sm max-w-lg mx-auto mb-14"><span data-lang="en">Type a keyword to find answers instantly.</span><span data-lang="hi" class="font-hindi">जवाब पाने के लिए कोई शब्द लिखिए।</span></p>
+<div class="premium-card mb-8 h-14 md:h-16 px-5 flex items-center gap-3"><span class="material-symbols-outlined text-white/20 text-xl">search</span><input id="faqSearch" type="text" placeholder="Search by keyword..." class="w-full bg-transparent text-white placeholder:text-white/20 text-sm md:text-base font-medium border-none outline-none focus:ring-0"/></div>
+<div class="mb-10 flex flex-wrap gap-2 justify-center">
+<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="sos">SOS</button>
+<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="location">Location</button>
+<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="chat">Chat</button>
+<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="district">District</button>
+<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="register">Register</button>
+</div>
+<div class="mb-12"><p class="text-[9px] uppercase tracking-cred text-white/20 mb-4"><span data-lang="en">Popular</span><span data-lang="hi" class="font-hindi tracking-normal text-[10px]">लोकप्रिय</span></p>
+<div class="flex flex-wrap gap-3 justify-center text-xs">
+<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="how does the app work">How does the app work?</button>
+<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="register">How do I register?</button>
+<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="sos alert">Who receives an SOS?</button>
+<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="cancel sos">Can I cancel an SOS?</button>
+</div></div>
+<div id="faqResults" class="space-y-4 text-left"></div>
+<div id="faqMessage" class="mt-8 text-white/20 text-sm"><span data-lang="en">Start typing a keyword like <b class="text-white/40">SOS</b>, <b class="text-white/40">location</b>, <b class="text-white/40">chat</b> or <b class="text-white/40">district</b>.</span><span data-lang="hi" class="font-hindi">कोई शब्द लिखकर जवाब खोजें।</span></div>
+<div class="mt-14 pt-8 border-t border-white/5"><p class="text-white/25 text-xs mb-2"><span data-lang="en">Still need help?</span><span data-lang="hi" class="font-hindi">और मदद चाहिए?</span></p><a href="mailto:ask@rapid-response.in" class="text-primary text-sm font-semibold hover:underline">ask@rapid-response.in</a></div>
+</div>
+</section>
+
+<!-- ══════ LEGAL DESK ══════ -->
+<div class="section-divider"></div>
+<section id="legal" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
+<div class="max-w-5xl mx-auto text-center">
+<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">Legal Assistant</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">कानूनी सहायता</span></span>
+<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase mb-4"><span data-lang="en">Know Your <span class="text-white/20">Rights</span></span><span data-lang="hi" class="font-hindi">अपने अधिकार <span class="text-white/20">जानें</span></span></h2>
+<p class="text-white/30 text-sm max-w-xl mx-auto mb-16"><span data-lang="en">Ask any question about animal welfare law in India. Get answers with exact laws, sections, and next steps.</span><span data-lang="hi" class="font-hindi">भारत में पशु कल्याण कानून, शिकायत प्रक्रिया और अधिकारों से जुड़े सवाल पूछें।</span></p>
+<div class="premium-card overflow-hidden max-w-3xl mx-auto text-left">
+<div class="flex items-center justify-between px-6 py-4 border-b border-white/5"><div class="flex items-center gap-3"><div class="w-9 h-9 border border-primary/20 bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-sm">balance</span></div><div><h3 class="text-white text-[10px] font-bold uppercase tracking-cred">Legal AI Desk</h3><p class="text-white/25 text-[10px] mt-0.5">Animal welfare law · ABC rules · FIR guidance</p></div></div><div class="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-green-400"><span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>Active</div></div>
+<div class="p-4 border-b border-white/5"><div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">pets</span><div><p class="text-white text-xs font-medium">ABC centre not functioning</p><p class="text-white/25 text-[10px] mt-0.5">Know the complaint process</p></div></div></button>
+<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">warning</span><div><p class="text-white text-xs font-medium">Dog died after ABC release</p><p class="text-white/25 text-[10px] mt-0.5">Liability, FIR and evidence</p></div></div></button>
+<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">local_hospital</span><div><p class="text-white text-xs font-medium">Hospital removing dogs</p><p class="text-white/25 text-[10px] mt-0.5">Feeding rights and remedies</p></div></div></button>
+<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">gavel</span><div><p class="text-white text-xs font-medium">Attacked while feeding dogs</p><p class="text-white/25 text-[10px] mt-0.5">Police complaint rights</p></div></div></button>
+</div></div>
+<div id="legalChatBox" class="p-5 min-h-[280px] max-h-[400px] overflow-y-auto">
+<div class="border border-primary/10 bg-primary/[0.02] p-4"><div class="flex gap-3"><div class="w-8 h-8 border border-primary/20 bg-primary/5 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-sm">balance</span></div><div><h4 class="text-white font-semibold text-sm mb-1.5"><span data-lang="en">Ask Any Legal Question</span><span data-lang="hi" class="font-hindi">कोई भी कानूनी सवाल पूछें</span></h4><p class="text-white/35 text-xs leading-relaxed mb-3"><span data-lang="en">Animal cruelty complaints, ABC centres, feeding disputes, FIR drafting and municipal issues.</span><span data-lang="hi" class="font-hindi">पशु क्रूरता, ABC केंद्र, पुलिस शिकायत और अधिकारों से जुड़े सवाल।</span></p><div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 border border-white/6 text-[9px] uppercase tracking-wider text-white/30">PCA Act</span><span class="px-2 py-0.5 border border-white/6 text-[9px] uppercase tracking-wider text-white/30">ABC Rules 2023</span><span class="px-2 py-0.5 border border-white/6 text-[9px] uppercase tracking-wider text-white/30">BNS Sections</span></div></div></div></div>
+</div>
+<div class="p-3 border-t border-white/5"><div class="glass-card border border-white/8 px-3 py-1.5 flex items-center gap-2"><input id="legalInput" type="text" placeholder="Ask your legal question..." class="flex-1 bg-transparent text-white placeholder:text-white/20 text-sm border-none outline-none focus:ring-0"/><button id="legalBtn" onclick="sendLegalQuestion()" class="w-10 h-10 bg-primary flex items-center justify-center hover:bg-red-600 transition flex-shrink-0"><span class="material-symbols-outlined text-white text-lg">north_east</span></button></div><p class="text-center text-white/15 text-[9px] mt-2"><span data-lang="en">⚖️ Legal information only. Not a substitute for a qualified lawyer.</span><span data-lang="hi" class="font-hindi">⚖️ केवल जानकारी। योग्य वकील की सलाह का विकल्प नहीं।</span></p></div>
+</div>
+</div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<div class="section-divider"></div>
+<footer class="px-6 md:px-12 lg:px-20 py-16 md:py-20" id="support">
+<div class="max-w-5xl mx-auto text-center">
+<div class="flex items-center justify-center gap-3 mb-5"><div class="w-8 h-8 border border-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-sm">pets</span></div><h2 class="text-[11px] font-black tracking-cred uppercase text-white">Rapid Response</h2></div>
+<p class="text-white/25 text-sm leading-relaxed max-w-md mx-auto font-light mb-8"><span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span><span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span></p>
+<div class="premium-card inline-flex flex-col items-center px-10 py-6 mb-10"><h4 class="text-white text-[10px] font-bold tracking-cred uppercase mb-2"><span data-lang="en">Support</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">सहायता</span></h4><a href="mailto:ask@rapid-response.in" class="text-primary text-sm font-semibold hover:underline">ask@rapid-response.in</a><p class="text-white/20 text-[10px] mt-1.5"><span data-lang="en">We respond within 24–48 hours.</span><span data-lang="hi" class="font-hindi">24–48 घंटों में जवाब मिलता है।</span></p></div>
+<div class="pt-8 border-t border-white/5"><p class="text-[9px] text-white/15 max-w-lg mx-auto leading-relaxed mb-3"><span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span><span data-lang="hi" class="font-hindi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span></p><p class="text-[9px] font-bold tracking-cred uppercase text-white/15">© 2026 RapidResponse Labs</p></div>
 </div>
 </footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1zcw1EaVAtjCmCCvLnnSqpRcugiVv4JBmo7UO2uJALHEsb833PgMZL6IkPLc4J2kEYA/exec";
-
-/* ═══════════════════════════════════════════
-   ANTI-BOT PROTECTION (zero config)
-   1. Honeypot — hidden field bots fill
-   2. Timing — reject <3s submissions
-   3. JS proof-of-work — hash challenge
-   4. Rate limit — 1 submit per 30s
-   ═══════════════════════════════════════════ */
-var _formLoadTime = Date.now();
-var _lastSubmitTime = 0;
-var _powAnswer = null;
-
-/* Simple proof-of-work: find a number that when appended to challenge,
-   the sum of char codes mod 97 === 0. Trivial for real browsers,
-   skipped by naive bots that don't execute JS. */
-function generatePoW(){
-  var challenge = 'RR' + Date.now().toString(36);
-  for(var i=0; i<100000; i++){
-    var test = challenge + i;
-    var sum = 0;
-    for(var j=0; j<test.length; j++) sum += test.charCodeAt(j);
-    if(sum % 97 === 0){
-      _powAnswer = {challenge:challenge, nonce:i, hash:sum};
-      return;
-    }
-  }
-  _powAnswer = {challenge:challenge, nonce:'timeout', hash:0};
-}
-generatePoW();
-
-function botCheck(){
-  var isHi = (document.documentElement.lang||'en') === 'hi';
-  /* 1. Honeypot */
-  var hp = document.getElementById('hpWebsite');
-  if(hp && hp.value){
-    showToast(isHi?'सबमिशन अस्वीकार।':'Submission rejected.','error');
-    return false;
-  }
-  /* 2. Timing — must spend at least 3 seconds on page */
-  var elapsed = (Date.now() - _formLoadTime) / 1000;
-  if(elapsed < 3){
-    showToast(isHi?'कृपया फ़ॉर्म पूरा भरें।':'Please complete the form properly.','error');
-    return false;
-  }
-  /* 3. Rate limit — no more than 1 submit per 30s */
-  var now = Date.now();
-  if(_lastSubmitTime && (now - _lastSubmitTime) < 30000){
-    var wait = Math.ceil((30000 - (now - _lastSubmitTime))/1000);
-    showToast(isHi?('कृपया '+wait+' सेकंड प्रतीक्षा करें।'):('Please wait '+wait+' seconds before resubmitting.'),'warn');
-    return false;
-  }
-  /* 4. PoW must exist (proves JS executed) */
-  if(!_powAnswer){
-    showToast(isHi?'सत्यापन विफल।':'Verification failed.','error');
-    return false;
-  }
-  return true;
-}
-
-var S = {
-  step:1, type:null, severity:null, animal:null,
-  lat:null, lng:null, accuracy:null,
-  state:null, district:null, landmark:null,
-  desc:null, accused:null, media:[], anon:false,
-  repName:null, repPhone:null, repEmail:null
-};
-
-var uploadedFiles = {photo:[], doc:[], voice:[]};
-
-var DISTRICTS = {
-  "Andhra Pradesh":["Alluri Sitharama Raju","Anakapalli","Ananthapuramu","Bapatla","Chittoor","East Godavari","Eluru","Guntur","Kakinada","Krishna","Kurnool","Nandyal","Prakasam","Srikakulam","Tirupati","Visakhapatnam","Vizianagaram","West Godavari","YSR Kadapa"],
-  "Arunachal Pradesh":["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Lohit","Longding","Lower Dibang Valley","Lower Siang","Namsai","Papum Pare","Tawang","Tirap","Upper Siang","West Kameng","West Siang"],
-  "Assam":["Barpeta","Bongaigaon","Cachar","Darrang","Dhemaji","Dhubri","Dibrugarh","Goalpara","Golaghat","Jorhat","Kamrup","Kamrup Metropolitan","Karimganj","Kokrajhar","Lakhimpur","Nagaon","Nalbari","Sivasagar","Sonitpur","Tinsukia"],
-  "Bihar":["Araria","Aurangabad","Begusarai","Bhagalpur","Bhojpur","Buxar","Darbhanga","East Champaran","Gaya","Gopalganj","Jamui","Katihar","Muzaffarpur","Nalanda","Patna","Purnia","Rohtas","Saran","Sitamarhi","Siwan","Vaishali","West Champaran"],
-  "Chhattisgarh":["Bastar","Bilaspur","Dantewada","Dhamtari","Durg","Janjgir-Champa","Jashpur","Korba","Koriya","Mahasamund","Raigarh","Raipur","Rajnandgaon","Sukma","Surguja"],
-  "Delhi":["Central Delhi","East Delhi","New Delhi","North Delhi","North East Delhi","North West Delhi","Shahdara","South Delhi","South East Delhi","South West Delhi","West Delhi"],
-  "Goa":["North Goa","South Goa"],
-  "Gujarat":["Ahmedabad","Amreli","Anand","Bharuch","Bhavnagar","Gandhinagar","Jamnagar","Junagadh","Kutch","Mehsana","Rajkot","Surat","Vadodara","Valsad"],
-  "Haryana":["Ambala","Faridabad","Fatehabad","Gurugram","Hisar","Jhajjar","Jind","Karnal","Kurukshetra","Panipat","Rohtak","Sirsa","Sonipat","Yamunanagar"],
-  "Himachal Pradesh":["Bilaspur","Chamba","Hamirpur","Kangra","Kullu","Mandi","Shimla","Sirmaur","Solan","Una"],
-  "Jharkhand":["Bokaro","Deoghar","Dhanbad","Dumka","East Singhbhum","Giridih","Hazaribagh","Lohardaga","Palamu","Ramgarh","Ranchi","West Singhbhum"],
-  "Karnataka":["Bagalkot","Ballari","Belagavi","Bengaluru Rural","Bengaluru Urban","Bidar","Chamarajanagar","Chikkaballapur","Chikkamagaluru","Chitradurga","Dakshina Kannada","Davanagere","Dharwad","Gadag","Hassan","Haveri","Kalaburagi","Kodagu","Kolar","Koppal","Mandya","Mysuru","Raichur","Ramanagara","Shivamogga","Tumakuru","Udupi","Uttara Kannada","Vijayapura","Yadgir"],
-  "Kerala":["Alappuzha","Ernakulam","Idukki","Kannur","Kasaragod","Kollam","Kottayam","Kozhikode","Malappuram","Palakkad","Pathanamthitta","Thiruvananthapuram","Thrissur","Wayanad"],
-  "Madhya Pradesh":["Bhopal","Chhindwara","Dhar","Gwalior","Indore","Jabalpur","Katni","Khandwa","Khargone","Morena","Rewa","Sagar","Satna","Ujjain","Vidisha"],
-  "Maharashtra":["Ahmednagar","Akola","Amravati","Aurangabad","Beed","Chandrapur","Dhule","Gadchiroli","Jalgaon","Kolhapur","Latur","Mumbai City","Mumbai Suburban","Nagpur","Nanded","Nashik","Pune","Raigad","Ratnagiri","Sangli","Satara","Solapur","Thane","Wardha","Yavatmal"],
-  "Manipur":["Bishnupur","Churachandpur","Imphal East","Imphal West","Senapati","Thoubal","Ukhrul"],
-  "Meghalaya":["East Garo Hills","East Khasi Hills","North Garo Hills","Ri Bhoi","South Garo Hills","West Garo Hills","West Khasi Hills"],
-  "Mizoram":["Aizawl","Champhai","Kolasib","Lawngtlai","Lunglei","Mamit","Serchhip"],
-  "Nagaland":["Dimapur","Kiphire","Kohima","Mokokchung","Mon","Phek","Tuensang","Wokha","Zunheboto"],
-  "Odisha":["Angul","Balasore","Bargarh","Bhadrak","Boudh","Cuttack","Gajapati","Ganjam","Jagatsinghpur","Jajpur","Jharsuguda","Kalahandi","Kendrapara","Khordha","Koraput","Puri","Rayagada","Sambalpur","Sundargarh"],
-  "Punjab":["Amritsar","Bathinda","Faridkot","Fatehgarh Sahib","Ferozepur","Gurdaspur","Hoshiarpur","Jalandhar","Kapurthala","Ludhiana","Mansa","Moga","Mohali","Muktsar","Pathankot","Patiala","Rupnagar","Sangrur","Tarn Taran"],
-  "Rajasthan":["Ajmer","Alwar","Bikaner","Bharatpur","Bhilwara","Bundi","Chittorgarh","Churu","Dausa","Dungarpur","Jaipur","Jaisalmer","Jalore","Jhalawar","Jhunjhunu","Jodhpur","Kota","Nagaur","Pali","Sikar","Tonk","Udaipur"],
-  "Sikkim":["East Sikkim","North Sikkim","South Sikkim","West Sikkim"],
-  "Tamil Nadu":["Ariyalur","Chennai","Coimbatore","Cuddalore","Dharmapuri","Dindigul","Erode","Kancheepuram","Kanyakumari","Karur","Krishnagiri","Madurai","Nagapattinam","Namakkal","Nilgiris","Pudukkottai","Ramanathapuram","Salem","Sivaganga","Thanjavur","Theni","Thoothukudi","Tiruchirappalli","Tirunelveli","Tiruppur","Tiruvallur","Tiruvannamalai","Vellore","Viluppuram","Virudhunagar"],
-  "Telangana":["Adilabad","Hyderabad","Jagtial","Karimnagar","Khammam","Mahabubnagar","Mancherial","Medak","Nalgonda","Nizamabad","Rangareddy","Sangareddy","Siddipet","Suryapet","Warangal","Yadadri Bhuvanagiri"],
-  "Tripura":["Dhalai","Gomati","Khowai","North Tripura","Sepahijala","South Tripura","Unakoti","West Tripura"],
-  "Uttar Pradesh":["Agra","Aligarh","Ayodhya","Azamgarh","Bareilly","Bijnor","Bulandshahr","Deoria","Etah","Farrukhabad","Fatehpur","Firozabad","Ghaziabad","Gorakhpur","Hardoi","Jhansi","Kanpur Nagar","Kaushambi","Lucknow","Mathura","Meerut","Mirzapur","Muzaffarnagar","Prayagraj","Raebareli","Saharanpur","Sitapur","Varanasi"],
-  "Uttarakhand":["Almora","Bageshwar","Chamoli","Dehradun","Haridwar","Nainital","Pithoragarh","Tehri Garhwal","Udham Singh Nagar"],
-  "West Bengal":["Bankura","Birbhum","Cooch Behar","Darjeeling","Hooghly","Howrah","Jalpaiguri","Kolkata","Malda","Murshidabad","Nadia","North 24 Parganas","Purulia","South 24 Parganas"],
-  "Andaman and Nicobar Islands":["Nicobar","North and Middle Andaman","South Andaman"],
-  "Chandigarh":["Chandigarh"],
-  "Jammu and Kashmir":["Anantnag","Baramulla","Budgam","Doda","Ganderbal","Jammu","Kathua","Kupwara","Poonch","Pulwama","Rajouri","Samba","Shopian","Srinagar","Udhampur"],
-  "Ladakh":["Kargil","Leh"],
-  "Lakshadweep":["Lakshadweep"],
-  "Puducherry":["Karaikal","Mahe","Puducherry","Yanam"]
-};
-
-/* ─── DISTRICTS ─── */
-function normDist(s){
-  return s.toLowerCase()
-    .replace(/\s*(district|zilla|taluk|taluka|tehsil|mandal)\s*/gi,'')
-    .replace(/[^a-z0-9\s]/g,'')
-    .replace(/\s+/g,' ').trim();
-}
-function loadDistricts(preselectDistrict){
-  var st=document.getElementById('stateSelect').value;
-  var dd=document.getElementById('districtSelect');
-  S.state=st; S.district=null;
-  var lang2=document.documentElement.lang||'en'; var s2=STRINGS[lang2]||STRINGS.en;
-  if(!st){ dd.innerHTML='<option value="">'+s2.districtDefault+'</option>'; return; }
-  var list=DISTRICTS[st]||[];
-  if(!list.length){ dd.innerHTML='<option value="">No districts found</option>'; return; }
-  var lang3=document.documentElement.lang||'en'; var s3=STRINGS[lang3]||STRINGS.en;
-  dd.innerHTML='<option value="">'+s3.districtSelect+'</option>'
-    +list.map(function(d){return '<option value="'+d+'">'+d+'</option>';}).join('');
-  /* 3-pass normalised match for geo preselect */
-  if(preselectDistrict){
-    var dnorm=normDist(preselectDistrict);
-    var opts=Array.from(dd.options).filter(function(o){return o.value;});
-    var matched='';
-    for(var i=0;i<opts.length;i++){
-      if(normDist(opts[i].value)===dnorm){matched=opts[i].value;break;}
-    }
-    if(!matched){
-      for(var j=0;j<opts.length;j++){
-        var on=normDist(opts[j].value);
-        if(dnorm.indexOf(on)>-1||on.indexOf(dnorm)>-1){matched=opts[j].value;break;}
-      }
-    }
-    if(!matched&&dnorm.length>2){
-      var fw=dnorm.split(' ')[0];
-      for(var k=0;k<opts.length;k++){
-        if(normDist(opts[k].value).split(' ')[0]===fw){matched=opts[k].value;break;}
-      }
-    }
-    if(matched){dd.value=matched;S.district=matched;}
-  }
-  dd.onchange=function(){S.district=dd.value;};
-  /* sync custom UI */
-  var lang4=document.documentElement.lang||'en'; var s4=STRINGS[lang4]||STRINGS.en;
-  var ph4=list.length?s4.districtSelect:s4.districtDefault;
-  custBuildList('districtList', list.map(function(d){return [d,d];}), ph4, function(val){
-    dd.value=val; S.district=val;
-    custSetDisplay('districtBtn','districtVal',val,val);
-  });
-  /* if geo preselected, reflect in custom UI */
-  if(preselectDistrict && S.district){
-    custSetDisplay('districtBtn','districtVal',S.district,S.district);
-    /* mark active */
-    var dlist=document.getElementById('districtList');
-    if(dlist){ dlist.querySelectorAll('.cust-opt').forEach(function(o){o.classList.toggle('active',o.dataset.v===S.district);}); }
-  }
-}
-
-/* ─── TOAST NOTIFICATION ─── */
-function showToast(msg, type){
-  type = type || 'error';
-  var box = document.getElementById('toastBox');
-  var icons = {error:'✗', success:'✓', warn:'⚠'};
-  var t = document.createElement('div');
-  t.className = 'toast toast-' + type;
-  t.innerHTML = '<span class="toast-icon">' + (icons[type]||'') + '</span>' + msg;
-  box.appendChild(t);
-  setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 3600);
-}
-
-/* ─── NAVIGATION ─── */
-/* ─── PHONE FORMATTER ─── */
-var _phoneBusy = false;
-function formatPhone(el){
-  if(_phoneBusy) return;
-  _phoneBusy = true;
-
-  var raw = el.value;
-
-  /* Strip our own formatting prefix before extracting digits */
-  var stripped = raw.replace(/^\+91[\s]?/, '');
-
-  /* Now extract only digits from what remains */
-  var digits = stripped.replace(/\D/g, '');
-
-  /* If user manually typed 91 or 0 at start, strip it */
-  if(digits.length > 10 && digits.startsWith('91')) digits = digits.slice(2);
-  if(digits.length > 10 && digits.startsWith('0')) digits = digits.slice(1);
-
-  /* Cap at 10 */
-  digits = digits.slice(0, 10);
-
-  /* Build formatted output */
-  var out = '';
-  if(digits.length === 0){
-    out = '';
-  } else if(digits.length <= 5){
-    out = '+91 ' + digits;
-  } else {
-    out = '+91 ' + digits.slice(0, 5) + ' ' + digits.slice(5);
-  }
-
-  if(el.value !== out){
-    el.value = out;
-    try { el.setSelectionRange(out.length, out.length); } catch(e){}
-  }
-
-  _phoneBusy = false;
-}
-
-/* ─── NAVIGATION ─── */
-function goTo(n){
-  var lang = document.documentElement.lang||'en';
-  var isHi = lang==='hi';
-
-  /* ═══ STEP 1 → 2: Incident Type ═══ */
-  if(n===2){
-    if(!S.type){
-      showToast(isHi?'कृपया एक घटना प्रकार चुनें।':'Please select an incident type.');
-      return;
-    }
-    /* If "Other" selected, require description */
-    if(S.type==='Other'){
-      var otherVal=(document.getElementById('otherTypeText')||{}).value||'';
-      if(otherVal.trim().length<3){
-        showToast(isHi?'कृपया घटना का प्रकार बताएं।':'Please describe the incident type.');
-        return;
-      }
-    }
-  }
-
-  /* ═══ STEP 2 → 3: Severity + Animal + Dynamic fields ═══ */
-  if(n===3){
-    if(!S.severity){
-      showToast(isHi?'कृपया गंभीरता स्तर चुनें।':'Please select a severity level.');
-      return;
-    }
-    var cfg=getConfig?getConfig():null;
-    var needsAnimal=!cfg||cfg.step2.showAnimal!==false;
-    if(needsAnimal && !S.animal){
-      showToast(isHi?'कृपया जानवर का प्रकार चुनें।':'Please select the animal type.');
-      return;
-    }
-    /* Validate ALL dynamic step2 fields — selects must be chosen, inputs must have content */
-    if(cfg){
-      var missingField=null;
-      (cfg.step2.extraFields||[]).forEach(function(f){
-        if(missingField) return;
-        var el=document.getElementById(f.id);
-        if(!el) return;
-        if(f.type==='select' && !el.value){
-          missingField=isHi?f.labelHi:f.labelEn;
-        } else if(f.type==='input' && !el.value.trim()){
-          missingField=isHi?f.labelHi:f.labelEn;
-        }
-      });
-      if(missingField){
-        showToast((isHi?'कृपया भरें: ':'Please fill: ')+missingField);
-        return;
-      }
-    }
-  }
-
-  /* ═══ STEP 3 → 4: Location ═══ */
-  if(n===4){
-    var st=document.getElementById("stateSelect").value;
-    var di=document.getElementById("districtSelect").value;
-    if(!st){
-      showToast(isHi?'कृपया राज्य चुनें।':'Please select a State.');
-      return;
-    }
-    if(!di){
-      showToast(isHi?'कृपया जिला चुनें।':'Please select a District.');
-      return;
-    }
-    S.state=st; S.district=di; S.landmark=document.getElementById("landmark").value;
-    renderDynamicStep4();
-  }
-
-  /* ═══ STEP 4 → 5: Details + Reporter Info ═══ */
-  if(n===5){
-    /* ── Dynamic step4 fields ── */
-    var cfg4=getConfig?getConfig():null;
-    if(cfg4){
-      var missingField4=null;
-      (cfg4.step4.extraFields||[]).forEach(function(f){
-        if(missingField4) return;
-        var el=document.getElementById(f.id);
-        if(!el) return;
-        if(f.type==='select' && !el.value){
-          missingField4=isHi?f.labelHi:f.labelEn;
-        }
-      });
-      if(missingField4){
-        showToast((isHi?'कृपया भरें: ':'Please fill: ')+missingField4);
-        return;
-      }
-    }
-
-    /* ── Description ── */
-    var desc=document.getElementById('desc').value.trim();
-    if(!desc){
-      showToast(isHi?'कृपया घटना का विवरण लिखें।':'Please describe the incident.');
-      return;
-    }
-    if(desc.length < 20){
-      showToast(isHi?'विवरण कम से कम 20 अक्षरों का होना चाहिए। (अभी: '+desc.length+')':'Description must be at least 20 characters. (Currently: '+desc.length+')');
-      return;
-    }
-
-    /* ── Reporter Name ── */
-    var repName=document.getElementById('repName').value.trim();
-    if(!repName){
-      showToast(isHi?'कृपया अपना नाम दर्ज करें।':'Please enter your name.');
-      return;
-    }
-    if(repName.length < 2){
-      showToast(isHi?'कृपया पूरा नाम दर्ज करें।':'Please enter your full name.');
-      return;
-    }
-    if(!/^[\p{L}\s.\-']+$/u.test(repName)){
-      showToast(isHi?'नाम में केवल अक्षर, स्पेस और हाइफ़न हो सकते हैं।':'Name can only contain letters, spaces, and hyphens.');
-      return;
-    }
-
-    /* ── Phone Number (mandatory, Indian mobile) ── */
-    var repPhone=document.getElementById('repPhone').value.trim();
-    if(!repPhone){
-      showToast(isHi?'कृपया अपना फोन नंबर दर्ज करें।':'Please enter your phone number.');
-      return;
-    }
-    var phoneDigits=repPhone.replace(/\D/g,'');
-    /* Normalise: strip country code */
-    if(phoneDigits.startsWith('91') && phoneDigits.length>10) phoneDigits=phoneDigits.slice(phoneDigits.length-10);
-    if(phoneDigits.startsWith('0') && phoneDigits.length===11) phoneDigits=phoneDigits.slice(1);
-    if(phoneDigits.length!==10){
-      showToast(isHi?'फोन नंबर में ठीक 10 अंक होने चाहिए।':'Phone number must be exactly 10 digits.');
-      return;
-    }
-    if(!/^[6-9]/.test(phoneDigits)){
-      showToast(isHi?'भारतीय मोबाइल नंबर 6, 7, 8 या 9 से शुरू होना चाहिए।':'Indian mobile number must start with 6, 7, 8, or 9.');
-      return;
-    }
-    if(/^(\d)\1{9}$/.test(phoneDigits)){
-      showToast(isHi?'कृपया एक वैध फोन नंबर दर्ज करें।':'Please enter a valid phone number.');
-      return;
-    }
-
-    /* ── Email (mandatory + format check) ── */
-    var repEmail=document.getElementById('repEmail').value.trim();
-    if(!repEmail){
-      showToast(isHi?'कृपया अपना ईमेल पता दर्ज करें।':'Please enter your email address.');
-      return;
-    }
-    var emailRegex=/^[a-zA-Z0-9](?:[a-zA-Z0-9._%+\-]*[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9.\-]*[a-zA-Z0-9])?\.[a-zA-Z]{2,}$/;
-    if(!emailRegex.test(repEmail)){
-      showToast(isHi?'कृपया एक वैध ईमेल पता दर्ज करें (जैसे name@example.com)।':'Please enter a valid email address (e.g. name@example.com).');
-      return;
-    }
-    /* Common typo checks */
-    var emailDomain=repEmail.split('@')[1].toLowerCase();
-    var typoMap={'gmial.com':'gmail.com','gmal.com':'gmail.com','gamil.com':'gmail.com','gmaill.com':'gmail.com','gmil.com':'gmail.com','gnail.com':'gmail.com','yaho.com':'yahoo.com','yahooo.com':'yahoo.com','yhaoo.com':'yahoo.com','outloo.com':'outlook.com','hotmal.com':'hotmail.com','redifmail.com':'rediffmail.com'};
-    if(typoMap[emailDomain]){
-      showToast((isHi?'क्या आपका मतलब @':'Did you mean @')+typoMap[emailDomain]+(isHi?' था?':'?'),'warn');
-      return;
-    }
-
-    /* ── Evidence confirmation ── */
-    var hasFiles=(uploadedFiles.photo.length+uploadedFiles.doc.length+uploadedFiles.voice.length)>0;
-    var hasWitness=S.media.indexOf('Eyewitness')>-1;
-    if(!hasFiles && !hasWitness){
-      if(!confirm(isHi?
-        'आपने कोई सबूत अपलोड नहीं किया। क्या आप बिना सबूत के जारी रखना चाहते हैं?':
-        'No evidence has been uploaded. Reports with evidence are reviewed faster. Continue without evidence?')){
-        return;
-      }
-    }
-
-    /* ── Email confirmation modal ── */
-    showEmailConfirm(repEmail, isHi, function(){
-      buildReview();
-      _doNavTo(n);
-    });
-    return; /* Don't navigate yet — modal callback will */
-  }
-
-  _doNavTo(n);
-}
-
-/* Helper — actually performs the panel switch */
-function _doNavTo(n){
-  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
-  var target = (n==='success')?'panelSuccess':(n==='error')?'panelError':'panel'+n;
-  document.getElementById(target).classList.add('active');
-  S.step = typeof n==='number'?n:S.step;
-  updateStepper(S.step);
-  document.getElementById('progFill').style.width = Math.min(S.step*20,100)+'%';
-  var _ap=document.querySelector('.panel.active');if(_ap)_ap.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-/* ─── EMAIL CONFIRMATION MODAL ─── */
-function showEmailConfirm(email, isHi, onConfirm){
-  /* Remove any existing modal */
-  var old=document.getElementById('emailConfirmModal');
-  if(old) old.remove();
-
-  var overlay=document.createElement('div');
-  overlay.className='modal-overlay';
-  overlay.id='emailConfirmModal';
-
-  var box=document.createElement('div');
-  box.className='modal-box';
-  box.innerHTML=
-    '<div class="modal-title">'+(isHi?'ईमेल पता सही है?':'Confirm your email')+'</div>'
-    +'<div class="modal-hint">'+(isHi?'कृपया सुनिश्चित करें कि यह ईमेल पता सही है। हम इसी पर अपडेट भेजेंगे।':'Please verify this is correct. We\'ll send updates to this address.')+'</div>'
-    +'<div class="modal-email">'+email+'</div>'
-    +'<div class="modal-btns">'
-    +'<button type="button" class="modal-btn modal-btn-edit" id="emailEditBtn">'+(isHi?'✎ संपादित करें':'✎ Edit')+'</button>'
-    +'<button type="button" class="modal-btn modal-btn-confirm" id="emailConfirmBtn">'+(isHi?'✓ सही है, आगे बढ़ें':'✓ Correct, proceed')+'</button>'
-    +'</div>';
-
-  overlay.appendChild(box);
-  document.body.appendChild(overlay);
-
-  /* Close on overlay click (outside box) */
-  overlay.addEventListener('click',function(e){
-    if(e.target===overlay){ overlay.remove(); }
-  });
-
-  /* Edit — close modal, focus email field */
-  document.getElementById('emailEditBtn').addEventListener('click',function(){
-    overlay.remove();
-    var emailInput=document.getElementById('repEmail');
-    if(emailInput){ emailInput.focus(); emailInput.select(); }
-  });
-
-  /* Confirm — proceed to review */
-  document.getElementById('emailConfirmBtn').addEventListener('click',function(){
-    overlay.remove();
-    if(onConfirm) onConfirm();
-  });
-
-  /* Esc key to close */
-  var escHandler=function(e){
-    if(e.key==='Escape'){ overlay.remove(); document.removeEventListener('keydown',escHandler); }
-  };
-  document.addEventListener('keydown',escHandler);
-}
-
-function stepClick(n){
-  if(n < S.step) goTo(n);
-}
-
-function updateStepper(n){
-  for(var i=1;i<=5;i++){
-    var dot=document.getElementById('sd'+i);
-    var lbl=document.getElementById('sl'+i);
-    dot.classList.remove('active','done');
-    lbl.classList.remove('active');
-    if(i<n){ dot.classList.add('done'); dot.textContent='✓'; }
-    else if(i===n){ dot.classList.add('active'); dot.textContent=i; lbl.classList.add('active'); }
-    else{ dot.textContent=i; }
-  }
-  for(var j=1;j<=4;j++){
-    var line=document.getElementById('line'+j+(j+1));
-    if(line) line.classList.toggle('done',j<n);
-  }
-}
-
-/* ─── DYNAMIC STEP CONFIG ─── */
-var DYNAMIC_CONFIG = {
-  'Feeder Harassment': {
-    step2: {
-      showAnimal: false,
-      extraFields: [
-        { id:'dyn_harasser', type:'input', labelEn:'Who is harassing?', labelHi:'कौन परेशान कर रहा है?', phEn:'Name, RWA, society, neighbour...', phHi:'नाम, RWA, सोसाइटी, पड़ोसी...' },
-        { id:'dyn_ongoing', type:'select', labelEn:'Is it still ongoing?', labelHi:'क्या यह अभी भी हो रहा है?',
-          options:[['yes','Yes - happening right now','हाँ - अभी हो रहा है'],['recent','Just happened','अभी हुआ'],['repeated','Repeated / recurring','बार-बार हो रहा है'],['past','Past incident','पिछली घटना']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe what happened',
-      descLabelHi: 'क्या हुआ - विस्तार से बताएं',
-      descPhEn: 'What was said or done? Any threats? Were there witnesses? What time did it happen?',
-      descPhHi: 'क्या कहा या किया गया? कोई धमकी? गवाह थे? किस समय हुआ?',
-      accusedLabelEn: 'Name / Organisation of harasser',
-      accusedLabelHi: 'उत्पीड़क का नाम / संस्था',
-      extraFields: [
-        { id:'dyn_policeReport', type:'select', labelEn:'Has a police complaint been filed?', labelHi:'क्या पुलिस में शिकायत दर्ज है?',
-          options:[['no','No','नहीं'],['yes','Yes','हाँ'],['planning','Planning to file','दर्ज करने की योजना है']] }
-      ]
-    }
-  },
-  'Animal Cruelty': {
-    step2: {
-      showAnimal: true,
-      extraFields: [
-        { id:'dyn_crueltyType', type:'select', labelEn:'Type of cruelty', labelHi:'क्रूरता का प्रकार',
-          options:[['beating','Beating / hitting','मारपीट'],['starvation','Starvation / neglect','भूखा रखना / उपेक्षा'],['torture','Torture / burn','यातना / जलाना'],['vehicle','Run over by vehicle','वाहन से कुचला'],['other','Other','अन्य']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe the cruelty',
-      descLabelHi: 'क्रूरता का विवरण दें',
-      descPhEn: 'What did you witness? Condition of the animal? Was anyone present?',
-      descPhHi: 'आपने क्या देखा? जानवर की स्थिति? कोई मौजूद था?',
-      accusedLabelEn: 'Name of person / organisation responsible',
-      accusedLabelHi: 'जिम्मेदार व्यक्ति / संस्था का नाम',
-      extraFields: []
-    }
-  },
-  'Poisoning': {
-    step2: {
-      showAnimal: true,
-      extraFields: [
-        { id:'dyn_poisonCount', type:'input', labelEn:'How many animals affected?', labelHi:'कितने जानवर प्रभावित?', phEn:'e.g. 3 dogs', phHi:'जैसे 3 कुत्ते' },
-        { id:'dyn_poisonStatus', type:'select', labelEn:'Current condition', labelHi:'मौजूदा स्थिति',
-          options:[['alive','Alive - needs urgent care','जीवित - तुरंत देखभाल चाहिए'],['critical','Critical / unconscious','गंभीर / बेहोश'],['dead','Died','मृत्यु हो गई'],['unknown','Unknown','पता नहीं']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe the poisoning incident',
-      descLabelHi: 'जहर देने की घटना का विवरण',
-      descPhEn: 'When did you find them? What symptoms? Where exactly? Suspected source of poison?',
-      descPhHi: 'कब मिले? क्या लक्षण? कहाँ ठीक से? जहर का संभावित स्रोत?',
-      accusedLabelEn: 'Suspected person / organisation',
-      accusedLabelHi: 'संदिग्ध व्यक्ति / संस्था',
-      extraFields: []
-    }
-  },
-  'Abandonment': {
-    step2: {
-      showAnimal: true,
-      extraFields: [
-        { id:'dyn_abandonCount', type:'input', labelEn:'Number of animals abandoned', labelHi:'कितने जानवर छोड़े गए?', phEn:'e.g. 4 puppies', phHi:'जैसे 4 पिल्ले' },
-        { id:'dyn_abandonAge', type:'select', labelEn:'Age / stage', labelHi:'उम्र / अवस्था',
-          options:[['newborn','Newborn / very young','नवजात / बहुत छोटे'],['puppy','Puppy / kitten','पिल्ला / बिल्ली का बच्चा'],['adult','Adult','वयस्क'],['injured','Injured / sick','घायल / बीमार'],['unknown','Unknown','पता नहीं']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe the abandonment',
-      descLabelHi: 'परित्याग का विवरण',
-      descPhEn: 'Where exactly were they found? Condition? Does anyone know who abandoned them?',
-      descPhHi: 'ठीक कहाँ मिले? स्थिति क्या है? क्या किसी को पता है किसने छोड़ा?',
-      accusedLabelEn: 'Person / family who abandoned (if known)',
-      accusedLabelHi: 'छोड़ने वाला व्यक्ति / परिवार (यदि पता हो)',
-      extraFields: []
-    }
-  },
-  'Shelter Negligence': {
-    step2: {
-      showAnimal: true,
-      extraFields: [
-        { id:'dyn_shelterName', type:'input', labelEn:'Name of shelter / NGO', labelHi:'आश्रय / एनजीओ का नाम', phEn:'Full name of the shelter', phHi:'आश्रय का पूरा नाम' },
-        { id:'dyn_shelterIssue', type:'select', labelEn:'Type of negligence', labelHi:'लापरवाही का प्रकार',
-          options:[['starvation','Food / water deprivation','खाना / पानी न देना'],['medical','Medical negligence','चिकित्सीय उपेक्षा'],['overcrowding','Overcrowding','अत्यधिक भीड़'],['abandonment','Animals abandoned / released','जानवर छोड़े गए'],['other','Other','अन्य']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe the negligence',
-      descLabelHi: 'लापरवाही का विवरण',
-      descPhEn: 'What conditions did you see? How many animals? Did you speak to anyone at the shelter?',
-      descPhHi: 'आपने क्या स्थिति देखी? कितने जानवर? क्या आश्रय में किसी से बात की?',
-      accusedLabelEn: 'Shelter name / person in charge',
-      accusedLabelHi: 'आश्रय का नाम / प्रभारी व्यक्ति',
-      extraFields: []
-    }
-  },
-  'Vet Negligence': {
-    step2: {
-      showAnimal: true,
-      extraFields: [
-        { id:'dyn_vetName', type:'input', labelEn:'Name of vet / clinic', labelHi:'पशु चिकित्सक / क्लिनिक का नाम', phEn:'Dr. Name, Clinic name, address', phHi:'डॉ. का नाम, क्लिनिक का नाम, पता' },
-        { id:'dyn_vetIssue', type:'select', labelEn:'Type of negligence', labelHi:'लापरवाही का प्रकार',
-          options:[['refusal','Refused treatment','इलाज से इनकार'],['malpractice','Wrong treatment / malpractice','गलत इलाज'],['overcharge','Illegal overcharging','अत्यधिक शुल्क'],['death','Animal died due to negligence','लापरवाही से मृत्यु'],['other','Other','अन्य']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe what happened at the clinic',
-      descLabelHi: 'क्लिनिक में क्या हुआ',
-      descPhEn: 'What treatment was given or refused? What was the outcome for the animal?',
-      descPhHi: 'क्या इलाज दिया गया या मना किया गया? जानवर का क्या हुआ?',
-      accusedLabelEn: 'Vet / clinic name',
-      accusedLabelHi: 'पशु चिकित्सक / क्लिनिक का नाम',
-      extraFields: []
-    }
-  },
-  'Illegal Transport': {
-    step2: {
-      showAnimal: true,
-      extraFields: [
-        { id:'dyn_vehicleDesc', type:'input', labelEn:'Vehicle details (if seen)', labelHi:'वाहन का विवरण (यदि देखा)', phEn:'Colour, type, number plate if possible', phHi:'रंग, प्रकार, नंबर प्लेट यदि संभव हो' },
-        { id:'dyn_transportType', type:'select', labelEn:'Type of transport', labelHi:'परिवहन का प्रकार',
-          options:[['slaughter','To slaughterhouse','बूचड़खाने को'],['smuggling','Cross-border smuggling','सीमा पार तस्करी'],['cruel','Cruel / overcrowded','क्रूर / अत्यधिक भरा'],['other','Other / unknown','अन्य / अज्ञात']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe what you witnessed',
-      descLabelHi: 'आपने क्या देखा',
-      descPhEn: 'Where were the animals being taken? How were they transported? Number of animals?',
-      descPhHi: 'जानवरों को कहाँ ले जाया जा रहा था? कैसे ले जाया गया? कितने जानवर?',
-      accusedLabelEn: 'Person / operator responsible',
-      accusedLabelHi: 'जिम्मेदार व्यक्ति / ऑपरेटर',
-      extraFields: []
-    }
-  },
-  'Illegal Breeding': {
-    step2: {
-      showAnimal: true,
-      extraFields: [
-        { id:'dyn_breedingScale', type:'select', labelEn:'Scale of operation', labelHi:'ऑपरेशन का पैमाना',
-          options:[['small','Small - few animals','छोटा - कुछ जानवर'],['medium','Medium - 10-50 animals','मध्यम - 10-50 जानवर'],['large','Large - 50+ animals','बड़ा - 50+ जानवर'],['unknown','Unknown','पता नहीं']] }
-      ]
-    },
-    step4: {
-      descLabelEn: 'Describe the breeding operation',
-      descLabelHi: 'प्रजनन ऑपरेशन का विवरण',
-      descPhEn: 'What did you see? Conditions of animals? Is it still active?',
-      descPhHi: 'क्या देखा? जानवरों की स्थिति? क्या यह अभी भी चल रहा है?',
-      accusedLabelEn: 'Name / operator of breeding facility',
-      accusedLabelHi: 'प्रजनन केंद्र का नाम / संचालक',
-      extraFields: []
-    }
-  },
-  'Other': {
-    step2: { showAnimal: true, extraFields: [] },
-    step4: {
-      descLabelEn: 'Describe the incident in detail',
-      descLabelHi: 'घटना का विस्तृत विवरण',
-      descPhEn: 'Tell us everything you witnessed - what happened, who was involved, when, and where.',
-      descPhHi: 'सब कुछ बताएं - क्या हुआ, कौन शामिल था, कब और कहाँ।',
-      accusedLabelEn: 'Accused / Organisation (if known)',
-      accusedLabelHi: 'आरोपी / संस्था (यदि पता हो)',
-      extraFields: []
-    }
-  }
-};
-
-function getConfig(){ return DYNAMIC_CONFIG[S.type] || DYNAMIC_CONFIG['Other']; }
-
-function renderDynamicStep2(){
-  var cfg = getConfig().step2;
-  var lang = document.documentElement.lang||'en';
-  var isHi = lang==='hi';
-  var html = '';
-
-  if(cfg.showAnimal){
-    html += '<label class="label" style="margin-top:8px;">'
-          + '<span data-en="Animal(s) Involved" data-hi="शामिल जानवर">'+(isHi?'शामिल जानवर':'Animal(s) Involved')+'</span></label>'
-          + '<div class="animal-grid" id="animalGrid">'
-          + makeAnimalChips()
-          + '</div>';
-  } else {
-    S.animal = 'N/A - Human incident';
-  }
-
-  cfg.extraFields.forEach(function(f){
-    html += '<div class="field" style="margin-top:16px;">';
-    html += '<label class="label">'+(isHi?f.labelHi:f.labelEn)+'</label>';
-    if(f.type==='input'){
-      html += '<input class="input" id="'+f.id+'" placeholder="'+(isHi?f.phHi:f.phEn)+'"/>';
-    } else if(f.type==='select'){
-      html += '<select class="input" id="'+f.id+'">';
-      html += '<option value="">- '+(isHi?'चुनें':'Select')+'-</option>';
-      f.options.forEach(function(o){
-        html += '<option value="'+o[0]+'">'+(isHi?o[2]:o[1])+'</option>';
-      });
-      html += '</select>';
-    }
-    html += '</div>';
-  });
-
-  document.getElementById('dynamicStep2').innerHTML = html;
-  custUpgradeSelects('dynamicStep2');
-  if(cfg.showAnimal){
-    document.querySelectorAll('#animalGrid .chip').forEach(function(c){
-      c.onclick = function(){ selAnimal(c); };
-    });
-  }
-  setLang(document.documentElement.lang||'en');
-}
-
-function makeAnimalChips(){
-  var animals=[['Dog','🐕','कुत्ता'],['Cat','🐈','बिल्ली'],['Bird','🐦','पक्षी'],['Cattle','🐄','गाय/मवेशी'],['Wildlife','🦁','वन्यजीव'],['Other','🐾','अन्य']];
-  return animals.map(function(a){
-    return '<div class="chip" data-val="'+a[0]+'">'
-      +'<div class="chip-check">✓</div>'
-      +'<div class="chip-icon">'+a[1]+'</div>'
-      +'<div class="chip-name">'+a[0]+'</div>'
-      +'</div>';
-  }).join('');
-}
-
-function renderDynamicStep4(){
-  var cfg = getConfig().step4;
-  var lang = document.documentElement.lang||'en';
-  var isHi = lang==='hi';
-  var html = '';
-
-  cfg.extraFields.forEach(function(f){
-    html += '<div class="field">';
-    html += '<label class="label">'+(isHi?f.labelHi:f.labelEn)+'</label>';
-    if(f.type==='input'){
-      html += '<input class="input" id="'+f.id+'" placeholder="'+(isHi?f.phHi:f.phEn)+'"/>';
-    } else if(f.type==='select'){
-      html += '<select class="input" id="'+f.id+'">';
-      html += '<option value="">- '+(isHi?'चुनें':'Select')+'-</option>';
-      f.options.forEach(function(o){
-        html += '<option value="'+o[0]+'">'+(isHi?o[2]:o[1])+'</option>';
-      });
-      html += '</select>';
-    }
-    html += '</div>';
-  });
-
-  document.getElementById('dynamicStep4').innerHTML = html;
-  custUpgradeSelects('dynamicStep4');
-
-  var dl = document.getElementById('descLabel');
-  var ta = document.getElementById('desc');
-  var al = document.getElementById('accusedLabel');
-  var ac = document.getElementById('accused');
-  if(dl) dl.innerHTML = isHi?cfg.descLabelHi:cfg.descLabelEn;
-  if(ta){ ta.placeholder = isHi?cfg.descPhHi:cfg.descPhEn; }
-  if(al) al.innerHTML = isHi?cfg.accusedLabelHi:cfg.accusedLabelEn;
-  if(ac){ ac.placeholder = isHi?(cfg.accusedLabelHi+' (यदि पता हो)'):(cfg.accusedLabelEn+' (if known)'); }
-}
-
-function collectDynamicFields(){
-  var cfg = getConfig();
-  var extra = {};
-  var all = (cfg.step2.extraFields||[]).concat(cfg.step4.extraFields||[]);
-  all.forEach(function(f){
-    var el = document.getElementById(f.id);
-    if(el) extra[f.id] = el.value;
-  });
-  return extra;
-}
-
-/* ─── SELECTORS ─── */
-function selType(el){
-  document.querySelectorAll('#typeGrid .chip').forEach(function(c){ c.classList.remove('sel'); });
-  el.classList.add('sel');
-  S.type = el.dataset.val;
-  document.getElementById('otherTypeWrap').style.display = S.type==='Other'?'block':'none';
-  renderDynamicStep2();
-}
-function selSev(el,val){
-  document.querySelectorAll('.sev-btn').forEach(function(b){ b.classList.remove('sel'); });
-  el.classList.add('sel'); S.severity=val;
-}
-function selAnimal(el){
-  document.querySelectorAll('.animal-grid .chip').forEach(function(c){ c.classList.remove('sel'); });
-  el.classList.add('sel'); S.animal=el.dataset.val;
-}
-
-/* ─── FILE UPLOAD ─── */
-function handleFiles(inputId, btnId, label){
-  var input=document.getElementById(inputId);
-  var btn=document.getElementById(btnId);
-  var files=Array.from(input.files);
-  if(!files.length) return;
-  var key=inputId.replace('file','').toLowerCase();
-  uploadedFiles[key]=files;
-  S.media=S.media.filter(function(m){return m!==label;});
-  if(files.length){ S.media.push(label); btn.classList.add('on'); }
-  else { btn.classList.remove('on'); }
-  renderFileList();
-}
-function togWitness(){
-  var btn=document.getElementById('mbWitness');
-  var isOn=btn.classList.toggle('on');
-  if(isOn){ if(S.media.indexOf('Eyewitness')===-1) S.media.push('Eyewitness'); }
-  else{ S.media=S.media.filter(function(m){return m!=='Eyewitness';}); }
-}
-function renderFileList(){
-  var all=[].concat(
-    uploadedFiles.photo.map(function(f){return {f:f,icon:'📷'};}),
-    uploadedFiles.doc.map(function(f){return {f:f,icon:'📄'};}),
-    uploadedFiles.voice.map(function(f){return {f:f,icon:'🎙️'};})
-  );
-  var wrap=document.getElementById('fileList');
-  var inner=document.getElementById('fileListInner');
-  if(!all.length){ wrap.style.display='none'; return; }
-  wrap.style.display='block';
-  inner.innerHTML=all.map(function(x){
-    return '<div class="file-item"><span class="file-icon">'+x.icon+'</span><span class="file-name">'+x.f.name+'</span><span class="file-size">'+(x.f.size/1024/1024).toFixed(1)+'MB</span></div>';
-  }).join('');
-}
-
-/* ─── ANON TOGGLE ─── */
-function togAnon(){
-  S.anon=!S.anon;
-  document.getElementById('anonToggle').classList.toggle('on',S.anon);
-  document.getElementById('anonBadge').style.display=S.anon?'block':'none';
-}
-
-/* ─── CHAR COUNT ─── */
-function updChar(){
-  var v=document.getElementById('desc').value;
-  if(v.length>1000){ document.getElementById('desc').value=v.slice(0,1000); }
-  document.getElementById('charCt').textContent=Math.min(v.length,1000);
-}
-
-/* ─── GEO ─── */
-function captureGeo(){
-  var btn=document.getElementById('geoBtn');
-  var icon=document.getElementById('geoIcon');
-  var lbl=document.getElementById('geoLabel');
-  btn.disabled=true;
-  icon.className='spinning'; icon.textContent='⟳';
-  var langG=document.documentElement.lang||'en';
-  lbl.textContent=(STRINGS[langG]||STRINGS.en).geoDetecting;
-  if(langG==='hi') lbl.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-  if(!navigator.geolocation){
-    showGeoErr((STRINGS[langG]||STRINGS.en).geoNotSupported);
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(
-    function(pos){
-      S.lat=pos.coords.latitude.toFixed(6);
-      S.lng=pos.coords.longitude.toFixed(6);
-      S.accuracy=Math.round(pos.coords.accuracy);
-      document.getElementById('geoLat').value=S.lat;
-      document.getElementById('geoLng').value=S.lng;
-      icon.className=''; icon.textContent='⟳'; icon.className='spinning';
-      lbl.textContent='Looking up address...';
-      /* ── Reverse geocode via OpenStreetMap Nominatim (free, no key) ── */
-      fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+S.lat+'&lon='+S.lng+'&addressdetails=1&accept-language=en',{headers:{'User-Agent':'RapidResponseApp/1.0'}})
-        .then(function(r){return r.json();})
-        .then(function(geo){
-          var addr=geo.address||{};
-          /* State: try state, then state_district */
-          var detectedState=addr.state||addr.state_district||'';
-          /* District: OSM uses county for Indian districts most reliably */
-          var detectedDistrict=addr.county||addr.state_district||addr.city_district||addr.district||addr.city||addr.town||addr.village||addr.municipality||'';
-          /* Strip " District" suffix if present */
-          detectedDistrict=detectedDistrict.replace(/ District$/i,'').replace(/ district$/i,'').trim();
-          /* Try to match state to our dropdown */
-          var stateSelect=document.getElementById('stateSelect');
-          var matched=false;
-          for(var i=0;i<stateSelect.options.length;i++){
-            if(stateSelect.options[i].value.toLowerCase()===detectedState.toLowerCase()){
-              stateSelect.value=stateSelect.options[i].value;
-              matched=true;
-              break;
-            }
-          }
-          /* If exact match fails try partial */
-          if(!matched){
-            for(var j=0;j<stateSelect.options.length;j++){
-              if(detectedState.toLowerCase().indexOf(stateSelect.options[j].value.toLowerCase())>-1||
-                 stateSelect.options[j].value.toLowerCase().indexOf(detectedState.toLowerCase())>-1){
-                stateSelect.value=stateSelect.options[j].value;
-                matched=true;
-                break;
-              }
-            }
-          }
-          if(matched){
-            S.state=stateSelect.value;
-            custSetDisplay('stateBtn','stateVal',S.state,S.state);
-            var sl=document.getElementById('stateList');if(sl){sl.querySelectorAll('.cust-opt').forEach(function(o){o.classList.toggle('active',o.dataset.v===S.state);});}
-            loadDistricts(detectedDistrict);
-                          /* district matching handled by loadDistricts() */
-          }
-          /* Show landmark in the landmark field if empty */
-          var landmarkField=document.getElementById('landmark');
-          if(landmarkField&&!landmarkField.value){
-            var parts=[];
-            if(addr.road) parts.push(addr.road);
-            if(addr.suburb||addr.neighbourhood) parts.push(addr.suburb||addr.neighbourhood);
-            if(parts.length) landmarkField.value=parts.join(', ');
-          }
-          btn.classList.add('got'); btn.disabled=false;
-          icon.className=''; icon.textContent='✓';
-          var langGS=document.documentElement.lang||'en';
-          lbl.textContent=(langGS==='hi'?'लोकेशन मिली (±'+S.accuracy+'मी)':'Location captured (±'+S.accuracy+'m)');
-          if(langGS==='hi') lbl.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-        })
-        .catch(function(){
-          /* Geocoding failed - GPS still captured, just no auto-fill */
-          btn.classList.add('got'); btn.disabled=false;
-          icon.className=''; icon.textContent='✓';
-          var langGS=document.documentElement.lang||'en';
-          lbl.textContent=(langGS==='hi'?'लोकेशन मिली (±'+S.accuracy+'मी)':'Location captured (±'+S.accuracy+'m) - please select state/district');
-        });
-    },
-    function(){
-      var langGE=document.documentElement.lang||'en';
-      showGeoErr((STRINGS[langGE]||STRINGS.en).geoErr);
-      btn.disabled=false;
-    },
-    {timeout:10000,maximumAge:0}
-  );
-}
-function showGeoErr(msg){
-  var btn=document.getElementById('geoBtn');
-  btn.classList.add('err');
-  document.getElementById('geoIcon').className='';
-  document.getElementById('geoIcon').textContent='✗';
-  document.getElementById('geoLabel').textContent=msg;
-}
-
-/* ─── REVIEW ─── */
-function buildReview(){
-  S.dynExtra = collectDynamicFields();
-  S.desc=document.getElementById('desc').value||'-';
-  S.accused=document.getElementById('accused').value||((STRINGS[document.documentElement.lang||'en']||STRINGS.en).notSpecified);
-  S.landmark=document.getElementById('landmark').value||'-';
-  S.repName=document.getElementById('repName').value.trim()||'Not provided';
-  S.repPhone=document.getElementById('repPhone').value.trim()||'Not provided';
-  S.repEmail=document.getElementById('repEmail').value.trim()||'Not provided';
-  if(S.type==='Other'){ S.type=document.getElementById('otherTypeText').value||'Other'; }
-  var allNames=[].concat(
-    uploadedFiles.photo.map(function(f){return f.name;}),
-    uploadedFiles.doc.map(function(f){return f.name;}),
-    uploadedFiles.voice.map(function(f){return f.name;})
-  );
-  var evStr=allNames.length?allNames.join(', '):(S.media.length?S.media.join(', '):((STRINGS[document.documentElement.lang||'en']||STRINGS.en).noneStr));
-  var langBR=document.documentElement.lang||'en'; var sBR=STRINGS[langBR]||STRINGS.en; var kBR=sBR.reviewKeys;
-  var rows=[
-    [kBR.incidentType,S.type],[kBR.severity,S.severity],[kBR.animal,S.animal],
-    [kBR.state,S.state],[kBR.district,S.district],[kBR.landmark,S.landmark],
-    [kBR.gps,S.lat?(S.lat+', '+S.lng+' (±'+S.accuracy+'m)'):sBR.notCaptured],
-    [kBR.accused,S.accused],[kBR.evidence,evStr],[kBR.description,S.desc],
-    [kBR.name,S.repName],[kBR.phone,S.repPhone],[kBR.email,S.repEmail],
-    [kBR.confidential,S.anon?sBR.identityProtected:sBR.identityNotProtected]
-  ];
-  document.getElementById('reviewBlock').innerHTML=rows.map(function(r){
-    var cls='rev-val';
-    if(r[0]==='Severity'&&S.severity&&S.severity.indexOf('Critical')>-1) cls='rev-val crit';
-    if(r[0]==='Confidential'&&S.anon) cls='rev-val safe';
-    return '<div class="rev-row"><div class="rev-key">'+r[0]+'</div><div class="'+cls+'">'+(r[1]||'-')+'</div></div>';
-  }).join('');
-}
-
-/* ─── SUBMIT ─── */
-async function submitReport(){
-  var btn=document.getElementById('submitBtn');
-  var spinner=document.getElementById('spinner');
-  var lbl=document.getElementById('submitLabel');
-  var langS=document.documentElement.lang||'en';
-  var isHi=langS==='hi';
-
-  /* ── Anti-bot checks ── */
-  if(!botCheck()){
-    return;
-  }
-
-  btn.disabled=true; spinner.style.display='inline-block';
-  lbl.textContent=(STRINGS[langS]||STRINGS.en).submitting;
-  if(isHi) lbl.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-  var refId='RR-'+Date.now().toString(36).toUpperCase().slice(-8);
-  var allFiles=[].concat(uploadedFiles.photo,uploadedFiles.doc,uploadedFiles.voice);
-  var encodedFiles=[];
-  for(var fi=0;fi<allFiles.length;fi++){
-    try{
-      var f=allFiles[fi];
-      var b64=await new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(fr.result.split(',')[1]);};fr.onerror=rej;fr.readAsDataURL(f);});
-      encodedFiles.push({name:f.name,mimeType:f.type||'application/octet-stream',data:b64});
-    }catch(fe){}
-  }
-  var payload={
-    timestamp:new Date().toISOString(),refId:refId,
-    incidentType:S.type,severity:S.severity,animal:S.animal,
-    state:S.state,district:S.district,landmark:S.landmark,
-    gpsLat:S.lat||'',gpsLng:S.lng||'',gpsAccuracy:S.accuracy||'',
-    accused:S.accused,evidence:S.media.join(', ')||'None',
-    description:S.desc,anonymous:S.anon?'Yes':'No',
-    reporterName:S.repName,reporterPhone:S.repPhone,reporterEmail:S.repEmail,
-    language:langS,
-    dynamicFields:JSON.stringify(S.dynExtra||{}),
-    files:encodedFiles,
-    /* Anti-bot metadata for server-side verification */
-    _bot:{
-      hp:document.getElementById('hpWebsite')?document.getElementById('hpWebsite').value:'',
-      elapsed:Math.round((Date.now()-_formLoadTime)/1000),
-      pow:_powAnswer
-    }
-  };
-
-  _lastSubmitTime = Date.now();
-
-  var _showSuccess = function(){
-    var langR=document.documentElement.lang||'en';
-    document.getElementById('refNum').textContent=(STRINGS[langR]||STRINGS.en).refPrefix+refId;
-    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
-    document.getElementById('panelSuccess').classList.add('active');
-    document.getElementById('progFill').style.width='100%';
-    showToast(langR==='hi'?'रिपोर्ट सफलतापूर्वक सबमिट हुई!':'Report submitted successfully!','success');
-    var _ap=document.querySelector('.panel.active');if(_ap)_ap.scrollIntoView({behavior:'smooth',block:'nearest'});
-  };
-
-  var _showError = function(msg){
-    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
-    document.getElementById('panelError').classList.add('active');
-    var langSE=document.documentElement.lang||'en';
-    btn.disabled=false;spinner.style.display='none';
-    lbl.textContent=(STRINGS[langSE]||STRINGS.en).submitLabel;
-    if(langSE==='hi') lbl.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-    showToast(msg||(langSE==='hi'?'सबमिशन विफल। कृपया पुनः प्रयास करें।':'Submission failed. Please try again.'));
-  };
-
-  try{
-    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
-    _showSuccess();
-  }catch(e){
-    console.error('Submit error:',e);
-    if(navigator.onLine===false){
-      _showError(isHi?'आप ऑफलाइन हैं। कृपया इंटरनेट कनेक्शन जांचें।':'You are offline. Please check your internet connection.');
-    } else {
-      _showSuccess();
-    }
-  }
-  /* Regenerate PoW for next submission */
-  generatePoW();
-}
-
-/* ─── RESET ─── */
-function resetForm(){
-  _formLoadTime=Date.now(); _lastSubmitTime=0; generatePoW();
-  var hp=document.getElementById('hpWebsite'); if(hp) hp.value='';
-  S={step:1,type:null,severity:null,animal:null,lat:null,lng:null,accuracy:null,state:null,district:null,landmark:null,desc:null,accused:null,media:[],anon:false,repName:null,repPhone:null,repEmail:null};
-  uploadedFiles={photo:[],doc:[],voice:[]};
-  document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel');});
-  document.querySelectorAll('.sev-btn').forEach(function(b){b.classList.remove('sel');});
-  document.querySelectorAll('.media-btn').forEach(function(b){b.classList.remove('on');});
-  ['desc','accused','landmark','repName','repPhone','repEmail','otherTypeText'].forEach(function(id){
-    var el=document.getElementById(id); if(el) el.value='';
-  });
-  ['filePhoto','fileDoc','fileVoice'].forEach(function(id){
-    var el=document.getElementById(id); if(el) el.value='';
-  });
-  document.getElementById('fileList').style.display='none';
-  document.getElementById('fileListInner').innerHTML='';
-  document.getElementById('anonToggle').classList.remove('on');
-  document.getElementById('anonBadge').style.display='none';
-  document.getElementById('otherTypeWrap').style.display='none';
-  document.getElementById('charCt').textContent='0';
-  document.getElementById('stateSelect').value='';
-  var langRR=document.documentElement.lang||'en'; var sRR=STRINGS[langRR]||STRINGS.en;
-  custSetDisplay('stateBtn','stateVal','',sRR.districtDefault||'- Select State -');
-  custSetDisplay('districtBtn','districtVal','',sRR.districtDefault);
-  var sl2=document.getElementById('stateList'); if(sl2){sl2.querySelectorAll('.cust-opt').forEach(function(o){o.classList.remove('active');});}
-  var dl2=document.getElementById('districtList'); if(dl2){dl2.querySelectorAll('.cust-opt').forEach(function(o){o.classList.remove('active');});}
-  var langRD=document.documentElement.lang||'en'; document.getElementById('districtSelect').innerHTML='<option value="">'+((STRINGS[langRD]||STRINGS.en).districtDefault)+'</option>';
-  var geoBtn=document.getElementById('geoBtn');
-  geoBtn.classList.remove('got','err'); geoBtn.disabled=false;
-  document.getElementById('geoIcon').textContent='📍'; document.getElementById('geoIcon').className='';
-  var langRF=document.documentElement.lang||'en'; document.getElementById('geoLabel').textContent=(STRINGS[langRF]||STRINGS.en).geoDefault;
-  document.getElementById('submitBtn').disabled=false;
-  document.getElementById('spinner').style.display='none';
-  var langRS=document.documentElement.lang||'en'; document.getElementById('submitLabel').textContent=(STRINGS[langRS]||STRINGS.en).submitLabel;
-  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
-  document.getElementById('panel1').classList.add('active');
-  document.getElementById('progFill').style.width='20%';
-  updateStepper(1);
-  var _ap=document.querySelector('.panel.active');if(_ap)_ap.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-/* ─── LANG ─── */
-var STRINGS = {
-  en:{
-    heroTag:'Animal Emergency Network',
-    heroSub:'Your report reaches our team directly. Your identity is protected and handled with care.',
-    p1tag:'Step 1 of 5', p1title:'What happened?', p1sub:'Select the type of incident you witnessed.',
-    p2tag:'Step 2 of 5', p2title:'How Urgent?', p2sub:'Rate the severity and tell us which animal(s) are involved.',
-    p3tag:'Step 3 of 5', p3title:'Where did it happen?', p3sub:'Location helps us connect the right responders in the district.',
-    p4tag:'Step 4 of 5', p4title:'Tell Us More', p4sub:'Describe what happened and share your contact details.',
-    p5sub:'Review your report before submitting. Go back to edit anything.',
-    sl1:'Type', sl2:'Severity', sl3:'Location', sl4:'Details', sl5:'Review',
-    geoDefault:'Auto-detect my location', geoDetecting:'Detecting location...',
-    geoErr:'Could not get location - enter manually', geoNotSupported:'Not supported - enter manually',
-    districtDefault:'- Select State First -', districtSelect:'- Select District -',
-    submitLabel:'Submit Report →', submitting:'Submitting...',
-    refPrefix:'Reference ID: ',
-    reviewKeys:{incidentType:'Incident Type',severity:'Severity',animal:'Animal(s)',state:'State',district:'District',landmark:'Landmark',gps:'GPS',accused:'Accused',evidence:'Evidence',description:'Description',name:'Name',phone:'Phone',email:'Email',confidential:'Confidential'},
-    notCaptured:'Not captured', notSpecified:'Not specified', notProvided:'Not provided', noneStr:'None',
-    identityProtected:'Yes - identity protected', identityNotProtected:'No',
-    alertType:'Please select an incident type.',
-    alertSev:'Please select both severity and animal type.',
-    alertLoc:'Please select State and District.'
-  },
-  hi:{
-    heroTag:'पशु आपातकालीन नेटवर्क',
-    heroSub:'आपकी रिपोर्ट सीधे हमारी टीम तक पहुँचती है। आपकी पहचान सुरक्षित रखी जाती है।',
-    p1tag:'चरण 1 / 5', p1title:'क्या हुआ?', p1sub:'घटना का प्रकार चुनें जो आपने देखी।',
-    p2tag:'चरण 2 / 5', p2title:'कितना जरूरी?', p2sub:'गंभीरता बताएं और कौन से जानवर हैं।',
-    p3tag:'चरण 3 / 5', p3title:'यह कहाँ हुआ?', p3sub:'जगह से सही जिले के लोगों को जोड़ने में मदद होती है।',
-    p4tag:'चरण 4 / 5', p4title:'और बताएं', p4sub:'क्या हुआ बताएं और अपनी जानकारी दें।',
-    p5sub:'सबमिट करने से पहले अपनी रिपोर्ट की समीक्षा करें।',
-    sl1:'प्रकार', sl2:'गंभीरता', sl3:'जगह', sl4:'विवरण', sl5:'समीक्षा',
-    geoDefault:'मेरी लोकेशन स्वतः पहचानें', geoDetecting:'लोकेशन ढूंढ रहे हैं...',
-    geoErr:'लोकेशन नहीं मिली - मैन्युअल दर्ज करें', geoNotSupported:'समर्थित नहीं - मैन्युअल दर्ज करें',
-    districtDefault:'- पहले राज्य चुनें -', districtSelect:'- जिला चुनें -',
-    submitLabel:'रिपोर्ट सबमिट करें →', submitting:'सबमिट हो रहा है...',
-    refPrefix:'संदर्भ ID: ',
-    reviewKeys:{incidentType:'घटना प्रकार',severity:'गंभीरता',animal:'जानवर',state:'राज्य',district:'जिला',landmark:'लैंडमार्क',gps:'जीपीएस',accused:'आरोपी',evidence:'सबूत',description:'विवरण',name:'नाम',phone:'फोन',email:'ईमेल',confidential:'गोपनीय'},
-    notCaptured:'नहीं मिली', notSpecified:'अज्ञात', notProvided:'नहीं दिया', noneStr:'कोई नहीं',
-    identityProtected:'हाँ - पहचान सुरक्षित', identityNotProtected:'नहीं',
-    alertType:'कृपया एक घटना प्रकार चुनें।',
-    alertSev:'कृपया गंभीरता और जानवर चुनें।',
-    alertLoc:'कृपया राज्य और जिला चुनें।'
-  }
-};
-
-
-/* ═══════════════════════════════════════════════
-   CUSTOM DROPDOWN ENGINE
-   All native <select class="input"> are replaced
-   by .cust-wrap/.cust-btn/.cust-list components.
-   ═══════════════════════════════════════════════ */
-
-var STATES_LIST = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"];
-
-function custBuildList(listId, pairs, placeholder, onSelect){
-  /* pairs = [[value, label], ...] */
-  var el=document.getElementById(listId);
-  if(!el) return;
-  el.innerHTML='<div class="cust-opt disabled">'+placeholder+'</div>'
-    +pairs.map(function(p){
-      return '<div class="cust-opt" data-v="'+p[0]+'">'+p[1]+'</div>';
-    }).join('');
-  el.querySelectorAll('.cust-opt:not(.disabled)').forEach(function(opt){
-    opt.addEventListener('click',function(e){
-      e.stopPropagation();
-      var v=opt.dataset.v;
-      /* mark active */
-      el.querySelectorAll('.cust-opt').forEach(function(o){o.classList.remove('active');});
-      opt.classList.add('active');
-      /* update display */
-      var wrap=el.parentElement;
-      var btn=wrap?wrap.querySelector('.cust-btn'):null;
-      if(btn){
-        var valEl=btn.querySelector('.cust-val');
-        if(valEl){
-          valEl.textContent=opt.textContent;
-          valEl.classList.remove('ph'); /* selected — full color */
-        }
-        btn.classList.remove('open');
-      }
-      el.classList.remove('open');
-      if(onSelect) onSelect(v);
-    });
-  });
-}
-
-function custToggle(btnId, listId){
-  var btn=document.getElementById(btnId);
-  var list=document.getElementById(listId);
-  if(!btn||!list) return;
-  var isOpen=list.classList.contains('open');
-  /* close all */
-  document.querySelectorAll('.cust-list.open').forEach(function(l){l.classList.remove('open');});
-  document.querySelectorAll('.cust-btn.open').forEach(function(b){b.classList.remove('open');});
-  if(!isOpen){
-    btn.classList.add('open');
-    list.classList.add('open');
-  }
-}
-
-function custSetDisplay(btnId, valId, value, label){
-  var valEl=document.getElementById(valId);
-  if(!valEl) return;
-  if(!value){
-    valEl.textContent=label;
-    valEl.classList.add('ph');
-  } else {
-    valEl.textContent=label||value;
-    valEl.classList.remove('ph');
-  }
-  var btn=document.getElementById(btnId);
-  if(btn){ btn.classList.remove('open'); }
-}
-
-function custUpgradeSelects(containerId){
-  var container=document.getElementById(containerId);
-  if(!container) return;
-  container.querySelectorAll('select.input').forEach(function(sel){
-    var id=sel.id;
-    var opts=Array.from(sel.options).filter(function(o){return o.value;}).map(function(o){return [o.value,o.text];});
-    var phText=sel.options[0]?sel.options[0].text:'- Select -';
-    sel.style.display='none';
-    var wrap=document.createElement('div');
-    wrap.className='cust-wrap';
-    var btnEl=document.createElement('div');
-    btnEl.className='cust-btn';
-    btnEl.id='cb_'+id;
-    btnEl.innerHTML='<span class="cust-val ph" id="cv_'+id+'">'+phText+'</span><span class="cust-arrow">▼</span>';
-    var listEl=document.createElement('div');
-    listEl.className='cust-list';
-    listEl.id='cl_'+id;
-    wrap.appendChild(btnEl);
-    wrap.appendChild(listEl);
-    sel.parentNode.insertBefore(wrap, sel.nextSibling);
-    (function(bid,lid,nsel){
-      btnEl.addEventListener('click',function(e){
-        e.stopPropagation();
-        custToggle(bid,lid);
-      });
-      custBuildList(lid, opts, phText, function(val){
-        nsel.value=val;
-        /* remove ph so selected text shows at full color */
-        var cv=document.getElementById('cv_'+nsel.id);
-        if(cv){ cv.textContent=val; cv.classList.remove('ph'); }
-        custSetDisplay(bid,'cv_'+nsel.id,val,val);
-      });
-    })(btnEl.id, listEl.id, sel);
-  });
-}
-
-/* Close all dropdowns when clicking outside */
-document.addEventListener('click',function(e){
-  if(!e.target.closest('.cust-wrap')){
-    document.querySelectorAll('.cust-list.open').forEach(function(l){l.classList.remove('open');});
-    document.querySelectorAll('.cust-btn.open').forEach(function(b){b.classList.remove('open');});
-  }
-});
-
-/* Init state dropdown on page load */
-(function initStateDropdown(){
-  var lang0=document.documentElement.lang||'en';
-  var ph0='- Select State -';
-  custBuildList('stateList', STATES_LIST.map(function(s){return [s,s];}), ph0, function(val){
-    document.getElementById('stateSelect').value=val;
-    custSetDisplay('stateBtn','stateVal',val,val);
-    S.state=val;
-    loadDistricts();
-  });
-})();
-
-function setLang(lang){
-  document.documentElement.lang=lang;
-  document.getElementById('btnEN').classList.toggle('active',lang==='en');
-  document.getElementById('btnHI').classList.toggle('active',lang==='hi');
-  var isHi=(lang==='hi');
-  var s=STRINGS[lang]||STRINGS.en;
-
-  // Update all data-en/data-hi spans
-  document.querySelectorAll('[data-en]').forEach(function(el){
-    el.textContent=isHi?(el.getAttribute('data-hi')||el.getAttribute('data-en')):el.getAttribute('data-en');
-    if(isHi) el.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-    else el.style.fontFamily='';
-  });
-
-  // Update placeholders with data-ph-en / data-ph-hi
-  document.querySelectorAll('[data-ph-en]').forEach(function(el){
-    el.placeholder=isHi?(el.getAttribute('data-ph-hi')||el.getAttribute('data-ph-en')):el.getAttribute('data-ph-en');
-  });
-
-  // Update IDs from STRINGS
-  var idKeys=['heroTag','heroSub','p1tag','p1title','p1sub','p2tag','p2title','p2sub','p3tag','p3title','p3sub','p4tag','p4title','p4sub','sl1','sl2','sl3','sl4','sl5'];
-  idKeys.forEach(function(k){
-    var el=document.getElementById(k);
-    if(el && s[k]!==undefined){
-      el.textContent=s[k];
-      if(isHi) el.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-      else el.style.fontFamily='';
-    }
-  });
-
-  // Hero title special case
-  var heroTitleEl=document.getElementById('heroTitle');
-  if(heroTitleEl){
-    if(isHi){
-      heroTitleEl.innerHTML='घटना की<br/><span style="color:rgba(255,255,255,0.18);font-style:italic;">रिपोर्ट करें</span>';
-    } else {
-      heroTitleEl.innerHTML='Report an<br/><span style="color:rgba(255,255,255,0.18);font-style:italic;">Incident</span>';
-    }
-  }
-
-  // Geo button label
-  var geoLbl=document.getElementById('geoLabel');
-  if(geoLbl && !document.getElementById('geoBtn').classList.contains('got') && !document.getElementById('geoBtn').classList.contains('err')){
-    geoLbl.textContent=s.geoDefault;
-    if(isHi) geoLbl.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-  }
-
-  // District select default option
-  var dd=document.getElementById('districtSelect');
-  if(dd && dd.options[0] && !dd.options[0].value){
-    dd.options[0].text = S.state ? s.districtSelect : s.districtDefault;
-  }
-
-  // Submit button label
-  var subLbl=document.getElementById('submitLabel');
-  if(subLbl && !document.getElementById('submitBtn').disabled){
-    subLbl.textContent=s.submitLabel;
-    if(isHi) subLbl.style.fontFamily='"Noto Sans Devanagari",sans-serif';
-  }
-}
-
-/* ─── MODE ─── */
-function toggleMode(){
-  /* toggle on BOTH body (for body.light rules) and html (for Tailwind .light rules) */
-  var isLight=document.body.classList.toggle('light');
-  document.documentElement.classList.toggle('light', isLight);
-  document.getElementById('modeBtn').textContent=isLight?'🌙':'☀️';
-  localStorage.setItem('mode',isLight?'light':'dark');
-  var h=document.getElementById('mainHeader');
-  if(h){ h.style.background=''; h.style.borderBottom=''; }
-  window.dispatchEvent(new Event('scroll'));
-  if(S.type){ renderDynamicStep2(); }
-  if(S.step>=4){ renderDynamicStep4(); }
-}
-if(localStorage.getItem('mode')==='light'){
-  document.body.classList.add('light');
-  document.documentElement.classList.add('light');
-  document.getElementById('modeBtn').textContent='🌙';
-}
-
-/* ─── SCROLL HEADER ─── */
-/* MOBILE MENU */
-var _mobileBtn=document.getElementById('mobileMenuBtn');
-var _mobileMenu=document.getElementById('mobileMenu');
-var _mobileOverlay=document.getElementById('mobileMenuOverlay');
-var _closeMenu=document.getElementById('closeMenu');
-function _openMenu(){
-  _mobileMenu.classList.remove('translate-x-full');
-  _mobileOverlay.classList.remove('opacity-0','pointer-events-none');
-  _mobileOverlay.classList.add('opacity-100');
-  document.body.style.overflow='hidden';
-}
-function _closeMenuFn(){
-  _mobileMenu.classList.add('translate-x-full');
-  _mobileOverlay.classList.remove('opacity-100');
-  _mobileOverlay.classList.add('opacity-0','pointer-events-none');
-  document.body.style.overflow='';
-}
-if(_mobileBtn) _mobileBtn.addEventListener('click',_openMenu);
-if(_closeMenu) _closeMenu.addEventListener('click',_closeMenuFn);
-if(_mobileOverlay) _mobileOverlay.addEventListener('click',_closeMenuFn);
-document.querySelectorAll('.mobile-link').forEach(function(l){l.addEventListener('click',_closeMenuFn);});
-
-/* HEADER SCROLL */
-window.addEventListener('scroll',function(){
-  var isLight=document.body.classList.contains('light');
-  var h=document.getElementById('mainHeader');
-  if(!h) return;
-  if(window.scrollY>10){
-    isLight?'rgba(255,255,255,0.97)':'rgba(0,0,0,0.92)';
-    h.style.borderBottom=isLight?'1px solid rgba(0,0,0,0.08)':'1px solid rgba(255,255,255,0.06)';
-  } else {
-    h.style.background='';
-    h.style.borderBottom='';
-  }
-});
+</div>
+
+<!-- SCRIPTS -->
+<script>function attachFaqToggle(){}</script>
+<script>
+const faqData=[
+{keywords:"what is the rapid response team app",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What is the Rapid Response app?</span><span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स ऐप क्या है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">It connects nearby volunteers during animal emergencies.</span><span data-lang="hi" class="font-hindi">यह ऐप जानवरों की इमरजेंसी में आसपास के लोगों को जोड़ता है।</span></p></div>`},
+{keywords:"what is the main purpose of the app",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What is the main purpose of the app?</span><span data-lang="hi" class="font-hindi">ऐप का मुख्य उद्देश्य क्या है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">To quickly connect people facing urgent animal welfare situations with registered users in the same district.</span><span data-lang="hi" class="font-hindi">पशु कल्याण से जुड़ी तात्कालिक परिस्थितियों में लोगों को जिले के उपयोगकर्ताओं से जोड़ना।</span></p></div>`},
+{keywords:"what kind of platform is rapid response team",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What kind of platform is Rapid Response Team?</span><span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम किस प्रकार का प्लेटफ़ॉर्म है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">A community-based, district-level SOS alert and coordination platform for animal welfare.</span><span data-lang="hi" class="font-hindi">पशु कल्याण के लिए कम्युनिटी-आधारित, जिला-स्तरीय एसओएस अलर्ट और समन्वय प्लेटफ़ॉर्म।</span></p></div>`},
+{keywords:"is the app linked to any government department",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Is the app linked to any government department?</span><span data-lang="hi" class="font-hindi">क्या यह किसी सरकारी विभाग से जुड़ा है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">No. It is an independent community initiative.</span><span data-lang="hi" class="font-hindi">नहीं। यह एक स्वतंत्र सामुदायिक पहल है।</span></p></div>`},
+{keywords:"does the app send a rescue team automatically",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Does the app send a rescue team automatically?</span><span data-lang="hi" class="font-hindi">क्या यह अपने आप रेस्क्यू टीम भेजता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">No. It sends SOS alerts to registered users so nearby people may help.</span><span data-lang="hi" class="font-hindi">नहीं। यह लोगों को अलर्ट भेजता है ताकि पास के लोग मदद कर सकें।</span></p></div>`},
+{keywords:"how does the app work",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">How does the app work?</span><span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">One tap raises an SOS alert sent to all registered users in the same district. They can view it and decide whether to respond.</span><span data-lang="hi" class="font-hindi">एक टैप से अलर्ट जिले के सभी लोगों को मिलता है।</span></p></div>`},
+{keywords:"who receives an sos alert",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Who receives an SOS alert?</span><span data-lang="hi" class="font-hindi">एसओएस अलर्ट किसे मिलता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">All registered users within the same district.</span><span data-lang="hi" class="font-hindi">उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को।</span></p></div>`},
+{keywords:"register",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">How do I register?</span><span data-lang="hi" class="font-hindi">रजिस्टर कैसे करें?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Download the app and register with your phone number and district. Alerts start immediately.</span><span data-lang="hi" class="font-hindi">ऐप डाउनलोड करें, नंबर और जिले से रजिस्टर करें।</span></p></div>`},
+{keywords:"sos alert",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What happens when I send an SOS?</span><span data-lang="hi" class="font-hindi">SOS भेजने पर क्या होता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Your alert with GPS, phone number, and message is broadcast to all users in your district.</span><span data-lang="hi" class="font-hindi">आपका अलर्ट GPS, नंबर और संदेश के साथ जिले के सभी लोगों को जाता है।</span></p></div>`},
+{keywords:"cancel sos",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can I cancel an SOS?</span><span data-lang="hi" class="font-hindi">क्या SOS रद्द कर सकते हैं?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Once sent, the alert is broadcast instantly. You can update the status or mark it resolved.</span><span data-lang="hi" class="font-hindi">भेजने के बाद तुरंत जाता है। आप स्थिति अपडेट कर सकते हैं।</span></p></div>`},
+{keywords:"call sender",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can responders call the sender?</span><span data-lang="hi" class="font-hindi">क्या रेस्पॉन्डर भेजने वाले को कॉल कर सकते हैं?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Yes. The alert includes the sender's phone number.</span><span data-lang="hi" class="font-hindi">हाँ। अलर्ट में भेजने वाले का नंबर होता है।</span></p></div>`},
+{keywords:"chat",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Is there a chat feature?</span><span data-lang="hi" class="font-hindi">क्या चैट की सुविधा है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Yes. Users can communicate about an active SOS alert in their district.</span><span data-lang="hi" class="font-hindi">हाँ। एक्टिव अलर्ट पर लोग चैट कर सकते हैं।</span></p></div>`},
+{keywords:"district",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Why is the alert sent only within the district?</span><span data-lang="hi" class="font-hindi">अलर्ट केवल जिले में ही क्यों जाता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">To keep it locally relevant and improve chances of faster response.</span><span data-lang="hi" class="font-hindi">ताकि पास के लोग तेज़ी से मदद कर सकें।</span></p></div>`},
+{keywords:"location",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Why is location important?</span><span data-lang="hi" class="font-hindi">लोकेशन क्यों ज़रूरी है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">It helps volunteers understand where the incident happened and if they're close enough to assist.</span><span data-lang="hi" class="font-hindi">इससे लोगों को पता चलता है कि घटना कहाँ हुई।</span></p></div>`},
+{keywords:"can i raise an sos without location",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can I raise an SOS without location?</span><span data-lang="hi" class="font-hindi">बिना लोकेशन के SOS भेज सकते हैं?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">The app captures GPS automatically when SOS is raised. Not live tracking.</span><span data-lang="hi" class="font-hindi">ऐप SOS भेजते समय GPS अपने आप कैप्चर करता है।</span></p></div>`},
+{keywords:"can the app help in cases of abandoned puppies or kittens",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can the app help with abandoned puppies or kittens?</span><span data-lang="hi" class="font-hindi">छोड़े गए पिल्लों या बिल्लियों के लिए मदद?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Yes. If urgent, the app alerts registered users in the district who may assist.</span><span data-lang="hi" class="font-hindi">हाँ। तात्कालिक स्थिति में जिले के लोगों को अलर्ट भेजा जा सकता है।</span></p></div>`}
+];
+
+const faqSearch=document.getElementById("faqSearch"),faqResults=document.getElementById("faqResults"),faqMessage=document.getElementById("faqMessage");
+function renderFAQs(l){faqResults.innerHTML="";setLang(document.documentElement.lang);if(!l.length){faqMessage.style.display="block";return}faqMessage.style.display="none";l.forEach(i=>{faqResults.innerHTML+=i.html});attachFaqToggle()}
+setLang(document.documentElement.lang);
+faqSearch.addEventListener("input",e=>{const v=e.target.value.toLowerCase();if(!v){faqResults.innerHTML="";faqMessage.style.display="block";return}renderFAQs(faqData.filter(i=>i.keywords.includes(v)))});
+document.querySelectorAll(".faq-chip").forEach(b=>{b.addEventListener("click",()=>{const k=b.dataset.keyword.toLowerCase();faqSearch.value=k;renderFAQs(faqData.filter(i=>i.keywords.includes(k)))})});
+
+const mobileBtn=document.getElementById("mobileMenuBtn"),mobileMenu=document.getElementById("mobileMenu"),mobileOverlay=document.getElementById("mobileMenuOverlay"),closeMenuEl=document.getElementById("closeMenu");
+function openMenu(){mobileMenu.classList.remove("translate-x-full");mobileOverlay.classList.remove("opacity-0","pointer-events-none");mobileOverlay.classList.add("opacity-100");document.body.style.overflow="hidden"}
+function closeMobileMenu(){mobileMenu.classList.add("translate-x-full");mobileOverlay.classList.remove("opacity-100");mobileOverlay.classList.add("opacity-0","pointer-events-none");document.body.style.overflow=""}
+mobileBtn.addEventListener("click",openMenu);closeMenuEl.addEventListener("click",closeMobileMenu);mobileOverlay.addEventListener("click",closeMobileMenu);
+document.querySelectorAll(".mobile-link").forEach(l=>l.addEventListener("click",closeMobileMenu));
+
+const header=document.getElementById("mainHeader");
+window.addEventListener("scroll",()=>{header.classList.toggle("bg-black/80",window.scrollY>50)});
+
+const observer=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add("show")})},{threshold:0.08});
+document.querySelectorAll(".fade-up").forEach(el=>observer.observe(el));
+
+function toggleMode(){const l=document.documentElement.classList.toggle('light');document.getElementById('modeBtn').textContent=l?'🌙':'☀️';localStorage.setItem('mode',l?'light':'dark')}
+const savedMode=localStorage.getItem('mode');
+if(savedMode==='light'){document.documentElement.classList.add('light');document.addEventListener('DOMContentLoaded',()=>{const b=document.getElementById('modeBtn');if(b)b.textContent='🌙'})}
+
+function fillLegal(el){const t=el.querySelector('p.text-white');document.getElementById('legalInput').value=t?t.innerText.trim():el.innerText.trim()}
+function addLegalMsg(text,role){const box=document.getElementById('legalChatBox'),div=document.createElement('div');div.className='flex gap-3 mb-4';const icon=document.createElement('div');icon.className='w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5 border';if(role==='user'){icon.className+=' border-white/10';icon.innerHTML='<span class="material-symbols-outlined text-white/30 text-xs">person</span>'}else{icon.className+=' border-primary/30';icon.innerHTML='<span class="material-symbols-outlined text-primary text-xs">balance</span>'}const bubble=document.createElement('div');bubble.className=role==='user'?'text-white/70 text-sm leading-relaxed':'text-white/50 text-sm leading-relaxed whitespace-pre-wrap';bubble.textContent=text;div.appendChild(icon);div.appendChild(bubble);box.appendChild(div);box.scrollTop=box.scrollHeight;return bubble}
+async function sendLegalQuestion(){const input=document.getElementById('legalInput'),btn=document.getElementById('legalBtn'),question=input.value.trim();if(!question)return;const lang=document.documentElement.lang||'en';addLegalMsg(question,'user');input.value='';btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-white text-lg animate-spin">progress_activity</span>';const thinkingBubble=addLegalMsg('Reviewing applicable laws...','bot');try{const res=await fetch('https://rapidresponse-animal-welfare-assistant.hf.space/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,language:lang})});const data=await res.json();thinkingBubble.textContent=data.answer}catch(e){thinkingBubble.textContent='Sorry, something went wrong. Please try again.'}btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-white text-lg">north_east</span>';document.getElementById('legalChatBox').scrollTop=document.getElementById('legalChatBox').scrollHeight}
+document.getElementById('legalInput').addEventListener('keydown',function(e){if(e.key==='Enter')sendLegalQuestion()});
 </script>
 </body>
 </html>
