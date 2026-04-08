@@ -18,6 +18,12 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{primary:"#ff3b30"},font
 html{scroll-behavior:smooth;font-size:16px;}
 body{background:#000;color:#fff;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;}
 
+
+/* SHARED FROM INDEX.HTML */
+.premium-card{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);transition:all 0.5s cubic-bezier(0.16,1,0.3,1)}
+.premium-card:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,59,48,0.15);transform:translateY(-2px)}
+body.light .premium-card{background:#f8f8f8 !important;border:1px solid rgba(0,0,0,0.08) !important;}
+
 /* LAYOUT */
 .max-w{max-width:720px;margin:0 auto;}
 .px{padding-left:24px;padding-right:24px;}
@@ -585,27 +591,18 @@ class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full tr
 <!-- HEADER -->
 <header id="mainHeader" class="fixed top-0 left-0 right-0 z-[100] backdrop-blur-2xl transition-all duration-500">
 <div class="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 py-5 flex items-center justify-between">
-  <a href="/" class="flex items-center gap-3" style="text-decoration:none;">
-    <div class="w-8 h-8 border border-white/15 flex items-center justify-center">
-      <span class="material-symbols-outlined text-primary text-lg">pets</span>
-    </div>
-    <h2 class="text-white text-[11px] font-black tracking-cred uppercase">Rapid Response</h2>
-  </a>
-  <nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
-    <a class="text-white/40 hover:text-white transition-colors" href="/#how"><span class="text-[10px] font-bold tracking-cred uppercase">How it Works</span></a>
-    <a class="text-white/40 hover:text-white transition-colors" href="/#faq"><span class="text-[10px] font-bold tracking-cred uppercase">FAQ</span></a>
-    <a class="text-white/40 hover:text-white transition-colors" href="/#legal"><span class="text-[10px] font-bold tracking-cred uppercase">Legal Desk</span></a>
-    <a class="text-primary border border-primary/40 px-3 py-1 text-[10px] font-bold tracking-cred uppercase hover:bg-primary hover:text-white transition-all" href="/report">Report</a>
-  </nav>
-  <div class="flex items-center gap-4 text-xs font-bold">
-    <button type="button" onclick="toggleMode()" id="modeBtn" class="w-10 h-10 border border-white/20 flex items-center justify-center text-lg hover:bg-white/10 transition mr-2">🌙</button>
-    <button type="button" onclick="setLang('en')" id="btnEN" class="text-white/70 hover:text-white">EN</button>
-    <span class="text-white/30">|</span>
-    <button type="button" onclick="setLang('hi')" id="btnHI" class="text-white/70 hover:text-white font-hindi">हिंदी</button>
-    <button type="button" id="mobileMenuBtn" class="lg:hidden text-white ml-2 relative w-8 h-8 flex items-center justify-center">
-      <span class="material-symbols-outlined text-2xl transition-all duration-300">menu</span>
-    </button>
-  </div>
+<div class="flex items-center gap-3"><div class="w-8 h-8 border border-white/15 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-lg">pets</span></div><h2 class="text-white text-[11px] font-black tracking-cred uppercase">Rapid Response</h2></div>
+<nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
+<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="/#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कैसे चलता है</span></a>
+<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="/#faq"><span data-lang="en">FAQ</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">सवाल-जवाब</span></a>
+<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="/#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कानूनी मदद</span></a>
+<a class="text-primary hover:text-white transition-colors border border-primary/30 px-4 py-1.5 hover:bg-primary text-[10px] font-bold tracking-cred uppercase" href="/report"><span data-lang="en">Report</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">रिपोर्ट</span></a>
+</nav>
+<div class="flex items-center gap-4 text-xs font-bold">
+<button type="button" onclick="toggleMode()" id="modeBtn" class="w-9 h-9 border border-white/10 flex items-center justify-center text-sm hover:bg-white/5 transition">🌙</button>
+<button type="button" onclick="setLang('en')" id="btnEN" class="text-white/50 hover:text-white text-[10px] tracking-wider">EN</button><span class="text-white/15">|</span><button type="button" onclick="setLang('hi')" id="btnHI" class="text-white/50 hover:text-white font-hindi text-xs">हिंदी</button>
+<button type="button" id="mobileMenuBtn" class="lg:hidden text-white ml-2"><span class="material-symbols-outlined text-2xl">menu</span></button>
+</div>
 </div>
 </header>
 
@@ -918,36 +915,12 @@ class="fixed top-0 right-0 h-full w-[320px] bg-black z-[100] translate-x-full tr
 </div>
 
 <!-- FOOTER -->
-<footer class="px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-white/5" id="support">
+<footer class="px-6 md:px-12 lg:px-20 py-16 md:py-20" id="support">
 <div class="max-w-5xl mx-auto text-center">
-<div class="flex items-center justify-center gap-3 mb-5">
-  <div class="w-8 h-8 border border-white/10 flex items-center justify-center">
-    <span class="material-symbols-outlined text-primary text-sm">pets</span>
-  </div>
-  <h2 class="text-[11px] font-black tracking-cred uppercase text-white">Rapid Response</h2>
-</div>
-<p class="text-white/25 text-sm leading-relaxed max-w-md mx-auto font-light mb-8">
-  <span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span>
-  <span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span>
-</p>
-<div style="background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);" class="inline-flex flex-col items-center px-10 py-6 mb-10">
-  <h4 class="text-white text-[10px] font-bold tracking-cred uppercase mb-2">
-    <span data-lang="en">Support</span>
-    <span data-lang="hi" class="font-hindi tracking-normal text-xs">सहायता</span>
-  </h4>
-  <a href="/cdn-cgi/l/email-protection#0e6f7d654e7c6f7e676a237c6b7d7e61607d6b206760" class="text-primary text-sm font-semibold hover:underline"><span class="__cf_email__" data-cfemail="90f1e3fbd0e2f1e0f9f4bde2f5e3e0fffee3f5bef9fe">[email&#160;protected]</span></a>
-  <p class="text-white/20 text-[10px] mt-1.5">
-    <span data-lang="en">We respond within 24–48 hours.</span>
-    <span data-lang="hi" class="font-hindi">24–48 घंटों में जवाब मिलता है।</span>
-  </p>
-</div>
-<div class="pt-8 border-t border-white/5">
-  <p class="text-[9px] text-white/15 max-w-lg mx-auto leading-relaxed mb-3">
-    <span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span>
-    <span data-lang="hi" class="font-hindi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
-  </p>
-  <p class="text-[9px] font-bold tracking-cred uppercase text-white/15">© 2026 RapidResponse Labs</p>
-</div>
+<div class="flex items-center justify-center gap-3 mb-5"><div class="w-8 h-8 border border-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-sm">pets</span></div><h2 class="text-[11px] font-black tracking-cred uppercase text-white">Rapid Response</h2></div>
+<p class="text-white/25 text-sm leading-relaxed max-w-md mx-auto font-light mb-8"><span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span><span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span></p>
+<div class="premium-card inline-flex flex-col items-center px-10 py-6 mb-10"><h4 class="text-white text-[10px] font-bold tracking-cred uppercase mb-2"><span data-lang="en">Support</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">सहायता</span></h4><a href="/cdn-cgi/l/email-protection#3e5f4d557e4c5f4e575a134c5b4d4e51504d5b105750" class="text-primary text-sm font-semibold hover:underline"><span class="__cf_email__" data-cfemail="4425372f043625342d2069362137342b2a37216a2d2a">[email&#160;protected]</span></a><p class="text-white/20 text-[10px] mt-1.5"><span data-lang="en">We respond within 24–48 hours.</span><span data-lang="hi" class="font-hindi">24–48 घंटों में जवाब मिलता है।</span></p></div>
+<div class="pt-8 border-t border-white/5"><p class="text-[9px] text-white/15 max-w-lg mx-auto leading-relaxed mb-3"><span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span><span data-lang="hi" class="font-hindi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span></p><p class="text-[9px] font-bold tracking-cred uppercase text-white/15">© 2026 RapidResponse Labs</p></div>
 </div>
 </footer>
 
