@@ -337,7 +337,7 @@ document.getElementById('legalChatBox').scrollIntoView({behavior:'smooth',block:
   btn.innerHTML='<span class="material-symbols-outlined text-white text-lg animate-spin">progress_activity</span>';
   const thinkingBubble=addLegalMsg('Reviewing applicable laws...','bot');
   try{
-    const res=await fetch('https://analyses-turtle-crimes-prize.trycloudflare.com/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,language:lang})});
+    const res=await fetch('https://grounds-instructor-recognition-doubt.trycloudflare.com/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,language:lang})});
     const data=await res.json();
     thinkingBubble.innerHTML=formatAnswer(data.answer);
   }catch(e){
