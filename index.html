@@ -331,7 +331,8 @@ async function sendLegalQuestion(){
   if(!question)return;
   const lang=document.documentElement.lang||'en';
   addLegalMsg(question,'user');
-  input.value='';
+input.value='';
+document.getElementById('legalChatBox').scrollIntoView({behavior:'smooth',block:'start'});
   btn.disabled=true;
   btn.innerHTML='<span class="material-symbols-outlined text-white text-lg animate-spin">progress_activity</span>';
   const thinkingBubble=addLegalMsg('Reviewing applicable laws...','bot');
