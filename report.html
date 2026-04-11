@@ -999,7 +999,7 @@ function loadDistricts(preselectDistrict){
         if(normDist(opts[k].value).split(' ')[0]===fw){matched=opts[k].value;break;}
       }
     }
-    if(matched){dd.value=matched;S.district=matched;}
+    if(matched){dd.value=matched;S.district=matched;S.state=st;}
   }
   dd.onchange=function(){S.district=dd.value;};
   /* sync custom UI */
