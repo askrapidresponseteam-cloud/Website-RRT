@@ -1,354 +1,1226 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NXXTRFLM');</script>
-<!-- End Google Tag Manager -->
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Rapid Response | Animal Emergency Network</title>
-<meta name="description" content="Rapid Response is a community network that connects nearby volunteers when animals need urgent help."/>
-<meta property="og:title" content="Rapid Response | Animal Emergency Network"/>
-<meta property="og:description" content="SOS alerts connecting volunteers during animal emergencies."/>
-<meta property="og:type" content="website"/>
+<meta name="description" content="Rapid Response connects nearby volunteers when animals need urgent help."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V773DF2W0N"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-V773DF2W0N');
-</script>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script>
-tailwind.config={darkMode:"class",theme:{extend:{colors:{primary:"#ff3b30",background:"#000000",surface:"#0a0a0a"},fontFamily:{sans:["Inter","system-ui","sans-serif"],mono:["JetBrains Mono","monospace"],hindi:["Noto Sans Devanagari","sans-serif"]},letterSpacing:{cred:"0.2em",tightx:"-0.05em"}}}}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;600;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"/>
 <style>
-html{scroll-behavior:smooth}
-body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-.hero-bg{background:radial-gradient(ellipse 80% 60% at 50% -10%,#111 0%,#000 100%)}
-.cred-gradient-text{background:linear-gradient(180deg,#FFFFFF 0%,rgba(255,255,255,0.4) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.glass-card{background:rgba(255,255,255,0.02);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.06)}
-.premium-card{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);transition:all 0.5s cubic-bezier(0.16,1,0.3,1)}
-.premium-card:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,59,48,0.15);transform:translateY(-2px)}
-.grid-bg{background-size:60px 60px;background-image:linear-gradient(to right,rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.02) 1px,transparent 1px)}
-.phone-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(255,59,48,0.18) 0%,transparent 70%);filter:blur(100px)}
-.font-hindi{line-height:1.7;letter-spacing:0.01em;font-family:"Noto Sans Devanagari",sans-serif}
-.fade-up{opacity:0;transform:translateY(30px);transition:all 0.9s cubic-bezier(0.16,1,0.3,1)}
-.fade-up.show{opacity:1;transform:translateY(0)}
-.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06) 50%,transparent);max-width:900px;margin:0 auto}
-#legalChatBox::-webkit-scrollbar{width:4px}
-#legalChatBox::-webkit-scrollbar-track{background:transparent}
-#legalChatBox::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:4px}
-[data-lang]{display:none !important}
-html[lang="en"] [data-lang="en"]{display:initial !important}
-html[lang="hi"] [data-lang="hi"]{display:initial !important}
-html[lang="en"] span[data-lang="en"],html[lang="en"] p[data-lang="en"],html[lang="en"] div[data-lang="en"]{display:block !important}
-html[lang="hi"] span[data-lang="hi"],html[lang="hi"] p[data-lang="hi"],html[lang="hi"] div[data-lang="hi"]{display:block !important}
-.light body{background:#ffffff;color:#111111}
-.light .text-white{color:#111111 !important}
-.light .text-white\/90{color:rgba(0,0,0,0.9) !important}
-.light .text-white\/80{color:rgba(0,0,0,0.8) !important}
-.light .text-white\/70{color:rgba(0,0,0,0.72) !important}
-.light .text-white\/60{color:rgba(0,0,0,0.65) !important}
-.light .text-white\/50{color:rgba(0,0,0,0.6) !important}
-.light .text-white\/40{color:rgba(0,0,0,0.55) !important}
-.light .text-white\/35{color:rgba(0,0,0,0.52) !important}
-.light .text-white\/30{color:rgba(0,0,0,0.48) !important}
-.light .text-white\/25{color:rgba(0,0,0,0.42) !important}
-.light .text-white\/20{color:rgba(0,0,0,0.35) !important}
-.light .text-white\/15{color:rgba(0,0,0,0.28) !important}
-.light .text-white\/10{color:rgba(0,0,0,0.15) !important}
-.light .text-white\/8{color:rgba(0,0,0,0.1) !important}
-.light .glass-card{background:#ffffff !important;border:1px solid rgba(0,0,0,0.08) !important;box-shadow:0 1px 10px rgba(0,0,0,0.04)}
-.light .premium-card{background:#f8f8f8 !important;border:1px solid rgba(0,0,0,0.08) !important;box-shadow:0 1px 6px rgba(0,0,0,0.03)}.light .premium-card:hover{background:#f3f3f3 !important;border-color:rgba(255,59,48,0.2) !important}
-.light .hero-bg{background:linear-gradient(to bottom,#fafafa,#f2f2f2)}
-.light .cred-gradient-text{background:linear-gradient(180deg,#111111 0%,rgba(0,0,0,0.5) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.light section{background:#ffffff !important}
-.light .section-divider{background:linear-gradient(90deg,transparent,rgba(0,0,0,0.1) 50%,transparent)}
-.light .grid-bg{background-image:linear-gradient(to right,rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,0,0,.04) 1px,transparent 1px)}
-.light #mainHeader{background:rgba(255,255,255,0.97) !important;border-bottom:1px solid rgba(0,0,0,0.08) !important}
-.light .text-primary{color:#e5342a !important}
-.light .text-green-500{color:#15803d !important}
-.light .text-green-400{color:#16a34a !important}
-.light .text-red-500{color:#dc2626 !important}
-.light [class*="border-white"]{border-color:rgba(0,0,0,0.1) !important}
-.light [class*="bg-white\/"]{background:rgba(0,0,0,0.025) !important}
-.light footer{background:#f9f9f9 !important}
-.light #mobileMenu{background:#ffffff !important}
-.light .mobile-link{color:#111111 !important}
-.light .faq-chip{color:#444 !important;border-color:rgba(0,0,0,0.15) !important}
-.light .faq-chip:hover{background:rgba(0,0,0,0.05) !important;color:#111 !important}
-.light #legalChatBox{background:linear-gradient(to bottom,#ffffff,#f7f7f7) !important}
-.light #legalInput{color:#111111 !important}
-.light .legal-chip{background:#f9f9f9 !important;border-color:rgba(0,0,0,0.1) !important}
-.light .legal-chip p.text-white{color:#111111 !important}
-.light .legal-chip p.text-white\/40{color:rgba(0,0,0,0.55) !important}
-.light .legal-chip p.text-white\/25{color:rgba(0,0,0,0.45) !important}
-.light input,.light textarea{color:#111111 !important}
-.light input::placeholder,.light textarea::placeholder{color:rgba(0,0,0,0.4) !important}
-.light .phone-glow{background:radial-gradient(circle,rgba(255,59,48,0.08) 0%,transparent 70%) !important}
-.light .bg-white.text-black{background:#111111 !important;color:#ffffff !important}
-.light .bg-white.text-black:hover{filter:invert(0) !important;background:#333 !important}
-.light .bg-white.text-black .bg-black\/20{background:rgba(255,255,255,0.2) !important}
-.light .bg-black\/80{background:rgba(255,255,255,0.95) !important}
+/* ═══════════════════════
+   TOKENS — dark (default)
+═══════════════════════ */
+:root {
+  --red:    #FF2D1A;
+  --ra10:   rgba(255,45,26,.10);
+  --ra32:   rgba(255,45,26,.32);
+  --w:      #ffffff;
+  --off:    #E8E4DC;
+  --dim:    rgba(255,255,255,.50);
+  --dimmer: rgba(255,255,255,.26);
+  --ghost:  rgba(255,255,255,.05);
+  --bg:     #080604;
+  --bg2:    #0E0C0A;
+  --b:      rgba(255,255,255,.12);
+  --bs:     rgba(255,255,255,.20);
+  --FD: 'Barlow Condensed', sans-serif;
+  --FB: 'Barlow', sans-serif;
+  --FM: 'JetBrains Mono', monospace;
+  --FH: 'Noto Sans Devanagari', sans-serif;
+}
+/* light mode token overrides */
+html.light {
+  --w:      #0A0806;
+  --off:    #1A1612;
+  --dim:    rgba(10,8,6,.58);
+  --dimmer: rgba(10,8,6,.34);
+  --ghost:  rgba(10,8,6,.04);
+  --bg:     #F3EFE7;
+  --bg2:    #EAE6DE;
+  --b:      rgba(10,8,6,.12);
+  --bs:     rgba(10,8,6,.20);
+  --ra10:   rgba(255,45,26,.07);
+  --ra32:   rgba(255,45,26,.28);
+}
+
+/* ═══════════════════════
+   RESET
+═══════════════════════ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg); color:var(--w);
+  font-family:var(--FB); -webkit-font-smoothing:antialiased;
+  overflow-x:hidden; max-width:100vw;
+}
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-thumb { background:var(--red); }
+img { display:block; max-width:100%; }
+
+/* noise texture overlay */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.42;
+}
+
+/* ═══════════════════════
+   LANGUAGE SWITCHING
+   Strategy: all [data-lang] hidden by default.
+   html[lang="XX"] shows only matching ones.
+   Block-level elements need display:block explicitly.
+═══════════════════════ */
+[data-lang] { display:none !important; }
+html[lang="en"] [data-lang="en"] { display:revert !important; }
+html[lang="hi"] [data-lang="hi"] { display:revert !important; }
+/* Force block display for block-level containers */
+html[lang="en"] div[data-lang="en"],
+html[lang="en"] p[data-lang="en"],
+html[lang="en"] span[data-lang="en"] { display:block !important; }
+html[lang="hi"] div[data-lang="hi"],
+html[lang="hi"] p[data-lang="hi"],
+html[lang="hi"] span[data-lang="hi"] { display:block !important; }
+/* Inline spans inside headings stay inline */
+html[lang="en"] h1 span[data-lang="en"],
+html[lang="en"] h2 span[data-lang="en"],
+html[lang="en"] h3 span[data-lang="en"],
+html[lang="en"] h4 span[data-lang="en"] { display:inline !important; }
+html[lang="hi"] h1 span[data-lang="hi"],
+html[lang="hi"] h2 span[data-lang="hi"],
+html[lang="hi"] h3 span[data-lang="hi"],
+html[lang="hi"] h4 span[data-lang="hi"] { display:inline !important; }
+
+/* ─── Hindi body text helper ─── */
+.hi {
+  font-family:var(--FH);
+  line-height:1.55;
+  letter-spacing:.01em;
+  font-weight:600;
+}
+
+/* ═══════════════════════
+   UTILITIES
+═══════════════════════ */
+.wrap { max-width:1160px; margin:0 auto; padding:0 20px; }
+@media(min-width:768px) { .wrap { padding:0 40px; } }
+
+.sec { padding:80px 20px; }
+@media(min-width:768px) { .sec { padding:100px 40px; } }
+
+.div {
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--bs) 20%, var(--bs) 80%, transparent);
+}
+
+/* Eyebrow mono label */
+.lbl {
+  display:block;
+  font-family:var(--FM); font-size:10px;
+  letter-spacing:.34em; text-transform:uppercase;
+  color:var(--red); margin-bottom:14px;
+}
+/* Hindi eyebrow */
+.lbl .hi {
+  font-family:var(--FH); font-size:11px;
+  letter-spacing:.02em; text-transform:none;
+  font-weight:600; line-height:1.4;
+}
+
+/*
+  DISPLAY HEADING SYSTEM
+  ──────────────────────
+  English: Barlow Condensed, weight 900, tight leading 0.88
+  Hindi:   Noto Sans Devanagari, weight 800.
+           Devanagari glyphs are ~38% taller per-em than
+           Latin Condensed, so we use font-size: 0.62em
+           relative to the parent's English size, giving
+           visually equivalent block height.
+           line-height: 1.22 to prevent matra clipping.
+
+  Usage: wrap heading text in .en-h and .hi-h spans,
+  both with matching data-lang attributes. The parent
+  .dh sets the English size via font-size on the element.
+*/
+.dh { font-family:var(--FD); font-weight:900; text-transform:uppercase; letter-spacing:-.01em; }
+.dh .en-h { line-height:.88; display:block; }
+.dh .hi-h {
+  display:block;
+  font-family:var(--FH); font-weight:800;
+  font-size:.62em;       /* compensates for Devanagari's taller em-height */
+  line-height:1.22;
+  letter-spacing:.01em;
+  text-transform:none;
+}
+
+/* scroll reveal */
+.rv { opacity:0; transform:translateY(20px); transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.rv.on { opacity:1; transform:none; }
+.rv.d1 { transition-delay:.08s; }
+.rv.d2 { transition-delay:.16s; }
+.rv.d3 { transition-delay:.24s; }
+.rv.d4 { transition-delay:.32s; }
+
+/* ═══════════════════════
+   HEADER
+═══════════════════════ */
+#hdr {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  height:58px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px; border-bottom:1px solid transparent;
+  transition:background .3s, border-color .3s;
+}
+@media(min-width:768px) { #hdr { padding:0 40px; } }
+#hdr.stuck { background:rgba(8,6,4,.96); backdrop-filter:blur(20px); border-bottom-color:var(--bs); }
+html.light #hdr.stuck { background:rgba(243,239,231,.97); }
+
+.logo { display:flex; align-items:center; gap:9px; text-decoration:none; flex-shrink:0; }
+.logo-sq { width:28px; height:28px; background:var(--red); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.logo-sq .material-symbols-outlined { font-size:14px; color:#fff; }
+.logo-t { font-family:var(--FD); font-weight:800; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--w); white-space:nowrap; }
+
+nav.desk { display:none; align-items:center; gap:24px; }
+@media(min-width:960px) { nav.desk { display:flex; } }
+nav.desk a { font-family:var(--FM); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--dimmer); text-decoration:none; transition:color .2s; white-space:nowrap; }
+nav.desk a:hover { color:var(--w); }
+nav.desk a.cta { color:var(--red); border:1px solid var(--ra32); padding:6px 14px; transition:all .2s; }
+nav.desk a.cta:hover { background:var(--red); color:#fff; }
+/* Hindi nav text */
+nav.desk a .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; text-transform:none; line-height:1.3; }
+
+.hdr-r { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+.lb { font-family:var(--FM); font-size:10px; letter-spacing:.14em; background:none; border:none; color:var(--dimmer); cursor:pointer; padding:0; transition:color .2s; }
+.lb:hover { color:var(--w); }
+.lsep { color:var(--b); font-size:11px; }
+.mode-b { width:28px; height:28px; background:var(--ghost); border:1px solid var(--b); cursor:pointer; font-size:12px; display:flex; align-items:center; justify-content:center; transition:background .2s; flex-shrink:0; }
+.mode-b:hover { background:rgba(128,128,128,.15); }
+.mob-btn { background:none; border:none; color:var(--w); cursor:pointer; display:flex; align-items:center; padding:4px; }
+.mob-btn .material-symbols-outlined { font-size:22px; }
+@media(min-width:960px) { .mob-btn { display:none; } }
+
+/* ═══════════════════════
+   MOBILE MENU
+═══════════════════════ */
+#mmo { position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:290; opacity:0; pointer-events:none; transition:opacity .3s; }
+#mm {
+  position:fixed; top:0; right:0; bottom:0; width:min(280px, 85vw);
+  background:var(--bg); border-left:2px solid var(--bs); z-index:300;
+  transform:translateX(100%); transition:transform .4s cubic-bezier(.16,1,.3,1);
+  display:flex; flex-direction:column; padding:72px 28px 40px; gap:20px; overflow-y:auto;
+}
+#mm a { font-family:var(--FD); font-weight:700; font-size:20px; letter-spacing:.06em; text-transform:uppercase; color:var(--dimmer); text-decoration:none; transition:color .2s; line-height:1; }
+#mm a.hi { font-family:var(--FH); font-size:17px; letter-spacing:.01em; text-transform:none; font-weight:700; line-height:1.4; }
+#mm a:hover, #mm a.r { color:var(--red); }
+#mmc { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--dimmer); cursor:pointer; font-size:22px; line-height:1; }
+
+/* ═══════════════════════
+   HERO
+═══════════════════════ */
+#hero {
+  min-height:100svh; padding:80px 20px 60px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; position:relative; overflow:hidden;
+}
+@media(min-width:768px) { #hero { padding:100px 40px 70px; } }
+
+#hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 65% at 50% 35%, black 0%, transparent 100%);
+}
+html.light #hero::before {
+  background-image: linear-gradient(rgba(10,8,6,.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(10,8,6,.05) 1px, transparent 1px);
+}
+
+.h-heat {
+  position:absolute; top:-20%; left:50%; transform:translateX(-50%);
+  width:min(900px, 130vw); height:600px; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 30%, rgba(255,45,26,.16) 0%, rgba(255,45,26,.04) 50%, transparent 70%);
+}
+.h-content { position:relative; z-index:2; width:100%; max-width:960px; }
+
+/* eyebrow pill */
+.h-eye {
+  display:inline-flex; align-items:center; gap:10px;
+  border:1px solid var(--bs); padding:7px 16px; margin-bottom:36px; max-width:100%;
+}
+.h-dot { width:7px; height:7px; flex-shrink:0; border-radius:50%; background:var(--red); animation:beat 1.8s ease-in-out infinite; }
+@keyframes beat { 0%,100%{ box-shadow:0 0 0 0 rgba(255,45,26,.6); } 50%{ box-shadow:0 0 0 7px rgba(255,45,26,0); } }
+.h-eye .el { font-family:var(--FM); font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:var(--dimmer); }
+.h-eye .el.hi { font-family:var(--FH); font-size:11px; letter-spacing:.03em; text-transform:none; font-weight:600; line-height:1.4; }
+
+/* hero headline — separate classes for EN vs HI to control each independently */
+.h1 { margin-bottom:28px; overflow-wrap:break-word; word-break:break-word; }
+.h1 .en-b {
+  display:block; font-family:var(--FD); font-weight:900;
+  font-size:clamp(3.2rem, 12vw, 10.5rem);
+  line-height:.88; letter-spacing:-.02em; text-transform:uppercase;
+}
+.h1 .en-b.ghost { -webkit-text-stroke:1.5px rgba(255,255,255,.22); color:transparent; font-style:italic; }
+html.light .h1 .en-b.ghost { -webkit-text-stroke-color:rgba(10,8,6,.20); }
+.h1 .hi-b {
+  display:block; font-family:var(--FH); font-weight:800;
+  font-size:clamp(1.9rem, 7vw, 5.8rem);  /* ~0.55× English size for equal visual weight */
+  line-height:1.22; letter-spacing:.01em;
+}
+.h1 .hi-b.ghost { -webkit-text-stroke:1.2px rgba(255,255,255,.22); color:transparent; }
+html.light .h1 .hi-b.ghost { -webkit-text-stroke-color:rgba(10,8,6,.20); }
+
+/* hero sub */
+.h-sub { font-size:clamp(14px, 3vw, 17px); font-weight:300; color:var(--dim); line-height:1.65; max-width:400px; margin:0 auto 36px; }
+.h-sub .hi { font-size:clamp(13px, 2.8vw, 16px); line-height:1.6; font-weight:400; }
+
+/* store buttons */
+.h-ctas { display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom:12px; }
+@media(min-width:480px) { .h-ctas { flex-direction:row; justify-content:center; } }
+.btn-s {
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  background:var(--w); color:var(--bg);
+  width:min(220px, 100%); height:50px;
+  font-family:var(--FD); font-weight:800; font-size:13px;
+  letter-spacing:.18em; text-transform:uppercase; text-decoration:none;
+  border:2px solid var(--w); flex-shrink:0; transition:all .2s;
+}
+.btn-s:hover { background:transparent; color:var(--w); border-color:var(--w); }
+html.light .btn-s:hover { color:var(--bg); border-color:var(--bg); background:transparent; }
+.btn-s img { width:16px; height:16px; flex-shrink:0; }
+html.light .btn-s img { filter:invert(1); }
+html.light .btn-s:hover img { filter:none; }
+.btn-r {
+  display:inline-flex; align-items:center; gap:7px;
+  color:var(--red); font-family:var(--FM); font-size:10px;
+  letter-spacing:.18em; text-transform:uppercase; text-decoration:none;
+  padding:6px 0; transition:color .2s;
+}
+.btn-r:hover { color:var(--w); }
+.btn-r .material-symbols-outlined { font-size:13px; }
+.btn-r .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; text-transform:none; line-height:1.3; }
+
+/* learn bar */
+.h-bar {
+  display:flex; flex-wrap:wrap; align-items:stretch;
+  border:1px solid var(--bs); margin-top:40px; overflow:hidden;
+}
+.h-bar-lbl {
+  width:100%; padding:11px 16px;
+  font-family:var(--FM); font-size:9px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--dimmer); background:rgba(128,128,128,.04);
+  border-bottom:1px solid var(--b); display:flex; align-items:center;
+}
+.h-bar-lbl .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; text-transform:none; line-height:1.3; }
+.h-bar a {
+  display:flex; align-items:center; gap:7px; padding:11px 14px;
+  font-family:var(--FM); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--dimmer); text-decoration:none;
+  border-top:1px solid var(--b); border-right:1px solid var(--b);
+  transition:all .2s; white-space:nowrap; flex:1 1 auto; min-width:0;
+}
+.h-bar a:last-child { border-right:none; }
+.h-bar a:hover { color:var(--w); background:rgba(255,45,26,.07); }
+.h-bar a .material-symbols-outlined { font-size:13px; color:var(--red); flex-shrink:0; }
+.h-bar a .hi { font-family:var(--FH); font-size:10px; letter-spacing:.01em; text-transform:none; line-height:1.3; }
+@media(min-width:700px) {
+  .h-bar-lbl { width:auto; border-bottom:none; border-right:1px solid var(--b); }
+  .h-bar a { border-top:none; }
+}
+
+/* ═══════════════════════
+   HOW IT WORKS
+═══════════════════════ */
+#how { background:var(--bg2); }
+
+/* heading row: left-aligned, max half-width on desktop */
+.how-hd {
+  max-width:600px;     /* never let Hindi heading sprawl full width */
+  margin-bottom:44px;
+}
+.how-hd h2 { font-size:clamp(2.4rem, 7vw, 5.5rem); margin-bottom:14px; }
+.how-desc { font-size:15px; color:var(--dim); line-height:1.65; font-weight:300; }
+.how-desc .hi { font-size:14px; line-height:1.6; }
+
+/* phone + steps layout */
+.how-lay { display:flex; flex-direction:column; gap:24px; }
+@media(min-width:860px) { .how-lay { flex-direction:row; align-items:flex-start; gap:32px; } }
+
+/* phone column */
+.ph-col { flex-shrink:0; width:180px; margin:0 auto; display:flex; flex-direction:column; }
+@media(min-width:860px) { .ph-col { margin:0; } }
+.ph-frame {
+  border:1px solid var(--bs); padding:16px;
+  background:linear-gradient(160deg, rgba(128,128,128,.04) 0%, transparent 60%);
+  position:relative;
+}
+.ph-frame::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--red), rgba(255,45,26,.2), transparent);
+}
+.ph-badge {
+  background:var(--red); padding:9px 14px;
+  font-family:var(--FM); font-size:9px; letter-spacing:.24em; text-transform:uppercase;
+  color:#fff; text-align:center;
+}
+.ph-badge .hi { font-family:var(--FH); font-size:10px; letter-spacing:.01em; text-transform:none; line-height:1.3; }
+
+/* steps grid */
+.steps-wrap { flex:1; min-width:0; }
+.steps-g { display:grid; grid-template-columns:1fr; gap:1px; background:var(--b); }
+@media(min-width:480px) { .steps-g { grid-template-columns:1fr 1fr; } }
+
+.step {
+  background:var(--bg2); padding:24px 22px;
+  position:relative; overflow:hidden; transition:background .3s;
+}
+.step:hover { background:rgba(255,45,26,.04); }
+.snum {
+  position:absolute; bottom:-10px; right:8px;
+  font-family:var(--FD); font-weight:900; font-size:80px;
+  color:rgba(128,128,128,.06); line-height:1; letter-spacing:-.04em; pointer-events:none;
+}
+.s-ic {
+  width:32px; height:32px; flex-shrink:0;
+  border:1px solid var(--ra32); background:var(--ra10);
+  display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+}
+.s-ic .material-symbols-outlined { font-size:14px; color:var(--red); }
+.s-lbl { font-family:var(--FM); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--red); margin-bottom:6px; display:block; }
+.step h4 { font-family:var(--FD); font-weight:700; font-size:16px; letter-spacing:.04em; text-transform:uppercase; color:var(--w); margin-bottom:8px; line-height:1; }
+.step h4 .hi { font-family:var(--FH); font-size:13px; font-weight:700; text-transform:none; letter-spacing:.01em; line-height:1.3; }
+.step p { font-size:13px; color:var(--dim); line-height:1.6; font-weight:300; }
+.step p .hi { font-size:12px; line-height:1.55; }
+
+.how-note {
+  background:var(--bg2); border-top:1px solid var(--b);
+  padding:18px 22px; display:flex; align-items:flex-start; gap:12px;
+}
+.how-note .material-symbols-outlined { color:var(--red); font-size:15px; flex-shrink:0; margin-top:2px; }
+.how-note p { font-size:13px; color:var(--dimmer); line-height:1.6; }
+.how-note p .hi { font-size:12px; line-height:1.55; }
+
+/* ═══════════════════════
+   CLARITY
+═══════════════════════ */
+.cl-hd { margin-bottom:44px; }
+.cl-hd h2 { font-size:clamp(2.2rem, 6vw, 5rem); }
+
+.cl-grid { display:grid; grid-template-columns:1fr; gap:2px; background:var(--bs); }
+@media(min-width:640px) { .cl-grid { grid-template-columns:1fr 1fr; } }
+
+.cl-col { background:var(--bg); padding:32px 26px; }
+@media(min-width:768px) { .cl-col { padding:40px 36px; } }
+
+.cl-ch { display:flex; align-items:center; gap:12px; margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--b); }
+.cl-ico { width:34px; height:34px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.cl-ico.gn { background:rgba(40,200,80,.08); border:1px solid rgba(40,200,80,.28); }
+.cl-ico.gn .material-symbols-outlined { color:#28C850; font-size:15px; }
+.cl-ico.rd { background:var(--ra10); border:1px solid var(--ra32); }
+.cl-ico.rd .material-symbols-outlined { color:var(--red); font-size:15px; }
+.cl-ch h3 { font-family:var(--FD); font-weight:800; font-size:17px; letter-spacing:.08em; text-transform:uppercase; line-height:1; }
+.cl-ch h3.gn { color:#28C850; }
+.cl-ch h3.rd { color:var(--red); }
+.cl-ch h3 .hi { font-family:var(--FH); font-size:14px; font-weight:700; text-transform:none; letter-spacing:.01em; line-height:1.3; }
+
+.cl-it { display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid rgba(128,128,128,.08); }
+.cl-it:last-child { border-bottom:none; padding-bottom:0; }
+.cl-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:9px; }
+.cl-dot.gn { background:#28C850; }
+.cl-dot.rd { background:var(--red); }
+.cl-it p { font-size:14px; color:var(--dim); line-height:1.6; font-weight:300; }
+.cl-it p .hi { font-size:13px; line-height:1.55; }
+
+/* ═══════════════════════
+   FAQ
+═══════════════════════ */
+#faq { background:var(--bg2); }
+
+.faq-lay { display:flex; flex-direction:column; gap:36px; }
+@media(min-width:860px) { .faq-lay { flex-direction:row; gap:56px; align-items:flex-start; } }
+
+.faq-l { flex-shrink:0; }
+@media(min-width:860px) { .faq-l { width:210px; } }
+.faq-l h2 { font-size:clamp(2.4rem, 7vw, 4.5rem); line-height:.88; margin-bottom:14px; }
+.faq-l h2 .hi-h { font-size:.62em; } /* inherits from .dh rule */
+.faq-l p { font-size:14px; color:var(--dim); line-height:1.65; margin-bottom:20px; }
+.faq-l p .hi { font-size:13px; line-height:1.6; }
+.ask-lbl { font-family:var(--FM); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--dimmer); margin-bottom:4px; display:block; }
+.ask-lbl .hi { font-family:var(--FH); font-size:11px; letter-spacing:.01em; text-transform:none; line-height:1.4; }
+.faq-l a { color:var(--red); font-size:13px; font-weight:600; text-decoration:none; }
+.faq-l a:hover { text-decoration:underline; }
+
+.faq-r { flex:1; min-width:0; }
+.faq-sw {
+  display:flex; align-items:center; gap:10px;
+  border:1px solid var(--bs); padding:0 14px; height:48px;
+  background:rgba(128,128,128,.03); margin-bottom:12px; transition:border-color .2s;
+}
+.faq-sw:focus-within { border-color:var(--ra32); }
+.faq-sw .material-symbols-outlined { font-size:17px; color:var(--dimmer); flex-shrink:0; }
+#faqSearch { background:none; border:none; outline:none; color:var(--w); font-size:14px; font-family:var(--FB); flex:1; min-width:0; }
+#faqSearch::placeholder { color:var(--dimmer); }
+.fq-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+.fq-chip {
+  font-family:var(--FM); font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--dimmer); border:1px solid var(--b); padding:5px 11px;
+  background:none; cursor:pointer; transition:all .2s;
+}
+.fq-chip:hover { color:var(--w); border-color:var(--bs); background:var(--ghost); }
+#faqRes { border:1px solid var(--bs); background:var(--bg); }
+.fq-it { padding:18px 20px; border-bottom:1px solid rgba(128,128,128,.08); transition:background .2s; }
+.fq-it:last-child { border-bottom:none; }
+.fq-it:hover { background:rgba(128,128,128,.03); }
+.fq-q { font-family:var(--FD); font-weight:700; font-size:16px; letter-spacing:.02em; color:var(--w); margin-bottom:6px; }
+.fq-q .hi { font-family:var(--FH); font-size:14px; font-weight:700; letter-spacing:.01em; line-height:1.4; }
+.fq-a { font-size:13px; color:var(--dim); line-height:1.65; font-weight:300; }
+.fq-a .hi { font-size:12px; line-height:1.6; }
+#fqEmp {
+  padding:30px 20px; text-align:center;
+  font-family:var(--FM); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--dimmer);
+}
+#fqEmp .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; text-transform:none; line-height:1.5; }
+
+/* ═══════════════════════
+   LEGAL DESK
+═══════════════════════ */
+.leg-hd { margin-bottom:44px; }
+.leg-hd h2 { font-size:clamp(2.2rem, 7vw, 5rem); margin-bottom:12px; }
+.leg-hd p { font-size:15px; color:var(--dim); max-width:480px; line-height:1.65; }
+.leg-hd p .hi { font-size:14px; line-height:1.6; }
+
+.leg-wrap { border:1px solid var(--bs); overflow:hidden; display:flex; flex-direction:column; }
+@media(min-width:860px) { .leg-wrap { flex-direction:row; } }
+
+/* sidebar */
+.leg-sb { background:var(--bg2); flex-shrink:0; }
+@media(min-width:860px) { .leg-sb { width:210px; border-right:1px solid var(--bs); } }
+
+.leg-sb-h { padding:14px 18px; border-bottom:1px solid var(--b); background:rgba(255,45,26,.05); }
+.leg-sb-h h4 { font-family:var(--FD); font-weight:800; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--w); margin-bottom:3px; }
+.leg-sb-h p { font-size:11px; color:var(--dimmer); font-family:var(--FM); }
+
+.leg-tags { padding:14px 16px; border-bottom:1px solid var(--b); display:flex; flex-wrap:wrap; gap:6px; }
+@media(min-width:860px) { .leg-tags { flex-direction:column; } }
+.ltag {
+  display:flex; align-items:center; gap:7px;
+  font-family:var(--FM); font-size:9px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--dimmer); padding:7px 10px; border:1px solid var(--b);
+  background:rgba(128,128,128,.02); white-space:nowrap;
+}
+.ltag .material-symbols-outlined { font-size:11px; color:var(--red); flex-shrink:0; }
+
+.leg-ql { padding:12px 18px 5px; font-family:var(--FM); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--dimmer); }
+.leg-qc { padding:0 14px 16px; display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+@media(min-width:860px) { .leg-qc { grid-template-columns:1fr; } }
+.lqc {
+  background:rgba(128,128,128,.02); border:1px solid var(--b);
+  padding:10px 11px; cursor:pointer; text-align:left; transition:all .2s; width:100%;
+}
+.lqc:hover { background:var(--ra10); border-color:var(--ra32); }
+.lqc .ct { font-size:12px; font-weight:600; color:var(--w); margin-bottom:3px; line-height:1.35; }
+.lqc .cs { font-family:var(--FM); font-size:9px; color:var(--dimmer); letter-spacing:.08em; text-transform:uppercase; }
+
+/* chat panel */
+.leg-panel { flex:1; min-width:0; background:var(--bg); display:flex; flex-direction:column; }
+
+.leg-ph {
+  padding:12px 18px; border-bottom:1px solid var(--b);
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(128,128,128,.02); flex-shrink:0;
+}
+.lph-dots { display:flex; gap:5px; }
+.lph-dot { width:10px; height:10px; border-radius:50%; }
+.lph-t {
+  font-family:var(--FM); font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--dimmer); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  padding:0 10px; flex:1; text-align:center; min-width:0;
+}
+.lph-s { display:flex; align-items:center; gap:5px; font-family:var(--FM); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:#28C850; flex-shrink:0; }
+.lph-sd { width:6px; height:6px; border-radius:50%; background:#28C850; animation:beat 2s infinite; flex-shrink:0; }
+
+#lcb {
+  flex:1; overflow-y:auto;
+  min-height:260px; max-height:400px;
+  padding:18px; display:flex; flex-direction:column; gap:14px;
+}
+#lcb::-webkit-scrollbar { width:2px; }
+#lcb::-webkit-scrollbar-thumb { background:var(--ra32); }
+
+.cu { display:flex; justify-content:flex-end; }
+.cu .cb {
+  background:var(--ra10); border:1px solid rgba(255,45,26,.22);
+  border-radius:10px 10px 2px 10px;
+  padding:10px 13px; max-width:82%;
+  font-size:13px; color:rgba(255,255,255,.82); line-height:1.55;
+  overflow-wrap:break-word; word-break:break-word;
+}
+html.light .cu .cb { color:rgba(10,8,6,.82); }
+.cbo { display:flex; gap:10px; align-items:flex-start; }
+.cbo-ic {
+  width:26px; height:26px; flex-shrink:0;
+  border:1px solid var(--ra32); background:var(--ra10);
+  display:flex; align-items:center; justify-content:center; margin-top:2px;
+}
+.cbo-ic .material-symbols-outlined { font-size:12px; color:var(--red); }
+.cbo .cb {
+  background:rgba(128,128,128,.04); border:1px solid var(--b);
+  border-radius:2px 10px 10px 10px;
+  padding:12px 14px; flex:1; min-width:0;
+  font-size:13px; color:var(--dim); line-height:1.7;
+  overflow-wrap:break-word; word-break:break-word;
+}
+.cbo .cb strong { color:var(--off); font-weight:600; }
+
+.leg-ir { display:flex; align-items:center; border-top:1px solid var(--bs); flex-shrink:0; }
+.leg-ir .ii { padding:0 12px; font-size:15px; color:var(--dimmer); flex-shrink:0; }
+#li { flex:1; min-width:0; background:none; border:none; outline:none; color:var(--w); font-size:14px; font-family:var(--FB); padding:15px 0; }
+#li::placeholder { color:var(--dimmer); }
+#lb { width:48px; height:48px; background:var(--red); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s; }
+#lb:hover { background:#e52515; }
+#lb:disabled { background:rgba(255,45,26,.25); cursor:default; }
+#lb .material-symbols-outlined { font-size:17px; color:#fff; }
+
+.leg-disc {
+  padding:8px 16px; border-top:1px solid rgba(128,128,128,.08);
+  font-family:var(--FM); font-size:9px; letter-spacing:.08em; text-transform:uppercase;
+  color:rgba(128,128,128,.4); text-align:center; flex-shrink:0;
+}
+.leg-disc .hi { font-family:var(--FH); font-size:10px; letter-spacing:.01em; text-transform:none; line-height:1.4; }
+
+.tdots { display:flex; gap:5px; align-items:center; padding:3px 0; }
+.tdot { width:5px; height:5px; border-radius:50%; background:var(--red); opacity:.6; animation:td 1.2s ease-in-out infinite; }
+.tdot:nth-child(2) { animation-delay:.2s; }
+.tdot:nth-child(3) { animation-delay:.4s; }
+@keyframes td { 0%,100%{ transform:scale(.7); opacity:.3; } 50%{ transform:scale(1.2); opacity:1; } }
+
+/* ═══════════════════════
+   FOOTER
+═══════════════════════ */
+footer { background:var(--bg2); border-top:1px solid var(--bs); padding:56px 20px 40px; }
+@media(min-width:768px) { footer { padding:60px 40px 40px; } }
+
+.ft-in {
+  max-width:1160px; margin:0 auto;
+  display:grid; grid-template-columns:1fr; gap:32px;
+}
+@media(min-width:560px) { .ft-in { grid-template-columns:1fr 1fr; } }
+@media(min-width:860px) { .ft-in { grid-template-columns:1fr 1fr 1fr; } }
+
+.ft-brand p { font-size:13px; color:var(--dimmer); line-height:1.65; max-width:220px; margin-top:12px; }
+.ft-brand p .hi { font-size:12px; line-height:1.6; }
+.ft-lbl { font-family:var(--FM); font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--red); margin-bottom:12px; display:block; }
+.ft-col a { display:block; font-size:13px; color:var(--dimmer); text-decoration:none; margin-bottom:7px; transition:color .2s; }
+.ft-col a:hover { color:var(--w); }
+.ft-col a .hi { font-family:var(--FH); font-size:12px; line-height:1.5; }
+.ft-contact a { color:var(--red); font-weight:600; font-size:14px; }
+.ft-contact .note-p { font-size:11px; color:rgba(128,128,128,.5); margin-top:5px; font-family:var(--FM); }
+.ft-contact .note-p .hi { font-family:var(--FH); font-size:11px; line-height:1.5; }
+.ft-note { margin-top:12px; padding:12px 14px; border:1px solid var(--b); background:rgba(128,128,128,.02); }
+.ft-note p { font-size:11px; color:var(--dimmer); font-family:var(--FM); letter-spacing:.04em; line-height:1.6; }
+.ft-note p .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; line-height:1.6; font-weight:400; }
+
+.ft-bot {
+  max-width:1160px; margin:32px auto 0; padding-top:20px;
+  border-top:1px solid rgba(128,128,128,.1);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
+}
+.ft-bot p { font-family:var(--FM); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(128,128,128,.45); }
+.ft-bot p .hi { font-family:var(--FH); font-size:10px; letter-spacing:.01em; text-transform:none; line-height:1.4; }
+
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.sp { animation:spin .8s linear infinite; }
 </style>
 </head>
-<body class="font-sans">
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXXTRFLM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>
-function updateFaqPlaceholder(lang){var f=document.getElementById("faqSearch");if(!f)return;f.placeholder=lang==="hi"?"कोई शब्द लिखकर जवाब खोजें...":"Search by keyword...";}
-function setLang(lang){document.documentElement.lang=lang;updateFaqPlaceholder(lang);}
-document.addEventListener("DOMContentLoaded",function(){setLang('en');});
-</script>
-<div class="relative flex min-h-screen flex-col overflow-x-hidden">
-<div id="mobileMenuOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
-<div id="mobileMenu" class="fixed top-0 right-0 h-full w-[300px] bg-black z-[100] translate-x-full transition-transform duration-500 ease-out flex flex-col pt-28 px-10 gap-10 text-lg">
-<a href="#how" class="mobile-link text-white">How it Works</a><a href="#clarity" class="mobile-link text-white">Clarity</a><a href="#faq" class="mobile-link text-white">FAQ</a><a href="#legal" class="mobile-link text-white">Legal Desk</a><a href="#support" class="mobile-link text-white">Support</a><a href="/report" class="mobile-link text-primary font-bold">Report Incident</a>
-<button id="closeMenu" class="absolute top-8 right-8 text-white"><span class="material-symbols-outlined text-3xl">close</span></button>
+<body>
+
+<div id="mmo" onclick="closeMM()"></div>
+<div id="mm">
+  <button id="mmc" onclick="closeMM()">✕</button>
+  <a href="#how"     onclick="closeMM()" data-lang="en">How it Works</a>
+  <a href="#how"     onclick="closeMM()" data-lang="hi" class="hi">कैसे चलता है</a>
+  <a href="#clarity" onclick="closeMM()" data-lang="en">Clarity</a>
+  <a href="#clarity" onclick="closeMM()" data-lang="hi" class="hi">साफ़ समझ</a>
+  <a href="#faq"     onclick="closeMM()">FAQ</a>
+  <a href="#legal"   onclick="closeMM()" data-lang="en">Legal Desk</a>
+  <a href="#legal"   onclick="closeMM()" data-lang="hi" class="hi">कानूनी मदद</a>
+  <a href="/report"  onclick="closeMM()" class="r" data-lang="en">Report →</a>
+  <a href="/report"  onclick="closeMM()" class="r hi" data-lang="hi">रिपोर्ट करें →</a>
 </div>
-<header id="mainHeader" class="fixed top-0 left-0 right-0 z-[100] backdrop-blur-2xl transition-all duration-500">
-<div class="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 py-5 flex items-center justify-between">
-<a href="/" class="flex items-center gap-3 cursor-pointer">
-  <div class="w-8 h-8 border border-white/15 flex items-center justify-center">
-    <span class="material-symbols-outlined text-primary text-lg">pets</span>
+
+<header id="hdr">
+  <a href="/" class="logo">
+    <div class="logo-sq"><span class="material-symbols-outlined">pets</span></div>
+    <span class="logo-t">Rapid Response</span>
+  </a>
+  <nav class="desk">
+    <a href="#how">
+      <span data-lang="en">How it Works</span>
+      <span data-lang="hi" class="hi">कैसे चलता है</span>
+    </a>
+    <a href="#faq">FAQ</a>
+    <a href="#legal">
+      <span data-lang="en">Legal Desk</span>
+      <span data-lang="hi" class="hi">कानूनी मदद</span>
+    </a>
+    <a href="/report" class="cta">
+      <span data-lang="en">Report</span>
+      <span data-lang="hi" class="hi">रिपोर्ट</span>
+    </a>
+  </nav>
+  <div class="hdr-r">
+    <button class="mode-b" id="modeBtn" onclick="toggleMode()">☀️</button>
+    <button class="lb" onclick="setLang('en')">EN</button>
+    <span class="lsep">|</span>
+    <button class="lb hi" onclick="setLang('hi')" style="font-size:13px">हिंदी</button>
+    <button class="mob-btn" onclick="openMM()"><span class="material-symbols-outlined">menu</span></button>
   </div>
-  <h2 class="text-white text-[11px] font-black tracking-cred uppercase">Rapid Response</h2>
-</a>
-<nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
-<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कैसे चलता है</span></a>
-<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="#faq"><span data-lang="en">FAQ</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">सवाल-जवाब</span></a>
-<a class="text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-cred uppercase" href="#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">कानूनी मदद</span></a>
-<a class="text-primary hover:text-white transition-colors border border-primary/30 px-4 py-1.5 hover:bg-primary text-[10px] font-bold tracking-cred uppercase" href="/report"><span data-lang="en">Report</span><span data-lang="hi" class="font-hindi text-[13px] font-semibold tracking-normal">रिपोर्ट</span></a>
-</nav>
-<div class="flex items-center gap-4 text-xs font-bold">
-<button onclick="toggleMode()" id="modeBtn" class="w-9 h-9 border border-white/10 flex items-center justify-center text-sm hover:bg-white/5 transition">☀️</button>
-<button onclick="setLang('en')" class="text-white/50 hover:text-white text-[10px] tracking-wider">EN</button><span class="text-white/15">|</span><button onclick="setLang('hi')" class="text-white/50 hover:text-white font-hindi text-xs">हिंदी</button>
-<button id="mobileMenuBtn" class="lg:hidden text-white ml-2"><span class="material-symbols-outlined text-2xl">menu</span></button>
-</div>
-</div>
 </header>
-<section class="hero-bg relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-24 text-center fade-up">
-<div class="absolute inset-0 grid-bg opacity-30"></div>
-<div class="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
-<span class="text-primary/80 font-mono tracking-[0.5em] text-[9px] uppercase mb-10 block"><span data-lang="en">Animal Emergency Network</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">जानवरों का आपातकालीन नेटवर्क</span></span>
-<h1 class="cred-gradient-text mb-8"><span data-lang="en" class="block text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-black tracking-tight leading-[0.95] uppercase">Help. When<br/>Seconds<br/><span class="text-white/20 italic">Matter.</span></span><span data-lang="hi" class="font-hindi block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1]">मदद। जब<br/>हर सेकंड<br/><span class="text-white/20 italic">बहुत मायने रखता है।</span></span></h1>
-<p class="text-white/35 text-base md:text-lg mx-auto mb-14 font-light max-w-lg leading-relaxed"><span data-lang="en">One tap connects you to nearby volunteers<br class="hidden sm:block"/> when an animal needs urgent help.</span><span data-lang="hi" class="font-hindi">एक टैप से आसपास के लोगों तक मदद की गुहार पहुँचती है।</span></p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-<a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" class="w-52 bg-white text-black h-12 flex items-center justify-center gap-3 font-black text-[10px] tracking-cred uppercase hover:invert transition-all"><img loading="lazy" src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000" class="w-4 h-4"/><span class="w-px h-3.5 bg-black/20"></span><span data-lang="en">Android</span><span data-lang="hi" class="font-hindi">एंड्रॉयड</span></a>
-<a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" class="w-52 bg-white text-black h-12 flex items-center justify-center gap-3 font-black text-[10px] tracking-cred uppercase hover:invert transition-all"><img loading="lazy" src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000" class="w-4 h-4"/><span class="w-px h-3.5 bg-black/20"></span><span data-lang="en">iPhone</span><span data-lang="hi" class="font-hindi">आईफोन</span></a>
-</div>
-<a href="/report" class="inline-flex items-center gap-2 text-primary/70 hover:text-primary text-[10px] font-bold tracking-cred uppercase transition-colors mb-16"><span class="material-symbols-outlined text-xs">report</span><span data-lang="en">Report Incident</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">घटना रिपोर्ट करें</span></a>
-<div class="premium-card px-8 py-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-<span class="text-white/20 text-[9px] tracking-cred uppercase font-bold"><span data-lang="en">Learn</span><span data-lang="hi" class="font-hindi tracking-normal text-[10px]">जानें</span></span>
-<a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">play_circle</span><span data-lang="en">iOS Demo</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">आईओएस डेमो</span></a>
-<a href="https://drive.google.com/file/d/1jsseovdhhCvx6k0SMhIx2uwowkeElnfF/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">play_circle</span><span data-lang="en">Android Demo</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">एंड्रॉयड डेमो</span></a>
-<a href="https://drive.google.com/file/d/1infaiPzLyf7QI6W9c_HD4lGRrXnoxReP/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">settings</span><span data-lang="en">Setup Guide</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">सेटअप गाइड</span></a>
-<a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview" target="_blank" class="text-white/50 hover:text-white text-[10px] font-bold tracking-cred uppercase flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-xs">info</span><span data-lang="en">How the App Works</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">ऐप कैसे काम करता है</span></a>
-</div>
-</div>
-<div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-20"><span class="material-symbols-outlined text-white text-lg animate-bounce">expand_more</span></div>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="h-heat"></div>
+  <div class="h-content">
+
+    <div class="h-eye rv">
+      <span class="h-dot"></span>
+      <span class="el" data-lang="en">Animal Emergency Network</span>
+      <span class="el hi" data-lang="hi">जानवरों का आपातकालीन नेटवर्क</span>
+    </div>
+
+    <div class="h1 rv d1">
+      <span class="en-b" data-lang="en">Help.</span>
+      <span class="en-b" data-lang="en">When Seconds</span>
+      <span class="en-b ghost" data-lang="en">Matter.</span>
+      <span class="hi-b" data-lang="hi">मदद।</span>
+      <span class="hi-b" data-lang="hi">हर सेकंड</span>
+      <span class="hi-b ghost" data-lang="hi">मायने रखता है।</span>
+    </div>
+
+    <p class="h-sub rv d2">
+      <span data-lang="en">One tap connects you to nearby volunteers when an animal needs urgent help.</span>
+      <span data-lang="hi" class="hi">एक टैप से आसपास के लोगों तक मदद पहुँचती है।</span>
+    </p>
+
+    <div class="h-ctas rv d3">
+      <a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" class="btn-s">
+        <img src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000" alt="" loading="lazy"/>
+        <span data-lang="en">Android</span>
+        <span data-lang="hi" class="hi">एंड्रॉयड</span>
+      </a>
+      <a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" class="btn-s">
+        <img src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000" alt="" loading="lazy"/>
+        <span data-lang="en">iPhone</span>
+        <span data-lang="hi" class="hi">आईफोन</span>
+      </a>
+    </div>
+
+    <div class="rv d3">
+      <a href="/report" class="btn-r">
+        <span class="material-symbols-outlined">report</span>
+        <span data-lang="en">Report Incident</span>
+        <span data-lang="hi" class="hi btn-r">घटना रिपोर्ट करें</span>
+      </a>
+    </div>
+
+    <div class="h-bar rv d4">
+      <span class="h-bar-lbl">
+        <span data-lang="en">Learn</span>
+        <span data-lang="hi" class="hi">जानें</span>
+      </span>
+      <a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview" target="_blank">
+        <span class="material-symbols-outlined">play_circle</span>
+        <span data-lang="en">iOS Demo</span>
+        <span data-lang="hi" class="hi">iOS डेमो</span>
+      </a>
+      <a href="https://drive.google.com/file/d/1jsseovdhhCvx6k0SMhIx2uwowkeElnfF/preview" target="_blank">
+        <span class="material-symbols-outlined">play_circle</span>
+        <span data-lang="en">Android Demo</span>
+        <span data-lang="hi" class="hi">Android डेमो</span>
+      </a>
+      <a href="https://drive.google.com/file/d/1infaiPzLyf7QI6W9c_HD4lGRrXnoxReP/preview" target="_blank">
+        <span class="material-symbols-outlined">settings</span>
+        <span data-lang="en">Setup Guide</span>
+        <span data-lang="hi" class="hi">सेटअप गाइड</span>
+      </a>
+      <a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview" target="_blank">
+        <span class="material-symbols-outlined">info</span>
+        <span data-lang="en">How It Works</span>
+        <span data-lang="hi" class="hi">ऐप कैसे काम करता है</span>
+      </a>
+    </div>
+
+  </div>
 </section>
-<div class="section-divider"></div>
-<section id="how" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
-<div class="max-w-5xl mx-auto text-center">
-<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">Protocol</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">काम करने का तरीका</span></span>
-<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase mb-6"><span data-lang="en">How The Network<br/><span class="text-white/20">Works</span></span><span data-lang="hi" class="font-hindi">यह नेटवर्क<br/><span class="text-white/20">कैसे काम करता है</span></span></h2>
-<p class="text-white/30 text-sm md:text-base max-w-xl mx-auto mb-20 leading-relaxed"><span data-lang="en">The Rapid Response App instantly broadcasts an alert to volunteers within the same district. Anyone nearby who is available can see the alert and coordinate help.</span><span data-lang="hi" class="font-hindi">Rapid Response ऐप उसी जिले में दर्ज सभी लोगों तक SOS अलर्ट तुरंत पहुँचा देता है। जो भी आसपास है और मदद कर सकता है, वह अलर्ट देखकर आगे आ सकता है।</span></p>
-<div class="relative flex justify-center items-center mb-20"><div class="phone-glow"></div><img loading="lazy" src="Phone.png" alt="Rapid Response SOS Screen" class="relative w-[220px] sm:w-[260px] md:w-[300px] drop-shadow-[0_60px_120px_rgba(0,0,0,0.6)]"/></div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">01</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">Raise SOS</span><span data-lang="hi" class="font-hindi tracking-normal">SOS भेजें</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">Open the app and press the SOS button when an animal needs urgent help.</span><span data-lang="hi" class="font-hindi">जब किसी जानवर को तुरंत मदद चाहिए, ऐप खोलकर SOS बटन दबाएँ।</span></p></div>
-<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">02</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">Location Shared</span><span data-lang="hi" class="font-hindi tracking-normal">लोकेशन साथ जाती है</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">The alert includes your phone number, GPS location and a short description.</span><span data-lang="hi" class="font-hindi">अलर्ट के साथ आपका नंबर, GPS लोकेशन और छोटा सा संदेश जाता है।</span></p></div>
-<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">03</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">District Alert</span><span data-lang="hi" class="font-hindi tracking-normal">जिले भर में अलर्ट</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">All Rapid Response users in the same district can see the alert.</span><span data-lang="hi" class="font-hindi">उसी जिले में दर्ज सभी लोगों को यह अलर्ट दिखता है।</span></p></div>
-<div class="premium-card p-8 md:p-10 text-center"><span class="text-white/8 font-black text-5xl tracking-tight block mb-6">04</span><h4 class="text-white font-bold text-sm uppercase tracking-widest mb-3"><span data-lang="en">Volunteer Responds</span><span data-lang="hi" class="font-hindi tracking-normal">कोई मदद के लिए आगे आता है</span></h4><p class="text-white/30 text-sm leading-relaxed font-light"><span data-lang="en">Nearby volunteers who are available can call and coordinate help.</span><span data-lang="hi" class="font-hindi">जो लोग उपलब्ध होते हैं, वे कॉल करके मदद जुटा सकते हैं।</span></p></div>
-</div>
-<div class="premium-card max-w-2xl mx-auto mt-10 p-8 text-center"><p class="text-white/30 text-sm leading-relaxed"><span data-lang="en">The app works best when more people in a district join the network. Every new volunteer increases the chances that an animal in distress receives help quickly.</span><span data-lang="hi" class="font-hindi">यह ऐप तब सबसे अच्छा काम करता है जब एक ही जिले में ज़्यादा लोग इससे जुड़ते हैं। हर नया व्यक्ति मदद पहुँचने की संभावना बढ़ाता है।</span></p></div>
-</div>
+
+<div class="div"></div>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section id="how" class="sec">
+  <div class="wrap">
+
+    <div class="how-hd rv">
+      <span class="lbl">
+        <span data-lang="en">Protocol</span>
+        <span data-lang="hi" class="hi">काम का तरीका</span>
+      </span>
+      <h2 class="dh">
+        <span class="en-h" data-lang="en">How The Network Works</span>
+        <span class="hi-h" data-lang="hi">नेटवर्क कैसे काम करता है</span>
+      </h2>
+      <p class="how-desc">
+        <span data-lang="en">An instant district-wide SOS alert system. Anyone nearby can coordinate help in real time.</span>
+        <span data-lang="hi" class="hi">जिले भर में तत्काल SOS अलर्ट। जो भी आसपास हो, मदद कर सकता है।</span>
+      </p>
+    </div>
+
+    <div class="how-lay">
+      <div class="ph-col rv">
+        <div class="ph-frame"><img src="Phone.png" alt="Rapid Response SOS Screen" loading="lazy"/></div>
+        <div class="ph-badge">
+          <span data-lang="en">Live SOS Screen</span>
+          <span data-lang="hi" class="hi">लाइव SOS स्क्रीन</span>
+        </div>
+      </div>
+
+      <div class="steps-wrap">
+        <div class="steps-g">
+          <div class="step rv">
+            <div class="snum">01</div>
+            <div class="s-ic"><span class="material-symbols-outlined">sos</span></div>
+            <span class="s-lbl">Step 01</span>
+            <h4>
+              <span data-lang="en">Raise SOS</span>
+              <span data-lang="hi" class="hi">SOS भेजें</span>
+            </h4>
+            <p>
+              <span data-lang="en">Open the app and press SOS when an animal needs urgent help.</span>
+              <span data-lang="hi" class="hi">जब किसी जानवर को मदद चाहिए, SOS बटन दबाएँ।</span>
+            </p>
+          </div>
+          <div class="step rv d1">
+            <div class="snum">02</div>
+            <div class="s-ic"><span class="material-symbols-outlined">location_on</span></div>
+            <span class="s-lbl">Step 02</span>
+            <h4>
+              <span data-lang="en">Location Shared</span>
+              <span data-lang="hi" class="hi">लोकेशन जाती है</span>
+            </h4>
+            <p>
+              <span data-lang="en">Alert includes your phone number, GPS location and a short description.</span>
+              <span data-lang="hi" class="hi">अलर्ट के साथ नंबर, GPS और संदेश जाता है।</span>
+            </p>
+          </div>
+          <div class="step rv d2">
+            <div class="snum">03</div>
+            <div class="s-ic"><span class="material-symbols-outlined">campaign</span></div>
+            <span class="s-lbl">Step 03</span>
+            <h4>
+              <span data-lang="en">District Alert</span>
+              <span data-lang="hi" class="hi">जिले में अलर्ट</span>
+            </h4>
+            <p>
+              <span data-lang="en">All users in the same district instantly receive the alert.</span>
+              <span data-lang="hi" class="hi">जिले के सभी लोगों को तुरंत अलर्ट मिलता है।</span>
+            </p>
+          </div>
+          <div class="step rv d3">
+            <div class="snum">04</div>
+            <div class="s-ic"><span class="material-symbols-outlined">volunteer_activism</span></div>
+            <span class="s-lbl">Step 04</span>
+            <h4>
+              <span data-lang="en">Volunteer Responds</span>
+              <span data-lang="hi" class="hi">मदद होती है</span>
+            </h4>
+            <p>
+              <span data-lang="en">Available volunteers call and coordinate to help the animal.</span>
+              <span data-lang="hi" class="hi">उपलब्ध लोग कॉल करके मदद जुटा सकते हैं।</span>
+            </p>
+          </div>
+        </div>
+        <div class="how-note rv">
+          <span class="material-symbols-outlined">info</span>
+          <p>
+            <span data-lang="en">The network grows stronger with every new volunteer. More people in a district means faster help for animals in distress.</span>
+            <span data-lang="hi" class="hi">जितने ज़्यादा लोग जुड़ेंगे, उतनी तेज़ मदद पहुँचेगी।</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
-<div class="section-divider"></div>
-<section id="clarity" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
-<div class="max-w-5xl mx-auto text-center">
-<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">Platform Clarity</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">साफ़ समझ</span></span>
-<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-tight mb-20"><span data-lang="en">What This Is<br/><span class="text-white/20">&amp; What It Isn't</span></span><span data-lang="hi" class="font-hindi">यह क्या है<br/><span class="text-white/20">और क्या नहीं</span></span></h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
-<div class="premium-card p-8 md:p-10 text-left space-y-5"><h3 class="uppercase text-[10px] font-bold tracking-cred text-green-500 mb-6 text-center"><span data-lang="en">What it is</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">यह क्या करता है</span></h3>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">A coordination network for animal emergencies</span><span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाला नेटवर्क</span></span></div>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">Alerts nearby volunteers in your district</span><span data-lang="hi" class="font-hindi">आपके जिले के लोगों तक अलर्ट पहुँचाता है</span></span></div>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">Shares GPS location and contact number</span><span data-lang="hi" class="font-hindi">GPS लोकेशन और नंबर साझा करता है</span></span></div>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-green-400 text-base mt-0.5 flex-shrink-0">check_circle</span><span><span data-lang="en">A platform where volunteers can respond if available</span><span data-lang="hi" class="font-hindi">एक ऐसा मंच जहाँ उपलब्ध लोग मदद कर सकते हैं</span></span></div>
-</div>
-<div class="premium-card p-8 md:p-10 text-left space-y-5"><h3 class="uppercase text-[10px] font-bold tracking-cred text-red-500 mb-6 text-center"><span data-lang="en">What it is not</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">यह क्या नहीं करता</span></h3>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">The app does not come with a rescue team</span><span data-lang="hi" class="font-hindi">अपनी कोई रेस्क्यू टीम नहीं लाता</span></span></div>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">Raising an SOS does not guarantee help</span><span data-lang="hi" class="font-hindi">SOS भेजने से मदद तय नहीं होती</span></span></div>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">Does not operate shelters or transport animals</span><span data-lang="hi" class="font-hindi">शेल्टर नहीं चलाता, ट्रांसपोर्ट नहीं करता</span></span></div>
-<div class="flex gap-4 text-sm text-white/35 leading-relaxed"><span class="material-symbols-outlined text-primary text-base mt-0.5 flex-shrink-0">cancel</span><span><span data-lang="en">Not affiliated with any government authority</span><span data-lang="hi" class="font-hindi">किसी सरकारी संस्था से जुड़ा नहीं है</span></span></div>
-</div>
-</div>
-</div>
+
+<div class="div"></div>
+
+<!-- ══════════ CLARITY ══════════ -->
+<section id="clarity" class="sec">
+  <div class="wrap">
+
+    <div class="cl-hd rv">
+      <span class="lbl">
+        <span data-lang="en">Platform Clarity</span>
+        <span data-lang="hi" class="hi">साफ़ समझ</span>
+      </span>
+      <h2 class="dh">
+        <span class="en-h" data-lang="en">What This Is &amp; What It Isn't</span>
+        <span class="hi-h" data-lang="hi">यह क्या है और क्या नहीं</span>
+      </h2>
+    </div>
+
+    <div class="cl-grid rv">
+      <div class="cl-col">
+        <div class="cl-ch">
+          <div class="cl-ico gn"><span class="material-symbols-outlined">check_circle</span></div>
+          <h3 class="gn">
+            <span data-lang="en">What it is</span>
+            <span data-lang="hi" class="hi">यह क्या करता है</span>
+          </h3>
+        </div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">A coordination network for animal emergencies</span><span data-lang="hi" class="hi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाला नेटवर्क</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">Alerts nearby volunteers in your district</span><span data-lang="hi" class="hi">आपके जिले के लोगों तक अलर्ट पहुँचाता है</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">Shares GPS location and contact number</span><span data-lang="hi" class="hi">GPS लोकेशन और नंबर साझा करता है</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">A platform where available volunteers can respond</span><span data-lang="hi" class="hi">एक मंच जहाँ उपलब्ध लोग मदद कर सकते हैं</span></p></div>
+      </div>
+      <div class="cl-col">
+        <div class="cl-ch">
+          <div class="cl-ico rd"><span class="material-symbols-outlined">cancel</span></div>
+          <h3 class="rd">
+            <span data-lang="en">What it is not</span>
+            <span data-lang="hi" class="hi">यह क्या नहीं</span>
+          </h3>
+        </div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">The app does not come with a rescue team</span><span data-lang="hi" class="hi">अपनी कोई रेस्क्यू टीम नहीं लाता</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">Raising an SOS does not guarantee help</span><span data-lang="hi" class="hi">SOS भेजने से मदद तय नहीं होती</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">Does not operate shelters or transport animals</span><span data-lang="hi" class="hi">शेल्टर नहीं चलाता, ट्रांसपोर्ट नहीं करता</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">Not affiliated with any government authority</span><span data-lang="hi" class="hi">किसी सरकारी संस्था से जुड़ा नहीं है</span></p></div>
+      </div>
+    </div>
+
+  </div>
 </section>
-<div class="section-divider"></div>
-<section id="faq" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
-<div class="max-w-4xl mx-auto text-center">
-<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">FAQ</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">सवाल-जवाब</span></span>
-<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase mb-4"><span data-lang="en">Questions</span><span data-lang="hi" class="font-hindi">सवाल खोजें</span></h2>
-<p class="text-white/30 text-sm max-w-lg mx-auto mb-14"><span data-lang="en">Type a keyword to find answers instantly.</span><span data-lang="hi" class="font-hindi">जवाब पाने के लिए कोई शब्द लिखिए।</span></p>
-<div class="premium-card mb-8 h-14 md:h-16 px-5 flex items-center gap-3"><span class="material-symbols-outlined text-white/20 text-xl">search</span><input id="faqSearch" type="text" placeholder="Search by keyword..." class="w-full bg-transparent text-white placeholder:text-white/20 text-sm md:text-base font-medium border-none outline-none focus:ring-0"/></div>
-<div class="mb-10 flex flex-wrap gap-2 justify-center">
-<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="sos">SOS</button>
-<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="location">Location</button>
-<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="chat">Chat</button>
-<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="district">District</button>
-<button class="faq-chip px-3 py-1.5 border border-white/8 text-[10px] text-white/40 hover:bg-white/5 transition tracking-wider uppercase" data-keyword="register">Register</button>
-</div>
-<div class="mb-12"><p class="text-[9px] uppercase tracking-cred text-white/20 mb-4"><span data-lang="en">Popular</span><span data-lang="hi" class="font-hindi tracking-normal text-[10px]">लोकप्रिय</span></p>
-<div class="flex flex-wrap gap-3 justify-center text-xs">
-<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="how does the app work">How does the app work?</button>
-<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="register">How do I register?</button>
-<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="sos alert">Who receives an SOS?</button>
-<button class="faq-chip text-white/40 hover:text-white transition" data-keyword="cancel sos">Can I cancel an SOS?</button>
-</div></div>
-<div id="faqResults" class="space-y-4 text-left"></div>
-<div id="faqMessage" class="mt-8 text-white/20 text-sm"><span data-lang="en">Start typing a keyword like <b class="text-white/40">SOS</b>, <b class="text-white/40">location</b>, <b class="text-white/40">chat</b> or <b class="text-white/40">district</b>.</span><span data-lang="hi" class="font-hindi">कोई शब्द लिखकर जवाब खोजें।</span></div>
-<div class="mt-14 pt-8 border-t border-white/5"><p class="text-white/25 text-xs mb-2"><span data-lang="en">Still need help?</span><span data-lang="hi" class="font-hindi">और मदद चाहिए?</span></p><a href="mailto:ask@rapid-response.in" class="text-primary text-sm font-semibold hover:underline">ask@rapid-response.in</a></div>
-</div>
+
+<div class="div"></div>
+
+<!-- ══════════ FAQ ══════════ -->
+<section id="faq" class="sec">
+  <div class="wrap">
+    <div class="faq-lay">
+
+      <div class="faq-l rv">
+        <span class="lbl">FAQ</span>
+        <h2 class="dh">
+          <span class="en-h" data-lang="en">Questions</span>
+          <span class="hi-h" data-lang="hi">सवाल</span>
+        </h2>
+        <p>
+          <span data-lang="en">Type a keyword to find answers instantly.</span>
+          <span data-lang="hi" class="hi">जवाब पाने के लिए कोई शब्द लिखिए।</span>
+        </p>
+        <span class="ask-lbl">
+          <span data-lang="en">Still need help?</span>
+          <span data-lang="hi" class="hi">और मदद?</span>
+        </span>
+        <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
+      </div>
+
+      <div class="faq-r rv d1">
+        <div class="faq-sw">
+          <span class="material-symbols-outlined">search</span>
+          <input id="faqSearch" type="text" placeholder="Search by keyword…"/>
+        </div>
+        <div class="fq-chips">
+          <button class="fq-chip" data-kw="sos">SOS</button>
+          <button class="fq-chip" data-kw="location">Location</button>
+          <button class="fq-chip" data-kw="chat">Chat</button>
+          <button class="fq-chip" data-kw="district">District</button>
+          <button class="fq-chip" data-kw="register">Register</button>
+          <button class="fq-chip" data-kw="cancel">Cancel</button>
+        </div>
+        <div id="faqRes">
+          <div id="fqEmp">
+            <span data-lang="en">Type a keyword like SOS, location or district</span>
+            <span data-lang="hi" class="hi">SOS, लोकेशन या जिला जैसे शब्द लिखें</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
-<div class="section-divider"></div>
-<section id="legal" class="px-6 md:px-12 lg:px-20 py-32 md:py-44 fade-up">
-<div class="max-w-5xl mx-auto text-center">
-<span class="text-primary font-mono tracking-[0.4em] text-[9px] uppercase mb-6 block"><span data-lang="en">Legal Assistant</span><span data-lang="hi" class="font-hindi tracking-normal text-[11px]">कानूनी सहायता</span></span>
-<h2 class="cred-gradient-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase mb-4"><span data-lang="en">Know Your <span class="text-white/20">Rights</span></span><span data-lang="hi" class="font-hindi">अपने अधिकार <span class="text-white/20">जानें</span></span></h2>
-<p class="text-white/30 text-sm max-w-xl mx-auto mb-16"><span data-lang="en">Ask any question about animal welfare law in India. Get answers with exact laws, sections, and next steps.</span><span data-lang="hi" class="font-hindi">भारत में पशु कल्याण कानून, शिकायत प्रक्रिया और अधिकारों से जुड़े सवाल पूछें।</span></p>
-<div class="premium-card overflow-hidden max-w-3xl mx-auto text-left">
-<div class="flex items-center justify-between px-6 py-4 border-b border-white/5"><div class="flex items-center gap-3"><div class="w-9 h-9 border border-primary/20 bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-sm">balance</span></div><div><h3 class="text-white text-[10px] font-bold uppercase tracking-cred">Legal AI Desk</h3><p class="text-white/25 text-[10px] mt-0.5">Animal welfare law · ABC rules · FIR guidance</p></div></div><div class="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-green-400"><span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>Active</div></div>
-<div class="p-4 border-b border-white/5"><div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">pets</span><div><p class="text-white text-xs font-medium">ABC centre not functioning</p><p class="text-white/25 text-[10px] mt-0.5">Know the complaint process</p></div></div></button>
-<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">warning</span><div><p class="text-white text-xs font-medium">Dog died after ABC release</p><p class="text-white/25 text-[10px] mt-0.5">Liability, FIR and evidence</p></div></div></button>
-<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">local_hospital</span><div><p class="text-white text-xs font-medium">Hospital removing dogs</p><p class="text-white/25 text-[10px] mt-0.5">Feeding rights and remedies</p></div></div></button>
-<button onclick="fillLegal(this)" class="legal-chip group border border-white/6 bg-white/[0.01] hover:border-primary/20 transition-all p-3 text-left"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-primary text-sm mt-0.5">gavel</span><div><p class="text-white text-xs font-medium">Attacked while feeding dogs</p><p class="text-white/25 text-[10px] mt-0.5">Police complaint rights</p></div></div></button>
-</div></div>
-<div id="legalChatBox" class="p-5 min-h-[280px] max-h-[400px] overflow-y-auto">
-<div class="border border-primary/10 bg-primary/[0.02] p-4"><div class="flex gap-3"><div class="w-8 h-8 border border-primary/20 bg-primary/5 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary text-sm">balance</span></div><div><h4 class="text-white font-semibold text-sm mb-1.5"><span data-lang="en">Ask Any Legal Question</span><span data-lang="hi" class="font-hindi">कोई भी कानूनी सवाल पूछें</span></h4><p class="text-white/35 text-xs leading-relaxed mb-3"><span data-lang="en">Animal cruelty complaints, ABC centres, feeding disputes, FIR drafting and municipal issues.</span><span data-lang="hi" class="font-hindi">पशु क्रूरता, ABC केंद्र, पुलिस शिकायत और अधिकारों से जुड़े सवाल।</span></p><div class="flex flex-wrap gap-1.5"><span class="px-2 py-0.5 border border-white/6 text-[9px] uppercase tracking-wider text-white/30">PCA Act</span><span class="px-2 py-0.5 border border-white/6 text-[9px] uppercase tracking-wider text-white/30">ABC Rules 2023</span><span class="px-2 py-0.5 border border-white/6 text-[9px] uppercase tracking-wider text-white/30">BNS Sections</span></div></div></div></div>
-</div>
-<div class="p-3 border-t border-white/5"><div class="glass-card border border-white/8 px-3 py-1.5 flex items-center gap-2"><input id="legalInput" type="text" placeholder="Ask your legal question..." class="flex-1 bg-transparent text-white placeholder:text-white/20 text-sm border-none outline-none focus:ring-0"/><button id="legalBtn" onclick="sendLegalQuestion()" class="w-10 h-10 bg-primary flex items-center justify-center hover:bg-red-600 transition flex-shrink-0"><span class="material-symbols-outlined text-white text-lg">north_east</span></button></div><p class="text-center text-white/15 text-[9px] mt-2"><span data-lang="en">⚖️ Legal information only. Not a substitute for a qualified lawyer.</span><span data-lang="hi" class="font-hindi">⚖️ केवल जानकारी। योग्य वकील की सलाह का विकल्प नहीं।</span></p></div>
-</div>
-</div>
+
+<div class="div"></div>
+
+<!-- ══════════ LEGAL DESK ══════════ -->
+<section id="legal" class="sec">
+  <div class="wrap">
+
+    <div class="leg-hd rv">
+      <span class="lbl">
+        <span data-lang="en">Legal Assistant</span>
+        <span data-lang="hi" class="hi">कानूनी सहायता</span>
+      </span>
+      <h2 class="dh">
+        <span class="en-h" data-lang="en">Know Your Rights</span>
+        <span class="hi-h" data-lang="hi">अपने अधिकार जानें</span>
+      </h2>
+      <p class="leg-hd-desc">
+        <span data-lang="en">Ask any question about animal welfare law in India — exact laws, sections, and next steps.</span>
+        <span data-lang="hi" class="hi">भारत में पशु कल्याण कानून, शिकायत प्रक्रिया और अधिकारों से जुड़े सवाल पूछें।</span>
+      </p>
+    </div>
+
+    <div class="leg-wrap rv">
+      <div class="leg-sb">
+        <div class="leg-sb-h">
+          <h4>Legal AI Desk</h4>
+          <p>Animal welfare law · India</p>
+        </div>
+        <div class="leg-tags">
+          <div class="ltag"><span class="material-symbols-outlined">gavel</span>PCA Act 1960</div>
+          <div class="ltag"><span class="material-symbols-outlined">pets</span>ABC Rules 2023</div>
+          <div class="ltag"><span class="material-symbols-outlined">balance</span>BNS Sections</div>
+          <div class="ltag"><span class="material-symbols-outlined">account_balance</span>Municipal Law</div>
+        </div>
+        <div class="leg-ql">Quick questions</div>
+        <div class="leg-qc">
+          <button class="lqc" onclick="fillSend('ABC centre not functioning — what is the complaint process?')">
+            <div class="ct">ABC centre not functioning</div><div class="cs">Complaint process</div>
+          </button>
+          <button class="lqc" onclick="fillSend('Dog died after ABC release — liability and how to file an FIR?')">
+            <div class="ct">Dog died after ABC release</div><div class="cs">Liability &amp; FIR</div>
+          </button>
+          <button class="lqc" onclick="fillSend('Hospital removing community dogs — feeding rights and legal remedies?')">
+            <div class="ct">Hospital removing dogs</div><div class="cs">Feeding rights &amp; remedies</div>
+          </button>
+          <button class="lqc" onclick="fillSend('Attacked while feeding dogs — what are my police complaint rights?')">
+            <div class="ct">Attacked while feeding dogs</div><div class="cs">Police complaint rights</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="leg-panel">
+        <div class="leg-ph">
+          <div class="lph-dots">
+            <div class="lph-dot" style="background:#ff5f57"></div>
+            <div class="lph-dot" style="background:#febc2e"></div>
+            <div class="lph-dot" style="background:#28c840"></div>
+          </div>
+          <span class="lph-t">legal-ai-desk.terminal</span>
+          <div class="lph-s"><span class="lph-sd"></span>Active</div>
+        </div>
+        <div id="lcb">
+          <div class="cbo">
+            <div class="cbo-ic"><span class="material-symbols-outlined">balance</span></div>
+            <div class="cb">
+              <strong>
+                <span data-lang="en">Welcome to Legal AI Desk</span>
+                <span data-lang="hi" class="hi">कानूनी AI डेस्क में स्वागत है</span>
+              </strong><br/>
+              <span data-lang="en">Ask any question about animal welfare law in India — cruelty complaints, ABC centres, feeding disputes, FIR guidance, or municipal issues.</span>
+              <span data-lang="hi" class="hi">पशु क्रूरता, ABC केंद्र, पुलिस शिकायत या अधिकारों से जुड़े कोई भी सवाल पूछें।</span>
+            </div>
+          </div>
+        </div>
+        <div class="leg-ir">
+          <span class="material-symbols-outlined ii">keyboard</span>
+          <input id="li" type="text" placeholder="Ask your legal question…"/>
+          <button id="lb" onclick="sendLeg()">
+            <span class="material-symbols-outlined" id="lbi">north_east</span>
+          </button>
+        </div>
+        <div class="leg-disc">
+          <span data-lang="en">⚖️ Legal information only — not a substitute for a qualified lawyer.</span>
+          <span data-lang="hi" class="hi">⚖️ केवल जानकारी — वकील की सलाह का विकल्प नहीं।</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
-<div class="section-divider"></div>
-<footer class="px-6 md:px-12 lg:px-20 py-16 md:py-20" id="support">
-<div class="max-w-5xl mx-auto text-center">
-<div class="flex items-center justify-center gap-3 mb-5"><div class="w-8 h-8 border border-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-sm">pets</span></div><h2 class="text-[11px] font-black tracking-cred uppercase text-white">Rapid Response</h2></div>
-<p class="text-white/25 text-sm leading-relaxed max-w-md mx-auto font-light mb-8"><span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span><span data-lang="hi" class="font-hindi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span></p>
-<div class="premium-card inline-flex flex-col items-center px-10 py-6 mb-10"><h4 class="text-white text-[10px] font-bold tracking-cred uppercase mb-2"><span data-lang="en">Support</span><span data-lang="hi" class="font-hindi tracking-normal text-xs">सहायता</span></h4><a href="mailto:ask@rapid-response.in" class="text-primary text-sm font-semibold hover:underline">ask@rapid-response.in</a><p class="text-white/20 text-[10px] mt-1.5"><span data-lang="en">We respond within 24–48 hours.</span><span data-lang="hi" class="font-hindi">24–48 घंटों में जवाब मिलता है।</span></p></div>
-<div class="pt-8 border-t border-white/5"><p class="text-[9px] text-white/15 max-w-lg mx-auto leading-relaxed mb-3"><span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span><span data-lang="hi" class="font-hindi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span></p><p class="text-[9px] font-bold tracking-cred uppercase text-white/15">© 2026 RapidResponse Labs</p></div>
-</div>
+
+<div class="div"></div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer id="support">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <a href="/" class="logo">
+        <div class="logo-sq"><span class="material-symbols-outlined">pets</span></div>
+        <span class="logo-t">Rapid Response</span>
+      </a>
+      <p>
+        <span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span>
+        <span data-lang="hi" class="hi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span>
+      </p>
+    </div>
+    <div class="ft-col">
+      <span class="ft-lbl">Navigate</span>
+      <a href="#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="hi">कैसे काम करता है</span></a>
+      <a href="#clarity"><span data-lang="en">Platform Clarity</span><span data-lang="hi" class="hi">साफ़ समझ</span></a>
+      <a href="#faq">FAQ</a>
+      <a href="#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
+      <a href="/report" style="color:var(--red)"><span data-lang="en">Report Incident</span><span data-lang="hi" class="hi">घटना रिपोर्ट करें</span></a>
+    </div>
+    <div class="ft-col ft-contact">
+      <span class="ft-lbl">Support</span>
+      <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
+      <p class="note-p">
+        <span data-lang="en">Response within 24–48 hours</span>
+        <span data-lang="hi" class="hi">24–48 घंटों में जवाब</span>
+      </p>
+      <div class="ft-note">
+        <p>
+          <span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span>
+          <span data-lang="hi" class="hi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <p>© 2026 RapidResponse Labs</p>
+    <p>
+      <span data-lang="en">Animal Emergency Network · India</span>
+      <span data-lang="hi" class="hi">पशु आपातकालीन नेटवर्क · भारत</span>
+    </p>
+  </div>
 </footer>
-</div>
-<script>function attachFaqToggle(){}</script>
+
 <script>
-const faqData=[
-{keywords:"what is the rapid response team app",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What is the Rapid Response app?</span><span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स ऐप क्या है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">It connects nearby volunteers during animal emergencies.</span><span data-lang="hi" class="font-hindi">यह ऐप जानवरों की इमरजेंसी में आसपास के लोगों को जोड़ता है।</span></p></div>`},
-{keywords:"what is the main purpose of the app",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What is the main purpose of the app?</span><span data-lang="hi" class="font-hindi">ऐप का मुख्य उद्देश्य क्या है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">To quickly connect people facing urgent animal welfare situations with registered users in the same district.</span><span data-lang="hi" class="font-hindi">पशु कल्याण से जुड़ी तात्कालिक परिस्थितियों में लोगों को जिले के उपयोगकर्ताओं से जोड़ना।</span></p></div>`},
-{keywords:"what kind of platform is rapid response team",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What kind of platform is Rapid Response Team?</span><span data-lang="hi" class="font-hindi">रैपिड रिस्पॉन्स टीम किस प्रकार का प्लेटफ़ॉर्म है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">A community-based, district-level SOS alert and coordination platform for animal welfare.</span><span data-lang="hi" class="font-hindi">पशु कल्याण के लिए कम्युनिटी-आधारित, जिला-स्तरीय एसओएस अलर्ट और समन्वय प्लेटफ़ॉर्म।</span></p></div>`},
-{keywords:"is the app linked to any government department",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Is the app linked to any government department?</span><span data-lang="hi" class="font-hindi">क्या यह किसी सरकारी विभाग से जुड़ा है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">No. It is an independent community initiative.</span><span data-lang="hi" class="font-hindi">नहीं। यह एक स्वतंत्र सामुदायिक पहल है।</span></p></div>`},
-{keywords:"does the app send a rescue team automatically",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Does the app send a rescue team automatically?</span><span data-lang="hi" class="font-hindi">क्या यह अपने आप रेस्क्यू टीम भेजता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">No. It sends SOS alerts to registered users so nearby people may help.</span><span data-lang="hi" class="font-hindi">नहीं। यह लोगों को अलर्ट भेजता है ताकि पास के लोग मदद कर सकें।</span></p></div>`},
-{keywords:"how does the app work",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">How does the app work?</span><span data-lang="hi" class="font-hindi">ऐप कैसे काम करता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">One tap raises an SOS alert sent to all registered users in the same district. They can view it and decide whether to respond.</span><span data-lang="hi" class="font-hindi">एक टैप से अलर्ट जिले के सभी लोगों को मिलता है।</span></p></div>`},
-{keywords:"who receives an sos alert",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Who receives an SOS alert?</span><span data-lang="hi" class="font-hindi">एसओएस अलर्ट किसे मिलता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">All registered users within the same district.</span><span data-lang="hi" class="font-hindi">उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को।</span></p></div>`},
-{keywords:"register",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">How do I register?</span><span data-lang="hi" class="font-hindi">रजिस्टर कैसे करें?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Download the app and register with your phone number and district. Alerts start immediately.</span><span data-lang="hi" class="font-hindi">ऐप डाउनलोड करें, नंबर और जिले से रजिस्टर करें।</span></p></div>`},
-{keywords:"sos alert",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">What happens when I send an SOS?</span><span data-lang="hi" class="font-hindi">SOS भेजने पर क्या होता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Your alert with GPS, phone number, and message is broadcast to all users in your district.</span><span data-lang="hi" class="font-hindi">आपका अलर्ट GPS, नंबर और संदेश के साथ जिले के सभी लोगों को जाता है।</span></p></div>`},
-{keywords:"cancel sos",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can I cancel an SOS?</span><span data-lang="hi" class="font-hindi">क्या SOS रद्द कर सकते हैं?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Once sent, the alert is broadcast instantly. You can update the status or mark it resolved.</span><span data-lang="hi" class="font-hindi">भेजने के बाद तुरंत जाता है। आप स्थिति अपडेट कर सकते हैं।</span></p></div>`},
-{keywords:"call sender",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can responders call the sender?</span><span data-lang="hi" class="font-hindi">क्या रेस्पॉन्डर भेजने वाले को कॉल कर सकते हैं?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Yes. The alert includes the sender's phone number.</span><span data-lang="hi" class="font-hindi">हाँ। अलर्ट में भेजने वाले का नंबर होता है।</span></p></div>`},
-{keywords:"chat",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Is there a chat feature?</span><span data-lang="hi" class="font-hindi">क्या चैट की सुविधा है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Yes. Users can communicate about an active SOS alert in their district.</span><span data-lang="hi" class="font-hindi">हाँ। एक्टिव अलर्ट पर लोग चैट कर सकते हैं।</span></p></div>`},
-{keywords:"district",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Why is the alert sent only within the district?</span><span data-lang="hi" class="font-hindi">अलर्ट केवल जिले में ही क्यों जाता है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">To keep it locally relevant and improve chances of faster response.</span><span data-lang="hi" class="font-hindi">ताकि पास के लोग तेज़ी से मदद कर सकें।</span></p></div>`},
-{keywords:"location",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Why is location important?</span><span data-lang="hi" class="font-hindi">लोकेशन क्यों ज़रूरी है?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">It helps volunteers understand where the incident happened and if they are close enough to assist.</span><span data-lang="hi" class="font-hindi">इससे लोगों को पता चलता है कि घटना कहाँ हुई।</span></p></div>`},
-{keywords:"can i raise an sos without location",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can I raise an SOS without location?</span><span data-lang="hi" class="font-hindi">बिना लोकेशन के SOS भेज सकते हैं?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">The app captures GPS automatically when SOS is raised. Not live tracking.</span><span data-lang="hi" class="font-hindi">ऐप SOS भेजते समय GPS अपने आप कैप्चर करता है।</span></p></div>`},
-{keywords:"can the app help in cases of abandoned puppies or kittens",html:`<div class="faq-item premium-card p-6"><h3 class="text-white text-lg font-bold mb-2"><span data-lang="en">Can the app help with abandoned puppies or kittens?</span><span data-lang="hi" class="font-hindi">छोड़े गए पिल्लों या बिल्लियों के लिए मदद?</span></h3><p class="text-white/35 text-sm leading-relaxed"><span data-lang="en">Yes. If urgent, the app alerts registered users in the district who may assist.</span><span data-lang="hi" class="font-hindi">हाँ। तात्कालिक स्थिति में जिले के लोगों को अलर्ट भेजा जा सकता है।</span></p></div>`}
+/* ── lang ── */
+function setLang(l) {
+  document.documentElement.lang = l;
+  var f = document.getElementById('faqSearch');
+  if (f) f.placeholder = l === 'hi' ? 'कोई शब्द लिखें…' : 'Search by keyword…';
+}
+document.addEventListener('DOMContentLoaded', function() { setLang('en'); });
+
+/* ── mode ── */
+function toggleMode() {
+  var on = document.documentElement.classList.toggle('light');
+  document.getElementById('modeBtn').textContent = on ? '🌙' : '☀️';
+  localStorage.setItem('rrm', on ? 'l' : 'd');
+}
+(function() {
+  if (localStorage.getItem('rrm') === 'l') {
+    document.documentElement.classList.add('light');
+    document.addEventListener('DOMContentLoaded', function() {
+      var b = document.getElementById('modeBtn'); if (b) b.textContent = '🌙';
+    });
+  }
+})();
+
+/* ── header scroll ── */
+window.addEventListener('scroll', function() {
+  document.getElementById('hdr').classList.toggle('stuck', window.scrollY > 40);
+});
+
+/* ── mobile menu ── */
+function openMM() {
+  document.getElementById('mm').style.transform = 'translateX(0)';
+  var o = document.getElementById('mmo'); o.style.opacity = '1'; o.style.pointerEvents = 'auto';
+  document.body.style.overflow = 'hidden';
+}
+function closeMM() {
+  document.getElementById('mm').style.transform = '';
+  var o = document.getElementById('mmo'); o.style.opacity = ''; o.style.pointerEvents = '';
+  document.body.style.overflow = '';
+}
+
+/* ── reveal ── */
+var io = new IntersectionObserver(function(es) {
+  es.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.rv').forEach(function(el) { io.observe(el); });
+
+/* ── FAQ ── */
+var fd = [
+  {k:'sos app rapid response what',     qe:'What is the Rapid Response app?',             ae:'It connects nearby volunteers during animal emergencies across the same district via instant SOS alerts.',            qh:'रैपिड रिस्पॉन्स ऐप क्या है?',      ah:'यह ऐप जानवरों की इमरजेंसी में जिले के लोगों को जोड़ता है।'},
+  {k:'how does app work purpose main',  qe:'How does the app work?',                       ae:'One tap raises a district-wide SOS. All registered users in your district receive your GPS, phone number and message instantly.', qh:'ऐप कैसे काम करता है?',           ah:'एक टैप से जिले के सभी लोगों को GPS, नंबर और संदेश के साथ अलर्ट जाता है।'},
+  {k:'government affiliated department',qe:'Is it linked to any government department?',   ae:'No. Rapid Response is an independent community initiative, not affiliated with any government authority.',            qh:'किसी सरकारी विभाग से जुड़ा है?',    ah:'नहीं। यह एक स्वतंत्र सामुदायिक पहल है।'},
+  {k:'rescue team automatic send',      qe:'Does it send a rescue team automatically?',    ae:'No. It sends an SOS alert to registered volunteers who may choose to help. There is no dedicated dispatch team.',    qh:'रेस्क्यू टीम भेजता है?',           ah:'नहीं। यह स्वयंसेवकों को अलर्ट भेजता है।'},
+  {k:'sos district who receives alert', qe:'Who receives an SOS alert?',                   ae:'All registered Rapid Response users within the same district receive the alert instantly.',                           qh:'SOS अलर्ट किसे मिलता है?',         ah:'उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को।'},
+  {k:'register how sign up join',       qe:'How do I register?',                           ae:'Download the app, register with your phone number, and select your district. Alerts begin immediately.',             qh:'रजिस्टर कैसे करें?',               ah:'ऐप डाउनलोड करें, नंबर और जिले से रजिस्टर करें।'},
+  {k:'sos alert send what happens',     qe:'What happens when I send an SOS?',             ae:'Your GPS, phone number, and message are instantly broadcast to all users registered in your district.',              qh:'SOS भेजने पर क्या होता है?',       ah:'आपका GPS, नंबर और संदेश जिले के सभी लोगों को तुरंत मिलता है।'},
+  {k:'cancel sos undo resolve',         qe:'Can I cancel an SOS?',                         ae:'Once sent, the alert broadcasts instantly. You can update the status or mark it resolved in the app.',               qh:'SOS रद्द कर सकते हैं?',            ah:'भेजने के बाद तुरंत जाता है। स्थिति अपडेट कर सकते हैं।'},
+  {k:'chat communicate message',        qe:'Is there a chat feature?',                     ae:'Yes. Users can communicate with each other about an active SOS alert in their district.',                            qh:'चैट की सुविधा है?',                ah:'हाँ। एक्टिव अलर्ट पर लोग चैट कर सकते हैं।'},
+  {k:'district why only local area',    qe:'Why is the alert sent only within the district?', ae:'To keep alerts locally relevant and ensure the fastest possible response from people who are actually nearby.',   qh:'अलर्ट केवल जिले में क्यों?',      ah:'ताकि पास के लोग तेज़ी से मदद कर सकें।'},
+  {k:'location gps important why',      qe:'Why is GPS location important?',               ae:'It helps volunteers immediately know where the incident occurred and whether they are close enough to assist.',       qh:'लोकेशन क्यों ज़रूरी है?',          ah:'इससे पता चलता है कि घटना कहाँ हुई।'},
 ];
 
-const faqSearch=document.getElementById("faqSearch"),faqResults=document.getElementById("faqResults"),faqMessage=document.getElementById("faqMessage");
-function renderFAQs(l){faqResults.innerHTML="";setLang(document.documentElement.lang);if(!l.length){faqMessage.style.display="block";return}faqMessage.style.display="none";l.forEach(i=>{faqResults.innerHTML+=i.html});attachFaqToggle()}
-setLang(document.documentElement.lang);
-faqSearch.addEventListener("input",e=>{const v=e.target.value.toLowerCase();if(!v){faqResults.innerHTML="";faqMessage.style.display="block";return}renderFAQs(faqData.filter(i=>i.keywords.includes(v)))});
-document.querySelectorAll(".faq-chip").forEach(b=>{b.addEventListener("click",()=>{const k=b.dataset.keyword.toLowerCase();faqSearch.value=k;renderFAQs(faqData.filter(i=>i.keywords.includes(k)))})});
+var fSrch = document.getElementById('faqSearch');
+var fRes  = document.getElementById('faqRes');
+var fEmp  = document.getElementById('fqEmp');
 
-const mobileBtn=document.getElementById("mobileMenuBtn"),mobileMenu=document.getElementById("mobileMenu"),mobileOverlay=document.getElementById("mobileMenuOverlay"),closeMenuEl=document.getElementById("closeMenu");
-function openMenu(){mobileMenu.classList.remove("translate-x-full");mobileOverlay.classList.remove("opacity-0","pointer-events-none");mobileOverlay.classList.add("opacity-100");document.body.style.overflow="hidden"}
-function closeMobileMenu(){mobileMenu.classList.add("translate-x-full");mobileOverlay.classList.remove("opacity-100");mobileOverlay.classList.add("opacity-0","pointer-events-none");document.body.style.overflow=""}
-mobileBtn.addEventListener("click",openMenu);closeMenuEl.addEventListener("click",closeMobileMenu);mobileOverlay.addEventListener("click",closeMobileMenu);
-document.querySelectorAll(".mobile-link").forEach(l=>l.addEventListener("click",closeMobileMenu));
-
-const header=document.getElementById("mainHeader");
-window.addEventListener("scroll",()=>{header.classList.toggle("bg-black/80",window.scrollY>50)});
-
-const observer=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add("show")})},{threshold:0.08});
-document.querySelectorAll(".fade-up").forEach(el=>observer.observe(el));
-
-function toggleMode(){const l=document.documentElement.classList.toggle('light');document.getElementById('modeBtn').textContent=l?'🌙':'☀️';localStorage.setItem('mode',l?'light':'dark')}
-const savedMode=localStorage.getItem('mode');
-if(savedMode==='light'){document.documentElement.classList.add('light');document.addEventListener('DOMContentLoaded',()=>{const b=document.getElementById('modeBtn');if(b)b.textContent='🌙'})}
-
-function fillLegal(el){const t=el.querySelector('p.text-white');document.getElementById('legalInput').value=t?t.innerText.trim():el.innerText.trim()}
-
-function formatAnswer(text){
-  return text
-    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
-    .replace(/^## (.*?)$/gm,'<br><strong style="font-size:0.85em;opacity:0.9">$1</strong><br>')
-    .replace(/^---$/gm,'<hr style="border-color:rgba(255,255,255,0.1);margin:8px 0">')
-    .replace(/\n/g,'<br>');
+function renderFaq(list) {
+  fRes.innerHTML = '';
+  var l = document.documentElement.lang || 'en';
+  if (!list.length) { fRes.appendChild(fEmp); return; }
+  list.forEach(function(d) {
+    var div = document.createElement('div'); div.className = 'fq-it';
+    var q = (l === 'hi' && d.qh) ? d.qh : d.qe;
+    var a = (l === 'hi' && d.ah) ? d.ah : d.ae;
+    div.innerHTML = '<div class="fq-q">' + q + '</div><div class="fq-a">' + a + '</div>';
+    fRes.appendChild(div);
+  });
 }
+fSrch.addEventListener('input', function() {
+  var v = this.value.toLowerCase().trim();
+  if (!v) { fRes.innerHTML = ''; fRes.appendChild(fEmp); return; }
+  renderFaq(fd.filter(function(d) { return d.k.includes(v); }));
+});
+document.querySelectorAll('.fq-chip').forEach(function(b) {
+  b.addEventListener('click', function() {
+    fSrch.value = b.dataset.kw;
+    fSrch.dispatchEvent(new Event('input'));
+  });
+});
 
-function addLegalMsg(text,role){
-  const box=document.getElementById('legalChatBox'),div=document.createElement('div');
-  div.className='flex gap-3 mb-4';
-  const icon=document.createElement('div');
-  icon.className='w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5 border';
-  if(role==='user'){
-    icon.className+=' border-white/10';
-    icon.innerHTML='<span class="material-symbols-outlined text-white/30 text-xs">person</span>';
-  } else {
-    icon.className+=' border-primary/30';
-    icon.innerHTML='<span class="material-symbols-outlined text-primary text-xs">balance</span>';
+/* ── Legal chat ── */
+function fmt(t) {
+  return t
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^##\s(.+)$/gm, '<br><strong style="font-size:.82em">$1</strong><br>')
+    .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid rgba(128,128,128,.15);margin:8px 0">')
+    .replace(/\n/g, '<br>');
+}
+function addBot(html) {
+  var box = document.getElementById('lcb');
+  var w = document.createElement('div'); w.className = 'cbo';
+  var ic = document.createElement('div'); ic.className = 'cbo-ic';
+  ic.innerHTML = '<span class="material-symbols-outlined">balance</span>';
+  var b = document.createElement('div'); b.className = 'cb'; b.innerHTML = html;
+  w.appendChild(ic); w.appendChild(b); box.appendChild(w);
+  box.scrollTop = 99999; return b;
+}
+function addUser(t) {
+  var box = document.getElementById('lcb');
+  var w = document.createElement('div'); w.className = 'cu';
+  var b = document.createElement('div'); b.className = 'cb'; b.textContent = t;
+  w.appendChild(b); box.appendChild(w); box.scrollTop = 99999;
+}
+function fillSend(q) { document.getElementById('li').value = q; sendLeg(); }
+async function sendLeg() {
+  var inp = document.getElementById('li'), btn = document.getElementById('lb'), ico = document.getElementById('lbi');
+  var q = inp.value.trim(); if (!q) return;
+  var lang = document.documentElement.lang || 'en';
+  addUser(q); inp.value = '';
+  btn.disabled = true; ico.textContent = 'progress_activity'; ico.classList.add('sp');
+  var bub = addBot('<div class="tdots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>');
+  try {
+    var r = await fetch('https://api.rapid-response.in/ask', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ question: q, language: lang })
+    });
+    var d = await r.json(); bub.innerHTML = fmt(d.answer);
+  } catch(e) {
+    bub.innerHTML = '<span style="color:rgba(255,45,26,.8)">Connection error. Please try again.</span>';
   }
-  const bubble=document.createElement('div');
-  bubble.className=role==='user'?'text-white/70 text-sm leading-relaxed':'text-white/50 text-sm leading-relaxed';
-  bubble.innerHTML=formatAnswer(text);
-  div.appendChild(icon);
-  div.appendChild(bubble);
-  box.appendChild(div);
-  box.scrollTop=box.scrollHeight;
-  return bubble;
+  btn.disabled = false; ico.textContent = 'north_east'; ico.classList.remove('sp');
+  document.getElementById('lcb').scrollTop = 99999;
 }
-
-async function sendLegalQuestion(){
-  const input=document.getElementById('legalInput'),btn=document.getElementById('legalBtn'),question=input.value.trim();
-  if(!question)return;
-  const lang=document.documentElement.lang||'en';
-  addLegalMsg(question,'user');
-input.value='';
-document.getElementById('legalChatBox').scrollIntoView({behavior:'smooth',block:'start'});
-  btn.disabled=true;
-  btn.innerHTML='<span class="material-symbols-outlined text-white text-lg animate-spin">progress_activity</span>';
-  const thinkingBubble=addLegalMsg('Reviewing applicable laws...','bot');
-  try{
-    const res=await fetch('https://api.rapid-response.in/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,language:lang})});
-    const data=await res.json();
-    thinkingBubble.innerHTML=formatAnswer(data.answer);
-  }catch(e){
-    thinkingBubble.textContent='Sorry, something went wrong. Please try again.';
-  }
-  btn.disabled=false;
-  btn.innerHTML='<span class="material-symbols-outlined text-white text-lg">north_east</span>';
-  setTimeout(()=>thinkingBubble.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
-}
-
-document.getElementById('legalInput').addEventListener('keydown',function(e){if(e.key==='Enter')sendLegalQuestion()});
+document.getElementById('li').addEventListener('keydown', function(e) { if (e.key === 'Enter') sendLeg(); });
 </script>
 </body>
 </html>
