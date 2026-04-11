@@ -1014,7 +1014,7 @@ function loadDistricts(preselectDistrict){
     custSetDisplay('districtBtn','districtVal',S.district,S.district);
     /* mark active */
     var dlist=document.getElementById('districtList');
-    if(dlist){ dlist.querySelectorAll('.cust-opt').forEach(function(o){o.classList.toggle('active',o.dataset.v===S.district);}); }
+    if(dlist){ dlist.querySelectorAll('.cust-opt').forEach(function(o){o.classList.toggle('active',o.dataset.v&&o.dataset.v.toLowerCase()===S.district.toLowerCase());}); }
   }
 }
 
