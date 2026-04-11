@@ -1688,16 +1688,17 @@ function captureGeo(){
       icon.className=''; icon.textContent='⟳'; icon.className='spinning';
       lbl.textContent='Looking up address...';
       /* ── Reverse geocode via OpenStreetMap Nominatim (free, no key) ── */
-      fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+S.lat+'&lon='+S.lng+'&addressdetails=1&accept-language=en',{headers:{'User-Agent':'RapidResponseApp/1.0'}})
+      fetch('https://api.olamaps.io/places/v1/reverse-geocode?latlng='+S.lat+','+S.lng+'&api_key=m9Xbpbi5HBDFxQflJMNF3wgiiqmNg2UPHds9vANS')
         .then(function(r){return r.json();})
         .then(function(geo){
-          var addr=geo.address||{};
-          /* State: try state, then state_district */
-          var detectedState=addr.state||addr.state_district||'';
-          /* District: OSM uses county for Indian districts most reliably */
-          var detectedDistrict=addr.county||addr.state_district||addr.city_district||addr.district||addr.city||addr.town||addr.village||addr.municipality||'';
-          /* Strip " District" suffix if present */
-          detectedDistrict=detectedDistrict.replace(/ District$/i,'').replace(/ district$/i,'').trim();
+var result=(geo.results&&geo.results[0])||{};
+var comps=result.address_components||[];
+var detectedState='', detectedDistrict='';
+comps.forEach(function(c){
+  if(c.types&&c.types.indexOf('administrative_area_level_1')>-1) detectedState=c.long_name||'';
+  if(c.types&&c.types.indexOf('administrative_area_level_3')>-1) detectedDistrict=c.long_name||'';
+});
+detectedDistrict=detectedDistrict.replace(/ District$/i,'').trim();
           /* Try to match state to our dropdown */
           var stateSelect=document.getElementById('stateSelect');
           var matched=false;
