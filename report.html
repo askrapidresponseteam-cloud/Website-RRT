@@ -1688,7 +1688,7 @@ function captureGeo(){
       icon.className=''; icon.textContent='⟳'; icon.className='spinning';
       lbl.textContent='Looking up address...';
       /* ── Reverse geocode via OpenStreetMap Nominatim (free, no key) ── */
-      fetch('https://api.olamaps.io/places/v1/reverse-geocode?latlng='+S.lat+','+S.lng+'&api_key=m9Xbpbi5HBDFxQflJMNF3wgiiqmNg2UPHds9vANS')
+      fetch('https://api.olamaps.io/places/v1/reverse-geocode?latlng='+S.lat+','+S.lng+'&api_key=Wtg6jEbMOIuA09kaICsbrtiZDWDfOnoJ6izkx25d')
         .then(function(r){return r.json();})
         .then(function(geo){
 var result=(geo.results&&geo.results[0])||{};
