@@ -36,8 +36,8 @@ html.light {
   --dim:    rgba(10,8,6,.58);
   --dimmer: rgba(10,8,6,.34);
   --ghost:  rgba(10,8,6,.04);
-  --bg:     #F3EFE7;
-  --bg2:    #EAE6DE;
+  --bg:     #FFFFFF;
+  --bg2:    #FFFFFF;
   --b:      rgba(10,8,6,.12);
   --bs:     rgba(10,8,6,.20);
   --ra10:   rgba(255,45,26,.07);
@@ -72,7 +72,7 @@ html[lang="en"] span[data-lang="en"],html[lang="hi"] span[data-lang="hi"]{displa
 }
 @media(min-width:768px) { #hdr { padding:0 40px; } }
 #hdr.stuck { background:rgba(8,6,4,.96); backdrop-filter:blur(20px); border-bottom-color:var(--bs); }
-html.light #hdr.stuck { background:rgba(243,239,231,.97); }
+html.light #hdr.stuck { background:rgba(255,255,255,.97); }
 
 .logo { display:flex; align-items:center; gap:9px; text-decoration:none; flex-shrink:0; }
 .logo-sq { width:28px; height:28px; background:var(--red); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -123,6 +123,8 @@ nav.desk a .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; te
 /* FORM SECTION */
 .form-section{padding:48px 24px 80px;background:var(--bg);}
 .grid-bg-report{background-size:40px 40px;background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);}
+html.light .hero h1 span { color:rgba(10,8,6,.45) !important; }
+html.light .grid-bg-report{background-image:linear-gradient(to right,rgba(10,8,6,.06) 1px,transparent 1px),linear-gradient(to bottom,rgba(10,8,6,.06) 1px,transparent 1px);}
 
 /* PROGRESS */
 .prog-wrap{max-width:720px;margin:0 auto 48px;}
@@ -503,7 +505,7 @@ html.light ::selection{background:var(--ra10);color:var(--w);}
 <!-- HERO -->
 <div class="hero grid-bg-report">
   <span class="hero-tag" id="heroTag">Animal Emergency Network</span>
-  <h1 id="heroTitle">Report an<br/><span style="color:rgba(255,255,255,0.18);font-style:italic;">Incident</span></h1>
+  <h1 id="heroTitle">Report an<br/><span style="color:var(--dimmer);font-style:italic;">Incident</span></h1>
   <p id="heroSub">Your report reaches our team directly. Your identity is protected and handled with care.</p>
 </div>
 
@@ -1016,23 +1018,38 @@ function loadDistricts(preselectDistrict){
         }
       }
     }
-    if(matched){dd.value=matched;S.district=matched;S.state=st;}
-    else { console.log('[geo] no district match for candidates:',candidates); }
+    if(matched){
+      dd.value=matched; S.district=matched; S.state=st;
+      console.log('[geo v2] district matched:',matched);
+    }
+    else { console.log('[geo v2] no district match for candidates:',candidates); }
   }
   dd.onchange=function(){S.district=dd.value;};
-  /* sync custom UI */
+  /* sync custom UI - rebuild list */
   var lang4=document.documentElement.lang||'en'; var s4=STRINGS[lang4]||STRINGS.en;
   var ph4=list.length?s4.districtSelect:s4.districtDefault;
   custBuildList('districtList', list.map(function(d){return [d,d];}), ph4, function(val){
     dd.value=val; S.district=val;
     custSetDisplay('districtBtn','districtVal',val,val);
   });
-  /* if geo preselected, reflect in custom UI */
-  if(preselectDistrict && S.district){
-    custSetDisplay('districtBtn','districtVal',S.district,S.district);
-    /* mark active */
+  /* If geo preselected, force the button label and active state.
+     We update the DOM directly to be defensive against any race
+     with custBuildList re-rendering. */
+  if(S.district){
+    var dvEl=document.getElementById('districtVal');
+    if(dvEl){
+      dvEl.textContent=S.district;
+      dvEl.classList.remove('ph');
+    }
+    var dBtn=document.getElementById('districtBtn');
+    if(dBtn){ dBtn.classList.remove('open'); }
     var dlist=document.getElementById('districtList');
-    if(dlist){ dlist.querySelectorAll('.cust-opt').forEach(function(o){o.classList.toggle('active',o.dataset.v&&o.dataset.v.toLowerCase()===S.district.toLowerCase());}); }
+    if(dlist){
+      dlist.querySelectorAll('.cust-opt').forEach(function(o){
+        o.classList.toggle('active', o.dataset.v && o.dataset.v.toLowerCase()===S.district.toLowerCase());
+      });
+    }
+    console.log('[geo v2] district UI updated to:',S.district);
   }
 }
 
