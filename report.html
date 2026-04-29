@@ -979,27 +979,45 @@ function loadDistricts(preselectDistrict){
   var lang3=document.documentElement.lang||'en'; var s3=STRINGS[lang3]||STRINGS.en;
   dd.innerHTML='<option value="">'+s3.districtSelect+'</option>'
     +list.map(function(d){return '<option value="'+d+'">'+d+'</option>';}).join('');
-  /* 3-pass normalised match for geo preselect */
+  /* 3-pass normalised match for geo preselect.
+     Accepts either a string OR an array of candidate strings -
+     we try each candidate in turn and use the first that matches. */
   if(preselectDistrict){
-    var dnorm=normDist(preselectDistrict);
+    var candidates=Array.isArray(preselectDistrict)?preselectDistrict:[preselectDistrict];
     var opts=Array.from(dd.options).filter(function(o){return o.value;});
     var matched='';
-    for(var i=0;i<opts.length;i++){
-      if(normDist(opts[i].value)===dnorm){matched=opts[i].value;break;}
-    }
-    if(!matched){
-      for(var j=0;j<opts.length;j++){
-        var on=normDist(opts[j].value);
-        if(dnorm.indexOf(on)>-1||on.indexOf(dnorm)>-1){matched=opts[j].value;break;}
+    /* Pass 1: exact normalised match across all candidates */
+    for(var ci=0;ci<candidates.length && !matched;ci++){
+      var dnorm=normDist(candidates[ci]);
+      if(!dnorm) continue;
+      for(var i=0;i<opts.length;i++){
+        if(normDist(opts[i].value)===dnorm){matched=opts[i].value;break;}
       }
     }
-    if(!matched&&dnorm.length>2){
-      var fw=dnorm.split(' ')[0];
-      for(var k=0;k<opts.length;k++){
-        if(normDist(opts[k].value).split(' ')[0]===fw){matched=opts[k].value;break;}
+    /* Pass 2: substring match across all candidates */
+    if(!matched){
+      for(var ci2=0;ci2<candidates.length && !matched;ci2++){
+        var dnorm2=normDist(candidates[ci2]);
+        if(!dnorm2||dnorm2.length<3) continue;
+        for(var j=0;j<opts.length;j++){
+          var on=normDist(opts[j].value);
+          if(dnorm2.indexOf(on)>-1||on.indexOf(dnorm2)>-1){matched=opts[j].value;break;}
+        }
+      }
+    }
+    /* Pass 3: first-word match across all candidates */
+    if(!matched){
+      for(var ci3=0;ci3<candidates.length && !matched;ci3++){
+        var dnorm3=normDist(candidates[ci3]);
+        if(!dnorm3||dnorm3.length<=2) continue;
+        var fw=dnorm3.split(' ')[0];
+        for(var k=0;k<opts.length;k++){
+          if(normDist(opts[k].value).split(' ')[0]===fw){matched=opts[k].value;break;}
+        }
       }
     }
     if(matched){dd.value=matched;S.district=matched;S.state=st;}
+    else { console.log('[geo] no district match for candidates:',candidates); }
   }
   dd.onchange=function(){S.district=dd.value;};
   /* sync custom UI */
@@ -1693,8 +1711,23 @@ fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+S.lat+'&lon
         .then(function(geo){
 var addr=geo.address||{};
 var detectedState=addr.state||addr.state_district||'';
-var detectedDistrict=addr.county||addr.state_district||addr.city_district||addr.district||addr.city||addr.town||addr.village||addr.municipality||'';
-detectedDistrict=detectedDistrict.replace(/ District$/i,'').replace(/ district$/i,'').trim();
+/* Build an ordered list of district candidates - Nominatim's
+   field for the Indian district varies by location. We try them
+   in order of likelihood. */
+var districtCandidates=[
+  addr.state_district, addr.county, addr.district,
+  addr.city_district, addr.municipality,
+  addr.city, addr.town, addr.village,
+  addr.suburb, addr.region
+].filter(function(v){return v;}).map(function(v){
+  return String(v).replace(/\s+(District|district|Zilla|zilla|Taluk|taluk|Taluka|taluka|Tehsil|tehsil|Mandal|mandal)$/,'').trim();
+});
+/* dedupe while preserving order */
+var seen={};
+districtCandidates=districtCandidates.filter(function(v){
+  var k=v.toLowerCase(); if(seen[k]) return false; seen[k]=true; return true;
+});
+console.log('[geo] Nominatim address:',addr,'candidates:',districtCandidates);
           /* Try to match state to our dropdown */
           var stateSelect=document.getElementById('stateSelect');
           var matched=false;
@@ -1720,7 +1753,7 @@ detectedDistrict=detectedDistrict.replace(/ District$/i,'').replace(/ district$/
             S.state=stateSelect.value;
             custSetDisplay('stateBtn','stateVal',S.state,S.state);
             var sl=document.getElementById('stateList');if(sl){sl.querySelectorAll('.cust-opt').forEach(function(o){o.classList.toggle('active',o.dataset.v===S.state);});}
-            loadDistricts(detectedDistrict);
+            loadDistricts(districtCandidates);
                           /* district matching handled by loadDistricts() */
           }
           /* Show landmark in the landmark field if empty */
