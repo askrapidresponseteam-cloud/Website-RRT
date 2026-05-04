@@ -173,11 +173,19 @@ html[lang="hi"] h4 span[data-lang="hi"] { display:inline !important; }
   transition:background .3s, border-color .3s;
 }
 @media(min-width:768px) { #hdr { padding:0 40px; } }
-#hdr.stuck { background:rgba(8,6,4,.65); backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border-bottom-color:var(--bs); }
+#hdr.stuck {
+  background:rgba(8,6,4,.5);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom-color:var(--bs);
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 4px 24px rgba(0,0,0,.2);
+}
 html.light #hdr.stuck {
-  background:rgba(255,255,255,.65);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom-color:rgba(10,8,6,.08);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 4px 24px rgba(10,8,6,.04);
 }
 .logo { display:flex; align-items:center; gap:9px; text-decoration:none; flex-shrink:0; }
 .logo-sq { width:28px; height:28px; background:var(--red); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -235,9 +243,10 @@ nav.desk a .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; te
   background-size:64px 64px;
   mask-image:radial-gradient(ellipse 80% 65% at 50% 35%, black 0%, transparent 100%);
 }
-html.light #hero::before {
-  background-image: linear-gradient(rgba(10,8,6,.08) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(10,8,6,.08) 1px, transparent 1px);
+html.light #hero::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:160px;
+  background:linear-gradient(180deg, rgba(255,45,26,.06) 0%, transparent 100%);
+  pointer-events:none; z-index:1;
 }
 .h-heat {
   position:absolute; top:-20%; left:50%; transform:translateX(-50%);
