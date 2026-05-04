@@ -173,9 +173,12 @@ html[lang="hi"] h4 span[data-lang="hi"] { display:inline !important; }
   transition:background .3s, border-color .3s;
 }
 @media(min-width:768px) { #hdr { padding:0 40px; } }
-#hdr.stuck { background:rgba(8,6,4,.96); backdrop-filter:blur(20px); border-bottom-color:var(--bs); }
-html.light #hdr.stuck { background:rgba(243,239,231,.97); }
-
+#hdr.stuck { background:rgba(8,6,4,.65); backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border-bottom-color:var(--bs); }
+html.light #hdr.stuck {
+  background:rgba(255,255,255,.65);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+}
 .logo { display:flex; align-items:center; gap:9px; text-decoration:none; flex-shrink:0; }
 .logo-sq { width:28px; height:28px; background:var(--red); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .logo-sq .material-symbols-outlined { font-size:14px; color:#fff; }
@@ -598,6 +601,7 @@ html.light .cu .cb { color:rgba(10,8,6,.82); }
    FOOTER
 ═══════════════════════ */
 footer { background:var(--bg2); border-top:1px solid var(--bs); padding:56px 20px 40px; }
+html.light footer { background:#FFFFFF; }
 @media(min-width:768px) { footer { padding:60px 40px 40px; } }
 
 .ft-in {
