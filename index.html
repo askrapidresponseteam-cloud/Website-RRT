@@ -4,14 +4,14 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Rapid Response | Animal Emergency Network</title>
-<meta name="description" content="Rapid Response is a peer network for animal people. Feeders, pet parents, fosterers, rescuers. When you need a vet at midnight, backup at a feeding spot, or transport for an injured animal, your district shows up."/>
+<meta name="description" content="Rapid Response is a peer network for everyone who shows up for animals. Feeders, pet parents, fosterers, rescuers, vets. One tap reaches your district when you need a vet at midnight, backup at a feeding spot, or transport for an injured animal."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;600;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"/>
 <style>
 /* ═══════════════════════
-   TOKENS — dark (default)
+   TOKENS - dark (default)
 ═══════════════════════ */
 :root {
   --red:    #FF2D1A;
@@ -32,16 +32,16 @@
   --FH: 'Noto Sans Devanagari', sans-serif;
 }
 /* ═══════════════════════
-   LIGHT MODE — Apple-inspired
+   LIGHT MODE - Apple-inspired
    apple.com uses #F5F5F7 (cool grey) as primary canvas.
    Pure white is reserved for elevated card surfaces.
-   Text contrast is HIGH — near-black for body, real black for headings.
+   Text contrast is HIGH - near-black for body, real black for headings.
    This is what makes Apple's light mode feel rich, not washed out.
 ═══════════════════════ */
 html.light {
-  --w:      #1D1D1F;       /* Apple's exact text color — near black */
+  --w:      #1D1D1F;       /* Apple's exact text color - near black */
   --off:    #1D1D1F;
-  --dim:    #6E6E73;       /* Apple secondary text — solid grey, not transparent */
+  --dim:    #6E6E73;       /* Apple secondary text - solid grey, not transparent */
   --dimmer: #86868B;       /* Apple tertiary text */
   --ghost:  rgba(0,0,0,.04);
   --bg:     #F5F5F7;       /* Apple canvas grey */
@@ -72,7 +72,7 @@ body::after {
   background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   opacity:.42;
 }
-/* light mode: kill noise entirely — Apple is pristine, not gritty */
+/* light mode: kill noise entirely - Apple is pristine, not gritty */
 html.light body::after { display:none; }
 
 /* ═══════════════════════
@@ -277,7 +277,7 @@ html.light .h-heat {
 .h-eye .el { font-family:var(--FM); font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:var(--dimmer); }
 .h-eye .el.hi { font-family:var(--FH); font-size:11px; letter-spacing:.03em; text-transform:none; font-weight:600; line-height:1.4; }
 
-/* hero headline — separate classes for EN vs HI to control each independently */
+/* hero headline - separate classes for EN vs HI to control each independently */
 .h1 { margin-bottom:28px; overflow-wrap:break-word; word-break:break-word; }
 .h1 .en-b {
   display:block; font-family:var(--FD); font-weight:900;
@@ -353,7 +353,7 @@ html.light .btn-s:hover img { filter:none; }
 }
 
 /* ═══════════════════════
-   MISSION (new — CRED-style "we believe")
+   MISSION (new - CRED-style "we believe")
 ═══════════════════════ */
 #mission { padding:90px 20px 90px; position:relative; }
 @media(min-width:768px) { #mission { padding:120px 40px 120px; } }
@@ -698,16 +698,16 @@ html.light footer { background:#FFFFFF; }
 .sp { animation:spin .8s linear infinite; }
 
 /* ═══════════════════════════════════════════════════════════
-   LIGHT MODE — APPLE POLISH LAYER
+   LIGHT MODE - APPLE POLISH LAYER
    Principles:
    • Cool grey canvas (#F5F5F7), white elevated surfaces
-   • HIGH text contrast — #1D1D1F headings, #6E6E73 body
+   • HIGH text contrast - #1D1D1F headings, #6E6E73 body
    • Restrained shadows: 1-2 layers max, low opacity
    • No gradients on cards. No noise. No clever effects.
    • Generous whitespace, hairline borders only when needed
 ═══════════════════════════════════════════════════════════ */
 
-/* SECTIONS — alternating grey canvas / white surface */
+/* SECTIONS - alternating grey canvas / white surface */
 html.light #hero    { background:#FFFFFF; }
 html.light #how     { background:#F5F5F7; }
 html.light #clarity { background:#FFFFFF; }
@@ -715,7 +715,7 @@ html.light #faq     { background:#F5F5F7; }
 html.light #legal   { background:#FFFFFF; }
 html.light footer   { background:#F5F5F7; border-top:1px solid rgba(0,0,0,.08); }
 
-/* hairline section dividers — barely there */
+/* hairline section dividers - barely there */
 html.light .div { background:linear-gradient(90deg, transparent, rgba(0,0,0,.06) 30%, rgba(0,0,0,.06) 70%, transparent); }
 
 /* ── HERO ── */
@@ -727,13 +727,13 @@ html.light .h-eye {
 }
 html.light .h-eye .el { color:#6E6E73; }
 
-/* hero ghost text — refined red stroke */
+/* hero ghost text - refined red stroke */
 html.light .h1 .en-b.ghost { -webkit-text-stroke:1.4px rgba(255,45,26,.45); }
 html.light .h1 .hi-b.ghost { -webkit-text-stroke:1.1px rgba(255,45,26,.45); }
 
 html.light .h-sub { color:#6E6E73; font-weight:400; }
 
-/* store buttons — Apple-style solid black with soft shadow */
+/* store buttons - Apple-style solid black with soft shadow */
 html.light .btn-s {
   background:#1D1D1F; color:#FFFFFF; border-color:#1D1D1F;
   box-shadow:0 1px 2px rgba(0,0,0,.06);
@@ -757,7 +757,7 @@ html.light .h-bar-lbl { background:rgba(0,0,0,.025); border-color:rgba(0,0,0,.08
 html.light .h-bar a { border-color:rgba(0,0,0,.08); color:#6E6E73; }
 html.light .h-bar a:hover { background:rgba(255,45,26,.05); color:#1D1D1F; }
 
-/* ── HOW IT WORKS — cards on grey canvas ── */
+/* ── HOW IT WORKS - cards on grey canvas ── */
 html.light .ph-frame {
   border:1px solid rgba(0,0,0,.08);
   background:#FFFFFF;
@@ -988,22 +988,22 @@ html.light .ft-lbl { color:var(--red); }
 
     <div class="h-eye rv">
       <span class="h-dot"></span>
-      <span class="el" data-lang="en">a network for animal people</span>
-      <span class="el hi" data-lang="hi">एनिमल लवर्स का नेटवर्क</span>
+      <span class="el" data-lang="en">a peer network. district by district.</span>
+      <span class="el hi" data-lang="hi">एक पीयर नेटवर्क। जिला-दर-जिला।</span>
     </div>
 
 <div class="h1 rv d1">
-      <span class="en-b" data-lang="en">animal welfare</span>
-      <span class="en-b" data-lang="en">needs a network.</span>
-      <span class="en-b ghost" data-lang="en">this is it.</span>
-      <span class="hi-b" data-lang="hi">जानवरों की भलाई को</span>
-      <span class="hi-b" data-lang="hi">एक नेटवर्क चाहिए।</span>
-      <span class="hi-b ghost" data-lang="hi">यही है वो।</span>
+      <span class="en-b" data-lang="en">people who</span>
+      <span class="en-b" data-lang="en">show up for animals</span>
+      <span class="en-b ghost" data-lang="en">find each other.</span>
+      <span class="hi-b" data-lang="hi">जो जानवरों के लिए</span>
+      <span class="hi-b" data-lang="hi">खड़े होते हैं</span>
+      <span class="hi-b ghost" data-lang="hi">एक-दूसरे को ढूँढ लेते हैं।</span>
     </div>
      
     <p class="h-sub rv d2">
-      <span data-lang="en">pet parents, feeders, rescuers in one place. need a vet at midnight, backup at a feeding spot, transport for an injured community animal? your district shows up.</span>
-      <span data-lang="hi" class="hi">पेट पैरेंट्स, फीडर, रेस्क्यूअर्स एक जगह। आधी रात को वेट चाहिए, फीडिंग स्पॉट पर साथ चाहिए, घायल जानवर के लिए ट्रांसपोर्ट? आपका जिला साथ है।</span>
+      <span data-lang="en">one tap could reach everyone in your district. but only if we're in one place. that's what this is for.</span>
+      <span data-lang="hi" class="hi">एक टैप जिले के हर इंसान तक पहुँच सकता है। लेकिन तभी जब हम एक जगह हों। यही इसका मक़सद है।</span>
     </p>
 
     <div class="h-ctas rv d3">
@@ -1069,10 +1069,10 @@ html.light .ft-lbl { color:var(--red); }
     </span>
 
     <h2 class="ms-stmt rv d1" data-lang="en">
-      animal people already do the work. <span class="ms-em">this is where you find each other.</span>
+      you already do the work. <span class="ms-em">imagine if we could find each other.</span>
     </h2>
     <h2 class="ms-stmt hi-ms rv d1" data-lang="hi">
-      एनिमल लवर्स पहले से काम कर रहे हैं। <span class="ms-em">यहाँ एक-दूसरे को ढूँढिए।</span>
+      आप पहले से काम कर रहे हैं। <span class="ms-em">सोचिए, अगर हम एक-दूसरे को ढूँढ पाएँ।</span>
     </h2>
 
     <p class="ms-body rv d2">
@@ -1086,8 +1086,8 @@ html.light .ft-lbl { color:var(--red); }
     </p>
 
     <p class="ms-body rv d3">
-      <span data-lang="en">rapid response puts every animal person in your district in one place. <strong>same passion, same area, one tap away.</strong> not strangers. not the general public. people who get it.</span>
-      <span data-lang="hi" class="hi">रैपिड रिस्पॉन्स आपके जिले के हर एनिमल लवर को एक जगह लाता है। <strong>एक जुनून, एक इलाक़ा, एक टैप दूर।</strong> कोई अजनबी नहीं। आम लोग नहीं। वो लोग जो समझते हैं।</span>
+      <span data-lang="en">your district has the people. the feeder who knows the open clinic at 2am. the rescuer with a car. the vet who picks up. they exist. they're just scattered across phones, groups, and chance. if we were in one place, finding them wouldn't take a panic.</span>
+      <span data-lang="hi" class="hi">आपके जिले में वो लोग हैं। वो फीडर जिसे आधी रात की क्लिनिक पता है। वो रेस्क्यूअर जिसके पास गाड़ी है। वो वेट जो फ़ोन उठाता है। वो हैं। बस अलग-अलग फ़ोन, ग्रुप्स और इत्तेफ़ाक़ में बँटे हैं। अगर हम एक जगह होते, उन्हें ढूँढने में घबराहट नहीं होती।</span>
     </p>
 
     <div class="ms-pillars rv d3">
@@ -1098,8 +1098,8 @@ html.light .ft-lbl { color:var(--red); }
           <span data-lang="hi" class="hi">वेट इमरजेंसी</span>
         </h4>
         <p>
-          <span data-lang="en">your dog spikes a fever at midnight. ping the network. find which clinic is open, who has a car, who's done this before.</span>
-          <span data-lang="hi" class="hi">आधी रात को कुत्ते को बुख़ार। नेटवर्क पर पूछिए। कौन-सी क्लिनिक खुली है, किसके पास गाड़ी है, किसने पहले ये किया है।</span>
+          <span data-lang="en">midnight. your dog has a fever. somewhere there's a vet who'd pick up. a neighbor with a car. someone who's been through this before. if we were in one place, you wouldn't be alone with it.</span>
+          <span data-lang="hi" class="hi">आधी रात। आपके कुत्ते को बुख़ार। कोई वेट होगा जो फ़ोन उठाएगा। कोई पड़ोसी होगा जिसके पास गाड़ी है। कोई होगा जिसने पहले ये किया है। अगर हम एक जगह होते, आप अकेले नहीं होते।</span>
         </p>
       </div>
       <div class="ms-pl">
@@ -1109,8 +1109,8 @@ html.light .ft-lbl { color:var(--red); }
           <span data-lang="hi" class="hi">साथ और समर्थन</span>
         </h4>
         <p>
-          <span data-lang="en">harassed at your feeding spot? cover needed for a few days? other feeders in your district step in. peers, not strangers.</span>
-          <span data-lang="hi" class="hi">फीडिंग स्पॉट पर परेशानी? कुछ दिन कोई कवर करे? जिले के दूसरे फीडर आते हैं। साथी, अजनबी नहीं।</span>
+          <span data-lang="en">harassed at your feeding spot. need cover for a few days. there are other feeders within a few kilometers, dealing with the same things. if we knew each other, we could have each other's backs.</span>
+          <span data-lang="hi" class="hi">फीडिंग स्पॉट पर परेशानी। कुछ दिन कोई कवर करे। कुछ किलोमीटर के अंदर और भी फीडर हैं, इन्हीं हालात से जूझ रहे। अगर हम एक-दूसरे को जानते, तो साथ दे सकते।</span>
         </p>
       </div>
       <div class="ms-pl">
@@ -1120,8 +1120,8 @@ html.light .ft-lbl { color:var(--red); }
           <span data-lang="hi" class="hi">फील्ड कोऑर्डिनेशन</span>
         </h4>
         <p>
-          <span data-lang="en">an injured animal, no transport, no foster. tap the district. someone with a car or an empty kennel responds. you stop working alone.</span>
-          <span data-lang="hi" class="hi">घायल जानवर, गाड़ी नहीं, फोस्टर नहीं। जिले को टैप कीजिए। किसी के पास गाड़ी या जगह होगी। आप अकेले नहीं।</span>
+          <span data-lang="en">an injured animal. no transport. no foster. somewhere within reach, someone has a car or an empty kennel and would help if asked. the asking is the part that's broken. it doesn't have to be.</span>
+          <span data-lang="hi" class="hi">घायल जानवर। न गाड़ी, न फोस्टर। पास ही कोई होगा जिसके पास गाड़ी या जगह है, और जो पूछने पर मदद करेगा। पूछना ही टूटा हुआ है। ऐसा होना ज़रूरी नहीं।</span>
         </p>
       </div>
     </div>
@@ -1149,8 +1149,8 @@ html.light .ft-lbl { color:var(--red); }
         <span class="hi-h" data-lang="hi">आप जैसे लोग।</span>
       </h2>
       <p class="how-desc">
-        <span data-lang="en">whatever you need. a vet reference, transport, a feeder backup, a foster lead. the network in your district sees it.</span>
-        <span data-lang="hi" class="hi">जो भी ज़रूरत हो। वेट का रेफ़रेंस, ट्रांसपोर्ट, फीडर का साथ, फोस्टर। आपके जिले का नेटवर्क देखता है।</span>
+        <span data-lang="en">if we're in one place, here's how this works.</span>
+        <span data-lang="hi" class="hi">अगर हम एक जगह हों, ऐसे काम करता है।</span>
       </p>
     </div>
 
@@ -1200,8 +1200,8 @@ html.light .ft-lbl { color:var(--red); }
               <span data-lang="hi" class="hi">पूरा जिला देखता है।</span>
             </h4>
             <p>
-              <span data-lang="en">every animal person registered in your district gets pinged. fellow feeders, pet parents, rescuers, vets. your real community.</span>
-              <span data-lang="hi" class="hi">जिले के हर एनिमल लवर तक पहुँचता है। फीडर, पेट पैरेंट्स, रेस्क्यूअर्स, वेट। आपकी असली कम्युनिटी।</span>
+              <span data-lang="en">it goes to everyone in your district who's on the app. fellow feeders, pet parents, rescuers, vets. people who already do this.</span>
+              <span data-lang="hi" class="hi">आपके जिले के हर उस इंसान तक पहुँचता है जो ऐप पर है। फीडर, पेट पैरेंट्स, रेस्क्यूअर्स, वेट। वो लोग जो ये पहले से करते हैं।</span>
             </p>
           </div>
           <div class="step rv d3">
@@ -1213,16 +1213,16 @@ html.light .ft-lbl { color:var(--red); }
               <span data-lang="hi" class="hi">आप मिलकर तय करते हैं।</span>
             </h4>
             <p>
-              <span data-lang="en">whoever can help replies. you chat, swap numbers, work it out together. the way animal people always have, now faster.</span>
-              <span data-lang="hi" class="hi">जो मदद कर सकता है, जवाब देता है। चैट कीजिए, नंबर लीजिए, मिलकर तय कीजिए। एनिमल लवर्स हमेशा यही करते हैं, अब तेज़।</span>
+              <span data-lang="en">whoever's free replies. you chat, swap numbers, work it out. this is how it's always been done. now it just doesn't take an hour to get started.</span>
+              <span data-lang="hi" class="hi">जो खाली है, जवाब देता है। चैट कीजिए, नंबर लीजिए, मिलकर तय कीजिए। हमेशा से ऐसे ही होता आया है। अब बस शुरू करने में घंटा नहीं लगता।</span>
             </p>
           </div>
         </div>
         <div class="how-note rv">
           <span class="material-symbols-outlined">info</span>
           <p>
-            <span data-lang="en">the network only works because real animal people are in it. every pet parent, feeder, fosterer, rescuer who joins makes the next emergency easier for someone else.</span>
-            <span data-lang="hi" class="hi">नेटवर्क इसलिए चलता है क्योंकि असली एनिमल लवर्स इसमें हैं। हर पेट पैरेंट, फीडर, फोस्टर, रेस्क्यूअर जो जुड़ता है, अगली इमरजेंसी किसी और के लिए आसान बनाता है।</span>
+            <span data-lang="en">none of this works alone. it works because people in your district are in one place. that's all this is. the appeal is simple: be findable, so others can be too.</span>
+            <span data-lang="hi" class="hi">अकेले कुछ नहीं चलता। ये इसलिए चलता है क्योंकि जिले के लोग एक जगह होते हैं। बस इतनी सी बात है। निवेदन सीधा है: ढूँढने लायक बनिए, ताकि बाक़ी लोग भी हों।</span>
           </p>
         </div>
       </div>
@@ -1260,7 +1260,7 @@ html.light .ft-lbl { color:var(--red); }
         <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">a peer network for people already working with animals. feeders, pet parents, fosterers, rescuers, vets</span><span data-lang="hi" class="hi">उन लोगों का नेटवर्क जो पहले से जानवरों के लिए काम कर रहे हैं। फीडर, पेट पैरेंट्स, फोस्टर, रेस्क्यूअर्स, वेट</span></p></div>
         <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">district-scoped, so the people you reach are actually close enough to be useful</span><span data-lang="hi" class="hi">जिले तक सीमित, ताकि जिन लोगों तक पहुँचें, वो सच में पास हों</span></p></div>
         <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">a coordination layer. chat, share GPS, swap contacts, work it out together</span><span data-lang="hi" class="hi">एक कोऑर्डिनेशन लेयर। चैट, GPS, नंबर, मिलकर तय करना</span></p></div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">free, community-owned, open to anyone genuinely involved in animal welfare</span><span data-lang="hi" class="hi">मुफ़्त, कम्युनिटी का, हर उस इंसान के लिए जो वाक़ई जानवरों के लिए काम करता है</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">free, community-owned, open to pet parents, feeders, fosterers, rescuers, vets - the people who already do this work</span><span data-lang="hi" class="hi">मुफ़्त, कम्युनिटी का। पेट पैरेंट्स, फीडर, फोस्टर, रेस्क्यूअर्स, वेट के लिए - वो लोग जो पहले से ये काम करते हैं</span></p></div>
       </div>
       <div class="cl-col">
         <div class="cl-ch">
@@ -1272,7 +1272,7 @@ html.light .ft-lbl { color:var(--red); }
         </div>
         <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a rescue service. we don't dispatch teams, run shelters, or operate ambulances</span><span data-lang="hi" class="hi">रेस्क्यू सर्विस। हम टीम नहीं भेजते, शेल्टर नहीं चलाते, एम्बुलेंस नहीं चलाते</span></p></div>
         <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a guarantee. we're a network. what comes back depends on who's in your district and who's free</span><span data-lang="hi" class="hi">कोई गारंटी। हम एक नेटवर्क हैं। जवाब इस पर है कि जिले में कौन है और कौन खाली है</span></p></div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a public alert system. SOS goes only to verified animal-welfare members, not random strangers</span><span data-lang="hi" class="hi">पब्लिक अलर्ट सिस्टम। SOS सिर्फ़ वेरिफ़ाइड एनिमल वेलफ़ेयर मेंबर्स तक जाता है, अजनबियों तक नहीं</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a public alert system. SOS goes to everyone registered in your district on the app, not the wider public</span><span data-lang="hi" class="hi">पब्लिक अलर्ट सिस्टम। SOS आपके जिले में ऐप पर रजिस्टर्ड सभी लोगों तक जाता है, बाहर नहीं</span></p></div>
         <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a government tool. no department backs us. no fees. no agenda beyond connecting our own community</span><span data-lang="hi" class="hi">कोई सरकारी टूल। न कोई विभाग है, न फ़ीस। बस अपनी कम्युनिटी को जोड़ने का काम</span></p></div>
       </div>
     </div>
