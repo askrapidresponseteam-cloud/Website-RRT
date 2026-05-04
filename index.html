@@ -31,19 +31,25 @@
   --FM: 'JetBrains Mono', monospace;
   --FH: 'Noto Sans Devanagari', sans-serif;
 }
-/* light mode token overrides */
+/* ═══════════════════════
+   LIGHT MODE — Apple-inspired
+   apple.com uses #F5F5F7 (cool grey) as primary canvas.
+   Pure white is reserved for elevated card surfaces.
+   Text contrast is HIGH — near-black for body, real black for headings.
+   This is what makes Apple's light mode feel rich, not washed out.
+═══════════════════════ */
 html.light {
-  --w:      #0A0806;
-  --off:    #1A1612;
-  --dim:    rgba(10,8,6,.58);
-  --dimmer: rgba(10,8,6,.34);
-  --ghost:  rgba(10,8,6,.04);
-  --bg:     #FFFFFF;
-  --bg2:    #F5F5F5;
-  --b:      rgba(10,8,6,.12);
-  --bs:     rgba(10,8,6,.20);
-  --ra10:   rgba(255,45,26,.07);
-  --ra32:   rgba(255,45,26,.28);
+  --w:      #1D1D1F;       /* Apple's exact text color — near black */
+  --off:    #1D1D1F;
+  --dim:    #6E6E73;       /* Apple secondary text — solid grey, not transparent */
+  --dimmer: #86868B;       /* Apple tertiary text */
+  --ghost:  rgba(0,0,0,.04);
+  --bg:     #F5F5F7;       /* Apple canvas grey */
+  --bg2:    #FFFFFF;       /* elevated surfaces */
+  --b:      rgba(0,0,0,.08);
+  --bs:     rgba(0,0,0,.12);
+  --ra10:   rgba(255,45,26,.08);
+  --ra32:   rgba(255,45,26,.32);
 }
 
 /* ═══════════════════════
@@ -66,6 +72,8 @@ body::after {
   background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   opacity:.42;
 }
+/* light mode: kill noise entirely — Apple is pristine, not gritty */
+html.light body::after { display:none; }
 
 /* ═══════════════════════
    LANGUAGE SWITCHING
@@ -181,11 +189,11 @@ html[lang="hi"] h4 span[data-lang="hi"] { display:inline !important; }
   box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 4px 24px rgba(0,0,0,.2);
 }
 html.light #hdr.stuck {
-  background:rgba(255,255,255,.55);
-  backdrop-filter:blur(24px) saturate(180%);
-  -webkit-backdrop-filter:blur(24px) saturate(180%);
-  border-bottom-color:rgba(10,8,6,.08);
-  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 4px 24px rgba(10,8,6,.04);
+  background:rgba(245,245,247,.72);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.08);
+  box-shadow:none;
 }
 .logo { display:flex; align-items:center; gap:9px; text-decoration:none; flex-shrink:0; }
 .logo-sq { width:28px; height:28px; background:var(--red); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -243,15 +251,17 @@ nav.desk a .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; te
   background-size:64px 64px;
   mask-image:radial-gradient(ellipse 80% 65% at 50% 35%, black 0%, transparent 100%);
 }
-html.light #hero::after {
-  content:''; position:absolute; top:0; left:0; right:0; height:160px;
-  background:linear-gradient(180deg, rgba(255,45,26,.06) 0%, transparent 100%);
-  pointer-events:none; z-index:1;
+html.light #hero::before {
+  background-image: linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px);
 }
 .h-heat {
   position:absolute; top:-20%; left:50%; transform:translateX(-50%);
   width:min(900px, 130vw); height:600px; pointer-events:none;
   background:radial-gradient(ellipse at 50% 30%, rgba(255,45,26,.16) 0%, rgba(255,45,26,.04) 50%, transparent 70%);
+}
+html.light .h-heat {
+  background:radial-gradient(ellipse at 50% 30%, rgba(255,45,26,.06) 0%, rgba(255,45,26,.015) 50%, transparent 70%);
 }
 .h-content { position:relative; z-index:2; width:100%; max-width:960px; }
 
@@ -643,6 +653,238 @@ html.light footer { background:#FFFFFF; }
 
 @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 .sp { animation:spin .8s linear infinite; }
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT MODE — APPLE POLISH LAYER
+   Principles:
+   • Cool grey canvas (#F5F5F7), white elevated surfaces
+   • HIGH text contrast — #1D1D1F headings, #6E6E73 body
+   • Restrained shadows: 1-2 layers max, low opacity
+   • No gradients on cards. No noise. No clever effects.
+   • Generous whitespace, hairline borders only when needed
+═══════════════════════════════════════════════════════════ */
+
+/* SECTIONS — alternating grey canvas / white surface */
+html.light #hero    { background:#FFFFFF; }
+html.light #how     { background:#F5F5F7; }
+html.light #clarity { background:#FFFFFF; }
+html.light #faq     { background:#F5F5F7; }
+html.light #legal   { background:#FFFFFF; }
+html.light footer   { background:#F5F5F7; border-top:1px solid rgba(0,0,0,.08); }
+
+/* hairline section dividers — barely there */
+html.light .div { background:linear-gradient(90deg, transparent, rgba(0,0,0,.06) 30%, rgba(0,0,0,.06) 70%, transparent); }
+
+/* ── HERO ── */
+html.light .h-eye {
+  border:1px solid rgba(0,0,0,.10);
+  background:rgba(255,255,255,.6);
+  backdrop-filter:saturate(180%) blur(10px);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);
+}
+html.light .h-eye .el { color:#6E6E73; }
+
+/* hero ghost text — refined red stroke */
+html.light .h1 .en-b.ghost { -webkit-text-stroke:1.4px rgba(255,45,26,.45); }
+html.light .h1 .hi-b.ghost { -webkit-text-stroke:1.1px rgba(255,45,26,.45); }
+
+html.light .h-sub { color:#6E6E73; font-weight:400; }
+
+/* store buttons — Apple-style solid black with soft shadow */
+html.light .btn-s {
+  background:#1D1D1F; color:#FFFFFF; border-color:#1D1D1F;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+  transition:all .2s ease;
+}
+html.light .btn-s:hover {
+  background:#000000; border-color:#000000; color:#FFFFFF;
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+html.light .btn-s img { filter:invert(1); }
+html.light .btn-s:hover img { filter:invert(1); }
+
+/* learn bar */
+html.light .h-bar {
+  border:1px solid rgba(0,0,0,.10);
+  background:#FFFFFF;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+html.light .h-bar-lbl { background:rgba(0,0,0,.025); border-color:rgba(0,0,0,.08); color:#86868B; }
+html.light .h-bar a { border-color:rgba(0,0,0,.08); color:#6E6E73; }
+html.light .h-bar a:hover { background:rgba(255,45,26,.05); color:#1D1D1F; }
+
+/* ── HOW IT WORKS — cards on grey canvas ── */
+html.light .ph-frame {
+  border:1px solid rgba(0,0,0,.08);
+  background:#FFFFFF;
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+}
+
+html.light .steps-g {
+  background:rgba(0,0,0,.08);
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+  overflow:hidden;
+}
+html.light .step { background:#FFFFFF; }
+html.light .step:hover { background:#FAFAFA; }
+html.light .step h4 { color:#1D1D1F; }
+html.light .step p { color:#6E6E73; }
+html.light .snum { color:rgba(0,0,0,.05); }
+
+html.light .how-note {
+  background:#FAFAFA;
+  border-top:1px solid rgba(0,0,0,.08);
+}
+html.light .how-note p { color:#6E6E73; }
+html.light .how-desc { color:#6E6E73; }
+
+/* ── CLARITY ── */
+html.light .cl-grid {
+  background:rgba(0,0,0,.08);
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+}
+html.light .cl-col { background:#FFFFFF; }
+html.light .cl-ch { border-bottom-color:rgba(0,0,0,.08); }
+html.light .cl-it { border-bottom-color:rgba(0,0,0,.06); }
+html.light .cl-it p { color:#6E6E73; }
+html.light .cl-ico.gn { background:rgba(40,200,80,.08); border:1px solid rgba(40,200,80,.25); }
+html.light .cl-ico.rd { background:rgba(255,45,26,.06); border:1px solid rgba(255,45,26,.22); }
+
+/* ── FAQ ── */
+html.light .faq-l p { color:#6E6E73; }
+html.light .ask-lbl { color:#86868B; }
+html.light .faq-sw {
+  border:1px solid rgba(0,0,0,.10);
+  background:#FFFFFF;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+html.light .faq-sw:focus-within {
+  border-color:rgba(255,45,26,.4);
+  box-shadow:0 0 0 4px rgba(255,45,26,.08);
+}
+html.light #faqSearch { color:#1D1D1F; }
+html.light #faqSearch::placeholder { color:#86868B; }
+html.light .fq-chip {
+  border:1px solid rgba(0,0,0,.10);
+  background:#FFFFFF;
+  color:#6E6E73;
+  transition:all .15s ease;
+}
+html.light .fq-chip:hover {
+  border-color:rgba(0,0,0,.20);
+  background:#FAFAFA;
+  color:#1D1D1F;
+}
+html.light #faqRes {
+  border:1px solid rgba(0,0,0,.08);
+  background:#FFFFFF;
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+}
+html.light .fq-it { border-bottom-color:rgba(0,0,0,.06); }
+html.light .fq-it:hover { background:#FAFAFA; }
+html.light .fq-q { color:#1D1D1F; }
+html.light .fq-a { color:#6E6E73; }
+html.light #fqEmp { color:#86868B; }
+
+/* ── LEGAL DESK ── */
+html.light .leg-hd p { color:#6E6E73; }
+html.light .leg-wrap {
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 32px rgba(0,0,0,.06);
+  background:#FFFFFF;
+}
+html.light .leg-sb {
+  background:#FAFAFA;
+  border-right:1px solid rgba(0,0,0,.08);
+}
+html.light .leg-sb-h {
+  background:rgba(255,45,26,.04);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+html.light .leg-sb-h h4 { color:#1D1D1F; }
+html.light .leg-sb-h p { color:#86868B; }
+html.light .leg-tags { border-bottom-color:rgba(0,0,0,.06); }
+html.light .ltag {
+  background:#FFFFFF;
+  border:1px solid rgba(0,0,0,.08);
+  color:#6E6E73;
+}
+html.light .leg-ql { color:#86868B; }
+html.light .lqc {
+  background:#FFFFFF;
+  border:1px solid rgba(0,0,0,.08);
+  transition:all .15s ease;
+}
+html.light .lqc:hover {
+  background:rgba(255,45,26,.04);
+  border-color:rgba(255,45,26,.3);
+}
+html.light .lqc .ct { color:#1D1D1F; }
+html.light .lqc .cs { color:#86868B; }
+html.light .leg-panel { background:#FFFFFF; }
+html.light .leg-ph {
+  background:#FAFAFA;
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+html.light .lph-t { color:#86868B; }
+html.light .cbo .cb {
+  background:#F5F5F7;
+  border:1px solid rgba(0,0,0,.06);
+  color:#1D1D1F;
+}
+html.light .cbo .cb strong { color:#1D1D1F; }
+html.light .cu .cb {
+  background:rgba(255,45,26,.06);
+  border:1px solid rgba(255,45,26,.20);
+  color:#1D1D1F;
+}
+html.light .leg-ir { border-top:1px solid rgba(0,0,0,.06); background:#FFFFFF; }
+html.light #li { color:#1D1D1F; }
+html.light #li::placeholder { color:#86868B; }
+html.light .leg-disc { border-top-color:rgba(0,0,0,.04); color:#86868B; }
+
+/* ── HEADER controls ── */
+html.light .mode-b {
+  background:rgba(255,255,255,.6);
+  border:1px solid rgba(0,0,0,.10);
+}
+html.light .mode-b:hover { background:#FFFFFF; border-color:rgba(0,0,0,.18); }
+html.light .lb { color:#6E6E73; }
+html.light .lb:hover { color:#1D1D1F; }
+html.light nav.desk a { color:#6E6E73; }
+html.light nav.desk a:hover { color:#1D1D1F; }
+html.light nav.desk a.cta { color:var(--red); border-color:rgba(255,45,26,.3); }
+html.light nav.desk a.cta:hover { color:#FFFFFF; }
+html.light .mob-btn { color:#1D1D1F; }
+
+/* step icons */
+html.light .s-ic { background:rgba(255,45,26,.06); border:1px solid rgba(255,45,26,.22); }
+
+/* ── FOOTER ── */
+html.light .ft-brand p { color:#6E6E73; }
+html.light .ft-col a { color:#6E6E73; }
+html.light .ft-col a:hover { color:#1D1D1F; }
+html.light .ft-note {
+  background:#FFFFFF;
+  border:1px solid rgba(0,0,0,.08);
+}
+html.light .ft-note p { color:#6E6E73; }
+html.light .ft-bot { border-top-color:rgba(0,0,0,.08); }
+html.light .ft-bot p { color:#86868B; }
+html.light .ft-contact .note-p { color:#86868B; }
+
+/* ── selection / scrollbar ── */
+html.light ::selection { background:rgba(255,45,26,.18); color:#1D1D1F; }
+html.light ::-webkit-scrollbar-thumb { background:rgba(255,45,26,.6); }
+
+/* ── eyebrow labels keep red but slightly darker for contrast ── */
+html.light .lbl { color:var(--red); }
+html.light .s-lbl { color:var(--red); }
+html.light .ft-lbl { color:var(--red); }
+
 </style>
 </head>
 <body>
