@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Rapid Response | Animal Emergency Network</title>
-<meta name="description" content="Rapid Response connects nearby volunteers when animals need urgent help."/>
+<meta name="description" content="Rapid Response is a peer network for animal people. Feeders, pet parents, fosterers, rescuers. When you need a vet at midnight, backup at a feeding spot, or transport for an injured animal, your district shows up."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;600;800&display=swap" rel="stylesheet"/>
@@ -293,7 +293,7 @@ html.light .h1 .en-b.ghost { -webkit-text-stroke-color:rgba(10,8,6,.20); }
 html.light .h1 .hi-b.ghost { -webkit-text-stroke-color:rgba(10,8,6,.20); }
 
 /* hero sub */
-.h-sub { font-size:clamp(14px, 3vw, 17px); font-weight:300; color:var(--dim); line-height:1.65; max-width:400px; margin:0 auto 36px; }
+.h-sub { font-size:clamp(14px, 3vw, 17px); font-weight:300; color:var(--dim); line-height:1.65; max-width:580px; margin:0 auto 36px; }
 .h-sub .hi { font-size:clamp(13px, 2.8vw, 16px); line-height:1.6; font-weight:400; }
 
 /* store buttons */
@@ -351,8 +351,49 @@ html.light .btn-s:hover img { filter:none; }
 }
 
 /* ═══════════════════════
-   HOW IT WORKS
+   MISSION (new — CRED-style "we believe")
 ═══════════════════════ */
+#mission { padding:90px 20px 90px; position:relative; }
+@media(min-width:768px) { #mission { padding:120px 40px 120px; } }
+.ms-wrap { max-width:880px; margin:0 auto; }
+.ms-stmt {
+  font-family:var(--FD); font-weight:900;
+  font-size:clamp(2rem, 5.4vw, 4.2rem);
+  line-height:.96; letter-spacing:-.015em;
+  text-transform:none;
+  margin-bottom:36px;
+}
+.ms-stmt .ms-em { color:var(--red); font-style:italic; }
+.ms-stmt.hi-ms {
+  font-family:var(--FH); font-weight:800;
+  font-size:clamp(1.5rem, 4.2vw, 3rem);
+  line-height:1.25; letter-spacing:.005em;
+}
+.ms-body { font-size:clamp(15px, 1.8vw, 17px); color:var(--dim); line-height:1.7; font-weight:300; max-width:620px; margin-bottom:18px; }
+.ms-body .hi { font-size:clamp(14px, 1.7vw, 16px); line-height:1.65; font-weight:400; }
+.ms-body strong { color:var(--w); font-weight:500; }
+
+.ms-pillars {
+  display:grid; grid-template-columns:1fr; gap:1px;
+  background:var(--b); margin-top:54px;
+  border-top:1px solid var(--bs); border-bottom:1px solid var(--bs);
+}
+@media(min-width:640px) { .ms-pillars { grid-template-columns:1fr 1fr 1fr; } }
+.ms-pl { background:var(--bg); padding:30px 26px; }
+.ms-pl-n {
+  font-family:var(--FM); font-size:10px; letter-spacing:.22em;
+  color:var(--red); text-transform:uppercase; margin-bottom:14px; display:block;
+}
+.ms-pl h4 {
+  font-family:var(--FD); font-weight:800; font-size:18px;
+  letter-spacing:.04em; text-transform:uppercase; line-height:1.05;
+  color:var(--w); margin-bottom:10px;
+}
+.ms-pl h4 .hi { font-family:var(--FH); font-size:15px; font-weight:700; text-transform:none; letter-spacing:.01em; line-height:1.3; }
+.ms-pl p { font-size:13.5px; color:var(--dim); line-height:1.6; font-weight:300; }
+.ms-pl p .hi { font-size:13px; line-height:1.55; }
+
+
 #how { background:var(--bg2); }
 
 /* heading row: left-aligned, max half-width on desktop */
@@ -892,6 +933,8 @@ html.light .ft-lbl { color:var(--red); }
 <div id="mmo" onclick="closeMM()"></div>
 <div id="mm">
   <button id="mmc" onclick="closeMM()">✕</button>
+  <a href="#mission" onclick="closeMM()" data-lang="en">Mission</a>
+  <a href="#mission" onclick="closeMM()" data-lang="hi" class="hi">मिशन</a>
   <a href="#how"     onclick="closeMM()" data-lang="en">How it Works</a>
   <a href="#how"     onclick="closeMM()" data-lang="hi" class="hi">कैसे चलता है</a>
   <a href="#clarity" onclick="closeMM()" data-lang="en">Clarity</a>
@@ -909,6 +952,10 @@ html.light .ft-lbl { color:var(--red); }
     <span class="logo-t">Rapid Response</span>
   </a>
   <nav class="desk">
+    <a href="#mission">
+      <span data-lang="en">Mission</span>
+      <span data-lang="hi" class="hi">मिशन</span>
+    </a>
     <a href="#how">
       <span data-lang="en">How it Works</span>
       <span data-lang="hi" class="hi">कैसे चलता है</span>
@@ -939,22 +986,22 @@ html.light .ft-lbl { color:var(--red); }
 
     <div class="h-eye rv">
       <span class="h-dot"></span>
-      <span class="el" data-lang="en">Animal Emergency Network</span>
-      <span class="el hi" data-lang="hi">जानवरों का आपातकालीन नेटवर्क</span>
+      <span class="el" data-lang="en">a network for animal people</span>
+      <span class="el hi" data-lang="hi">एनिमल लवर्स का नेटवर्क</span>
     </div>
 
     <div class="h1 rv d1">
-      <span class="en-b" data-lang="en">Help.</span>
-      <span class="en-b" data-lang="en">When Seconds</span>
-      <span class="en-b ghost" data-lang="en">Matter.</span>
-      <span class="hi-b" data-lang="hi">मदद।</span>
-      <span class="hi-b" data-lang="hi">हर सेकंड</span>
-      <span class="hi-b ghost" data-lang="hi">मायने रखता है।</span>
+      <span class="en-b" data-lang="en">animal people</span>
+      <span class="en-b" data-lang="en">looking out for</span>
+      <span class="en-b ghost" data-lang="en">each other.</span>
+      <span class="hi-b" data-lang="hi">एनिमल लवर्स,</span>
+      <span class="hi-b" data-lang="hi">एक-दूसरे का</span>
+      <span class="hi-b ghost" data-lang="hi">साथ।</span>
     </div>
 
     <p class="h-sub rv d2">
-      <span data-lang="en">One tap connects you to nearby volunteers when an animal needs urgent help.</span>
-      <span data-lang="hi" class="hi">एक टैप से आसपास के लोगों तक मदद पहुँचती है।</span>
+      <span data-lang="en">pet parents, feeders, rescuers in one place. need a vet at midnight, backup at a feeding spot, transport for an injured stray? your district shows up.</span>
+      <span data-lang="hi" class="hi">पेट पैरेंट्स, फीडर, रेस्क्यूअर्स एक जगह। आधी रात को वेट चाहिए, फीडिंग स्पॉट पर साथ चाहिए, घायल जानवर के लिए ट्रांसपोर्ट? आपका जिला साथ है।</span>
     </p>
 
     <div class="h-ctas rv d3">
@@ -1010,22 +1057,94 @@ html.light .ft-lbl { color:var(--red); }
 
 <div class="div"></div>
 
+<!-- ══════════ MISSION ══════════ -->
+<section id="mission">
+  <div class="ms-wrap">
+
+    <span class="lbl rv">
+      <span data-lang="en">Why We Exist</span>
+      <span data-lang="hi" class="hi">हम क्यों हैं</span>
+    </span>
+
+    <h2 class="ms-stmt rv d1" data-lang="en">
+      animal people already do the work. <span class="ms-em">this is where you find each other.</span>
+    </h2>
+    <h2 class="ms-stmt hi-ms rv d1" data-lang="hi">
+      एनिमल लवर्स पहले से काम कर रहे हैं। <span class="ms-em">यहाँ एक-दूसरे को ढूँढिए।</span>
+    </h2>
+
+    <p class="ms-body rv d2">
+      <span data-lang="en">if you feed strays, foster pets, run a rescue, or love the dog on your street, you already know the work isn't the hard part. <strong>finding the right person at the right moment is.</strong></span>
+      <span data-lang="hi" class="hi">अगर आप जानवरों को खाना खिलाते हैं, पेट्स फोस्टर करते हैं, रेस्क्यू चलाते हैं, या अपनी गली के कुत्ते से प्यार करते हैं, आप जानते हैं कि काम मुश्किल नहीं है। <strong>सही वक़्त पर सही इंसान ढूँढना मुश्किल है।</strong></span>
+    </p>
+
+    <p class="ms-body rv d2">
+      <span data-lang="en">vets close at 9pm. NGO numbers go to voicemail. the one feeder you trust is out of town. you end up scrolling WhatsApp groups at 2am hoping someone replies.</span>
+      <span data-lang="hi" class="hi">वेट 9 बजे बंद हो जाते हैं। NGO के नंबर पर कॉल नहीं उठती। जिस फीडर पर आप भरोसा करते हैं वो शहर के बाहर है। आप रात 2 बजे WhatsApp ग्रुप्स में उम्मीद से देखते रहते हैं।</span>
+    </p>
+
+    <p class="ms-body rv d3">
+      <span data-lang="en">rapid response puts every animal person in your district in one place. <strong>same passion, same area, one tap away.</strong> not strangers. not the general public. people who get it.</span>
+      <span data-lang="hi" class="hi">रैपिड रिस्पॉन्स आपके जिले के हर एनिमल लवर को एक जगह लाता है। <strong>एक जुनून, एक इलाक़ा, एक टैप दूर।</strong> कोई अजनबी नहीं। आम लोग नहीं। वो लोग जो समझते हैं।</span>
+    </p>
+
+    <div class="ms-pillars rv d3">
+      <div class="ms-pl">
+        <span class="ms-pl-n">For Pet Parents</span>
+        <h4>
+          <span data-lang="en">Vet Emergencies</span>
+          <span data-lang="hi" class="hi">वेट इमरजेंसी</span>
+        </h4>
+        <p>
+          <span data-lang="en">your dog spikes a fever at midnight. ping the network. find which clinic is open, who has a car, who's done this before.</span>
+          <span data-lang="hi" class="hi">आधी रात को कुत्ते को बुख़ार। नेटवर्क पर पूछिए। कौन-सी क्लिनिक खुली है, किसके पास गाड़ी है, किसने पहले ये किया है।</span>
+        </p>
+      </div>
+      <div class="ms-pl">
+        <span class="ms-pl-n">For Feeders</span>
+        <h4>
+          <span data-lang="en">Backup &amp; Solidarity</span>
+          <span data-lang="hi" class="hi">साथ और समर्थन</span>
+        </h4>
+        <p>
+          <span data-lang="en">harassed at your feeding spot? cover needed for a few days? other feeders in your district step in. peers, not strangers.</span>
+          <span data-lang="hi" class="hi">फीडिंग स्पॉट पर परेशानी? कुछ दिन कोई कवर करे? जिले के दूसरे फीडर आते हैं। साथी, अजनबी नहीं।</span>
+        </p>
+      </div>
+      <div class="ms-pl">
+        <span class="ms-pl-n">For Rescuers</span>
+        <h4>
+          <span data-lang="en">Field Coordination</span>
+          <span data-lang="hi" class="hi">फील्ड कोऑर्डिनेशन</span>
+        </h4>
+        <p>
+          <span data-lang="en">an injured animal, no transport, no foster. tap the district. someone with a car or an empty kennel responds. you stop working alone.</span>
+          <span data-lang="hi" class="hi">घायल जानवर, गाड़ी नहीं, फोस्टर नहीं। जिले को टैप कीजिए। किसी के पास गाड़ी या जगह होगी। आप अकेले नहीं।</span>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="div"></div>
+
 <!-- ══════════ HOW IT WORKS ══════════ -->
 <section id="how" class="sec">
   <div class="wrap">
 
     <div class="how-hd rv">
       <span class="lbl">
-        <span data-lang="en">Protocol</span>
-        <span data-lang="hi" class="hi">काम का तरीका</span>
+        <span data-lang="en">How It Works</span>
+        <span data-lang="hi" class="hi">कैसे काम करता है</span>
       </span>
       <h2 class="dh">
-        <span class="en-h" data-lang="en">How The Network Works</span>
-        <span class="hi-h" data-lang="hi">नेटवर्क कैसे काम करता है</span>
+        <span class="en-h" data-lang="en">One Tap. Your District. People Like You.</span>
+        <span class="hi-h" data-lang="hi">एक टैप। आपका जिला। आप जैसे लोग।</span>
       </h2>
       <p class="how-desc">
-        <span data-lang="en">An instant district-wide SOS alert system. Anyone nearby can coordinate help in real time.</span>
-        <span data-lang="hi" class="hi">जिले भर में तत्काल SOS अलर्ट। जो भी आसपास हो, मदद कर सकता है।</span>
+        <span data-lang="en">whatever you need. a vet reference, transport, a feeder backup, a foster lead. the network in your district sees it.</span>
+        <span data-lang="hi" class="hi">जो भी ज़रूरत हो। वेट का रेफ़रेंस, ट्रांसपोर्ट, फीडर का साथ, फोस्टर। आपके जिले का नेटवर्क देखता है।</span>
       </p>
     </div>
 
@@ -1045,12 +1164,12 @@ html.light .ft-lbl { color:var(--red); }
             <div class="s-ic"><span class="material-symbols-outlined">sos</span></div>
             <span class="s-lbl">Step 01</span>
             <h4>
-              <span data-lang="en">Raise SOS</span>
-              <span data-lang="hi" class="hi">SOS भेजें</span>
+              <span data-lang="en">You need a hand.</span>
+              <span data-lang="hi" class="hi">आपको साथ चाहिए।</span>
             </h4>
             <p>
-              <span data-lang="en">Open the app and press SOS when an animal needs urgent help.</span>
-              <span data-lang="hi" class="hi">जब किसी जानवर को मदद चाहिए, SOS बटन दबाएँ।</span>
+              <span data-lang="en">a vet at midnight. someone to cover your feeding spot. transport for an injured animal. open the app, raise the SOS.</span>
+              <span data-lang="hi" class="hi">आधी रात को वेट। फीडिंग स्पॉट पर साथ। घायल जानवर के लिए ट्रांसपोर्ट। ऐप खोलें, SOS भेजें।</span>
             </p>
           </div>
           <div class="step rv d1">
@@ -1058,12 +1177,12 @@ html.light .ft-lbl { color:var(--red); }
             <div class="s-ic"><span class="material-symbols-outlined">location_on</span></div>
             <span class="s-lbl">Step 02</span>
             <h4>
-              <span data-lang="en">Location Shared</span>
-              <span data-lang="hi" class="hi">लोकेशन जाती है</span>
+              <span data-lang="en">Context goes out.</span>
+              <span data-lang="hi" class="hi">पूरी बात जाती है।</span>
             </h4>
             <p>
-              <span data-lang="en">Alert includes your phone number, GPS location and a short description.</span>
-              <span data-lang="hi" class="hi">अलर्ट के साथ नंबर, GPS और संदेश जाता है।</span>
+              <span data-lang="en">your GPS, your number, and a short note explaining what you need. sent automatically.</span>
+              <span data-lang="hi" class="hi">GPS, नंबर और एक छोटा संदेश जिसमें ज़रूरत साफ़ हो। खुद भेजा जाता है।</span>
             </p>
           </div>
           <div class="step rv d2">
@@ -1071,33 +1190,33 @@ html.light .ft-lbl { color:var(--red); }
             <div class="s-ic"><span class="material-symbols-outlined">campaign</span></div>
             <span class="s-lbl">Step 03</span>
             <h4>
-              <span data-lang="en">District Alert</span>
-              <span data-lang="hi" class="hi">जिले में अलर्ट</span>
+              <span data-lang="en">Your district sees it.</span>
+              <span data-lang="hi" class="hi">पूरा जिला देखता है।</span>
             </h4>
             <p>
-              <span data-lang="en">All users in the same district instantly receive the alert.</span>
-              <span data-lang="hi" class="hi">जिले के सभी लोगों को तुरंत अलर्ट मिलता है।</span>
+              <span data-lang="en">every animal person registered in your district gets pinged. fellow feeders, pet parents, rescuers, vets. your real community.</span>
+              <span data-lang="hi" class="hi">जिले के हर एनिमल लवर तक पहुँचता है। फीडर, पेट पैरेंट्स, रेस्क्यूअर्स, वेट। आपकी असली कम्युनिटी।</span>
             </p>
           </div>
           <div class="step rv d3">
             <div class="snum">04</div>
-            <div class="s-ic"><span class="material-symbols-outlined">volunteer_activism</span></div>
+            <div class="s-ic"><span class="material-symbols-outlined">forum</span></div>
             <span class="s-lbl">Step 04</span>
             <h4>
-              <span data-lang="en">Volunteer Responds</span>
-              <span data-lang="hi" class="hi">मदद होती है</span>
+              <span data-lang="en">You coordinate.</span>
+              <span data-lang="hi" class="hi">आप मिलकर तय करते हैं।</span>
             </h4>
             <p>
-              <span data-lang="en">Available volunteers call and coordinate to help the animal.</span>
-              <span data-lang="hi" class="hi">उपलब्ध लोग कॉल करके मदद जुटा सकते हैं।</span>
+              <span data-lang="en">whoever can help replies. you chat, swap numbers, work it out together. the way animal people always have, now faster.</span>
+              <span data-lang="hi" class="hi">जो मदद कर सकता है, जवाब देता है। चैट कीजिए, नंबर लीजिए, मिलकर तय कीजिए। एनिमल लवर्स हमेशा यही करते हैं, अब तेज़।</span>
             </p>
           </div>
         </div>
         <div class="how-note rv">
           <span class="material-symbols-outlined">info</span>
           <p>
-            <span data-lang="en">The network grows stronger with every new volunteer. More people in a district means faster help for animals in distress.</span>
-            <span data-lang="hi" class="hi">जितने ज़्यादा लोग जुड़ेंगे, उतनी तेज़ मदद पहुँचेगी।</span>
+            <span data-lang="en">the network only works because real animal people are in it. every pet parent, feeder, fosterer, rescuer who joins makes the next emergency easier for someone else.</span>
+            <span data-lang="hi" class="hi">नेटवर्क इसलिए चलता है क्योंकि असली एनिमल लवर्स इसमें हैं। हर पेट पैरेंट, फीडर, फोस्टर, रेस्क्यूअर जो जुड़ता है, अगली इमरजेंसी किसी और के लिए आसान बनाता है।</span>
           </p>
         </div>
       </div>
@@ -1114,12 +1233,12 @@ html.light .ft-lbl { color:var(--red); }
 
     <div class="cl-hd rv">
       <span class="lbl">
-        <span data-lang="en">Platform Clarity</span>
-        <span data-lang="hi" class="hi">साफ़ समझ</span>
+        <span data-lang="en">Be Clear-Eyed</span>
+        <span data-lang="hi" class="hi">साफ़ बात</span>
       </span>
       <h2 class="dh">
-        <span class="en-h" data-lang="en">What This Is &amp; What It Isn't</span>
-        <span class="hi-h" data-lang="hi">यह क्या है और क्या नहीं</span>
+        <span class="en-h" data-lang="en">What We Are. What We Aren't.</span>
+        <span class="hi-h" data-lang="hi">हम क्या हैं। हम क्या नहीं।</span>
       </h2>
     </div>
 
@@ -1128,27 +1247,27 @@ html.light .ft-lbl { color:var(--red); }
         <div class="cl-ch">
           <div class="cl-ico gn"><span class="material-symbols-outlined">check_circle</span></div>
           <h3 class="gn">
-            <span data-lang="en">What it is</span>
-            <span data-lang="hi" class="hi">यह क्या करता है</span>
+            <span data-lang="en">we are</span>
+            <span data-lang="hi" class="hi">हम हैं</span>
           </h3>
         </div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">A coordination network for animal emergencies</span><span data-lang="hi" class="hi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाला नेटवर्क</span></p></div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">Alerts nearby volunteers in your district</span><span data-lang="hi" class="hi">आपके जिले के लोगों तक अलर्ट पहुँचाता है</span></p></div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">Shares GPS location and contact number</span><span data-lang="hi" class="hi">GPS लोकेशन और नंबर साझा करता है</span></p></div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">A platform where available volunteers can respond</span><span data-lang="hi" class="hi">एक मंच जहाँ उपलब्ध लोग मदद कर सकते हैं</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">a peer network for people already working with animals. feeders, pet parents, fosterers, rescuers, vets</span><span data-lang="hi" class="hi">उन लोगों का नेटवर्क जो पहले से जानवरों के लिए काम कर रहे हैं। फीडर, पेट पैरेंट्स, फोस्टर, रेस्क्यूअर्स, वेट</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">district-scoped, so the people you reach are actually close enough to be useful</span><span data-lang="hi" class="hi">जिले तक सीमित, ताकि जिन लोगों तक पहुँचें, वो सच में पास हों</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">a coordination layer. chat, share GPS, swap contacts, work it out together</span><span data-lang="hi" class="hi">एक कोऑर्डिनेशन लेयर। चैट, GPS, नंबर, मिलकर तय करना</span></p></div>
+        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">free, community-owned, open to anyone genuinely involved in animal welfare</span><span data-lang="hi" class="hi">मुफ़्त, कम्युनिटी का, हर उस इंसान के लिए जो वाक़ई जानवरों के लिए काम करता है</span></p></div>
       </div>
       <div class="cl-col">
         <div class="cl-ch">
           <div class="cl-ico rd"><span class="material-symbols-outlined">cancel</span></div>
           <h3 class="rd">
-            <span data-lang="en">What it is not</span>
-            <span data-lang="hi" class="hi">यह क्या नहीं</span>
+            <span data-lang="en">we aren't</span>
+            <span data-lang="hi" class="hi">हम नहीं हैं</span>
           </h3>
         </div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">The app does not come with a rescue team</span><span data-lang="hi" class="hi">अपनी कोई रेस्क्यू टीम नहीं लाता</span></p></div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">Raising an SOS does not guarantee help</span><span data-lang="hi" class="hi">SOS भेजने से मदद तय नहीं होती</span></p></div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">Does not operate shelters or transport animals</span><span data-lang="hi" class="hi">शेल्टर नहीं चलाता, ट्रांसपोर्ट नहीं करता</span></p></div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">Not affiliated with any government authority</span><span data-lang="hi" class="hi">किसी सरकारी संस्था से जुड़ा नहीं है</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a rescue service. we don't dispatch teams, run shelters, or operate ambulances</span><span data-lang="hi" class="hi">रेस्क्यू सर्विस। हम टीम नहीं भेजते, शेल्टर नहीं चलाते, एम्बुलेंस नहीं चलाते</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a guarantee. we're a network. what comes back depends on who's in your district and who's free</span><span data-lang="hi" class="hi">कोई गारंटी। हम एक नेटवर्क हैं। जवाब इस पर है कि जिले में कौन है और कौन खाली है</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a public alert system. SOS goes only to verified animal-welfare members, not random strangers</span><span data-lang="hi" class="hi">पब्लिक अलर्ट सिस्टम। SOS सिर्फ़ वेरिफ़ाइड एनिमल वेलफ़ेयर मेंबर्स तक जाता है, अजनबियों तक नहीं</span></p></div>
+        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a government tool. no department backs us. no fees. no agenda beyond connecting our own community</span><span data-lang="hi" class="hi">कोई सरकारी टूल। न कोई विभाग है, न फ़ीस। बस अपनी कम्युनिटी को जोड़ने का काम</span></p></div>
       </div>
     </div>
 
@@ -1165,16 +1284,16 @@ html.light .ft-lbl { color:var(--red); }
       <div class="faq-l rv">
         <span class="lbl">FAQ</span>
         <h2 class="dh">
-          <span class="en-h" data-lang="en">Questions</span>
-          <span class="hi-h" data-lang="hi">सवाल</span>
+          <span class="en-h" data-lang="en">No mystery.</span>
+          <span class="hi-h" data-lang="hi">कोई रहस्य नहीं।</span>
         </h2>
         <p>
-          <span data-lang="en">Type a keyword to find answers instantly.</span>
-          <span data-lang="hi" class="hi">जवाब पाने के लिए कोई शब्द लिखिए।</span>
+          <span data-lang="en">type a word. get a real answer. no jargon, no run-around.</span>
+          <span data-lang="hi" class="hi">एक शब्द लिखें। सच्चा जवाब पाएँ। न शब्दजाल, न चक्कर।</span>
         </p>
         <span class="ask-lbl">
-          <span data-lang="en">Still need help?</span>
-          <span data-lang="hi" class="hi">और मदद?</span>
+          <span data-lang="en">Question we missed?</span>
+          <span data-lang="hi" class="hi">कोई और सवाल?</span>
         </span>
         <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
       </div>
@@ -1212,16 +1331,16 @@ html.light .ft-lbl { color:var(--red); }
 
     <div class="leg-hd rv">
       <span class="lbl">
-        <span data-lang="en">Legal Assistant</span>
-        <span data-lang="hi" class="hi">कानूनी सहायता</span>
+        <span data-lang="en">Legal AI Desk</span>
+        <span data-lang="hi" class="hi">कानूनी AI डेस्क</span>
       </span>
       <h2 class="dh">
-        <span class="en-h" data-lang="en">Know Your Rights</span>
-        <span class="hi-h" data-lang="hi">अपने अधिकार जानें</span>
+        <span class="en-h" data-lang="en">Know The Law. Then Use It.</span>
+        <span class="hi-h" data-lang="hi">कानून जानिए। फिर इस्तेमाल कीजिए।</span>
       </h2>
       <p class="leg-hd-desc">
-        <span data-lang="en">Ask any question about animal welfare law in India — exact laws, sections, and next steps.</span>
-        <span data-lang="hi" class="hi">भारत में पशु कल्याण कानून, शिकायत प्रक्रिया और अधिकारों से जुड़े सवाल पूछें।</span>
+        <span data-lang="en">harassed for feeding? RWA threatening removal? FIR you don't know how to file? ask anything. get the exact section, the exact procedure, the next step.</span>
+        <span data-lang="hi" class="hi">खिलाने पर परेशानी? RWA हटाने की धमकी? FIR दर्ज करनी है पर पता नहीं कैसे? कुछ भी पूछिए। सटीक धारा, सटीक प्रक्रिया, अगला कदम।</span>
       </p>
     </div>
 
@@ -1239,16 +1358,16 @@ html.light .ft-lbl { color:var(--red); }
         </div>
         <div class="leg-ql">Quick questions</div>
         <div class="leg-qc">
-          <button class="lqc" onclick="fillSend('ABC centre not functioning — what is the complaint process?')">
+          <button class="lqc" onclick="fillSend('ABC centre not functioning - what is the complaint process?')">
             <div class="ct">ABC centre not functioning</div><div class="cs">Complaint process</div>
           </button>
-          <button class="lqc" onclick="fillSend('Dog died after ABC release — liability and how to file an FIR?')">
+          <button class="lqc" onclick="fillSend('Dog died after ABC release - liability and how to file an FIR?')">
             <div class="ct">Dog died after ABC release</div><div class="cs">Liability &amp; FIR</div>
           </button>
-          <button class="lqc" onclick="fillSend('Hospital removing community dogs — feeding rights and legal remedies?')">
+          <button class="lqc" onclick="fillSend('Hospital removing community dogs - feeding rights and legal remedies?')">
             <div class="ct">Hospital removing dogs</div><div class="cs">Feeding rights &amp; remedies</div>
           </button>
-          <button class="lqc" onclick="fillSend('Attacked while feeding dogs — what are my police complaint rights?')">
+          <button class="lqc" onclick="fillSend('Attacked while feeding dogs - what are my police complaint rights?')">
             <div class="ct">Attacked while feeding dogs</div><div class="cs">Police complaint rights</div>
           </button>
         </div>
@@ -1269,11 +1388,11 @@ html.light .ft-lbl { color:var(--red); }
             <div class="cbo-ic"><span class="material-symbols-outlined">balance</span></div>
             <div class="cb">
               <strong>
-                <span data-lang="en">Welcome to Legal AI Desk</span>
-                <span data-lang="hi" class="hi">कानूनी AI डेस्क में स्वागत है</span>
+                <span data-lang="en">Welcome to the Legal AI Desk.</span>
+                <span data-lang="hi" class="hi">कानूनी AI डेस्क में स्वागत है।</span>
               </strong><br/>
-              <span data-lang="en">Ask any question about animal welfare law in India — cruelty complaints, ABC centres, feeding disputes, FIR guidance, or municipal issues.</span>
-              <span data-lang="hi" class="hi">पशु क्रूरता, ABC केंद्र, पुलिस शिकायत या अधिकारों से जुड़े कोई भी सवाल पूछें।</span>
+              <span data-lang="en">trained on the PCA Act, ABC Rules, BNS sections, and municipal law. ask about a cruelty case, an FIR, an ABC centre that's not running, feeding rights, anything. you'll get the section, the steps, and what to do next.</span>
+              <span data-lang="hi" class="hi">PCA Act, ABC नियम, BNS धारा और नगरपालिका कानून पर प्रशिक्षित। क्रूरता का केस, FIR, ABC केंद्र, खिलाने का अधिकार, कुछ भी पूछिए। धारा, प्रक्रिया, अगला कदम मिलेगा।</span>
             </div>
           </div>
         </div>
@@ -1285,8 +1404,8 @@ html.light .ft-lbl { color:var(--red); }
           </button>
         </div>
         <div class="leg-disc">
-          <span data-lang="en">⚖️ Legal information only — not a substitute for a qualified lawyer.</span>
-          <span data-lang="hi" class="hi">⚖️ केवल जानकारी — वकील की सलाह का विकल्प नहीं।</span>
+          <span data-lang="en">⚖️ Legal information only. not a substitute for a qualified lawyer.</span>
+          <span data-lang="hi" class="hi">⚖️ केवल जानकारी। वकील की सलाह का विकल्प नहीं।</span>
         </div>
       </div>
     </div>
@@ -1305,14 +1424,15 @@ html.light .ft-lbl { color:var(--red); }
         <span class="logo-t">Rapid Response</span>
       </a>
       <p>
-        <span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span>
-        <span data-lang="hi" class="hi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span>
+        <span data-lang="en">a peer network for the people already doing the work. feeders, pet parents, fosterers, rescuers. district by district.</span>
+        <span data-lang="hi" class="hi">उन लोगों का नेटवर्क जो पहले से काम कर रहे हैं। फीडर, पेट पैरेंट्स, फोस्टर, रेस्क्यूअर्स। जिला-दर-जिला।</span>
       </p>
     </div>
     <div class="ft-col">
       <span class="ft-lbl">Navigate</span>
+      <a href="#mission"><span data-lang="en">Mission</span><span data-lang="hi" class="hi">मिशन</span></a>
       <a href="#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="hi">कैसे काम करता है</span></a>
-      <a href="#clarity"><span data-lang="en">Platform Clarity</span><span data-lang="hi" class="hi">साफ़ समझ</span></a>
+      <a href="#clarity"><span data-lang="en">Clarity</span><span data-lang="hi" class="hi">साफ़ बात</span></a>
       <a href="#faq">FAQ</a>
       <a href="#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
       <a href="/report" style="color:var(--red)"><span data-lang="en">Report Incident</span><span data-lang="hi" class="hi">घटना रिपोर्ट करें</span></a>
