@@ -135,9 +135,25 @@ nav.desk a .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; te
 
 /* FORM SECTION */
 .form-section{padding:48px 24px 80px;background:var(--bg);}
-.grid-bg-report{background-size:40px 40px;background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);}
+/* GRID-BG-REPORT — matches index page hero exactly:
+   64px × 64px cells, faint lines, radial fade-out at edges.
+   Uses a pseudo-element so it can layer cleanly with the .hero
+   background (radial red glow) without conflicts. */
+.grid-bg-report{position:relative;}
+.grid-bg-report::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 65% at 50% 35%, black 0%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 65% at 50% 35%, black 0%, transparent 100%);
+}
+.grid-bg-report > *{position:relative;z-index:1;}
 html.light .hero h1 span { color:rgba(10,8,6,.45) !important; }
-html.light .grid-bg-report{background-image:linear-gradient(to right,rgba(10,8,6,.06) 1px,transparent 1px),linear-gradient(to bottom,rgba(10,8,6,.06) 1px,transparent 1px);}
+html.light .grid-bg-report::before{
+  background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);
+}
 
 /* PROGRESS */
 .prog-wrap{max-width:720px;margin:0 auto 48px;}
@@ -473,24 +489,14 @@ html.light ::selection{background:var(--ra10);color:var(--w);}
 ═══════════════════════════════════════════════════════════ */
 
 /* ── HERO ── */
-html.light .hero { background:#FFFFFF; }
+html.light .hero {
+  background:radial-gradient(circle at 50% 0%, rgba(255,45,26,.06) 0%, transparent 60%), #FFFFFF;
+}
 html.light .hero h1 { color:#1D1D1F; }
 html.light .hero p { color:#6E6E73; font-weight:400; }
 
 /* ── FORM SECTION ── */
 html.light .form-section { background:#F5F5F7; }
-/* grid + radial glow combined — this rule wins because it's more specific
-   and source-later than the .hero rule above */
-html.light .grid-bg-report {
-  background-color:#FFFFFF;
-  background-image:
-    linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px),
-    radial-gradient(circle at 50% 0%, rgba(255,45,26,.06) 0%, transparent 60%);
-  background-size: 40px 40px, 40px 40px, 100% 100%;
-  background-position: 0 0, 0 0, 50% 0;
-  background-repeat: repeat, repeat, no-repeat;
-}
 
 /* ── PROGRESS / STEPPER ── */
 html.light .prog-bar { background:rgba(0,0,0,.08); }
