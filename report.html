@@ -9,9 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Report an Incident | Rapid Response</title>
 <meta name="description" content="Report an animal incident to the Rapid Response community. Cruelty cases, feeder harassment, injured animals, ABC issues. Your report reaches our team directly. Identity protected."/>
+<!-- pdf-lib for client-side PDF receipt generation (loaded async, doesn't block render) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" defer></script>
 <style>
 /* ═══════════════════════
-   TOKENS — dark (default)
+   TOKENS - dark (default)
 ═══════════════════════ */
 :root {
   --red:    #FF2D1A;
@@ -32,10 +34,10 @@
   --FH: 'Noto Sans Devanagari', sans-serif;
 }
 /* ═══════════════════════
-   LIGHT MODE — Apple-inspired
+   LIGHT MODE - Apple-inspired
    apple.com uses #F5F5F7 (cool grey) as primary canvas.
    Pure white is reserved for elevated card surfaces.
-   Text contrast is HIGH — near-black for body, real black for headings.
+   Text contrast is HIGH - near-black for body, real black for headings.
 ═══════════════════════ */
 html.light {
   --w:      #1D1D1F;
@@ -143,7 +145,7 @@ html.light .hero h1 .ghost{ -webkit-text-stroke-color:rgba(10,8,6,.20); }
 
 /* FORM SECTION */
 .form-section{padding:48px 24px 80px;background:var(--bg);}
-/* GRID-BG-REPORT — matches index page hero exactly:
+/* GRID-BG-REPORT - matches index page hero exactly:
    64px × 64px cells, faint lines, radial fade-out at edges.
    Uses a pseudo-element so it can layer cleanly with the .hero
    background (radial red glow) without conflicts. */
@@ -223,6 +225,29 @@ html.light .grid-bg-report::before{
 .input{width:100%;background:var(--ghost) !important;border:1px solid var(--b) !important;color:var(--w);font-family:var(--FB);font-size:14px;padding:13px 16px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;border-radius:0;}
 .input:focus{border-color:var(--ra32);outline:none;}
 .input::placeholder{color:var(--dimmer);font-size:13px;}
+
+/* Phone-list widget - used by relocation report and any future field of type "phoneList" */
+.plist-help{font-size:12px;color:var(--dim);line-height:1.55;margin:-2px 0 12px;font-weight:300;}
+.plist-help.hi{font-family:var(--FH);font-size:12px;line-height:1.6;font-weight:400;}
+.plist{display:flex;flex-direction:column;gap:8px;}
+.plist-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:stretch;}
+@media(max-width:520px){ .plist-row{grid-template-columns:1fr 1fr;} .plist-row .plist-rm{grid-column:1 / -1;} }
+.plist-row .input{padding:11px 13px;font-size:13px;}
+.plist-rm{
+  background:transparent;border:1px solid var(--b);color:var(--dimmer);
+  width:40px;cursor:pointer;font-family:var(--FM);font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.plist-rm:hover{border-color:var(--ra32);color:var(--red);background:var(--ra10);}
+@media(max-width:520px){ .plist-rm{width:100%;height:38px;} }
+.plist-add{
+  margin-top:10px;background:transparent;border:1px dashed var(--b);
+  color:var(--dimmer);font-family:var(--FM);font-size:10px;letter-spacing:0.2em;
+  text-transform:uppercase;padding:11px 16px;cursor:pointer;width:100%;
+  transition:all 0.2s;
+}
+.plist-add:hover{border-color:var(--ra32);color:var(--red);background:var(--ra10);border-style:solid;}
 select.input{display:none !important;}
 /* CUSTOM DROPDOWN */
 .cust-wrap{position:relative;width:100%;}
@@ -264,8 +289,17 @@ select.input{display:none !important;}
 .file-item{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--b);}
 .file-item:last-child{border-bottom:none;}
 .file-icon{font-size:14px;flex-shrink:0;}
-.file-name{font-size:12px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.file-name{font-size:12px;color:var(--dim);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .file-size{font-size:10px;color:var(--dimmer);font-family:var(--FM);flex-shrink:0;}
+.file-rm{
+  flex-shrink:0;background:transparent;border:1px solid var(--b);color:var(--dimmer);
+  width:24px;height:24px;cursor:pointer;font-family:var(--FM);font-size:13px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;margin-left:4px;transition:all 0.15s;
+}
+.file-rm:hover{border-color:var(--ra32);color:var(--red);background:var(--ra10);}
+html.light .file-rm{border-color:rgba(0,0,0,.10);color:#86868B;}
+html.light .file-rm:hover{border-color:var(--ra32);color:var(--red);background:var(--ra10);}
 
 /* DIVIDER */
 .divider{height:1px;background:var(--b);margin:28px 0;}
@@ -316,6 +350,25 @@ select.input{display:none !important;}
 .state-icon.fail{border:1px solid var(--ra32);background:var(--ra10);}
 .ref-id{font-family:var(--FM);font-size:11px;letter-spacing:0.28em;color:var(--dimmer);margin-bottom:28px;}
 
+/* Receipt card on success panel - shows PDF email + download confirmation */
+.receipt-card{
+  display:flex;align-items:flex-start;gap:14px;
+  max-width:480px;margin:24px auto 4px;padding:18px 20px;
+  background:var(--ghost);border:1px solid var(--b);
+  text-align:left;
+}
+.receipt-card-icon{font-size:22px;flex-shrink:0;line-height:1.2;}
+.receipt-card-body{flex:1;min-width:0;}
+.receipt-card-title{
+  font-family:var(--FD);font-weight:800;font-size:13px;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--w);
+  margin-bottom:6px;
+}
+.receipt-card-sub{font-size:12.5px;color:var(--dim);line-height:1.55;margin-top:4px;}
+html.light .receipt-card{background:#FFFFFF;border-color:rgba(0,0,0,.10);}
+html.light .receipt-card-title{color:#1D1D1F;}
+html.light .receipt-card-sub{color:#6E6E73;}
+
 /* ═══════════════════════
    FOOTER  (matches index.html)
 ═══════════════════════ */
@@ -351,7 +404,7 @@ html.light footer { background:#FFFFFF; }
 .ft-bot p { font-family:var(--FM); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(128,128,128,.45); }
 .ft-bot p .hi { font-family:var(--FH); font-size:10px; letter-spacing:.01em; text-transform:none; line-height:1.4; }
 
-/* LIGHT MODE — uses CSS variables, no overrides needed for most things */
+/* LIGHT MODE - uses CSS variables, no overrides needed for most things */
 html.light body { background:var(--bg); color:var(--w); }
 html.light .hero { background: radial-gradient(circle at 50% 0%, rgba(255,45,26,.08) 0%, transparent 45%), var(--bg2); }
 html.light .hero h1 { color:var(--w); }
@@ -487,7 +540,7 @@ html.light ::selection{background:var(--ra10);color:var(--w);}
     font-size:12px;
   }
 }
-/* ═══ HONEYPOT — invisible to humans ═══ */
+/* ═══ HONEYPOT - invisible to humans ═══ */
 .hp-field{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;tab-index:-1;}
 
 /* ═══ EMAIL CONFIRM MODAL ═══ */
@@ -506,7 +559,7 @@ html.light ::selection{background:var(--ra10);color:var(--w);}
 @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
 
 /* ═══════════════════════════════════════════════════════════
-   LIGHT MODE — APPLE POLISH LAYER (REPORT PAGE)
+   LIGHT MODE - APPLE POLISH LAYER (REPORT PAGE)
    Matches the landing page exactly.
    • Cool grey canvas (#F5F5F7), white surfaces
    • HIGH text contrast: #1D1D1F headings, #6E6E73 body
@@ -990,6 +1043,12 @@ html.light body { color:#1D1D1F; }
           <div class="chip-name"><span data-en="Vet Negligence" data-hi="पशु चिकित्सक लापरवाही">Vet Negligence</span></div>
           <div class="chip-desc"><span data-en="Malpractice or refusal" data-hi="कुप्रचार या इनकार">Malpractice or refusal</span></div>
         </div>
+        <div class="chip" data-val="Suspected Relocation" onclick="selType(this)">
+          <div class="chip-check">✓</div>
+          <div class="chip-icon">🚐</div>
+          <div class="chip-name"><span data-en="Suspected Relocation" data-hi="संदिग्ध स्थानांतरण">Suspected Relocation</span></div>
+          <div class="chip-desc"><span data-en="Community animals being taken away" data-hi="कम्युनिटी जानवरों को ले जाया जा रहा है">Community animals being taken away</span></div>
+        </div>
         <div class="chip" data-val="Other" onclick="selType(this)">
           <div class="chip-check">✓</div>
           <div class="chip-icon">📋</div>
@@ -1133,7 +1192,7 @@ html.light body { color:#1D1D1F; }
           <input class="input" id="repPhone" placeholder="+91 00000 00000" type="tel" maxlength="15" oninput="formatPhone(this)"/>
         </div>
       </div>
-      <!-- Honeypot — bots see "website" field, humans cannot -->
+      <!-- Honeypot - bots see "website" field, humans cannot -->
       <div class="hp-field" aria-hidden="true">
         <label for="website">Website</label>
         <input type="text" id="hpWebsite" name="website" autocomplete="off" tabindex="-1"/>
@@ -1182,11 +1241,28 @@ html.light body { color:#1D1D1F; }
     <div class="panel" id="panelSuccess" style="text-align:center;padding:40px 0 60px;">
       <div class="state-icon ok" style="font-size:28px;">✓</div>
       <div class="panel-title"><span data-en="Report Submitted" data-hi="रिपोर्ट सबमिट हुई">Report Submitted</span></div>
-      <p style="color:rgba(255,255,255,0.38);font-size:14px;max-width:360px;margin:12px auto 16px;line-height:1.6;"><span data-en="Your report has been received and logged securely. Our team will look into it." data-hi="आपकी घटना सुरक्षित दर्ज हो गई है। हमारी टीम 24 घंटे में समीक्षा करेगी।">Your report has been received and logged securely. Our team will look into it.</span></p>
+      <p style="color:rgba(255,255,255,0.38);font-size:14px;max-width:380px;margin:12px auto 18px;line-height:1.6;"><span data-en="Your report has been received and logged securely. Our team will review it within 24 to 48 hours." data-hi="आपकी रिपोर्ट सुरक्षित दर्ज हो गई है। हमारी टीम 24 से 48 घंटे में समीक्षा करेगी।">Your report has been received and logged securely. Our team will review it within 24 to 48 hours.</span></p>
       <div class="ref-id" id="refNum"></div>
-      <div class="btn-row" style="justify-content:center;">
-        <a href="index.html" class="btn-secondary"><span data-en="🏠 Back to Home" data-hi="🏠 होम पर वापस">🏠 Back to Home</span></a>
+
+      <!-- PDF receipt card: shows what was sent and offers re-download -->
+      <div class="receipt-card" id="receiptCard" style="display:none;">
+        <div class="receipt-card-icon">📄</div>
+        <div class="receipt-card-body">
+          <div class="receipt-card-title"><span data-en="Your PDF receipt" data-hi="आपकी पीडीएफ रसीद">Your PDF receipt</span></div>
+          <div class="receipt-card-sub">
+            <span data-en="A copy has been sent to your email and downloaded to this device. Keep it safe - the reference number is required for any follow-up." data-hi="एक प्रति आपके ईमेल पर भेज दी गई है और इस डिवाइस पर डाउनलोड कर ली गई है। इसे सुरक्षित रखें - फॉलो-अप के लिए संदर्भ संख्या ज़रूरी है।">A copy has been sent to your email and downloaded to this device. Keep it safe - the reference number is required for any follow-up.</span>
+          </div>
+          <div class="receipt-card-sub" id="anonNote" style="display:none;color:var(--red);">
+            <span data-en="You submitted anonymously, so no email copy was sent. Please download and save the PDF now." data-hi="आपने गुमनाम रूप से सबमिट किया है, इसलिए ईमेल नहीं भेजा गया। कृपया अभी पीडीएफ डाउनलोड करके सुरक्षित रखें।">You submitted anonymously, so no email copy was sent. Please download and save the PDF now.</span>
+          </div>
+        </div>
+      </div>
+      <p id="pdfStatus" style="color:var(--dimmer);font-size:11px;font-family:var(--FM);letter-spacing:.14em;text-transform:uppercase;margin:14px 0 18px;min-height:14px;"></p>
+
+      <div class="btn-row" style="justify-content:center;flex-wrap:wrap;gap:10px;">
+        <button type="button" class="btn-primary" id="dlPdfBtn" onclick="downloadReceiptPdf()" style="display:none;"><span data-en="📄 Download PDF Receipt" data-hi="📄 पीडीएफ रसीद डाउनलोड करें">📄 Download PDF Receipt</span></button>
         <button type="button" class="btn-secondary" onclick="resetForm()"><span data-en="+ Report Another" data-hi="+ एक और रिपोर्ट">+ Report Another</span></button>
+        <a href="index.html" class="btn-secondary"><span data-en="🏠 Back to Home" data-hi="🏠 होम पर वापस">🏠 Back to Home</span></a>
       </div>
     </div>
 
@@ -1235,8 +1311,8 @@ html.light body { color:#1D1D1F; }
         @rrtanimals
       </a>
       <p class="note-p">
-        <span data-lang="en">Response within 24–48 hours</span>
-        <span data-lang="hi" class="hi">24–48 घंटों में जवाब</span>
+        <span data-lang="en">Response within 24-48 hours</span>
+        <span data-lang="hi" class="hi">24-48 घंटों में जवाब</span>
       </p>
       <div class="ft-note">
         <p>
@@ -1260,10 +1336,10 @@ var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwyXj13lJGkhn6Juw
 
 /* ═══════════════════════════════════════════
    ANTI-BOT PROTECTION (zero config)
-   1. Honeypot — hidden field bots fill
-   2. Timing — reject <3s submissions
-   3. JS proof-of-work — hash challenge
-   4. Rate limit — 1 submit per 30s
+   1. Honeypot - hidden field bots fill
+   2. Timing - reject <3s submissions
+   3. JS proof-of-work - hash challenge
+   4. Rate limit - 1 submit per 30s
    ═══════════════════════════════════════════ */
 var _formLoadTime = Date.now();
 var _lastSubmitTime = 0;
@@ -1295,13 +1371,13 @@ function botCheck(){
     showToast(isHi?'सबमिशन अस्वीकार।':'Submission rejected.','error');
     return false;
   }
-  /* 2. Timing — must spend at least 3 seconds on page */
+  /* 2. Timing - must spend at least 3 seconds on page */
   var elapsed = (Date.now() - _formLoadTime) / 1000;
   if(elapsed < 3){
     showToast(isHi?'कृपया फ़ॉर्म पूरा भरें।':'Please complete the form properly.','error');
     return false;
   }
-  /* 3. Rate limit — no more than 1 submit per 30s */
+  /* 3. Rate limit - no more than 1 submit per 30s */
   var now = Date.now();
   if(_lastSubmitTime && (now - _lastSubmitTime) < 30000){
     var wait = Math.ceil((30000 - (now - _lastSubmitTime))/1000);
@@ -1539,7 +1615,7 @@ function goTo(n){
       showToast(isHi?'कृपया जानवर का प्रकार चुनें।':'Please select the animal type.');
       return;
     }
-    /* Validate ALL dynamic step2 fields — selects must be chosen, inputs must have content */
+    /* Validate ALL dynamic step2 fields - selects must be chosen, inputs must have content */
     if(cfg){
       var missingField=null;
       (cfg.step2.extraFields||[]).forEach(function(f){
@@ -1679,13 +1755,13 @@ function goTo(n){
       buildReview();
       _doNavTo(n);
     });
-    return; /* Don't navigate yet — modal callback will */
+    return; /* Don't navigate yet - modal callback will */
   }
 
   _doNavTo(n);
 }
 
-/* Helper — actually performs the panel switch */
+/* Helper - actually performs the panel switch */
 function _doNavTo(n){
   document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
   var target = (n==='success')?'panelSuccess':(n==='error')?'panelError':'panel'+n;
@@ -1725,14 +1801,14 @@ function showEmailConfirm(email, isHi, onConfirm){
     if(e.target===overlay){ overlay.remove(); }
   });
 
-  /* Edit — close modal, focus email field */
+  /* Edit - close modal, focus email field */
   document.getElementById('emailEditBtn').addEventListener('click',function(){
     overlay.remove();
     var emailInput=document.getElementById('repEmail');
     if(emailInput){ emailInput.focus(); emailInput.select(); }
   });
 
-  /* Confirm — proceed to review */
+  /* Confirm - proceed to review */
   document.getElementById('emailConfirmBtn').addEventListener('click',function(){
     overlay.remove();
     if(onConfirm) onConfirm();
@@ -1920,6 +1996,61 @@ var DYNAMIC_CONFIG = {
       extraFields: []
     }
   },
+  'Suspected Relocation': {
+    step2: {
+      showAnimal: true,
+      extraFields: [
+        { id:'dyn_relocCount', type:'input',
+          labelEn:'How many animals are being taken?', labelHi:'कितने जानवरों को ले जाया जा रहा है?',
+          phEn:'e.g. 4 community dogs', phHi:'जैसे 4 कम्युनिटी कुत्ते' },
+        { id:'dyn_relocStatus', type:'select',
+          labelEn:'When is this happening?', labelHi:'यह कब हो रहा है?',
+          options:[
+            ['imminent','Planned for today / soon','आज / जल्द होने वाला है'],
+            ['ongoing','Happening right now','अभी हो रहा है'],
+            ['recent','Already taken (recent)','हाल ही में ले जाया गया'],
+            ['past','Past incident','पुरानी घटना']
+          ] },
+        { id:'dyn_relocReason', type:'select',
+          labelEn:'Reason being claimed', labelHi:'दिया जा रहा कारण',
+          options:[
+            ['sterilisation','Sterilisation (ABC programme)','नसबंदी (ABC कार्यक्रम)'],
+            ['vaccination','Vaccination drive','टीकाकरण अभियान'],
+            ['both','Sterilisation AND vaccination','नसबंदी और टीकाकरण दोनों'],
+            ['rehoming','"Rehoming" / shelter','"पुनर्वास" / आश्रय'],
+            ['removal','Removal demand by RWA / residents','RWA / निवासियों की माँग पर हटाना'],
+            ['none','No reason given','कोई कारण नहीं बताया'],
+            ['other','Other / unclear','अन्य / स्पष्ट नहीं']
+          ] }
+      ]
+    },
+    step4: {
+      descLabelEn: 'Describe what is happening',
+      descLabelHi: 'क्या हो रहा है - बताएं',
+      descPhEn: 'Where exactly are the animals being picked up from? What was said to residents/feeders? Any official ID, paperwork, or vehicle markings shown? Are the animals being returned after the procedure?',
+      descPhHi: 'जानवरों को कहाँ से उठाया जा रहा है? निवासियों / फीडर्स को क्या बताया गया? कोई आधिकारिक पहचान, कागज़ात, या वाहन पर निशान? क्या जानवरों को प्रक्रिया के बाद वापस लाया जाएगा?',
+      accusedLabelEn: 'Organisation / NGO / ABC centre being claimed',
+      accusedLabelHi: 'संस्था / एनजीओ / ABC केंद्र जिसका नाम दिया जा रहा है',
+      extraFields: [
+        { id:'dyn_relocVehicle', type:'input',
+          labelEn:'Vehicle details (if seen)', labelHi:'वाहन का विवरण (यदि देखा)',
+          phEn:'Colour, type, number plate, markings/logo', phHi:'रंग, प्रकार, नंबर प्लेट, निशान / लोगो' },
+        { id:'dyn_relocPhones', type:'phoneList',
+          labelEn:'People claiming to take the animals',
+          labelHi:'जानवरों को ले जाने का दावा करने वाले लोग',
+          helpEn:'Name + phone of anyone who came to collect, supervise, or authorise the pickup. Add as many as you can. Even partial info helps verify the claim.',
+          helpHi:'जो भी व्यक्ति लेने, निगरानी करने, या मंज़ूरी देने आया, उसका नाम और फ़ोन। जितने भी पता हों जोड़ें। अधूरी जानकारी भी सत्यापन में मदद करती है।' },
+        { id:'dyn_relocReturn', type:'select',
+          labelEn:'Was a return commitment given?', labelHi:'क्या वापस लाने का वादा दिया गया?',
+          options:[
+            ['yes_written','Yes - in writing','हाँ - लिखित में'],
+            ['yes_verbal','Yes - verbally only','हाँ - केवल मौखिक'],
+            ['no','No commitment given','कोई वादा नहीं'],
+            ['unsure','Unsure / not asked','पता नहीं / पूछा नहीं']
+          ] }
+      ]
+    }
+  },
   'Other': {
     step2: { showAnimal: true, extraFields: [] },
     step4: {
@@ -1964,6 +2095,8 @@ function renderDynamicStep2(){
         html += '<option value="'+o[0]+'">'+(isHi?o[2]:o[1])+'</option>';
       });
       html += '</select>';
+    } else if(f.type==='phoneList'){
+      html += renderPhoneList(f, isHi);
     }
     html += '</div>';
   });
@@ -1975,6 +2108,7 @@ function renderDynamicStep2(){
       c.onclick = function(){ selAnimal(c); };
     });
   }
+  wirePhoneLists('dynamicStep2');
   setLang(document.documentElement.lang||'en');
 }
 
@@ -2007,12 +2141,15 @@ function renderDynamicStep4(){
         html += '<option value="'+o[0]+'">'+(isHi?o[2]:o[1])+'</option>';
       });
       html += '</select>';
+    } else if(f.type==='phoneList'){
+      html += renderPhoneList(f, isHi);
     }
     html += '</div>';
   });
 
   document.getElementById('dynamicStep4').innerHTML = html;
   custUpgradeSelects('dynamicStep4');
+  wirePhoneLists('dynamicStep4');
 
   var dl = document.getElementById('descLabel');
   var ta = document.getElementById('desc');
@@ -2024,13 +2161,101 @@ function renderDynamicStep4(){
   if(ac){ ac.placeholder = isHi?(cfg.accusedLabelHi+' (यदि पता हो)'):(cfg.accusedLabelEn+' (if known)'); }
 }
 
+/* ─── PHONE LIST WIDGET ─── */
+function renderPhoneList(f, isHi){
+  var help = isHi?(f.helpHi||''):(f.helpEn||'');
+  var phName = isHi?'नाम':'Name';
+  var phPhone = isHi?'फ़ोन':'Phone';
+  var hiCls = isHi?' hi':'';
+  var addLbl = isHi?'+ और जोड़ें':'+ Add another';
+  var removeLbl = isHi?'हटाएं':'Remove';
+  var html = '';
+  if(help){
+    html += '<p class="plist-help'+hiCls+'">'+help+'</p>';
+  }
+  html += '<div class="plist" id="'+f.id+'" data-phname="'+phName+'" data-phphone="'+phPhone+'" data-rmlbl="'+removeLbl+'">';
+  html += '<div class="plist-row">';
+  html += '<input class="input" type="text" data-pl-name placeholder="'+phName+'"/>';
+  html += '<input class="input" type="tel" data-pl-phone inputmode="tel" placeholder="'+phPhone+'"/>';
+  html += '<button type="button" class="plist-rm" data-pl-rm aria-label="'+removeLbl+'">×</button>';
+  html += '</div>';
+  html += '</div>';
+  html += '<button type="button" class="plist-add" data-pl-add="'+f.id+'">'+addLbl+'</button>';
+  return html;
+}
+
+function wirePhoneLists(containerId){
+  var container = document.getElementById(containerId);
+  if(!container) return;
+  /* Wire add buttons */
+  container.querySelectorAll('[data-pl-add]').forEach(function(btn){
+    btn.onclick = function(){
+      var listId = btn.getAttribute('data-pl-add');
+      var list = document.getElementById(listId);
+      if(!list) return;
+      var phName = list.getAttribute('data-phname');
+      var phPhone = list.getAttribute('data-phphone');
+      var removeLbl = list.getAttribute('data-rmlbl');
+      var row = document.createElement('div');
+      row.className = 'plist-row';
+      row.innerHTML =
+        '<input class="input" type="text" data-pl-name placeholder="'+phName+'"/>'+
+        '<input class="input" type="tel" data-pl-phone inputmode="tel" placeholder="'+phPhone+'"/>'+
+        '<button type="button" class="plist-rm" data-pl-rm aria-label="'+removeLbl+'">×</button>';
+      list.appendChild(row);
+      wireRemoveButtons(list);
+      var firstInput = row.querySelector('input');
+      if(firstInput) firstInput.focus();
+    };
+  });
+  /* Wire remove buttons on existing rows */
+  container.querySelectorAll('.plist').forEach(function(list){
+    wireRemoveButtons(list);
+  });
+}
+
+function wireRemoveButtons(list){
+  var rows = list.querySelectorAll('.plist-row');
+  list.querySelectorAll('[data-pl-rm]').forEach(function(rm){
+    rm.onclick = function(){
+      var currentRows = list.querySelectorAll('.plist-row');
+      if(currentRows.length <= 1){
+        /* Don't remove last row - just clear it */
+        rm.closest('.plist-row').querySelectorAll('input').forEach(function(i){ i.value=''; });
+      } else {
+        rm.closest('.plist-row').remove();
+      }
+    };
+  });
+}
+
+function readPhoneList(listId){
+  var list = document.getElementById(listId);
+  if(!list) return [];
+  var entries = [];
+  list.querySelectorAll('.plist-row').forEach(function(row){
+    var n = row.querySelector('[data-pl-name]');
+    var p = row.querySelector('[data-pl-phone]');
+    var nv = n ? n.value.trim() : '';
+    var pv = p ? p.value.trim() : '';
+    if(nv || pv){
+      entries.push({ name: nv, phone: pv });
+    }
+  });
+  return entries;
+}
+
 function collectDynamicFields(){
   var cfg = getConfig();
   var extra = {};
   var all = (cfg.step2.extraFields||[]).concat(cfg.step4.extraFields||[]);
   all.forEach(function(f){
-    var el = document.getElementById(f.id);
-    if(el) extra[f.id] = el.value;
+    if(f.type==='phoneList'){
+      extra[f.id] = readPhoneList(f.id);
+    } else {
+      var el = document.getElementById(f.id);
+      if(el) extra[f.id] = el.value;
+    }
   });
   return extra;
 }
@@ -2053,36 +2278,86 @@ function selAnimal(el){
 }
 
 /* ─── FILE UPLOAD ─── */
+/* Maps for the remove-button → media-btn coordination.
+   Keys are the lowercase categories used in uploadedFiles. */
+var FILE_CATEGORIES = {
+  photo: { mediaBtn:'mbPhoto', label:'Photo/Video',     fileInput:'filePhoto', icon:'📷' },
+  doc:   { mediaBtn:'mbDoc',   label:'Document/FIR',    fileInput:'fileDoc',   icon:'📄' },
+  voice: { mediaBtn:'mbVoice', label:'Voice Recording', fileInput:'fileVoice', icon:'🎙️' }
+};
+
 function handleFiles(inputId, btnId, label){
   var input=document.getElementById(inputId);
   var btn=document.getElementById(btnId);
-  var files=Array.from(input.files);
-  if(!files.length) return;
+  var newFiles=Array.from(input.files);
+  if(!newFiles.length) return;
   var key=inputId.replace('file','').toLowerCase();
-  uploadedFiles[key]=files;
-  S.media=S.media.filter(function(m){return m!==label;});
-  if(files.length){ S.media.push(label); btn.classList.add('on'); }
-  else { btn.classList.remove('on'); }
+  /* Append rather than replace - so a second pick adds to the existing batch.
+     Skip duplicates (same name + size) so re-picking accidentally doesn't double up. */
+  var existing=uploadedFiles[key]||[];
+  newFiles.forEach(function(nf){
+    var dupe=existing.some(function(ef){ return ef.name===nf.name && ef.size===nf.size; });
+    if(!dupe) existing.push(nf);
+  });
+  uploadedFiles[key]=existing;
+  /* Reset the input so the same file can be re-selected after removal */
+  input.value='';
+  if(existing.length){
+    if(S.media.indexOf(label)===-1) S.media.push(label);
+    btn.classList.add('on');
+  } else {
+    S.media=S.media.filter(function(m){return m!==label;});
+    btn.classList.remove('on');
+  }
   renderFileList();
 }
+
+function removeFile(category, idx){
+  var arr=uploadedFiles[category];
+  if(!arr || idx<0 || idx>=arr.length) return;
+  arr.splice(idx,1);
+  var meta=FILE_CATEGORIES[category];
+  if(meta && arr.length===0){
+    /* Last file in this category gone - clear S.media + un-highlight the picker */
+    S.media=S.media.filter(function(m){return m!==meta.label;});
+    var btn=document.getElementById(meta.mediaBtn);
+    if(btn) btn.classList.remove('on');
+    /* Clear the underlying file input too, so picking the same file works again */
+    var inp=document.getElementById(meta.fileInput);
+    if(inp) inp.value='';
+  }
+  renderFileList();
+}
+
 function togWitness(){
   var btn=document.getElementById('mbWitness');
   var isOn=btn.classList.toggle('on');
   if(isOn){ if(S.media.indexOf('Eyewitness')===-1) S.media.push('Eyewitness'); }
   else{ S.media=S.media.filter(function(m){return m!=='Eyewitness';}); }
 }
+
 function renderFileList(){
+  var lang=document.documentElement.lang||'en';
+  var rmAria=lang==='hi'?'हटाएं':'Remove';
   var all=[].concat(
-    uploadedFiles.photo.map(function(f){return {f:f,icon:'📷'};}),
-    uploadedFiles.doc.map(function(f){return {f:f,icon:'📄'};}),
-    uploadedFiles.voice.map(function(f){return {f:f,icon:'🎙️'};})
+    uploadedFiles.photo.map(function(f,i){return {f:f,icon:FILE_CATEGORIES.photo.icon,cat:'photo',idx:i};}),
+    uploadedFiles.doc.map(function(f,i){return {f:f,icon:FILE_CATEGORIES.doc.icon,cat:'doc',idx:i};}),
+    uploadedFiles.voice.map(function(f,i){return {f:f,icon:FILE_CATEGORIES.voice.icon,cat:'voice',idx:i};})
   );
   var wrap=document.getElementById('fileList');
   var inner=document.getElementById('fileListInner');
-  if(!all.length){ wrap.style.display='none'; return; }
+  if(!all.length){ wrap.style.display='none'; inner.innerHTML=''; return; }
   wrap.style.display='block';
+  /* Escape user-controlled file names before injecting as HTML */
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];}); }
   inner.innerHTML=all.map(function(x){
-    return '<div class="file-item"><span class="file-icon">'+x.icon+'</span><span class="file-name">'+x.f.name+'</span><span class="file-size">'+(x.f.size/1024/1024).toFixed(1)+'MB</span></div>';
+    return '<div class="file-item">'
+      +'<span class="file-icon">'+x.icon+'</span>'
+      +'<span class="file-name" title="'+esc(x.f.name)+'">'+esc(x.f.name)+'</span>'
+      +'<span class="file-size">'+(x.f.size/1024/1024).toFixed(1)+'MB</span>'
+      +'<button type="button" class="file-rm" aria-label="'+rmAria+'" '
+      +'onclick="removeFile(\''+x.cat+'\','+x.idx+')">×</button>'
+      +'</div>';
   }).join('');
 }
 
@@ -2229,14 +2504,41 @@ function buildReview(){
   );
   var evStr=allNames.length?allNames.join(', '):(S.media.length?S.media.join(', '):((STRINGS[document.documentElement.lang||'en']||STRINGS.en).noneStr));
   var langBR=document.documentElement.lang||'en'; var sBR=STRINGS[langBR]||STRINGS.en; var kBR=sBR.reviewKeys;
+  var isHiR = langBR==='hi';
+
+  /* Format any phoneList fields as readable strings - name (phone) joined with semicolons */
+  var phoneListRows = [];
+  var cfgR = getConfig?getConfig():null;
+  if(cfgR){
+    var allFields = (cfgR.step2.extraFields||[]).concat(cfgR.step4.extraFields||[]);
+    allFields.forEach(function(f){
+      if(f.type==='phoneList'){
+        var entries = S.dynExtra[f.id]||[];
+        var rendered;
+        if(!entries.length){
+          rendered = isHiR?'कोई नहीं जोड़ा गया':'None added';
+        } else {
+          rendered = entries.map(function(e){
+            var name = e.name || (isHiR?'(नाम नहीं)':'(no name)');
+            var phone = e.phone || (isHiR?'(फ़ोन नहीं)':'(no phone)');
+            return name + ' : ' + phone;
+          }).join('; ');
+        }
+        phoneListRows.push([ isHiR?f.labelHi:f.labelEn, rendered ]);
+      }
+    });
+  }
+
   var rows=[
     [kBR.incidentType,S.type],[kBR.severity,S.severity],[kBR.animal,S.animal],
     [kBR.state,S.state],[kBR.district,S.district],[kBR.landmark,S.landmark],
     [kBR.gps,S.lat?(S.lat+', '+S.lng+' (±'+S.accuracy+'m)'):sBR.notCaptured],
-    [kBR.accused,S.accused],[kBR.evidence,evStr],[kBR.description,S.desc],
+    [kBR.accused,S.accused]
+  ].concat(phoneListRows).concat([
+    [kBR.evidence,evStr],[kBR.description,S.desc],
     [kBR.name,S.repName],[kBR.phone,S.repPhone],[kBR.email,S.repEmail],
     [kBR.confidential,S.anon?sBR.identityProtected:sBR.identityNotProtected]
-  ];
+  ]);
   document.getElementById('reviewBlock').innerHTML=rows.map(function(r){
     var cls='rev-val';
     if(r[0]==='Severity'&&S.severity&&S.severity.indexOf('Critical')>-1) cls='rev-val crit';
@@ -2271,6 +2573,21 @@ async function submitReport(){
       encodedFiles.push({name:f.name,mimeType:f.type||'application/octet-stream',data:b64});
     }catch(fe){}
   }
+
+  /* ── Build the PDF receipt BEFORE the fetch so we can embed it in the
+        payload. The Apps Script can use pdfBase64 + pdfFilename to email
+        the receipt as an attachment to both the reporter and the receiver
+        address. If pdf-lib hasn't loaded yet, generateReceiptForSubmission
+        will set _lastReceiptBytes=null and the user can still download
+        manually from the success panel (which retries the build). */
+  await generateReceiptForSubmission(refId, langS);
+  var pdfBase64 = '';
+  var pdfFilename = 'RapidResponse-Receipt-'+refId+'.pdf';
+  if(_lastReceiptBytes){
+    try { pdfBase64 = _bytesToBase64(_lastReceiptBytes); }
+    catch(be){ console.warn('PDF base64 encoding failed:', be); pdfBase64 = ''; }
+  }
+
   var payload={
     timestamp:new Date().toISOString(),refId:refId,
     incidentType:S.type,severity:S.severity,animal:S.animal,
@@ -2282,6 +2599,9 @@ async function submitReport(){
     language:langS,
     dynamicFields:JSON.stringify(S.dynExtra||{}),
     files:encodedFiles,
+    /* PDF receipt for server-side email delivery to reporter + receiver */
+    pdfBase64:pdfBase64,
+    pdfFilename:pdfFilename,
     /* Anti-bot metadata for server-side verification */
     _bot:{
       hp:document.getElementById('hpWebsite')?document.getElementById('hpWebsite').value:'',
@@ -2300,6 +2620,15 @@ async function submitReport(){
     document.getElementById('progFill').style.width='100%';
     showToast(langR==='hi'?'रिपोर्ट सफलतापूर्वक सबमिट हुई!':'Report submitted successfully!','success');
     var _ap=document.querySelector('.panel.active');if(_ap)_ap.scrollIntoView({behavior:'smooth',block:'nearest'});
+    /* Reveal the receipt info card and the manual download button */
+    var card=document.getElementById('receiptCard');
+    if(card) card.style.display='';
+    var anonNote=document.getElementById('anonNote');
+    if(anonNote) anonNote.style.display = (S.anon || !(S.repEmail||'').trim()) ? 'block' : 'none';
+    var dlBtn=document.getElementById('dlPdfBtn');
+    if(dlBtn) dlBtn.style.display='';
+    /* Auto-trigger download once - user can also click the button to re-download */
+    setTimeout(function(){ downloadReceiptPdf(); }, 500);
   };
 
   var _showError = function(msg){
@@ -2327,9 +2656,570 @@ async function submitReport(){
   generatePoW();
 }
 
+/* ─── PDF RECEIPT ───────────────────────────────────────────
+   Generates a printable PDF summary of the submission. Uses
+   pdf-lib (UMD) loaded from CDN. PDF is generated client-side
+   and ALSO embedded (base64) in the submission payload so the
+   server can email it to both reporter and the receiver address.
+
+   Helvetica is the only font used (Latin-1 only); non-WinAnsi
+   characters in user input are sanitised. A footnote appears
+   on every page when the original submission was in Hindi.
+
+   Em-dashes are intentionally avoided everywhere in favour of
+   simple hyphens or colons. */
+
+var _lastReceipt = null;
+var _lastReceiptBytes = null;
+
+function buildReceiptObject(refId, lang){
+  /* Snapshot every field we will need into a self-contained object,
+     so the PDF can be regenerated even after resetForm() runs. */
+  var attachmentNames = [].concat(
+    uploadedFiles.photo.map(function(f){return f.name;}),
+    uploadedFiles.doc.map(function(f){return f.name;}),
+    uploadedFiles.voice.map(function(f){return f.name;})
+  );
+  var cfg = getConfig?getConfig():null;
+  var dynamicEntries = [];
+  if(cfg){
+    var allFields = (cfg.step2.extraFields||[]).concat(cfg.step4.extraFields||[]);
+    allFields.forEach(function(f){
+      var raw = (S.dynExtra||{})[f.id];
+      if(raw===undefined || raw===null || raw==='') return;
+      if(f.type==='phoneList'){
+        if(!Array.isArray(raw) || !raw.length) return;
+        var lines = raw.map(function(e){
+          var n = e.name||'(no name given)';
+          var p = e.phone||'(no phone given)';
+          /* Use a colon separator between name and phone - never an em-dash */
+          return n+' : '+p;
+        });
+        dynamicEntries.push({ label:f.labelEn, value:lines.join('\n') });
+      } else if(f.type==='select'){
+        var displayLabel = raw;
+        if(f.options){
+          var match = f.options.find(function(o){ return o[0]===raw; });
+          if(match) displayLabel = match[1];
+        }
+        dynamicEntries.push({ label:f.labelEn, value:displayLabel });
+      } else {
+        dynamicEntries.push({ label:f.labelEn, value:String(raw) });
+      }
+    });
+  }
+
+  return {
+    refId: refId,
+    lang: lang||'en',
+    timestamp: new Date(),
+    incidentType: S.type||'-',
+    severity: S.severity||'-',
+    animal: S.animal||'-',
+    state: S.state||'-',
+    district: S.district||'-',
+    landmark: S.landmark||'-',
+    gpsLat: S.lat||'',
+    gpsLng: S.lng||'',
+    gpsAccuracy: S.accuracy||'',
+    description: S.desc||'-',
+    accused: S.accused||'Not specified',
+    reporterName: S.anon?'(Identity protected)':(S.repName||'-'),
+    reporterPhone: S.anon?'(Identity protected)':(S.repPhone||'-'),
+    reporterEmail: S.anon?'(Identity protected)':(S.repEmail||'-'),
+    anonymous: !!S.anon,
+    attachmentNames: attachmentNames,
+    eyewitness: S.media.indexOf('Eyewitness')>-1,
+    mediaCategories: S.media.slice(),
+    dynamicEntries: dynamicEntries
+  };
+}
+
+/* WinAnsi-safe text. pdf-lib's Helvetica only encodes Latin-1; any
+   Devanagari, emoji, or non-WinAnsi char throws on draw. Strip them
+   and substitute a placeholder so the PDF still renders cleanly.
+   IMPORTANT: em-dash (U+2014) and en-dash (U+2013) are converted to
+   plain hyphens - we never let an em-dash reach the output. */
+function _winAnsiSafe(s){
+  if(s==null) return '';
+  s = String(s);
+  var out = '';
+  var hadStripped = false;
+  for(var i=0;i<s.length;i++){
+    var code = s.charCodeAt(i);
+    /* Latin-1 range plus tab and newline. Note we deliberately exclude
+       U+2014 (em-dash) and U+2013 (en-dash) here so they get replaced. */
+    if(code===9 || code===10 || (code>=0x20 && code<=0x7E) || (code>=0xA0 && code<=0xFF)){
+      out += s[i];
+    } else {
+      var sub = ({
+        0x2018:"'", 0x2019:"'", 0x201A:"'", 0x201B:"'",
+        0x201C:'"', 0x201D:'"', 0x201E:'"',
+        0x2013:'-', 0x2014:'-', 0x2212:'-',
+        0x2022:'\u00B7', 0x2023:'\u00B7', 0x25E6:'\u00B7',
+        0x2026:'...', 0x00A0:' '
+      })[code];
+      if(sub!==undefined){ out += sub; }
+      else { hadStripped = true; }
+    }
+  }
+  return hadStripped ? out.trim() : out;
+}
+
+/* Wrap a string into lines that fit within maxWidth at the given size. */
+function _wrapText(text, font, size, maxWidth){
+  if(!text) return [''];
+  var paragraphs = String(text).split(/\r?\n/);
+  var allLines = [];
+  paragraphs.forEach(function(para){
+    if(!para){ allLines.push(''); return; }
+    var words = para.split(/\s+/);
+    var line = '';
+    words.forEach(function(w){
+      var test = line ? (line+' '+w) : w;
+      var width = font.widthOfTextAtSize(test, size);
+      if(width <= maxWidth){
+        line = test;
+      } else {
+        if(line) allLines.push(line);
+        if(font.widthOfTextAtSize(w, size) > maxWidth){
+          var chunk = '';
+          for(var i=0;i<w.length;i++){
+            var t2 = chunk + w[i];
+            if(font.widthOfTextAtSize(t2, size) > maxWidth){
+              if(chunk) allLines.push(chunk);
+              chunk = w[i];
+            } else {
+              chunk = t2;
+            }
+          }
+          line = chunk;
+        } else {
+          line = w;
+        }
+      }
+    });
+    if(line) allLines.push(line);
+  });
+  return allLines.length?allLines:[''];
+}
+
+/* Logo PNG (Material Symbols 'pets' on red background) embedded as
+   base64 so we don't need a network round-trip during PDF generation.
+   Encoded once from the screenshot the user uploaded; 256x256 RGB PNG. */
+var LOGO_PNG_B64 = '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';
+
+/* Decode a base64 string into a Uint8Array (browser btoa's inverse) */
+function _b64ToBytes(b64){
+  var binary = atob(b64);
+  var len = binary.length;
+  var bytes = new Uint8Array(len);
+  for(var i=0;i<len;i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+/* Build the PDF given a receipt object. Returns Uint8Array. */
+async function buildReceiptBytes(R){
+  if(typeof PDFLib === 'undefined'){
+    throw new Error('PDFLib not loaded');
+  }
+  var PDFDocument = PDFLib.PDFDocument;
+  var StandardFonts = PDFLib.StandardFonts;
+  var rgb = PDFLib.rgb;
+
+  var pdfDoc = await PDFDocument.create();
+  pdfDoc.setTitle('Rapid Response Incident Report - '+R.refId);
+  pdfDoc.setAuthor('Rapid Response');
+  pdfDoc.setSubject('Incident Report Receipt');
+  pdfDoc.setCreator('Rapid Response Web');
+  pdfDoc.setProducer('Rapid Response Web (pdf-lib)');
+  pdfDoc.setCreationDate(R.timestamp);
+
+  var helv     = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  var helvBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  var helvOblique = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
+
+  /* Embed the logo PNG once for this document */
+  var logoImg = await pdfDoc.embedPng(_b64ToBytes(LOGO_PNG_B64));
+
+  /* Brand palette: same as site */
+  var RED   = rgb(1, 0.176, 0.102);
+  var INK   = rgb(0.114, 0.114, 0.122);
+  var DIM   = rgb(0.43,  0.43,  0.45);
+  var DIMMER= rgb(0.527, 0.527, 0.545);
+  var LINE  = rgb(0.86,  0.86,  0.87);
+
+  /* Page geometry: A4 portrait. Increased margins for breathing room. */
+  var PW = 595, PH = 842;
+  var MARGIN_X = 56;
+  var MARGIN_TOP = 56;
+  var MARGIN_BOTTOM = 72;
+  var CONTENT_W = PW - MARGIN_X*2;
+
+  var pages = [];
+  var page = pdfDoc.addPage([PW, PH]); pages.push(page);
+  var cursor = PH - MARGIN_TOP;
+
+  function drawRunningHeader(){
+    page.drawRectangle({ x:0, y:PH-4, width:PW, height:4, color:RED });
+    /* Use a hyphen separator only - no em-dash anywhere */
+    page.drawText(_winAnsiSafe('RAPID RESPONSE  |  INCIDENT REPORT RECEIPT  |  '+R.refId),
+      { x:MARGIN_X, y:PH-22, size:8, font:helvBold, color:DIMMER });
+    cursor = PH - 44;
+  }
+  function ensure(needed){
+    if(cursor - needed < MARGIN_BOTTOM){
+      page = pdfDoc.addPage([PW, PH]); pages.push(page);
+      cursor = PH - MARGIN_TOP;
+      drawRunningHeader();
+    }
+  }
+
+  /* ── PAGE 1 HEADER ──
+     Vertical alignment plan: the logo square is 28pt tall. We pin
+       sqY = PH - MARGIN_TOP - 19  (so square top sits at PH-MARGIN_TOP+9,
+                                     square bottom at PH-MARGIN_TOP-19)
+     Then both text rows share matching baselines on left and right:
+       Row 1 baseline:  PH - MARGIN_TOP - 2   (wordmark + title)
+       Row 2 baseline:  PH - MARGIN_TOP - 17  (tagline + timestamp)
+     This makes left text-stack vertically centred with the logo, and
+     right text-stack mirror those exact baselines. */
+  page.drawRectangle({ x:0, y:PH-4, width:PW, height:4, color:RED });
+
+  var sqSize = 28;
+  var sqX = MARGIN_X;
+  var sqY = PH - MARGIN_TOP - 19;
+  page.drawImage(logoImg, { x:sqX, y:sqY, width:sqSize, height:sqSize });
+
+  var ROW1_Y = PH - MARGIN_TOP - 2;
+  var ROW2_Y = PH - MARGIN_TOP - 17;
+
+  page.drawText('RAPID RESPONSE', {
+    x:MARGIN_X + sqSize + 12, y:ROW1_Y, size:13, font:helvBold, color:INK
+  });
+  page.drawText('Animal Emergency Network  |  India', {
+    x:MARGIN_X + sqSize + 12, y:ROW2_Y, size:8, font:helv, color:DIMMER
+  });
+
+  /* Right-side title and timestamp - share Row 1 / Row 2 baselines with left */
+  var rLbl = 'INCIDENT REPORT RECEIPT';
+  var rLblW = helvBold.widthOfTextAtSize(rLbl, 9);
+  page.drawText(rLbl, {
+    x:PW-MARGIN_X-rLblW, y:ROW1_Y, size:9, font:helvBold, color:RED
+  });
+  var ts = R.timestamp;
+  /* Format timestamp in IST (Asia/Kolkata) regardless of where the user's
+     browser actually is. We use Intl.DateTimeFormat so the timezone is
+     forced; the trailing "IST" label is appended manually since the
+     'short' timezone name returns "GMT+5:30" in some locales. */
+  function _formatIST(d, opts){
+    try {
+      var fmt = new Intl.DateTimeFormat('en-IN', Object.assign({
+        timeZone: 'Asia/Kolkata'
+      }, opts||{}));
+      return fmt.format(d);
+    } catch(e){
+      /* Fallback: manual offset (+05:30) if Intl misbehaves */
+      var t = new Date(d.getTime() + (5.5*60*60*1000));
+      return t.toISOString().replace('T',' ').replace(/\.\d{3}Z$/, '');
+    }
+  }
+  /* Compact header timestamp: YYYY-MM-DD HH:MM:SS IST */
+  var tsCompact = _formatIST(ts, {
+    year:'numeric', month:'2-digit', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', second:'2-digit',
+    hour12: false
+  }).replace(',', '');
+  /* Some locales render dd/mm/yyyy; normalise to yyyy-mm-dd for the header */
+  var dmy = tsCompact.match(/(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}:\d{2}:\d{2})/);
+  if(dmy){ tsCompact = dmy[3]+'-'+dmy[2]+'-'+dmy[1]+' '+dmy[4]; }
+  var tsStr = tsCompact + ' IST';
+  var tsW = helv.widthOfTextAtSize(tsStr, 8);
+  page.drawText(tsStr, {
+    x:PW-MARGIN_X-tsW, y:ROW2_Y, size:8, font:helv, color:DIMMER
+  });
+
+  cursor = PH - MARGIN_TOP - 48;
+  /* Divider under header */
+  page.drawLine({ start:{x:MARGIN_X, y:cursor}, end:{x:PW-MARGIN_X, y:cursor}, thickness:0.5, color:LINE });
+  cursor -= 38;
+
+  /* ── REFERENCE BANNER ── */
+  page.drawText('REFERENCE NUMBER', { x:MARGIN_X, y:cursor, size:8, font:helvBold, color:DIMMER });
+  cursor -= 26;
+  page.drawText(_winAnsiSafe('RR-'+R.refId.replace(/^RR-/,'')), {
+    x:MARGIN_X, y:cursor, size:26, font:helvBold, color:INK
+  });
+  cursor -= 22;
+  /* Verbose, human-readable IST timestamp under the ref number */
+  var localStr = _formatIST(ts, {
+    weekday:'long', day:'numeric', month:'long', year:'numeric',
+    hour:'numeric', minute:'2-digit', second:'2-digit',
+    hour12: true
+  }) + ' IST';
+  page.drawText(_winAnsiSafe('Submitted: '+localStr), {
+    x:MARGIN_X, y:cursor, size:9.5, font:helv, color:DIM
+  });
+  cursor -= 44;
+
+  /* ── SECTION + ROW RENDERERS ── */
+  function drawSectionHeader(title){
+    /* Reserve enough space for the header and at least one row. */
+    ensure(58);
+    cursor -= 4;
+    /* Small red accent bar sits ABOVE the title text. Both anchor to MARGIN_X
+       so the title text shares the same left column as row labels and the
+       paragraph blocks below. This keeps the entire page on a single grid. */
+    page.drawRectangle({ x:MARGIN_X, y:cursor, width:22, height:2, color:RED });
+    cursor -= 14;
+    page.drawText(_winAnsiSafe(title.toUpperCase()), {
+      x:MARGIN_X, y:cursor, size:10, font:helvBold, color:RED
+    });
+    cursor -= 14;
+    /* Divider line under the heading */
+    page.drawLine({ start:{x:MARGIN_X, y:cursor}, end:{x:PW-MARGIN_X, y:cursor}, thickness:0.4, color:LINE });
+    cursor -= 22;
+  }
+
+  var LABEL_COL_W = 165;
+  var VAL_COL_X = MARGIN_X + LABEL_COL_W + 14;
+  var VAL_COL_W = CONTENT_W - LABEL_COL_W - 14;
+  var ROW_LINE_H = 14;        /* Line height for value text */
+  var ROW_PAD_TOP = 5;        /* Padding above first line */
+  var ROW_PAD_BOT = 8;        /* Padding below last line, before hairline */
+
+  function drawRow(label, value, opts2){
+    opts2 = opts2||{};
+    var valFont = opts2.bold?helvBold:helv;
+    var valColor = opts2.accent?RED:(opts2.muted?DIM:INK);
+    var safeVal = _winAnsiSafe(value||'-')||'-';
+    var safeLabel = _winAnsiSafe(label);
+    var valLines = _wrapText(safeVal, valFont, 10, VAL_COL_W);
+    var rowH = ROW_PAD_TOP + valLines.length*ROW_LINE_H + ROW_PAD_BOT;
+    ensure(rowH);
+    /* Label aligns to the first line of the value */
+    page.drawText(safeLabel, { x:MARGIN_X, y:cursor-ROW_PAD_TOP-9, size:8.5, font:helvBold, color:DIMMER });
+    var y = cursor - ROW_PAD_TOP - 9;
+    valLines.forEach(function(ln){
+      page.drawText(ln, { x:VAL_COL_X, y:y, size:10, font:valFont, color:valColor });
+      y -= ROW_LINE_H;
+    });
+    cursor -= rowH;
+    /* Hairline between rows */
+    page.drawLine({ start:{x:MARGIN_X, y:cursor+4}, end:{x:PW-MARGIN_X, y:cursor+4}, thickness:0.25, color:LINE });
+  }
+
+  function endSection(){
+    /* Extra space after each section before the next header */
+    cursor -= 18;
+  }
+
+  /* Soft keep-together: if a small section won't fit on the current page
+     with at least `needed` points of room, start a new page now so the
+     section doesn't get split awkwardly (e.g. one orphan row at the top
+     of the next page). Used for compact sections like Reporter. */
+  function ensureSection(needed){
+    if(cursor - needed < MARGIN_BOTTOM){
+      page = pdfDoc.addPage([PW, PH]); pages.push(page);
+      cursor = PH - MARGIN_TOP;
+      drawRunningHeader();
+    }
+  }
+
+  /* Paragraph block: full-width text starting at MARGIN_X (same column as
+     row labels and section headings). Used for Description and Accused. */
+  function drawParagraphBlock(text){
+    var safe = _winAnsiSafe(text)||'-';
+    var lines = _wrapText(safe, helv, 10.5, CONTENT_W);
+    /* Reserve enough space for the whole block + bottom padding */
+    ensure(lines.length*16 + 12);
+    cursor -= 6;
+    lines.forEach(function(ln){
+      ensure(16);
+      page.drawText(ln, { x:MARGIN_X, y:cursor-10, size:10.5, font:helv, color:INK });
+      cursor -= 16;
+    });
+    cursor -= 6;
+  }
+
+  /* ── INCIDENT DETAILS ── */
+  drawSectionHeader('Incident Details');
+  drawRow('Incident Type', R.incidentType, { bold:true });
+  drawRow('Severity', R.severity, { accent: /critical/i.test(R.severity) });
+  drawRow('Animal(s) Involved', R.animal);
+  if(R.dynamicEntries && R.dynamicEntries.length){
+    R.dynamicEntries.forEach(function(e){ drawRow(e.label, e.value); });
+  }
+  endSection();
+
+  /* ── LOCATION ── */
+  drawSectionHeader('Location');
+  drawRow('State', R.state);
+  drawRow('District', R.district);
+  drawRow('Landmark / Address', R.landmark);
+  if(R.gpsLat && R.gpsLng){
+    drawRow('GPS Coordinates', R.gpsLat+', '+R.gpsLng+(R.gpsAccuracy?' (\u00B1'+R.gpsAccuracy+'m)':''));
+  } else {
+    drawRow('GPS Coordinates', 'Not captured', { muted:true });
+  }
+  endSection();
+
+  /* ── DESCRIPTION ── */
+  drawSectionHeader('Description');
+  drawParagraphBlock(R.description);
+  endSection();
+
+  /* ── ACCUSED ── */
+  drawSectionHeader('Accused / Subject of Report');
+  drawParagraphBlock(R.accused);
+  endSection();
+
+  /* ── EVIDENCE ── */
+  drawSectionHeader('Evidence');
+  if(R.attachmentNames.length){
+    drawRow('Attachments', String(R.attachmentNames.length)+' file(s)');
+    R.attachmentNames.forEach(function(n, i){
+      drawRow('  \u00B7 '+(i+1), n, { muted:true });
+    });
+  } else {
+    drawRow('Attachments', 'None uploaded', { muted:true });
+  }
+  drawRow('Eyewitness', R.eyewitness?'Yes - reporter witnessed personally':'Not declared');
+  endSection();
+
+  /* ── REPORTER ── */
+  /* Keep this small section together: header (50pt) + 3 rows (~28pt each)
+     + final hairline = ~135pt. If less is available, start a new page. */
+  ensureSection(150);
+  drawSectionHeader('Reporter');
+  if(R.anonymous){
+    drawRow('Status', 'Identity protected (anonymous submission)', { accent:true });
+  } else {
+    drawRow('Name', R.reporterName);
+    drawRow('Phone', R.reporterPhone);
+    drawRow('Email', R.reporterEmail);
+  }
+
+  /* ── FOOTER on every page ── */
+  var totalPages = pages.length;
+  pages.forEach(function(p, idx){
+    var pn = idx+1;
+    var disc1 = 'This is an automatically generated receipt of an incident report submitted via rapid-response.in.';
+    var disc2 = 'Keep this document for your records. The reference number is required for any follow-up communication.';
+    var disc3 = 'Rapid Response is an independent community initiative and is not affiliated with any government authority.';
+    var hindiNote = (R.lang==='hi') ? 'This receipt is generated in English for forwarding to authorities. Your original submission is preserved as entered.' : null;
+    var foot = [disc1, disc2, disc3];
+    if(hindiNote) foot.push(hindiNote);
+    /* Top divider above footer */
+    p.drawLine({ start:{x:MARGIN_X, y:MARGIN_BOTTOM-4}, end:{x:PW-MARGIN_X, y:MARGIN_BOTTOM-4}, thickness:0.3, color:LINE });
+    var yLine = MARGIN_BOTTOM - 16;
+    foot.forEach(function(line){
+      var ln = _winAnsiSafe(line);
+      var wrapped = _wrapText(ln, helvOblique, 7.5, CONTENT_W - 90);
+      wrapped.forEach(function(w){
+        p.drawText(w, { x:MARGIN_X, y:yLine, size:7.5, font:helvOblique, color:DIMMER });
+        yLine -= 10;
+      });
+    });
+    /* Page number on the right */
+    var pgStr = 'Page '+pn+' of '+totalPages;
+    var pgW = helv.widthOfTextAtSize(pgStr, 8);
+    p.drawText(pgStr, { x:PW-MARGIN_X-pgW, y:MARGIN_BOTTOM-16, size:8, font:helv, color:DIMMER });
+    var rfStr = R.refId;
+    var rfW = helvBold.widthOfTextAtSize(rfStr, 8);
+    p.drawText(rfStr, { x:PW-MARGIN_X-rfW, y:MARGIN_BOTTOM-28, size:8, font:helvBold, color:RED });
+  });
+
+  return await pdfDoc.save();
+}
+
+/* Convert Uint8Array to base64 (chunked to avoid call-stack issues for large bytes). */
+function _bytesToBase64(bytes){
+  var CHUNK = 0x8000;
+  var binary = '';
+  for(var i=0; i<bytes.length; i+=CHUNK){
+    var slice = bytes.subarray(i, Math.min(i+CHUNK, bytes.length));
+    binary += String.fromCharCode.apply(null, slice);
+  }
+  return btoa(binary);
+}
+
+/* Wait up to N seconds for PDFLib to finish loading. */
+function _waitForPdfLib(maxMs){
+  return new Promise(function(resolve, reject){
+    if(typeof PDFLib !== 'undefined'){ resolve(); return; }
+    var start = Date.now();
+    var iv = setInterval(function(){
+      if(typeof PDFLib !== 'undefined'){
+        clearInterval(iv); resolve();
+      } else if(Date.now() - start > (maxMs||5000)){
+        clearInterval(iv); reject(new Error('PDFLib failed to load'));
+      }
+    }, 80);
+  });
+}
+
+/* Top-level: build the receipt object, build the PDF bytes, cache both.
+   Called BEFORE the fetch so the PDF can ride along in the payload. */
+async function generateReceiptForSubmission(refId, lang){
+  _lastReceipt = buildReceiptObject(refId, lang);
+  try {
+    await _waitForPdfLib(5000);
+    _lastReceiptBytes = await buildReceiptBytes(_lastReceipt);
+  } catch(err){
+    console.warn('PDF pre-build failed; will retry at download time:', err);
+    _lastReceiptBytes = null;
+  }
+  /* Show the manual-download button now that data is staged */
+  var btn=document.getElementById('dlPdfBtn');
+  if(btn) btn.style.display='';
+}
+
+/* User-initiated download. If pre-built bytes exist, reuse them; else build now. */
+async function downloadReceiptPdf(){
+  var statusEl = document.getElementById('pdfStatus');
+  var setStatus = function(msg){ if(statusEl) statusEl.textContent = msg||''; };
+  var langR = (_lastReceipt && _lastReceipt.lang) || document.documentElement.lang || 'en';
+  var isHiR = langR === 'hi';
+
+  if(!_lastReceipt){
+    setStatus(isHiR?'पहले रिपोर्ट सबमिट करें।':'Submit the report first.');
+    return;
+  }
+
+  setStatus(isHiR?'पीडीएफ बन रही है...':'Generating PDF...');
+
+  try {
+    if(!_lastReceiptBytes){
+      await _waitForPdfLib(5000);
+      _lastReceiptBytes = await buildReceiptBytes(_lastReceipt);
+    }
+    var blob = new Blob([_lastReceiptBytes], { type:'application/pdf' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'RapidResponse-Receipt-'+_lastReceipt.refId+'.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    setStatus(isHiR?'पीडीएफ डाउनलोड हो गई।':'PDF downloaded.');
+    setTimeout(function(){ setStatus(''); }, 4000);
+  } catch(err) {
+    console.error('PDF generation failed:', err);
+    setStatus(isHiR?'पीडीएफ बनाने में समस्या। कृपया फिर से कोशिश करें।':'Could not generate PDF. Try again.');
+  }
+}
+
 /* ─── RESET ─── */
 function resetForm(){
   _formLoadTime=Date.now(); _lastSubmitTime=0; generatePoW();
+  /* Clear any prior receipt and hide the PDF download button */
+  _lastReceipt = null;
+  _lastReceiptBytes = null;
+  var _dl=document.getElementById('dlPdfBtn'); if(_dl) _dl.style.display='none';
+  var _rc=document.getElementById('receiptCard'); if(_rc) _rc.style.display='none';
+  var _ps=document.getElementById('pdfStatus'); if(_ps) _ps.textContent='';
   var hp=document.getElementById('hpWebsite'); if(hp) hp.value='';
   S={step:1,type:null,severity:null,animal:null,lat:null,lng:null,accuracy:null,state:null,district:null,landmark:null,desc:null,accused:null,media:[],anon:false,repName:null,repPhone:null,repEmail:null};
   uploadedFiles={photo:[],doc:[],voice:[]};
@@ -2446,7 +3336,7 @@ function custBuildList(listId, pairs, placeholder, onSelect){
         var valEl=btn.querySelector('.cust-val');
         if(valEl){
           valEl.textContent=opt.textContent;
-          valEl.classList.remove('ph'); /* selected — full color */
+          valEl.classList.remove('ph'); /* selected - full color */
         }
         btn.classList.remove('open');
       }
