@@ -8,6 +8,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Report an Incident | Rapid Response</title>
+<meta name="description" content="Report an animal incident to the Rapid Response community. Cruelty cases, feeder harassment, injured animals, ABC issues. Your report reaches our team directly. Identity protected."/>
 <style>
 /* ═══════════════════════
    TOKENS — dark (default)
@@ -131,6 +132,13 @@ nav.desk a .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; te
 .hero{padding:128px 24px 60px;text-align:center;background:radial-gradient(circle at 50% 0%,rgba(255,45,26,.12) 0%,transparent 60%), var(--bg2);}
 .hero-tag{font-size:10px;font-weight:700;letter-spacing:0.35em;text-transform:uppercase;color:var(--red);display:block;margin-bottom:14px;font-family:var(--FM);}
 .hero h1{font-size:clamp(36px,7vw,72px);font-weight:900;letter-spacing:-0.03em;line-height:1.04;text-transform:uppercase;margin-bottom:16px;font-family:var(--FD);color:var(--w);}
+.hero h1 .ghost{
+  display:block;
+  font-style:italic;
+  -webkit-text-stroke:1.5px rgba(255,255,255,.22);
+  color:transparent;
+}
+html.light .hero h1 .ghost{ -webkit-text-stroke-color:rgba(10,8,6,.20); }
 .hero p{font-size:15px;color:var(--dim);max-width:420px;margin:0 auto;line-height:1.65;font-weight:300;}
 
 /* FORM SECTION */
@@ -149,7 +157,6 @@ nav.desk a .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; te
   -webkit-mask-image:radial-gradient(ellipse 80% 65% at 50% 35%, black 0%, transparent 100%);
 }
 .grid-bg-report > *{position:relative;z-index:1;}
-html.light .hero h1 span { color:rgba(10,8,6,.45) !important; }
 html.light .grid-bg-report::before{
   background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),
                    linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);
@@ -309,22 +316,40 @@ select.input{display:none !important;}
 .state-icon.fail{border:1px solid var(--ra32);background:var(--ra10);}
 .ref-id{font-family:var(--FM);font-size:11px;letter-spacing:0.28em;color:var(--dimmer);margin-bottom:28px;}
 
-/* FOOTER */
+/* ═══════════════════════
+   FOOTER  (matches index.html)
+═══════════════════════ */
 footer { background:var(--bg2); border-top:1px solid var(--bs); padding:56px 20px 40px; }
+html.light footer { background:#FFFFFF; }
 @media(min-width:768px) { footer { padding:60px 40px 40px; } }
-.ft-in { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:1fr; gap:32px; }
+
+.ft-in {
+  max-width:1160px; margin:0 auto;
+  display:grid; grid-template-columns:1fr; gap:32px;
+}
 @media(min-width:560px) { .ft-in { grid-template-columns:1fr 1fr; } }
 @media(min-width:860px) { .ft-in { grid-template-columns:1fr 1fr 1fr; } }
+
 .ft-brand p { font-size:13px; color:var(--dimmer); line-height:1.65; max-width:220px; margin-top:12px; }
+.ft-brand p .hi { font-size:12px; line-height:1.6; }
 .ft-lbl { font-family:var(--FM); font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--red); margin-bottom:12px; display:block; }
 .ft-col a { display:block; font-size:13px; color:var(--dimmer); text-decoration:none; margin-bottom:7px; transition:color .2s; }
 .ft-col a:hover { color:var(--w); }
+.ft-col a .hi { font-family:var(--FH); font-size:12px; line-height:1.5; }
 .ft-contact a { color:var(--red); font-weight:600; font-size:14px; }
 .ft-contact .note-p { font-size:11px; color:rgba(128,128,128,.5); margin-top:5px; font-family:var(--FM); }
+.ft-contact .note-p .hi { font-family:var(--FH); font-size:11px; line-height:1.5; }
 .ft-note { margin-top:12px; padding:12px 14px; border:1px solid var(--b); background:rgba(128,128,128,.02); }
 .ft-note p { font-size:11px; color:var(--dimmer); font-family:var(--FM); letter-spacing:.04em; line-height:1.6; }
-.ft-bot { max-width:1160px; margin:32px auto 0; padding-top:20px; border-top:1px solid rgba(128,128,128,.1); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.ft-note p .hi { font-family:var(--FH); font-size:12px; letter-spacing:.01em; line-height:1.6; font-weight:400; }
+
+.ft-bot {
+  max-width:1160px; margin:32px auto 0; padding-top:20px;
+  border-top:1px solid rgba(128,128,128,.1);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
+}
 .ft-bot p { font-family:var(--FM); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(128,128,128,.45); }
+.ft-bot p .hi { font-family:var(--FH); font-size:10px; letter-spacing:.01em; text-transform:none; line-height:1.4; }
 
 /* LIGHT MODE — uses CSS variables, no overrides needed for most things */
 html.light body { background:var(--bg); color:var(--w); }
@@ -793,10 +818,6 @@ html.light .lb:hover { color:#1D1D1F; }
 html.light .mob-btn { color:#1D1D1F; }
 
 /* ── FOOTER ── */
-html.light footer {
-  background:#F5F5F7;
-  border-top:1px solid rgba(0,0,0,.08);
-}
 html.light .ft-brand p { color:#6E6E73; }
 html.light .ft-col a { color:#6E6E73; }
 html.light .ft-col a:hover { color:#1D1D1F; }
@@ -805,6 +826,7 @@ html.light .ft-note {
   border:1px solid rgba(0,0,0,.08);
 }
 html.light .ft-note p { color:#6E6E73; }
+html.light .ft-lbl { color:var(--red); }
 html.light .ft-bot { border-top-color:rgba(0,0,0,.08); }
 html.light .ft-bot p { color:#86868B; }
 
@@ -824,6 +846,8 @@ html.light body { color:#1D1D1F; }
 <div id="mmo" onclick="closeMM()"></div>
 <div id="mm">
   <button id="mmc" onclick="closeMM()">✕</button>
+  <a href="/#mission" onclick="closeMM()" data-lang="en">Mission</a>
+  <a href="/#mission" onclick="closeMM()" data-lang="hi" class="hi">मिशन</a>
   <a href="/#how" onclick="closeMM()" data-lang="en">How it Works</a>
   <a href="/#how" onclick="closeMM()" data-lang="hi" class="hi">कैसे चलता है</a>
   <a href="/#clarity" onclick="closeMM()" data-lang="en">Clarity</a>
@@ -842,6 +866,10 @@ html.light body { color:#1D1D1F; }
     <span class="logo-t">Rapid Response</span>
   </a>
   <nav class="desk">
+    <a href="/#mission">
+      <span data-lang="en">Mission</span>
+      <span data-lang="hi" class="hi">मिशन</span>
+    </a>
     <a href="/#how">
       <span data-lang="en">How it Works</span>
       <span data-lang="hi" class="hi">कैसे चलता है</span>
@@ -869,7 +897,7 @@ html.light body { color:#1D1D1F; }
 <!-- HERO -->
 <div class="hero grid-bg-report">
   <span class="hero-tag" id="heroTag">Animal Emergency Network</span>
-  <h1 id="heroTitle">Report an<br/><span style="color:var(--dimmer);font-style:italic;">Incident</span></h1>
+  <h1 id="heroTitle">Report an<br/><span class="ghost">Incident</span></h1>
   <p id="heroSub">Your report reaches our team directly. Your identity is protected and handled with care.</p>
 </div>
 
@@ -1182,14 +1210,15 @@ html.light body { color:#1D1D1F; }
         <span class="logo-t">Rapid Response</span>
       </a>
       <p>
-        <span data-lang="en">A community initiative connecting volunteers during animal emergencies.</span>
-        <span data-lang="hi" class="hi">जानवरों की इमरजेंसी में लोगों को जोड़ने वाली पहल।</span>
+        <span data-lang="en">a peer network for the people already doing the work. feeders, pet parents, fosterers, rescuers. district by district.</span>
+        <span data-lang="hi" class="hi">उन लोगों का नेटवर्क जो पहले से काम कर रहे हैं। फीडर, पेट पैरेंट्स, फोस्टर, रेस्क्यूअर्स। जिला-दर-जिला।</span>
       </p>
     </div>
     <div class="ft-col">
       <span class="ft-lbl">Navigate</span>
+      <a href="/#mission"><span data-lang="en">Mission</span><span data-lang="hi" class="hi">मिशन</span></a>
       <a href="/#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="hi">कैसे काम करता है</span></a>
-      <a href="/#clarity"><span data-lang="en">Platform Clarity</span><span data-lang="hi" class="hi">साफ़ समझ</span></a>
+      <a href="/#clarity"><span data-lang="en">Clarity</span><span data-lang="hi" class="hi">साफ़ बात</span></a>
       <a href="/#faq">FAQ</a>
       <a href="/#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
       <a href="/report" style="color:var(--red)"><span data-lang="en">Report Incident</span><span data-lang="hi" class="hi">घटना रिपोर्ट करें</span></a>
@@ -1197,6 +1226,14 @@ html.light body { color:#1D1D1F; }
     <div class="ft-col ft-contact">
       <span class="ft-lbl">Support</span>
       <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
+      <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" aria-label="Instagram @rrtanimals" style="display:inline-flex;align-items:center;gap:8px;color:#0095F6;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
+        </svg>
+        @rrtanimals
+      </a>
       <p class="note-p">
         <span data-lang="en">Response within 24–48 hours</span>
         <span data-lang="hi" class="hi">24–48 घंटों में जवाब</span>
@@ -2535,9 +2572,9 @@ function setLang(lang){
   var heroTitleEl=document.getElementById('heroTitle');
   if(heroTitleEl){
     if(isHi){
-      heroTitleEl.innerHTML='घटना की<br/><span style="color:var(--dimmer);font-style:italic;">रिपोर्ट करें</span>';
+      heroTitleEl.innerHTML='घटना की<br/><span class="ghost">रिपोर्ट करें</span>';
     } else {
-      heroTitleEl.innerHTML='Report an<br/><span style="color:var(--dimmer);font-style:italic;">Incident</span>';
+      heroTitleEl.innerHTML='Report an<br/><span class="ghost">Incident</span>';
     }
   }
 
