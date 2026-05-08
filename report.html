@@ -1043,6 +1043,12 @@ html.light body { color:#1D1D1F; }
           <div class="chip-name"><span data-en="Vet Negligence" data-hi="पशु चिकित्सक लापरवाही">Vet Negligence</span></div>
           <div class="chip-desc"><span data-en="Malpractice or refusal" data-hi="कुप्रचार या इनकार">Malpractice or refusal</span></div>
         </div>
+        <div class="chip" data-val="Ritual Sacrifice" onclick="selType(this)">
+          <div class="chip-check">✓</div>
+          <div class="chip-icon">🪓</div>
+          <div class="chip-name"><span data-en="Ritual Sacrifice" data-hi="अनुष्ठान बलि">Ritual Sacrifice</span></div>
+          <div class="chip-desc"><span data-en="Religious / ceremonial killing" data-hi="धार्मिक / समारोह में पशुवध">Religious / ceremonial killing</span></div>
+        </div>
         <div class="chip" data-val="Suspected Relocation" onclick="selType(this)">
           <div class="chip-check">✓</div>
           <div class="chip-icon">🚐</div>
@@ -1994,6 +2000,118 @@ var DYNAMIC_CONFIG = {
       accusedLabelEn: 'Name / operator of breeding facility',
       accusedLabelHi: 'प्रजनन केंद्र का नाम / संचालक',
       extraFields: []
+    }
+  },
+  'Ritual Sacrifice': {
+    step2: {
+      showAnimal: true,
+      extraFields: [
+        // Time-criticality is the single biggest factor for triage.
+        // Drives whether this is "act in hours" vs documentation case.
+        { id:'dyn_ritualTiming', type:'select',
+          labelEn:'When is this happening?',
+          labelHi:'यह कब हो रहा है?',
+          options:[
+            ['within_24h',     'Within the next 24 hours',          'अगले 24 घंटों में'],
+            ['within_week',    'Within the next 7 days',            'अगले 7 दिनों में'],
+            ['scheduled_later','Scheduled later (date known)',      'बाद में निर्धारित (तारीख ज्ञात है)'],
+            ['ongoing',        'Happening right now',                'अभी हो रहा है'],
+            ['recurring',      'Recurring (annual / festival)',      'आवर्ती (वार्षिक / त्योहार)'],
+            ['past_recent',    'Already happened (past 7 days)',     'हो चुका है (पिछले 7 दिनों में)'],
+            ['past_older',     'Already happened (older)',           'हो चुका है (पुराना)'],
+            ['unsure',         'Unsure',                              'पता नहीं']
+          ] },
+        // Free text - reporters express dates many ways: "this Sunday",
+        // "Bakr Eid", "Navami", "12/05". Better to capture however they
+        // say it than force a date picker they'll abandon.
+        { id:'dyn_ritualDate', type:'input',
+          labelEn:'Specific date or occasion (if known)',
+          labelHi:'विशिष्ट तिथि या अवसर (यदि ज्ञात हो)',
+          phEn:'e.g. 17/05/2026, "this Sunday", "Bakr Eid", "Navratri"',
+          phHi:'जैसे 17/05/2026, "इस रविवार", "बकरीद", "नवरात्रि"' },
+        // Rough scale buckets. Not asking for precision, just enough
+        // to know if this is 1 goat in a backyard vs 200 at a festival.
+        { id:'dyn_ritualScale', type:'select',
+          labelEn:'Approximate scale',
+          labelHi:'अनुमानित पैमाना',
+          options:[
+            ['single',  '1 animal',                    '1 जानवर'],
+            ['few',     '2-5 animals',                 '2-5 जानवर'],
+            ['dozens',  '10-50 animals',               '10-50 जानवर'],
+            ['large',   '50+ animals',                 '50+ जानवर'],
+            ['mass',    '100+ (mass event)',           '100+ (बड़ा आयोजन)'],
+            ['unknown', 'Unknown',                      'पता नहीं']
+          ] },
+        // Venue type drives which authority handles it. Temple = state
+        // religious endowments dept, slaughterhouse = FSSAI/municipal,
+        // public ground = police directly.
+        { id:'dyn_ritualVenue', type:'select',
+          labelEn:'Type of venue',
+          labelHi:'स्थान का प्रकार',
+          options:[
+            ['private_home',     'Private home / backyard',         'निजी घर / पिछवाड़ा'],
+            ['temple',           'Temple / shrine / religious site','मंदिर / देवस्थान / धार्मिक स्थल'],
+            ['public_ground',    'Public ground / open space',      'सार्वजनिक मैदान / खुला स्थान'],
+            ['festival_grounds', 'Festival / fair grounds',         'मेला / उत्सव स्थल'],
+            ['unauth_slaughter', 'Unauthorised slaughter site',     'अनधिकृत वधस्थल'],
+            ['farm',             'Farm / livestock site',           'फ़ार्म / पशुधन स्थल'],
+            ['other',            'Other',                            'अन्य'],
+            ['unsure',           'Unsure',                           'पता नहीं']
+          ] }
+      ]
+    },
+    step4: {
+      descLabelEn: 'Describe what you saw or know',
+      descLabelHi: 'आपने जो देखा या जानते हैं उसका विवरण',
+      descPhEn: 'Useful details: how you came to know, who is organising (group / family / temple committee), how the animals are being sourced, signs of stress or visible cruelty, whether attendees are aware. If you witnessed it before in the same place, mention that too. Skip anything you are unsure about.',
+      descPhHi: 'उपयोगी विवरण: आपको कैसे पता चला, कौन आयोजन कर रहा है (समूह / परिवार / मंदिर समिति), जानवर कहाँ से लाए जा रहे हैं, तनाव या क्रूरता के संकेत, क्या उपस्थित लोग जानते हैं। यदि पहले भी इसी जगह देखा हो तो वह भी बताएं। जिस बारे में अनिश्चित हों उसे छोड़ दें।',
+      accusedLabelEn: 'Organiser / venue / individual (if known)',
+      accusedLabelHi: 'आयोजक / स्थान / व्यक्ति (यदि ज्ञात हो)',
+      extraFields: [
+        // Has anyone tried official channels first? If yes, the next
+        // step from our side is different - we escalate past their
+        // blocker rather than duplicating their effort.
+        { id:'dyn_ritualReported', type:'select',
+          labelEn:'Has this been reported to authorities yet?',
+          labelHi:'क्या यह पहले अधिकारियों को सूचित किया गया है?',
+          options:[
+            ['no',            'Not yet',                                 'अभी नहीं'],
+            ['police_filed',  'Reported to police - FIR filed',          'पुलिस को सूचित - FIR दर्ज'],
+            ['police_refused','Police informed but refused to act',      'पुलिस को सूचित किया, कार्रवाई से इनकार'],
+            ['awbi_spca',     'Reported to AWBI / SPCA',                 'AWBI / SPCA को सूचित'],
+            ['ngo',           'Reported to another NGO',                 'किसी अन्य NGO को सूचित'],
+            ['multiple',      'Reported to multiple authorities',        'कई अधिकारियों को सूचित'],
+            ['unsure',        'Unsure',                                   'पता नहीं']
+          ] },
+        // Reporter safety screening. Sacrifice cases produce documented
+        // retaliation against whistleblowers. We need to know if there
+        // is risk so we can route accordingly and protect identity.
+        { id:'dyn_ritualReporterRisk', type:'select',
+          labelEn:'Have you been seen, identified, or warned?',
+          labelHi:'क्या आपको देखा गया, पहचाना गया, या चेतावनी दी गई?',
+          options:[
+            ['no_risk',        'No - I was not noticed',                 'नहीं - मुझे नहीं देखा गया'],
+            ['seen_no_threat', 'Seen but not threatened',                'देखा गया लेकिन धमकी नहीं'],
+            ['warned',         'Warned to stay quiet',                   'चुप रहने की चेतावनी दी गई'],
+            ['threatened',     'Threatened or intimidated',              'धमकी या डराया गया'],
+            ['safety_concern', 'I have safety concerns about reporting', 'रिपोर्ट करने में सुरक्षा संबंधी चिंता है'],
+            ['na',             'Not applicable (reporting from afar)',   'लागू नहीं (दूर से रिपोर्ट कर रहे हैं)']
+          ] },
+        // Evidence reliability. "I witnessed" vs "social media" vs
+        // "someone told me" produces very different escalation
+        // strategies. We don't want to mobilise on an unverified rumour.
+        { id:'dyn_ritualSource', type:'select',
+          labelEn:'How did you learn about this?',
+          labelHi:'आपको इसके बारे में कैसे पता चला?',
+          options:[
+            ['witnessed',          'I witnessed / am witnessing it',     'मैंने देखा / देख रहा हूँ'],
+            ['told_directly',      'Someone involved told me directly',  'इसमें शामिल किसी ने सीधे बताया'],
+            ['community_word',     'Heard from community / neighbours',  'समुदाय / पड़ोसियों से सुना'],
+            ['social_media',       'Saw on social media / WhatsApp',     'सोशल मीडिया / WhatsApp पर देखा'],
+            ['poster_announcement','Public poster / announcement',       'सार्वजनिक पोस्टर / घोषणा'],
+            ['other_source',       'Other',                              'अन्य']
+          ] }
+      ]
     }
   },
   'Suspected Relocation': {
