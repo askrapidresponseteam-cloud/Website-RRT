@@ -357,27 +357,27 @@ html.light .network { opacity: 0.45; }
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 0;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  gap: 4px 2px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
 }
-@media (min-width: 768px) { .links { font-size: 11px; letter-spacing: 0.16em; } }
+@media (min-width: 768px) { .links { font-size: 14.5px; gap: 4px 4px; } }
 
 .links a {
-  color: var(--text-dim);
-  padding: 10px 14px;
+  color: var(--text-low);
+  padding: 8px 12px;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .links a:hover { color: var(--text); }
-.links .sep { color: var(--text-faint); }
-.links .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
-@media (min-width: 768px) { .links .hi { font-size: 13px; } }
-@media (max-width: 480px) { .links .sep { display: none; } }
+.links .sep { color: var(--text-faint); user-select: none; }
+.links .hi { font-family: var(--hindi); font-size: 13.5px; font-weight: 500; }
+@media (min-width: 768px) { .links .hi { font-size: 14px; } }
+@media (max-width: 540px) { .links .sep { display: none; } }
 
 /* Reveal animations */
 .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -406,47 +406,130 @@ footer {
 }
 @media (min-width: 768px) { footer { padding: 32px 40px; padding-bottom: max(32px, env(safe-area-inset-bottom)); } }
 
+/* ═══════════════════════
+   FOOTER — readable on every screen
+═══════════════════════ */
+footer {
+  position: relative;
+  border-top: 1px solid var(--border);
+  padding: 32px 24px 28px;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  footer {
+    padding: 36px 40px 32px;
+    padding-bottom: max(32px, env(safe-area-inset-bottom));
+  }
+}
+
 .foot {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px 24px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-dim);
+  gap: 20px;
 }
-@media (min-width: 768px) { .foot { font-size: 11px; letter-spacing: 0.14em; } }
-.foot .right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.foot a { color: var(--text-low); transition: color 0.2s; }
-.foot a:hover { color: var(--text); }
-.foot .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
+@media (min-width: 768px) {
+  .foot {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+  }
+}
 
-/* Instagram link: gradient color + inline lottie icon */
-.foot .ig {
+/* Contact group — actionable, mixed-case for readability */
+.foot-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  order: 1;
+}
+@media (min-width: 768px) {
+  .foot-contact {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    order: 2;
+  }
+}
+
+.foot-contact a {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: #E1306C; /* fallback if lottie fails */
-  background: linear-gradient(45deg, #F58529 0%, #DD2A7B 35%, #8134AF 65%, #515BD4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 600;
+  gap: 9px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-mid);
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 6px 0;
+  min-height: 32px;
+  transition: color 0.2s;
 }
-.foot .ig:hover { opacity: 0.85; }
-.ig-icon {
-  display: inline-block;
+.foot-contact a:hover { color: var(--text); }
+
+.foot-contact .ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  /* Reserve space so layout doesn't shift when lottie loads */
+  color: var(--text-dim);
 }
-.ig-icon svg { width: 100%; height: 100%; display: block; }
+.foot-contact a:hover .ic { color: var(--accent); }
+
+/* Instagram link: icon stays branded (lottie has gradient), text stays neutral */
+.foot-contact .ig-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.foot-contact .ig-icon svg { width: 100%; height: 100%; display: block; }
+.foot-contact a.ig { gap: 10px; }
+.foot-contact a.ig:hover .ig-icon { opacity: 0.85; }
+
+/* Brand/copyright group — informational, quieter */
+.foot-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  order: 2;
+}
+@media (min-width: 768px) {
+  .foot-brand { align-items: flex-start; text-align: left; order: 1; }
+}
+
+.foot-brand .copy {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-low);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.foot-brand .copy .hi { font-family: var(--hindi); font-size: 13px; font-weight: 500; }
+
+.foot-brand .desc {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0;
+  text-transform: none;
+  max-width: 36ch;
+}
+.foot-brand .desc .hi { font-family: var(--hindi); font-size: 12px; font-weight: 500; }
 </style>
 </head>
 <body>
@@ -538,17 +621,34 @@ footer {
 
 <footer>
   <div class="foot">
-    <p>
-      <span data-lang="en">© 2026 RapidResponse Labs · An independent community initiative</span>
-      <span data-lang="hi" class="hi">© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र कम्युनिटी पहल</span>
-    </p>
-    <div class="right">
-      <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
+
+    <div class="foot-brand">
+      <div class="copy">
+        <span data-lang="en">© 2026 RapidResponse Labs</span>
+        <span data-lang="hi" class="hi">© 2026 रैपिड रिस्पॉन्स लैब्स</span>
+      </div>
+      <div class="desc">
+        <span data-lang="en">An independent community initiative.</span>
+        <span data-lang="hi" class="hi">स्वतंत्र कम्युनिटी पहल।</span>
+      </div>
+    </div>
+
+    <div class="foot-contact">
+      <a href="mailto:ask@rapid-response.in">
+        <span class="ic" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </span>
+        ask@rapid-response.in
+      </a>
       <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" class="ig">
         <span id="igLottie" class="ig-icon" aria-hidden="true"></span>
-        <span>@rrtanimals</span>
+        @rrtanimals
       </a>
     </div>
+
   </div>
 </footer>
 
