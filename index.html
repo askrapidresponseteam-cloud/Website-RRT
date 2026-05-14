@@ -748,7 +748,7 @@ html.light .btn-s img { filter: none; }
   100% { transform: scale(1.35); opacity: 0; border-width: 1px; }
 }
 
-/* Ask the district button attention cue (Ask the district.png — black bar ~50%/23%, ~80% wide × 7% tall) */
+/* Ask the district button glow (Ask the district.png — POST AN ASK black bar at ~50%/23%) */
 .ph-ask-cue {
   position: absolute;
   left: 50%;
@@ -758,50 +758,24 @@ html.light .btn-s img { filter: none; }
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
+  animation: askGlow 2.6s ease-in-out infinite;
 }
-/* Expanding ring — like SOS but rectangular, blue, subtler */
-.ph-ask-cue::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 2px solid var(--accent);
-  opacity: 0;
-  animation: askRing 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-/* Shimmer pass — light sweep across the button (clipped to button bounds) */
-.ph-ask-cue::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: linear-gradient(
-    100deg,
-    transparent 0%,
-    transparent 35%,
-    rgba(255,255,255,0.55) 50%,
-    transparent 65%,
-    transparent 100%
-  );
-  background-size: 250% 100%;
-  background-position: 150% 0;
-  animation: askShimmer 2.6s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-@keyframes askRing {
-  0%   { transform: scale(0.96, 0.7); opacity: 0; }
-  15%  { transform: scale(1.0, 1.0); opacity: 0.95; }
-  70%  { transform: scale(1.08, 1.6); opacity: 0; }
-  100% { transform: scale(1.08, 1.6); opacity: 0; }
-}
-@keyframes askShimmer {
-  0%   { background-position: 150% 0; }
-  60%  { background-position: -150% 0; }
-  100% { background-position: -150% 0; }
+@keyframes askGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(31, 117, 240, 0),
+      0 0 12px 2px rgba(31, 117, 240, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 0 4px rgba(31, 117, 240, 0.18),
+      0 0 32px 8px rgba(31, 117, 240, 0.55);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ph-sos-pulse::before, .ph-sos-pulse::after,
-  .ph-ask-cue::before, .ph-ask-cue::after { animation: none; opacity: 0; }
+  .ph-sos-pulse::before, .ph-sos-pulse::after { animation: none; opacity: 0; }
+  .ph-ask-cue { animation: none; box-shadow: none; }
 }
 
 .ph-badge {
