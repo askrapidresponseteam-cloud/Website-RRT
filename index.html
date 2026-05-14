@@ -758,37 +758,45 @@ html.light .btn-s img { filter: none; }
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
-  overflow: hidden;
 }
+/* Expanding ring — like SOS but rectangular, blue, subtler */
 .ph-ask-cue::before {
   content: '';
   position: absolute;
   inset: 0;
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  border: 2px solid var(--accent);
   opacity: 0;
-  animation: askPulse 2.6s ease-out infinite;
+  animation: askRing 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
+/* Shimmer pass — light sweep across the button (clipped to button bounds) */
 .ph-ask-cue::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: -50%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(255,255,255,0.55) 50%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  background-position: 150% 0;
   animation: askShimmer 2.6s ease-in-out infinite;
+  mix-blend-mode: screen;
 }
-@keyframes askPulse {
-  0%   { opacity: 0; outline-offset: 0; }
-  20%  { opacity: 0.9; outline-offset: 6px; }
-  60%  { opacity: 0; outline-offset: 10px; }
-  100% { opacity: 0; outline-offset: 10px; }
+@keyframes askRing {
+  0%   { transform: scale(0.96, 0.7); opacity: 0; }
+  15%  { transform: scale(1.0, 1.0); opacity: 0.95; }
+  70%  { transform: scale(1.08, 1.6); opacity: 0; }
+  100% { transform: scale(1.08, 1.6); opacity: 0; }
 }
 @keyframes askShimmer {
-  0%   { left: -50%; }
-  60%  { left: 100%; }
-  100% { left: 100%; }
+  0%   { background-position: 150% 0; }
+  60%  { background-position: -150% 0; }
+  100% { background-position: -150% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
