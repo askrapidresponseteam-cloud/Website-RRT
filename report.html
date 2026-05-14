@@ -6,7 +6,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"/>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#0A0908" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <title>Report an Incident | Rapid Response</title>
 <meta name="description" content="Report an animal incident to the Rapid Response community. Cruelty cases, feeder harassment, injured animals, ABC issues. Your report reaches our team directly. Identity protected."/>
 <!-- pdf-lib for client-side PDF receipt generation (loaded async, doesn't block render) -->
@@ -18,7 +22,7 @@
    ───────────────────────────────────────────────────────────────────
    Core moves vs the old design:
    • Serif headlines (Fraunces ~ Denton), lowercase, weight 400
-   • Body text 17–18px minimum, never below 14px for labels
+   • Body text 17-18px minimum, never below 14px for labels
    • Text opacity floor 0.65 for body, 0.55 only for tertiary labels
    • Warm off-white accent (#1F75F0) replaces alarm-red as primary
    • Red reserved for genuine error/critical states only
@@ -1563,68 +1567,318 @@ html.light ::selection { background: var(--accent-soft); color: var(--text); }
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   STYLE SYSTEM OVERRIDES - match the rest of the site
+   (header, hero intro, footer)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Smooth out html/body for app-feel parity */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* HEADER - minimal, matching index */
+#hdr {
+  position: fixed !important;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: 60px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px !important;
+  padding-left: max(20px, env(safe-area-inset-left)) !important;
+  padding-right: max(20px, env(safe-area-inset-right)) !important;
+  background: transparent;
+  transition: background 0.25s, border-color 0.25s;
+  border-bottom: 1px solid transparent;
+  grid-template-columns: none !important;
+}
+#hdr.stuck {
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+@media (min-width: 768px) {
+  #hdr {
+    height: 68px !important;
+    padding-left: max(40px, env(safe-area-inset-left)) !important;
+    padding-right: max(40px, env(safe-area-inset-right)) !important;
+  }
+}
+
+#hdr .logo { display: inline-flex; align-items: center; gap: 10px; }
+#hdr .logo-sq { width: 28px; height: 28px; background: var(--accent); display: grid; place-items: center; border-radius: 0; }
+#hdr .logo-sq .material-symbols-outlined { color: #fff; font-size: 18px; }
+#hdr .logo-t {
+  font-family: var(--display); font-weight: 800; font-size: 17px;
+  letter-spacing: 0.01em; text-transform: uppercase; color: var(--text);
+}
+
+#hdr .hdr-r { display: flex; align-items: center; gap: 4px; }
+#hdr .lb {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: none; border: none; padding: 10px 8px;
+  min-height: 44px; min-width: 36px; cursor: pointer;
+  color: var(--text-low); transition: color 0.2s;
+}
+#hdr .lb:hover { color: var(--text); }
+#hdr .lb.hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 13px; }
+#hdr .lsep { color: var(--text-dim); padding: 0 2px; }
+#hdr .mode-b {
+  background: none; border: none; cursor: pointer;
+  padding: 10px; min-height: 44px; min-width: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 15px; line-height: 1;
+}
+
+/* HERO - refreshed to match index visual language */
+.hero {
+  position: relative;
+  padding: 100px 24px 56px !important;
+  padding-left: max(24px, env(safe-area-inset-left)) !important;
+  padding-right: max(24px, env(safe-area-inset-right)) !important;
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  max-width: 880px;
+  margin: 0 auto;
+  background: none !important;
+  border-bottom: none !important;
+}
+@media (min-width: 768px) {
+  .hero { padding: 140px 40px 72px !important; }
+}
+
+.hero .back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-low);
+  margin-bottom: 32px;
+  padding: 8px 4px 8px 0;
+  min-height: 44px;
+  transition: color 0.2s, gap 0.2s;
+}
+.hero .back-link:hover { color: var(--text); gap: 10px; }
+.hero .back-link .material-symbols-outlined { font-size: 16px; }
+
+.hero .eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-low);
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin-bottom: 28px;
+  border-radius: 0;
+}
+@media (min-width: 768px) { .hero .eyebrow { font-size: 11px; gap: 12px; margin-bottom: 36px; } }
+.hero .eyebrow .ping {
+  position: relative; display: inline-block;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+}
+.hero .eyebrow .ping::after {
+  content: ''; position: absolute; inset: -3px; border-radius: 50%;
+  border: 1px solid var(--accent); opacity: 0;
+  animation: eyebrowPing 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@keyframes eyebrowPing {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.hero .eyebrow .hi { font-family: var(--hindi); font-size: 12px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
+@media (min-width: 768px) { .hero .eyebrow .hi { font-size: 13px; } }
+
+#heroTitle {
+  font-family: var(--display) !important;
+  font-weight: 800 !important;
+  font-size: clamp(44px, 9vw, 96px) !important;
+  line-height: 0.94 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase !important;
+  color: var(--text) !important;
+  margin-bottom: 20px !important;
+  max-width: 14ch;
+}
+@media (min-width: 768px) {
+  #heroTitle { font-size: clamp(60px, 7vw, 96px) !important; margin-bottom: 24px !important; }
+}
+#heroTitle .b { display: block; }
+#heroTitle .hi-b { display: block; font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.06; text-transform: none; }
+#heroTitle .em {
+  color: var(--accent) !important;
+  font-style: italic;
+  font-weight: 900;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+          background-clip: initial !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+#heroSub {
+  font-family: var(--sans) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.55 !important;
+  color: var(--text-mid) !important;
+  max-width: 52ch !important;
+  margin: 0 !important;
+}
+@media (min-width: 768px) { #heroSub { font-size: 18px !important; } }
+#heroSub .hi { font-family: var(--hindi); font-size: 15px; line-height: 1.7; font-weight: 500; }
+@media (min-width: 768px) { #heroSub .hi { font-size: 17px; } }
+
+/* Reveal anim parity */
+.hero .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.hero .rv.on { opacity: 1; transform: translateY(0); }
+.hero .rv.d1 { transition-delay: 0.10s; }
+.hero .rv.d2 { transition-delay: 0.20s; }
+.hero .rv.d3 { transition-delay: 0.32s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero .rv { opacity: 1 !important; transform: none !important; }
+  .hero .eyebrow .ping::after { animation: none !important; }
+}
+
+/* FOOTER - matches index */
+footer#support {
+  position: relative;
+  border-top: 1px solid var(--border) !important;
+  padding: 32px 24px 28px !important;
+  padding-left: max(24px, env(safe-area-inset-left)) !important;
+  padding-right: max(24px, env(safe-area-inset-right)) !important;
+  padding-bottom: max(28px, env(safe-area-inset-bottom)) !important;
+  background: var(--bg) !important;
+  margin-top: 80px;
+}
+@media (min-width: 768px) {
+  footer#support {
+    padding: 36px 40px 32px !important;
+    padding-bottom: max(32px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+footer#support .foot {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+@media (min-width: 768px) {
+  footer#support .foot {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+  }
+}
+
+footer#support .foot-contact {
+  display: flex; flex-direction: column; align-items: center; gap: 12px; order: 1;
+}
+@media (min-width: 768px) {
+  footer#support .foot-contact { flex-direction: row; align-items: center; gap: 20px; order: 2; }
+}
+footer#support .foot-contact a {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--sans); font-size: 14px; font-weight: 500;
+  color: var(--text-mid); letter-spacing: 0; text-transform: none;
+  padding: 6px 0; min-height: 32px; transition: color 0.2s;
+}
+footer#support .foot-contact a:hover { color: var(--text); }
+footer#support .foot-contact .ic {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; flex-shrink: 0; color: var(--text-dim);
+}
+footer#support .foot-contact a:hover .ic { color: var(--accent); }
+footer#support .foot-contact .ig-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; flex-shrink: 0;
+}
+footer#support .foot-contact .ig-icon svg { width: 100%; height: 100%; display: block; }
+footer#support .foot-contact a.ig { gap: 10px; }
+footer#support .foot-contact a.ig:hover .ig-icon { opacity: 0.85; }
+
+footer#support .foot-brand {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  text-align: center; order: 2;
+}
+@media (min-width: 768px) {
+  footer#support .foot-brand { align-items: flex-start; text-align: left; order: 1; }
+}
+footer#support .foot-brand .copy {
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  color: var(--text-low); letter-spacing: 0; text-transform: none;
+}
+footer#support .foot-brand .copy .hi { font-family: var(--hindi); font-size: 13px; font-weight: 500; }
+footer#support .foot-brand .desc {
+  font-family: var(--sans); font-size: 12px;
+  color: var(--text-dim); letter-spacing: 0; text-transform: none;
+  max-width: 36ch;
+}
+footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12px; font-weight: 500; }
+
+/* Hide old desktop nav and mobile menu remnants if any stray references remain */
+#hdr .desk, #hdr .mob-btn, #mm, #mmo { display: none !important; }
+
 </style>
 </head>
 <body>
 <div class="toast-container" id="toastBox"></div>
 
-<!-- MOBILE MENU OVERLAY -->
-<div id="mmo" onclick="closeMM()"></div>
-<div id="mm">
-  <button id="mmc" onclick="closeMM()">✕</button>
-  <a href="/#mission" onclick="closeMM()" data-lang="en">Mission</a>
-  <a href="/#mission" onclick="closeMM()" data-lang="hi" class="hi">मिशन</a>
-  <a href="/#how" onclick="closeMM()" data-lang="en">How it Works</a>
-  <a href="/#how" onclick="closeMM()" data-lang="hi" class="hi">कैसे चलता है</a>
-  <a href="/#clarity" onclick="closeMM()" data-lang="en">Clarity</a>
-  <a href="/#clarity" onclick="closeMM()" data-lang="hi" class="hi">साफ़ समझ</a>
-  <a href="/#faq" onclick="closeMM()">FAQ</a>
-  <a href="/#legal" onclick="closeMM()" data-lang="en">Legal Desk</a>
-  <a href="/#legal" onclick="closeMM()" data-lang="hi" class="hi">कानूनी मदद</a>
-  <a href="/report" onclick="closeMM()" class="r" data-lang="en">Report →</a>
-  <a href="/report" onclick="closeMM()" class="r hi" data-lang="hi">रिपोर्ट करें →</a>
-</div>
-
 <!-- HEADER -->
 <header id="hdr">
-  <a href="/" class="logo">
+  <a href="/" class="logo" aria-label="Rapid Response">
     <div class="logo-sq"><span class="material-symbols-outlined">pets</span></div>
     <span class="logo-t">Rapid Response</span>
   </a>
-  <nav class="desk">
-    <a href="/#mission">
-      <span data-lang="en">Mission</span>
-      <span data-lang="hi" class="hi">मिशन</span>
-    </a>
-    <a href="/#how">
-      <span data-lang="en">How it Works</span>
-      <span data-lang="hi" class="hi">कैसे चलता है</span>
-    </a>
-    <a href="/#faq">FAQ</a>
-    <a href="/#legal">
-      <span data-lang="en">Legal Desk</span>
-      <span data-lang="hi" class="hi">कानूनी मदद</span>
-    </a>
-    <a href="/report" class="cta">
-      <span data-lang="en">Report</span>
-      <span data-lang="hi" class="hi">रिपोर्ट</span>
-    </a>
-  </nav>
   <div class="hdr-r">
-    <button class="mode-b" id="modeBtn" onclick="toggleMode()">☀️</button>
+    <button class="mode-b" id="modeBtn" onclick="toggleMode()" aria-label="Toggle theme">☀️</button>
     <button class="lb" onclick="setLang('en')">EN</button>
     <span class="lsep">|</span>
-    <button class="lb hi" onclick="setLang('hi')" style="font-size:13px">हिंदी</button>
-    <button class="mob-btn" onclick="openMM()"><span class="material-symbols-outlined">menu</span></button>
+    <button class="lb hi" onclick="setLang('hi')">हिंदी</button>
   </div>
 </header>
 
 
 <!-- HERO -->
-<div class="hero grid-bg-report">
-  <span class="hero-tag" id="heroTag">animal emergency network</span>
-  <h1 id="heroTitle">Report an <span class="ghost">incident</span></h1>
-  <p id="heroSub">Your report reaches our team directly. Your identity is protected and handled with care.</p>
+<div class="hero">
+  <a href="/" class="back-link rv">
+    <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+    <span data-lang="en">Home</span>
+    <span data-lang="hi" class="hi">होम</span>
+  </a>
+
+  <div class="eyebrow rv d1">
+    <span class="ping"></span>
+    <span data-lang="en">incident report</span>
+    <span data-lang="hi" class="hi">घटना रिपोर्ट</span>
+  </div>
+
+  <h1 id="heroTitle" class="rv d2">
+    <span class="b" data-lang="en">report an</span>
+    <span class="b em" data-lang="en">incident.</span>
+    <span class="hi-b" data-lang="hi">घटना की</span>
+    <span class="hi-b em" data-lang="hi">रिपोर्ट करें।</span>
+  </h1>
+
+  <p id="heroSub" class="rv d3">
+    <span data-lang="en">your report reaches our team directly. your identity is protected and handled with care.</span>
+    <span data-lang="hi" class="hi">आपकी रिपोर्ट सीधे हमारी टीम तक पहुँचती है। आपकी पहचान सुरक्षित और सावधानी से रखी जाती है।</span>
+  </p>
 </div>
 
 <!-- FORM -->
@@ -1931,12 +2185,12 @@ html.light ::selection { background: var(--accent-soft); color: var(--text); }
           <div class="receipt-card-sub">
             <span data-en="A copy has been sent to your email and downloaded to this device. Keep it safe - the reference number is required for any follow-up." data-hi="एक प्रति आपके ईमेल पर भेज दी गई है और इस डिवाइस पर डाउनलोड कर ली गई है। इसे सुरक्षित रखें - फॉलो-अप के लिए संदर्भ संख्या ज़रूरी है।">A copy has been sent to your email and downloaded to this device. Keep it safe - the reference number is required for any follow-up.</span>
           </div>
-          <div class="receipt-card-sub" id="anonNote" style="display:none;color:var(--red);">
+          <div class="receipt-card-sub" id="anonNote" style="display:none;color:var(--crit);">
             <span data-en="You submitted anonymously, so no email copy was sent. Please download and save the PDF now." data-hi="आपने गुमनाम रूप से सबमिट किया है, इसलिए ईमेल नहीं भेजा गया। कृपया अभी पीडीएफ डाउनलोड करके सुरक्षित रखें।">You submitted anonymously, so no email copy was sent. Please download and save the PDF now.</span>
           </div>
         </div>
       </div>
-      <p id="pdfStatus" style="color:var(--dimmer);font-size:11px;font-family:var(--FM);letter-spacing:.14em;text-transform:uppercase;margin:14px 0 18px;min-height:14px;"></p>
+      <p id="pdfStatus" style="color:var(--text-dim);font-size:11px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;margin:14px 0 18px;min-height:14px;"></p>
 
       <div class="btn-row" style="justify-content:center;flex-wrap:wrap;gap:10px;">
         <button type="button" class="btn-primary" id="dlPdfBtn" onclick="downloadReceiptPdf()" style="display:none;"><span data-en="📄 Download PDF Receipt" data-hi="📄 पीडीएफ रसीद डाउनलोड करें">📄 Download PDF Receipt</span></button>
@@ -1958,55 +2212,35 @@ html.light ::selection { background: var(--accent-soft); color: var(--text); }
 
 <!-- FOOTER -->
 <footer id="support">
-  <div class="ft-in">
-    <div class="ft-brand">
-      <a href="/" class="logo">
-        <div class="logo-sq"><span class="material-symbols-outlined">pets</span></div>
-        <span class="logo-t">Rapid Response</span>
-      </a>
-      <p>
-        <span data-lang="en">a peer network for the people already doing the work. feeders, pet parents, fosterers, rescuers. district by district.</span>
-        <span data-lang="hi" class="hi">उन लोगों का नेटवर्क जो पहले से काम कर रहे हैं। फीडर, पेट पैरेंट्स, फोस्टर, रेस्क्यूअर्स। जिला-दर-जिला।</span>
-      </p>
-    </div>
-    <div class="ft-col">
-      <span class="ft-lbl">Navigate</span>
-      <a href="/#mission"><span data-lang="en">Mission</span><span data-lang="hi" class="hi">मिशन</span></a>
-      <a href="/#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="hi">कैसे काम करता है</span></a>
-      <a href="/#clarity"><span data-lang="en">Clarity</span><span data-lang="hi" class="hi">साफ़ बात</span></a>
-      <a href="/#faq">FAQ</a>
-      <a href="/#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
-      <a href="/report" style="color:var(--red)"><span data-lang="en">Report Incident</span><span data-lang="hi" class="hi">घटना रिपोर्ट करें</span></a>
-    </div>
-    <div class="ft-col ft-contact">
-      <span class="ft-lbl">Support</span>
-      <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
-      <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" aria-label="Instagram @rrtanimals" style="display:inline-flex;align-items:center;gap:8px;color:#0095F6;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-          <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
-        </svg>
-        @rrtanimals
-      </a>
-      <p class="note-p">
-        <span data-lang="en">Response within 24-48 hours</span>
-        <span data-lang="hi" class="hi">24-48 घंटों में जवाब</span>
-      </p>
-      <div class="ft-note">
-        <p>
-          <span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span>
-          <span data-lang="hi" class="hi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
-        </p>
+  <div class="foot">
+
+    <div class="foot-brand">
+      <div class="copy">
+        <span data-lang="en">© 2026 RapidResponse Labs</span>
+        <span data-lang="hi" class="hi">© 2026 रैपिड रिस्पॉन्स लैब्स</span>
+      </div>
+      <div class="desc">
+        <span data-lang="en">An independent community initiative.</span>
+        <span data-lang="hi" class="hi">स्वतंत्र कम्युनिटी पहल।</span>
       </div>
     </div>
-  </div>
-  <div class="ft-bot">
-    <p>© 2026 RapidResponse Labs</p>
-    <p>
-      <span data-lang="en">Animal Emergency Network · India</span>
-      <span data-lang="hi" class="hi">पशु आपातकालीन नेटवर्क · भारत</span>
-    </p>
+
+    <div class="foot-contact">
+      <a href="mailto:ask@rapid-response.in">
+        <span class="ic" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </span>
+        ask@rapid-response.in
+      </a>
+      <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" class="ig">
+        <span id="igLottie" class="ig-icon" aria-hidden="true"></span>
+        @rrtanimals
+      </a>
+    </div>
+
   </div>
 </footer>
 
@@ -3634,7 +3868,7 @@ async function buildReceiptBytes(R){
   var logoImg = await pdfDoc.embedPng(_b64ToBytes(LOGO_PNG_B64));
 
   /* Brand palette: same as site */
-  var RED   = rgb(1, 0.176, 0.102);
+  var ACCENT = rgb(0.1216, 0.4588, 0.9412);  /* #1F75F0 - matches site brand */
   var INK   = rgb(0.114, 0.114, 0.122);
   var DIM   = rgb(0.43,  0.43,  0.45);
   var DIMMER= rgb(0.527, 0.527, 0.545);
@@ -3652,7 +3886,7 @@ async function buildReceiptBytes(R){
   var cursor = PH - MARGIN_TOP;
 
   function drawRunningHeader(){
-    page.drawRectangle({ x:0, y:PH-4, width:PW, height:4, color:RED });
+    page.drawRectangle({ x:0, y:PH-4, width:PW, height:4, color:ACCENT });
     /* Use a hyphen separator only - no em-dash anywhere */
     page.drawText(_winAnsiSafe('RAPID RESPONSE  |  INCIDENT REPORT RECEIPT  |  '+R.refId),
       { x:MARGIN_X, y:PH-22, size:8, font:helvBold, color:DIMMER });
@@ -3675,7 +3909,7 @@ async function buildReceiptBytes(R){
        Row 2 baseline:  PH - MARGIN_TOP - 17  (tagline + timestamp)
      This makes left text-stack vertically centred with the logo, and
      right text-stack mirror those exact baselines. */
-  page.drawRectangle({ x:0, y:PH-4, width:PW, height:4, color:RED });
+  page.drawRectangle({ x:0, y:PH-4, width:PW, height:4, color:ACCENT });
 
   var sqSize = 28;
   var sqX = MARGIN_X;
@@ -3696,7 +3930,7 @@ async function buildReceiptBytes(R){
   var rLbl = 'INCIDENT REPORT RECEIPT';
   var rLblW = helvBold.widthOfTextAtSize(rLbl, 9);
   page.drawText(rLbl, {
-    x:PW-MARGIN_X-rLblW, y:ROW1_Y, size:9, font:helvBold, color:RED
+    x:PW-MARGIN_X-rLblW, y:ROW1_Y, size:9, font:helvBold, color:ACCENT
   });
   var ts = R.timestamp;
   /* Format timestamp in IST (Asia/Kolkata) regardless of where the user's
@@ -3761,10 +3995,10 @@ async function buildReceiptBytes(R){
     /* Small red accent bar sits ABOVE the title text. Both anchor to MARGIN_X
        so the title text shares the same left column as row labels and the
        paragraph blocks below. This keeps the entire page on a single grid. */
-    page.drawRectangle({ x:MARGIN_X, y:cursor, width:22, height:2, color:RED });
+    page.drawRectangle({ x:MARGIN_X, y:cursor, width:22, height:2, color:ACCENT });
     cursor -= 14;
     page.drawText(_winAnsiSafe(title.toUpperCase()), {
-      x:MARGIN_X, y:cursor, size:10, font:helvBold, color:RED
+      x:MARGIN_X, y:cursor, size:10, font:helvBold, color:ACCENT
     });
     cursor -= 14;
     /* Divider line under the heading */
@@ -3782,7 +4016,7 @@ async function buildReceiptBytes(R){
   function drawRow(label, value, opts2){
     opts2 = opts2||{};
     var valFont = opts2.bold?helvBold:helv;
-    var valColor = opts2.accent?RED:(opts2.muted?DIM:INK);
+    var valColor = opts2.accent?ACCENT:(opts2.muted?DIM:INK);
     var safeVal = _winAnsiSafe(value||'-')||'-';
     var safeLabel = _winAnsiSafe(label);
     var valLines = _wrapText(safeVal, valFont, 10, VAL_COL_W);
@@ -3918,7 +4152,7 @@ async function buildReceiptBytes(R){
     p.drawText(pgStr, { x:PW-MARGIN_X-pgW, y:MARGIN_BOTTOM-16, size:8, font:helv, color:DIMMER });
     var rfStr = R.refId;
     var rfW = helvBold.widthOfTextAtSize(rfStr, 8);
-    p.drawText(rfStr, { x:PW-MARGIN_X-rfW, y:MARGIN_BOTTOM-28, size:8, font:helvBold, color:RED });
+    p.drawText(rfStr, { x:PW-MARGIN_X-rfW, y:MARGIN_BOTTOM-28, size:8, font:helvBold, color:ACCENT });
   });
 
   return await pdfDoc.save();
@@ -4302,17 +4536,58 @@ window.addEventListener('scroll',function(){
   document.getElementById('hdr').classList.toggle('stuck',window.scrollY>40);
 });
 
-/* ─── MOBILE MENU ─── */
-function openMM(){
-  document.getElementById('mm').style.transform='translateX(0)';
-  var o=document.getElementById('mmo'); o.style.opacity='1'; o.style.pointerEvents='auto';
-  document.body.style.overflow='hidden';
-}
-function closeMM(){
-  document.getElementById('mm').style.transform='';
-  var o=document.getElementById('mmo'); o.style.opacity=''; o.style.pointerEvents='';
-  document.body.style.overflow='';
-}
+/* Mobile menu removed - new minimal header has no overlay */
+function openMM(){}
+function closeMM(){}
+
+/* Instagram Lottie - lazy loaded, plays only when visible */
+(function() {
+  var container = document.getElementById('igLottie');
+  if (!container) return;
+
+  function igStaticSvg() {
+    return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>';
+  }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    container.innerHTML = igStaticSvg();
+    return;
+  }
+
+  container.innerHTML = igStaticSvg();
+  var anim = null;
+  var loaded = false;
+
+  function loadLottie() {
+    if (loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie_light.min.js';
+    s.async = true;
+    s.onload = function() {
+      try {
+        anim = lottie.loadAnimation({
+          container: container,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: 'instagram.json'
+        });
+        anim.addEventListener('data_failed', function() { container.innerHTML = igStaticSvg(); });
+      } catch (err) { container.innerHTML = igStaticSvg(); }
+    };
+    s.onerror = function() { container.innerHTML = igStaticSvg(); };
+    document.head.appendChild(s);
+  }
+
+  var ioIg = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { loadLottie(); if (anim) anim.play(); }
+      else if (anim) anim.pause();
+    });
+  }, { threshold: 0.1 });
+  ioIg.observe(container);
+})();
 
 document.addEventListener('DOMContentLoaded',function(){ setLang('en'); });</script>
 </body>
