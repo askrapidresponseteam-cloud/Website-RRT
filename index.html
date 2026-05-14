@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#0A0908" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Rapid Response"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="format-detection" content="telephone=no"/>
 <title>Rapid Response | Animal Emergency Network</title>
 <meta name="description" content="A peer network for everyone who shows up for animals. Feeders, pet parents, fosterers, rescuers, vets. One tap, your district, people who already do this."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,8 +69,8 @@ html.light {
 /* RESET */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 18px; scroll-behavior: smooth; }
-@media (max-width: 600px) { html { font-size: 17px; } }
+html { font-size: 18px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+@media (max-width: 600px) { html { font-size: 16px; } }
 
 body {
   background: var(--bg);
@@ -73,7 +80,9 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 
@@ -115,11 +124,13 @@ a { color: inherit; text-decoration: none; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  height: 68px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
+  padding: 0 20px;
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
   background: transparent;
   transition: background 0.25s, border-color 0.25s;
   border-bottom: 1px solid transparent;
@@ -130,7 +141,14 @@ a { color: inherit; text-decoration: none; }
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
-@media (min-width: 768px) { #hdr { padding: 0 48px; } }
+@media (min-width: 768px) {
+  #hdr {
+    height: 68px;
+    padding: 0 48px;
+    padding-left: max(48px, env(safe-area-inset-left));
+    padding-right: max(48px, env(safe-area-inset-right));
+  }
+}
 
 .logo {
   display: inline-flex;
@@ -164,7 +182,9 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.12em;
   background: none;
   border: none;
-  padding: 8px 10px;
+  padding: 10px 8px;
+  min-height: 44px;
+  min-width: 36px;
   cursor: pointer;
   color: var(--text-low);
   transition: color 0.2s;
@@ -178,7 +198,12 @@ a { color: inherit; text-decoration: none; }
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px 8px;
+  padding: 10px 8px;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   line-height: 1;
 }
@@ -189,15 +214,24 @@ a { color: inherit; text-decoration: none; }
 #hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
-  padding: 120px 28px 80px;
+  padding: 96px 20px 64px;
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
   background:
     radial-gradient(ellipse 70% 50% at 30% 50%, var(--accent-soft) 0%, transparent 70%),
     var(--bg);
   overflow: hidden;
 }
-@media (min-width: 768px) { #hero { padding: 120px 48px 80px; } }
+@media (min-width: 768px) {
+  #hero {
+    padding: 120px 48px 80px;
+    padding-left: max(48px, env(safe-area-inset-left));
+    padding-right: max(48px, env(safe-area-inset-right));
+  }
+}
 
 .h-grain {
   position: absolute;
@@ -215,7 +249,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 56px;
+  gap: 40px;
   align-items: center;
 }
 @media (min-width: 980px) {
@@ -223,27 +257,29 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* LEFT — copy */
-.h-left { max-width: 620px; }
+.h-left { max-width: 620px; width: 100%; }
 
 .h-eye {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
+@media (min-width: 768px) { .h-eye { font-size: 11px; gap: 12px; margin-bottom: 28px; } }
 .h-eye .hi {
   font-family: var(--hindi);
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.04em;
   text-transform: none;
   font-weight: 500;
 }
+@media (min-width: 768px) { .h-eye .hi { font-size: 13px; } }
 .h-dot {
   width: 6px; height: 6px;
   background: var(--accent);
@@ -253,13 +289,14 @@ a { color: inherit; text-decoration: none; }
 .h1 {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(40px, 6.8vw, 80px);
-  line-height: 0.96;
-  letter-spacing: -0.015em;
+  font-size: clamp(38px, 9vw, 80px);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--text);
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
+@media (min-width: 768px) { .h1 { margin-bottom: 28px; line-height: 0.96; letter-spacing: -0.015em; } }
 .h1 .en-b, .h1 .hi-b { display: block; }
 .h1 .hi-b { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.10; }
 .h1 .ghost {
@@ -270,26 +307,29 @@ a { color: inherit; text-decoration: none; }
 
 .h-sub {
   font-family: var(--sans);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--text-mid);
   max-width: 48ch;
-  margin-bottom: 36px;
+  margin-bottom: 28px;
 }
-.h-sub .hi { font-family: var(--hindi); font-size: 16px; line-height: 1.7; font-weight: 500; }
+@media (min-width: 768px) { .h-sub { font-size: 17px; line-height: 1.6; margin-bottom: 36px; } }
+.h-sub .hi { font-family: var(--hindi); font-size: 15px; line-height: 1.7; font-weight: 500; }
+@media (min-width: 768px) { .h-sub .hi { font-size: 16px; } }
 
 .h-ctas {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 .btn-s {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 14px 22px;
+  min-height: 48px;
   background: var(--text);
   color: var(--bg);
   font-family: var(--sans);
@@ -298,10 +338,15 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.01em;
   border: 1px solid var(--text);
   transition: transform 0.15s, opacity 0.15s;
-  min-width: 158px;
+  flex: 1 1 calc(50% - 5px);
+  min-width: 140px;
   justify-content: center;
 }
+@media (min-width: 480px) {
+  .btn-s { flex: 0 0 auto; min-width: 158px; }
+}
 .btn-s:hover { transform: translateY(-1px); opacity: 0.92; }
+.btn-s:active { transform: translateY(0); opacity: 0.85; }
 .btn-s img { width: 18px; height: 18px; display: block; }
 .btn-s .hi { font-family: var(--hindi); font-size: 15px; font-weight: 600; }
 
@@ -309,22 +354,31 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px 14px;
+  gap: 6px 12px;
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
   color: var(--text-dim);
   text-transform: uppercase;
 }
+@media (min-width: 768px) { .h-meta { font-size: 11px; gap: 6px 14px; letter-spacing: 0.12em; } }
 .h-meta a {
   color: var(--text-low);
   border-bottom: 1px solid transparent;
-  padding-bottom: 1px;
+  padding: 4px 0 2px;
   transition: color 0.2s, border-color 0.2s;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
 }
 .h-meta a:hover { color: var(--text); border-bottom-color: var(--accent); }
-.h-meta .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 13px; }
+.h-meta .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
+@media (min-width: 768px) { .h-meta .hi { font-size: 13px; } }
 .h-meta-sep { color: var(--text-dim); opacity: 0.4; }
+@media (max-width: 480px) {
+  .h-meta-sep { display: none; }
+  .h-meta { gap: 4px 14px; }
+}
 
 /* RIGHT — phone */
 .h-right {
@@ -335,9 +389,11 @@ a { color: inherit; text-decoration: none; }
 }
 .ph-wrap {
   width: 100%;
-  max-width: 320px;
+  max-width: 280px;
   position: relative;
 }
+@media (min-width: 480px) { .ph-wrap { max-width: 300px; } }
+@media (min-width: 980px) { .ph-wrap { max-width: 320px; } }
 .ph-stage {
   position: relative;
   width: 100%;
@@ -415,16 +471,26 @@ a { color: inherit; text-decoration: none; }
 ═══════════════════════ */
 footer {
   border-top: 1px solid var(--border);
-  padding: 56px 28px 32px;
+  padding: 48px 20px 28px;
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
 }
-@media (min-width: 768px) { footer { padding: 64px 48px 36px; } }
+@media (min-width: 768px) {
+  footer {
+    padding: 64px 48px 36px;
+    padding-left: max(48px, env(safe-area-inset-left));
+    padding-right: max(48px, env(safe-area-inset-right));
+    padding-bottom: max(36px, env(safe-area-inset-bottom));
+  }
+}
 
 .ft-in {
   max-width: 1280px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 32px;
 }
 @media (min-width: 768px) {
   .ft-in { grid-template-columns: 1.2fr 1fr 1fr; gap: 56px; }
@@ -475,6 +541,161 @@ footer {
   color: var(--text-dim);
 }
 .ft-bot p .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE APP-LIKE BASELINE
+   Applied everywhere. Keeps the site feeling like an app on phones.
+   ═══════════════════════════════════════════════════════════════════ */
+
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+a, button, [role="button"], .lqc, .chip, .btn-s, .lb, .mode-b {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+input, textarea, select {
+  font-size: 16px; /* prevents iOS zoom on focus */
+}
+
+@media (max-width: 760px) {
+  /* Header: tighter, safe-area aware, no wordmark crowding */
+  #hdr {
+    height: 56px;
+    padding-left: max(18px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
+    padding-top: env(safe-area-inset-top);
+    height: calc(56px + env(safe-area-inset-top));
+  }
+  .logo-t { font-size: 16px; }
+  .logo-sq { width: 24px; height: 24px; }
+  .logo-sq .material-symbols-outlined { font-size: 16px; }
+  .hdr-r { gap: 4px; }
+  .lb { padding: 8px 8px; font-size: 11px; }
+  .mode-b { padding: 6px 6px; font-size: 15px; }
+
+  /* Page safe-area on bottom for iPhone home indicator */
+  footer, .page { padding-bottom: max(32px, env(safe-area-inset-bottom)); }
+
+  /* Page top padding accounts for shorter header + safe-area */
+  .page { padding-top: calc(96px + env(safe-area-inset-top)); }
+
+  /* Hero on mobile: phone-first, generous breathing room */
+  #hero {
+    padding: calc(88px + env(safe-area-inset-top)) 22px 56px;
+    align-items: flex-start;
+    min-height: auto;
+  }
+  .h-wrap {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  /* Mobile keeps natural source order: headline first, phone below. The headline carries the meaning. */
+  .h-left { max-width: 100%; text-align: left; }
+  .ph-wrap { max-width: 260px; }
+
+  .h-eye { margin-bottom: 20px; font-size: 10px; }
+  .h1 { font-size: clamp(36px, 11vw, 46px); line-height: 0.98; margin-bottom: 18px; }
+  .h-sub { font-size: 15.5px; margin-bottom: 24px; }
+
+  /* CTAs: full-width on mobile, big tap targets */
+  .h-ctas, .cta-btns { width: 100%; flex-direction: column; gap: 8px; }
+  .h-ctas .btn-s, .cta-btns .btn-s {
+    width: 100%;
+    min-height: 48px;
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+
+  /* Secondary link row — wrap nicely */
+  .h-meta { font-size: 10px; gap: 4px 10px; }
+
+  /* Section text — restrain font sizes that were tuned for desktop */
+  .h1, .h2, .dh, .cta-t, .use-ttl, .step h4, .fq-q, .pl-h, .leg-sb-h h4 {
+    word-wrap: break-word;
+  }
+
+  /* About / How / FAQ / Legal: pages need consistent left/right padding */
+  .page { padding-left: 22px; padding-right: 22px; }
+  .wrap { max-width: 100%; }
+
+  .h1 { font-size: clamp(36px, 9vw, 52px); }
+
+  /* Cards/pills */
+  .pl { padding: 26px 22px; }
+  .step { padding: 22px 22px 24px; }
+  .use { padding: 24px 22px; }
+
+  /* CTA strips */
+  .cta { padding: 28px 22px; flex-direction: column; align-items: flex-start; }
+  .cta-t { font-size: 19px; }
+
+  /* HOW IT WORKS — phone scrolls inline (no sticky) on mobile */
+  .ph-col { position: static !important; }
+  .ph-frame { max-width: 260px; margin: 0 auto; }
+  .flow-lay { gap: 32px; }
+  .flow { margin-bottom: 64px; }
+  .flow-div { margin-bottom: 56px; }
+  .flow-hd { margin-bottom: 32px; }
+  .h2 { font-size: clamp(28px, 8vw, 36px); }
+
+  /* FAQ chips — smaller but still tappable */
+  .chip { font-size: 11px; padding: 9px 12px; min-height: 36px; }
+  .chips { gap: 6px; }
+  .fq-it { padding: 22px 22px; }
+  .fq-q { font-size: 18px; }
+
+  /* LEGAL DESK chat — full-bleed feel */
+  .leg-wrap {
+    grid-template-columns: 1fr;
+    margin-left: -22px; margin-right: -22px;
+    border-left: none; border-right: none;
+  }
+  .leg-sb { padding: 20px 22px; }
+  .leg-tags { margin: 16px 0 20px; }
+  .lqc { padding: 14px 14px; min-height: 56px; }
+  #lcb { min-height: 280px; max-height: 60vh; padding: 20px 18px; gap: 14px; -webkit-overflow-scrolling: touch; }
+  .cbo-ic { width: 32px; height: 32px; }
+  .cbo-ic .material-symbols-outlined { font-size: 16px; }
+  .cb { font-size: 14.5px; }
+  .cu .cb { font-size: 14px; }
+  .leg-ir { padding: 12px 14px; }
+  #li { font-size: 16px; padding: 8px 0; }
+  #lb { width: 44px; height: 44px; }
+  .leg-disc { padding: 10px 14px 12px; font-size: 9.5px; }
+
+  /* Footer: vertical stack, tighter */
+  footer { padding-left: 22px; padding-right: 22px; padding-top: 48px; }
+  .ft-in { gap: 32px; }
+  .ft-bot { font-size: 10px; margin-top: 36px; padding-top: 20px; }
+  .ft-col a { min-height: 32px; }
+
+  /* Back link top of sub-pages */
+  .back { margin-bottom: 32px; min-height: 32px; }
+
+  /* Pillars stack tightly */
+  .pillars { grid-template-columns: 1fr; }
+  .uses { grid-template-columns: 1fr; }
+
+  /* Lead text */
+  .lead { font-size: 16px; margin-bottom: 32px; }
+
+  /* Grain texture: keep light, don't pile up */
+  .h-grain, .p-grain { opacity: 0.25; }
+}
+
+@media (max-width: 380px) {
+  .h1 { font-size: 34px; }
+  .ph-wrap { max-width: 230px; }
+}
+
 </style>
 </head>
 <body>
