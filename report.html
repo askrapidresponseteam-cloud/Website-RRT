@@ -312,7 +312,7 @@ nav.desk a .hi { font-size: 16px; }
 }
 #mm a.hi { font-family: var(--hindi); font-size: 22px; font-weight: 500; }
 #mm a:hover, #mm a.r { color: var(--text); }
-#mm a.r::after { content: ' →'; color: var(--accent); }
+#mm a.r::after { content: ''; color: var(--accent); }
 #mmc {
   position: absolute;
   top: 24px; right: 24px;
@@ -1643,13 +1643,15 @@ body {
 /* HERO - refreshed to match index visual language */
 .hero {
   position: relative;
+  min-height: 0 !important;
   padding: 100px 24px 56px !important;
   padding-left: max(24px, env(safe-area-inset-left)) !important;
   padding-right: max(24px, env(safe-area-inset-right)) !important;
-  text-align: left !important;
+  text-align: center !important;
   display: flex !important;
   flex-direction: column !important;
-  align-items: flex-start !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   max-width: 880px;
   margin: 0 auto;
   background: none !important;
@@ -1658,19 +1660,6 @@ body {
 @media (min-width: 768px) {
   .hero { padding: 140px 40px 72px !important; }
 }
-
-.hero .back-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--mono); font-size: 11px; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--text-low);
-  margin-bottom: 32px;
-  padding: 8px 4px 8px 0;
-  min-height: 44px;
-  transition: color 0.2s, gap 0.2s;
-}
-.hero .back-link:hover { color: var(--text); gap: 10px; }
-.hero .back-link .material-symbols-outlined { font-size: 16px; }
 
 .hero .eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
@@ -1709,11 +1698,11 @@ body {
   letter-spacing: -0.02em !important;
   text-transform: uppercase !important;
   color: var(--text) !important;
-  margin-bottom: 20px !important;
+  margin: 0 auto 20px !important;
   max-width: 14ch;
 }
 @media (min-width: 768px) {
-  #heroTitle { font-size: clamp(60px, 7vw, 96px) !important; margin-bottom: 24px !important; }
+  #heroTitle { font-size: clamp(60px, 7vw, 96px) !important; margin: 0 auto 24px !important; }
 }
 #heroTitle .b { display: block; }
 #heroTitle .hi-b { display: block; font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.06; text-transform: none; }
@@ -1734,7 +1723,7 @@ body {
   line-height: 1.55 !important;
   color: var(--text-mid) !important;
   max-width: 52ch !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
 }
 @media (min-width: 768px) { #heroSub { font-size: 18px !important; } }
 #heroSub .hi { font-family: var(--hindi); font-size: 15px; line-height: 1.7; font-weight: 500; }
@@ -1856,12 +1845,6 @@ footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12p
 
 <!-- HERO -->
 <div class="hero">
-  <a href="/" class="back-link rv">
-    <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
-    <span data-lang="en">Home</span>
-    <span data-lang="hi" class="hi">होम</span>
-  </a>
-
   <div class="eyebrow rv d1">
     <span class="ping"></span>
     <span data-lang="en">incident report</span>
@@ -1994,7 +1977,7 @@ footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12p
         <input class="input" id="otherTypeText" placeholder="Please describe..." data-ph-en="Please describe..." data-ph-hi="कृपया बताएं..."/>
       </div>
       <div class="btn-row">
-        <button type="button" class="btn-primary" onclick="goTo(2)"><span data-en="Continue →" data-hi="जारी रखें →"><span data-en="Continue →" data-hi="जारी रखें →">Continue →</span></span></button>
+        <button type="button" class="btn-primary" onclick="goTo(2)"><span data-en="Continue" data-hi="जारी रखें"><span data-en="Continue" data-hi="जारी रखें">Continue</span></span></button>
       </div>
     </div>
 
@@ -2019,7 +2002,7 @@ footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12p
 
       <div class="btn-row">
         <button type="button" class="btn-secondary" onclick="goTo(1)"><span data-en="← Back" data-hi="← वापस">← Back</span></button>
-        <button type="button" class="btn-primary" onclick="goTo(3)"><span data-en="Continue →" data-hi="जारी रखें →">Continue →</span></button>
+        <button type="button" class="btn-primary" onclick="goTo(3)"><span data-en="Continue" data-hi="जारी रखें">Continue</span></button>
       </div>
     </div>
 
@@ -2069,7 +2052,7 @@ footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12p
       </div>
       <div class="btn-row">
         <button type="button" class="btn-secondary" onclick="goTo(2)"><span data-en="← Back" data-hi="← वापस">← Back</span></button>
-        <button type="button" class="btn-primary" onclick="goTo(4)"><span data-en="Continue →" data-hi="जारी रखें →">Continue →</span></button>
+        <button type="button" class="btn-primary" onclick="goTo(4)"><span data-en="Continue" data-hi="जारी रखें">Continue</span></button>
       </div>
     </div>
 
@@ -2150,7 +2133,7 @@ footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12p
 
       <div class="btn-row">
         <button type="button" class="btn-secondary" onclick="goTo(3)"><span data-en="← Back" data-hi="← वापस">← Back</span></button>
-        <button type="button" class="btn-primary" onclick="goTo(5)"><span data-en="Review Report →" data-hi="रिपोर्ट देखें →"><span data-en="Review Report →" data-hi="रिपोर्ट देखें →">Review Report →</span></span></button>
+        <button type="button" class="btn-primary" onclick="goTo(5)"><span data-en="Review Report" data-hi="रिपोर्ट देखें"><span data-en="Review Report" data-hi="रिपोर्ट देखें">Review Report</span></span></button>
       </div>
     </div>
 
@@ -2165,7 +2148,7 @@ footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12p
         <button type="button" class="btn-secondary" onclick="goTo(4)"><span data-en="← Edit" data-hi="← संपादित करें"><span data-en="← Edit" data-hi="← संपादित करें">← Edit</span></span></button>
         <button type="button" class="btn-primary" id="submitBtn" onclick="submitReport()">
           <span class="spinner" id="spinner"></span>
-          <span id="submitLabel"><span data-en="Submit Report →" data-hi="रिपोर्ट सबमिट करें →"><span data-en="Submit Report →" data-hi="रिपोर्ट सबमिट करें →">Submit Report →</span></span></span>
+          <span id="submitLabel"><span data-en="Submit Report" data-hi="रिपोर्ट सबमिट करें"><span data-en="Submit Report" data-hi="रिपोर्ट सबमिट करें">Submit Report</span></span></span>
         </button>
       </div>
     </div>
@@ -2204,7 +2187,7 @@ footer#support .foot-brand .desc .hi { font-family: var(--hindi); font-size: 12p
       <div class="state-icon fail" style="font-size:28px;">✗</div>
       <div class="panel-title"><span data-en="Submission Failed" data-hi="सबमिशन विफल">Submission Failed</span></div>
       <p style="color:rgba(255,255,255,0.38);font-size:14px;max-width:360px;margin:12px auto 28px;line-height:1.6;"><span data-en="Something went wrong. Please try again." data-hi="कुछ गलत हुआ। कृपया फिर से प्रयास करें।">Something went wrong. Please try again.</span></p>
-      <button type="button" class="btn-primary" onclick="goTo(5)"><span data-en="Try Again →" data-hi="फिर कोशिश करें →">Try Again →</span></button>
+      <button type="button" class="btn-primary" onclick="goTo(5)"><span data-en="Try Again" data-hi="फिर कोशिश करें">Try Again</span></button>
     </div>
 
   </div>
@@ -2500,7 +2483,7 @@ function goTo(n){
   var lang = document.documentElement.lang||'en';
   var isHi = lang==='hi';
 
-  /* ═══ STEP 1 → 2: Incident Type ═══ */
+  /* ═══ STEP 1 2: Incident Type ═══ */
   if(n===2){
     if(!S.type){
       showToast(isHi?'कृपया एक घटना प्रकार चुनें।':'Please select an incident type.');
@@ -2516,7 +2499,7 @@ function goTo(n){
     }
   }
 
-  /* ═══ STEP 2 → 3: Severity + Animal + Dynamic fields ═══ */
+  /* ═══ STEP 2 3: Severity + Animal + Dynamic fields ═══ */
   if(n===3){
     if(!S.severity){
       showToast(isHi?'कृपया गंभीरता स्तर चुनें।':'Please select a severity level.');
@@ -2548,7 +2531,7 @@ function goTo(n){
     }
   }
 
-  /* ═══ STEP 3 → 4: Location ═══ */
+  /* ═══ STEP 3 4: Location ═══ */
   if(n===4){
     var st=document.getElementById("stateSelect").value;
     var di=document.getElementById("districtSelect").value;
@@ -2564,7 +2547,7 @@ function goTo(n){
     renderDynamicStep4();
   }
 
-  /* ═══ STEP 4 → 5: Details + Reporter Info ═══ */
+  /* ═══ STEP 4 5: Details + Reporter Info ═══ */
   if(n===5){
     /* ── Dynamic step4 fields ── */
     var cfg4=getConfig?getConfig():null;
@@ -3303,7 +3286,7 @@ function selAnimal(el){
 }
 
 /* ─── FILE UPLOAD ─── */
-/* Maps for the remove-button → media-btn coordination.
+/* Maps for the remove-button media-btn coordination.
    Keys are the lowercase categories used in uploadedFiles. */
 var FILE_CATEGORIES = {
   photo: { mediaBtn:'mbPhoto', label:'Photo/Video',     fileInput:'filePhoto', icon:'📷' },
@@ -4298,7 +4281,7 @@ var STRINGS = {
     geoDefault:'Auto-detect my location', geoDetecting:'Detecting location...',
     geoErr:'Could not get location - enter manually', geoNotSupported:'Not supported - enter manually',
     districtDefault:'- Select State First -', districtSelect:'- Select District -',
-    submitLabel:'Submit Report →', submitting:'Submitting...',
+    submitLabel:'Submit Report', submitting:'Submitting...',
     refPrefix:'Reference ID: ',
     reviewKeys:{incidentType:'Incident Type',severity:'Severity',animal:'Animal(s)',state:'State',district:'District',landmark:'Landmark',gps:'GPS',accused:'Accused',evidence:'Evidence',description:'Description',name:'Name',phone:'Phone',email:'Email',confidential:'Confidential'},
     notCaptured:'Not captured', notSpecified:'Not specified', notProvided:'Not provided', noneStr:'None',
@@ -4319,7 +4302,7 @@ var STRINGS = {
     geoDefault:'मेरी लोकेशन स्वतः पहचानें', geoDetecting:'लोकेशन ढूंढ रहे हैं...',
     geoErr:'लोकेशन नहीं मिली - मैन्युअल दर्ज करें', geoNotSupported:'समर्थित नहीं - मैन्युअल दर्ज करें',
     districtDefault:'- पहले राज्य चुनें -', districtSelect:'- जिला चुनें -',
-    submitLabel:'रिपोर्ट सबमिट करें →', submitting:'सबमिट हो रहा है...',
+    submitLabel:'रिपोर्ट सबमिट करें', submitting:'सबमिट हो रहा है...',
     refPrefix:'संदर्भ ID: ',
     reviewKeys:{incidentType:'घटना प्रकार',severity:'गंभीरता',animal:'जानवर',state:'राज्य',district:'जिला',landmark:'लैंडमार्क',gps:'जीपीएस',accused:'आरोपी',evidence:'सबूत',description:'विवरण',name:'नाम',phone:'फोन',email:'ईमेल',confidential:'गोपनीय'},
     notCaptured:'नहीं मिली', notSpecified:'अज्ञात', notProvided:'नहीं दिया', noneStr:'कोई नहीं',
@@ -4535,6 +4518,32 @@ function toggleMode(){
 window.addEventListener('scroll',function(){
   document.getElementById('hdr').classList.toggle('stuck',window.scrollY>40);
 });
+
+/* ─── REVEAL ANIMATIONS ───
+   Add .on to .rv elements when they enter viewport.
+   Safety net: if no IO support or anything fails, show everything immediately. */
+(function() {
+  var els = document.querySelectorAll('.rv');
+  if (!els.length) return;
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el) { el.classList.add('on'); });
+    return;
+  }
+  try {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.06 });
+    els.forEach(function(el) { io.observe(el); });
+    /* Failsafe: ensure visibility after 1.5s even if IO missed anything */
+    setTimeout(function() {
+      document.querySelectorAll('.rv:not(.on)').forEach(function(el) { el.classList.add('on'); });
+    }, 1500);
+  } catch (err) {
+    els.forEach(function(el) { el.classList.add('on'); });
+  }
+})();
 
 /* Mobile menu removed - new minimal header has no overlay */
 function openMM(){}
