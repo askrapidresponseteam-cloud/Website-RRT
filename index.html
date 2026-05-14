@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Rapid Response | Animal Emergency Network</title>
-<meta name="description" content="Rapid Response is a peer network for everyone who shows up for animals. Feeders, pet parents, fosterers, rescuers, vets. One tap reaches your district when you need a vet at midnight, backup at a feeding spot, or transport for an injured animal."/>
+<meta name="description" content="Rapid Response is a peer network for everyone who shows up for animals. Feeders, pet parents, fosterers, rescuers, vets. One tap reaches your district when you need a vet recommendation, backup at a feeding spot, or transport for an injured animal."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -706,6 +706,96 @@ html.light .btn-s img { filter: none; }
   width: 100%;
   display: block;
 }
+
+/* Phone stage = relative wrapper so overlays sit on top of img */
+.ph-stage {
+  position: relative;
+  width: 100%;
+}
+.ph-stage img {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* SOS button pulsing glow ring (Phone.png — red circle, centered ~50%/47%) */
+.ph-sos-pulse {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 54%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+.ph-sos-pulse::before,
+.ph-sos-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #FF3B30;
+  opacity: 0;
+  animation: sosRing 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.ph-sos-pulse::after { animation-delay: 1.2s; }
+@keyframes sosRing {
+  0%   { transform: scale(0.92); opacity: 0.75; border-width: 3px; }
+  70%  { transform: scale(1.35); opacity: 0; border-width: 1px; }
+  100% { transform: scale(1.35); opacity: 0; border-width: 1px; }
+}
+
+/* Ask the district button attention cue (Ask the district.png — black bar ~50%/23%, ~80% wide × 7% tall) */
+.ph-ask-cue {
+  position: absolute;
+  left: 50%;
+  top: 23%;
+  width: 84%;
+  aspect-ratio: 8 / 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+.ph-ask-cue::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  opacity: 0;
+  animation: askPulse 2.6s ease-out infinite;
+}
+.ph-ask-cue::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+  animation: askShimmer 2.6s ease-in-out infinite;
+}
+@keyframes askPulse {
+  0%   { opacity: 0; outline-offset: 0; }
+  20%  { opacity: 0.9; outline-offset: 6px; }
+  60%  { opacity: 0; outline-offset: 10px; }
+  100% { opacity: 0; outline-offset: 10px; }
+}
+@keyframes askShimmer {
+  0%   { left: -50%; }
+  60%  { left: 100%; }
+  100% { left: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-sos-pulse::before, .ph-sos-pulse::after,
+  .ph-ask-cue::before, .ph-ask-cue::after { animation: none; opacity: 0; }
+}
+
 .ph-badge {
   font-family: var(--mono);
   font-size: 10px;
@@ -805,6 +895,58 @@ html.light .btn-s img { filter: none; }
   color: var(--text-mid);
 }
 .how-note p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
+
+/* Two-uses framing block: SOS vs Ask the District */
+.how-uses {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 32px;
+  margin-bottom: 18px;
+}
+@media (max-width: 760px) {
+  .how-uses { grid-template-columns: 1fr; gap: 12px; }
+}
+.how-use {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 18px 20px;
+}
+.how-use-hd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.how-use-hd .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--accent);
+}
+.how-use-ttl {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+.how-use-ttl .hi { font-family: var(--hindi); font-weight: 600; font-size: 18px; }
+.how-use-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+}
+.how-use-tag .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
+.how-use-p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-mid);
+}
+.how-use-p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
 
 /* ═══════════════════════
    CLARITY
@@ -1388,8 +1530,8 @@ html.light .ph-frame img { filter: none; }
   <button id="mmc" onclick="closeMM()">✕</button>
   <a href="#mission" onclick="closeMM()" data-lang="en">Mission</a>
   <a href="#mission" onclick="closeMM()" data-lang="hi" class="hi">मिशन</a>
-  <a href="#how"     onclick="closeMM()" data-lang="en">How it Works</a>
-  <a href="#how"     onclick="closeMM()" data-lang="hi" class="hi">कैसे चलता है</a>
+  <a href="#for"     onclick="closeMM()" data-lang="en">How it Works</a>
+  <a href="#for"     onclick="closeMM()" data-lang="hi" class="hi">कैसे चलता है</a>
   <a href="#clarity" onclick="closeMM()" data-lang="en">Clarity</a>
   <a href="#clarity" onclick="closeMM()" data-lang="hi" class="hi">साफ़ समझ</a>
   <a href="#faq"     onclick="closeMM()">FAQ</a>
@@ -1409,7 +1551,7 @@ html.light .ph-frame img { filter: none; }
       <span data-lang="en">Mission</span>
       <span data-lang="hi" class="hi">मिशन</span>
     </a>
-    <a href="#how">
+    <a href="#for">
       <span data-lang="en">How it Works</span>
       <span data-lang="hi" class="hi">कैसे चलता है</span>
     </a>
@@ -1532,25 +1674,25 @@ html.light .ph-frame img { filter: none; }
     </p>
 
     <p class="ms-body rv d2">
-      <span data-lang="en">vets close at 9pm. NGO numbers go to voicemail. the one feeder you trust is out of town. you end up scrolling WhatsApp groups at 2am hoping someone replies.</span>
-      <span data-lang="hi" class="hi">वेट 9 बजे बंद हो जाते हैं। NGO के नंबर पर कॉल नहीं उठती। जिस फीडर पर आप भरोसा करते हैं वो शहर के बाहर है। आप रात 2 बजे WhatsApp ग्रुप्स में उम्मीद से देखते रहते हैं।</span>
+      <span data-lang="en">NGO numbers go to voicemail. the one feeder you trust is out of town. you don't know which vet is good for what. you end up forwarding the same message across five WhatsApp groups, hoping someone replies.</span>
+      <span data-lang="hi" class="hi">NGO के नंबर पर कॉल नहीं उठती। जिस फीडर पर आप भरोसा करते हैं वो शहर के बाहर है। पता नहीं किस वेट के पास जाएँ। आप एक ही मैसेज पाँच WhatsApp ग्रुप्स में फॉरवर्ड करते रहते हैं, उम्मीद में कि कोई जवाब देगा।</span>
     </p>
 
     <p class="ms-body rv d3">
-      <span data-lang="en">your district has the people. the feeder who knows the open clinic at 2am. the rescuer with a car. the vet who picks up. they exist. they're just scattered across phones, groups, and chance. if we were in one place, finding them wouldn't take a panic.</span>
-      <span data-lang="hi" class="hi">आपके जिले में वो लोग हैं। वो फीडर जिसे आधी रात की क्लिनिक पता है। वो रेस्क्यूअर जिसके पास गाड़ी है। वो वेट जो फ़ोन उठाता है। वो हैं। बस अलग-अलग फ़ोन, ग्रुप्स और इत्तेफ़ाक़ में बँटे हैं। अगर हम एक जगह होते, उन्हें ढूँढने में घबराहट नहीं होती।</span>
+      <span data-lang="en">your district has the people. the feeder who knows which clinic to go to. the rescuer with a car. the foster with an empty kennel. they exist. they're just scattered across phones, groups, and chance. if we were in one place, finding them wouldn't take a panic.</span>
+      <span data-lang="hi" class="hi">आपके जिले में वो लोग हैं। वो फीडर जिसे पता है कहाँ ले जाना है। वो रेस्क्यूअर जिसके पास गाड़ी है। वो फोस्टर जिसके पास खाली केनल है। वो हैं। बस अलग-अलग फ़ोन, ग्रुप्स और इत्तेफ़ाक़ में बँटे हैं। अगर हम एक जगह होते, उन्हें ढूँढने में घबराहट नहीं होती।</span>
     </p>
 
     <div class="ms-pillars rv d3">
       <div class="ms-pl">
         <span class="ms-pl-n">For Pet Parents</span>
         <h4>
-          <span data-lang="en">Vet Emergencies</span>
-          <span data-lang="hi" class="hi">वेट इमरजेंसी</span>
+          <span data-lang="en">Be the Neighbor</span>
+          <span data-lang="hi" class="hi">वो पड़ोसी बनिए</span>
         </h4>
         <p>
-          <span data-lang="en">midnight. your dog has a fever. somewhere there's a vet who'd pick up. a neighbor with a car. someone who's been through this before. if we were in one place, you wouldn't be alone with it.</span>
-          <span data-lang="hi" class="hi">आधी रात। आपके कुत्ते को बुख़ार। कोई वेट होगा जो फ़ोन उठाएगा। कोई पड़ोसी होगा जिसके पास गाड़ी है। कोई होगा जिसने पहले ये किया है। अगर हम एक जगह होते, आप अकेले नहीं होते।</span>
+          <span data-lang="en">you already keep an eye on the dog outside your gate. you'd help a feeder if you knew one needed it. an SOS goes out three streets away — you're the closest person who'd actually show up. that's the network. you in it makes it real.</span>
+          <span data-lang="hi" class="hi">आप पहले से गेट के बाहर वाले कुत्ते का ख़्याल रखते हैं। किसी फीडर की मदद कर देते अगर पता होता। तीन गलियाँ दूर SOS जाता है — आप ही सबसे पास हैं जो असल में पहुँचेंगे। यही नेटवर्क है। आप जुड़े तो ये असली है।</span>
         </p>
       </div>
       <div class="ms-pl">
@@ -1582,14 +1724,85 @@ html.light .ph-frame img { filter: none; }
 
 <div class="div"></div>
 
+<!-- ══════════ WHAT IT'S FOR ══════════ -->
+<section id="for" class="sec">
+  <div class="wrap">
+
+    <div class="how-hd rv">
+      <span class="lbl">
+        <span data-lang="en">What It's For</span>
+        <span data-lang="hi" class="hi">किसके लिए है</span>
+      </span>
+      <h2 class="dh">
+        <span class="en-h" data-lang="en">Two Things.</span>
+        <span class="en-h" data-lang="en">Different Asks.</span>
+        <span class="hi-h" data-lang="hi">दो काम।</span>
+        <span class="hi-h" data-lang="hi">अलग-अलग ज़रूरतें।</span>
+      </h2>
+      <p class="how-desc">
+        <span data-lang="en">the app does two things. it helps to know which one you need.</span>
+        <span data-lang="hi" class="hi">ऐप दो काम करता है। पता हो तो आसान होता है कि कौन सा चाहिए।</span>
+      </p>
+    </div>
+
+    <div class="how-uses rv d1">
+      <div class="how-use">
+        <div class="how-use-hd">
+          <span class="material-symbols-outlined">sos</span>
+          <span class="how-use-ttl">
+            <span data-lang="en">SOS</span>
+            <span data-lang="hi" class="hi">SOS</span>
+          </span>
+          <span class="how-use-tag">
+            <span data-lang="en">For emergencies</span>
+            <span data-lang="hi" class="hi">इमरजेंसी के लिए</span>
+          </span>
+        </div>
+        <p class="how-use-p">
+          <span data-lang="en">injured animal on the road. attack in progress. urgent transport. harassment at your feeding spot. anything happening right now that can't wait.</span>
+          <span data-lang="hi" class="hi">सड़क पर घायल जानवर। हमला हो रहा है। ज़रूरी ट्रांसपोर्ट। फीडिंग स्पॉट पर परेशानी। जो अभी हो रहा है और रुक नहीं सकता।</span>
+        </p>
+      </div>
+      <div class="how-use">
+        <div class="how-use-hd">
+          <span class="material-symbols-outlined">help</span>
+          <span class="how-use-ttl">
+            <span data-lang="en">Ask the District</span>
+            <span data-lang="hi" class="hi">जिले से पूछें</span>
+          </span>
+          <span class="how-use-tag">
+            <span data-lang="en">For non-urgent asks</span>
+            <span data-lang="hi" class="hi">सामान्य सवालों के लिए</span>
+          </span>
+        </div>
+        <p class="how-use-p">
+          <span data-lang="en">a vet recommendation. a foster for the week. has anyone dealt with this before. the questions that aren't emergencies but still need people who know.</span>
+          <span data-lang="hi" class="hi">वेट की सलाह। हफ़्ते भर के लिए फोस्टर। क्या किसी ने पहले ये झेला है। वो सवाल जो इमरजेंसी नहीं, पर जवाब चाहिए।</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="how-note rv">
+      <span class="material-symbols-outlined">info</span>
+      <p>
+        <span data-lang="en">keeping SOS for real emergencies is what makes it worth answering. if your ask can wait, it belongs in Ask the District.</span>
+        <span data-lang="hi" class="hi">SOS असली इमरजेंसी के लिए रखेंगे तो लोग जवाब देंगे। जो रुक सकता है, वो Ask the District में जाता है।</span>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<div class="div"></div>
+
 <!-- ══════════ HOW IT WORKS ══════════ -->
 <section id="how" class="sec">
   <div class="wrap">
 
     <div class="how-hd rv">
       <span class="lbl">
-        <span data-lang="en">How It Works</span>
-        <span data-lang="hi" class="hi">कैसे काम करता है</span>
+        <span data-lang="en">How SOS Works</span>
+        <span data-lang="hi" class="hi">SOS कैसे काम करता है</span>
       </span>
       <h2 class="dh">
         <span class="en-h" data-lang="en">One Tap.</span>
@@ -1600,14 +1813,19 @@ html.light .ph-frame img { filter: none; }
         <span class="hi-h" data-lang="hi">आप जैसे लोग।</span>
       </h2>
       <p class="how-desc">
-        <span data-lang="en">if we're in one place, here's how this works.</span>
-        <span data-lang="hi" class="hi">अगर हम एक जगह हों, ऐसे काम करता है।</span>
+        <span data-lang="en">an SOS is for emergencies. here's what happens when you raise one.</span>
+        <span data-lang="hi" class="hi">SOS इमरजेंसी के लिए है। भेजने पर ऐसा होता है।</span>
       </p>
     </div>
 
     <div class="how-lay">
       <div class="ph-col rv">
-        <div class="ph-frame"><img src="Phone.png" alt="Rapid Response SOS Screen" loading="lazy"/></div>
+        <div class="ph-frame">
+          <div class="ph-stage">
+            <img src="Phone.png" alt="Rapid Response SOS Screen" loading="lazy"/>
+            <div class="ph-sos-pulse" aria-hidden="true"></div>
+          </div>
+        </div>
         <div class="ph-badge">
           <span data-lang="en">Live SOS Screen</span>
           <span data-lang="hi" class="hi">लाइव SOS स्क्रीन</span>
@@ -1625,8 +1843,8 @@ html.light .ph-frame img { filter: none; }
               <span data-lang="hi" class="hi">आपको साथ चाहिए।</span>
             </h4>
             <p>
-              <span data-lang="en">a vet at midnight. someone to cover your feeding spot. transport for an injured animal. open the app, raise the SOS.</span>
-              <span data-lang="hi" class="hi">आधी रात को वेट। फीडिंग स्पॉट पर साथ। घायल जानवर के लिए ट्रांसपोर्ट। ऐप खोलें, SOS भेजें।</span>
+              <span data-lang="en">an injured animal on the road. an attack in progress. urgent transport. harassment at your feeding spot. open the app, raise the SOS.</span>
+              <span data-lang="hi" class="hi">सड़क पर घायल जानवर। हमला हो रहा है। ज़रूरी ट्रांसपोर्ट। फीडिंग स्पॉट पर परेशानी। ऐप खोलें, SOS भेजें।</span>
             </p>
           </div>
           <div class="step rv d1">
@@ -1674,6 +1892,100 @@ html.light .ph-frame img { filter: none; }
           <p>
             <span data-lang="en">none of this works alone. it works because people in your district are in one place. that's all this is. the appeal is simple: be findable, so others can be too.</span>
             <span data-lang="hi" class="hi">अकेले कुछ नहीं चलता। ये इसलिए चलता है क्योंकि जिले के लोग एक जगह होते हैं। बस इतनी सी बात है। निवेदन सीधा है: ढूँढने लायक बनिए, ताकि बाक़ी लोग भी हों।</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ══════════ HOW ASK THE DISTRICT WORKS ══════════ -->
+<section id="ask" class="sec">
+  <div class="wrap">
+
+    <div class="how-hd rv">
+      <span class="lbl">
+        <span data-lang="en">How Ask the District Works</span>
+        <span data-lang="hi" class="hi">Ask the District कैसे काम करता है</span>
+      </span>
+      <h2 class="dh">
+        <span class="en-h" data-lang="en">A Question.</span>
+        <span class="en-h" data-lang="en">Your District.</span>
+        <span class="en-h" data-lang="en">People Who Know.</span>
+        <span class="hi-h" data-lang="hi">एक सवाल।</span>
+        <span class="hi-h" data-lang="hi">आपका जिला।</span>
+        <span class="hi-h" data-lang="hi">जो जानते हैं।</span>
+      </h2>
+      <p class="how-desc">
+        <span data-lang="en">for the asks that aren't emergencies — but still need a real answer from people nearby.</span>
+        <span data-lang="hi" class="hi">वो सवाल जो इमरजेंसी नहीं — पर जवाब उन्हीं से चाहिए जो पास हैं और जानते हैं।</span>
+      </p>
+    </div>
+
+    <div class="how-lay">
+      <div class="ph-col rv">
+        <div class="ph-frame">
+          <div class="ph-stage">
+            <img src="Ask the district.png" alt="Rapid Response Ask the District Screen" loading="lazy"/>
+            <div class="ph-ask-cue" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="ph-badge">
+          <span data-lang="en">Ask the District Screen</span>
+          <span data-lang="hi" class="hi">Ask the District स्क्रीन</span>
+        </div>
+      </div>
+
+      <div class="steps-wrap">
+        <div class="steps-g">
+          <div class="step rv">
+            <div class="snum">01</div>
+            <div class="s-ic"><span class="material-symbols-outlined">help</span></div>
+            <span class="s-lbl">Step 01</span>
+            <h4>
+              <span data-lang="en">You have a question.</span>
+              <span data-lang="hi" class="hi">आपके पास एक सवाल है।</span>
+            </h4>
+            <p>
+              <span data-lang="en">which vet handles tick fever. anyone has a foster bed for a week. how did you sort out sterilisation for the strays on your street. not urgent, but you want people who've actually done it.</span>
+              <span data-lang="hi" class="hi">tick fever के लिए कौन सा वेट। किसी के पास हफ़्ते भर के लिए फोस्टर है। आपने अपनी गली के स्ट्रे की नसबंदी कैसे करवाई। ज़रूरी नहीं, पर वो लोग चाहिए जिन्होंने सच में किया है।</span>
+            </p>
+          </div>
+          <div class="step rv d1">
+            <div class="snum">02</div>
+            <div class="s-ic"><span class="material-symbols-outlined">edit_note</span></div>
+            <span class="s-lbl">Step 02</span>
+            <h4>
+              <span data-lang="en">You post the ask.</span>
+              <span data-lang="hi" class="hi">आप सवाल पोस्ट करते हैं।</span>
+            </h4>
+            <p>
+              <span data-lang="en">write what you need. it shows up in your district's ask feed for everyone on the app to see.</span>
+              <span data-lang="hi" class="hi">जो चाहिए वो लिखिए। आपके जिले के ask feed में सबको दिखता है।</span>
+            </p>
+          </div>
+          <div class="step rv d2">
+            <div class="snum">03</div>
+            <div class="s-ic"><span class="material-symbols-outlined">forum</span></div>
+            <span class="s-lbl">Step 03</span>
+            <h4>
+              <span data-lang="en">People who know reply.</span>
+              <span data-lang="hi" class="hi">जो जानते हैं, जवाब देते हैं।</span>
+            </h4>
+            <p>
+              <span data-lang="en">whoever has an answer or an offer responds in their own time. no alarm, no pressure. just the network being useful.</span>
+              <span data-lang="hi" class="hi">जिसके पास जवाब या मदद है, अपनी सुविधा से जवाब देता है। न अलार्म, न दबाव। बस नेटवर्क काम का होता है।</span>
+            </p>
+          </div>
+        </div>
+        <div class="how-note rv">
+          <span class="material-symbols-outlined">info</span>
+          <p>
+            <span data-lang="en">Ask the District is not an SOS. no one's phone buzzes. it's a slower, calmer channel for the questions that matter but can wait.</span>
+            <span data-lang="hi" class="hi">Ask the District SOS नहीं है। किसी का फ़ोन नहीं बजता। ये धीमा, शांत चैनल है उन सवालों के लिए जो ज़रूरी हैं पर रुक सकते हैं।</span>
           </p>
         </div>
       </div>
@@ -1888,7 +2200,7 @@ html.light .ph-frame img { filter: none; }
     <div class="ft-col">
       <span class="ft-lbl">Navigate</span>
       <a href="#mission"><span data-lang="en">Mission</span><span data-lang="hi" class="hi">मिशन</span></a>
-      <a href="#how"><span data-lang="en">How it Works</span><span data-lang="hi" class="hi">कैसे काम करता है</span></a>
+      <a href="#for"><span data-lang="en">How it Works</span><span data-lang="hi" class="hi">कैसे काम करता है</span></a>
       <a href="#clarity"><span data-lang="en">Clarity</span><span data-lang="hi" class="hi">साफ़ बात</span></a>
       <a href="#faq">FAQ</a>
       <a href="#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
@@ -1975,8 +2287,10 @@ document.querySelectorAll('.rv').forEach(function(el) { io.observe(el); });
 
 /* ── FAQ ── */
 var fd = [
-  {k:'sos app rapid response what',     qe:'What is the Rapid Response app?',             ae:'It connects nearby volunteers during animal emergencies across the same district via instant SOS alerts.',            qh:'रैपिड रिस्पॉन्स ऐप क्या है?',      ah:'यह ऐप जानवरों की इमरजेंसी में जिले के लोगों को जोड़ता है।'},
+  {k:'sos app rapid response what',     qe:'What is the Rapid Response app?',             ae:'A peer network for people who work with animals across a district. SOS for emergencies, Ask the District for non-urgent questions like vet recommendations or fostering help.', qh:'रैपिड रिस्पॉन्स ऐप क्या है?',      ah:'जानवरों के लिए काम करने वालों का जिला-स्तरीय नेटवर्क। इमरजेंसी के लिए SOS, सामान्य सवालों जैसे वेट की सलाह या फोस्टर के लिए Ask the District।'},
   {k:'how does app work purpose main',  qe:'How does the app work?',                       ae:'One tap raises a district-wide SOS. All registered users in your district receive your GPS, phone number and message instantly.', qh:'ऐप कैसे काम करता है?',           ah:'एक टैप से जिले के सभी लोगों को GPS, नंबर और संदेश के साथ अलर्ट जाता है।'},
+  {k:'sos vs ask district difference when use', qe:'SOS or Ask the District — which do I use?', ae:'SOS is for emergencies: injured animal, attack, urgent transport, harassment at a feeding spot. Ask the District is for non-urgent questions: which vet, who has a foster, has anyone dealt with this. If it can wait, it should not be an SOS.', qh:'SOS या Ask the District — कौन सा इस्तेमाल करें?', ah:'SOS इमरजेंसी के लिए: घायल जानवर, हमला, ज़रूरी ट्रांसपोर्ट, फीडिंग स्पॉट पर परेशानी। Ask the District सामान्य सवालों के लिए: कौन सा वेट, फोस्टर किसके पास है, क्या किसी ने पहले झेला है। अगर इंतज़ार हो सकता है, तो SOS नहीं भेजें।'},
+  {k:'when not use sos non emergency',  qe:'When should I NOT use SOS?', ae:'Do not use SOS for vet recommendations, fostering enquiries, general advice, or anything that is not happening right now. Use Ask the District for these. Keeping SOS for real emergencies is how the network stays useful.', qh:'SOS कब नहीं भेजें?', ah:'वेट की सलाह, फोस्टर की पूछताछ, सामान्य राय, या ऐसा कुछ जो अभी नहीं हो रहा — इनके लिए SOS नहीं। इनके लिए Ask the District है। SOS को असली इमरजेंसी के लिए रखना ही नेटवर्क को काम का बनाता है।'},
   {k:'government affiliated department',qe:'Is it linked to any government department?',   ae:'No. Rapid Response is an independent community initiative, not affiliated with any government authority.',            qh:'किसी सरकारी विभाग से जुड़ा है?',    ah:'नहीं। यह एक स्वतंत्र सामुदायिक पहल है।'},
   {k:'rescue team automatic send',      qe:'Does it send a rescue team automatically?',    ae:'No. It sends an SOS alert to registered volunteers who may choose to help. There is no dedicated dispatch team.',    qh:'रेस्क्यू टीम भेजता है?',           ah:'नहीं। यह स्वयंसेवकों को अलर्ट भेजता है।'},
   {k:'sos district who receives alert', qe:'Who receives an SOS alert?',                   ae:'All registered Rapid Response users within the same district receive the alert instantly.',                           qh:'SOS अलर्ट किसे मिलता है?',         ah:'उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को।'},
