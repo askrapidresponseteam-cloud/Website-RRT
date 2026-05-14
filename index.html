@@ -7,9 +7,6 @@
 <meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Rapid Response"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="format-detection" content="telephone=no"/>
 <title>Rapid Response | Animal Emergency Network</title>
 <meta name="description" content="A peer network for everyone who shows up for animals. Feeders, pet parents, fosterers, rescuers, vets. One tap, your district, people who already do this."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,58 +15,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"/>
 <style>
 /* ═══════════════════════════════════════════════════════════════════
-   RAPID RESPONSE — LANDING
-   Refined minimalism. Hero + phone. Everything else lives one click away.
+   RAPID RESPONSE — LANDING (v2)
+   Centered vertical narrative. The page is the network.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* TOKENS — DARK (default) */
 :root {
   --bg:        #0A0908;
   --bg-soft:   #14110F;
   --bg-card:   rgba(255,255,255,0.025);
-
-  --w:         #FFFFFF;
   --text:      #FFFFFF;
   --text-mid:  rgba(255,255,255,0.82);
   --text-low:  rgba(255,255,255,0.65);
   --text-dim:  rgba(255,255,255,0.48);
-
-  --b:               rgba(255,255,255,0.12);
-  --border:          rgba(255,255,255,0.12);
-  --border-strong:   rgba(255,255,255,0.22);
-  --border-focus:    rgba(31,117,240,0.55);
-
-  --accent:      #1F75F0;
-  --accent-h:    #4A90F5;
-  --accent-soft: rgba(31,117,240,0.12);
-
+  --text-faint: rgba(255,255,255,0.18);
+  --border:    rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.22);
+  --border-focus:  rgba(31,117,240,0.55);
+  --accent:    #1F75F0;
+  --accent-h:  #4A90F5;
+  --accent-soft: rgba(31,117,240,0.10);
   --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --sans:    'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --hindi:   'Noto Sans Devanagari', system-ui, sans-serif;
 }
-
-/* TOKENS — LIGHT */
 html.light {
   --bg:        #FAFAF7;
   --bg-soft:   #FFFFFF;
   --bg-card:   rgba(0,0,0,0.015);
-
-  --w:         #1A1817;
   --text:      #1A1817;
   --text-mid:  rgba(26,24,23,0.86);
   --text-low:  rgba(26,24,23,0.68);
   --text-dim:  rgba(26,24,23,0.52);
-
-  --b:               rgba(0,0,0,0.10);
-  --border:          rgba(0,0,0,0.10);
-  --border-strong:   rgba(0,0,0,0.22);
+  --text-faint: rgba(26,24,23,0.18);
+  --border:    rgba(0,0,0,0.10);
+  --border-strong: rgba(0,0,0,0.22);
+  --accent-soft: rgba(31,117,240,0.07);
 }
 
-/* RESET */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 18px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 @media (max-width: 600px) { html { font-size: 16px; } }
 
 body {
@@ -86,36 +77,20 @@ body {
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); }
-::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
-
 ::selection { background: var(--accent-soft); color: var(--text); }
 
 .hi { font-family: var(--hindi); line-height: 1.55; letter-spacing: 0; font-weight: 500; }
-
 [data-lang] { display: none !important; }
 html[lang="en"] [data-lang="en"] { display: revert !important; }
 html[lang="hi"] [data-lang="hi"] { display: revert !important; }
-html[lang="en"] span[data-lang="en"],
-html[lang="hi"] span[data-lang="hi"] { display: inline !important; }
+html[lang="en"] span[data-lang="en"], html[lang="hi"] span[data-lang="hi"] { display: inline !important; }
 
 *:focus { outline: none; }
 *:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
-
 a { color: inherit; text-decoration: none; }
-
-/* Reveal */
-.rv { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.rv.on { opacity: 1; transform: translateY(0); }
-.rv.d1 { transition-delay: 0.08s; }
-.rv.d2 { transition-delay: 0.16s; }
-.rv.d3 { transition-delay: 0.24s; }
-.rv.d4 { transition-delay: 0.32s; }
-@media (prefers-reduced-motion: reduce) {
-  .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
-}
 
 /* ═══════════════════════
    HEADER
@@ -144,17 +119,12 @@ a { color: inherit; text-decoration: none; }
 @media (min-width: 768px) {
   #hdr {
     height: 68px;
-    padding: 0 48px;
-    padding-left: max(48px, env(safe-area-inset-left));
-    padding-right: max(48px, env(safe-area-inset-right));
+    padding-left: max(40px, env(safe-area-inset-left));
+    padding-right: max(40px, env(safe-area-inset-right));
   }
 }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
+.logo { display: inline-flex; align-items: center; gap: 10px; }
 .logo-sq {
   width: 28px; height: 28px;
   background: var(--accent);
@@ -162,104 +132,110 @@ a { color: inherit; text-decoration: none; }
 }
 .logo-sq .material-symbols-outlined { color: #fff; font-size: 18px; }
 .logo-t {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: var(--text);
+  font-family: var(--display); font-weight: 800;
+  font-size: 17px; letter-spacing: 0.01em;
+  text-transform: uppercase; color: var(--text);
 }
 
-.hdr-r {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.hdr-r { display: flex; align-items: center; gap: 4px; }
 .lb {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  background: none;
-  border: none;
-  padding: 10px 8px;
-  min-height: 44px;
-  min-width: 36px;
-  cursor: pointer;
-  color: var(--text-low);
-  transition: color 0.2s;
-  text-transform: uppercase;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: none; border: none; padding: 10px 8px;
+  min-height: 44px; min-width: 36px; cursor: pointer;
+  color: var(--text-low); transition: color 0.2s;
 }
 .lb:hover { color: var(--text); }
 .lb.hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 13px; }
-.lsep { color: var(--text-dim); }
-
+.lsep { color: var(--text-dim); padding: 0 2px; }
 .mode-b {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px 8px;
-  min-height: 44px;
-  min-width: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 1;
+  background: none; border: none; cursor: pointer;
+  padding: 10px; min-height: 44px; min-width: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 15px; line-height: 1;
 }
 
 /* ═══════════════════════
-   HERO  (the whole page)
+   HERO — centered, vertical
 ═══════════════════════ */
 #hero {
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 96px 20px 64px;
-  padding-left: max(20px, env(safe-area-inset-left));
-  padding-right: max(20px, env(safe-area-inset-right));
-  background:
-    radial-gradient(ellipse 70% 50% at 30% 50%, var(--accent-soft) 0%, transparent 70%),
-    var(--bg);
+  justify-content: center;
+  padding: 120px 24px 80px;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
   overflow: hidden;
+  isolation: isolate;
 }
-@media (min-width: 768px) {
-  #hero {
-    padding: 120px 48px 80px;
-    padding-left: max(48px, env(safe-area-inset-left));
-    padding-right: max(48px, env(safe-area-inset-right));
-  }
-}
+@media (min-width: 768px) { #hero { padding: 140px 40px 100px; } }
 
-.h-grain {
+/* Network background — animated dot grid */
+.network {
   position: absolute;
   inset: 0;
+  z-index: -1;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.6;
+}
+html.light .network { opacity: 0.45; }
+
+.network svg { width: 100%; height: 100%; display: block; }
+.network circle.dot { fill: var(--text-faint); }
+.network circle.live {
+  fill: var(--accent);
+  animation: nodePulse 4s ease-in-out infinite;
+}
+.network circle.live:nth-child(2) { animation-delay: 1.3s; }
+.network circle.live:nth-child(3) { animation-delay: 2.6s; }
+.network circle.live:nth-child(4) { animation-delay: 0.7s; }
+.network circle.live:nth-child(5) { animation-delay: 3.1s; }
+
+@keyframes nodePulse {
+  0%, 100% { r: 1.5; opacity: 0.35; }
+  50%      { r: 3.5; opacity: 1; }
+}
+
+/* Radial glow behind the centered content — subtle warmth */
+.hero-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -55%);
+  width: min(720px, 90vw);
+  aspect-ratio: 1;
+  background: radial-gradient(circle at center, var(--accent-soft) 0%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Grain overlay */
+.grain {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: -1;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.h-wrap {
+/* Hero content stack */
+.hero-stack {
   position: relative;
   z-index: 2;
-  max-width: 1280px;
   width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-}
-@media (min-width: 980px) {
-  .h-wrap { grid-template-columns: 1.15fr 1fr; gap: 80px; }
+  text-align: center;
+  gap: 0;
 }
 
-/* LEFT — copy */
-.h-left { max-width: 620px; width: 100%; }
-
-.h-eye {
+/* Eyebrow status pill — top of hero */
+.eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -268,462 +244,209 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 20px;
+  color: var(--text-low);
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin-bottom: 32px;
 }
-@media (min-width: 768px) { .h-eye { font-size: 11px; gap: 12px; margin-bottom: 28px; } }
-.h-eye .hi {
-  font-family: var(--hindi);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  text-transform: none;
-  font-weight: 500;
-}
-@media (min-width: 768px) { .h-eye .hi { font-size: 13px; } }
-.h-dot {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  display: inline-block;
-}
+@media (min-width: 768px) { .eyebrow { font-size: 11px; gap: 12px; margin-bottom: 40px; } }
 
+.eyebrow .ping {
+  position: relative;
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.eyebrow .ping::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  animation: eyebrowPing 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@keyframes eyebrowPing {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.eyebrow .hi { font-family: var(--hindi); font-size: 12px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
+@media (min-width: 768px) { .eyebrow .hi { font-size: 13px; } }
+
+/* The headline — dominant */
 .h1 {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(38px, 9vw, 80px);
-  line-height: 0.94;
-  letter-spacing: -0.02em;
+  font-size: clamp(52px, 12vw, 144px);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
   color: var(--text);
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+  max-width: 14ch;
 }
-@media (min-width: 768px) { .h1 { margin-bottom: 28px; line-height: 0.96; letter-spacing: -0.015em; } }
-.h1 .en-b, .h1 .hi-b { display: block; }
-.h1 .hi-b { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.10; }
-.h1 .ghost {
+@media (min-width: 768px) {
+  .h1 { font-size: clamp(72px, 8.5vw, 144px); line-height: 0.94; margin-bottom: 36px; }
+}
+.h1 .b { display: block; }
+.h1 .hi-b { display: block; font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.06; }
+.h1 .em {
   color: var(--accent);
   font-style: italic;
-  font-weight: 800;
+  font-weight: 900;
 }
 
-.h-sub {
+/* Subhead */
+.sub {
   font-family: var(--sans);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
   line-height: 1.55;
   color: var(--text-mid);
-  max-width: 48ch;
-  margin-bottom: 28px;
+  max-width: 44ch;
+  margin-bottom: 40px;
 }
-@media (min-width: 768px) { .h-sub { font-size: 17px; line-height: 1.6; margin-bottom: 36px; } }
-.h-sub .hi { font-family: var(--hindi); font-size: 15px; line-height: 1.7; font-weight: 500; }
-@media (min-width: 768px) { .h-sub .hi { font-size: 16px; } }
+@media (min-width: 768px) { .sub { font-size: 19px; margin-bottom: 52px; } }
+.sub .hi { font-family: var(--hindi); font-size: 16px; line-height: 1.7; font-weight: 500; }
+@media (min-width: 768px) { .sub .hi { font-size: 17px; } }
 
-.h-ctas {
+/* CTA buttons */
+.ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
   margin-bottom: 32px;
 }
-.btn-s {
+@media (min-width: 768px) { .ctas { margin-bottom: 40px; } }
+
+.btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 22px;
-  min-height: 48px;
-  background: var(--text);
-  color: var(--bg);
+  padding: 15px 26px;
+  min-height: 50px;
   font-family: var(--sans);
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.01em;
   border: 1px solid var(--text);
-  transition: transform 0.15s, opacity 0.15s;
-  min-width: 158px;
+  background: var(--text);
+  color: var(--bg);
+  transition: transform 0.15s, opacity 0.15s, background 0.2s;
+  min-width: 156px;
   justify-content: center;
+  cursor: pointer;
 }
+.btn:hover { transform: translateY(-1px); opacity: 0.92; }
+.btn:active { transform: translateY(0); opacity: 0.85; }
+.btn img { width: 18px; height: 18px; display: block; }
+.btn .hi { font-family: var(--hindi); font-size: 15px; font-weight: 600; }
+
 @media (max-width: 380px) {
-  /* Very narrow phones — stretch each button to full width so they stack cleanly */
-  .btn-s { flex: 1 1 100%; min-width: 0; }
-}
-.btn-s:hover { transform: translateY(-1px); opacity: 0.92; }
-.btn-s:active { transform: translateY(0); opacity: 0.85; }
-.btn-s img { width: 18px; height: 18px; display: block; }
-.btn-s .hi { font-family: var(--hindi); font-size: 15px; font-weight: 600; }
-
-/* Hairline divider between CTA group and meta links */
-.h-divide {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
-  max-width: 480px;
-}
-.h-divide-lbl {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  flex-shrink: 0;
-}
-.h-divide-lbl .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
-.h-divide-line {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
+  .btn { flex: 1 1 100%; min-width: 0; }
 }
 
-.h-meta {
+/* Secondary links — quiet row below buttons */
+.links {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 6px 12px;
+  gap: 0;
   font-family: var(--mono);
   font-size: 10.5px;
-  letter-spacing: 0.1em;
-  color: var(--text-dim);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-@media (min-width: 768px) { .h-meta { font-size: 11px; gap: 6px 14px; letter-spacing: 0.12em; } }
-.h-meta a {
-  color: var(--text-low);
-  border-bottom: 1px solid transparent;
-  padding: 4px 0 2px;
-  transition: color 0.2s, border-color 0.2s;
-  min-height: 32px;
+@media (min-width: 768px) { .links { font-size: 11px; letter-spacing: 0.16em; } }
+
+.links a {
+  color: var(--text-dim);
+  padding: 10px 14px;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
+  transition: color 0.2s;
 }
-.h-meta a:hover { color: var(--text); border-bottom-color: var(--accent); }
-.h-meta .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
-@media (min-width: 768px) { .h-meta .hi { font-size: 13px; } }
-.h-meta-sep { color: var(--text-dim); opacity: 0.4; }
-@media (max-width: 480px) {
-  .h-meta-sep { display: none; }
-  .h-meta { gap: 4px 14px; }
-}
+.links a:hover { color: var(--text); }
+.links .sep { color: var(--text-faint); }
+.links .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
+@media (min-width: 768px) { .links .hi { font-size: 13px; } }
+@media (max-width: 480px) { .links .sep { display: none; } }
 
-/* RIGHT — phone */
-.h-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-.ph-wrap {
-  width: 100%;
-  max-width: 280px;
-  position: relative;
-}
-@media (min-width: 480px) { .ph-wrap { max-width: 300px; } }
-@media (min-width: 980px) { .ph-wrap { max-width: 320px; } }
-.ph-stage {
-  position: relative;
-  width: 100%;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 8px;
-}
-.ph-stage img {
-  width: 100%;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
-/* SOS pulse — red rings expanding from the SOS button. Centered ~50% / ~45% of image, width ~54%. */
-.ph-sos-pulse {
-  position: absolute;
-  left: 50%;
-  top: 45%;
-  width: 54%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
-}
-.ph-sos-pulse::before,
-.ph-sos-pulse::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid #FF3B30;
-  opacity: 0;
-  animation: sosRing 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-.ph-sos-pulse::after { animation-delay: 1.2s; }
-@keyframes sosRing {
-  0%   { transform: scale(0.92); opacity: 0.75; border-width: 3px; }
-  70%  { transform: scale(1.35); opacity: 0; border-width: 1px; }
-  100% { transform: scale(1.35); opacity: 0; border-width: 1px; }
-}
-
+/* Reveal animations */
+.rv { opacity: 0; transform: translateY(14px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.rv.on { opacity: 1; transform: translateY(0); }
+.rv.d1 { transition-delay: 0.10s; }
+.rv.d2 { transition-delay: 0.20s; }
+.rv.d3 { transition-delay: 0.32s; }
+.rv.d4 { transition-delay: 0.44s; }
+.rv.d5 { transition-delay: 0.56s; }
+.rv.d6 { transition-delay: 0.68s; }
 @media (prefers-reduced-motion: reduce) {
-  .ph-sos-pulse::before, .ph-sos-pulse::after { animation: none; opacity: 0; }
+  .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .eyebrow .ping::after, .network circle.live { animation: none !important; }
 }
-
-/* Phone caption */
-.ph-cap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-low);
-}
-.ph-cap .dot {
-  width: 6px; height: 6px;
-  background: #FF3B30;
-  border-radius: 50%;
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-@keyframes pulseDot {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50%      { opacity: 1; transform: scale(1.15); }
-}
-.ph-cap .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
 
 /* ═══════════════════════
-   FOOTER
+   FOOTER — minimal one-line
 ═══════════════════════ */
 footer {
+  position: relative;
   border-top: 1px solid var(--border);
-  padding: 48px 20px 28px;
-  padding-left: max(20px, env(safe-area-inset-left));
-  padding-right: max(20px, env(safe-area-inset-right));
+  padding: 28px 24px;
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
   padding-bottom: max(28px, env(safe-area-inset-bottom));
 }
-@media (min-width: 768px) {
-  footer {
-    padding: 64px 48px 36px;
-    padding-left: max(48px, env(safe-area-inset-left));
-    padding-right: max(48px, env(safe-area-inset-right));
-    padding-bottom: max(36px, env(safe-area-inset-bottom));
-  }
-}
+@media (min-width: 768px) { footer { padding: 32px 40px; padding-bottom: max(32px, env(safe-area-inset-bottom)); } }
 
-.ft-in {
+.foot {
   max-width: 1280px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-}
-@media (min-width: 768px) {
-  .ft-in { grid-template-columns: 1.2fr 1fr 1fr; gap: 56px; }
-}
-
-.ft-brand .logo { margin-bottom: 16px; }
-.ft-brand p {
-  font-size: 14px;
-  color: var(--text-low);
-  line-height: 1.65;
-  max-width: 36ch;
-}
-.ft-brand p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; }
-
-.ft-col { display: flex; flex-direction: column; gap: 12px; }
-/* Mobile: subtle dividers between stacked footer columns */
-@media (max-width: 767px) {
-  .ft-col { padding-top: 24px; border-top: 1px solid var(--border); }
-  .ft-brand { padding-bottom: 4px; }
-}
-.ft-lbl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-dim);
-  margin-bottom: 6px;
 }
-.ft-col a {
-  font-size: 14px;
-  color: var(--text-low);
-  transition: color 0.2s;
+@media (min-width: 768px) { .foot { font-size: 11px; letter-spacing: 0.14em; } }
+.foot .right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.foot a { color: var(--text-low); transition: color 0.2s; }
+.foot a:hover { color: var(--text); }
+.foot .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
+
+/* Instagram link: gradient color + inline lottie icon */
+.foot .ig {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  color: #E1306C; /* fallback if lottie fails */
+  background: linear-gradient(45deg, #F58529 0%, #DD2A7B 35%, #8134AF 65%, #515BD4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
 }
-.ft-col a:hover { color: var(--text); }
-.ft-col a .hi { font-family: var(--hindi); font-size: 14px; }
-
-.ft-bot {
-  max-width: 1280px;
-  margin: 48px auto 0;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-dim);
+.foot .ig:hover { opacity: 0.85; }
+.ig-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  /* Reserve space so layout doesn't shift when lottie loads */
 }
-.ft-bot p .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
-
-/* ═══════════════════════════════════════════════════════════════════
-   MOBILE APP-LIKE BASELINE
-   Applied everywhere. Keeps the site feeling like an app on phones.
-   ═══════════════════════════════════════════════════════════════════ */
-
-html, body {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-}
-
-body {
-  overscroll-behavior-y: none;
-}
-
-a, button, [role="button"], .lqc, .chip, .btn-s, .lb, .mode-b {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-input, textarea, select {
-  font-size: 16px; /* prevents iOS zoom on focus */
-}
-
-@media (max-width: 760px) {
-  /* Header: tighter, safe-area aware, no wordmark crowding */
-  #hdr {
-    height: 56px;
-    padding-left: max(18px, env(safe-area-inset-left));
-    padding-right: max(18px, env(safe-area-inset-right));
-    padding-top: env(safe-area-inset-top);
-    height: calc(56px + env(safe-area-inset-top));
-  }
-  .logo-t { font-size: 16px; }
-  .logo-sq { width: 24px; height: 24px; }
-  .logo-sq .material-symbols-outlined { font-size: 16px; }
-  .hdr-r { gap: 4px; }
-  .lb { padding: 8px 8px; font-size: 11px; }
-  .mode-b { padding: 6px 6px; font-size: 15px; }
-
-  /* Page safe-area on bottom for iPhone home indicator */
-  footer, .page { padding-bottom: max(32px, env(safe-area-inset-bottom)); }
-
-  /* Page top padding accounts for shorter header + safe-area */
-  .page { padding-top: calc(96px + env(safe-area-inset-top)); }
-
-  /* Hero on mobile: phone-first, generous breathing room */
-  #hero {
-    padding: calc(88px + env(safe-area-inset-top)) 22px 56px;
-    align-items: flex-start;
-    min-height: auto;
-  }
-  .h-wrap {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-  /* Mobile keeps natural source order: headline first, phone below. The headline carries the meaning. */
-  .h-left { max-width: 100%; text-align: left; }
-  .ph-wrap { max-width: 260px; }
-
-  .h-eye { margin-bottom: 20px; font-size: 10px; }
-  .h1 { font-size: clamp(36px, 11vw, 46px); line-height: 0.98; margin-bottom: 18px; }
-  .h-sub { font-size: 15.5px; margin-bottom: 24px; }
-
-  /* CTAs: full-width on mobile, big tap targets */
-  .h-ctas, .cta-btns { width: 100%; flex-direction: column; gap: 8px; }
-  .h-ctas .btn-s, .cta-btns .btn-s {
-    width: 100%;
-    min-height: 48px;
-    padding: 14px 18px;
-    font-size: 15px;
-  }
-
-  /* Secondary link row — wrap nicely */
-  .h-meta { font-size: 10px; gap: 4px 10px; }
-
-  /* Section text — restrain font sizes that were tuned for desktop */
-  .h1, .h2, .dh, .cta-t, .use-ttl, .step h4, .fq-q, .pl-h, .leg-sb-h h4 {
-    word-wrap: break-word;
-  }
-
-  /* About / How / FAQ / Legal: pages need consistent left/right padding */
-  .page { padding-left: 22px; padding-right: 22px; }
-  .wrap { max-width: 100%; }
-
-  .h1 { font-size: clamp(36px, 9vw, 52px); }
-
-  /* Cards/pills */
-  .pl { padding: 26px 22px; }
-  .step { padding: 22px 22px 24px; }
-  .use { padding: 24px 22px; }
-
-  /* CTA strips */
-  .cta { padding: 28px 22px; flex-direction: column; align-items: flex-start; }
-  .cta-t { font-size: 19px; }
-
-  /* HOW IT WORKS — phone scrolls inline (no sticky) on mobile */
-  .ph-col { position: static !important; }
-  .ph-frame { max-width: 260px; margin: 0 auto; }
-  .flow-lay { gap: 32px; }
-  .flow { margin-bottom: 64px; }
-  .flow-div { margin-bottom: 56px; }
-  .flow-hd { margin-bottom: 32px; }
-  .h2 { font-size: clamp(28px, 8vw, 36px); }
-
-  /* FAQ chips — smaller but still tappable */
-  .chip { font-size: 11px; padding: 9px 12px; min-height: 36px; }
-  .chips { gap: 6px; }
-  .fq-it { padding: 22px 22px; }
-  .fq-q { font-size: 18px; }
-
-  /* LEGAL DESK chat — full-bleed feel */
-  .leg-wrap {
-    grid-template-columns: 1fr;
-    margin-left: -22px; margin-right: -22px;
-    border-left: none; border-right: none;
-  }
-  .leg-sb { padding: 20px 22px; }
-  .leg-tags { margin: 16px 0 20px; }
-  .lqc { padding: 14px 14px; min-height: 56px; }
-  #lcb { min-height: 280px; max-height: 60vh; padding: 20px 18px; gap: 14px; -webkit-overflow-scrolling: touch; }
-  .cbo-ic { width: 32px; height: 32px; }
-  .cbo-ic .material-symbols-outlined { font-size: 16px; }
-  .cb { font-size: 14.5px; }
-  .cu .cb { font-size: 14px; }
-  .leg-ir { padding: 12px 14px; }
-  #li { font-size: 16px; padding: 8px 0; }
-  #lb { width: 44px; height: 44px; }
-  .leg-disc { padding: 10px 14px 12px; font-size: 9.5px; }
-
-  /* Footer: vertical stack, tighter */
-  footer { padding-left: 22px; padding-right: 22px; padding-top: 48px; }
-  .ft-in { gap: 32px; }
-  .ft-bot { font-size: 10px; margin-top: 36px; padding-top: 20px; }
-  .ft-col a { min-height: 32px; }
-
-  /* Back link top of sub-pages */
-  .back { margin-bottom: 32px; min-height: 32px; }
-
-  /* Pillars stack tightly */
-  .pillars { grid-template-columns: 1fr; }
-  .uses { grid-template-columns: 1fr; }
-
-  /* Lead text */
-  .lead { font-size: 16px; margin-bottom: 32px; }
-
-  /* Grain texture: keep light, don't pile up */
-  .h-grain, .p-grain { opacity: 0.25; }
-}
-
-@media (max-width: 380px) {
-  .h1 { font-size: 34px; }
-  .ph-wrap { max-width: 230px; }
-}
-
+.ig-icon svg { width: 100%; height: 100%; display: block; }
 </style>
 </head>
 <body>
@@ -742,128 +465,95 @@ input, textarea, select {
 </header>
 
 <section id="hero">
-  <div class="h-grain" aria-hidden="true"></div>
-  <div class="h-wrap">
+  <!-- Atmospheric layers -->
+  <div class="network" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1000 700">
+      <defs>
+        <pattern id="dotgrid" x="0" y="0" width="44" height="44" patternUnits="userSpaceOnUse">
+          <circle cx="22" cy="22" r="1.2" class="dot"/>
+        </pattern>
+      </defs>
+      <rect width="1000" height="700" fill="url(#dotgrid)"/>
+      <!-- Live nodes scattered across the field -->
+      <circle cx="160"  cy="120" r="2" class="live"/>
+      <circle cx="820"  cy="180" r="2" class="live"/>
+      <circle cx="280"  cy="540" r="2" class="live"/>
+      <circle cx="720"  cy="600" r="2" class="live"/>
+      <circle cx="500"  cy="80"  r="2" class="live"/>
+    </svg>
+  </div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-    <div class="h-left">
-      <div class="h-eye rv">
-        <span class="h-dot"></span>
-        <span data-lang="en">a peer network. district by district.</span>
-        <span data-lang="hi" class="hi">एक पीयर नेटवर्क। जिला-दर-जिला।</span>
-      </div>
+  <!-- Content -->
+  <div class="hero-stack">
 
-      <h1 class="h1 rv d1">
-        <span class="en-b" data-lang="en">people who</span>
-        <span class="en-b" data-lang="en">show up for animals</span>
-        <span class="en-b ghost" data-lang="en">find each other.</span>
-        <span class="hi-b" data-lang="hi">जो जानवरों के लिए</span>
-        <span class="hi-b" data-lang="hi">खड़े होते हैं</span>
-        <span class="hi-b ghost" data-lang="hi">एक-दूसरे को ढूँढ लेते हैं।</span>
-      </h1>
-
-      <p class="h-sub rv d2">
-        <span data-lang="en">one tap could reach everyone in your district. but only if we're in one place. that's what this is for.</span>
-        <span data-lang="hi" class="hi">एक टैप जिले के हर इंसान तक पहुँच सकता है। लेकिन तभी जब हम एक जगह हों। यही इसका मक़सद है।</span>
-      </p>
-
-      <div class="h-ctas rv d3">
-        <a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" class="btn-s">
-          <img src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000" alt="" loading="lazy"/>
-          <span data-lang="en">Android</span>
-          <span data-lang="hi" class="hi">एंड्रॉयड</span>
-        </a>
-        <a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" class="btn-s">
-          <img src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000" alt="" loading="lazy"/>
-          <span data-lang="en">iPhone</span>
-          <span data-lang="hi" class="hi">आईफोन</span>
-        </a>
-      </div>
-
-      <div class="h-divide rv d4">
-        <span class="h-divide-lbl">
-          <span data-lang="en">More</span>
-          <span data-lang="hi" class="hi">और</span>
-        </span>
-        <span class="h-divide-line" aria-hidden="true"></span>
-      </div>
-
-      <div class="h-meta rv d4">
-        <a href="/how-it-works"><span data-lang="en">How it works</span><span data-lang="hi" class="hi">कैसे चलता है</span></a>
-        <span class="h-meta-sep">·</span>
-        <a href="/about"><span data-lang="en">About</span><span data-lang="hi" class="hi">हमारे बारे में</span></a>
-        <span class="h-meta-sep">·</span>
-        <a href="/faq">FAQ</a>
-        <span class="h-meta-sep">·</span>
-        <a href="/report"><span data-lang="en">Report an incident</span><span data-lang="hi" class="hi">रिपोर्ट करें</span></a>
-      </div>
+    <div class="eyebrow rv">
+      <span class="ping"></span>
+      <span data-lang="en">a peer network · district by district</span>
+      <span data-lang="hi" class="hi">एक पीयर नेटवर्क · जिला-दर-जिला</span>
     </div>
 
-    <div class="h-right rv d2">
-      <div class="ph-wrap">
-        <div class="ph-stage">
-          <img src="Phone.png" alt="Rapid Response SOS screen" loading="eager"/>
-          <div class="ph-sos-pulse" aria-hidden="true"></div>
-        </div>
-        <div class="ph-cap">
-          <span class="dot" aria-hidden="true"></span>
-          <span data-lang="en">Live SOS screen</span>
-          <span data-lang="hi" class="hi">लाइव SOS स्क्रीन</span>
-        </div>
-      </div>
+    <h1 class="h1 rv d1">
+      <span class="b" data-lang="en">people who</span>
+      <span class="b" data-lang="en">show up for animals</span>
+      <span class="b em" data-lang="en">find each other.</span>
+      <span class="hi-b" data-lang="hi">जो जानवरों के लिए</span>
+      <span class="hi-b" data-lang="hi">खड़े होते हैं</span>
+      <span class="hi-b em" data-lang="hi">एक-दूसरे को ढूँढ लेते हैं।</span>
+    </h1>
+
+    <p class="sub rv d2">
+      <span data-lang="en">one tap could reach your whole district. but only if we're in one place.</span>
+      <span data-lang="hi" class="hi">एक टैप पूरे जिले तक पहुँच सकता है। लेकिन तभी जब हम एक जगह हों।</span>
+    </p>
+
+    <div class="ctas rv d3">
+      <a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" rel="noopener" class="btn">
+        <img src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000" alt="" loading="lazy"/>
+        <span data-lang="en">Android</span>
+        <span data-lang="hi" class="hi">एंड्रॉयड</span>
+      </a>
+      <a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" rel="noopener" class="btn">
+        <img src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000" alt="" loading="lazy"/>
+        <span data-lang="en">iPhone</span>
+        <span data-lang="hi" class="hi">आईफोन</span>
+      </a>
     </div>
+
+    <nav class="links rv d4" aria-label="More">
+      <a href="/how-it-works"><span data-lang="en">How it works</span><span data-lang="hi" class="hi">कैसे चलता है</span></a>
+      <span class="sep">·</span>
+      <a href="/about"><span data-lang="en">About</span><span data-lang="hi" class="hi">हमारे बारे में</span></a>
+      <span class="sep">·</span>
+      <a href="/faq">FAQ</a>
+      <span class="sep">·</span>
+      <a href="/legal-desk"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
+      <span class="sep">·</span>
+      <a href="/report" style="color:var(--accent)"><span data-lang="en">Report incident</span><span data-lang="hi" class="hi">रिपोर्ट करें</span></a>
+    </nav>
 
   </div>
 </section>
 
 <footer>
-  <div class="ft-in">
-    <div class="ft-brand">
-      <a href="/" class="logo" aria-label="Rapid Response">
-        <div class="logo-sq"><span class="material-symbols-outlined">pets</span></div>
-        <span class="logo-t">Rapid Response</span>
-      </a>
-      <p>
-        <span data-lang="en">An independent community initiative. Not affiliated with any government authority.</span>
-        <span data-lang="hi" class="hi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
-      </p>
-    </div>
-
-    <div class="ft-col">
-      <span class="ft-lbl">Explore</span>
-      <a href="/about"><span data-lang="en">About</span><span data-lang="hi" class="hi">हमारे बारे में</span></a>
-      <a href="/how-it-works"><span data-lang="en">How it works</span><span data-lang="hi" class="hi">कैसे चलता है</span></a>
-      <a href="/faq">FAQ</a>
-      <a href="/legal-desk"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
-      <a href="/report" style="color:var(--accent)"><span data-lang="en">Report incident →</span><span data-lang="hi" class="hi">घटना रिपोर्ट करें →</span></a>
-    </div>
-
-    <div class="ft-col">
-      <span class="ft-lbl">Contact</span>
-      <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
-      <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" style="color:#0095F6;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-          <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
-        </svg>
-        @rrtanimals
-      </a>
-    </div>
-  </div>
-
-  <div class="ft-bot">
-    <p>© 2026 RapidResponse Labs</p>
+  <div class="foot">
     <p>
-      <span data-lang="en">Animal Emergency Network · India</span>
-      <span data-lang="hi" class="hi">पशु आपातकालीन नेटवर्क · भारत</span>
+      <span data-lang="en">© 2026 RapidResponse Labs · An independent community initiative</span>
+      <span data-lang="hi" class="hi">© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र कम्युनिटी पहल</span>
     </p>
+    <div class="right">
+      <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
+      <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" class="ig">
+        <span id="igLottie" class="ig-icon" aria-hidden="true"></span>
+        <span>@rrtanimals</span>
+      </a>
+    </div>
   </div>
 </footer>
 
 <script>
-function setLang(l) {
-  document.documentElement.lang = l;
-}
+function setLang(l) { document.documentElement.lang = l; }
 document.addEventListener('DOMContentLoaded', function() { setLang('en'); });
 
 function toggleMode() {
@@ -888,6 +578,72 @@ var io = new IntersectionObserver(function(es) {
   es.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('on'); });
 }, { threshold: 0.06 });
 document.querySelectorAll('.rv').forEach(function(el) { io.observe(el); });
+
+/* Instagram Lottie — lazy loaded, plays only when visible */
+(function() {
+  var container = document.getElementById('igLottie');
+  if (!container) return;
+
+  // Respect reduced motion: skip the animation, use static SVG fallback
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    container.innerHTML = igStaticSvg();
+    return;
+  }
+
+  var anim = null;
+  var loaded = false;
+
+  function igStaticSvg() {
+    return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>';
+  }
+
+  // Place a static SVG immediately so the layout reserves space and the icon shows even if lottie never loads
+  container.innerHTML = igStaticSvg();
+
+  function loadLottie() {
+    if (loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie_light.min.js';
+    s.async = true;
+    s.onload = function() {
+      try {
+        anim = lottie.loadAnimation({
+          container: container,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: 'instagram.json'
+        });
+        // Replace the static SVG once the animation initializes
+        anim.addEventListener('DOMLoaded', function() {
+          // The static SVG is replaced automatically by lottie's render. No-op needed.
+        });
+        anim.addEventListener('data_failed', function() {
+          // Restore static SVG on failure
+          container.innerHTML = igStaticSvg();
+        });
+      } catch (err) {
+        container.innerHTML = igStaticSvg();
+      }
+    };
+    s.onerror = function() { container.innerHTML = igStaticSvg(); };
+    document.head.appendChild(s);
+  }
+
+  // Trigger the load when the footer comes into view
+  var ioIg = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        loadLottie();
+        if (anim) anim.play();
+      } else {
+        if (anim) anim.pause();
+      }
+    });
+  }, { threshold: 0.1 });
+  ioIg.observe(container);
+})();
 </script>
 </body>
 </html>
