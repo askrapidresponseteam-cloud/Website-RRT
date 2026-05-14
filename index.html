@@ -4,74 +4,45 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Rapid Response | Animal Emergency Network</title>
-<meta name="description" content="Rapid Response is a peer network for everyone who shows up for animals. Feeders, pet parents, fosterers, rescuers, vets. One tap reaches your district when you need a vet recommendation, backup at a feeding spot, or transport for an injured animal."/>
+<meta name="description" content="A peer network for everyone who shows up for animals. Feeders, pet parents, fosterers, rescuers, vets. One tap, your district, people who already do this."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"/>
 <style>
 /* ═══════════════════════════════════════════════════════════════════
-   RAPID RESPONSE - LANDING (INDEX)
-   Design system matches the report page exactly:
-   • Three-font system: Barlow Condensed (display), JetBrains Mono (labels),
-     Barlow (body), Noto Sans Devanagari (Hindi)
-   • Tokens, opacities, touch targets, accent #1F75F0, no rounded corners
+   RAPID RESPONSE — LANDING
+   Refined minimalism. Hero + phone. Everything else lives one click away.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* TOKENS - DARK (default) */
+/* TOKENS — DARK (default) */
 :root {
-  /* Surface */
   --bg:        #0A0908;
   --bg-soft:   #14110F;
   --bg-card:   rgba(255,255,255,0.025);
 
-  /* Text */
   --w:         #FFFFFF;
   --text:      #FFFFFF;
   --text-mid:  rgba(255,255,255,0.82);
   --text-low:  rgba(255,255,255,0.65);
   --text-dim:  rgba(255,255,255,0.48);
 
-  /* Legacy aliases (kept so JS / inline-style references don't break) */
-  --dim:       rgba(255,255,255,0.65);
-  --dimmer:    rgba(255,255,255,0.48);
-  --ghost:     rgba(255,255,255,0.025);
-
-  /* Border */
   --b:               rgba(255,255,255,0.12);
   --border:          rgba(255,255,255,0.12);
   --border-strong:   rgba(255,255,255,0.22);
   --border-focus:    rgba(31,117,240,0.55);
 
-  /* Accent (blue replaces brand red as primary signal) */
   --accent:      #1F75F0;
   --accent-h:    #4A90F5;
   --accent-soft: rgba(31,117,240,0.12);
 
-  /* Legacy red kept ONLY for genuine error/critical semantics */
-  --red:    #FF6B5C;
-  --ra10:   rgba(255,107,92,0.10);
-  --ra32:   rgba(255,107,92,0.35);
-
-  /* Signal */
-  --ok:    #5CD97F;
-  --warn:  #E8C44A;
-  --crit:  #FF6B5C;
-
-  /* Type */
   --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --sans:    'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --hindi:   'Noto Sans Devanagari', system-ui, sans-serif;
-
-  /* Legacy aliases used in original index */
-  --FD: var(--display);
-  --FB: var(--sans);
-  --FM: var(--mono);
-  --FH: var(--hindi);
 }
 
-/* TOKENS - LIGHT */
+/* TOKENS — LIGHT */
 html.light {
   --bg:        #FAFAF7;
   --bg-soft:   #FFFFFF;
@@ -82,33 +53,16 @@ html.light {
   --text-mid:  rgba(26,24,23,0.86);
   --text-low:  rgba(26,24,23,0.68);
   --text-dim:  rgba(26,24,23,0.52);
-  --dim:       rgba(26,24,23,0.68);
-  --dimmer:    rgba(26,24,23,0.52);
-  --ghost:     rgba(0,0,0,0.025);
 
   --b:               rgba(0,0,0,0.10);
   --border:          rgba(0,0,0,0.10);
   --border-strong:   rgba(0,0,0,0.22);
-  --border-focus:    rgba(31,117,240,0.55);
-
-  --accent:      #1F75F0;
-  --accent-h:    #1860C8;
-  --accent-soft: rgba(31,117,240,0.10);
-
-  --red:    #B8281A;
-  --ra10:   rgba(184,40,26,0.06);
-  --ra32:   rgba(184,40,26,0.30);
 }
 
-/* ═══════════════════════
-   BASE
-═══════════════════════ */
+/* RESET */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  font-size: 18px;
-  scroll-behavior: smooth;
-}
+html { font-size: 18px; scroll-behavior: smooth; }
 @media (max-width: 600px) { html { font-size: 17px; } }
 
 body {
@@ -130,7 +84,6 @@ body {
 
 ::selection { background: var(--accent-soft); color: var(--text); }
 
-/* Hindi */
 .hi { font-family: var(--hindi); line-height: 1.55; letter-spacing: 0; font-weight: 500; }
 
 [data-lang] { display: none !important; }
@@ -144,17 +97,15 @@ html[lang="hi"] span[data-lang="hi"] { display: inline !important; }
 
 a { color: inherit; text-decoration: none; }
 
-/* Reveal animation */
-.rv { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+/* Reveal */
+.rv { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .rv.on { opacity: 1; transform: translateY(0); }
 .rv.d1 { transition-delay: 0.08s; }
 .rv.d2 { transition-delay: 0.16s; }
 .rv.d3 { transition-delay: 0.24s; }
 .rv.d4 { transition-delay: 0.32s; }
 @media (prefers-reduced-motion: reduce) {
-  .rv, .rv.d1, .rv.d2, .rv.d3, .rv.d4 {
-    opacity: 1 !important; transform: none !important; transition: none !important;
-  }
+  .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* ═══════════════════════
@@ -170,273 +121,128 @@ a { color: inherit; text-decoration: none; }
   justify-content: space-between;
   padding: 0 28px;
   background: transparent;
+  transition: background 0.25s, border-color 0.25s;
   border-bottom: 1px solid transparent;
-  transition: background 0.3s, border-color 0.3s;
+}
+#hdr.stuck {
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
 @media (min-width: 768px) { #hdr { padding: 0 48px; } }
 
-#hdr.stuck {
-  background: rgba(10,9,8,0.78);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-bottom-color: var(--border);
-}
-html.light #hdr.stuck { background: rgba(250,250,247,0.86); }
-
 .logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  flex-shrink: 0;
+  gap: 10px;
 }
 .logo-sq {
-  width: 32px; height: 32px;
-  background: transparent;
-  border: 1px solid var(--border-strong);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: var(--accent);
+  display: grid; place-items: center;
 }
-.logo-sq .material-symbols-outlined { font-size: 18px; color: var(--text); }
+.logo-sq .material-symbols-outlined { color: #fff; font-size: 18px; }
 .logo-t {
   font-family: var(--display);
   font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.16em;
+  font-size: 18px;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--text);
-  white-space: nowrap;
-}
-
-nav.desk {
-  display: none;
-  align-items: center;
-  gap: 28px;
-}
-@media (min-width: 960px) { nav.desk { display: flex; } }
-
-nav.desk a {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-low);
-  text-decoration: none;
-  transition: color 0.2s;
-  white-space: nowrap;
-}
-nav.desk a:hover { color: var(--text); }
-nav.desk a .hi { font-family: var(--hindi); font-size: 12px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
-
-nav.desk a.cta {
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  padding: 10px 18px;
-  transition: all 0.2s;
-}
-nav.desk a.cta:hover {
-  background: var(--accent);
-  color: #FFFFFF;
 }
 
 .hdr-r {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
+  gap: 8px;
 }
 .lb {
   font-family: var(--mono);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.12em;
   background: none;
   border: none;
-  color: var(--text-low);
+  padding: 8px 10px;
   cursor: pointer;
-  padding: 6px 4px;
+  color: var(--text-low);
   transition: color 0.2s;
+  text-transform: uppercase;
 }
 .lb:hover { color: var(--text); }
-.lsep { color: var(--border); font-size: 14px; }
+.lb.hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 13px; }
+.lsep { color: var(--text-dim); }
 
 .mode-b {
-  width: 36px; height: 36px;
-  background: transparent;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s, border-color 0.2s;
-  flex-shrink: 0;
-}
-.mode-b:hover {
-  background: rgba(255,255,255,0.04);
-  border-color: var(--border-strong);
-}
-
-.mob-btn {
   background: none;
   border: none;
-  color: var(--text);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 8px;
-}
-.mob-btn .material-symbols-outlined { font-size: 26px; }
-@media (min-width: 960px) { .mob-btn { display: none; } }
-
-/* MOBILE MENU */
-#mmo {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  z-index: 290;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-#mm {
-  position: fixed;
-  top: 0; right: 0; bottom: 0;
-  width: min(320px, 90vw);
-  background: var(--bg);
-  border-left: 1px solid var(--border);
-  z-index: 300;
-  transform: translateX(100%);
-  transition: transform 0.4s cubic-bezier(.16,1,.3,1);
-  display: flex;
-  flex-direction: column;
-  padding: 80px 32px 40px;
-  gap: 28px;
-  overflow-y: auto;
-}
-#mm a {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 24px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-low);
-  text-decoration: none;
-  transition: color 0.2s;
-  line-height: 1.2;
-}
-#mm a.hi { font-family: var(--hindi); font-size: 22px; font-weight: 500; }
-#mm a:hover, #mm a.r { color: var(--text); }
-#mm a.r::after { content: ' →'; color: var(--accent); }
-#mmc {
-  position: absolute;
-  top: 24px; right: 24px;
-  background: none;
-  border: none;
-  color: var(--text-low);
-  cursor: pointer;
-  font-size: 28px;
+  padding: 6px 8px;
+  font-size: 16px;
   line-height: 1;
-  padding: 8px;
 }
 
 /* ═══════════════════════
-   LAYOUT HELPERS
-═══════════════════════ */
-.wrap, .ms-wrap, .ft-in {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 28px;
-}
-@media (min-width: 768px) {
-  .wrap, .ms-wrap, .ft-in { padding: 0 48px; }
-}
-
-.sec { padding: 88px 0; }
-@media (min-width: 768px) { .sec { padding: 112px 0; } }
-
-.div {
-  height: 1px;
-  background: var(--border);
-  margin: 0;
-}
-
-/* Generic label (eyebrow above big headings) */
-.lbl, .h-eye {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 24px;
-}
-.lbl .hi, .h-eye .hi {
-  font-family: var(--hindi);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: none;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-/* Display headline (sections after the hero) */
-.dh {
-  font-family: var(--display);
-  font-size: clamp(34px, 5.5vw, 60px);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 18px;
-}
-.dh .en-h,
-.dh .hi-h { display: block; }
-.dh .hi-h { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.15; }
-
-/* ═══════════════════════
-   HERO
+   HERO  (the whole page)
 ═══════════════════════ */
 #hero {
   position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 140px 28px 80px;
+  padding: 120px 28px 80px;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 32%, var(--accent-soft) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 30% 50%, var(--accent-soft) 0%, transparent 70%),
     var(--bg);
   overflow: hidden;
 }
-.h-heat {
+@media (min-width: 768px) { #hero { padding: 120px 48px 80px; } }
+
+.h-grain {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(31,117,240,0.06) 0%, transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(31,117,240,0.04) 0%, transparent 40%);
-}
-.h-content {
-  position: relative;
-  z-index: 2;
-  max-width: 920px;
-  width: 100%;
-  text-align: center;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+.h-wrap {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 56px;
+  align-items: center;
+}
+@media (min-width: 980px) {
+  .h-wrap { grid-template-columns: 1.15fr 1fr; gap: 80px; }
+}
+
+/* LEFT — copy */
+.h-left { max-width: 620px; }
+
 .h-eye {
-  justify-content: center;
-  margin-bottom: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+}
+.h-eye .hi {
+  font-family: var(--hindi);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-weight: 500;
 }
 .h-dot {
   width: 6px; height: 6px;
@@ -447,15 +253,15 @@ nav.desk a.cta:hover {
 .h1 {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(40px, 7.5vw, 88px);
-  line-height: 0.98;
-  letter-spacing: -0.01em;
+  font-size: clamp(40px, 6.8vw, 80px);
+  line-height: 0.96;
+  letter-spacing: -0.015em;
   text-transform: uppercase;
   color: var(--text);
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 .h1 .en-b, .h1 .hi-b { display: block; }
-.h1 .hi-b { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.12; }
+.h1 .hi-b { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; line-height: 1.10; }
 .h1 .ghost {
   color: var(--accent);
   font-style: italic;
@@ -464,262 +270,89 @@ nav.desk a.cta:hover {
 
 .h-sub {
   font-family: var(--sans);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 400;
-  line-height: 1.65;
+  line-height: 1.6;
   color: var(--text-mid);
-  max-width: 56ch;
-  margin: 0 auto 40px;
+  max-width: 48ch;
+  margin-bottom: 36px;
 }
-.h-sub .hi { font-family: var(--hindi); font-size: 17px; line-height: 1.7; font-weight: 500; }
+.h-sub .hi { font-family: var(--hindi); font-size: 16px; line-height: 1.7; font-weight: 500; }
 
-/* HERO CTAs */
 .h-ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 14px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 .btn-s {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 14px 22px;
-  min-height: 52px;
-  background: transparent;
-  border: 1px solid var(--border-strong);
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 12px;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--sans);
   font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: all 0.2s;
-  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--text);
+  transition: transform 0.15s, opacity 0.15s;
+  min-width: 158px;
+  justify-content: center;
 }
-.btn-s:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-.btn-s img {
-  width: 16px; height: 16px;
-  filter: invert(1) brightness(2);
-}
-html.light .btn-s img { filter: none; }
-.btn-s .hi { font-family: var(--hindi); font-size: 13px; letter-spacing: 0.04em; text-transform: none; font-weight: 600; }
+.btn-s:hover { transform: translateY(-1px); opacity: 0.92; }
+.btn-s img { width: 18px; height: 18px; display: block; }
+.btn-s .hi { font-family: var(--hindi); font-size: 15px; font-weight: 600; }
 
-.btn-r {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 30px;
-  min-height: 56px;
-  background: var(--accent);
-  border: 1px solid var(--accent);
-  color: #FFFFFF;
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: all 0.2s;
-  margin-top: 18px;
-  cursor: pointer;
-}
-.btn-r:hover {
-  background: var(--accent-h);
-  border-color: var(--accent-h);
-  transform: translateY(-1px);
-}
-.btn-r .material-symbols-outlined { font-size: 18px; }
-.btn-r .hi { font-family: var(--hindi); font-size: 13px; letter-spacing: 0.04em; text-transform: none; font-weight: 600; color: #FFFFFF; }
-
-/* HERO BAR (Learn + demo links) */
-.h-bar {
-  margin-top: 56px;
-  padding: 18px 22px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
+.h-meta {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
-  gap: 18px 24px;
+  gap: 6px 14px;
   font-family: var(--mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
   text-transform: uppercase;
 }
-.h-bar-lbl {
-  color: var(--accent);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.h-bar-lbl::after {
-  content: '';
-  width: 12px;
-  height: 1px;
-  background: var(--accent);
-}
-.h-bar-lbl .hi { font-family: var(--hindi); font-size: 13px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
-.h-bar a {
+.h-meta a {
   color: var(--text-low);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: color 0.2s;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
 }
-.h-bar a:hover { color: var(--text); }
-.h-bar a .material-symbols-outlined { font-size: 16px; color: var(--accent); }
-.h-bar a .hi { font-family: var(--hindi); font-size: 13px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
+.h-meta a:hover { color: var(--text); border-bottom-color: var(--accent); }
+.h-meta .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 13px; }
+.h-meta-sep { color: var(--text-dim); opacity: 0.4; }
 
-/* ═══════════════════════
-   MISSION
-═══════════════════════ */
-#mission {
-  padding: 96px 0;
-  background: var(--bg);
-}
-@media (min-width: 768px) { #mission { padding: 120px 0; } }
-
-.ms-stmt {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(32px, 5vw, 52px);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 32px;
-  max-width: 20ch;
-}
-.ms-stmt.hi-ms {
-  font-family: var(--hindi);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.15;
-  font-size: clamp(28px, 4.4vw, 46px);
-}
-.ms-em { color: var(--accent); font-style: italic; }
-
-.ms-body {
-  font-family: var(--sans);
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.7;
-  color: var(--text-mid);
-  max-width: 64ch;
-  margin-bottom: 22px;
-}
-.ms-body strong { color: var(--text); font-weight: 600; }
-.ms-body .hi { font-family: var(--hindi); font-size: 17px; line-height: 1.75; font-weight: 500; }
-.ms-body .hi strong { font-weight: 600; }
-
-.ms-pillars {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  margin-top: 56px;
-}
-@media (min-width: 720px) { .ms-pillars { grid-template-columns: repeat(3, 1fr); } }
-
-.ms-pl {
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 24px 22px;
-}
-.ms-pl-n {
-  display: block;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 12px;
-}
-.ms-pl h4 {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 22px;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  line-height: 1.1;
-  color: var(--text);
-  margin-bottom: 12px;
-}
-.ms-pl h4 .hi { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; }
-.ms-pl p {
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--text-mid);
-  font-weight: 400;
-}
-.ms-pl p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
-
-/* ═══════════════════════
-   HOW IT WORKS
-═══════════════════════ */
-.how-hd { margin-bottom: 56px; text-align: left; }
-.how-hd .lbl { margin-bottom: 18px; }
-.how-desc {
-  font-size: 17px;
-  color: var(--text-mid);
-  max-width: 50ch;
-  line-height: 1.65;
-  margin-top: 8px;
-}
-.how-desc .hi { font-family: var(--hindi); font-size: 16px; line-height: 1.7; font-weight: 500; }
-
-.how-lay {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 56px;
-  align-items: start;
-}
-@media (min-width: 880px) { .how-lay { grid-template-columns: 380px 1fr; gap: 64px; } }
-
-.ph-col {
+/* RIGHT — phone */
+.h-right {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
-  position: sticky;
-  top: 96px;
+  position: relative;
 }
-@media (max-width: 879px) { .ph-col { position: static; } }
-.ph-frame {
+.ph-wrap {
   width: 100%;
-  max-width: 360px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  overflow: hidden;
-  padding: 8px;
+  max-width: 320px;
+  position: relative;
 }
-.ph-frame img {
-  width: 100%;
-  display: block;
-}
-
-/* Phone stage = relative wrapper so overlays sit on top of img */
 .ph-stage {
   position: relative;
   width: 100%;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 8px;
 }
 .ph-stage img {
-  display: block;
   width: 100%;
+  display: block;
   position: relative;
   z-index: 1;
 }
 
-/* SOS button pulsing glow ring (Phone.png — red circle, centered ~50%/47%) */
+/* SOS pulse — red rings expanding from the SOS button. Centered ~50% / ~45% of image, width ~54%. */
 .ph-sos-pulse {
   position: absolute;
   left: 50%;
@@ -748,1469 +381,219 @@ html.light .btn-s img { filter: none; }
   100% { transform: scale(1.35); opacity: 0; border-width: 1px; }
 }
 
-/* Ask the district button glow (Ask the district.png — POST AN ASK black bar at ~50%/23%) */
-.ph-ask-cue {
-  position: absolute;
-  left: 50%;
-  top: 23%;
-  width: 84%;
-  aspect-ratio: 8 / 1;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 2;
-  animation: askGlow 2.6s ease-in-out infinite;
-}
-@keyframes askGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 0 0 rgba(31, 117, 240, 0),
-      0 0 12px 2px rgba(31, 117, 240, 0.25);
-  }
-  50% {
-    box-shadow:
-      0 0 0 4px rgba(31, 117, 240, 0.18),
-      0 0 32px 8px rgba(31, 117, 240, 0.55);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .ph-sos-pulse::before, .ph-sos-pulse::after { animation: none; opacity: 0; }
-  .ph-ask-cue { animation: none; box-shadow: none; }
 }
 
-.ph-badge {
+/* Phone caption */
+.ph-cap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent);
-  padding: 6px 12px;
-  border: 1px solid var(--accent);
-  background: var(--accent-soft);
-}
-.ph-badge .hi { font-family: var(--hindi); font-size: 12px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
-
-.steps-wrap { display: flex; flex-direction: column; gap: 18px; }
-.steps-g { display: grid; gap: 18px; }
-.step {
-  position: relative;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 28px 26px 26px;
-  transition: border-color 0.25s, background 0.25s;
-}
-.step:hover {
-  border-color: var(--border-strong);
-  background: rgba(255,255,255,0.04);
-}
-.snum {
-  position: absolute;
-  top: 18px; right: 22px;
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 56px;
-  letter-spacing: -0.02em;
-  color: var(--text-dim);
-  opacity: 0.4;
-  line-height: 1;
-}
-.s-ic {
-  display: inline-flex;
-  width: 40px; height: 40px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-  margin-bottom: 16px;
-}
-.s-ic .material-symbols-outlined { font-size: 20px; }
-.s-lbl {
-  display: block;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 10px;
-}
-.step h4 {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 24px;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 12px;
-  max-width: 18ch;
-}
-.step h4 .hi { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; }
-.step p {
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--text-mid);
-  max-width: 44ch;
-}
-.step p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
-
-.how-note {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  border: 1px solid var(--border);
-  border-left: 2px solid var(--accent);
-  background: var(--bg-card);
-  padding: 18px 22px;
-  margin-top: 8px;
-}
-.how-note .material-symbols-outlined {
-  font-size: 20px;
-  color: var(--accent);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.how-note p {
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--text-mid);
-}
-.how-note p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
-
-/* Two-uses framing block: SOS vs Ask the District */
-.how-uses {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 32px;
-  margin-bottom: 18px;
-}
-@media (max-width: 760px) {
-  .how-uses { grid-template-columns: 1fr; gap: 12px; }
-}
-.how-use {
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 18px 20px;
-}
-.how-use-hd {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-.how-use-hd .material-symbols-outlined {
-  font-size: 20px;
-  color: var(--accent);
-}
-.how-use-ttl {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 0.01em;
-  color: var(--text);
-}
-.how-use-ttl .hi { font-family: var(--hindi); font-weight: 600; font-size: 18px; }
-.how-use-tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  padding: 3px 8px;
-  border: 1px solid var(--border);
-}
-.how-use-tag .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
-.how-use-p {
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: var(--text-mid);
-}
-.how-use-p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
-
-/* ═══════════════════════
-   CLARITY
-═══════════════════════ */
-.cl-hd { margin-bottom: 48px; }
-.cl-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-}
-@media (min-width: 760px) { .cl-grid { grid-template-columns: 1fr 1fr; gap: 28px; } }
-
-.cl-col {
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 28px 26px;
-}
-.cl-ch {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 22px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--border);
-}
-.cl-ico {
-  display: inline-flex;
-  width: 40px; height: 40px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid currentColor;
-  flex-shrink: 0;
-}
-.cl-ico .material-symbols-outlined { font-size: 22px; }
-.cl-ico.gn { color: var(--ok); background: rgba(92,217,127,0.08); }
-.cl-ico.rd { color: var(--crit); background: var(--ra10); }
-.cl-ch h3 {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 22px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.cl-ch h3.gn { color: var(--ok); }
-.cl-ch h3.rd { color: var(--crit); }
-.cl-ch h3 .hi { font-family: var(--hindi); font-weight: 700; letter-spacing: 0; }
-
-.cl-it {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-.cl-it:last-child { border-bottom: none; }
-.cl-dot {
-  width: 6px; height: 6px;
-  margin-top: 10px;
-  flex-shrink: 0;
-}
-.cl-dot.gn { background: var(--ok); }
-.cl-dot.rd { background: var(--crit); }
-.cl-it p {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text-mid);
-}
-.cl-it p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
-
-/* ═══════════════════════
-   FAQ
-═══════════════════════ */
-.faq-lay {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px;
-}
-@media (min-width: 880px) { .faq-lay { grid-template-columns: 320px 1fr; gap: 64px; } }
-
-.faq-l p {
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--text-mid);
-  margin-bottom: 28px;
-  max-width: 30ch;
-}
-.faq-l p .hi { font-family: var(--hindi); font-size: 15px; line-height: 1.7; font-weight: 500; }
-.ask-lbl {
-  display: block;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 8px;
-}
-.ask-lbl .hi { font-family: var(--hindi); font-size: 13px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
-.faq-l a {
-  color: var(--accent);
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.faq-l a:hover { color: var(--accent-h); }
-
-.faq-sw {
-  position: relative;
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 0 16px;
-  margin-bottom: 16px;
-  transition: border-color 0.2s;
-  min-height: 56px;
-}
-.faq-sw:focus-within {
-  border-color: var(--accent);
-  background: rgba(255,255,255,0.04);
-}
-.faq-sw .material-symbols-outlined {
-  color: var(--text-dim);
-  font-size: 20px;
-  margin-right: 12px;
-}
-#faqSearch {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 16px;
-  padding: 14px 0;
-  outline: none;
-  width: 100%;
-}
-#faqSearch::placeholder { color: var(--text-dim); }
-
-.fq-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-.fq-chip {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 8px 14px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-low);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.fq-chip:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
-.fq-chip.on {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #FFFFFF;
-}
-
-#faqRes {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 200px;
-}
-#fqEmp {
-  border: 1px dashed var(--border);
-  padding: 24px;
-  text-align: center;
-  font-size: 14px;
-  color: var(--text-dim);
-  font-family: var(--mono);
-  letter-spacing: 0.04em;
-}
-#fqEmp .hi { font-family: var(--hindi); font-size: 14px; letter-spacing: 0; font-weight: 500; }
-
-.fq-it {
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 18px 20px;
-}
-.fq-it .fq-q {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 6px;
-  line-height: 1.25;
-}
-.fq-it .fq-q.hi { font-family: var(--hindi); font-weight: 600; letter-spacing: 0; line-height: 1.4; }
-.fq-it .fq-a {
-  font-size: 15px;
-  color: var(--text-mid);
-  line-height: 1.65;
-}
-.fq-it .fq-a.hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
-
-/* ═══════════════════════
-   LEGAL DESK
-═══════════════════════ */
-.leg-hd { margin-bottom: 48px; }
-.leg-hd-desc {
-  font-size: 17px;
-  color: var(--text-mid);
-  line-height: 1.65;
-  max-width: 64ch;
-  margin-top: 12px;
-}
-.leg-hd-desc .hi { font-family: var(--hindi); font-size: 16px; line-height: 1.7; font-weight: 500; }
-
-.leg-wrap {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  padding: 0;
-  overflow: hidden;
-}
-@media (min-width: 880px) { .leg-wrap { grid-template-columns: 280px 1fr; gap: 0; } }
-
-.leg-sb {
-  padding: 24px 22px;
-  border-right: 1px solid var(--border);
-  background: rgba(255,255,255,0.015);
-}
-@media (max-width: 879px) { .leg-sb { border-right: none; border-bottom: 1px solid var(--border); } }
-
-.leg-sb-h h4 {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-.leg-sb-h p {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-top: 6px;
-}
-
-.leg-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 20px 0 24px;
-}
-.ltag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 6px 10px;
-  border: 1px solid var(--border);
   color: var(--text-low);
 }
-.ltag .material-symbols-outlined { font-size: 14px; color: var(--accent); }
-
-.leg-ql {
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 10px;
-}
-.leg-qc { display: flex; flex-direction: column; gap: 8px; }
-.lqc {
-  text-align: left;
-  background: transparent;
-  border: 1px solid var(--border);
-  padding: 12px 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--sans);
-}
-.lqc:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-.lqc .ct {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 2px;
-}
-.lqc .cs {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.leg-panel {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
-}
-.leg-ph {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(255,255,255,0.02);
-}
-.lph-dots { display: flex; gap: 6px; }
-.lph-dot { width: 10px; height: 10px; }
-.lph-t {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  flex: 1;
-}
-.lph-s {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ok);
-}
-.lph-sd {
+.ph-cap .dot {
   width: 6px; height: 6px;
-  background: var(--ok);
-  display: inline-block;
+  background: #FF3B30;
+  border-radius: 50%;
+  animation: pulseDot 2.4s ease-in-out infinite;
 }
-
-#lcb {
-  padding: 24px;
-  min-height: 280px;
-  max-height: 480px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.15); }
 }
-.cbo {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.cbo-ic {
-  display: inline-flex;
-  width: 36px; height: 36px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-  flex-shrink: 0;
-}
-.cbo-ic .material-symbols-outlined { font-size: 18px; }
-.cb {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text-mid);
-  flex: 1;
-}
-.cb strong { color: var(--text); font-weight: 600; }
-.cb .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
-.cb .hi strong { font-weight: 600; }
-
-.cu {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 14px;
-  align-items: flex-start;
-}
-.cu .cb {
-  background: var(--accent);
-  color: #FFFFFF;
-  padding: 12px 16px;
-  max-width: 80%;
-}
-.leg-ir {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  border-top: 1px solid var(--border);
-  background: rgba(255,255,255,0.02);
-}
-.leg-ir .ii {
-  color: var(--text-dim);
-  font-size: 18px;
-  flex-shrink: 0;
-}
-#li {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 15px;
-  padding: 10px 0;
-}
-#li::placeholder { color: var(--text-dim); }
-#lb {
-  display: inline-flex;
-  width: 40px; height: 40px;
-  align-items: center;
-  justify-content: center;
-  background: var(--accent);
-  border: 1px solid var(--accent);
-  color: #FFFFFF;
-  cursor: pointer;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
-#lb:hover { background: var(--accent-h); }
-#lb .material-symbols-outlined { font-size: 18px; }
-
-.leg-disc {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  padding: 10px 16px 14px;
-  background: rgba(255,255,255,0.02);
-  border-top: 1px solid var(--border);
-}
-.leg-disc .hi { font-family: var(--hindi); font-size: 12px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
+.ph-cap .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
 
 /* ═══════════════════════
    FOOTER
 ═══════════════════════ */
-footer#support {
-  background: var(--bg-soft);
+footer {
   border-top: 1px solid var(--border);
-  padding: 72px 28px 40px;
+  padding: 56px 28px 32px;
 }
-@media (min-width: 768px) { footer#support { padding: 96px 48px 48px; } }
+@media (min-width: 768px) { footer { padding: 64px 48px 36px; } }
 
 .ft-in {
-  max-width: 1160px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
-  padding: 0;
 }
-@media (min-width: 600px) { .ft-in { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 920px) { .ft-in { grid-template-columns: 1.4fr 1fr 1fr; gap: 56px; } }
+@media (min-width: 768px) {
+  .ft-in { grid-template-columns: 1.2fr 1fr 1fr; gap: 56px; }
+}
 
+.ft-brand .logo { margin-bottom: 16px; }
 .ft-brand p {
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: 14px;
   color: var(--text-low);
-  margin-top: 18px;
-  max-width: 32ch;
+  line-height: 1.65;
+  max-width: 36ch;
 }
-.ft-brand p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
+.ft-brand p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; }
 
+.ft-col { display: flex; flex-direction: column; gap: 12px; }
 .ft-lbl {
-  display: block;
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 18px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
 }
 .ft-col a {
-  display: block;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-low);
-  text-decoration: none;
-  margin-bottom: 10px;
   transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 .ft-col a:hover { color: var(--text); }
-.ft-col a .hi { font-family: var(--hindi); font-size: 14px; font-weight: 500; }
-
-.ft-contact a { color: var(--accent); font-size: 15px; font-weight: 500; }
-.ft-contact a[style*="color"] { color: var(--accent) !important; }
-.note-p {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-top: 12px;
-}
-.note-p .hi { font-family: var(--hindi); font-size: 13px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
-
-.ft-note {
-  margin-top: 18px;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-}
-.ft-note p { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
-.ft-note p .hi { font-family: var(--hindi); font-size: 14px; line-height: 1.7; font-weight: 500; }
+.ft-col a .hi { font-family: var(--hindi); font-size: 14px; }
 
 .ft-bot {
-  max-width: 1160px;
+  max-width: 1280px;
   margin: 48px auto 0;
   padding-top: 24px;
   border-top: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
   gap: 12px;
-}
-.ft-bot p {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-dim);
 }
-.ft-bot p .hi { font-family: var(--hindi); font-size: 12px; letter-spacing: 0.04em; text-transform: none; font-weight: 500; }
-
-/* ═══════════════════════
-   MOBILE TUNING
-═══════════════════════ */
-@media (max-width: 600px) {
-  #hero { padding: 120px 22px 64px; min-height: auto; }
-  .sec { padding: 64px 0; }
-  #mission { padding: 72px 0; }
-  .h1 { font-size: clamp(36px, 9vw, 56px); }
-  .h-sub { font-size: 17px; }
-  .h-bar { padding: 14px 16px; gap: 12px 18px; }
-  .ms-stmt { font-size: clamp(28px, 7vw, 38px); }
-  .ms-body { font-size: 17px; }
-  .ms-pl { padding: 22px 18px; }
-  .step { padding: 22px 20px 20px; }
-  .snum { font-size: 44px; top: 14px; right: 16px; }
-  .step h4 { font-size: 22px; }
-  .cl-col { padding: 22px 20px; }
-  .cl-ch h3 { font-size: 20px; }
-  .leg-sb { padding: 20px 18px; }
-}
-
-/* Light-mode input clarity patches */
-html.light .ph-frame img { filter: none; }
-
-
-/* Loading spinner for legal AI send button */
-.sp { animation: lspin 0.8s linear infinite; display: inline-block; }
-@keyframes lspin { to { transform: rotate(360deg); } }
-
+.ft-bot p .hi { font-family: var(--hindi); text-transform: none; letter-spacing: 0; font-size: 12px; }
 </style>
 </head>
 <body>
 
-<div id="mmo" onclick="closeMM()"></div>
-<div id="mm">
-  <button id="mmc" onclick="closeMM()">✕</button>
-  <a href="#mission" onclick="closeMM()" data-lang="en">Mission</a>
-  <a href="#mission" onclick="closeMM()" data-lang="hi" class="hi">मिशन</a>
-  <a href="#for"     onclick="closeMM()" data-lang="en">How it Works</a>
-  <a href="#for"     onclick="closeMM()" data-lang="hi" class="hi">कैसे चलता है</a>
-  <a href="#clarity" onclick="closeMM()" data-lang="en">Clarity</a>
-  <a href="#clarity" onclick="closeMM()" data-lang="hi" class="hi">साफ़ समझ</a>
-  <a href="#faq"     onclick="closeMM()">FAQ</a>
-  <a href="#legal"   onclick="closeMM()" data-lang="en">Legal Desk</a>
-  <a href="#legal"   onclick="closeMM()" data-lang="hi" class="hi">कानूनी मदद</a>
-  <a href="/report"  onclick="closeMM()" class="r" data-lang="en">Report →</a>
-  <a href="/report"  onclick="closeMM()" class="r hi" data-lang="hi">रिपोर्ट करें →</a>
-</div>
-
 <header id="hdr">
-  <a href="/" class="logo">
+  <a href="/" class="logo" aria-label="Rapid Response">
     <div class="logo-sq"><span class="material-symbols-outlined">pets</span></div>
     <span class="logo-t">Rapid Response</span>
   </a>
-  <nav class="desk">
-    <a href="#mission">
-      <span data-lang="en">Mission</span>
-      <span data-lang="hi" class="hi">मिशन</span>
-    </a>
-    <a href="#for">
-      <span data-lang="en">How it Works</span>
-      <span data-lang="hi" class="hi">कैसे चलता है</span>
-    </a>
-    <a href="#faq">FAQ</a>
-    <a href="#legal">
-      <span data-lang="en">Legal Desk</span>
-      <span data-lang="hi" class="hi">कानूनी मदद</span>
-    </a>
-    <a href="/report" class="cta">
-      <span data-lang="en">Report</span>
-      <span data-lang="hi" class="hi">रिपोर्ट</span>
-    </a>
-  </nav>
   <div class="hdr-r">
-    <button class="mode-b" id="modeBtn" onclick="toggleMode()">☀️</button>
+    <button class="mode-b" id="modeBtn" onclick="toggleMode()" aria-label="Toggle theme">☀️</button>
     <button class="lb" onclick="setLang('en')">EN</button>
     <span class="lsep">|</span>
     <button class="lb hi" onclick="setLang('hi')">हिंदी</button>
-    <button class="mob-btn" onclick="openMM()"><span class="material-symbols-outlined">menu</span></button>
   </div>
 </header>
 
-<!-- ══════════ HERO ══════════ -->
 <section id="hero">
-  <div class="h-heat"></div>
-  <div class="h-content">
+  <div class="h-grain" aria-hidden="true"></div>
+  <div class="h-wrap">
 
-    <div class="h-eye rv">
-      <span class="h-dot"></span>
-      <span class="el" data-lang="en">a peer network. district by district.</span>
-      <span class="el hi" data-lang="hi">एक पीयर नेटवर्क। जिला-दर-जिला।</span>
-    </div>
-
-<div class="h1 rv d1">
-      <span class="en-b" data-lang="en">people who</span>
-      <span class="en-b" data-lang="en">show up for animals</span>
-      <span class="en-b ghost" data-lang="en">find each other.</span>
-      <span class="hi-b" data-lang="hi">जो जानवरों के लिए</span>
-      <span class="hi-b" data-lang="hi">खड़े होते हैं</span>
-      <span class="hi-b ghost" data-lang="hi">एक-दूसरे को ढूँढ लेते हैं।</span>
-    </div>
-     
-    <p class="h-sub rv d2">
-      <span data-lang="en">one tap could reach everyone in your district. but only if we're in one place. that's what this is for.</span>
-      <span data-lang="hi" class="hi">एक टैप जिले के हर इंसान तक पहुँच सकता है। लेकिन तभी जब हम एक जगह हों। यही इसका मक़सद है।</span>
-    </p>
-
-    <div class="h-ctas rv d3">
-      <a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" class="btn-s">
-        <img src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000" alt="" loading="lazy"/>
-        <span data-lang="en">Android</span>
-        <span data-lang="hi" class="hi">एंड्रॉयड</span>
-      </a>
-      <a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" class="btn-s">
-        <img src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000" alt="" loading="lazy"/>
-        <span data-lang="en">iPhone</span>
-        <span data-lang="hi" class="hi">आईफोन</span>
-      </a>
-    </div>
-
-    <div class="rv d3">
-      <a href="/report" class="btn-r">
-        <span class="material-symbols-outlined">report</span>
-        <span data-lang="en">Report Incident</span>
-        <span data-lang="hi" class="hi btn-r">घटना रिपोर्ट करें</span>
-      </a>
-    </div>
-
-    <div class="h-bar rv d4">
-      <span class="h-bar-lbl">
-        <span data-lang="en">Learn</span>
-        <span data-lang="hi" class="hi">जानें</span>
-      </span>
-      <a href="https://drive.google.com/file/d/10g338Ptd-xZtY68b-Ih4Op0EdGVITJaz/preview" target="_blank">
-        <span class="material-symbols-outlined">play_circle</span>
-        <span data-lang="en">iOS Demo</span>
-        <span data-lang="hi" class="hi">iOS डेमो</span>
-      </a>
-      <a href="https://drive.google.com/file/d/1jsseovdhhCvx6k0SMhIx2uwowkeElnfF/preview" target="_blank">
-        <span class="material-symbols-outlined">play_circle</span>
-        <span data-lang="en">Android Demo</span>
-        <span data-lang="hi" class="hi">Android डेमो</span>
-      </a>
-      <a href="https://drive.google.com/file/d/1infaiPzLyf7QI6W9c_HD4lGRrXnoxReP/preview" target="_blank">
-        <span class="material-symbols-outlined">settings</span>
-        <span data-lang="en">Setup Guide</span>
-        <span data-lang="hi" class="hi">सेटअप गाइड</span>
-      </a>
-      <a href="https://drive.google.com/file/d/1tNzlAMjhQUWH47_DYEOchLnwHTcVQMn2/preview" target="_blank">
-        <span class="material-symbols-outlined">info</span>
-        <span data-lang="en">How It Works</span>
-        <span data-lang="hi" class="hi">ऐप कैसे काम करता है</span>
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- ══════════ MISSION ══════════ -->
-<section id="mission">
-  <div class="ms-wrap">
-
-    <span class="lbl rv">
-      <span data-lang="en">Why We Exist</span>
-      <span data-lang="hi" class="hi">हम क्यों हैं</span>
-    </span>
-
-    <h2 class="ms-stmt rv d1" data-lang="en">
-      you already do the work. <span class="ms-em">imagine if we could find each other.</span>
-    </h2>
-    <h2 class="ms-stmt hi-ms rv d1" data-lang="hi">
-      आप पहले से काम कर रहे हैं। <span class="ms-em">सोचिए, अगर हम एक-दूसरे को ढूँढ पाएँ।</span>
-    </h2>
-
-    <p class="ms-body rv d2">
-      <span data-lang="en">if you feed community animals, foster pets, run a rescue, or love the dog on your street, you already know the work isn't the hard part. <strong>finding the right person at the right moment is.</strong></span>
-      <span data-lang="hi" class="hi">अगर आप जानवरों को खाना खिलाते हैं, पेट्स फोस्टर करते हैं, रेस्क्यू चलाते हैं, या अपनी गली के कुत्ते से प्यार करते हैं, आप जानते हैं कि काम मुश्किल नहीं है। <strong>सही वक़्त पर सही इंसान ढूँढना मुश्किल है।</strong></span>
-    </p>
-
-    <p class="ms-body rv d2">
-      <span data-lang="en">NGO numbers go to voicemail. the one feeder you trust is out of town. you don't know which vet is good for what. you end up forwarding the same message across five WhatsApp groups, hoping someone replies.</span>
-      <span data-lang="hi" class="hi">NGO के नंबर पर कॉल नहीं उठती। जिस फीडर पर आप भरोसा करते हैं वो शहर के बाहर है। पता नहीं किस वेट के पास जाएँ। आप एक ही मैसेज पाँच WhatsApp ग्रुप्स में फॉरवर्ड करते रहते हैं, उम्मीद में कि कोई जवाब देगा।</span>
-    </p>
-
-    <p class="ms-body rv d3">
-      <span data-lang="en">your district has the people. the feeder who knows which clinic to go to. the rescuer with a car. the foster with an empty kennel. they exist. they're just scattered across phones, groups, and chance. if we were in one place, finding them wouldn't take a panic.</span>
-      <span data-lang="hi" class="hi">आपके जिले में वो लोग हैं। वो फीडर जिसे पता है कहाँ ले जाना है। वो रेस्क्यूअर जिसके पास गाड़ी है। वो फोस्टर जिसके पास खाली केनल है। वो हैं। बस अलग-अलग फ़ोन, ग्रुप्स और इत्तेफ़ाक़ में बँटे हैं। अगर हम एक जगह होते, उन्हें ढूँढने में घबराहट नहीं होती।</span>
-    </p>
-
-    <div class="ms-pillars rv d3">
-      <div class="ms-pl">
-        <span class="ms-pl-n">For Pet Parents</span>
-        <h4>
-          <span data-lang="en">Be the Neighbor</span>
-          <span data-lang="hi" class="hi">वो पड़ोसी बनिए</span>
-        </h4>
-        <p>
-          <span data-lang="en">you already keep an eye on the dog outside your gate. you'd help a feeder if you knew one needed it. an SOS goes out three streets away — you're the closest person who'd actually show up. that's the network. you in it makes it real.</span>
-          <span data-lang="hi" class="hi">आप पहले से गेट के बाहर वाले कुत्ते का ख़्याल रखते हैं। किसी फीडर की मदद कर देते अगर पता होता। तीन गलियाँ दूर SOS जाता है — आप ही सबसे पास हैं जो असल में पहुँचेंगे। यही नेटवर्क है। आप जुड़े तो ये असली है।</span>
-        </p>
+    <div class="h-left">
+      <div class="h-eye rv">
+        <span class="h-dot"></span>
+        <span data-lang="en">a peer network. district by district.</span>
+        <span data-lang="hi" class="hi">एक पीयर नेटवर्क। जिला-दर-जिला।</span>
       </div>
-      <div class="ms-pl">
-        <span class="ms-pl-n">For Feeders</span>
-        <h4>
-          <span data-lang="en">Backup &amp; Solidarity</span>
-          <span data-lang="hi" class="hi">साथ और समर्थन</span>
-        </h4>
-        <p>
-          <span data-lang="en">harassed at your feeding spot. need cover for a few days. there are other feeders within a few kilometers, dealing with the same things. if we knew each other, we could have each other's backs.</span>
-          <span data-lang="hi" class="hi">फीडिंग स्पॉट पर परेशानी। कुछ दिन कोई कवर करे। कुछ किलोमीटर के अंदर और भी फीडर हैं, इन्हीं हालात से जूझ रहे। अगर हम एक-दूसरे को जानते, तो साथ दे सकते।</span>
-        </p>
-      </div>
-      <div class="ms-pl">
-        <span class="ms-pl-n">For Rescuers</span>
-        <h4>
-          <span data-lang="en">Field Coordination</span>
-          <span data-lang="hi" class="hi">फील्ड कोऑर्डिनेशन</span>
-        </h4>
-        <p>
-          <span data-lang="en">an injured animal. no transport. no foster. somewhere within reach, someone has a car or an empty kennel and would help if asked. the asking is the part that's broken. it doesn't have to be.</span>
-          <span data-lang="hi" class="hi">घायल जानवर। न गाड़ी, न फोस्टर। पास ही कोई होगा जिसके पास गाड़ी या जगह है, और जो पूछने पर मदद करेगा। पूछना ही टूटा हुआ है। ऐसा होना ज़रूरी नहीं।</span>
-        </p>
-      </div>
-    </div>
 
-  </div>
-</section>
+      <h1 class="h1 rv d1">
+        <span class="en-b" data-lang="en">people who</span>
+        <span class="en-b" data-lang="en">show up for animals</span>
+        <span class="en-b ghost" data-lang="en">find each other.</span>
+        <span class="hi-b" data-lang="hi">जो जानवरों के लिए</span>
+        <span class="hi-b" data-lang="hi">खड़े होते हैं</span>
+        <span class="hi-b ghost" data-lang="hi">एक-दूसरे को ढूँढ लेते हैं।</span>
+      </h1>
 
-<div class="div"></div>
-
-<!-- ══════════ WHAT IT'S FOR ══════════ -->
-<section id="for" class="sec">
-  <div class="wrap">
-
-    <div class="how-hd rv">
-      <span class="lbl">
-        <span data-lang="en">What It's For</span>
-        <span data-lang="hi" class="hi">किसके लिए है</span>
-      </span>
-      <h2 class="dh">
-        <span class="en-h" data-lang="en">Two Things.</span>
-        <span class="en-h" data-lang="en">Different Asks.</span>
-        <span class="hi-h" data-lang="hi">दो काम।</span>
-        <span class="hi-h" data-lang="hi">अलग-अलग ज़रूरतें।</span>
-      </h2>
-      <p class="how-desc">
-        <span data-lang="en">the app does two things. it helps to know which one you need.</span>
-        <span data-lang="hi" class="hi">ऐप दो काम करता है। पता हो तो आसान होता है कि कौन सा चाहिए।</span>
+      <p class="h-sub rv d2">
+        <span data-lang="en">one tap could reach everyone in your district. but only if we're in one place. that's what this is for.</span>
+        <span data-lang="hi" class="hi">एक टैप जिले के हर इंसान तक पहुँच सकता है। लेकिन तभी जब हम एक जगह हों। यही इसका मक़सद है।</span>
       </p>
-    </div>
 
-    <div class="how-uses rv d1">
-      <div class="how-use">
-        <div class="how-use-hd">
-          <span class="material-symbols-outlined">sos</span>
-          <span class="how-use-ttl">
-            <span data-lang="en">SOS</span>
-            <span data-lang="hi" class="hi">SOS</span>
-          </span>
-          <span class="how-use-tag">
-            <span data-lang="en">For emergencies</span>
-            <span data-lang="hi" class="hi">इमरजेंसी के लिए</span>
-          </span>
-        </div>
-        <p class="how-use-p">
-          <span data-lang="en">injured animal on the road. attack in progress. urgent transport. harassment at your feeding spot. anything happening right now that can't wait.</span>
-          <span data-lang="hi" class="hi">सड़क पर घायल जानवर। हमला हो रहा है। ज़रूरी ट्रांसपोर्ट। फीडिंग स्पॉट पर परेशानी। जो अभी हो रहा है और रुक नहीं सकता।</span>
-        </p>
+      <div class="h-ctas rv d3">
+        <a href="https://play.google.com/store/apps/details?id=com.rrt.sos" target="_blank" class="btn-s">
+          <img src="https://img.icons8.com/?size=100&id=s9k2rXOtb7lB&format=png&color=000000" alt="" loading="lazy"/>
+          <span data-lang="en">Android</span>
+          <span data-lang="hi" class="hi">एंड्रॉयड</span>
+        </a>
+        <a href="https://apps.apple.com/in/app/rapid-response/id6758672498" target="_blank" class="btn-s">
+          <img src="https://img.icons8.com/?size=100&id=17843&format=png&color=000000" alt="" loading="lazy"/>
+          <span data-lang="en">iPhone</span>
+          <span data-lang="hi" class="hi">आईफोन</span>
+        </a>
       </div>
-      <div class="how-use">
-        <div class="how-use-hd">
-          <span class="material-symbols-outlined">help</span>
-          <span class="how-use-ttl">
-            <span data-lang="en">Ask the District</span>
-            <span data-lang="hi" class="hi">जिले से पूछें</span>
-          </span>
-          <span class="how-use-tag">
-            <span data-lang="en">For non-urgent asks</span>
-            <span data-lang="hi" class="hi">सामान्य सवालों के लिए</span>
-          </span>
-        </div>
-        <p class="how-use-p">
-          <span data-lang="en">a vet recommendation. a foster for the week. has anyone dealt with this before. the questions that aren't emergencies but still need people who know.</span>
-          <span data-lang="hi" class="hi">वेट की सलाह। हफ़्ते भर के लिए फोस्टर। क्या किसी ने पहले ये झेला है। वो सवाल जो इमरजेंसी नहीं, पर जवाब चाहिए।</span>
-        </p>
+
+      <div class="h-meta rv d4">
+        <a href="/how-it-works"><span data-lang="en">How it works</span><span data-lang="hi" class="hi">कैसे चलता है</span></a>
+        <span class="h-meta-sep">·</span>
+        <a href="/about"><span data-lang="en">About</span><span data-lang="hi" class="hi">हमारे बारे में</span></a>
+        <span class="h-meta-sep">·</span>
+        <a href="/faq">FAQ</a>
+        <span class="h-meta-sep">·</span>
+        <a href="/report"><span data-lang="en">Report an incident</span><span data-lang="hi" class="hi">रिपोर्ट करें</span></a>
       </div>
     </div>
 
-    <div class="how-note rv">
-      <span class="material-symbols-outlined">info</span>
-      <p>
-        <span data-lang="en">keeping SOS for real emergencies is what makes it worth answering. if your ask can wait, it belongs in Ask the District.</span>
-        <span data-lang="hi" class="hi">SOS असली इमरजेंसी के लिए रखेंगे तो लोग जवाब देंगे। जो रुक सकता है, वो Ask the District में जाता है।</span>
-      </p>
-    </div>
-
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- ══════════ HOW IT WORKS ══════════ -->
-<section id="how" class="sec">
-  <div class="wrap">
-
-    <div class="how-hd rv">
-      <span class="lbl">
-        <span data-lang="en">How SOS Works</span>
-        <span data-lang="hi" class="hi">SOS कैसे काम करता है</span>
-      </span>
-      <h2 class="dh">
-        <span class="en-h" data-lang="en">One Tap.</span>
-        <span class="en-h" data-lang="en">Your District.</span>
-        <span class="en-h" data-lang="en">People Like You.</span>
-        <span class="hi-h" data-lang="hi">एक टैप।</span>
-        <span class="hi-h" data-lang="hi">आपका जिला।</span>
-        <span class="hi-h" data-lang="hi">आप जैसे लोग।</span>
-      </h2>
-      <p class="how-desc">
-        <span data-lang="en">an SOS is for emergencies. here's what happens when you raise one.</span>
-        <span data-lang="hi" class="hi">SOS इमरजेंसी के लिए है। भेजने पर ऐसा होता है।</span>
-      </p>
-    </div>
-
-    <div class="how-lay">
-      <div class="ph-col rv">
-        <div class="ph-frame">
-          <div class="ph-stage">
-            <img src="Phone.png" alt="Rapid Response SOS Screen" loading="lazy"/>
-            <div class="ph-sos-pulse" aria-hidden="true"></div>
-          </div>
+    <div class="h-right rv d2">
+      <div class="ph-wrap">
+        <div class="ph-stage">
+          <img src="Phone.png" alt="Rapid Response SOS screen" loading="eager"/>
+          <div class="ph-sos-pulse" aria-hidden="true"></div>
         </div>
-        <div class="ph-badge">
-          <span data-lang="en">Live SOS Screen</span>
+        <div class="ph-cap">
+          <span class="dot" aria-hidden="true"></span>
+          <span data-lang="en">Live SOS screen</span>
           <span data-lang="hi" class="hi">लाइव SOS स्क्रीन</span>
         </div>
       </div>
-
-      <div class="steps-wrap">
-        <div class="steps-g">
-          <div class="step rv">
-            <div class="snum">01</div>
-            <div class="s-ic"><span class="material-symbols-outlined">sos</span></div>
-            <span class="s-lbl">Step 01</span>
-            <h4>
-              <span data-lang="en">You need a hand.</span>
-              <span data-lang="hi" class="hi">आपको साथ चाहिए।</span>
-            </h4>
-            <p>
-              <span data-lang="en">an injured animal on the road. an attack in progress. urgent transport. harassment at your feeding spot. open the app, raise the SOS.</span>
-              <span data-lang="hi" class="hi">सड़क पर घायल जानवर। हमला हो रहा है। ज़रूरी ट्रांसपोर्ट। फीडिंग स्पॉट पर परेशानी। ऐप खोलें, SOS भेजें।</span>
-            </p>
-          </div>
-          <div class="step rv d1">
-            <div class="snum">02</div>
-            <div class="s-ic"><span class="material-symbols-outlined">location_on</span></div>
-            <span class="s-lbl">Step 02</span>
-            <h4>
-              <span data-lang="en">Context goes out.</span>
-              <span data-lang="hi" class="hi">पूरी बात जाती है।</span>
-            </h4>
-            <p>
-              <span data-lang="en">your GPS, your number, and a short note explaining what you need. sent automatically.</span>
-              <span data-lang="hi" class="hi">GPS, नंबर और एक छोटा संदेश जिसमें ज़रूरत साफ़ हो। खुद भेजा जाता है।</span>
-            </p>
-          </div>
-          <div class="step rv d2">
-            <div class="snum">03</div>
-            <div class="s-ic"><span class="material-symbols-outlined">campaign</span></div>
-            <span class="s-lbl">Step 03</span>
-            <h4>
-              <span data-lang="en">Your district sees it.</span>
-              <span data-lang="hi" class="hi">पूरा जिला देखता है।</span>
-            </h4>
-            <p>
-              <span data-lang="en">it goes to everyone in your district who's on the app. fellow feeders, pet parents, rescuers, vets. people who already do this.</span>
-              <span data-lang="hi" class="hi">आपके जिले के हर उस इंसान तक पहुँचता है जो ऐप पर है। फीडर, पेट पैरेंट्स, रेस्क्यूअर्स, वेट। वो लोग जो ये पहले से करते हैं।</span>
-            </p>
-          </div>
-          <div class="step rv d3">
-            <div class="snum">04</div>
-            <div class="s-ic"><span class="material-symbols-outlined">forum</span></div>
-            <span class="s-lbl">Step 04</span>
-            <h4>
-              <span data-lang="en">You coordinate.</span>
-              <span data-lang="hi" class="hi">आप मिलकर तय करते हैं।</span>
-            </h4>
-            <p>
-              <span data-lang="en">whoever's free replies. you chat, swap numbers, work it out. this is how it's always been done. now it just doesn't take an hour to get started.</span>
-              <span data-lang="hi" class="hi">जो खाली है, जवाब देता है। चैट कीजिए, नंबर लीजिए, मिलकर तय कीजिए। हमेशा से ऐसे ही होता आया है। अब बस शुरू करने में घंटा नहीं लगता।</span>
-            </p>
-          </div>
-        </div>
-        <div class="how-note rv">
-          <span class="material-symbols-outlined">info</span>
-          <p>
-            <span data-lang="en">none of this works alone. it works because people in your district are in one place. that's all this is. the appeal is simple: be findable, so others can be too.</span>
-            <span data-lang="hi" class="hi">अकेले कुछ नहीं चलता। ये इसलिए चलता है क्योंकि जिले के लोग एक जगह होते हैं। बस इतनी सी बात है। निवेदन सीधा है: ढूँढने लायक बनिए, ताकि बाक़ी लोग भी हों।</span>
-          </p>
-        </div>
-      </div>
     </div>
 
   </div>
 </section>
 
-<div class="div"></div>
-
-<!-- ══════════ HOW ASK THE DISTRICT WORKS ══════════ -->
-<section id="ask" class="sec">
-  <div class="wrap">
-
-    <div class="how-hd rv">
-      <span class="lbl">
-        <span data-lang="en">How Ask the District Works</span>
-        <span data-lang="hi" class="hi">Ask the District कैसे काम करता है</span>
-      </span>
-      <h2 class="dh">
-        <span class="en-h" data-lang="en">A Question.</span>
-        <span class="en-h" data-lang="en">Your District.</span>
-        <span class="en-h" data-lang="en">People Who Know.</span>
-        <span class="hi-h" data-lang="hi">एक सवाल।</span>
-        <span class="hi-h" data-lang="hi">आपका जिला।</span>
-        <span class="hi-h" data-lang="hi">जो जानते हैं।</span>
-      </h2>
-      <p class="how-desc">
-        <span data-lang="en">for the asks that aren't emergencies — but still need a real answer from people nearby.</span>
-        <span data-lang="hi" class="hi">वो सवाल जो इमरजेंसी नहीं — पर जवाब उन्हीं से चाहिए जो पास हैं और जानते हैं।</span>
-      </p>
-    </div>
-
-    <div class="how-lay">
-      <div class="ph-col rv">
-        <div class="ph-frame">
-          <div class="ph-stage">
-            <img src="Ask the district.png" alt="Rapid Response Ask the District Screen" loading="lazy"/>
-            <div class="ph-ask-cue" aria-hidden="true"></div>
-          </div>
-        </div>
-        <div class="ph-badge">
-          <span data-lang="en">Ask the District Screen</span>
-          <span data-lang="hi" class="hi">Ask the District स्क्रीन</span>
-        </div>
-      </div>
-
-      <div class="steps-wrap">
-        <div class="steps-g">
-          <div class="step rv">
-            <div class="snum">01</div>
-            <div class="s-ic"><span class="material-symbols-outlined">help</span></div>
-            <span class="s-lbl">Step 01</span>
-            <h4>
-              <span data-lang="en">You have a question.</span>
-              <span data-lang="hi" class="hi">आपके पास एक सवाल है।</span>
-            </h4>
-            <p>
-              <span data-lang="en">which vet handles tick fever. anyone has a foster bed for a week. how did you sort out sterilisation for the strays on your street. not urgent, but you want people who've actually done it.</span>
-              <span data-lang="hi" class="hi">tick fever के लिए कौन सा वेट। किसी के पास हफ़्ते भर के लिए फोस्टर है। आपने अपनी गली के स्ट्रे की नसबंदी कैसे करवाई। ज़रूरी नहीं, पर वो लोग चाहिए जिन्होंने सच में किया है।</span>
-            </p>
-          </div>
-          <div class="step rv d1">
-            <div class="snum">02</div>
-            <div class="s-ic"><span class="material-symbols-outlined">edit_note</span></div>
-            <span class="s-lbl">Step 02</span>
-            <h4>
-              <span data-lang="en">You post the ask.</span>
-              <span data-lang="hi" class="hi">आप सवाल पोस्ट करते हैं।</span>
-            </h4>
-            <p>
-              <span data-lang="en">write what you need. it shows up in your district's ask feed for everyone on the app to see.</span>
-              <span data-lang="hi" class="hi">जो चाहिए वो लिखिए। आपके जिले के ask feed में सबको दिखता है।</span>
-            </p>
-          </div>
-          <div class="step rv d2">
-            <div class="snum">03</div>
-            <div class="s-ic"><span class="material-symbols-outlined">forum</span></div>
-            <span class="s-lbl">Step 03</span>
-            <h4>
-              <span data-lang="en">People who know reply.</span>
-              <span data-lang="hi" class="hi">जो जानते हैं, जवाब देते हैं।</span>
-            </h4>
-            <p>
-              <span data-lang="en">whoever has an answer or an offer responds in their own time. no alarm, no pressure. just the network being useful.</span>
-              <span data-lang="hi" class="hi">जिसके पास जवाब या मदद है, अपनी सुविधा से जवाब देता है। न अलार्म, न दबाव। बस नेटवर्क काम का होता है।</span>
-            </p>
-          </div>
-        </div>
-        <div class="how-note rv">
-          <span class="material-symbols-outlined">info</span>
-          <p>
-            <span data-lang="en">Ask the District is not an SOS. no one's phone buzzes. it's a slower, calmer channel for the questions that matter but can wait.</span>
-            <span data-lang="hi" class="hi">Ask the District SOS नहीं है। किसी का फ़ोन नहीं बजता। ये धीमा, शांत चैनल है उन सवालों के लिए जो ज़रूरी हैं पर रुक सकते हैं।</span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- ══════════ CLARITY ══════════ -->
-<section id="clarity" class="sec">
-  <div class="wrap">
-
-    <div class="cl-hd rv">
-      <span class="lbl">
-        <span data-lang="en">Be Clear-Eyed</span>
-        <span data-lang="hi" class="hi">साफ़ बात</span>
-      </span>
-      <h2 class="dh">
-        <span class="en-h" data-lang="en">What We Are. What We Aren't.</span>
-        <span class="hi-h" data-lang="hi">हम क्या हैं। हम क्या नहीं।</span>
-      </h2>
-    </div>
-
-    <div class="cl-grid rv">
-      <div class="cl-col">
-        <div class="cl-ch">
-          <div class="cl-ico gn"><span class="material-symbols-outlined">check_circle</span></div>
-          <h3 class="gn">
-            <span data-lang="en">we are</span>
-            <span data-lang="hi" class="hi">हम हैं</span>
-          </h3>
-        </div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">a peer network for people already working with animals. feeders, pet parents, fosterers, rescuers, vets</span><span data-lang="hi" class="hi">उन लोगों का नेटवर्क जो पहले से जानवरों के लिए काम कर रहे हैं। फीडर, पेट पैरेंट्स, फोस्टर, रेस्क्यूअर्स, वेट</span></p></div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">district-scoped, so the people you reach are actually close enough to be useful</span><span data-lang="hi" class="hi">जिले तक सीमित, ताकि जिन लोगों तक पहुँचें, वो सच में पास हों</span></p></div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">a coordination layer. chat, share GPS, swap contacts, work it out together</span><span data-lang="hi" class="hi">एक कोऑर्डिनेशन लेयर। चैट, GPS, नंबर, मिलकर तय करना</span></p></div>
-        <div class="cl-it"><span class="cl-dot gn"></span><p><span data-lang="en">free, community-owned, open to pet parents, feeders, fosterers, rescuers, vets - the people who already do this work</span><span data-lang="hi" class="hi">मुफ़्त, कम्युनिटी का। पेट पैरेंट्स, फीडर, फोस्टर, रेस्क्यूअर्स, वेट के लिए - वो लोग जो पहले से ये काम करते हैं</span></p></div>
-      </div>
-      <div class="cl-col">
-        <div class="cl-ch">
-          <div class="cl-ico rd"><span class="material-symbols-outlined">cancel</span></div>
-          <h3 class="rd">
-            <span data-lang="en">we aren't</span>
-            <span data-lang="hi" class="hi">हम नहीं हैं</span>
-          </h3>
-        </div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a rescue service. we don't dispatch teams, run shelters, or operate ambulances</span><span data-lang="hi" class="hi">रेस्क्यू सर्विस। हम टीम नहीं भेजते, शेल्टर नहीं चलाते, एम्बुलेंस नहीं चलाते</span></p></div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a guarantee. we're a network. what comes back depends on who's in your district and who's free</span><span data-lang="hi" class="hi">कोई गारंटी। हम एक नेटवर्क हैं। जवाब इस पर है कि जिले में कौन है और कौन खाली है</span></p></div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a public alert system. SOS goes to everyone registered in your district on the app, not the wider public</span><span data-lang="hi" class="hi">पब्लिक अलर्ट सिस्टम। SOS आपके जिले में ऐप पर रजिस्टर्ड सभी लोगों तक जाता है, बाहर नहीं</span></p></div>
-        <div class="cl-it"><span class="cl-dot rd"></span><p><span data-lang="en">a government tool. no department backs us. no fees. no agenda beyond connecting our own community</span><span data-lang="hi" class="hi">कोई सरकारी टूल। न कोई विभाग है, न फ़ीस। बस अपनी कम्युनिटी को जोड़ने का काम</span></p></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- ══════════ FAQ ══════════ -->
-<section id="faq" class="sec">
-  <div class="wrap">
-    <div class="faq-lay">
-
-      <div class="faq-l rv">
-        <span class="lbl">FAQ</span>
-        <h2 class="dh">
-          <span class="en-h" data-lang="en">No mystery.</span>
-          <span class="hi-h" data-lang="hi">कोई रहस्य नहीं।</span>
-        </h2>
-        <p>
-          <span data-lang="en">type a word. get a real answer. no jargon, no run-around.</span>
-          <span data-lang="hi" class="hi">एक शब्द लिखें। सच्चा जवाब पाएँ। न शब्दजाल, न चक्कर।</span>
-        </p>
-        <span class="ask-lbl">
-          <span data-lang="en">Question we missed?</span>
-          <span data-lang="hi" class="hi">कोई और सवाल?</span>
-        </span>
-        <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
-      </div>
-
-      <div class="faq-r rv d1">
-        <div class="faq-sw">
-          <span class="material-symbols-outlined">search</span>
-          <input id="faqSearch" type="text" placeholder="Search by keyword…"/>
-        </div>
-        <div class="fq-chips">
-          <button class="fq-chip" data-kw="sos">SOS</button>
-          <button class="fq-chip" data-kw="location">Location</button>
-          <button class="fq-chip" data-kw="chat">Chat</button>
-          <button class="fq-chip" data-kw="district">District</button>
-          <button class="fq-chip" data-kw="register">Register</button>
-          <button class="fq-chip" data-kw="cancel">Cancel</button>
-        </div>
-        <div id="faqRes">
-          <div id="fqEmp">
-            <span data-lang="en">Type a keyword like SOS, location or district</span>
-            <span data-lang="hi" class="hi">SOS, लोकेशन या जिला जैसे शब्द लिखें</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- ══════════ LEGAL DESK ══════════ -->
-<section id="legal" class="sec">
-  <div class="wrap">
-
-    <div class="leg-hd rv">
-      <span class="lbl">
-        <span data-lang="en">Legal AI Desk</span>
-        <span data-lang="hi" class="hi">कानूनी AI डेस्क</span>
-      </span>
-      <h2 class="dh">
-        <span class="en-h" data-lang="en">Know The Law. Then Use It.</span>
-        <span class="hi-h" data-lang="hi">कानून जानिए। फिर इस्तेमाल कीजिए।</span>
-      </h2>
-      <p class="leg-hd-desc">
-        <span data-lang="en">harassed for feeding? RWA threatening removal? FIR you don't know how to file? ask anything. get the exact section, the exact procedure, the next step.</span>
-        <span data-lang="hi" class="hi">खिलाने पर परेशानी? RWA हटाने की धमकी? FIR दर्ज करनी है पर पता नहीं कैसे? कुछ भी पूछिए। सटीक धारा, सटीक प्रक्रिया, अगला कदम।</span>
-      </p>
-    </div>
-
-    <div class="leg-wrap rv">
-      <div class="leg-sb">
-        <div class="leg-sb-h">
-          <h4>Legal AI Desk</h4>
-          <p>Animal welfare law · India</p>
-        </div>
-        <div class="leg-tags">
-          <div class="ltag"><span class="material-symbols-outlined">gavel</span>PCA Act 1960</div>
-          <div class="ltag"><span class="material-symbols-outlined">pets</span>ABC Rules 2023</div>
-          <div class="ltag"><span class="material-symbols-outlined">balance</span>BNS Sections</div>
-          <div class="ltag"><span class="material-symbols-outlined">account_balance</span>Municipal Law</div>
-        </div>
-        <div class="leg-ql">Quick questions</div>
-        <div class="leg-qc">
-          <button class="lqc" onclick="fillSend('ABC centre not functioning - what is the complaint process?')">
-            <div class="ct">ABC centre not functioning</div><div class="cs">Complaint process</div>
-          </button>
-          <button class="lqc" onclick="fillSend('Dog died after ABC release - liability and how to file an FIR?')">
-            <div class="ct">Dog died after ABC release</div><div class="cs">Liability &amp; FIR</div>
-          </button>
-          <button class="lqc" onclick="fillSend('Hospital removing community dogs - feeding rights and legal remedies?')">
-            <div class="ct">Hospital removing dogs</div><div class="cs">Feeding rights &amp; remedies</div>
-          </button>
-          <button class="lqc" onclick="fillSend('Attacked while feeding dogs - what are my police complaint rights?')">
-            <div class="ct">Attacked while feeding dogs</div><div class="cs">Police complaint rights</div>
-          </button>
-        </div>
-      </div>
-
-      <div class="leg-panel">
-        <div class="leg-ph">
-          <div class="lph-dots">
-            <div class="lph-dot" style="background:#ff5f57"></div>
-            <div class="lph-dot" style="background:#febc2e"></div>
-            <div class="lph-dot" style="background:#28c840"></div>
-          </div>
-          <span class="lph-t">legal-ai-desk.terminal</span>
-          <div class="lph-s"><span class="lph-sd"></span>Active</div>
-        </div>
-        <div id="lcb">
-          <div class="cbo">
-            <div class="cbo-ic"><span class="material-symbols-outlined">balance</span></div>
-            <div class="cb">
-              <strong>
-                <span data-lang="en">Welcome to the Legal AI Desk.</span>
-                <span data-lang="hi" class="hi">कानूनी AI डेस्क में स्वागत है।</span>
-              </strong><br/>
-              <span data-lang="en">trained on the PCA Act, ABC Rules, BNS sections, and municipal law. ask about a cruelty case, an FIR, an ABC centre that's not running, feeding rights, anything. you'll get the section, the steps, and what to do next.</span>
-              <span data-lang="hi" class="hi">PCA Act, ABC नियम, BNS धारा और नगरपालिका कानून पर प्रशिक्षित। क्रूरता का केस, FIR, ABC केंद्र, खिलाने का अधिकार, कुछ भी पूछिए। धारा, प्रक्रिया, अगला कदम मिलेगा।</span>
-            </div>
-          </div>
-        </div>
-        <div class="leg-ir">
-          <span class="material-symbols-outlined ii">keyboard</span>
-          <input id="li" type="text" placeholder="Ask your legal question…"/>
-          <button id="lb" onclick="sendLeg()">
-            <span class="material-symbols-outlined" id="lbi">north_east</span>
-          </button>
-        </div>
-        <div class="leg-disc">
-          <span data-lang="en">⚖️ Legal information only. not a substitute for a qualified lawyer.</span>
-          <span data-lang="hi" class="hi">⚖️ केवल जानकारी। वकील की सलाह का विकल्प नहीं।</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- ══════════ FOOTER ══════════ -->
-<footer id="support">
+<footer>
   <div class="ft-in">
     <div class="ft-brand">
-      <a href="/" class="logo">
+      <a href="/" class="logo" aria-label="Rapid Response">
         <div class="logo-sq"><span class="material-symbols-outlined">pets</span></div>
         <span class="logo-t">Rapid Response</span>
       </a>
       <p>
-        <span data-lang="en">a peer network for the people already doing the work. feeders, pet parents, fosterers, rescuers. district by district.</span>
-        <span data-lang="hi" class="hi">उन लोगों का नेटवर्क जो पहले से काम कर रहे हैं। फीडर, पेट पैरेंट्स, फोस्टर, रेस्क्यूअर्स। जिला-दर-जिला।</span>
+        <span data-lang="en">An independent community initiative. Not affiliated with any government authority.</span>
+        <span data-lang="hi" class="hi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
       </p>
     </div>
+
     <div class="ft-col">
-      <span class="ft-lbl">Navigate</span>
-      <a href="#mission"><span data-lang="en">Mission</span><span data-lang="hi" class="hi">मिशन</span></a>
-      <a href="#for"><span data-lang="en">How it Works</span><span data-lang="hi" class="hi">कैसे काम करता है</span></a>
-      <a href="#clarity"><span data-lang="en">Clarity</span><span data-lang="hi" class="hi">साफ़ बात</span></a>
-      <a href="#faq">FAQ</a>
-      <a href="#legal"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
-      <a href="/report" style="color:var(--accent)"><span data-lang="en">Report Incident</span><span data-lang="hi" class="hi">घटना रिपोर्ट करें</span></a>
+      <span class="ft-lbl">Explore</span>
+      <a href="/about"><span data-lang="en">About</span><span data-lang="hi" class="hi">हमारे बारे में</span></a>
+      <a href="/how-it-works"><span data-lang="en">How it works</span><span data-lang="hi" class="hi">कैसे चलता है</span></a>
+      <a href="/faq">FAQ</a>
+      <a href="/legal-desk"><span data-lang="en">Legal Desk</span><span data-lang="hi" class="hi">कानूनी मदद</span></a>
+      <a href="/report" style="color:var(--accent)"><span data-lang="en">Report incident →</span><span data-lang="hi" class="hi">घटना रिपोर्ट करें →</span></a>
     </div>
-<div class="ft-col ft-contact">
-      <span class="ft-lbl">Support</span>
+
+    <div class="ft-col">
+      <span class="ft-lbl">Contact</span>
       <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
-      <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" aria-label="Instagram @rrtanimals" style="display:inline-flex;align-items:center;gap:8px;color:#0095F6;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <a href="https://www.instagram.com/rrtanimals" target="_blank" rel="noopener noreferrer" style="color:#0095F6;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
           <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
         </svg>
         @rrtanimals
       </a>
-      <p class="note-p">
-        <span data-lang="en">Response within 24–48 hours</span>
-        <span data-lang="hi" class="hi">24–48 घंटों में जवाब</span>
-      </p>
-      <div class="ft-note">
-        <p>
-          <span data-lang="en">Independent community initiative. Not affiliated with any government authority.</span>
-          <span data-lang="hi" class="hi">स्वतंत्र कम्युनिटी पहल। किसी सरकारी संस्था से जुड़ा नहीं।</span>
-        </p>
-      </div>
     </div>
   </div>
+
   <div class="ft-bot">
     <p>© 2026 RapidResponse Labs</p>
     <p>
@@ -2221,15 +604,11 @@ html.light .ph-frame img { filter: none; }
 </footer>
 
 <script>
-/* ── lang ── */
 function setLang(l) {
   document.documentElement.lang = l;
-  var f = document.getElementById('faqSearch');
-  if (f) f.placeholder = l === 'hi' ? 'कोई शब्द लिखें…' : 'Search by keyword…';
 }
 document.addEventListener('DOMContentLoaded', function() { setLang('en'); });
 
-/* ── mode ── */
 function toggleMode() {
   var on = document.documentElement.classList.toggle('light');
   document.getElementById('modeBtn').textContent = on ? '🌙' : '☀️';
@@ -2244,118 +623,14 @@ function toggleMode() {
   }
 })();
 
-/* ── header scroll ── */
 window.addEventListener('scroll', function() {
   document.getElementById('hdr').classList.toggle('stuck', window.scrollY > 40);
 });
 
-/* ── mobile menu ── */
-function openMM() {
-  document.getElementById('mm').style.transform = 'translateX(0)';
-  var o = document.getElementById('mmo'); o.style.opacity = '1'; o.style.pointerEvents = 'auto';
-  document.body.style.overflow = 'hidden';
-}
-function closeMM() {
-  document.getElementById('mm').style.transform = '';
-  var o = document.getElementById('mmo'); o.style.opacity = ''; o.style.pointerEvents = '';
-  document.body.style.overflow = '';
-}
-
-/* ── reveal ── */
 var io = new IntersectionObserver(function(es) {
   es.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('on'); });
 }, { threshold: 0.06 });
 document.querySelectorAll('.rv').forEach(function(el) { io.observe(el); });
-
-/* ── FAQ ── */
-var fd = [
-  {k:'sos app rapid response what',     qe:'What is the Rapid Response app?',             ae:'A peer network for people who work with animals across a district. SOS for emergencies, Ask the District for non-urgent questions like vet recommendations or fostering help.', qh:'रैपिड रिस्पॉन्स ऐप क्या है?',      ah:'जानवरों के लिए काम करने वालों का जिला-स्तरीय नेटवर्क। इमरजेंसी के लिए SOS, सामान्य सवालों जैसे वेट की सलाह या फोस्टर के लिए Ask the District।'},
-  {k:'how does app work purpose main',  qe:'How does the app work?',                       ae:'One tap raises a district-wide SOS. All registered users in your district receive your GPS, phone number and message instantly.', qh:'ऐप कैसे काम करता है?',           ah:'एक टैप से जिले के सभी लोगों को GPS, नंबर और संदेश के साथ अलर्ट जाता है।'},
-  {k:'sos vs ask district difference when use', qe:'SOS or Ask the District — which do I use?', ae:'SOS is for emergencies: injured animal, attack, urgent transport, harassment at a feeding spot. Ask the District is for non-urgent questions: which vet, who has a foster, has anyone dealt with this. If it can wait, it should not be an SOS.', qh:'SOS या Ask the District — कौन सा इस्तेमाल करें?', ah:'SOS इमरजेंसी के लिए: घायल जानवर, हमला, ज़रूरी ट्रांसपोर्ट, फीडिंग स्पॉट पर परेशानी। Ask the District सामान्य सवालों के लिए: कौन सा वेट, फोस्टर किसके पास है, क्या किसी ने पहले झेला है। अगर इंतज़ार हो सकता है, तो SOS नहीं भेजें।'},
-  {k:'when not use sos non emergency',  qe:'When should I NOT use SOS?', ae:'Do not use SOS for vet recommendations, fostering enquiries, general advice, or anything that is not happening right now. Use Ask the District for these. Keeping SOS for real emergencies is how the network stays useful.', qh:'SOS कब नहीं भेजें?', ah:'वेट की सलाह, फोस्टर की पूछताछ, सामान्य राय, या ऐसा कुछ जो अभी नहीं हो रहा — इनके लिए SOS नहीं। इनके लिए Ask the District है। SOS को असली इमरजेंसी के लिए रखना ही नेटवर्क को काम का बनाता है।'},
-  {k:'government affiliated department',qe:'Is it linked to any government department?',   ae:'No. Rapid Response is an independent community initiative, not affiliated with any government authority.',            qh:'किसी सरकारी विभाग से जुड़ा है?',    ah:'नहीं। यह एक स्वतंत्र सामुदायिक पहल है।'},
-  {k:'rescue team automatic send',      qe:'Does it send a rescue team automatically?',    ae:'No. It sends an SOS alert to registered volunteers who may choose to help. There is no dedicated dispatch team.',    qh:'रेस्क्यू टीम भेजता है?',           ah:'नहीं। यह स्वयंसेवकों को अलर्ट भेजता है।'},
-  {k:'sos district who receives alert', qe:'Who receives an SOS alert?',                   ae:'All registered Rapid Response users within the same district receive the alert instantly.',                           qh:'SOS अलर्ट किसे मिलता है?',         ah:'उसी जिले के सभी पंजीकृत उपयोगकर्ताओं को।'},
-  {k:'register how sign up join',       qe:'How do I register?',                           ae:'Download the app, register with your phone number, and select your district. Alerts begin immediately.',             qh:'रजिस्टर कैसे करें?',               ah:'ऐप डाउनलोड करें, नंबर और जिले से रजिस्टर करें।'},
-  {k:'sos alert send what happens',     qe:'What happens when I send an SOS?',             ae:'Your GPS, phone number, and message are instantly broadcast to all users registered in your district.',              qh:'SOS भेजने पर क्या होता है?',       ah:'आपका GPS, नंबर और संदेश जिले के सभी लोगों को तुरंत मिलता है।'},
-  { k: 'cancel sos undo resolve',       qe: 'Can I cancel an SOS?', ae: 'Once sent, the alert is broadcast instantly. You can cancel the SOS once the issue is resolved, or it will automatically resolve after 60 minutes.', qh: 'क्या मैं SOS रद्द कर सकता हूँ?', ah: 'भेजने के बाद अलर्ट तुरंत प्रसारित हो जाता है। समस्या हल होने के बाद आप SOS रद्द कर सकते हैं, या यह 60 मिनट बाद अपने आप समाप्त हो जाएगा।' },
-  {k:'chat communicate message',        qe:'Is there a chat feature?',                     ae:'Yes. Users can communicate with each other about an active SOS alert in their district.',                            qh:'चैट की सुविधा है?',                ah:'हाँ। एक्टिव अलर्ट पर लोग चैट कर सकते हैं।'},
-  {k:'district why only local area',    qe:'Why is the alert sent only within the district?', ae:'To keep alerts locally relevant and ensure the fastest possible response from people who are actually nearby.',   qh:'अलर्ट केवल जिले में क्यों?',      ah:'ताकि पास के लोग तेज़ी से मदद कर सकें।'},
-  {k:'location gps important why',      qe:'Why is GPS location important?',               ae:'It helps volunteers immediately know where the incident occurred and whether they are close enough to assist.',       qh:'लोकेशन क्यों ज़रूरी है?',          ah:'इससे पता चलता है कि घटना कहाँ हुई।'},
-];
-
-var fSrch = document.getElementById('faqSearch');
-var fRes  = document.getElementById('faqRes');
-var fEmp  = document.getElementById('fqEmp');
-
-function renderFaq(list) {
-  fRes.innerHTML = '';
-  var l = document.documentElement.lang || 'en';
-  if (!list.length) { fRes.appendChild(fEmp); return; }
-  list.forEach(function(d) {
-    var div = document.createElement('div'); div.className = 'fq-it';
-    var q = (l === 'hi' && d.qh) ? d.qh : d.qe;
-    var a = (l === 'hi' && d.ah) ? d.ah : d.ae;
-    div.innerHTML = '<div class="fq-q">' + q + '</div><div class="fq-a">' + a + '</div>';
-    fRes.appendChild(div);
-  });
-}
-fSrch.addEventListener('input', function() {
-  var v = this.value.toLowerCase().trim();
-  if (!v) { fRes.innerHTML = ''; fRes.appendChild(fEmp); return; }
-  renderFaq(fd.filter(function(d) { return d.k.includes(v); }));
-});
-document.querySelectorAll('.fq-chip').forEach(function(b) {
-  b.addEventListener('click', function() {
-    fSrch.value = b.dataset.kw;
-    fSrch.dispatchEvent(new Event('input'));
-  });
-});
-
-/* ── Legal chat ── */
-function fmt(t) {
-  return t
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/^##\s(.+)$/gm, '<br><strong style="font-size:.82em">$1</strong><br>')
-    .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid rgba(128,128,128,.15);margin:8px 0">')
-    .replace(/\n/g, '<br>');
-}
-function addBot(html) {
-  var box = document.getElementById('lcb');
-  var w = document.createElement('div'); w.className = 'cbo';
-  var ic = document.createElement('div'); ic.className = 'cbo-ic';
-  ic.innerHTML = '<span class="material-symbols-outlined">balance</span>';
-  var b = document.createElement('div'); b.className = 'cb'; b.innerHTML = html;
-  w.appendChild(ic); w.appendChild(b); box.appendChild(w);
-  box.scrollTop = 99999; return b;
-}
-function addUser(t) {
-  var box = document.getElementById('lcb');
-  var w = document.createElement('div'); w.className = 'cu';
-  var b = document.createElement('div'); b.className = 'cb'; b.textContent = t;
-  w.appendChild(b); box.appendChild(w); box.scrollTop = 99999;
-}
-function fillSend(q) { document.getElementById('li').value = q; sendLeg(); }
-async function sendLeg() {
-  var inp = document.getElementById('li'), btn = document.getElementById('lb'), ico = document.getElementById('lbi');
-  var q = inp.value.trim(); if (!q) return;
-  var lang = document.documentElement.lang || 'en';
-  addUser(q); inp.value = '';
-  btn.disabled = true; ico.textContent = 'progress_activity'; ico.classList.add('sp');
-  var bub = addBot('<div class="tdots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>');
-  try {
-    var r = await fetch('https://api.rapid-response.in/ask', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ question: q, language: lang })
-    });
-    var d = await r.json(); bub.innerHTML = fmt(d.answer);
-  } catch(e) {
-    bub.innerHTML = '<span style="color:var(--crit)">Connection error. Please try again.</span>';
-  }
-  btn.disabled = false; ico.textContent = 'north_east'; ico.classList.remove('sp');
-  document.getElementById('lcb').scrollTop = 99999;
-}
-document.getElementById('li').addEventListener('keydown', function(e) { if (e.key === 'Enter') sendLeg(); });
 </script>
 </body>
 </html>
