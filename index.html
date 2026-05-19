@@ -101,12 +101,12 @@ a { color:inherit; text-decoration:none; }
 #hero {
   position:relative; min-height:100vh; min-height:100dvh;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:120px 24px 80px;
+  padding:96px 24px 56px;
   padding-left:max(24px, env(safe-area-inset-left));
   padding-right:max(24px, env(safe-area-inset-right));
   overflow:hidden; isolation:isolate;
 }
-@media (min-width: 768px) { #hero { padding:140px 40px 100px; } }
+@media (min-width: 768px) { #hero { padding:110px 40px 70px; } }
 
 .network { position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:0.6; }
 html.light .network { opacity:0.45; }
@@ -145,9 +145,9 @@ html.light .network { opacity:0.45; }
   letter-spacing:0.22em; text-transform:uppercase; color:var(--text-low);
   padding:8px 14px; border:1px solid var(--border); background:var(--bg-card);
   backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-  margin-bottom:32px;
+  margin-bottom:20px;
 }
-@media (min-width: 768px) { .eyebrow { font-size:11px; gap:12px; margin-bottom:40px; } }
+@media (min-width: 768px) { .eyebrow { font-size:11px; gap:12px; margin-bottom:24px; } }
 .eyebrow .ping {
   position:relative; display:inline-block;
   width:7px; height:7px; border-radius:50%; background:var(--accent);
@@ -166,13 +166,13 @@ html.light .network { opacity:0.45; }
 
 .h1 {
   font-family:var(--display); font-weight:800;
-  font-size:clamp(52px, 12vw, 144px);
+  font-size:clamp(48px, 11vw, 112px);
   line-height:0.92; letter-spacing:-0.025em;
   text-transform:uppercase; color:var(--text);
-  margin-bottom:28px; max-width:14ch;
+  margin-bottom:18px; max-width:14ch;
 }
 @media (min-width: 768px) {
-  .h1 { font-size:clamp(72px, 8.5vw, 144px); line-height:0.94; margin-bottom:36px; }
+  .h1 { font-size:clamp(64px, 7.5vw, 120px); line-height:0.94; margin-bottom:22px; }
 }
 .h1 .b { display:block; }
 .h1 .hi-b { display:block; font-family:var(--hindi); font-weight:700; letter-spacing:0; line-height:1.06; }
@@ -181,17 +181,17 @@ html.light .network { opacity:0.45; }
 .sub {
   font-family:var(--sans); font-size:17px; font-weight:400;
   line-height:1.55; color:var(--text-mid);
-  max-width:44ch; margin-bottom:40px;
+  max-width:44ch; margin-bottom:26px;
 }
-@media (min-width: 768px) { .sub { font-size:19px; margin-bottom:52px; } }
+@media (min-width: 768px) { .sub { font-size:19px; margin-bottom:32px; } }
 .sub .hi { font-family:var(--hindi); font-size:16px; line-height:1.7; font-weight:500; }
 @media (min-width: 768px) { .sub .hi { font-size:17px; } }
 
 .ctas {
   display:flex; flex-wrap:wrap; justify-content:center;
-  gap:12px; margin-bottom:32px;
+  gap:12px; margin-bottom:20px;
 }
-@media (min-width: 768px) { .ctas { margin-bottom:40px; } }
+@media (min-width: 768px) { .ctas { margin-bottom:26px; } }
 
 .btn {
   display:inline-flex; align-items:center; gap:10px;
