@@ -4,6 +4,10 @@
     {
       "source": "/manage",
       "destination": "/manage.html"
+    },
+    {
+      "source": "/report/manage",
+      "destination": "/report/manage.html"
     }
   ]
 }
