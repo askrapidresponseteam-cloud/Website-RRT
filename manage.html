@@ -6,7 +6,7 @@
 <h1>Remove this from the public record</h1>
 <p>This takes your case off the public wall straight away. Your report and evidence stay with the welfare team, so any action already under way continues.</p>
 <p class="hi">इससे आपका मामला सार्वजनिक दीवार से तुरंत हट जाता है। आपकी रिपोर्ट और सबूत टीम के पास रहते हैं, इसलिए जो कार्रवाई चल रही है वह जारी रहती है।</p>
-<div class="ref" id="refBox">Reference <b id="refId">checking...</b></div>
+<div class="ref" id="refBox">Reference <b id="refId">checking...</b><span id="refMeta"></span></div>
 <div class="note">Once removed, the case cannot be put back on the public wall from this link. You would need to file it again.</div>
 <button class="btn btn-danger" id="goBtn"><span class="material-symbols-outlined">delete</span><span id="goLbl">Remove from public record</span></button>
 <a class="btn btn-ghost" href="/report">Keep it published</a>
@@ -37,7 +37,8 @@
 <script>
 /* Name of the deployed callable that unpublishes a report.
    Change this one line if your function is named differently. */
-var REMOVE_FN = "removeReport";
+var REMOVE_FN = "takeDownReport";
+var LOOKUP_FN = "getReportByToken";
 
 firebase.initializeApp({apiKey:"AIzaSyAw-WpM6fVhwkREGqAcfMRXJRAjGR5f2sw",authDomain:"report-5bf7e.firebaseapp.com",projectId:"report-5bf7e",storageBucket:"report-5bf7e.firebasestorage.app",messagingSenderId:"52699587932",appId:"1:52699587932:web:603115f216d768151b8d99"});
 var FNS = firebase.app().functions("asia-south1");
@@ -50,8 +51,34 @@ var q = new URLSearchParams(location.search);
 var token = (q.get("token")||"").trim();
 var rid = (q.get("id")||q.get("reportId")||q.get("ref")||"").trim();
 
-if(!token){ fail("Link not valid","This removal link is missing its token. It may have been cut short by your email app."); }
-else { $("refId").textContent = rid || "on file"; }
+if(!token){
+  fail("Link not valid","This removal link is missing its token. It may have been cut short by your email app.");
+} else {
+  $("refId").textContent = rid || "looking up...";
+  FNS.httpsCallable(LOOKUP_FN)({ token: token }).then(function(res){
+    var d = (res && res.data) || {};
+    if(!d.ok) throw new Error("not found");
+    rid = d.reportId || rid;
+    $("refId").textContent = rid;
+    var bits = [];
+    if(d.incidentType) bits.push(d.incidentType);
+    var place = [d.district, d.state].filter(Boolean).join(", ");
+    if(place) bits.push(place);
+    if(d.createdAt) bits.push("filed " + new Date(d.createdAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}));
+    if(bits.length) $("refMeta").innerHTML = "<br>" + bits.join(" &middot; ");
+    if(d.takenDown){
+      fail("Already removed","This case has already been taken off the public record. Nothing more to do.");
+    }
+  }).catch(function(err){
+    console.error("lookup failed", err);
+    var code = (err && err.code) || "";
+    if(code.indexOf("not-found")>-1 || code.indexOf("invalid-argument")>-1){
+      fail("Link not valid","This removal link does not match any report. It may have already been used.");
+    } else {
+      $("refId").textContent = rid || "on file";
+    }
+  });
+}
 
 $("goBtn").addEventListener("click", function(){
   var b=$("goBtn"), l=$("goLbl");
