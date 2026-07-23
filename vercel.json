@@ -13,5 +13,12 @@
       "source": "/manage",
       "destination": "/manage.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/report/manage",
+      "destination": "/manage",
+      "permanent": false
+    }
   ]
 }
