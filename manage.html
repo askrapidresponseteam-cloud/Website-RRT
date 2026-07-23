@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0A0908"><meta name="robots" content="noindex,nofollow"><title>Remove your report | Rapid Response</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Noto+Sans+Devanagari:wght@400;500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"><style>:root{--bg:#0a0908;--bg-soft:#14110f;--bg-card:#ffffff06;--text:#fff;--text-mid:#ffffffd1;--text-low:#ffffffa6;--text-dim:#ffffff7a;--border:#ffffff1a;--border-strong:#ffffff38;--accent:#1f75f0;--accent-h:#4a90f5;--ok:#5cd97f;--crit:#ff6b5c;--display:"Barlow Condensed","Arial Narrow",sans-serif;--sans:"Barlow",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--hindi:"Noto Sans Devanagari",system-ui,sans-serif}*{box-sizing:border-box;margin:0;padding:0}html{font-size:18px;-webkit-text-size-adjust:100%}body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100dvh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}.material-symbols-outlined{font-variation-settings:'wght' 400,'FILL' 0;line-height:1}header{display:flex;align-items:center;height:64px;padding:0 max(20px,env(safe-area-inset-left));border-bottom:1px solid var(--border)}.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none}.logo-sq{display:grid;place-items:center;width:28px;height:28px;background:var(--accent)}.logo-sq .material-symbols-outlined{color:#fff;font-size:18px}.logo-t{font-family:var(--display);font-weight:800;font-size:17px;text-transform:uppercase;color:var(--text)}.logo-sub{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);padding:3px 6px;border:1px solid var(--border-strong)}main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px 60px}.card{width:100%;max-width:520px;border:1px solid var(--border);background:var(--bg-card);padding:30px 28px}h1{font-family:var(--display);font-weight:800;font-size:32px;line-height:1.05;text-transform:uppercase;color:var(--text);margin-bottom:14px}p{font-size:15.5px;line-height:1.6;color:var(--text-mid);margin-bottom:14px}p.hi{font-family:var(--hindi);font-size:14.5px;color:var(--text-low)}.ref{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--text-low);border:1px solid var(--border);padding:12px 14px;margin:4px 0 20px;word-break:break-all}.ref b{color:var(--text)}.note{font-size:14.5px;line-height:1.55;color:var(--text-low);border:1px solid var(--border);border-left:2px solid var(--accent);padding:14px 16px;margin-bottom:22px}.btn{width:100%;font-family:var(--sans);font-size:16px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:54px;padding:15px 22px;text-decoration:none;border:1px solid transparent;transition:all .2s;margin-bottom:10px}.btn .material-symbols-outlined{font-size:19px}.btn-danger{background:var(--crit);color:#fff;border-color:var(--crit)}.btn-danger:hover{filter:brightness(1.08)}.btn-ghost{background:0 0;color:var(--text-mid);border-color:var(--border-strong)}.btn-ghost:hover{color:var(--text);border-color:var(--accent)}.btn[disabled]{opacity:.55;cursor:default}.ic{width:60px;height:60px;display:grid;place-items:center;border:1px solid;margin-bottom:18px}.ic .material-symbols-outlined{font-size:32px}.ic.ok{border-color:var(--ok);color:var(--ok)}.ic.bad{border-color:var(--crit);color:var(--crit)}.state{display:none}.state.on{display:block}footer{border-top:1px solid var(--border);padding:22px 20px;font-size:13px;color:var(--text-dim);text-align:center}footer a{color:var(--accent);text-decoration:none}</style></head><body>
+<header><a class="logo" href="/report"><span class="logo-sq"><span class="material-symbols-outlined">pets</span></span><span class="logo-t">Rapid Response</span><span class="logo-sub">On Record</span></a></header>
+<main><div class="card">
+
+<div class="state on" id="sConfirm">
+<h1>Remove this from the public record</h1>
+<p>This takes your case off the public wall straight away. Your report and evidence stay with the welfare team, so any action already under way continues.</p>
+<p class="hi">इससे आपका मामला सार्वजनिक दीवार से तुरंत हट जाता है। आपकी रिपोर्ट और सबूत टीम के पास रहते हैं, इसलिए जो कार्रवाई चल रही है वह जारी रहती है।</p>
+<div class="ref" id="refBox">Reference <b id="refId">checking...</b></div>
+<div class="note">Once removed, the case cannot be put back on the public wall from this link. You would need to file it again.</div>
+<button class="btn btn-danger" id="goBtn"><span class="material-symbols-outlined">delete</span><span id="goLbl">Remove from public record</span></button>
+<a class="btn btn-ghost" href="/report">Keep it published</a>
+</div>
+
+<div class="state" id="sDone">
+<div class="ic ok"><span class="material-symbols-outlined">check</span></div>
+<h1>Removed</h1>
+<p>Your case is no longer visible on the public record. The welfare team still holds your report for any follow up.</p>
+<p class="hi">आपका मामला अब सार्वजनिक रिकॉर्ड पर नहीं दिखता। किसी भी फॉलो-अप के लिए रिपोर्ट टीम के पास है।</p>
+<a class="btn btn-ghost" href="/report">Back to the record</a>
+</div>
+
+<div class="state" id="sErr">
+<div class="ic bad"><span class="material-symbols-outlined">error</span></div>
+<h1 id="errH">Link not valid</h1>
+<p id="errP">This removal link is missing its token, or it has already been used.</p>
+<p>If you still need this case taken down, write to us and we will remove it for you. Include the reference number from your report receipt.</p>
+<a class="btn btn-ghost" href="mailto:ask@rapid-response.in?subject=Remove%20my%20case%20from%20the%20public%20record"><span class="material-symbols-outlined">mail</span>Email ask@rapid-response.in</a>
+<a class="btn btn-ghost" href="/report">Back to the record</a>
+</div>
+
+</div></main>
+<footer>Rapid Response &middot; <a href="/report">On Record</a></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-functions-compat.js"></script>
+<script>
+/* Name of the deployed callable that unpublishes a report.
+   Change this one line if your function is named differently. */
+var REMOVE_FN = "removeReport";
+
+firebase.initializeApp({apiKey:"AIzaSyAw-WpM6fVhwkREGqAcfMRXJRAjGR5f2sw",authDomain:"report-5bf7e.firebaseapp.com",projectId:"report-5bf7e",storageBucket:"report-5bf7e.firebasestorage.app",messagingSenderId:"52699587932",appId:"1:52699587932:web:603115f216d768151b8d99"});
+var FNS = firebase.app().functions("asia-south1");
+
+var $ = function(id){return document.getElementById(id)};
+function show(id){["sConfirm","sDone","sErr"].forEach(function(s){$(s).classList.toggle("on", s===id)});window.scrollTo(0,0)}
+function fail(h,p){if(h)$("errH").textContent=h;if(p)$("errP").textContent=p;show("sErr")}
+
+var q = new URLSearchParams(location.search);
+var token = (q.get("token")||"").trim();
+var rid = (q.get("id")||q.get("reportId")||q.get("ref")||"").trim();
+
+if(!token){ fail("Link not valid","This removal link is missing its token. It may have been cut short by your email app."); }
+else { $("refId").textContent = rid || "on file"; }
+
+$("goBtn").addEventListener("click", function(){
+  var b=$("goBtn"), l=$("goLbl");
+  b.disabled=true; l.textContent="Removing...";
+  FNS.httpsCallable(REMOVE_FN)({ token: token, reportId: rid })
+    .then(function(res){
+      var d = (res && res.data) || {};
+      if(d.ok === false){ throw new Error(d.error || "refused"); }
+      show("sDone");
+    })
+    .catch(function(err){
+      console.error("remove failed", err);
+      b.disabled=false; l.textContent="Remove from public record";
+      var code = (err && err.code) || "";
+      if(code.indexOf("not-found")>-1 || code.indexOf("internal")>-1){
+        fail("Could not remove it automatically","Something went wrong on our side. Please email us and we will take it down for you.");
+      } else if(code.indexOf("permission")>-1 || code.indexOf("unauthenticated")>-1 || code.indexOf("invalid-argument")>-1){
+        fail("Link not valid","This removal link has already been used, or it does not match a live case.");
+      } else {
+        fail("Could not remove it automatically","Please check your connection and try again, or email us and we will take it down for you.");
+      }
+    });
+});
+</script>
+</body></html>
