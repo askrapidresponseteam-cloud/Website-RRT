@@ -1,6 +1,17 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/report", "destination": "/report.html" }
+    {
+      "source": "/report",
+      "destination": "/report.html"
+    },
+    {
+      "source": "/report/manage",
+      "destination": "/manage.html"
+    },
+    {
+      "source": "/manage",
+      "destination": "/manage.html"
+    }
   ]
 }
