@@ -1,0 +1,31 @@
+{
+  "name": "Rapid Response",
+  "short_name": "Rapid Response",
+  "description": "Animal Emergency Network for India",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0908",
+  "theme_color": "#0a0908",
+  "icons": [
+    {
+      "src": "/assets/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ]
+}

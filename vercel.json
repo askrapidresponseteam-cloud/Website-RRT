@@ -3,11 +3,23 @@
   "rewrites": [
     {
       "source": "/manage",
-      "destination": "/manage.html"
+      "destination": "/report/manage.html"
     },
     {
       "source": "/report/manage",
       "destination": "/report/manage.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
