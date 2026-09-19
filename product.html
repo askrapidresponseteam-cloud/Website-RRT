@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!--
-  Product page — the web twin of the app's store_product_view.
+  Product page - the web twin of the app's store_product_view.
 
   One live read from the vendor answers everything on this page: every
   variant with paise prices, stock, images and the vendor's own quantity
-  rule where they set one. Selecting options resolves to a real variant id —
+  rule where they set one. Selecting options resolves to a real variant id  - 
   the thing the vendor's cart and checkout understand.
 
   ADD TO BAG keeps the RRT cart; BUY NOW re-reads the product fresh (the
@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product — The RRT Shop</title>
+<title>Product · The RRT Shop</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,6 +57,12 @@
                    cursor:pointer; color:inherit; }
 .opt-vals button[aria-pressed="true"] { border-color:var(--accent); background:var(--accent-soft); }
 .opt-vals button.gone { opacity:.35; text-decoration:line-through; }
+.opt-vals a { font-family:var(--sans); font-size:12px; padding:9px 15px;
+              border:1px solid var(--border-strong); color:inherit;
+              text-decoration:none; display:inline-block; }
+.opt-vals a[aria-current="true"] { border-color:var(--accent); background:var(--accent-soft); }
+.opt-vals a.gone { opacity:.35; }
+.opt-vals a .sp { font-family:var(--mono); font-size:10px; color:var(--text-low); margin-left:8px; }
 
 .buy { display:flex; gap:10px; margin:24px 0 8px; }
 .qty { display:flex; border:1px solid var(--border-strong); }
@@ -128,6 +134,7 @@
       <h1 id="title"></h1>
       <div class="price-row" id="priceRow"><span class="skel"></span></div>
       <p class="stock" id="stock">Checking availability…</p>
+      <div id="sizes" hidden></div>
       <div id="options"></div>
       <div class="buy">
         <div class="qty">
@@ -190,7 +197,7 @@
   S.product(handle).then(function (p) {
     if (!p) return fail(S.vendor.name + ' no longer sells this product.');
     product = p;
-    document.title = p.title + ' — The RRT Shop';
+    document.title = p.title + ' · The RRT Shop';
     render();
   }).catch(function (e) {
     fail(e && e.message ? e.message : 'Something went wrong.');
@@ -416,7 +423,27 @@
   });
 
   function loadRecs() {
-    S.recommendations(product.id).then(function (list) {
+    function loadSizes() {
+    var q = S.sizeQuery(product.title);
+    if (!q || q === product.title) return; // no size token: nothing to group
+    S.suggest(q).then(function (r) {
+      var fam = S.sizeSiblings(product, r.products);
+      if (fam.length < 2) return;
+      $('sizes').innerHTML = '<div class="opt"><h2>Sizes</h2><div class="opt-vals">' +
+        fam.map(function (m) {
+          var price = m.pricePaise != null ? '<span class="sp">' + S.money(m.pricePaise) + '</span>' : '';
+          if (m.current) {
+            return '<a href="#" aria-current="true" onclick="return false">' + esc(m.label) + price + '</a>';
+          }
+          return '<a href="/shop/p/' + encodeURIComponent(m.handle) + '"' +
+            (m.available ? '' : ' class="gone"') + '>' + esc(m.label) + price + '</a>';
+        }).join('') + '</div></div>';
+      $('sizes').hidden = false;
+    }).catch(function () { /* a product page without a size row is complete */ });
+  }
+  loadSizes();
+
+  S.recommendations(product.id).then(function (list) {
       if (!list.length) return;
       $('recsH').hidden = false;
       $('recs').innerHTML = list.map(function (p) { return U.tile(p); }).join('');

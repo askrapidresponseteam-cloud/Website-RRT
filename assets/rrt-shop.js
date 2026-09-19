@@ -1,5 +1,5 @@
 /**
- * RRT Shop — storefront client. THE WEB TWIN OF THE APP'S STORE.
+ * RRT Shop - storefront client. THE WEB TWIN OF THE APP'S STORE.
  *
  * This is a JavaScript port of the mobile app's vendor layer:
  *
@@ -10,14 +10,14 @@
  * Like the app, there is NO RRT SERVER IN THE LOOP. The browser reads Pets
  * Lifestyle's live Shopify store directly and hands checkout to their own
  * payment page, carrying the same cart attributes (source, rrt_ref) that the
- * app sends — so the backend order ledger counts web orders the same way it
+ * app sends - so the backend order ledger counts web orders the same way it
  * counts app orders.
  *
  * ONE TRANSPORT DIFFERENCE, forced by the browser: the app reads the vendor's
  * `/collections/....json` and `/products/....js` endpoints, which do not send
  * CORS headers and therefore cannot be fetched cross-origin from a web page.
- * The web client instead uses Shopify's public Storefront API — the same
- * tokenless GraphQL endpoint the app already uses for full search — which is
+ * The web client instead uses Shopify's public Storefront API - the same
+ * tokenless GraphQL endpoint the app already uses for full search - which is
  * CORS-open and serves the identical live data: products, collections, search
  * and recommendations. Same store, same prices, same stock; different door.
  *
@@ -40,7 +40,7 @@
     /** Permanent Shopify domain; the Storefront API is served here whatever
      *  the vendor does with their custom domain. */
     myshopifyDomain: '08e8df.myshopify.com',
-    /** Shopify "tokenless access": products, collections, search — no key to
+    /** Shopify "tokenless access": products, collections, search - no key to
      *  issue or leak. A retired version keeps answering as the oldest
      *  supported one, so this does not silently break when Shopify moves on. */
     storefrontApiVersion: '2026-01',
@@ -299,8 +299,8 @@
   }
 
   /** The vendor's product HTML, reduced to blocks RRT sets in its own type:
-   *  headings, paragraphs and bullets. Everything else — inline styles,
-   *  spans, tables, scripts — is flattened. Rendering blocks instead of the
+   *  headings, paragraphs and bullets. Everything else - inline styles,
+   *  spans, tables, scripts - is flattened. Rendering blocks instead of the
    *  vendor's raw HTML is also what keeps their markup out of our DOM. */
   function descriptionBlocks(html, maxBlocks) {
     maxBlocks = maxBlocks || 160;
@@ -484,7 +484,7 @@
       return p.variants[0];
     })();
     /** The cheapest variant still for sale (or the cheapest at all when sold
-     *  out) — what "from ₹X" means on the vendor's own grid. */
+     *  out) - what "from ₹X" means on the vendor's own grid. */
     p.cheapestVariant = (function () {
       var pool = p.variants.filter(function (v) { return v.available; });
       var list = pool.length ? pool : p.variants;
@@ -497,7 +497,7 @@
       return null;
     };
     /** The choices for option [index]: the vendor's option list when it
-     *  carries values, otherwise read off the variants in their order —
+     *  carries values, otherwise read off the variants in their order  - 
      *  the order their own product page shows. */
     p.valuesForOption = function (index) {
       if (index < p.options.length && p.options[index].values.length) return p.options[index].values;
@@ -746,6 +746,85 @@
     });
   }
 
+  /* ==================================================== SIZE SIBLINGS */
+  /* The vendor sometimes publishes each size of a product as its own
+   * listing ("... 2 Kg", "... 12 Kg") instead of as variants of one.
+   * These helpers group such sibling listings so the product page can
+   * offer every size in one place - each chip linking to the vendor's
+   * real listing at its own live price. Pure functions: the page feeds
+   * them the current product plus search results for the base title. */
+
+  var SIZE_UNITS = {
+    kg: ['wt', 1000], kgs: ['wt', 1000], g: ['wt', 1], gm: ['wt', 1],
+    gms: ['wt', 1], gram: ['wt', 1], grams: ['wt', 1],
+    l: ['vol', 1000], ltr: ['vol', 1000], litre: ['vol', 1000],
+    litres: ['vol', 1000], liter: ['vol', 1000], liters: ['vol', 1000],
+    ml: ['vol', 1], tab: ['ct', 1], tabs: ['ct', 1], tablet: ['ct', 1],
+    tablets: ['ct', 1], cap: ['ct', 1], caps: ['ct', 1],
+    capsule: ['ct', 1], capsules: ['ct', 1], pc: ['ct', 1], pcs: ['ct', 1],
+    piece: ['ct', 1], pieces: ['ct', 1]
+  };
+  var SIZE_RE = /(\d+(?:[.,]\d+)?)\s*(kgs?|gms?|grams?|g|ml|ltr|litres?|liters?|l|tabs?|tablets?|caps?|capsules?|pcs?|pieces?)\b\.?/gi;
+
+  /** The LAST size token in a title - sizes trail ("UltraHypo 12 Kg"). */
+  function parseSize(title) {
+    var t = String(title || '');
+    var m, last = null;
+    SIZE_RE.lastIndex = 0;
+    while ((m = SIZE_RE.exec(t)) !== null) last = m;
+    if (!last) return null;
+    var unit = SIZE_UNITS[last[2].toLowerCase()];
+    if (!unit) return null;
+    var n = parseFloat(last[1].replace(',', '.'));
+    if (!(n > 0)) return null;
+    var base = (t.slice(0, last.index) + ' ' + t.slice(last.index + last[0].length))
+      .replace(/\(\s*\)/g, ' ')
+      .replace(/[\s\-– - ,·|]+/g, ' ')
+      .trim();
+    return {
+      base: base.toLowerCase(),
+      label: last[0].replace(/\s+/g, ' ').replace(/\.$/, '').trim(),
+      family: unit[0],
+      value: n * unit[1]
+    };
+  }
+
+  /** Sibling listings of [current] among [candidates]: same base title,
+   *  same brand where both name one. Two or more sizes, sorted small to
+   *  large, or [] - a lone size is not a family. */
+  function sizeSiblings(current, candidates) {
+    var own = current && parseSize(current.title);
+    if (!own) return [];
+    var brandKey = String(current.brand || '').trim().toLowerCase();
+    var seen = {};
+    var out = [];
+    var pool = [current].concat(candidates || []);
+    for (var i = 0; i < pool.length; i++) {
+      var p = pool[i];
+      if (!p || !p.handle || seen[p.handle]) continue;
+      var ps = parseSize(p.title);
+      if (!ps || ps.base !== own.base) continue;
+      var pBrand = String(p.brand || '').trim().toLowerCase();
+      if (brandKey && pBrand && pBrand !== brandKey) continue;
+      seen[p.handle] = true;
+      out.push({
+        handle: p.handle,
+        label: ps.label,
+        family: ps.family,
+        value: ps.value,
+        pricePaise: p.cheapestVariant ? p.cheapestVariant.pricePaise : null,
+        available: p.available !== false,
+        current: p.handle === current.handle
+      });
+    }
+    if (out.length < 2) return [];
+    var famRank = { wt: 0, vol: 1, ct: 2 };
+    out.sort(function (a, b) {
+      return (famRank[a.family] - famRank[b.family]) || (a.value - b.value);
+    });
+    return out;
+  }
+
   /* ============================================== VISIBLE PRODUCTS (BROWSE) */
 
   var SORTS = ['featured', 'newest', 'priceLow', 'priceHigh'];
@@ -895,7 +974,7 @@
         throw StorefrontError(Vendor.name + ' could not load this right now (' + res.status + ').', res.status);
       }
       return res.json().catch(function () {
-        // Their storefront answered with a page, not data — usually a bot
+        // Their storefront answered with a page, not data - usually a bot
         // challenge or maintenance screen in front of the JSON.
         throw StorefrontError(Vendor.name + ' sent something unexpected. Try again shortly.');
       });
@@ -925,7 +1004,7 @@
   }
 
   /* Which door listings use this session: the Storefront API ('sf', sorted
-   * server-side) until it misbehaves, then the vendor's feeds ('feeds') —
+   * server-side) until it misbehaves, then the vendor's feeds ('feeds')  - 
    * the app's own endpoints, which are also the door of last resort for
    * every other read. Found necessary in production on 19 Sep 2026, when
    * the API answered the catalogue with an empty collection. */
@@ -964,7 +1043,7 @@
         throw StorefrontError(Vendor.name + ' could not load this right now (' + res.status + ').', res.status);
       }
       return res.json().catch(function () {
-        // Their storefront answered with a page, not data — usually a bot
+        // Their storefront answered with a page, not data - usually a bot
         // challenge or maintenance screen in front of the JSON.
         throw StorefrontError(Vendor.name + ' sent something unexpected. Try again shortly.');
       });
@@ -993,7 +1072,7 @@
    * search, but a few individual fields (tags, quantityRule) can require a
    * token depending on the shop's setup. Try them once; on a GraphQL error
    * retry lean and remember, so every later query succeeds first time. The
-   * rules that use tags degrade gracefully — they mostly read the title and
+   * rules that use tags degrade gracefully - they mostly read the title and
    * description anyway. */
   function caps() { return readJson(local, CAPS_KEY, {}); }
   function setCap(name) {
@@ -1022,7 +1101,7 @@
 
   /* The whole catalogue is NOT read through the "all" collection handle.
    * On the storefront, /collections/all is a virtual collection Shopify
-   * invents — which is what the app's JSON feed reads — but through the
+   * invents - which is what the app's JSON feed reads - but through the
    * Storefront API that handle resolves to whatever real collection the
    * merchant made with that name. On this store that answered with an empty
    * collection, and the shop's landing grid shipped blank (found in
@@ -1061,7 +1140,7 @@
     });
   }
 
-  /** A listing straight from the vendor's feed — the app's own read.
+  /** A listing straight from the vendor's feed - the app's own read.
    *  The catalogue pages 24 at a time (endCursor "fp:N"); an aisle is
    *  loaded whole (up to 1000 items) exactly as the app does when it
    *  sorts, so client-side sort is complete, not partial. */
@@ -1111,10 +1190,10 @@
   }
 
   /** One page of a vendor collection. Resolves to
-   *  { products, hasMore, endCursor, missing, clientSort } — missing true
+   *  { products, hasMore, endCursor, missing, clientSort } - missing true
    *  when the vendor has removed the collection. The Storefront API answers
-   *  first (its sort is server-side); the vendor's own feeds — the app's
-   *  endpoints, same-origin via the proxy — take over the moment the API
+   *  first (its sort is server-side); the vendor's own feeds - the app's
+   *  endpoints, same-origin via the proxy - take over the moment the API
    *  errors or hands the catalogue back empty, and keep the session. */
   function collectionPage(handle, opts) {
     opts = opts || {};
@@ -1191,9 +1270,9 @@
       '}';
   }
 
-  /** The live product with every variant, from /products/{handle}.js —
+  /** The live product with every variant, from /products/{handle}.js  - 
    *  the exact read the app makes, quantity rules and tags included. Null
-   *  when the vendor has removed it. `fresh` skips the cache — used when
+   *  when the vendor has removed it. `fresh` skips the cache - used when
    *  the answer decides money. The Storefront API is the fallback door. */
   function product(handle, opts) {
     opts = opts || {};
@@ -1228,8 +1307,8 @@
 
   /* ================================================================ SEARCH */
 
-  /** Search-as-you-type: the vendor's own suggest.json — the app's exact
-   *  read — with matching products and matching collections (so "royal
+  /** Search-as-you-type: the vendor's own suggest.json - the app's exact
+   *  read - with matching products and matching collections (so "royal
    *  canin" offers their whole Royal Canin shelf, not just ten
    *  suggestions). The API's predictive search is the fallback. */
   function suggest(query) {
@@ -1285,7 +1364,7 @@
     });
   }
 
-  /* The vendor's full search — every match, a page at a time. This query is
+  /* The vendor's full search - every match, a page at a time. This query is
    * the one the app ships and has verified against the live shop. */
   var SEARCH_QUERY =
     'query RrtSearch($q: String!, $after: String) {\n' +
@@ -1329,8 +1408,8 @@
       });
   }
 
-  /** The vendor's related products, from their own recommendations feed —
-   *  the app's read — with the API as fallback. Never rejects: a product
+  /** The vendor's related products, from their own recommendations feed  - 
+   *  the app's read - with the API as fallback. Never rejects: a product
    *  page without recommendations is still a complete product page. */
   function recommendations(productId) {
     return feedGet('/recommendations/products.json', {
@@ -1464,7 +1543,7 @@
   function cartRemove(variantId) { return cartSetQty(variantId, 0); }
   function cartClear() { return writeCart([]); }
 
-  /** Re-read every line from the vendor. FRESH — this decides money.
+  /** Re-read every line from the vendor. FRESH - this decides money.
    *  Resolves to { lines, changes } where each change is
    *  { type: 'price'|'stock'|'gone', title, from, to }. */
   function cartRevalidate() {
@@ -1584,7 +1663,7 @@
 
   /** A new checkout reference, "RRT-7K2Q9XM4PA". One per checkout attempt;
    *  sent to the vendor as a cart attribute and matched by the backend's
-   *  order ledger — the count the RRT Admin sees. */
+   *  order ledger - the count the RRT Admin sees. */
   function newRrtRef() {
     var out = '';
     var n = RRT_REF_ALPHABET.length;
@@ -1603,12 +1682,12 @@
    *  permalink). Their checkout then does everything a checkout on their
    *  site does: address, delivery charge, offers, payment, confirmation.
    *
-   *  `toVendorCart` lands on their cart page instead — the fallback if their
+   *  `toVendorCart` lands on their cart page instead - the fallback if their
    *  checkout ever refuses a permalink, since from their cart page their own
    *  checkout button always works.
    *
-   *  The `attributes[source]` note rides on the order in their admin — and
-   *  onto the backend's ledger — so RRT can see which orders came through
+   *  The `attributes[source]` note rides on the order in their admin - and
+   *  onto the backend's ledger - so RRT can see which orders came through
    *  the website as opposed to the apps. */
   function checkoutUrl(lines, opts) {
     opts = opts || {};
@@ -1638,13 +1717,13 @@
   }
 
   /** Hand [lines] to the vendor's checkout, exactly as the app's
-   *  startVendorCheckout does — mint a reference, keep a receipt, go.
+   *  startVendorCheckout does - mint a reference, keep a receipt, go.
    *
    *  The one honest difference from the phone: a browser cannot watch the
    *  vendor's checkout the way the app's WebView can, so the receipt is
    *  saved as pending now and confirmed when the buyer comes back and says
    *  so (the cart page asks). The authoritative count never depended on
-   *  either — it comes from the vendor's Shopify via the backend webhook,
+   *  either - it comes from the vendor's Shopify via the backend webhook,
    *  which sees the rrt_ref whether or not the buyer ever returns. */
   function beginCheckout(lines, opts) {
     opts = opts || {};
@@ -1687,7 +1766,7 @@
   }
 
   /** The unresolved checkout hand-off, if one exists and is under 7 days
-   *  old. Older ones are quietly dropped along with their pending receipt —
+   *  old. Older ones are quietly dropped along with their pending receipt  - 
    *  an unconfirmed receipt is a question, not a record. */
   function pendingCheckout() {
     var p = readJson(local, PENDING_KEY, null);
@@ -1725,7 +1804,7 @@
   /* ======================================================== DELETE MY DATA */
 
   /** Clears everything the shop keeps in this browser: cart, saved items,
-   *  receipts, the pending hand-off and the response cache — the same
+   *  receipts, the pending hand-off and the response cache - the same
    *  promise the app's delete-my-data makes. */
   function deleteMyData() {
     [CART_KEY, SAVED_KEY, RECEIPTS_KEY, PENDING_KEY].forEach(function (k) {
@@ -1771,6 +1850,11 @@
     visibleProducts: visibleProducts,
     collectionPage: collectionPage,
     product: product,
+    sizeQuery: function (title) {
+      var ps = parseSize(title);
+      return ps ? ps.base : String(title || '');
+    },
+    sizeSiblings: sizeSiblings,
     suggest: suggest,
     searchAll: searchAll,
     recommendations: recommendations,
@@ -1800,7 +1884,7 @@
   };
   /* END PUBLIC API */
 
-  /* Test seams — used only by scripts/test-storefront-client.js. */
+  /* Test seams - used only by scripts/test-storefront-client.js. */
   api.__internal = {
     productFromGraphTile: productFromGraphTile,
     productFromGraphFull: productFromGraphFull,

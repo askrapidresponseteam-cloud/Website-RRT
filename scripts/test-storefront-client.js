@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Tests for web/assets/rrt-shop.js — the web twin of the app's store layer.
+ * Tests for web/assets/rrt-shop.js - the web twin of the app's store layer.
  *
  * These mirror the app's client/test/store_models_test.dart: money, parsing,
  * the whole-word label rules, the checkout link, references, the cart and
@@ -153,7 +153,7 @@ eq(full.cheapestVariant.id, 71, 'full: cheapest counts only in-stock variants');
 
 /* --------------------------------------- vendor feed parsers (app parity) */
 
-// /collections/{handle}/products.json — decimal-string prices, body_html.
+// /collections/{handle}/products.json - decimal-string prices, body_html.
 const feedProd = S.__internal.productFromFeed({
   id: 7, handle: 'wormer', title: ' Wormer ', vendor: 'Acme',
   product_type: 'Pharmacy', tags: 'dogs, Prescription only',
@@ -179,7 +179,7 @@ ok(!feedProd.partial, 'feed products are complete');
 eq(S.__internal.productFromFeed({ id: 9, handle: 'x', variants: [] }), null,
   'feed: a product with no priced variant cannot be sold');
 
-// /products/{handle}.js — integer paise, quantity rules, string images.
+// /products/{handle}.js - integer paise, quantity rules, string images.
 const ajaxProd = S.__internal.productFromAjax({
   id: 7, handle: 'wormer', title: 'Wormer', vendor: 'Acme', type: 'Pharmacy',
   tags: ['dogs'], description: '<p>Broad spectrum.</p>',
@@ -197,7 +197,7 @@ eq(ajaxProd.productType, 'Pharmacy', 'ajax: `type` field read');
 eq(ajaxProd.valuesForOption(0), ['1 kg', '3 kg'], 'ajax: values read off variants for bare option names');
 eq(ajaxProd.descriptionHtml, '<p>Broad spectrum.</p>', 'ajax: description field read');
 
-// /search/suggest.json — partial tiles with a price range.
+// /search/suggest.json - partial tiles with a price range.
 const sugProd = S.__internal.productFromSuggest({
   id: 5, handle: 'gravy', title: 'Gravy &amp; Chunks', vendor: 'JerHigh',
   price_min: '70.00', price_max: '3072.00', compare_at_price_max: '90.00',
@@ -284,6 +284,47 @@ eq(S.cart().lines.length, 1, 'zero quantity removes the line');
 S.clearCart();
 eq(S.cart().count, 0, 'clear empties the cart');
 
+/* ------------------------------------------------------- size siblings */
+// The vendor lists each size of some products as its own listing. The
+// grouper must find the family and nothing but the family.
+(function () {
+  function tile(title, handle, brand, paise, avail) {
+    return S.__internal.wrapProduct({
+      id: Math.floor(Math.random() * 1e6), handle: handle, title: title,
+      brand: brand, productType: '', tags: [], descriptionHtml: '',
+      images: [], options: [], partial: true, createdAtMs: null,
+      variants: [{ id: 1, title: 'Default Title', optionValues: [],
+                   pricePaise: paise, compareAtPaise: null,
+                   available: avail !== false, imageUrl: null, maxQty: null }]
+    });
+  }
+  var cur = tile('Farmina Vet Life UltraHypo Hydrolyzed Fish Monoprotein 12 Kg',
+    'ultrahypo-12-kg', 'Vet Life', 1300000);
+  var fam = S.sizeSiblings(cur, [
+    tile('Farmina Vet Life UltraHypo Hydrolyzed Fish Monoprotein 2 Kg',
+      'ultrahypo-2-kg', 'Vet Life', 315000),
+    tile('Farmina Vet Life UltraHypo Hydrolyzed Fish Monoprotein 400 Gm',
+      'ultrahypo-400-gm', 'Vet Life', 90000, false),
+    cur, // the search returns the page's own product too: dedupe
+    tile('Farmina Vet Life UltraHypo Cat Hydrolyzed Fish Monoprotein 2 Kg',
+      'ultrahypo-cat-2-kg', 'Vet Life', 320000),     // different base
+    tile('Royal Canin Hypoallergenic 12 Kg', 'rc-hypo-12', 'Royal Canin', 1100000),
+    tile('Farmina Vet Life UltraHypo Hydrolyzed Fish Monoprotein', 'no-size', 'Vet Life', 100)
+  ]);
+  eq(fam.map(function (m) { return m.label; }), ['400 Gm', '2 Kg', '12 Kg'],
+    'size family found and sorted small to large across units');
+  eq(fam.map(function (m) { return m.current; }), [false, false, true],
+    'the open listing is marked current');
+  eq(fam[0].available, false, 'a sold-out size keeps its truth');
+  eq(fam[1].handle, 'ultrahypo-2-kg', 'chips link the sibling listings');
+  eq(S.sizeSiblings(tile('Just A Toy', 'toy', 'Acme', 500), [cur]), [],
+    'no size token, no family');
+  eq(S.sizeSiblings(cur, []), [], 'a lone size is not a family');
+  eq(S.sizeQuery('Farmina Vet Life UltraHypo Hydrolyzed Fish Monoprotein 12 Kg'),
+    'farmina vet life ultrahypo hydrolyzed fish monoprotein',
+    'the sibling search asks for the base title');
+})();
+
 /* ------------------------------------------- revalidation (stubbed vendor) */
 
 function jsonRes(body, status) {
@@ -296,7 +337,7 @@ function jsonRes(body, status) {
 function gqlResponse(data) { return jsonRes({ data }); }
 
 /** Answer like the vendor: feed URLs get feed bodies, everything else the
- *  Storefront API shape. Cart re-checks read /products/{handle}.js — the
+ *  Storefront API shape. Cart re-checks read /products/{handle}.js - the
  *  same read the app makes before money moves. */
 function vendorStub(routes) {
   return function (url) {
@@ -376,7 +417,7 @@ S.revalidateCart().then((r) => {
 
   /* --------------------------------------------- catalogue transport
    * Regression: reading the whole range through collection(handle:"all")
-   * shipped an EMPTY landing grid in production (19 Sep 2026) — through
+   * shipped an EMPTY landing grid in production (19 Sep 2026) - through
    * the Storefront API that handle resolves to the merchant's own "all"
    * collection, not Shopify's virtual everything-collection. The catalogue
    * must therefore use the top-level products connection. */
@@ -412,8 +453,8 @@ S.revalidateCart().then((r) => {
 }).then(function () {
 
   /* -------------------------------------- feed fallback (app's endpoints)
-   * When the Storefront API errors — or answers the catalogue with an
-   * empty page while the live store lists thousands of products — the shop
+   * When the Storefront API errors - or answers the catalogue with an
+   * empty page while the live store lists thousands of products - the shop
    * switches to the vendor's own storefront feeds through the same-origin
    * /pl-api proxy: the byte-identical endpoints the app reads. If
    * pets-lifestyle.com shows it, the shop shows it. */

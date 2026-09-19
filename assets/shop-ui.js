@@ -1,5 +1,5 @@
 /**
- * RRT Shop — shared page chrome. The tile, the bag count and the toast, so
+ * RRT Shop - shared page chrome. The tile, the bag count and the toast, so
  * the hub, search results, saved shelf and "you may also like" strip can
  * never draw a product differently. Everything here reads through RRTShop
  * (assets/rrt-shop.js), which must be loaded first.
@@ -63,7 +63,7 @@
   }
 
   /** Delegated tile actions on [container]: the heart saves, and + ADD adds
-   *  the live default variant — or opens the product page when there is a
+   *  the live default variant - or opens the product page when there is a
    *  choice to make, exactly like the vendor's own "Options" button. */
   function bindTiles(container, onChange) {
     container.addEventListener('click', function (e) {

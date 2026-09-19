@@ -63,6 +63,9 @@ for (const file of SHOP_PAGES) {
 
   if (!s.includes('assets/shop.css')) problems.push('not using the shared stylesheet');
 
+  // House style: no em dashes, anywhere, ever.
+  if (s.includes(String.fromCharCode(0x2014))) problems.push('em dash in shipped text');
+
   // Branding. The layout came from a mock belonging to another organisation;
   // none of their identity may ship.
   if (/PFA|People For Animals/i.test(f)) problems.push('FOREIGN BRANDING PRESENT');
@@ -75,7 +78,7 @@ for (const file of SHOP_PAGES) {
   if (hotlink.test(s)) problems.push('placeholder image hotlink');
 
   // Every customer-facing page must carry the seller disclosure. The seller
-  // is NAMED, as in the app — an anonymous "retail partner" is the one thing
+  // is NAMED, as in the app - an anonymous "retail partner" is the one thing
   // the superseded architecture required that consumer-protection rules on
   // seller identity would not survive.
   if (!/Pets Lifestyle/.test(f)) problems.push('seller not named');
@@ -146,6 +149,13 @@ if (lost.length) {
   failed++;
 } else {
   console.log(`  ok    layout contract intact (${GEOMETRY.length} geometry checks)`);
+}
+
+for (const [name, text] of [['shop.css', cssOnly], ['rrt-shop.js', sdk], ['shop-ui.js', ui]]) {
+  if (text.includes(String.fromCharCode(0x2014))) {
+    console.log(`  FAIL  assets/${name}: em dash in shipped text`);
+    failed++;
+  }
 }
 
 console.log(failed ? `\n${failed} check(s) failed.\n` : '\nAll storefront checks pass.\n');

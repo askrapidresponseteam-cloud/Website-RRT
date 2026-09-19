@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  The bag — the web twin of the app's store_cart_view.
+  The bag - the web twin of the app's store_cart_view.
 
   The stored cart is a snapshot, so the page renders instantly; then every
   line is re-read live from the vendor, because THE SNAPSHOT IS NEVER
@@ -10,7 +10,7 @@
   Checkout is a hand-off: the vendor's own secure page takes address,
   delivery charge, offers and payment. A browser cannot watch that page the
   way the app's in-app browser can, so when the buyer comes back this page
-  asks one question — "did you place the order?" — and keeps or drops the
+  asks one question - "did you place the order?" - and keeps or drops the
   receipt accordingly. The authoritative order count never depends on that
   answer: it comes from the vendor's store via the rrt_ref attribute.
 -->
@@ -18,7 +18,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your bag — The RRT Shop</title>
+<title>Your bag · The RRT Shop</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,7 +119,7 @@
     Did you place the order there?
     <div class="row">
       <button class="btn-solid" id="paidYes" type="button">I placed my order</button>
-      <button class="btn-line" id="paidNo" type="button">No — keep my bag</button>
+      <button class="btn-line" id="paidNo" type="button">No, keep my bag</button>
     </div>
   </div>
 
@@ -135,10 +135,10 @@
   <div id="checkoutBlock" hidden>
     <div class="summary">
       <span class="label">Item subtotal</span>
-      <span class="amount" id="subtotal">—</span>
+      <span class="amount" id="subtotal">-</span>
     </div>
     <p class="fineprint">Delivery and any offers are added on Pets Lifestyle's
-       checkout — you'll see the final total there before paying. Out-of-stock
+       checkout; you'll see the final total there before paying. Out-of-stock
        items stay in your bag but are not sent to checkout.</p>
     <div class="lock">Secure checkout · payment taken by Pets Lifestyle</div>
     <button class="btn-solid checkout-btn" id="checkout" type="button">Go to secure checkout</button>
@@ -153,7 +153,7 @@
        carried over; they take payment, ship the order and handle returns and
        refunds. Rapid Response never sees your payment details.</p>
     <p>Prices here were just re-checked with their live store. If anything
-       changed since you added it, it is called out above by name — nothing is
+       changed since you added it, it is called out above by name; nothing is
        ever adjusted silently.</p>
   </div>
 </section>
@@ -214,7 +214,7 @@
         '<div class="unit">' + esc(S.money(l.pricePaise)) + ' each' +
         (l.compareAtPaise ? '<span class="was">' + esc(S.money(l.compareAtPaise)) + '</span>' : '') + '</div>' +
         moved +
-        (l.available ? '' : '<div class="oosNote">Out of stock at ' + esc(S.vendor.name) + ' — not sent to checkout</div>') +
+        (l.available ? '' : '<div class="oosNote">Out of stock at ' + esc(S.vendor.name) + ', not sent to checkout</div>') +
         '<div class="qty">' +
         '<button type="button" data-step="-1" aria-label="Reduce quantity">−</button>' +
         '<span>' + l.qty + '</span>' +
@@ -222,11 +222,11 @@
         '</div>' +
         '</div>' +
         '<div class="right">' +
-        '<div class="total">' + (l.available ? esc(S.money(l.pricePaise * l.qty)) : '—') + '</div>' +
+        '<div class="total">' + (l.available ? esc(S.money(l.pricePaise * l.qty)) : '-') + '</div>' +
         '<button class="rm" type="button" data-rm>Remove</button>' +
         '</div></div>';
     }).join('');
-    $('subtotal').textContent = lines.length ? S.money(state.subtotalPaise) : '—';
+    $('subtotal').textContent = lines.length ? S.money(state.subtotalPaise) : '-';
   }
 
   $('lines').addEventListener('click', function (e) {
@@ -257,10 +257,10 @@
       '<strong>Just re-checked with ' + esc(S.vendor.name) + ':</strong><br>' +
       changes.map(function (c) {
         if (c.type === 'price') {
-          return esc(c.title) + ' — was ' + esc(S.money(c.from)) + ', now ' + esc(S.money(c.to));
+          return esc(c.title) + ': was ' + esc(S.money(c.from)) + ', now ' + esc(S.money(c.to));
         }
-        if (c.type === 'stock') return esc(c.title) + ' — just went out of stock';
-        return esc(c.title) + ' — no longer sold';
+        if (c.type === 'stock') return esc(c.title) + ': just went out of stock';
+        return esc(c.title) + ': no longer sold';
       }).join('<br>');
   }
 
@@ -282,7 +282,7 @@
         describeChanges(r.changes);
         btn.disabled = false;
         btn.textContent = 'Go to secure checkout';
-        U.toast('Something changed — check your bag, then press again');
+        U.toast('Something changed. Check your bag, then press again');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  The shop hub — the web twin of the app's SHOP tab, on the editorial
+  The shop hub - the web twin of the app's SHOP tab, on the editorial
   reference layout: cellular 112px header, hairline rows, 85% grid.
 
   The ten RRT shelves ride the category bar; a chosen shelf reveals its
@@ -90,7 +90,7 @@
   <div>
     <p>Rapid Response designs and hosts this storefront. Everything on it is
        sold and delivered by <strong>Pets Lifestyle</strong>, the seller for
-       every order placed here — the same store behind the SHOP tab in the
+       every order placed here: the same store behind the SHOP tab in the
        RRT app.</p>
     <p>Pets Lifestyle takes payment on their own secure checkout, holds the
        order, ships it, and handles returns, refunds and cancellations. We do
@@ -144,18 +144,18 @@
   }
 
   if (searching) {
-    document.title = q + ' — The RRT Shop';
+    document.title = q + ' · The RRT Shop';
     $('pageTitle').textContent = 'Search';
     $('pageCopy').textContent = 'Results for \u201c' + q + '\u201d \u2014 every match from the live range, straight from the seller\u2019s own search.';
     $('q').value = q;
     $('stockWrap').hidden = true;
     $('sort').hidden = true;
   } else if (shelf) {
-    document.title = shelf.name + ' — The RRT Shop';
+    document.title = shelf.name + ' · The RRT Shop';
     $('pageTitle').textContent = shelf.name;
     $('pageCopy').textContent = 'One of the ten RRT shelves \u2014 pick an aisle below, or browse the lot.';
   } else if (aisle) {
-    document.title = aisleLabel() + ' — The RRT Shop';
+    document.title = aisleLabel() + ' · The RRT Shop';
     $('pageTitle').textContent = aisleLabel();
     $('pageCopy').textContent = 'A shelf from the live range.';
   }

@@ -1,9 +1,9 @@
 /* ==========================================================================
-   RRT SHOP — shared skin.
+   RRT SHOP - shared skin.
 
    A faithful translation of the PFA editorial reference: its geometry,
-   spacing and hairline structure kept to the pixel — 112px cellular header
-   (72 / 248 / 1fr / 72), 85% grid at 26/48 gutters, 7.5% side rails —
+   spacing and hairline structure kept to the pixel - 112px cellular header
+   (72 / 248 / 1fr / 72), 85% grid at 26/48 gutters, 7.5% side rails  - 
    re-clothed in Rapid Response's identity. Paper white becomes #0a0908,
    the serif becomes Barlow Condensed, the ink-black keystone and hover
    fills become signal red, and money is set in JetBrains Mono.
@@ -73,8 +73,8 @@ button { font: inherit; color: inherit; }
   background: rgba(10, 9, 8, .97);
 }
 
-/* The site logo — the landing page's lockup verbatim: 28px accent square,
-   Material Symbols paw, Barlow Condensed wordmark — spanning the first two
+/* The site logo - the landing page's lockup verbatim: 28px accent square,
+   Material Symbols paw, Barlow Condensed wordmark - spanning the first two
    header columns, with a dim SHOP tag for context. */
 .logo {
   grid-column: 1 / 3;
