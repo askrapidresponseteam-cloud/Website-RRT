@@ -107,14 +107,14 @@ const LIGHT = [
   [/color:\s*#(171717|222|444|666|999|bbb|ddd)\b/i, 'light-theme text colour'],
   [/Times New Roman/i, 'reference serif typeface'],
   [/font-family:\s*Arial/i, 'reference body typeface'],
-  [/color-scheme:\s*light/i, 'light colour scheme'],
+  [/#0a0908|#ff4d3d/i, 'retired dark palette'],
 ];
 
 for (const file of ['assets/shop.css', ...SHOP_PAGES]) {
   const s = fs.readFileSync(path.join(WEB, file), 'utf8');
   const hits = LIGHT.filter(([re]) => re.test(s)).map(([, name]) => name);
   if (hits.length) {
-    console.log(`  FAIL  ${file}  -> light theme leaked: ${hits.join('; ')}`);
+    console.log(`  FAIL  ${file}  -> design contract broken: ${hits.join('; ')}`);
     failed++;
   }
 }
@@ -126,6 +126,16 @@ for (const file of ['assets/shop.css', ...SHOP_PAGES]) {
  * asserting rather than assuming. If a future change drifts the grid, this says
  * so before it ships.
  * ------------------------------------------------------------------------- */
+
+// The app's palette (client/lib/core/theme/app_theme.dart), required
+// verbatim so phone and web can never drift apart.
+const PALETTE = [
+  [/#e52222/i, 'app red'],
+  [/#111111/i, 'app black'],
+  [/#f7f6f4/i, 'app offWhite'],
+  [/#e2e2e2/i, 'app border grey'],
+  [/#16a34a/i, 'app success green'],
+];
 
 const GEOMETRY = [
   // The header is the landing page's bar, so the logo sits at the exact
@@ -147,6 +157,13 @@ const GEOMETRY = [
 ];
 
 const cssOnly = fs.readFileSync(path.join(WEB, 'assets', 'shop.css'), 'utf8');
+const missingColours = PALETTE.filter(([re]) => !re.test(cssOnly)).map(([, name]) => name);
+if (missingColours.length) {
+  console.log(`  FAIL  app palette drifted -> missing: ${missingColours.join('; ')}`);
+  failed++;
+} else {
+  console.log(`  ok    app palette intact (${PALETTE.length} colour checks)`);
+}
 const lost = GEOMETRY.filter(([re]) => !re.test(cssOnly)).map(([, name]) => name);
 if (lost.length) {
   console.log(`  FAIL  layout contract drifted -> missing: ${lost.join('; ')}`);

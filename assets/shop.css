@@ -4,7 +4,7 @@
    A faithful translation of the PFA editorial reference: its geometry,
    spacing and hairline structure kept to the pixel - 112px cellular header
    (72 / 248 / 1fr / 72), 85% grid at 26/48 gutters, 7.5% side rails  - 
-   re-clothed in Rapid Response's identity. Paper white becomes #0a0908,
+   re-clothed in Rapid Response's identity: the app's light palette,
    the serif becomes Barlow Condensed, the ink-black keystone and hover
    fills become signal red, and money is set in JetBrains Mono.
 
@@ -13,24 +13,29 @@
    only way they read as objects rather than stickers.
    ========================================================================== */
 
+/* The palette is the app's own (client/lib/core/theme/app_theme.dart):
+   red #E52222 on ink #111111, white surfaces over off-white #F7F6F4,
+   the app's grey ladder for secondary text and hairlines, and its
+   success green. One identity, phone and web. */
 :root {
-  --bg: #0a0908;
-  --bg-soft: #14110f;
-  --bg-card: #ffffff06;
+  color-scheme: light;
+  --bg: #f7f6f4;            /* the app's offWhite scaffold */
+  --bg-soft: #ffffff;       /* the app's white surfaces */
+  --bg-card: #f2f1ee;       /* hover and pressed fills */
   --plate: #ffffff;
-  --text: #fff;
-  --text-mid: #ffffffd1;
-  --text-low: #ffffffa6;
-  --text-dim: #ffffff7a;
-  --line: #ffffff38;        /* the mock's #222 structural hairline */
-  --line-soft: #ffffff1a;   /* the mock's #ddd secondary hairline  */
+  --text: #111111;          /* the app's black */
+  --text-mid: #444444;
+  --text-low: #666666;
+  --text-dim: #888888;      /* the app's grey */
+  --line: #e2e2e2;          /* the app's border */
+  --line-soft: #efefef;     /* the app's divider lines */
   --border: var(--line-soft);
   --border-strong: var(--line);
-  --border-focus: #ff4d3d8c;
-  --accent: #ff4d3d;
-  --accent-h: #ff6a5a;
-  --accent-soft: #ff4d3d1a;
-  --ok: #7fd18a;
+  --border-focus: #e522228c;
+  --accent: #e52222;        /* the app's red */
+  --accent-h: #c91d1d;      /* hover darkens on light ground */
+  --accent-soft: #e522221a;
+  --ok: #16a34a;            /* the app's successGreenDark */
   --display: "Barlow Condensed", "Arial Narrow", sans-serif;
   --sans: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -74,7 +79,7 @@ button { font: inherit; color: inherit; }
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(10, 9, 8, .95);
+  background: rgba(255, 255, 255, .92);
   backdrop-filter: blur(12px);
 }
 @media (min-width: 768px) {
@@ -120,7 +125,7 @@ button { font: inherit; color: inherit; }
   transition: transform .2s;
 }
 .logo:hover .logo-sq { transform: rotate(-6deg); }
-.logo-sq .material-symbols-outlined { color: #fff; font-size: 18px; }
+.logo-sq .material-symbols-outlined { color: #ffffff; font-size: 18px; }
 .logo-t {
   font-family: var(--display);
   font-size: 17px;
@@ -312,7 +317,7 @@ button { font: inherit; color: inherit; }
   content: "";
   position: absolute; left: 3.5px; top: 1px;
   width: 4px; height: 7px;
-  border: solid #fff; border-width: 0 1.5px 1.5px 0;
+  border: solid #ffffff; border-width: 0 1.5px 1.5px 0;
   transform: rotate(45deg);
 }
 
@@ -348,7 +353,7 @@ button { font: inherit; color: inherit; }
   z-index: 40;
   background: var(--bg-soft);
   border: 1px solid var(--line);
-  box-shadow: 0 24px 60px #000000a6;
+  box-shadow: 0 24px 60px #1111111f;
   max-height: 430px;
   overflow: auto;
 }
@@ -439,7 +444,7 @@ button { font: inherit; color: inherit; }
 }
 
 .no-shot { width: 100%; height: 100%; background:
-  repeating-linear-gradient(45deg, #ffffff 0 14px, #efedeb 14px 15px); }
+  repeating-linear-gradient(45deg, #ffffff 0 14px, #e8e8e8 14px 15px); }
 
 .product-image .flag {
   position: absolute; left: 0; bottom: 0;
@@ -448,16 +453,16 @@ button { font: inherit; color: inherit; }
   padding: 5px 9px;
 }
 .product-image .flag + .flag { left: auto; right: 0; }
-.flag.oos-flag { background: #0a0908; color: var(--text-low); }
-.flag.veg-flag { background: #0a0908; color: var(--ok); }
-.flag.rx-flag { background: #0a0908; color: var(--text-mid); }
+.flag.oos-flag { background: #111111; color: #cccccc; }
+.flag.veg-flag { background: #111111; color: #22c55e; }
+.flag.rx-flag { background: #111111; color: #eeeeee; }
 .product-image .flag:nth-child(n+4) { display: none; }
 
 .p-heart {
   position: absolute; top: 8px; right: 8px; z-index: 2;
   width: 30px; height: 30px; line-height: 28px;
   border: 1px solid #00000026; background: var(--plate);
-  color: #6b6461; font-size: 14px; cursor: pointer; padding: 0;
+  color: #888888; font-size: 14px; cursor: pointer; padding: 0;
   transition: all .2s ease;
 }
 .p-heart:hover { border-color: var(--accent); color: var(--accent); }
@@ -505,7 +510,7 @@ button { font: inherit; color: inherit; }
 
 .skel-tile .ph {
   aspect-ratio: 1 / 1;
-  background: linear-gradient(100deg, #ffffff 40%, #edebe8 50%, #ffffff 60%);
+  background: linear-gradient(100deg, #ffffff 40%, #efefef 50%, #ffffff 60%);
   background-size: 240% 100%;
   animation: shimmer 1.4s linear infinite;
 }
@@ -582,7 +587,7 @@ button { font: inherit; color: inherit; }
   padding: 12px 20px;
   font-size: 12px;
   z-index: 60;
-  box-shadow: 0 12px 40px #000000a6;
+  box-shadow: 0 12px 40px #1111111f;
 }
 
 /* ---------------------------------------------------------- FOOTERS -- */
