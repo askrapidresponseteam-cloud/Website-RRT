@@ -73,15 +73,44 @@ button { font: inherit; color: inherit; }
   background: rgba(10, 9, 8, .97);
 }
 
-/* The keystone cell carries the site logo — the same accent square and
-   Material Symbols paw as the landing page header, at header scale. */
-.keystone {
-  background: var(--accent);
-  color: #fff;
+/* The site logo — the landing page's lockup verbatim: 28px accent square,
+   Material Symbols paw, Barlow Condensed wordmark — spanning the first two
+   header columns, with a dim SHOP tag for context. */
+.logo {
+  grid-column: 1 / 3;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: 0;
+  gap: 10px;
+  padding: 0 30px;
+  border-right: 1px solid var(--line);
+  text-decoration: none;
+}
+.logo-sq {
+  background: var(--accent);
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  transition: transform .2s;
+}
+.logo:hover .logo-sq { transform: rotate(-6deg); }
+.logo-sq .material-symbols-outlined { color: #fff; font-size: 18px; }
+.logo-t {
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.logo-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-left: 2px;
 }
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
@@ -98,36 +127,7 @@ button { font: inherit; color: inherit; }
   -webkit-font-smoothing: antialiased;
   font-variation-settings: 'FILL' 0, 'wght' 400;
 }
-.keystone .material-symbols-outlined {
-  font-size: 30px;
-  transition: transform .2s;
-}
-.keystone:hover .material-symbols-outlined { transform: rotate(-6deg); }
 
-.brand {
-  border-right: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  padding: 0 30px;
-  text-decoration: none;
-}
-.brand-name {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 23px;
-  line-height: 1.05;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-}
-.brand-sub {
-  display: block;
-  font-size: 10px;
-  font-family: var(--sans);
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  margin-top: 8px;
-  color: var(--text-dim);
-}
 
 .nav {
   display: flex;
@@ -602,9 +602,8 @@ footer.site-footer {
     height: 74px;
     grid-template-columns: 52px 1fr 52px;
   }
-  .brand { border-right: 0; padding: 0 18px; }
-  .brand-name { font-size: 17px; }
-  .brand-sub { display: none; }
+  .logo { border-right: 0; padding: 0 18px; }
+  .logo-tag { display: none; }
   .nav { display: none; }
   .bag { border-left: 1px solid var(--line); }
   .bag-count { top: 12px; right: 6px; }
