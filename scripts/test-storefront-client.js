@@ -284,6 +284,33 @@ eq(S.cart().lines.length, 1, 'zero quantity removes the line');
 S.clearCart();
 eq(S.cart().count, 0, 'clear empties the cart');
 
+/* ---------------------------------------------------------- veg only */
+(function () {
+  function tile(title, ptype, tags) {
+    return S.__internal.wrapProduct({
+      id: Math.floor(Math.random() * 1e6), handle: title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      title: title, brand: 'B', productType: ptype || '', tags: tags || [],
+      descriptionHtml: '', images: [], options: [], partial: true, createdAtMs: null,
+      variants: [{ id: 1, title: 'Default Title', optionValues: [], pricePaise: 100,
+                   compareAtPaise: null, available: true, imageUrl: null, maxQty: null }]
+    });
+  }
+  var pool = [
+    tile('Chicken Jerky Treats', 'Dog Treats'),
+    tile('Veg Biscuits For Dogs', 'Dog Treats'),
+    tile('Rope Tug Toy', 'Dog Toys'),
+    tile('Salmon Oil Supplement', 'Supplements')
+  ];
+  var vis = S.visibleProducts(pool, { vegOnly: true, sort: 'featured' });
+  eq(vis.map(function (p) { return p.title; }),
+    ['Veg Biscuits For Dogs', 'Rope Tug Toy'],
+    'veg only hides animal-ingredient food, keeps veg food and non-food');
+  S.setVegOnly(true);
+  eq(S.vegOnly(), true, 'the veg choice persists like the app');
+  S.setVegOnly(false);
+  eq(S.vegOnly(), false, 'and clears');
+})();
+
 /* ------------------------------------------------------- size siblings */
 // The vendor lists each size of some products as its own listing. The
 // grouper must find the family and nothing but the family.

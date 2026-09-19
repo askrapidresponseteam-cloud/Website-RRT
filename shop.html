@@ -67,6 +67,7 @@
   </div>
   <div class="controls">
     <label class="stock-toggle" id="stockWrap"><input type="checkbox" id="inStock"> In stock</label>
+    <label class="stock-toggle" id="vegWrap"><input type="checkbox" id="vegOnly"> Veg only</label>
     <select class="sort" id="sort" aria-label="Sort products"></select>
     <span class="count" id="count"></span>
   </div>
@@ -148,6 +149,7 @@
     $('pageCopy').textContent = 'Results for \u201c' + q + '\u201d \u2014 every match from the live range, straight from the seller\u2019s own search.';
     document.querySelector('.hsearch input').value = q;
     $('stockWrap').hidden = true;
+    $('vegWrap').hidden = true;
     $('sort').hidden = true;
   } else if (shelf) {
     document.title = shelf.name + ' · The RRT Shop';
@@ -189,16 +191,21 @@
     sortSel.appendChild(o);
   });
 
-  var state = { sort: 'featured', inStockOnly: false, products: [], cursor: null, hasMore: false, loading: false, total: null };
+  var state = { sort: 'featured', inStockOnly: false, vegOnly: S.vegOnly(), products: [], cursor: null, hasMore: false, loading: false, total: null };
 
   sortSel.addEventListener('change', function () {
     state.sort = sortSel.value;
     if (state.clientSort) render(); else resetAndLoad();
   });
-  $('inStock').addEventListener('change', function () {
+  function applyToggles() {
     state.inStockOnly = $('inStock').checked;
+    state.vegOnly = $('vegOnly').checked;
+    S.setVegOnly(state.vegOnly);
     render();
-  });
+  }
+  $('inStock').addEventListener('change', applyToggles);
+  $('vegOnly').addEventListener('change', applyToggles);
+  $('vegOnly').checked = state.vegOnly;
 
   /* ------------------------------------------------------------- loading */
 
@@ -262,7 +269,7 @@
   function render() {
     var visible = S.visibleProducts(state.products, {
       inStockOnly: state.inStockOnly,
-      vegOnly: S.vegOnly(),
+      vegOnly: state.vegOnly,
       // Server-sorted pages arrive in order; feed pages sort here, the
       // way the app sorts a shelf it loaded whole.
       sort: state.clientSort ? state.sort : 'featured'

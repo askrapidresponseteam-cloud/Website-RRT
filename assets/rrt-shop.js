@@ -1779,6 +1779,7 @@
   }
 
   function vegOnly() { return readJson(local, VEG_KEY, false) === true; }
+  function setVegOnly(v) { writeJson(local, VEG_KEY, v === true); }
 
   function escapeHtml(s) {
     return String(s == null ? '' : s)
@@ -1833,6 +1834,7 @@
     beginCheckout: beginCheckout,
     deleteMyData: deleteMyData,
     vegOnly: vegOnly,
+    setVegOnly: setVegOnly,
     esc: escapeHtml,
     clearResponseCache: cacheClear
   };
