@@ -14,14 +14,14 @@
    ========================================================================== */
 
 /* The palette is the app's own (client/lib/core/theme/app_theme.dart):
-   red #E52222 on ink #111111, white surfaces over off-white #F7F6F4,
-   the app's grey ladder for secondary text and hairlines, and its
-   success green. One identity, phone and web. */
+   red #E52222 on ink #111111 over pure white, the app's grey ladder for
+   secondary text and hairlines, and its success green. One identity,
+   phone and web. */
 :root {
   color-scheme: light;
-  --bg: #f7f6f4;            /* the app's offWhite scaffold */
-  --bg-soft: #ffffff;       /* the app's white surfaces */
-  --bg-card: #f2f1ee;       /* hover and pressed fills */
+  --bg: #ffffff;            /* pure white, edge to edge */
+  --bg-soft: #ffffff;
+  --bg-card: #f5f5f5;       /* hover and pressed fills */
   --plate: #ffffff;
   --text: #111111;          /* the app's black */
   --text-mid: #444444;

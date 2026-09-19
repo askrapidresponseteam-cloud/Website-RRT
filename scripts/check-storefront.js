@@ -103,7 +103,7 @@ for (const file of SHOP_PAGES) {
 
 const LIGHT = [
   [/background:\s*#fff\b(?![^;]*accent)/i, 'white background'],
-  [/#f7f7f5|#ececea|#faf9f7/i, 'reference light wash'],
+  [/#f7f7f5|#ececea|#faf9f7|#f7f6f4|#fafaf7/i, 'off-white wash'],
   [/color:\s*#(171717|222|444|666|999|bbb|ddd)\b/i, 'light-theme text colour'],
   [/Times New Roman/i, 'reference serif typeface'],
   [/font-family:\s*Arial/i, 'reference body typeface'],
@@ -132,7 +132,7 @@ for (const file of ['assets/shop.css', ...SHOP_PAGES]) {
 const PALETTE = [
   [/#e52222/i, 'app red'],
   [/#111111/i, 'app black'],
-  [/#f7f6f4/i, 'app offWhite'],
+  [/#ffffff/i, 'pure white ground'],
   [/#e2e2e2/i, 'app border grey'],
   [/#16a34a/i, 'app success green'],
 ];
