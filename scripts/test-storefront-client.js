@@ -1,0 +1,306 @@
+#!/usr/bin/env node
+/**
+ * Tests for web/assets/rrt-shop.js — the web twin of the app's store layer.
+ *
+ * These mirror the app's client/test/store_models_test.dart: money, parsing,
+ * the whole-word label rules, the checkout link, references, the cart and
+ * the pre-checkout revalidation. Where a case exists in the Dart tests, the
+ * expected value here is the same value, so the two clients cannot drift
+ * apart silently.
+ *
+ * Run: node scripts/test-storefront-client.js
+ */
+'use strict';
+
+require(require('path').join(__dirname, '..', 'assets', 'rrt-shop.js'));
+const S = globalThis.RRTShop;
+
+let passed = 0;
+let failed = 0;
+function eq(actual, expected, name) {
+  const a = JSON.stringify(actual);
+  const b = JSON.stringify(expected);
+  if (a === b) { passed++; return; }
+  failed++;
+  console.log(`  FAIL  ${name}\n        expected ${b}\n        got      ${a}`);
+}
+function ok(cond, name) { eq(!!cond, true, name); }
+
+/* ------------------------------------------------------------------ money */
+
+eq(S.money(123400), '₹1,234', 'formatPaise groups rupees');
+eq(S.money(11719), '₹117.19', 'formatPaise keeps paisa pricing');
+eq(S.money(100000000), '₹10,00,000', 'formatPaise Indian grouping (lakh)');
+eq(S.money(123456789), '₹12,34,567.89', 'formatPaise crore grouping with paise');
+eq(S.money(0), '₹0', 'formatPaise zero');
+eq(S.money(-50), '-₹0.50', 'formatPaise negative paise');
+
+eq(S.paiseFromDecimal('245.00'), 24500, 'decimal string to paise');
+eq(S.paiseFromDecimal('245'), 24500, 'integer string to paise');
+eq(S.paiseFromDecimal('0.29'), 29, 'text parse never 28.999…');
+eq(S.paiseFromDecimal(245.5), 24550, 'double to paise');
+eq(S.paiseFromDecimal('1,245.00'), 124500, 'comma-grouped input');
+eq(S.paiseFromDecimal('245.0'), 24500, 'Storefront API one-decimal amounts');
+eq(S.paiseFromDecimal('abc'), null, 'junk is null, not zero');
+eq(S.paiseFromDecimal(null), null, 'null stays null');
+
+eq(S.paiseFromSubunits(24500), 24500, 'subunits pass through');
+eq(S.paiseFromSubunits('24500'), 24500, 'numeric-string subunits');
+eq(S.paiseFromSubunits('x'), null, 'junk subunits are null');
+
+/* ----------------------------------------------------------------- images */
+
+eq(S.imageUrl('//cdn.shopify.com/a.png'), 'https://cdn.shopify.com/a.png', 'protocol-relative image');
+eq(S.imageUrl('/cdn/shop/a.png'), 'https://www.pets-lifestyle.com/cdn/shop/a.png', 'site-relative image');
+eq(S.imageUrl('http://cdn.shopify.com/a.png'), 'https://cdn.shopify.com/a.png', 'http upgraded');
+eq(S.sizedImage('https://cdn.shopify.com/a.png?v=1', 480), 'https://cdn.shopify.com/a.png?v=1&width=480', 'sized image keeps query');
+eq(S.sizedImage('https://cdn.shopify.com/a.png?width=900', 480), 'https://cdn.shopify.com/a.png?width=480', 'sized image replaces width');
+eq(S.sizedImage('https://elsewhere.example/a.png', 480), 'https://elsewhere.example/a.png', 'non-Shopify image untouched');
+
+/* -------------------------------------------------- whole-word label rules */
+
+function fakeProduct(title, extra) {
+  return Object.assign({
+    title, tags: [], productType: '', descriptionHtml: ''
+  }, extra || {});
+}
+ok(!S.rules.isVeg(fakeProduct('Herbal Shampoo')), '"shampoo" is not ham');
+ok(!S.rules.hideWhenVegOnly(fakeProduct('Same-day delivery biscuits')), '"delivery" is not liver');
+ok(S.rules.isVeg(fakeProduct('Vegetarian Dog Biscuits')), 'vegetarian in title marks veg');
+ok(!S.rules.isVeg(fakeProduct('Veggie & Chicken Treats')), 'chicken in title blocks veg');
+ok(!S.rules.hideWhenVegOnly(fakeProduct('Plush Duck Dog Toy')), 'a plush duck is not a duck');
+ok(S.rules.hideWhenVegOnly(fakeProduct('Chicken Flavoured Dental Chew Toy')), 'flavoured gear is edible after all');
+ok(!S.rules.hideWhenVegOnly(fakeProduct('Vegetarian Training Treats')), 'veg-marked food stays under veg-only');
+ok(S.rules.hideWhenVegOnly(fakeProduct('Puppy Starter', { descriptionHtml: '<p>Made with real chicken.</p>' })),
+  'animal ingredient in opening description hides under veg-only');
+ok(S.rules.isRx(fakeProduct('Amoxicillin 250', { tags: ['Schedule H'] })), 'Schedule H tag marks Rx');
+ok(!S.rules.isRx(fakeProduct('Multivitamin syrup')), 'plain product is not Rx');
+
+/* ------------------------------------------------------------ description */
+
+const blocks = S.descriptionBlocks(
+  '<p><strong>Composition</strong></p><ul><li>Item &amp; one</li><li>Item two</li></ul>' +
+  '<h3>Dosage</h3><p>Twice a day.</p><table><tr><td>A</td><td>B</td></tr></table>'
+);
+eq(blocks[0], { kind: 'heading', text: 'Composition' }, 'bold-only paragraph becomes heading');
+eq(blocks[1], { kind: 'bullet', text: 'Item & one' }, 'list item becomes bullet, entities decoded');
+eq(blocks[3], { kind: 'heading', text: 'Dosage' }, 'h3 becomes heading');
+eq(blocks[4], { kind: 'paragraph', text: 'Twice a day.' }, 'paragraph kept');
+ok(blocks.every((b) => !/[<>]/.test(b.text)), 'no markup survives into blocks');
+eq(S.decodeEntities('R&amp;D &#8377; &frac12;'), 'R&D ₹ ½', 'entity decoding, named and numeric');
+
+/* -------------------------------------------------------- GraphQL parsing */
+
+const tileNode = {
+  id: 'gid://shopify/Product/101',
+  handle: 'puppy-food-1kg',
+  title: ' Puppy Food ',
+  vendor: 'Acme',
+  productType: 'Food',
+  availableForSale: true,
+  publishedAt: '2026-01-05T00:00:00Z',
+  featuredImage: { url: '//cdn.shopify.com/p.png' },
+  priceRange: { minVariantPrice: { amount: '245.0' }, maxVariantPrice: { amount: '540.0' } },
+  compareAtPriceRange: { maxVariantPrice: { amount: '600.0' } }
+};
+const tile = S.__internal.productFromGraphTile(tileNode);
+eq(tile.id, 101, 'tile: numeric id from gid');
+eq(tile.title, 'Puppy Food', 'tile: title trimmed');
+eq(tile.cheapestVariant.pricePaise, 24500, 'tile: from-price is the range minimum');
+eq(tile.priceVaries, true, 'tile: price range means price varies');
+eq(tile.cheapestVariant.compareAtPaise, null, 'tile: no strikethrough against a price range');
+ok(tile.partial, 'tile products are partial');
+
+const singleTile = S.__internal.productFromGraphTile(Object.assign({}, tileNode, {
+  priceRange: { minVariantPrice: { amount: '245.0' }, maxVariantPrice: { amount: '245.0' } }
+}));
+eq(singleTile.cheapestVariant.compareAtPaise, 60000, 'tile: single price shows honest strikethrough');
+
+const fullNode = {
+  id: 'gid://shopify/Product/7',
+  handle: 'wormer',
+  title: 'Wormer',
+  vendor: 'Acme',
+  productType: 'Pharmacy',
+  tags: ['dogs'],
+  descriptionHtml: '<p>Broad spectrum.</p>',
+  publishedAt: '2026-02-01T00:00:00Z',
+  featuredImage: { url: '//cdn.shopify.com/f.png' },
+  images: { nodes: [{ url: '//cdn.shopify.com/1.png' }, { url: '//cdn.shopify.com/2.png' }] },
+  options: [{ name: 'Size' }],
+  variants: { nodes: [
+    { id: 'gid://shopify/ProductVariant/71', title: '1 kg', availableForSale: true,
+      price: { amount: '117.19' }, compareAtPrice: { amount: '117.19' },
+      image: { url: '//cdn.shopify.com/v1.png' }, selectedOptions: [{ name: 'Size', value: '1 kg' }] },
+    { id: 'gid://shopify/ProductVariant/72', title: '3 kg', availableForSale: false,
+      price: { amount: '300.00' }, compareAtPrice: { amount: '350.00' },
+      image: null, selectedOptions: [{ name: 'Size', value: '3 kg' }],
+      quantityRule: { maximum: 2, minimum: 1, increment: 1 } }
+  ] }
+};
+const full = S.__internal.productFromGraphFull(fullNode);
+eq(full.variants[0].pricePaise, 11719, 'full: paisa-priced variant exact');
+eq(full.variants[0].compareAtPaise, null, 'full: compare-at at price is noise, not a sale');
+eq(full.variants[1].compareAtPaise, 35000, 'full: real compare-at kept');
+eq(full.variants[1].maxQty, 2, 'full: vendor quantity rule respected');
+eq(full.optionCount, 1, 'full: one option picker');
+eq(full.valuesForOption(0), ['1 kg', '3 kg'], 'full: option values in vendor order');
+eq(full.variantMatching(['3 kg']).id, 72, 'full: variant matched by option values');
+ok(full.isValueAvailable(0, '1 kg', ['1 kg']), 'full: sellable value not struck');
+ok(!full.isValueAvailable(0, '3 kg', ['3 kg']), 'full: sold-out value struck');
+eq(full.defaultVariant.id, 71, 'full: default variant is first available');
+eq(full.cheapestVariant.id, 71, 'full: cheapest counts only in-stock variants');
+
+/* ----------------------------------------------------------- browse rules */
+
+function tileWith(price, opts) {
+  opts = opts || {};
+  return S.__internal.wrapProduct({
+    id: opts.id || price, handle: 'h' + price, title: opts.title || 'P' + price,
+    brand: '', productType: '', tags: [], descriptionHtml: '',
+    images: [], options: [],
+    variants: [{ id: 0, title: 'Default Title', optionValues: [], pricePaise: price, available: opts.available !== false }],
+    partial: true, createdAtMs: opts.createdAtMs || null
+  });
+}
+const listing = [tileWith(300), tileWith(100), tileWith(200, { available: false }), tileWith(50, { createdAtMs: 5 })];
+eq(S.visibleProducts(listing, { sort: 'priceLow' }).map((p) => p.cheapestVariant.pricePaise),
+  [50, 100, 200, 300], 'sort price low');
+eq(S.visibleProducts(listing, { sort: 'priceHigh' })[0].cheapestVariant.pricePaise, 300, 'sort price high');
+eq(S.visibleProducts(listing, { inStockOnly: true, sort: 'featured' }).length, 3, 'in-stock filter');
+eq(S.visibleProducts(listing, { sort: 'newest' })[0].createdAtMs, 5, 'newest first; undated keep order after');
+
+/* ---------------------------------------------------------------- shelves */
+
+eq(S.shelves.length, 10, 'ten shelves, as in the app');
+eq(S.shelves.reduce((a, s) => a + s.aisles.length, 0), 71, '71 aisle handles, as in the app');
+eq(S.shelfByKey('pharmacy').aisles[0].handle, 'dog-fleas-ticks', 'shelf lookup by key');
+eq(S.shelfForAisle('clearance-sale').key, 'sale', 'shelf lookup by aisle handle');
+eq(S.shelfByKey('pharmacy').preview, 'Flea & Tick · Deworming · Antibiotics +13', 'hub preview line matches the app');
+
+/* ------------------------------------------------------ checkout permalink */
+
+const lines = [
+  { variantId: 111, qty: 2, available: true, handle: 'a', title: 'A', variantTitle: '', pricePaise: 100, productId: 1, imageUrl: null },
+  { variantId: 222, qty: 1, available: true, handle: 'b', title: 'B', variantTitle: '', pricePaise: 200, productId: 2, imageUrl: null },
+  { variantId: 333, qty: 0, available: true, handle: 'c', title: 'C', variantTitle: '', pricePaise: 300, productId: 3, imageUrl: null },
+  { variantId: 444, qty: 1, available: false, handle: 'd', title: 'D', variantTitle: '', pricePaise: 400, productId: 4, imageUrl: null }
+];
+const url = S.checkoutUrl(lines, { rrtRef: 'RRT-TEST123456', buyerName: 'Asha Rao', buyerPhone: '+91 98765-43210' });
+ok(url.indexOf('https://www.pets-lifestyle.com/cart/111:2,222:1?') === 0,
+  'permalink lists only sellable lines, in order');
+ok(url.indexOf(encodeURIComponent('attributes[source]') + '=' + encodeURIComponent('RRT website')) !== -1,
+  'source attribute says RRT website');
+ok(url.indexOf('ref=rrt-web') !== -1, 'ref says rrt-web');
+ok(url.indexOf(encodeURIComponent('attributes[rrt_ref]') + '=RRT-TEST123456') !== -1,
+  'rrt_ref rides as a cart attribute');
+ok(url.indexOf(encodeURIComponent('checkout[shipping_address][first_name]') + '=Asha') !== -1,
+  'first name prefilled');
+ok(url.indexOf(encodeURIComponent('checkout[shipping_address][phone]') + '=' + encodeURIComponent('+919876543210')) !== -1,
+  'phone prefilled digits-only');
+const cartUrl = S.checkoutUrl(lines, { toVendorCart: true });
+ok(cartUrl.indexOf('storefront=true') !== -1, 'vendor-cart fallback flagged');
+ok(cartUrl.indexOf('first_name') === -1, 'no prefill on the vendor-cart fallback');
+
+for (let i = 0; i < 200; i++) {
+  const ref = S.newRrtRef();
+  if (!/^RRT-[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{10}$/.test(ref)) {
+    failed++; console.log('  FAIL  rrt_ref alphabet/format: ' + ref); break;
+  }
+}
+passed++;
+
+/* ------------------------------------------------------------------- cart */
+
+S.clearCart();
+S.add(full, full.variants[0], 1);
+S.add(full, full.variants[0], 1);
+eq(S.cart().lines[0].qty, 2, 'adding same variant merges quantity');
+eq(S.cart().subtotalPaise, 23438, 'subtotal in paise, to the paisa');
+S.add(full, full.variants[1], 5);
+eq(S.cart().lines[1].qty, 2, 'vendor max quantity caps the add');
+S.setQuantity(71, 99 + 5);
+eq(S.cart().lines[0].qty, 99, 'stepper hard cap at 99 without a vendor rule');
+S.setQuantity(71, 0);
+eq(S.cart().lines.length, 1, 'zero quantity removes the line');
+S.clearCart();
+eq(S.cart().count, 0, 'clear empties the cart');
+
+/* ------------------------------------------- revalidation (stubbed vendor) */
+
+function gqlResponse(data) {
+  return Promise.resolve({
+    status: 200,
+    json: () => Promise.resolve({ data })
+  });
+}
+
+// The vendor raised 1 kg to ₹120.00 and sold out of 3 kg since the snapshot.
+const movedNode = JSON.parse(JSON.stringify(fullNode));
+movedNode.variants.nodes[0].price = { amount: '120.00' };
+movedNode.variants.nodes[1].availableForSale = false;
+
+S.clearCart();
+S.add(full, full.variants[0], 1);
+S.add(Object.assign({}, full, { variants: [Object.assign({}, full.variants[1], { available: true })] }),
+  Object.assign({}, full.variants[1], { available: true }), 1);
+
+S.__internal.setFetch(() => gqlResponse({ product: movedNode }));
+
+S.revalidateCart().then((r) => {
+  const types = r.changes.map((c) => c.type).sort();
+  eq(types, ['price', 'stock'], 'revalidate reports the price move and the stock-out');
+  const priceChange = r.changes.filter((c) => c.type === 'price')[0];
+  eq(priceChange.from, 11719, 'price change reports the old paise');
+  eq(priceChange.to, 12000, 'price change reports the new paise');
+  eq(r.lines[0].pricePaise, 12000, 'line snapshot updated to the live price');
+  eq(r.lines[0].previousPricePaise, 11719, 'previous price kept so the cart can say so');
+  eq(r.lines[1].available, false, 'sold-out line marked, not deleted');
+
+  // Vendor removed the product entirely.
+  S.__internal.setFetch(() => gqlResponse({ product: null }));
+  return S.revalidateCart();
+}).then((r) => {
+  eq(r.changes.filter((c) => c.type === 'gone').length, 1,
+    'a removed product reports gone once (already-unavailable lines stay quiet)');
+
+  // Vendor unreachable: snapshots stand, nothing invented.
+  S.__internal.setFetch(() => Promise.reject(new Error('offline')));
+  return S.revalidateCart();
+}).then((r) => {
+  eq(r.changes.length, 0, 'an unreachable vendor changes nothing');
+
+  /* ------------------------------------------------- checkout + receipts */
+
+  S.clearCart();
+  S.add(full, full.variants[0], 2);
+  const handoff = S.beginCheckout(S.cart().lines, { fromCart: true });
+  ok(handoff && handoff.url.indexOf('https://www.pets-lifestyle.com/cart/71:2?') === 0,
+    'beginCheckout builds the permalink from the cart');
+  eq(S.receipts()[0].status, 'handed', 'receipt saved as pending at hand-off');
+  eq(S.receipts()[0].subtotalPaise, 23438, 'receipt keeps the item subtotal shown');
+  ok(S.pendingCheckout() !== null, 'hand-off is pending until the buyer says');
+
+  const kept = S.resolvePendingCheckout(true);
+  eq(kept.status, 'placed', 'confirmed hand-off becomes a placed receipt');
+  eq(S.cart().count, 0, 'purchased lines leave the cart');
+  eq(S.orderStatusUrl(kept), 'https://www.pets-lifestyle.com/account',
+    'order status falls back to the vendor account page');
+
+  S.add(full, full.variants[0], 1);
+  S.beginCheckout(S.cart().lines, { fromCart: true });
+  S.resolvePendingCheckout(false);
+  eq(S.cart().count, 1, 'an abandoned hand-off keeps the cart');
+  eq(S.receipts().length, 1, 'and drops the unconfirmed receipt');
+
+  S.deleteMyData();
+  eq(S.cart().count, 0, 'delete-my-data clears the cart');
+  eq(S.receipts().length, 0, 'delete-my-data clears receipts');
+  eq(S.saved().length, 0, 'delete-my-data clears saved items');
+
+  console.log(`\n${passed} passed, ${failed} failed.`);
+  process.exit(failed ? 1 : 0);
+}).catch((e) => {
+  console.error('  FAIL  unhandled: ' + (e && e.stack || e));
+  process.exit(1);
+});

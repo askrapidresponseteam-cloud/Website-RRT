@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<!--
+  Product page — the web twin of the app's store_product_view.
+
+  One live read from the vendor answers everything on this page: every
+  variant with paise prices, stock, images and the vendor's own quantity
+  rule where they set one. Selecting options resolves to a real variant id —
+  the thing the vendor's cart and checkout understand.
+
+  ADD TO BAG keeps the RRT cart; BUY NOW re-reads the product fresh (the
+  answer decides money) and hands straight off to the vendor's secure
+  checkout, exactly like the app's Buy Now.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product — The RRT Shop</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/shop.css">
+<style>
+.pdp { width:85%; margin:0 auto; display:grid; grid-template-columns:1fr 1fr;
+       gap:56px; padding:40px 0 30px; }
+.gal { display:flex; flex-direction:column; gap:10px; }
+.gal .main { aspect-ratio:1/1; background:var(--bg-card); overflow:hidden; position:relative; }
+.gal .main img { width:100%; height:100%; object-fit:contain; }
+.thumbs { display:flex; gap:8px; flex-wrap:wrap; }
+.thumbs button { width:62px; height:62px; padding:0; border:1px solid var(--border);
+                 background:var(--bg-card); cursor:pointer; overflow:hidden; }
+.thumbs button[aria-current="true"] { border-color:var(--accent); }
+.thumbs img { width:100%; height:100%; object-fit:contain; }
+
+.pdp h1 { font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:34px; line-height:1.08;
+          margin:0 0 6px; }
+.eyebrow { font-size:12px; color:var(--text); margin-bottom:12px; display:flex; gap:14px; align-items:center; }
+.eyebrow .tag { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+                padding:3px 8px; border:1px solid var(--border-strong); color:var(--text-mid); }
+.eyebrow .tag.veg { color:#7fd18a; border-color:#7fd18a66; }
+.price-row { min-height:34px; margin:16px 0 4px; font-family:var(--mono); font-size:24px; font-weight:500; }
+.price-row .was { font-size:15px; color:var(--text-low); text-decoration:line-through; margin-left:10px; }
+.price-row .off { font-size:12px; color:var(--accent); margin-left:10px; letter-spacing:.06em; }
+.price-row .skel { display:inline-block; width:120px; height:20px; background:var(--bg-card); }
+.stock { font-size:12px; color:var(--text-low); min-height:18px; margin-bottom:22px; }
+.stock.bad { color:var(--accent); }
+
+.opt { margin-bottom:18px; }
+.opt h2 { font-size:11px; text-transform:uppercase; letter-spacing:.06em;
+          color:var(--text-low); margin:0 0 8px; font-weight:400; font-family:var(--sans); }
+.opt-vals { display:flex; gap:8px; flex-wrap:wrap; }
+.opt-vals button { font-family:var(--sans); font-size:12px; padding:9px 15px;
+                   border:1px solid var(--border-strong); background:transparent;
+                   cursor:pointer; color:inherit; }
+.opt-vals button[aria-pressed="true"] { border-color:var(--accent); background:var(--accent-soft); }
+.opt-vals button.gone { opacity:.35; text-decoration:line-through; }
+
+.buy { display:flex; gap:10px; margin:24px 0 8px; }
+.qty { display:flex; border:1px solid var(--border-strong); }
+.qty button { width:40px; background:transparent; border:0; font-size:17px; cursor:pointer; color:inherit; }
+.qty input { width:44px; text-align:center; border:0; background:transparent;
+             color:var(--text); font-family:var(--mono); font-size:14px; }
+.buy .btn-solid { flex:1; }
+.buy2 { display:flex; gap:10px; margin:0 0 20px; }
+.buy2 .btn-line { flex:1; text-align:center; }
+
+.desc { border-top:1px solid var(--border); padding-top:18px; font-size:13px;
+        line-height:1.65; color:var(--text-low); max-width:62ch; }
+.desc p { margin:0 0 10px; }
+.desc h3 { font-family:var(--sans); font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+           color:var(--text); margin:16px 0 8px; }
+.desc ul { margin:0 0 10px 18px; padding:0; }
+.desc li { margin-bottom:4px; }
+.sold-by { margin-top:22px; border-top:1px solid var(--border); padding-top:16px;
+           font-size:12px; line-height:1.6; color:var(--text-low); max-width:62ch; }
+.sold-by a { color:var(--text); }
+.recs-h { width:85%; margin:0 auto; padding:26px 0 0; font-family:var(--display);
+          font-weight:700; text-transform:uppercase; font-size:20px; }
+@media (max-width:900px){ .pdp{ grid-template-columns:1fr; gap:26px; width:88%; } .recs-h{ width:88%; } }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to product</a>
+
+<header class="site-header">
+  <button class="language" type="button" aria-label="Change language">EN ●</button>
+  <a class="brand" href="/"><div>
+    <div class="brand-name">Rapid<br>Response</div>
+    <span class="brand-sub">RRT SHOP</span>
+  </div></a>
+  <nav class="nav" aria-label="Shop">
+    <a href="/shop">Shop</a>
+    <a href="/shop/saved">Saved</a>
+    <a href="/shop/track">Your orders</a>
+  </nav>
+  <a class="bag" href="/shop/cart" aria-label="Basket">
+    <div class="bag-icon"></div><span class="bag-count" id="bagCount" hidden>0</span>
+  </a>
+</header>
+
+<main id="main">
+  <div class="pdp" id="pdp" hidden>
+    <div class="gal">
+      <div class="main">
+        <img id="shot" alt="">
+        <button type="button" class="p-heart" id="heart" aria-pressed="false" aria-label="Save for later">&#9825;</button>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+    <div>
+      <div class="eyebrow"><span id="brand">RRT Selection</span><span id="tags"></span></div>
+      <h1 id="title"></h1>
+      <div class="price-row" id="priceRow"><span class="skel"></span></div>
+      <p class="stock" id="stock">Checking availability…</p>
+      <div id="options"></div>
+      <div class="buy">
+        <div class="qty">
+          <button type="button" id="minus" aria-label="Reduce quantity">−</button>
+          <input id="qty" value="1" inputmode="numeric" aria-label="Quantity">
+          <button type="button" id="plus" aria-label="Increase quantity">+</button>
+        </div>
+        <button class="btn-solid" id="add" disabled>Checking price…</button>
+      </div>
+      <div class="buy2">
+        <button class="btn-line" id="buyNow" disabled>Buy now</button>
+        <button class="btn-line" id="share">Share</button>
+      </div>
+      <div class="desc" id="desc"></div>
+      <p class="sold-by">Sold and delivered by <strong>Pets Lifestyle</strong>, the seller for
+         this product. Payment is taken on their secure checkout, where delivery
+         charges and any offers are added; their confirmation email is your
+         invoice. <a id="policyShip" target="_blank" rel="noopener">Shipping policy</a> ·
+         <a id="policyRefund" target="_blank" rel="noopener">Refund policy</a>.</p>
+    </div>
+  </div>
+
+  <div class="state" id="err" hidden></div>
+
+  <h2 class="recs-h" id="recsH" hidden>You may also like</h2>
+  <div class="product-grid" id="recs"></div>
+</main>
+
+<footer class="site-footer">
+  <span>Rapid Response · Shop</span>
+  <span>Sold by Pets Lifestyle</span>
+</footer>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="/assets/rrt-shop.js"></script>
+<script src="/assets/shop-ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  var S = window.RRTShop, U = window.RRTUI, esc = S.esc;
+  function $(id) { return document.getElementById(id); }
+
+  U.bindHeader();
+  U.bindTiles($('recs'));
+  $('policyShip').href = S.vendor.shippingPolicyUrl;
+  $('policyRefund').href = S.vendor.refundPolicyUrl;
+
+  /* /shop/p/{handle} via the hosting rewrite, ?h={handle} as the fallback. */
+  var m = location.pathname.match(/\/shop\/p\/([^/?#]+)/);
+  var handle = m ? decodeURIComponent(m[1]) : (new URLSearchParams(location.search).get('h') || '').trim();
+
+  var product = null;
+  var selection = [];
+  var images = [];
+  var shotIndex = 0;
+
+  if (!handle) return fail('That product link is incomplete.');
+
+  S.product(handle).then(function (p) {
+    if (!p) return fail(S.vendor.name + ' no longer sells this product.');
+    product = p;
+    document.title = p.title + ' — The RRT Shop';
+    render();
+  }).catch(function (e) {
+    fail(e && e.message ? e.message : 'Something went wrong.');
+  });
+
+  function fail(message) {
+    $('pdp').hidden = true;
+    var el = $('err');
+    el.hidden = false;
+    el.innerHTML = '<p>' + esc(message) + '</p>' +
+      '<p><a class="btn-line" href="/shop">Back to the shop</a></p>';
+  }
+
+  /* -------------------------------------------------------------- render */
+
+  function selectedVariant() {
+    if (product.optionCount === 0) return product.defaultVariant;
+    return product.variantMatching(selection);
+  }
+
+  function render() {
+    var p = product;
+    $('pdp').hidden = false;
+    $('title').textContent = p.title;
+    $('brand').textContent = p.brand || 'RRT Selection';
+
+    var tags = '';
+    if (p.isVeg) tags += '<span class="tag veg">Veg</span> ';
+    if (p.isRx) tags += '<span class="tag">Prescription \u00b7 the seller runs the process</span>';
+    $('tags').innerHTML = tags;
+
+    images = p.images.length ? p.images : (p.imageUrl ? [p.imageUrl] : []);
+    $('thumbs').innerHTML = images.map(function (u, i) {
+      return '<button type="button" data-i="' + i + '" aria-current="' + (i === 0 ? 'true' : 'false') + '">' +
+        '<img src="' + esc(S.sizedImage(u, 160)) + '" alt=""></button>';
+    }).join('');
+    setShot(0);
+
+    selection = p.defaultVariant.optionValues.slice();
+    renderOptions();
+
+    var heart = $('heart');
+    heart.setAttribute('aria-pressed', S.isSaved(p.id) ? 'true' : 'false');
+    heart.addEventListener('click', function () {
+      var on = S.toggleSaved(p);
+      heart.setAttribute('aria-pressed', on ? 'true' : 'false');
+      U.toast(on ? 'Saved for later' : 'Removed from saved');
+    });
+
+    var blocks = S.descriptionBlocks(p.descriptionHtml);
+    var out = '', listOpen = false;
+    blocks.forEach(function (b) {
+      if (b.kind === 'bullet') {
+        if (!listOpen) { out += '<ul>'; listOpen = true; }
+        out += '<li>' + esc(b.text) + '</li>';
+        return;
+      }
+      if (listOpen) { out += '</ul>'; listOpen = false; }
+      out += b.kind === 'heading' ? '<h3>' + esc(b.text) + '</h3>' : '<p>' + esc(b.text) + '</p>';
+    });
+    if (listOpen) out += '</ul>';
+    $('desc').innerHTML = out;
+
+    paintVariant();
+    loadRecs();
+  }
+
+  function setShot(i) {
+    shotIndex = i;
+    if (!images.length) return;
+    $('shot').src = S.sizedImage(images[i], 900);
+    $('shot').alt = product.title;
+    var buttons = $('thumbs').querySelectorAll('button');
+    buttons.forEach(function (b, bi) { b.setAttribute('aria-current', bi === i ? 'true' : 'false'); });
+  }
+  $('thumbs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (b) setShot(parseInt(b.getAttribute('data-i'), 10));
+  });
+
+  function renderOptions() {
+    var p = product;
+    if (p.optionCount === 0) { $('options').innerHTML = ''; return; }
+    var html = '';
+    for (var oi = 0; oi < p.optionCount; oi++) {
+      var name = oi < p.options.length && p.options[oi].name ? p.options[oi].name : 'Option ' + (oi + 1);
+      html += '<div class="opt"><h2>' + esc(name) + '</h2><div class="opt-vals" data-opt="' + oi + '">' +
+        p.valuesForOption(oi).map(function (v) {
+          var pressed = selection[oi] === v;
+          var sellable = p.isValueAvailable(oi, v, selection);
+          return '<button type="button" data-v="' + esc(v) + '"' +
+            ' aria-pressed="' + (pressed ? 'true' : 'false') + '"' +
+            (sellable ? '' : ' class="gone"') + '>' + esc(v) + '</button>';
+        }).join('') + '</div></div>';
+    }
+    $('options').innerHTML = html;
+  }
+
+  $('options').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-v]');
+    if (!b) return;
+    var oi = parseInt(b.parentElement.getAttribute('data-opt'), 10);
+    selection[oi] = b.getAttribute('data-v');
+    // A combination the vendor never made: snap the other options to the
+    // first variant that has this value, like their own picker does.
+    if (!product.variantMatching(selection)) {
+      for (var i = 0; i < product.variants.length; i++) {
+        if (product.variants[i].optionValues[oi] === selection[oi]) {
+          selection = product.variants[i].optionValues.slice();
+          break;
+        }
+      }
+    }
+    renderOptions();
+    paintVariant();
+  });
+
+  function qtyValue() {
+    var n = parseInt($('qty').value, 10);
+    return isNaN(n) || n < 1 ? 1 : n;
+  }
+
+  function paintVariant() {
+    var v = selectedVariant();
+    var priceRow = $('priceRow');
+    var stock = $('stock');
+    var add = $('add');
+    var buyNow = $('buyNow');
+
+    if (!v) {
+      priceRow.innerHTML = (product.priceVaries ? 'From ' : '') + esc(S.money(product.cheapestVariant.pricePaise));
+      stock.textContent = 'Choose your options';
+      stock.className = 'stock';
+      add.disabled = true; add.textContent = 'Choose options';
+      buyNow.disabled = true;
+      return;
+    }
+    var off = v.compareAtPaise
+      ? Math.round(((v.compareAtPaise - v.pricePaise) * 100) / v.compareAtPaise) : 0;
+    priceRow.innerHTML = esc(S.money(v.pricePaise)) +
+      (v.compareAtPaise ? '<span class="was">' + esc(S.money(v.compareAtPaise)) + '</span>' +
+        (off > 0 ? '<span class="off">' + off + '% off</span>' : '') : '');
+    if (v.imageUrl) {
+      var i = images.indexOf(v.imageUrl);
+      if (i >= 0) setShot(i);
+    }
+    var cap = v.maxQty || 99;
+    if (!v.available) {
+      stock.textContent = 'Out of stock at ' + S.vendor.name;
+      stock.className = 'stock bad';
+      add.disabled = true; add.textContent = 'Out of stock';
+      buyNow.disabled = true;
+    } else {
+      stock.textContent = 'In stock' + (v.maxQty ? ' \u00b7 max ' + v.maxQty + ' per order' : '');
+      stock.className = 'stock';
+      add.disabled = false; add.textContent = 'Add to bag';
+      buyNow.disabled = false;
+    }
+    if (qtyValue() > cap) $('qty').value = String(cap);
+  }
+
+  $('minus').addEventListener('click', function () { $('qty').value = String(Math.max(1, qtyValue() - 1)); });
+  $('plus').addEventListener('click', function () {
+    var v = selectedVariant();
+    var cap = v && v.maxQty ? v.maxQty : 99;
+    $('qty').value = String(Math.min(cap, qtyValue() + 1));
+  });
+  $('qty').addEventListener('change', function () { $('qty').value = String(qtyValue()); });
+
+  $('add').addEventListener('click', function () {
+    var v = selectedVariant();
+    if (!v || !v.available) return;
+    S.add(product, v, qtyValue());
+    U.toast('Added to bag');
+  });
+
+  /* Buy now = the app's Buy Now: a fresh read (the answer decides money),
+   * then straight to the vendor's secure checkout with just this line. */
+  $('buyNow').addEventListener('click', function () {
+    var v = selectedVariant();
+    if (!v || !v.available) return;
+    var btn = $('buyNow');
+    btn.disabled = true; btn.textContent = 'Checking price\u2026';
+    S.product(product.handle, { fresh: true }).then(function (live) {
+      var lv = live && live.variantById(v.id);
+      if (!live || !lv || !lv.available) {
+        btn.disabled = false; btn.textContent = 'Buy now';
+        U.toast('Just went out of stock at ' + S.vendor.name);
+        paintVariant();
+        return;
+      }
+      if (lv.pricePaise !== v.pricePaise) {
+        product = live; selection = lv.optionValues.slice();
+        renderOptions(); paintVariant();
+        btn.disabled = false; btn.textContent = 'Buy now';
+        U.toast('Price is now ' + S.money(lv.pricePaise) + ' \u2014 press again to continue');
+        return;
+      }
+      var line = {
+        variantId: lv.id, productId: live.id, handle: live.handle,
+        title: live.title,
+        variantTitle: lv.title.trim().toLowerCase() === 'default title' ? '' : lv.title,
+        pricePaise: lv.pricePaise, qty: qtyValue(),
+        available: true, imageUrl: lv.imageUrl || live.imageUrl, maxQty: lv.maxQty
+      };
+      var handoff = S.beginCheckout([line], { fromCart: false });
+      if (handoff) location.href = handoff.url;
+    }).catch(function (e) {
+      btn.disabled = false; btn.textContent = 'Buy now';
+      U.toast(e && e.message ? e.message : 'Something went wrong. Try again.');
+    });
+  });
+
+  $('share').addEventListener('click', function () {
+    var url = S.vendor.productUrl(product.handle);
+    if (navigator.share) {
+      navigator.share({ title: product.title, url: url }).catch(function () { /* dismissed */ });
+      return;
+    }
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+      .then(function () { U.toast('Link copied'); })
+      .catch(function () { prompt('Product link', url); });
+  });
+
+  function loadRecs() {
+    S.recommendations(product.id).then(function (list) {
+      if (!list.length) return;
+      $('recsH').hidden = false;
+      $('recs').innerHTML = list.map(function (p) { return U.tile(p); }).join('');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

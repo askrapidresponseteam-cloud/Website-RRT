@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+  Saved for later — the web twin of the app's saved shelf.
+
+  Saved items are snapshots (title, image, last-seen price) kept in this
+  browser only. The heart on any tile removes; + ADD re-reads the live
+  product first, so nothing goes into the bag at a remembered price.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saved for later — The RRT Shop</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/shop.css">
+</head>
+<body>
+
+<a class="skip" href="#grid">Skip to saved items</a>
+
+<header class="site-header">
+  <button class="language" type="button" aria-label="Change language">EN ●</button>
+  <a class="brand" href="/"><div>
+    <div class="brand-name">Rapid<br>Response</div>
+    <span class="brand-sub">RRT SHOP</span>
+  </div></a>
+  <nav class="nav" aria-label="Shop">
+    <a href="/shop">Shop</a>
+    <a href="/shop/saved" aria-current="page">Saved</a>
+    <a href="/shop/track">Your orders</a>
+  </nav>
+  <a class="bag" href="/shop/cart" aria-label="Basket">
+    <div class="bag-icon"></div><span class="bag-count" id="bagCount" hidden>0</span>
+  </a>
+</header>
+
+<section class="shop-intro">
+  <div>
+    <h1 class="shop-title">Saved for later</h1>
+    <p class="shop-copy">Kept in this browser only. Prices shown are as last
+       seen — the live price is checked the moment anything goes in the bag.</p>
+  </div>
+</section>
+
+<main class="product-grid" id="grid" aria-live="polite"></main>
+<div class="state" id="empty" hidden>
+  <p>Nothing saved yet. The little heart on any product keeps it here.</p>
+  <p><a class="btn-line" href="/shop">Browse the shop</a></p>
+</div>
+
+<section class="disclosure" aria-labelledby="who">
+  <h2 id="who">Who runs this shop</h2>
+  <div>
+    <p>Everything here is sold and delivered by <strong>Pets Lifestyle</strong>,
+       the seller for every order placed through this storefront. Rapid Response
+       hosts the storefront and never sees your payment details.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <span>Rapid Response · Shop</span>
+  <span>Sold by Pets Lifestyle</span>
+</footer>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="/assets/rrt-shop.js"></script>
+<script src="/assets/shop-ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  var S = window.RRTShop, U = window.RRTUI;
+  var grid = document.getElementById('grid');
+  var empty = document.getElementById('empty');
+
+  U.bindHeader();
+  U.bindTiles(grid, function (kind) { if (kind === 'saved') render(); });
+
+  function render() {
+    var items = S.saved();
+    empty.hidden = items.length > 0;
+    grid.innerHTML = items.map(function (p) { return U.tile(p); }).join('');
+  }
+  render();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!--
+  The shop hub — the web twin of the app's SHOP tab.
+
+  Like store_hub_view / store_shelf_view / store_search_view on the phone:
+  the landing lists the vendor's WHOLE catalogue (their "all" collection),
+  paged 24 at a time as you scroll; the ten RRT shelves sit above it as
+  chips, each opening its aisles; search suggests as you type and a
+  submitted search lists every match the vendor's own search returns.
+
+  Everything on this page is live from Pets Lifestyle's Shopify store. No
+  price and no picture is baked into this file, and nothing is stored.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The RRT Shop</title>
+<meta name="description" content="Everyday things for the animals you look after. Sold and delivered by Pets Lifestyle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/shop.css">
+<style>
+.search-row { width: 85%; margin: 0 auto; padding: 4px 0 14px; position: relative; }
+.search-row form { display: flex; border: 1px solid var(--border-strong); }
+.search-row input {
+  flex: 1; background: transparent; border: 0; color: var(--text);
+  font-family: var(--sans); font-size: 14px; padding: 13px 16px;
+}
+.search-row input::placeholder { color: var(--text-dim); }
+.search-row button[type="submit"] {
+  background: transparent; border: 0; border-left: 1px solid var(--border);
+  color: var(--text-mid); font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase; padding: 0 20px; cursor: pointer;
+}
+.search-row button[type="submit"]:hover { color: var(--accent); }
+.sugg {
+  position: absolute; left: 0; right: 0; top: 100%; z-index: 40;
+  background: var(--bg-soft); border: 1px solid var(--border-strong); border-top: 0;
+  max-height: 420px; overflow: auto;
+}
+.sugg a { display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  text-decoration: none; color: var(--text-mid); font-size: 13px;
+  border-bottom: 1px solid var(--border); }
+.sugg a:last-child { border-bottom: 0; }
+.sugg a:hover { background: var(--bg-card); color: var(--text); }
+.sugg img { width: 40px; height: 40px; object-fit: contain; background: var(--bg-card); flex: none; }
+.sugg .s-price { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--text); white-space: nowrap; }
+.sugg .s-shelf { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.sugg .s-shelf::before { content: "→ "; color: var(--accent); }
+.shelf-note { width: 85%; margin: 0 auto; padding: 6px 0 0;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-dim); }
+@media (max-width: 760px) { .search-row, .shelf-note { width: 88%; } }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#grid">Skip to products</a>
+
+<header class="site-header">
+  <button class="language" type="button" aria-label="Change language">EN ●</button>
+
+  <a class="brand" href="/">
+    <div>
+      <div class="brand-name">Rapid<br>Response</div>
+      <span class="brand-sub">RRT SHOP</span>
+    </div>
+  </a>
+
+  <nav class="nav" aria-label="Shop">
+    <a href="/shop" aria-current="page">Shop</a>
+    <a href="/shop/saved">Saved</a>
+    <a href="/shop/track">Your orders</a>
+  </nav>
+
+  <a class="bag" href="/shop/cart" aria-label="Basket">
+    <div class="bag-icon"></div>
+    <span class="bag-count" id="bagCount" hidden>0</span>
+  </a>
+</header>
+
+<section class="shop-intro">
+  <div>
+    <h1 class="shop-title" id="pageTitle">The RRT Shop</h1>
+    <p class="shop-copy" id="pageCopy">
+      Everyday things for the animals you look after.
+      Every purchase helps keep the emergency network free to use.
+    </p>
+  </div>
+</section>
+
+<div class="search-row">
+  <form id="searchForm" role="search" autocomplete="off">
+    <input id="q" name="q" placeholder="Search the whole range — food, medicines, brands…"
+           aria-label="Search the shop" inputmode="search">
+    <button type="submit">Search</button>
+  </form>
+  <div class="sugg" id="sugg" hidden></div>
+</div>
+
+<div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"></div>
+<div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
+<p class="shelf-note" id="shelfNote" hidden></p>
+
+<div class="controls-row" id="controls">
+  <label class="stock-toggle"><input type="checkbox" id="inStock"> In stock only</label>
+  <span class="count" id="count"></span>
+  <select id="sort" aria-label="Sort products"></select>
+</div>
+
+<div class="notice" id="notice" hidden></div>
+
+<main class="product-grid" id="grid" aria-busy="true" aria-live="polite"></main>
+<div class="state" id="state" hidden></div>
+<div class="grid-foot" id="foot" hidden>
+  <button class="btn-line" id="more" type="button">Load more</button>
+  <span class="done" id="done" hidden>That is the whole shelf.</span>
+</div>
+
+<section class="disclosure" aria-labelledby="who">
+  <h2 id="who">Who runs this shop</h2>
+  <div>
+    <p>Rapid Response designs and hosts this storefront. Everything on it is
+       sold and delivered by <strong>Pets Lifestyle</strong>, the seller for
+       every order placed here — the same store behind the SHOP tab in the
+       RRT app.</p>
+    <p>Pets Lifestyle takes payment on their own secure checkout, holds the
+       order, ships it, and handles returns, refunds and cancellations. We do
+       not process payments and cannot access your payment details. Prices,
+       stock and photos on this page are read live from their store.</p>
+    <p>For anything about an order, use the link in your confirmation email
+       or see <a href="/shop/track">your orders</a>.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <span>Rapid Response · Shop</span>
+  <span>Sold by Pets Lifestyle</span>
+</footer>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="/assets/rrt-shop.js"></script>
+<script src="/assets/shop-ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  var S = window.RRTShop, U = window.RRTUI, esc = S.esc;
+  function $(id) { return document.getElementById(id); }
+
+  U.bindHeader();
+  U.bindTiles($('grid'));
+
+  /* ------------------------------------------------------- what to list */
+
+  var params = new URLSearchParams(location.search);
+  var q = (params.get('q') || '').trim();
+  var aisle = (params.get('a') || '').trim();
+  var shelfKey = (params.get('shelf') || '').trim();
+  var titleHint = (params.get('t') || '').trim();
+
+  var shelf = shelfKey ? S.shelfByKey(shelfKey) : (aisle ? S.shelfForAisle(aisle) : null);
+  if (shelf && !aisle) aisle = shelf.aisles[0].handle;
+  var searching = !!q;
+  var handle = searching ? null : (aisle || S.vendor.catalogHandle);
+
+  function aisleLabel() {
+    if (shelf) {
+      for (var i = 0; i < shelf.aisles.length; i++) {
+        if (shelf.aisles[i].handle === aisle) return shelf.aisles[i].label;
+      }
+    }
+    if (titleHint) return titleHint;
+    return aisle.replace(/-/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+
+  if (searching) {
+    $('pageTitle').textContent = 'Search';
+    $('pageCopy').textContent = 'Every match from the live range, exactly as the seller\u2019s own search finds it.';
+    $('q').value = q;
+    $('controls').hidden = true;
+  } else if (shelf) {
+    $('pageTitle').textContent = shelf.num + ' \u00b7 ' + shelf.name;
+    $('pageCopy').textContent = shelf.preview;
+  } else if (aisle) {
+    $('pageTitle').textContent = aisleLabel();
+    $('pageCopy').textContent = 'A shelf from the live range.';
+  }
+
+  /* ----------------------------------------------------------- the rails */
+
+  var shelfBar = $('shelfBar');
+  var html = '<a class="category" href="/shop" aria-pressed="' + (!shelf && !aisle && !searching) + '">All</a>';
+  S.shelves.forEach(function (s) {
+    var on = shelf && shelf.key === s.key;
+    html += '<a class="category" href="/shop?shelf=' + encodeURIComponent(s.key) + '"' +
+      ' aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(s.name) + '</a>';
+  });
+  shelfBar.innerHTML = html;
+
+  if (shelf) {
+    var bar = $('aisleBar');
+    bar.hidden = false;
+    bar.innerHTML = shelf.aisles.map(function (a) {
+      return '<a class="category" href="/shop?shelf=' + encodeURIComponent(shelf.key) +
+        '&a=' + encodeURIComponent(a.handle) + '"' +
+        ' aria-pressed="' + (a.handle === aisle ? 'true' : 'false') + '">' + esc(a.label) + '</a>';
+    }).join('');
+  } else if (aisle && !searching) {
+    var note = $('shelfNote');
+    note.hidden = false;
+    note.textContent = 'Shelf: ' + aisleLabel();
+  }
+
+  /* ------------------------------------------------------------- controls */
+
+  var sortSel = $('sort');
+  S.sorts.forEach(function (key) {
+    var o = document.createElement('option');
+    o.value = key; o.textContent = S.sortLabels[key];
+    sortSel.appendChild(o);
+  });
+
+  var state = { sort: 'featured', inStockOnly: false, products: [], cursor: null, hasMore: false, loading: false, total: null };
+
+  sortSel.addEventListener('change', function () {
+    state.sort = sortSel.value;
+    resetAndLoad();
+  });
+  $('inStock').addEventListener('change', function () {
+    state.inStockOnly = $('inStock').checked;
+    render();
+  });
+
+  /* ------------------------------------------------------------- loading */
+
+  function fetchPage() {
+    if (searching) return S.searchAll(q, { after: state.cursor });
+    return S.collectionPage(handle, { sort: state.sort, after: state.cursor });
+  }
+
+  function resetAndLoad() {
+    state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
+    $('grid').innerHTML = ''; $('state').hidden = true; $('foot').hidden = true;
+    loadNext();
+  }
+
+  function loadNext() {
+    if (state.loading) return;
+    state.loading = true;
+    $('grid').setAttribute('aria-busy', 'true');
+    $('more').disabled = true;
+    fetchPage().then(function (page) {
+      state.loading = false;
+      state.products = state.products.concat(page.products);
+      state.cursor = page.endCursor;
+      state.hasMore = page.hasMore;
+      if (typeof page.total === 'number') state.total = page.total;
+      if (page.missing) {
+        showState('This shelf is empty right now. The seller may have renamed it \u2014 the rest of the shop is unaffected.', true);
+        return;
+      }
+      render();
+    }).catch(function (err) {
+      state.loading = false;
+      showState(esc(err && err.message ? err.message : 'Something went wrong.') , true, true);
+    });
+  }
+
+  function showState(message, replaceGrid, retry) {
+    var el = $('state');
+    el.hidden = false;
+    el.innerHTML = '<p>' + message + '</p>' +
+      (retry ? '<p><button class="btn-line" id="retry" type="button">Try again</button></p>'
+             : '<p><a class="btn-line" href="/shop">Back to the shop</a></p>');
+    if (replaceGrid) { $('grid').innerHTML = ''; $('grid').setAttribute('aria-busy', 'false'); $('foot').hidden = true; }
+    var r = $('retry');
+    if (r) r.addEventListener('click', function () { el.hidden = true; loadNext(); });
+  }
+
+  function render() {
+    var visible = S.visibleProducts(state.products, {
+      inStockOnly: state.inStockOnly,
+      vegOnly: S.vegOnly(),
+      sort: 'featured' // order already comes from the vendor (server-side sort)
+    });
+    $('grid').setAttribute('aria-busy', 'false');
+    if (!visible.length && !state.hasMore) {
+      showState(searching
+        ? 'Nothing matched \u201c' + esc(q) + '\u201d. Try fewer words, or a brand name.'
+        : 'Nothing on this shelf right now.', true);
+      return;
+    }
+    $('state').hidden = true;
+    $('grid').innerHTML = visible.map(function (p) { return U.tile(p); }).join('');
+    $('count').textContent = searching && state.total != null
+      ? state.total + ' result' + (state.total === 1 ? '' : 's')
+      : visible.length + ' shown';
+    $('foot').hidden = false;
+    $('more').disabled = false;
+    $('more').hidden = !state.hasMore;
+    $('done').hidden = state.hasMore;
+  }
+
+  $('more').addEventListener('click', loadNext);
+
+  // Page as you scroll, like the phone: the button stays as the fallback.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && state.hasMore && !state.loading) loadNext();
+    }, { rootMargin: '600px' }).observe($('foot'));
+  }
+
+  loadNext();
+
+  /* ------------------------------------------------- search suggestions */
+
+  var suggEl = $('sugg');
+  var debounce = null;
+  var lastQuery = '';
+
+  $('q').addEventListener('input', function () {
+    var text = $('q').value.trim();
+    clearTimeout(debounce);
+    if (text.length < 2) { suggEl.hidden = true; suggEl.innerHTML = ''; return; }
+    debounce = setTimeout(function () {
+      lastQuery = text;
+      S.suggest(text).then(function (r) {
+        if (r.query !== lastQuery) return; // a newer keystroke owns the box
+        if (!r.products.length && !r.collections.length) { suggEl.hidden = true; return; }
+        var out = '';
+        r.collections.slice(0, 3).forEach(function (c) {
+          out += '<a href="/shop?a=' + encodeURIComponent(c.handle) + '&t=' + encodeURIComponent(c.title) + '">' +
+            '<span class="s-shelf">' + esc(c.title) + '</span></a>';
+        });
+        r.products.forEach(function (p) {
+          out += '<a href="/shop/p/' + encodeURIComponent(p.handle) + '">' +
+            (p.imageUrl ? '<img src="' + esc(S.sizedImage(p.imageUrl, 96)) + '" alt="">' : '') +
+            '<span>' + esc(p.title) + '</span>' +
+            '<span class="s-price">' + (p.priceVaries ? 'From ' : '') + S.money(p.cheapestVariant.pricePaise) + '</span></a>';
+        });
+        out += '<a href="/shop?q=' + encodeURIComponent(text) + '"><span class="s-shelf">All results for \u201c' + esc(text) + '\u201d</span></a>';
+        suggEl.innerHTML = out;
+        suggEl.hidden = false;
+      }).catch(function () { suggEl.hidden = true; });
+    }, 250);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!suggEl.contains(e.target) && e.target !== $('q')) suggEl.hidden = true;
+  });
+
+  $('searchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = $('q').value.trim();
+    if (text) location.href = '/shop?q=' + encodeURIComponent(text);
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -8,6 +8,34 @@
     {
       "source": "/report/manage",
       "destination": "/report/manage.html"
+    },
+    {
+      "source": "/shop/cart",
+      "destination": "/cart.html"
+    },
+    {
+      "source": "/shop/saved",
+      "destination": "/saved.html"
+    },
+    {
+      "source": "/shop/return",
+      "destination": "/shop-return.html"
+    },
+    {
+      "source": "/shop/track",
+      "destination": "/track.html"
+    },
+    {
+      "source": "/shop/track/:path*",
+      "destination": "/track.html"
+    },
+    {
+      "source": "/shop/p/:handle",
+      "destination": "/product.html"
+    },
+    {
+      "source": "/shop/:path*",
+      "destination": "/shop.html"
     }
   ],
   "redirects": [

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--
+  Your orders — the web twin of the app's store_orders_view.
+
+  RRT keeps receipts, not order records: what was handed to the vendor's
+  checkout and the reference that rode along. The order itself — status,
+  tracking, invoice, refunds — lives with the vendor, so every "where is
+  it?" road on this page leads to Pets Lifestyle: their account page, their
+  policies, their WhatsApp and email.
+
+  A hand-off the buyer never confirmed shows up here as a question, exactly
+  as it does on the bag page, and expires quietly after seven days.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your orders — The RRT Shop</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/shop.css">
+<style>
+.trk { width: 85%; max-width: 760px; margin: 0 auto; padding: 34px 0 70px; }
+.trk h1 { font-family: var(--display); font-weight: 700; text-transform: uppercase;
+          font-size: 34px; margin: 0 0 18px; }
+.pending { border: 1px solid var(--accent); background: var(--accent-soft);
+           padding: 18px 20px; margin: 0 0 22px; font-size: 13px; line-height: 1.6; }
+.pending .row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.order { border: 1px solid var(--border); margin-bottom: 14px; }
+.order > summary { list-style: none; cursor: pointer; padding: 16px 18px;
+                   display: flex; align-items: center; gap: 14px; }
+.order > summary::-webkit-details-marker { display: none; }
+.order .when { font-family: var(--mono); font-size: 12px; }
+.order .n { font-size: 12.5px; color: var(--text-low); }
+.order .chip { margin-left: auto; font-family: var(--mono); font-size: 10px;
+               letter-spacing: .1em; text-transform: uppercase; padding: 4px 9px;
+               border: 1px solid var(--border-strong); color: var(--text-mid); }
+.order .chip.placed { border-color: var(--accent); color: var(--accent); }
+.order .body { border-top: 1px solid var(--border); padding: 8px 18px 18px; }
+.o-line { display: flex; gap: 12px; align-items: center; padding: 10px 0;
+          border-bottom: 1px solid var(--border); font-size: 13px; }
+.o-line:last-of-type { border-bottom: 0; }
+.o-line img { width: 44px; height: 44px; object-fit: contain; background: var(--bg-card);
+              border: 1px solid var(--border); }
+.o-line .q { color: var(--text-low); }
+.o-line .amt { margin-left: auto; font-family: var(--mono); font-size: 12.5px; }
+.o-meta { display: flex; justify-content: space-between; align-items: center;
+          padding-top: 14px; font-family: var(--mono); font-size: 12px; flex-wrap: wrap; gap: 10px; }
+.o-meta .ref { color: var(--text-low); letter-spacing: .05em; }
+.help { border-top: 1px solid var(--border); margin-top: 34px; padding-top: 22px; }
+.help h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 19px; margin: 0 0 10px; }
+.help p { font-size: 13px; color: var(--text-low); line-height: 1.7; max-width: 60ch; }
+.help a { color: var(--text); }
+.danger { margin-top: 34px; border-top: 1px solid var(--border); padding-top: 22px; }
+.danger button { background: none; border: 1px solid var(--border-strong); color: var(--text-low);
+                 font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+                 padding: 10px 16px; cursor: pointer; }
+.danger button:hover { border-color: var(--accent); color: var(--accent); }
+.danger p { font-size: 12px; color: var(--text-dim); margin-top: 8px; max-width: 52ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to orders</a>
+
+<header class="site-header">
+  <button class="language" type="button" aria-label="Change language">EN ●</button>
+  <a class="brand" href="/"><div>
+    <div class="brand-name">Rapid<br>Response</div>
+    <span class="brand-sub">RRT SHOP</span>
+  </div></a>
+  <nav class="nav" aria-label="Shop">
+    <a href="/shop">Shop</a>
+    <a href="/shop/saved">Saved</a>
+    <a href="/shop/track" aria-current="page">Your orders</a>
+  </nav>
+  <a class="bag" href="/shop/cart" aria-label="Basket">
+    <div class="bag-icon"></div><span class="bag-count" id="bagCount" hidden>0</span>
+  </a>
+</header>
+
+<main class="trk" id="main">
+  <h1>Your orders</h1>
+
+  <div class="pending" id="pending" hidden>
+    <strong>You were taken to Pets Lifestyle's secure checkout.</strong><br>
+    Did you place the order there?
+    <div class="row">
+      <button class="btn-solid" id="paidYes" type="button">I placed my order</button>
+      <button class="btn-line" id="paidNo" type="button">No — I didn't order</button>
+    </div>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="state" id="empty" hidden>
+    <p>No orders on this device yet.</p>
+    <p><a class="btn-line" href="/shop">Browse the shop</a></p>
+  </div>
+
+  <div class="help">
+    <h2>Anything about an order</h2>
+    <p>Orders are held, shipped and supported by <strong>Pets Lifestyle</strong>,
+       the seller for everything bought here. Their confirmation email is your
+       invoice and carries the tracking link. You can also
+       <a id="accountLink" target="_blank" rel="noopener">sign in on their site</a>
+       with the email or phone you gave at checkout to see every order from any
+       device — including orders placed through the RRT app.</p>
+    <p><a id="shipLink" target="_blank" rel="noopener">Shipping policy</a> ·
+       <a id="refundLink" target="_blank" rel="noopener">Refund policy</a> ·
+       <a id="waLink" target="_blank" rel="noopener">WhatsApp Pets Lifestyle</a> ·
+       <a id="mailLink">Email them</a></p>
+  </div>
+
+  <div class="danger">
+    <button id="wipe" type="button">Delete my shop data</button>
+    <p>Clears the bag, saved items and receipts stored in this browser. Orders
+       already with the seller are unaffected — they remain in your Pets
+       Lifestyle account.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>Rapid Response · Shop</span>
+  <span>Sold by Pets Lifestyle</span>
+</footer>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="/assets/rrt-shop.js"></script>
+<script src="/assets/shop-ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  var S = window.RRTShop, U = window.RRTUI, esc = S.esc;
+  function $(id) { return document.getElementById(id); }
+
+  U.bindHeader();
+  $('accountLink').href = S.vendor.accountUrl;
+  $('shipLink').href = S.vendor.shippingPolicyUrl;
+  $('refundLink').href = S.vendor.refundPolicyUrl;
+  $('waLink').href = S.vendor.whatsAppUrl('Hi, I have a question about my order (via RRT)');
+  $('mailLink').href = 'mailto:' + S.vendor.supportEmail;
+
+  function paintPending() { $('pending').hidden = !S.pendingCheckout(); }
+  $('paidYes').addEventListener('click', function () {
+    var order = S.resolvePendingCheckout(true);
+    if (order) { location.href = '/shop/return?order=' + encodeURIComponent(order.id); return; }
+    paintPending(); render();
+  });
+  $('paidNo').addEventListener('click', function () {
+    S.resolvePendingCheckout(false);
+    paintPending(); render();
+  });
+  paintPending();
+
+  function render() {
+    var all = S.receipts();
+    $('empty').hidden = all.length > 0;
+    $('list').innerHTML = all.map(function (o, i) {
+      var placed = o.status === 'placed';
+      var count = o.lines.reduce(function (a, l) { return a + l.qty; }, 0);
+      return '<details class="order"' + (i === 0 ? ' open' : '') + '>' +
+        '<summary>' +
+        '<span class="when">' + esc(S.receiptDateLabel(o.createdAt)) + '</span>' +
+        '<span class="n">' + count + ' item' + (count === 1 ? '' : 's') + ' \u00b7 ' +
+          esc(S.money(o.subtotalPaise)) + '</span>' +
+        '<span class="chip' + (placed ? ' placed' : '') + '">' +
+          (placed ? 'Placed' : 'Handed to checkout') + '</span>' +
+        '</summary>' +
+        '<div class="body">' +
+        o.lines.map(function (l) {
+          return '<div class="o-line">' +
+            (l.image ? '<img src="' + esc(S.sizedImage(l.image, 100)) + '" alt="">' : '') +
+            '<span>' + esc(l.title) + (l.variant_title ? ' \u00b7 ' + esc(l.variant_title) : '') +
+            ' <span class="q">\u00d7 ' + l.qty + '</span></span>' +
+            '<span class="amt">' + esc(S.money(l.unit_price * l.qty)) + '</span></div>';
+        }).join('') +
+        '<div class="o-meta">' +
+        '<span class="ref">' + esc(o.rrtRef) + '</span>' +
+        '<a class="btn-line" href="' + esc(S.orderStatusUrl(o)) + '" target="_blank" rel="noopener">View order status</a>' +
+        '</div></div></details>';
+    }).join('');
+  }
+  render();
+
+  $('wipe').addEventListener('click', function () {
+    if (!confirm('Delete the bag, saved items and receipts stored in this browser? Orders already with the seller are unaffected.')) return;
+    S.deleteMyData();
+    U.toast('Shop data on this device deleted');
+    paintPending(); render();
+  });
+})();
+</script>
+
+</body>
+</html>
