@@ -26,18 +26,22 @@
 <a class="skip" href="#grid">Skip to products</a>
 
 <header class="site-header">
+  <button class="back" type="button" data-fallback="/" aria-label="Back"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+
   <a class="logo" href="/" aria-label="Rapid Response">
     <div class="logo-sq"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>
     <span class="logo-t">Rapid Response</span>
     <span class="logo-tag">Shop</span>
   </a>
 
+  <form class="hsearch find" role="search" autocomplete="off">
+    <input name="q" placeholder="Search the range…" aria-label="Search the shop" inputmode="search">
+    <button type="submit" aria-label="Search">→</button>
+    <div class="sugg" hidden></div>
+  </form>
+
   <nav class="nav" aria-label="Shop">
     <a href="/shop" aria-current="page">Shop</a>
-    <a href="/shop?shelf=pharmacy">Pharmacy</a>
-    <a href="/shop?shelf=dog-food">Dog food</a>
-    <a href="/shop?shelf=cat-food">Cat food</a>
-    <a href="/shop?shelf=grooming">Grooming</a>
     <a href="/shop/saved">Saved</a>
     <a href="/shop/track">Your orders</a>
   </nav>
@@ -62,14 +66,9 @@
     </p>
   </div>
   <div class="controls">
-    <form class="find" id="searchForm" role="search" autocomplete="off">
-      <input id="q" name="q" placeholder="Search the range…" aria-label="Search the shop" inputmode="search">
-      <button type="submit" aria-label="Search">→</button>
-    </form>
     <label class="stock-toggle" id="stockWrap"><input type="checkbox" id="inStock"> In stock</label>
     <select class="sort" id="sort" aria-label="Sort products"></select>
     <span class="count" id="count"></span>
-    <div class="sugg" id="sugg" hidden></div>
   </div>
 </section>
 
@@ -147,7 +146,7 @@
     document.title = q + ' · The RRT Shop';
     $('pageTitle').textContent = 'Search';
     $('pageCopy').textContent = 'Results for \u201c' + q + '\u201d \u2014 every match from the live range, straight from the seller\u2019s own search.';
-    $('q').value = q;
+    document.querySelector('.hsearch input').value = q;
     $('stockWrap').hidden = true;
     $('sort').hidden = true;
   } else if (shelf) {
@@ -303,48 +302,6 @@
 
   loadNext();
 
-  /* ------------------------------------------------- search suggestions */
-
-  var suggEl = $('sugg');
-  var debounce = null;
-  var lastQuery = '';
-
-  $('q').addEventListener('input', function () {
-    var text = $('q').value.trim();
-    clearTimeout(debounce);
-    if (text.length < 2) { suggEl.hidden = true; suggEl.innerHTML = ''; return; }
-    debounce = setTimeout(function () {
-      lastQuery = text;
-      S.suggest(text).then(function (r) {
-        if (r.query !== lastQuery) return; // a newer keystroke owns the box
-        if (!r.products.length && !r.collections.length) { suggEl.hidden = true; return; }
-        var out = '';
-        r.collections.slice(0, 3).forEach(function (c) {
-          out += '<a href="/shop?a=' + encodeURIComponent(c.handle) + '&t=' + encodeURIComponent(c.title) + '">' +
-            '<span class="s-shelf">' + esc(c.title) + ' \u2192</span></a>';
-        });
-        r.products.forEach(function (p) {
-          out += '<a href="/shop/p/' + encodeURIComponent(p.handle) + '">' +
-            (p.imageUrl ? '<img src="' + esc(S.sizedImage(p.imageUrl, 96)) + '" alt="">' : '') +
-            '<span>' + esc(p.title) + '</span>' +
-            '<span class="s-price">' + (p.priceVaries ? 'From ' : '') + S.money(p.cheapestVariant.pricePaise) + '</span></a>';
-        });
-        out += '<a href="/shop?q=' + encodeURIComponent(text) + '"><span class="s-shelf">All results for \u201c' + esc(text) + '\u201d</span></a>';
-        suggEl.innerHTML = out;
-        suggEl.hidden = false;
-      }).catch(function () { suggEl.hidden = true; });
-    }, 250);
-  });
-
-  document.addEventListener('click', function (e) {
-    if (!suggEl.contains(e.target) && e.target !== $('q')) suggEl.hidden = true;
-  });
-
-  $('searchForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var text = $('q').value.trim();
-    if (text) location.href = '/shop?q=' + encodeURIComponent(text);
-  });
 })();
 </script>
 

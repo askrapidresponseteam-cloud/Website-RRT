@@ -128,8 +128,12 @@ for (const file of ['assets/shop.css', ...SHOP_PAGES]) {
  * ------------------------------------------------------------------------- */
 
 const GEOMETRY = [
-  [/height:\s*112px/, 'header height 112px'],
-  [/grid-template-columns:\s*72px 248px 1fr 72px/, 'header column grid'],
+  // The header is the landing page's bar, so the logo sits at the exact
+  // position it holds on the homepage: 60px tall (68px from 768px up),
+  // 20/40px side padding. The grids below stay on the reference contract.
+  [/\.site-header \{\s*\n\s*height:\s*60px/, 'landing header height 60px'],
+  [/height:\s*68px/, 'landing header height 68px at 768px'],
+  [/max\(40px, env\(safe-area-inset-left\)\)/, 'landing header 40px left offset'],
   [/width:\s*85%/, '85% content width'],
   [/grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/, 'four-column product grid'],
   [/column-gap:\s*26px/, '26px column gutter'],

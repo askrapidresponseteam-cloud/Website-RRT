@@ -108,6 +108,69 @@
 
   /* ------------------------------------------------------------- chrome */
 
+  /** The header back button: browser history when we own it, the shop
+   *  (or the homepage, per data-fallback) when we arrived from outside. */
+  function bindBack() {
+    var btn = document.querySelector('.site-header .back');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var cameFromHere = document.referrer.indexOf(location.origin) === 0;
+      if (cameFromHere && global.history.length > 1) {
+        global.history.back();
+      } else {
+        location.href = btn.getAttribute('data-fallback') || '/shop';
+      }
+    });
+  }
+
+  /** The header search: the vendor's own suggestions as you type, the full
+   *  results page on Enter. One implementation for every page. */
+  function bindSearch() {
+    var form = document.querySelector('.site-header .hsearch');
+    if (!form) return;
+    var input = form.querySelector('input');
+    var suggEl = form.querySelector('.sugg');
+    var debounce = null;
+    var lastQuery = '';
+
+    input.addEventListener('input', function () {
+      var text = input.value.trim();
+      clearTimeout(debounce);
+      if (text.length < 2) { suggEl.hidden = true; suggEl.innerHTML = ''; return; }
+      debounce = setTimeout(function () {
+        lastQuery = text;
+        S.suggest(text).then(function (r) {
+          if (r.query !== lastQuery) return; // a newer keystroke owns the box
+          if (!r.products.length && !r.collections.length) { suggEl.hidden = true; return; }
+          var out = '';
+          r.collections.slice(0, 3).forEach(function (c) {
+            out += '<a href="/shop?a=' + encodeURIComponent(c.handle) + '&t=' + encodeURIComponent(c.title) + '">' +
+              '<span class="s-shelf">' + esc(c.title) + ' \u2192</span></a>';
+          });
+          r.products.forEach(function (p) {
+            out += '<a href="/shop/p/' + encodeURIComponent(p.handle) + '">' +
+              (p.imageUrl ? '<img src="' + esc(S.sizedImage(p.imageUrl, 96)) + '" alt="">' : '') +
+              '<span>' + esc(p.title) + '</span>' +
+              '<span class="s-price">' + (p.priceVaries ? 'From ' : '') + S.money(p.cheapestVariant.pricePaise) + '</span></a>';
+          });
+          out += '<a href="/shop?q=' + encodeURIComponent(text) + '"><span class="s-shelf">All results for \u201c' + esc(text) + '\u201d</span></a>';
+          suggEl.innerHTML = out;
+          suggEl.hidden = false;
+        }).catch(function () { suggEl.hidden = true; });
+      }, 250);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!form.contains(e.target)) suggEl.hidden = true;
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var text = input.value.trim();
+      if (text) location.href = '/shop?q=' + encodeURIComponent(text);
+    });
+  }
+
   function bindHeader() {
     var badge = document.getElementById('bagCount');
     function paint(state) {
@@ -118,6 +181,8 @@
     }
     paint();
     global.addEventListener('rrt:cart', function (e) { paint(e.detail); });
+    bindBack();
+    bindSearch();
   }
 
   var toastTimer = null;

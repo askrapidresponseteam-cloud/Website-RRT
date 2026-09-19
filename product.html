@@ -93,18 +93,22 @@
 <a class="skip" href="#main">Skip to product</a>
 
 <header class="site-header">
+  <button class="back" type="button" data-fallback="/shop" aria-label="Back"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+
   <a class="logo" href="/" aria-label="Rapid Response">
     <div class="logo-sq"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>
     <span class="logo-t">Rapid Response</span>
     <span class="logo-tag">Shop</span>
   </a>
 
+  <form class="hsearch find" role="search" autocomplete="off">
+    <input name="q" placeholder="Search the range…" aria-label="Search the shop" inputmode="search">
+    <button type="submit" aria-label="Search">→</button>
+    <div class="sugg" hidden></div>
+  </form>
+
   <nav class="nav" aria-label="Shop">
     <a href="/shop">Shop</a>
-    <a href="/shop?shelf=pharmacy">Pharmacy</a>
-    <a href="/shop?shelf=dog-food">Dog food</a>
-    <a href="/shop?shelf=cat-food">Cat food</a>
-    <a href="/shop?shelf=grooming">Grooming</a>
     <a href="/shop/saved">Saved</a>
     <a href="/shop/track">Your orders</a>
   </nav>
