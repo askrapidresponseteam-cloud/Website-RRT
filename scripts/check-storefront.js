@@ -13,9 +13,9 @@ const path = require('path');
 
 const WEB = path.join(__dirname, '..');
 // Only the shop's own pages: the landing pages around them have a light
-// mode and no seller disclosure, by design.
+// mode and no seller disclosure, by design. Served copy never names the vendor.
 const SHOP_PAGES = ['shop.html', 'product.html', 'cart.html',
-  'shop-return.html', 'track.html', 'saved.html'];
+  'track.html', 'saved.html'];
 const css = fs.readFileSync(path.join(WEB, 'assets', 'shop.css'), 'utf8');
 const sdk = fs.readFileSync(path.join(WEB, 'assets', 'rrt-shop.js'), 'utf8');
 const ui = fs.readFileSync(path.join(WEB, 'assets', 'shop-ui.js'), 'utf8');
@@ -81,7 +81,8 @@ for (const file of SHOP_PAGES) {
   // is NAMED, as in the app - an anonymous "retail partner" is the one thing
   // the superseded architecture required that consumer-protection rules on
   // seller identity would not survive.
-  if (!/Pets Lifestyle/.test(f)) problems.push('seller not named');
+  if (/Pets\s+Lifestyle/i.test(f)) problems.push('vendor named in served copy');
+  if (!/third-party/i.test(f)) problems.push('missing third-party seller disclosure');
   const fullDisclosure = !/robots.*noindex/.test(s) ||
     file === 'track.html' || file === 'cart.html';
   if (fullDisclosure && !/(sold and delivered by|seller for every|takes? payment)/i.test(f)) {

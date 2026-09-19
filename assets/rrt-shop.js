@@ -32,7 +32,6 @@
   /* ================================================================ VENDOR */
 
   var Vendor = {
-    name: 'Pets Lifestyle',
     /** Canonical storefront host. The bare domain redirects. */
     domain: 'www.pets-lifestyle.com',
     /** Numeric Shopify shop id; order status pages live under /{shopId}/orders/. */
@@ -861,7 +860,6 @@
   var CART_KEY = 'rrt_store_cart_v2';
   var SAVED_KEY = 'rrt_store_saved_v2';
   var RECEIPTS_KEY = 'rrt_store_receipts_v2';
-  var PENDING_KEY = 'rrt_store_pending_v1';
   var VEG_KEY = 'rrt_store_veg_only';
   var CAPS_KEY = 'rrt_sf_caps_v1';
   var CACHE_PREFIX = 'rrt_sf_cache_v1:';
@@ -968,23 +966,23 @@
       clearTimeout(timer);
       if (res.status === 404) throw StorefrontError('Not found', 404);
       if (res.status === 429 || res.status === 430) {
-        throw StorefrontError(Vendor.name + ' is busy right now. Try again in a moment.', res.status);
+        throw StorefrontError('The store is busy right now. Try again in a moment.', res.status);
       }
       if (res.status !== 200) {
-        throw StorefrontError(Vendor.name + ' could not load this right now (' + res.status + ').', res.status);
+        throw StorefrontError('The store could not load this right now (' + res.status + ').', res.status);
       }
       return res.json().catch(function () {
         // Their storefront answered with a page, not data - usually a bot
         // challenge or maintenance screen in front of the JSON.
-        throw StorefrontError(Vendor.name + ' sent something unexpected. Try again shortly.');
+        throw StorefrontError('The store sent something unexpected. Try again shortly.');
       });
     }).catch(function (e) {
       clearTimeout(timer);
       if (e && e.storefront) throw e;
       if (e && e.name === 'AbortError') {
-        throw StorefrontError(Vendor.name + ' is taking too long to answer. Try again.');
+        throw StorefrontError('The store is taking too long to answer. Try again.');
       }
-      throw StorefrontError('Could not reach ' + Vendor.name + '. Check your internet and try again.');
+      throw StorefrontError('Could not reach the store. Check your internet and try again.');
     });
   }
 
@@ -1036,23 +1034,23 @@
     }).then(function (res) {
       clearTimeout(timer);
       if (res.status === 429 || res.status === 430) {
-        throw StorefrontError(Vendor.name + ' is busy right now. Try again in a moment.', res.status);
+        throw StorefrontError('The store is busy right now. Try again in a moment.', res.status);
       }
       if (res.status === 404) throw StorefrontError('Not found', 404);
       if (res.status !== 200) {
-        throw StorefrontError(Vendor.name + ' could not load this right now (' + res.status + ').', res.status);
+        throw StorefrontError('The store could not load this right now (' + res.status + ').', res.status);
       }
       return res.json().catch(function () {
         // Their storefront answered with a page, not data - usually a bot
         // challenge or maintenance screen in front of the JSON.
-        throw StorefrontError(Vendor.name + ' sent something unexpected. Try again shortly.');
+        throw StorefrontError('The store sent something unexpected. Try again shortly.');
       });
     }).then(function (body) {
       if (!body || typeof body !== 'object') {
-        throw StorefrontError(Vendor.name + ' sent something unexpected. Try again shortly.');
+        throw StorefrontError('The store sent something unexpected. Try again shortly.');
       }
       if (Array.isArray(body.errors) && body.errors.length) {
-        var err = StorefrontError(Vendor.name + ' could not load this right now.');
+        var err = StorefrontError('The store could not load this right now.');
         err.graphQLErrors = body.errors;
         throw err;
       }
@@ -1062,9 +1060,9 @@
       clearTimeout(timer);
       if (e && e.storefront) throw e;
       if (e && e.name === 'AbortError') {
-        throw StorefrontError(Vendor.name + ' is taking too long to answer. Try again.');
+        throw StorefrontError('The store is taking too long to answer. Try again.');
       }
-      throw StorefrontError('Could not reach ' + Vendor.name + '. Check your internet and try again.');
+      throw StorefrontError('Could not reach the store. Check your internet and try again.');
     });
   }
 
@@ -1388,7 +1386,7 @@
     return gql(SEARCH_QUERY, { q: q, after: opts.after || null }, { cacheKey: cacheKey })
       .then(function (data) {
         var search = data && data.search;
-        if (!search) throw StorefrontError(Vendor.name + ' search is not available right now.');
+        if (!search) throw StorefrontError('Store search is not available right now.');
         var info = search.pageInfo || {};
         return {
           query: q,
@@ -1719,12 +1717,11 @@
   /** Hand [lines] to the vendor's checkout, exactly as the app's
    *  startVendorCheckout does - mint a reference, keep a receipt, go.
    *
-   *  The one honest difference from the phone: a browser cannot watch the
-   *  vendor's checkout the way the app's WebView can, so the receipt is
-   *  saved as pending now and confirmed when the buyer comes back and says
-   *  so (the cart page asks). The authoritative count never depended on
-   *  either - it comes from the vendor's Shopify via the backend webhook,
-   *  which sees the rrt_ref whether or not the buyer ever returns. */
+   *  The receipt records the hand-off itself: what was sent, when, and the
+   *  reference that rode along. A browser cannot watch the vendor's
+   *  checkout, so RRT never claims more than that - and never needs to,
+   *  because the authoritative order count comes from the vendor's Shopify
+   *  via the backend webhook, which sees the rrt_ref regardless. */
   function beginCheckout(lines, opts) {
     opts = opts || {};
     var sellable = lines.filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; });
@@ -1753,61 +1750,20 @@
       status: 'handed'
     };
     saveReceipt(order);
-    writeJson(local, PENDING_KEY, {
-      receiptId: order.id,
-      fromCart: !!opts.fromCart,
-      variantIds: sellable.map(function (l) { return l.variantId; }),
-      at: now
-    });
     var url = checkoutUrl(sellable, {
       buyerName: opts.buyerName, buyerPhone: opts.buyerPhone, rrtRef: rrtRef
     });
     return { order: order, url: url };
   }
 
-  /** The unresolved checkout hand-off, if one exists and is under 7 days
-   *  old. Older ones are quietly dropped along with their pending receipt  - 
-   *  an unconfirmed receipt is a question, not a record. */
-  function pendingCheckout() {
-    var p = readJson(local, PENDING_KEY, null);
-    if (!p || !p.receiptId) return null;
-    if (Date.now() - (p.at || 0) > 7 * 24 * 60 * 60 * 1000) {
-      dropReceipt(p.receiptId);
-      writeJson(local, PENDING_KEY, null);
-      return null;
-    }
-    return p;
-  }
-
-  /** The buyer told us how the hand-off ended. Paid: the receipt stands and
-   *  the purchased lines leave the cart (when they came from it). Not paid:
-   *  the pending receipt is dropped and the cart is left exactly as it was. */
-  function resolvePendingCheckout(paid) {
-    var p = pendingCheckout();
-    if (!p) return null;
-    writeJson(local, PENDING_KEY, null);
-    if (!paid) {
-      dropReceipt(p.receiptId);
-      return null;
-    }
-    var order = receipt(p.receiptId);
-    if (order) { order.status = 'placed'; saveReceipt(order); }
-    if (p.fromCart) {
-      var lines = cartLines().filter(function (l) {
-        return p.variantIds.indexOf(l.variantId) === -1;
-      });
-      writeCart(lines);
-    }
-    return order;
-  }
 
   /* ======================================================== DELETE MY DATA */
 
   /** Clears everything the shop keeps in this browser: cart, saved items,
-   *  receipts, the pending hand-off and the response cache - the same
+   *  receipts, the legacy pending flag and the response cache - the same
    *  promise the app's delete-my-data makes. */
   function deleteMyData() {
-    [CART_KEY, SAVED_KEY, RECEIPTS_KEY, PENDING_KEY].forEach(function (k) {
+    [CART_KEY, SAVED_KEY, RECEIPTS_KEY, 'rrt_store_pending_v1'].forEach(function (k) {
       try { local.removeItem(k); } catch (e) { /* ignore */ }
     });
     cacheClear();
@@ -1875,8 +1831,6 @@
     newRrtRef: newRrtRef,
     checkoutUrl: checkoutUrl,
     beginCheckout: beginCheckout,
-    pendingCheckout: pendingCheckout,
-    resolvePendingCheckout: resolvePendingCheckout,
     deleteMyData: deleteMyData,
     vegOnly: vegOnly,
     esc: escapeHtml,

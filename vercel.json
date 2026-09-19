@@ -18,10 +18,6 @@
       "destination": "/saved"
     },
     {
-      "source": "/shop/return",
-      "destination": "/shop-return"
-    },
-    {
       "source": "/shop/track",
       "destination": "/track"
     },

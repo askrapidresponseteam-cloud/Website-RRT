@@ -43,13 +43,13 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-html { color-scheme: dark; }
+html { color-scheme: light; }
 body {
   font-family: var(--sans);
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
 }
 img { max-width: 100%; }
@@ -274,7 +274,7 @@ button { font: inherit; color: inherit; }
   background: transparent;
   border: 0;
   color: var(--text);
-  font-size: 12px;
+  font-size: 14px;
   padding: 8px 2px;
 }
 .find input::placeholder { color: var(--text-dim); }

@@ -5,7 +5,7 @@
   RRT keeps receipts, not order records: what was handed to the vendor's
   checkout and the reference that rode along. The order itself - status,
   tracking, invoice, refunds - lives with the vendor, so every "where is
-  it?" road on this page leads to Pets Lifestyle: their account page, their
+  it?" road on this page leads to the seller: their account page, their
   policies, their WhatsApp and email.
 
   A hand-off the buyer never confirmed shows up here as a question, exactly
@@ -27,9 +27,6 @@
 .trk { width: 85%; max-width: 760px; margin: 0 auto; padding: 34px 0 70px; }
 .trk h1 { font-family: var(--display); font-weight: 700; text-transform: uppercase;
           font-size: 34px; margin: 0 0 18px; }
-.pending { border: 1px solid var(--accent); background: var(--accent-soft);
-           padding: 18px 20px; margin: 0 0 22px; font-size: 13px; line-height: 1.6; }
-.pending .row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 .order { border: 1px solid var(--border); margin-bottom: 14px; }
 .order > summary { list-style: none; cursor: pointer; padding: 16px 18px;
                    display: flex; align-items: center; gap: 14px; }
@@ -102,15 +99,6 @@
 <main class="trk" id="main">
   <h1>Your orders</h1>
 
-  <div class="pending" id="pending" hidden>
-    <strong>You were taken to Pets Lifestyle's secure checkout.</strong><br>
-    Did you place the order there?
-    <div class="row">
-      <button class="btn-solid" id="paidYes" type="button">I placed my order</button>
-      <button class="btn-line" id="paidNo" type="button">No, I didn't order</button>
-    </div>
-  </div>
-
   <div id="list"></div>
 
   <div class="state" id="empty" hidden>
@@ -120,29 +108,27 @@
 
   <div class="help">
     <h2>Anything about an order</h2>
-    <p>Orders are held, shipped and supported by <strong>Pets Lifestyle</strong>,
-       the seller for everything bought here. Their confirmation email is your
+    <p>Orders are held, shipped and supported by <strong>a third-party partner store</strong>, the seller for everything bought here. Their confirmation email is your
        invoice and carries the tracking link. You can also
        <a id="accountLink" target="_blank" rel="noopener">sign in on their site</a>
        with the email or phone you gave at checkout to see every order from any
        device, including orders placed through the RRT app.</p>
     <p><a id="shipLink" target="_blank" rel="noopener">Shipping policy</a> ·
        <a id="refundLink" target="_blank" rel="noopener">Refund policy</a> ·
-       <a id="waLink" target="_blank" rel="noopener">WhatsApp Pets Lifestyle</a> ·
+       <a id="waLink" target="_blank" rel="noopener">WhatsApp the seller</a> ·
        <a id="mailLink">Email them</a></p>
   </div>
 
   <div class="danger">
     <button id="wipe" type="button">Delete my shop data</button>
     <p>Clears the bag, saved items and receipts stored in this browser. Orders
-       already with the seller are unaffected; they remain in your Pets
-       Lifestyle account.</p>
+       already with the seller are unaffected; they remain in your account with the seller.</p>
   </div>
 </main>
 
 <footer class="site-footer">
   <span>Rapid Response · Shop</span>
-  <span>Sold by Pets Lifestyle</span>
+  <span>Sold by a third-party partner store</span>
 </footer>
 
 <div class="toast" id="toast" hidden role="status"></div>
@@ -162,17 +148,6 @@
   $('waLink').href = S.vendor.whatsAppUrl('Hi, I have a question about my order (via RRT)');
   $('mailLink').href = 'mailto:' + S.vendor.supportEmail;
 
-  function paintPending() { $('pending').hidden = !S.pendingCheckout(); }
-  $('paidYes').addEventListener('click', function () {
-    var order = S.resolvePendingCheckout(true);
-    if (order) { location.href = '/shop/return?order=' + encodeURIComponent(order.id); return; }
-    paintPending(); render();
-  });
-  $('paidNo').addEventListener('click', function () {
-    S.resolvePendingCheckout(false);
-    paintPending(); render();
-  });
-  paintPending();
 
   function render() {
     var all = S.receipts();
@@ -186,7 +161,7 @@
         '<span class="n">' + count + ' item' + (count === 1 ? '' : 's') + ' \u00b7 ' +
           esc(S.money(o.subtotalPaise)) + '</span>' +
         '<span class="chip' + (placed ? ' placed' : '') + '">' +
-          (placed ? 'Placed' : 'Handed to checkout') + '</span>' +
+          (placed ? 'Placed' : 'Sent to checkout') + '</span>' +
         '</summary>' +
         '<div class="body">' +
         o.lines.map(function (l) {

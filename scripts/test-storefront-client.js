@@ -394,21 +394,16 @@ S.revalidateCart().then((r) => {
   const handoff = S.beginCheckout(S.cart().lines, { fromCart: true });
   ok(handoff && handoff.url.indexOf('https://www.pets-lifestyle.com/cart/71:2?') === 0,
     'beginCheckout builds the permalink from the cart');
-  eq(S.receipts()[0].status, 'handed', 'receipt saved as pending at hand-off');
+  eq(S.receipts()[0].status, 'handed', 'the receipt records the hand-off itself');
   eq(S.receipts()[0].subtotalPaise, 23438, 'receipt keeps the item subtotal shown');
-  ok(S.pendingCheckout() !== null, 'hand-off is pending until the buyer says');
-
-  const kept = S.resolvePendingCheckout(true);
-  eq(kept.status, 'placed', 'confirmed hand-off becomes a placed receipt');
-  eq(S.cart().count, 0, 'purchased lines leave the cart');
-  eq(S.orderStatusUrl(kept), 'https://www.pets-lifestyle.com/account',
+  eq(S.cart().count, 2, 'the bag is never cleared behind the buyer\u2019s back');
+  eq(S.orderStatusUrl(S.receipts()[0]), 'https://www.pets-lifestyle.com/account',
     'order status falls back to the vendor account page');
+  ok(!('pendingCheckout' in S) && !('resolvePendingCheckout' in S),
+    'nobody gets interrogated about how checkout went');
 
-  S.add(full, full.variants[0], 1);
   S.beginCheckout(S.cart().lines, { fromCart: true });
-  S.resolvePendingCheckout(false);
-  eq(S.cart().count, 1, 'an abandoned hand-off keeps the cart');
-  eq(S.receipts().length, 1, 'and drops the unconfirmed receipt');
+  eq(S.receipts().length, 2, 'every hand-off keeps its own receipt');
 
   S.deleteMyData();
   eq(S.cart().count, 0, 'delete-my-data clears the cart');

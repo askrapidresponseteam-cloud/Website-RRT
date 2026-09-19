@@ -30,11 +30,6 @@
 .cart-wrap { width: 85%; max-width: 880px; margin: 0 auto; padding: 34px 0 70px; }
 .cart-wrap h1 { font-family: var(--display); font-weight: 700; text-transform: uppercase;
                 font-size: 34px; margin: 0 0 18px; }
-.pending {
-  border: 1px solid var(--accent); background: var(--accent-soft);
-  padding: 18px 20px; margin: 0 0 22px; font-size: 13px; line-height: 1.6;
-}
-.pending .row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 .changes { border: 1px solid var(--border-strong); background: var(--bg-soft);
            padding: 14px 18px; margin: 0 0 20px; font-size: 12.5px; line-height: 1.7; }
 .changes strong { color: var(--text); }
@@ -118,14 +113,6 @@
 
 <main class="cart-wrap" id="main">
   <h1>Your bag</h1>
-
-  <div class="pending" id="pending" hidden>
-    <strong>You were taken to Pets Lifestyle's secure checkout.</strong><br>
-    Did you place the order there?
-    <div class="row">
-      <button class="btn-solid" id="paidYes" type="button">I placed my order</button>
-      <button class="btn-line" id="paidNo" type="button">No, keep my bag</button>
-    </div>
   </div>
 
   <div class="changes" id="changes" hidden></div>
@@ -142,10 +129,9 @@
       <span class="label">Item subtotal</span>
       <span class="amount" id="subtotal">-</span>
     </div>
-    <p class="fineprint">Delivery and any offers are added on Pets Lifestyle's
-       checkout; you'll see the final total there before paying. Out-of-stock
+    <p class="fineprint">Delivery and any offers are added on the seller's checkout; you'll see the final total there before paying. Out-of-stock
        items stay in your bag but are not sent to checkout.</p>
-    <div class="lock">Secure checkout · payment taken by Pets Lifestyle</div>
+    <div class="lock">Secure checkout · payment taken by the seller</div>
     <button class="btn-solid checkout-btn" id="checkout" type="button">Go to secure checkout</button>
   </div>
 </main>
@@ -153,8 +139,7 @@
 <section class="disclosure" aria-labelledby="who">
   <h2 id="who">Who takes your payment</h2>
   <div>
-    <p><strong>Pets Lifestyle</strong> is the seller for everything in this
-       bag. Pressing checkout opens their secure payment page with your items
+    <p><strong>A third-party partner store</strong> is the seller for everything in this bag. Pressing checkout opens their secure payment page with your items
        carried over; they take payment, ship the order and handle returns and
        refunds. Rapid Response never sees your payment details.</p>
     <p>Prices here were just re-checked with their live store. If anything
@@ -165,7 +150,7 @@
 
 <footer class="site-footer">
   <span>Rapid Response · Shop</span>
-  <span>Sold by Pets Lifestyle</span>
+  <span>Sold by a third-party partner store</span>
 </footer>
 
 <div class="toast" id="toast" hidden role="status"></div>
@@ -180,22 +165,6 @@
 
   U.bindHeader();
 
-  /* -------------------------------------------- the unanswered hand-off */
-
-  function paintPending() {
-    $('pending').hidden = !S.pendingCheckout();
-  }
-  $('paidYes').addEventListener('click', function () {
-    var order = S.resolvePendingCheckout(true);
-    if (order) { location.href = '/shop/return?order=' + encodeURIComponent(order.id); return; }
-    paintPending(); render();
-  });
-  $('paidNo').addEventListener('click', function () {
-    S.resolvePendingCheckout(false);
-    U.toast('Your bag is unchanged');
-    paintPending(); render();
-  });
-  paintPending();
 
   /* --------------------------------------------------------- the lines */
 
@@ -219,7 +188,7 @@
         '<div class="unit">' + esc(S.money(l.pricePaise)) + ' each' +
         (l.compareAtPaise ? '<span class="was">' + esc(S.money(l.compareAtPaise)) + '</span>' : '') + '</div>' +
         moved +
-        (l.available ? '' : '<div class="oosNote">Out of stock at ' + esc(S.vendor.name) + ', not sent to checkout</div>') +
+        (l.available ? '' : '<div class="oosNote">Out of stock with the seller, not sent to checkout</div>') +
         '<div class="qty">' +
         '<button type="button" data-step="-1" aria-label="Reduce quantity">−</button>' +
         '<span>' + l.qty + '</span>' +
@@ -259,7 +228,7 @@
     if (!changes.length) { $('changes').hidden = true; return; }
     $('changes').hidden = false;
     $('changes').innerHTML =
-      '<strong>Just re-checked with ' + esc(S.vendor.name) + ':</strong><br>' +
+      '<strong>Just re-checked with the seller:</strong><br>' +
       changes.map(function (c) {
         if (c.type === 'price') {
           return esc(c.title) + ': was ' + esc(S.money(c.from)) + ', now ' + esc(S.money(c.to));

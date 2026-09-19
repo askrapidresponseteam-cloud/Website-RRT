@@ -89,7 +89,7 @@
         // product before anything can go in the cart.
         S.product(tp.handle).then(function (live) {
           add.textContent = '+ Add';
-          if (!live) { toast(S.vendor.name + ' no longer sells this'); return; }
+          if (!live) { toast('The seller no longer lists this'); return; }
           if (!live.available) { toast('Out of stock'); return; }
           if (live.optionCount > 0 || live.hasChoices) {
             global.location.href = '/shop/p/' + encodeURIComponent(live.handle);
