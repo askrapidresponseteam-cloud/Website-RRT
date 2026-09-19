@@ -2,40 +2,40 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/manage",
-      "destination": "/report/manage.html"
+      "source": "/pl-api/:path*",
+      "destination": "https://www.pets-lifestyle.com/:path*"
     },
     {
-      "source": "/report/manage",
-      "destination": "/report/manage.html"
+      "source": "/manage",
+      "destination": "/report/manage"
     },
     {
       "source": "/shop/cart",
-      "destination": "/cart.html"
+      "destination": "/cart"
     },
     {
       "source": "/shop/saved",
-      "destination": "/saved.html"
+      "destination": "/saved"
     },
     {
       "source": "/shop/return",
-      "destination": "/shop-return.html"
+      "destination": "/shop-return"
     },
     {
       "source": "/shop/track",
-      "destination": "/track.html"
+      "destination": "/track"
     },
     {
       "source": "/shop/track/:path*",
-      "destination": "/track.html"
+      "destination": "/track"
     },
     {
       "source": "/shop/p/:handle",
-      "destination": "/product.html"
+      "destination": "/product"
     },
     {
       "source": "/shop/:path*",
-      "destination": "/shop.html"
+      "destination": "/shop"
     }
   ],
   "redirects": [

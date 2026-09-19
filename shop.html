@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <!--
-  The shop hub — the web twin of the app's SHOP tab.
+  The shop hub — the web twin of the app's SHOP tab, on the editorial
+  reference layout: cellular 112px header, hairline rows, 85% grid.
 
-  The landing opens with the ten RRT shelves as a wall of cards (drawn from
-  the vendor map, alive before any network) and the whole live catalogue
-  beneath, paged 24 at a time. A chosen shelf shows its aisles; search
-  suggests as you type and a submitted search lists every match the
-  vendor's own search returns.
-
-  Everything with a price or a photo is live from Pets Lifestyle's store.
-  While it arrives, the grid shows skeletons, never a void.
+  The ten RRT shelves ride the category bar; a chosen shelf reveals its
+  aisle rail beneath. Search lives in the intro's control cluster and
+  suggests as you type. Everything with a price or a photo is live from
+  Pets Lifestyle's store; while it arrives the grid shows plate-white
+  skeletons, never a void.
 -->
 <html lang="en">
 <head>
@@ -26,21 +24,36 @@
 
 <a class="skip" href="#grid">Skip to products</a>
 
-<header class="site-header"><div class="hd-in">
+<header class="site-header">
+  <div class="language">EN ●</div>
+
   <a class="brand" href="/">
-    <span class="brand-sq" aria-hidden="true">RRT</span>
-    <span class="brand-word">Rapid Response<em>Shop</em></span>
+    <div>
+      <div class="brand-name">Rapid<br>Response</div>
+      <span class="brand-sub">RRT Shop</span>
+    </div>
   </a>
+
   <nav class="nav" aria-label="Shop">
     <a href="/shop" aria-current="page">Shop</a>
+    <a href="/shop?shelf=pharmacy">Pharmacy</a>
+    <a href="/shop?shelf=dog-food">Dog food</a>
+    <a href="/shop?shelf=cat-food">Cat food</a>
+    <a href="/shop?shelf=grooming">Grooming</a>
     <a href="/shop/saved">Saved</a>
     <a href="/shop/track">Your orders</a>
   </nav>
+
   <a class="bag" href="/shop/cart" aria-label="Basket">
     <span class="bag-icon" aria-hidden="true"></span>
     <span class="bag-count" id="bagCount" hidden>0</span>
   </a>
-</div></header>
+</header>
+<nav class="mobile-nav" aria-label="Shop">
+  <a href="/shop" aria-current="page">Shop</a>
+  <a href="/shop/saved">Saved</a>
+  <a href="/shop/track">Your orders</a>
+</nav>
 
 <section class="shop-intro">
   <div>
@@ -50,35 +63,20 @@
       Every purchase helps keep the emergency network free to use.
     </p>
   </div>
-
-  <div class="search-row">
-    <form id="searchForm" role="search" autocomplete="off">
-      <span class="s-ic" aria-hidden="true"></span>
-      <input id="q" name="q" placeholder="Search food, medicines, brands…"
-             aria-label="Search the shop" inputmode="search">
-      <button type="submit">Search</button>
+  <div class="controls">
+    <form class="find" id="searchForm" role="search" autocomplete="off">
+      <input id="q" name="q" placeholder="Search the range…" aria-label="Search the shop" inputmode="search">
+      <button type="submit" aria-label="Search">→</button>
     </form>
+    <label class="stock-toggle" id="stockWrap"><input type="checkbox" id="inStock"> In stock</label>
+    <select class="sort" id="sort" aria-label="Sort products"></select>
+    <span class="count" id="count"></span>
     <div class="sugg" id="sugg" hidden></div>
   </div>
-
-  <div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"></div>
-  <div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
 </section>
 
-<section class="shelves" id="shelves" hidden>
-  <h2>Shop by shelf</h2>
-  <div class="shelf-grid" id="shelfGrid"></div>
-</section>
-
-<div class="range-head">
-  <h2 id="rangeTitle">The whole range</h2>
-  <span class="count" id="count"></span>
-</div>
-
-<div class="controls-row" id="controls">
-  <label class="stock-toggle"><input type="checkbox" id="inStock"> In stock only</label>
-  <select id="sort" aria-label="Sort products"></select>
-</div>
+<div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"></div>
+<div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
 
 <div class="notice" id="notice" hidden></div>
 
@@ -86,7 +84,7 @@
 <div class="state" id="state" hidden></div>
 <div class="grid-foot" id="foot" hidden>
   <button class="btn-line" id="more" type="button">Load more</button>
-  <span class="done" id="done" hidden>That's the whole shelf.</span>
+  <span class="done" id="done" hidden>That's everything on this shelf</span>
 </div>
 
 <section class="disclosure" aria-labelledby="who">
@@ -150,33 +148,18 @@
   if (searching) {
     document.title = q + ' — The RRT Shop';
     $('pageTitle').textContent = 'Search';
-    $('pageCopy').textContent = 'Every match from the live range, straight from the seller\u2019s own search.';
+    $('pageCopy').textContent = 'Results for \u201c' + q + '\u201d \u2014 every match from the live range, straight from the seller\u2019s own search.';
     $('q').value = q;
-    $('controls').hidden = true;
-    $('rangeTitle').textContent = 'Results for \u201c' + q + '\u201d';
+    $('stockWrap').hidden = true;
+    $('sort').hidden = true;
   } else if (shelf) {
     document.title = shelf.name + ' — The RRT Shop';
     $('pageTitle').textContent = shelf.name;
-    $('pageCopy').textContent = 'One of the ten RRT shelves \u2014 pick an aisle or browse the lot.';
-    $('rangeTitle').textContent = aisleLabel();
+    $('pageCopy').textContent = 'One of the ten RRT shelves \u2014 pick an aisle below, or browse the lot.';
   } else if (aisle) {
     document.title = aisleLabel() + ' — The RRT Shop';
     $('pageTitle').textContent = aisleLabel();
     $('pageCopy').textContent = 'A shelf from the live range.';
-    $('rangeTitle').textContent = aisleLabel();
-  }
-
-  /* ------------------------------------------------- shelf cards (hub) */
-
-  if (hub) {
-    $('shelves').hidden = false;
-    $('shelfGrid').innerHTML = S.shelves.map(function (s) {
-      return '<a class="shelf-card" href="/shop?shelf=' + encodeURIComponent(s.key) + '">' +
-        '<span class="sc-name">' + esc(s.name) + '</span>' +
-        '<span class="sc-aisles">' + s.aisles.length + (s.aisles.length === 1 ? ' aisle' : ' aisles') + '</span>' +
-        '<span class="sc-preview">' + esc(s.aisles.slice(0, 4).map(function (a) { return a.label; }).join(', ')) + '</span>' +
-        '<span class="sc-go" aria-hidden="true">\u2192</span></a>';
-    }).join('');
   }
 
   /* ----------------------------------------------------------- the rails */
@@ -205,7 +188,7 @@
   S.sorts.forEach(function (key) {
     var o = document.createElement('option');
     o.value = key;
-    o.textContent = { featured: 'Featured', newest: 'Newest', priceLow: 'Price: low to high', priceHigh: 'Price: high to low' }[key];
+    o.textContent = { featured: 'Sort: featured', newest: 'Sort: newest', priceLow: 'Sort: price low', priceHigh: 'Sort: price high' }[key];
     sortSel.appendChild(o);
   });
 
@@ -213,7 +196,7 @@
 
   sortSel.addEventListener('change', function () {
     state.sort = sortSel.value;
-    resetAndLoad();
+    if (state.clientSort) render(); else resetAndLoad();
   });
   $('inStock').addEventListener('change', function () {
     state.inStockOnly = $('inStock').checked;
@@ -234,6 +217,7 @@
 
   function resetAndLoad() {
     state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
+    state.clientSort = false;
     $('grid').innerHTML = skeletons(8);
     $('state').hidden = true; $('foot').hidden = true;
     loadNext();
@@ -250,6 +234,7 @@
       state.products = state.products.concat(page.products);
       state.cursor = page.endCursor;
       state.hasMore = page.hasMore;
+      if (page.clientSort) state.clientSort = true;
       if (typeof page.total === 'number') state.total = page.total;
       if (page.missing) {
         showState('This shelf is empty right now.',
@@ -266,11 +251,10 @@
   function showState(message, sub, retry) {
     var el = $('state');
     el.hidden = false;
-    el.innerHTML = '<div class="st-card"><p>' + message + '</p>' +
+    el.innerHTML = '<p>' + message + '</p>' +
       (sub ? '<p class="st-sub">' + sub + '</p>' : '') +
       (retry ? '<p><button class="btn-line" id="retry" type="button">Try again</button></p>'
-             : '<p><a class="btn-line" href="/shop">Back to the shop</a></p>') +
-      '</div>';
+             : '<p><a class="btn-line" href="/shop">Back to the shop</a></p>');
     $('grid').innerHTML = '';
     $('grid').setAttribute('aria-busy', 'false');
     $('foot').hidden = true;
@@ -282,7 +266,9 @@
     var visible = S.visibleProducts(state.products, {
       inStockOnly: state.inStockOnly,
       vegOnly: S.vegOnly(),
-      sort: 'featured' // order already comes from the vendor (server-side sort)
+      // Server-sorted pages arrive in order; feed pages sort here, the
+      // way the app sorts a shelf it loaded whole.
+      sort: state.clientSort ? state.sort : 'featured'
     });
     $('grid').setAttribute('aria-busy', 'false');
     if (!visible.length && !state.hasMore) {
@@ -299,7 +285,9 @@
     $('grid').innerHTML = visible.map(function (p) { return U.tile(p); }).join('');
     $('count').textContent = searching && state.total != null
       ? state.total + (state.total === 1 ? ' result' : ' results')
-      : visible.length + ' shown';
+      : state.hasMore
+        ? visible.length + ' so far'
+        : visible.length + (visible.length === 1 ? ' product' : ' products');
     $('foot').hidden = false;
     $('more').disabled = false;
     $('more').hidden = !state.hasMore;

@@ -45,21 +45,36 @@
 
 <a class="skip" href="#main">Skip to receipt</a>
 
-<header class="site-header"><div class="hd-in">
+<header class="site-header">
+  <div class="language">EN ●</div>
+
   <a class="brand" href="/">
-    <span class="brand-sq" aria-hidden="true">RRT</span>
-    <span class="brand-word">Rapid Response<em>Shop</em></span>
+    <div>
+      <div class="brand-name">Rapid<br>Response</div>
+      <span class="brand-sub">RRT Shop</span>
+    </div>
   </a>
+
   <nav class="nav" aria-label="Shop">
     <a href="/shop">Shop</a>
+    <a href="/shop?shelf=pharmacy">Pharmacy</a>
+    <a href="/shop?shelf=dog-food">Dog food</a>
+    <a href="/shop?shelf=cat-food">Cat food</a>
+    <a href="/shop?shelf=grooming">Grooming</a>
     <a href="/shop/saved">Saved</a>
     <a href="/shop/track">Your orders</a>
   </nav>
+
   <a class="bag" href="/shop/cart" aria-label="Basket">
     <span class="bag-icon" aria-hidden="true"></span>
     <span class="bag-count" id="bagCount" hidden>0</span>
   </a>
-</div></header>
+</header>
+<nav class="mobile-nav" aria-label="Shop">
+  <a href="/shop">Shop</a>
+  <a href="/shop/saved">Saved</a>
+  <a href="/shop/track">Your orders</a>
+</nav>
 
 <main class="done-wrap" id="main">
   <div id="receipt" hidden>

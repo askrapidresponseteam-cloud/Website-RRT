@@ -63,6 +63,22 @@
   };
   Vendor.storefrontApiUrl =
     'https://' + Vendor.myshopifyDomain + '/api/' + Vendor.storefrontApiVersion + '/graphql.json';
+  /** The vendor's storefront feeds, reached same-origin: Vercel rewrites
+   *  /pl-api/* to https://www.pets-lifestyle.com/*, which is what lets a
+   *  browser read the EXACT endpoints the app reads (their JSON feeds send
+   *  no CORS headers, so a cross-origin fetch would be blocked; a
+   *  same-origin path has no CORS at all). */
+  Vendor.proxyBase = '/pl-api';
+  Vendor.feedUrl = function (path, query) {
+    var u = Vendor.proxyBase + path;
+    if (query) {
+      var qs = Object.keys(query)
+        .map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(query[k]); })
+        .join('&');
+      if (qs) u += '?' + qs;
+    }
+    return u;
+  };
   Vendor.accountUrl = Vendor.url('/account');
   Vendor.shippingPolicyUrl = Vendor.url('/policies/shipping-policy');
   Vendor.refundPolicyUrl = Vendor.url('/policies/refund-policy');
@@ -560,6 +576,176 @@
     });
   }
 
+  /* ================================================ VENDOR FEED PARSERS */
+  /* The app's parsers, ported line for line (store_models.dart):
+   *  - /collections/{handle}/products.json: prices as decimal strings
+   *    ("245.00"), images as objects with `src`, description in body_html.
+   *  - /products/{handle}.js and /recommendations/products.json: prices as
+   *    integer paise (24500), plus per-variant quantity rules.
+   *  - /search/suggest.json: price_min/max as decimals, partial products. */
+
+  function feedOptionValues(m) {
+    var out = [];
+    ['option1', 'option2', 'option3'].forEach(function (k) {
+      if (m[k] != null && String(m[k]) !== '') out.push(String(m[k]));
+    });
+    return out;
+  }
+
+  function variantFromFeed(m) {
+    var id = paiseFromSubunits(m.id);
+    var price = paiseFromDecimal(m.price);
+    if (id == null || price == null) return null;
+    var featured = m.featured_image;
+    return {
+      id: id,
+      title: String(m.title || ''),
+      optionValues: feedOptionValues(m),
+      pricePaise: price,
+      compareAtPaise: realCompareAt(paiseFromDecimal(m.compare_at_price), price),
+      // Absent means sellable: the feed always sends it, and a missing field
+      // should never quietly turn a whole shelf into "sold out".
+      available: m.available !== false,
+      imageUrl: featured && typeof featured === 'object' ? absoluteImageUrl(featured.src) : null,
+      maxQty: null
+    };
+  }
+
+  function variantFromAjax(m) {
+    var id = paiseFromSubunits(m.id);
+    var price = paiseFromSubunits(m.price);
+    if (id == null || price == null) return null;
+    var featured = m.featured_image;
+    var rule = m.quantity_rule;
+    var max = rule && typeof rule === 'object' ? paiseFromSubunits(rule.max) : null;
+    return {
+      id: id,
+      title: String(m.title || ''),
+      optionValues: feedOptionValues(m),
+      pricePaise: price,
+      compareAtPaise: realCompareAt(paiseFromSubunits(m.compare_at_price), price),
+      available: m.available !== false,
+      imageUrl: featured && typeof featured === 'object' ? absoluteImageUrl(featured.src) : null,
+      maxQty: (max != null && max > 0) ? max : null
+    };
+  }
+
+  function feedTags(raw) {
+    if (Array.isArray(raw)) return raw.map(String);
+    if (typeof raw === 'string' && raw.trim()) {
+      return raw.split(',').map(function (t) { return t.trim(); }).filter(Boolean);
+    }
+    return [];
+  }
+
+  function feedOptions(raw) {
+    if (!Array.isArray(raw)) return [];
+    return raw.map(function (o) {
+      if (o && typeof o === 'object') {
+        return {
+          name: String(o.name || ''),
+          values: Array.isArray(o.values) ? o.values.map(String) : []
+        };
+      }
+      return { name: String(o), values: [] };
+    });
+  }
+
+  function feedImages(raw) {
+    if (!Array.isArray(raw)) return [];
+    return raw.map(function (i) {
+      return absoluteImageUrl(i && typeof i === 'object' ? i.src : i);
+    }).filter(Boolean);
+  }
+
+  /** From /collections/{handle}/products.json. */
+  function productFromFeed(m) {
+    if (!m || typeof m !== 'object') return null;
+    var id = paiseFromSubunits(m.id);
+    var handle = String(m.handle || '');
+    if (id == null || !handle) return null;
+    var variants = (Array.isArray(m.variants) ? m.variants : [])
+      .map(variantFromFeed).filter(Boolean);
+    if (!variants.length) return null;
+    var published = Date.parse(String(m.published_at || m.created_at || ''));
+    return wrapProduct({
+      id: id,
+      handle: handle,
+      title: String(m.title || '').trim(),
+      brand: String(m.vendor || '').trim(),
+      productType: String(m.product_type || ''),
+      tags: feedTags(m.tags),
+      descriptionHtml: String(m.body_html || ''),
+      images: feedImages(m.images),
+      options: feedOptions(m.options),
+      variants: variants,
+      partial: false,
+      createdAtMs: isNaN(published) ? null : published
+    });
+  }
+
+  /** From /products/{handle}.js or /recommendations/products.json. */
+  function productFromAjax(m) {
+    if (!m || typeof m !== 'object') return null;
+    var id = paiseFromSubunits(m.id);
+    var handle = String(m.handle || '');
+    if (id == null || !handle) return null;
+    var variants = (Array.isArray(m.variants) ? m.variants : [])
+      .map(variantFromAjax).filter(Boolean);
+    if (!variants.length) return null;
+    var images = feedImages(m.images);
+    if (!images.length && m.featured_image != null) {
+      var f = absoluteImageUrl(m.featured_image);
+      if (f) images.push(f);
+    }
+    return wrapProduct({
+      id: id,
+      handle: handle,
+      title: String(m.title || '').trim(),
+      brand: String(m.vendor || '').trim(),
+      productType: String(m.type || m.product_type || ''),
+      tags: feedTags(m.tags),
+      descriptionHtml: String(m.description || m.body_html || ''),
+      images: images,
+      options: feedOptions(m.options),
+      variants: variants,
+      partial: false,
+      createdAtMs: null
+    });
+  }
+
+  /** From a /search/suggest.json product: a partial tile. */
+  function productFromSuggest(m) {
+    if (!m || typeof m !== 'object') return null;
+    var id = paiseFromSubunits(m.id);
+    var handle = String(m.handle || '');
+    if (id == null || !handle) return null;
+    var min = paiseFromDecimal(m.price_min);
+    if (min == null) min = paiseFromDecimal(m.price);
+    if (min == null) return null;
+    var featured = m.featured_image != null ? m.featured_image : m.image;
+    var image = absoluteImageUrl(featured && typeof featured === 'object' ? featured.url : featured);
+    return wrapProduct({
+      id: id,
+      handle: handle,
+      title: decodeHtmlEntities(String(m.title || '').trim()),
+      brand: String(m.vendor || '').trim(),
+      productType: String(m.type || ''),
+      tags: feedTags(m.tags),
+      descriptionHtml: '',
+      images: image ? [image] : [],
+      options: [],
+      variants: previewVariants(
+        min,
+        paiseFromDecimal(m.price_max),
+        paiseFromDecimal(m.compare_at_price_max),
+        m.available !== false
+      ),
+      partial: true,
+      createdAtMs: null
+    });
+  }
+
   /* ============================================== VISIBLE PRODUCTS (BROWSE) */
 
   var SORTS = ['featured', 'newest', 'priceLow', 'priceHigh'];
@@ -693,6 +879,65 @@
 
   var fetchImpl = function () { return global.fetch.apply(global, arguments); };
 
+  /** GET/POST [url], expect JSON, with the app's timeout and error copy. */
+  function fetchJson(url, init) {
+    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = setTimeout(function () { if (controller) controller.abort(); }, TIMEOUT_MS);
+    init = init || {};
+    if (controller) init.signal = controller.signal;
+    return fetchImpl(url, init).then(function (res) {
+      clearTimeout(timer);
+      if (res.status === 404) throw StorefrontError('Not found', 404);
+      if (res.status === 429 || res.status === 430) {
+        throw StorefrontError(Vendor.name + ' is busy right now. Try again in a moment.', res.status);
+      }
+      if (res.status !== 200) {
+        throw StorefrontError(Vendor.name + ' could not load this right now (' + res.status + ').', res.status);
+      }
+      return res.json().catch(function () {
+        // Their storefront answered with a page, not data — usually a bot
+        // challenge or maintenance screen in front of the JSON.
+        throw StorefrontError(Vendor.name + ' sent something unexpected. Try again shortly.');
+      });
+    }).catch(function (e) {
+      clearTimeout(timer);
+      if (e && e.storefront) throw e;
+      if (e && e.name === 'AbortError') {
+        throw StorefrontError(Vendor.name + ' is taking too long to answer. Try again.');
+      }
+      throw StorefrontError('Could not reach ' + Vendor.name + '. Check your internet and try again.');
+    });
+  }
+
+  /** GET a vendor feed through the same-origin proxy, with the 3-minute
+   *  cache unless the answer decides money ([fresh]). */
+  function feedGet(path, query, opts) {
+    opts = opts || {};
+    var url = Vendor.feedUrl(path, query);
+    if (!opts.fresh) {
+      var hit = cacheGet('feed|' + url);
+      if (hit !== undefined) return Promise.resolve(hit);
+    }
+    return fetchJson(url, { headers: { 'Accept': 'application/json' } }).then(function (body) {
+      cacheSet('feed|' + url, body);
+      return body;
+    });
+  }
+
+  /* Which door listings use this session: the Storefront API ('sf', sorted
+   * server-side) until it misbehaves, then the vendor's feeds ('feeds') —
+   * the app's own endpoints, which are also the door of last resort for
+   * every other read. Found necessary in production on 19 Sep 2026, when
+   * the API answered the catalogue with an empty collection. */
+  var TRANSPORT_KEY = 'rrt_sf_transport';
+  function transport() {
+    try { return session.getItem(TRANSPORT_KEY) === 'feeds' ? 'feeds' : 'sf'; }
+    catch (e) { return 'sf'; }
+  }
+  function useFeeds() {
+    try { session.setItem(TRANSPORT_KEY, 'feeds'); } catch (e) { /* ignore */ }
+  }
+
   function gql(query, variables, opts) {
     opts = opts || {};
     var cacheKey = opts.cacheKey || null;
@@ -810,17 +1055,91 @@
         products: (conn.nodes || []).map(productFromGraphTile).filter(Boolean),
         hasMore: info.hasNextPage === true,
         endCursor: info.endCursor || null,
-        missing: false
+        missing: false,
+        clientSort: false
       };
     });
   }
 
+  /** A listing straight from the vendor's feed — the app's own read.
+   *  The catalogue pages 24 at a time (endCursor "fp:N"); an aisle is
+   *  loaded whole (up to 1000 items) exactly as the app does when it
+   *  sorts, so client-side sort is complete, not partial. */
+  function feedCollectionPage(handle, opts) {
+    opts = opts || {};
+    var isCatalog = handle === Vendor.catalogHandle;
+    var m = /^fp:(\d+)$/.exec(String(opts.after || ''));
+    var pageNum = m ? parseInt(m[1], 10) : 1;
+
+    function onePage(n, limit) {
+      return feedGet('/collections/' + encodeURIComponent(handle) + '/products.json',
+        { limit: String(limit), page: String(n) }, { fresh: opts.fresh })
+        .then(function (body) {
+          var raw = body && Array.isArray(body.products) ? body.products : [];
+          return { raw: raw, products: raw.map(productFromFeed).filter(Boolean) };
+        });
+    }
+
+    if (isCatalog) {
+      return onePage(pageNum, PAGE_SIZE).then(function (r) {
+        return {
+          products: r.products,
+          hasMore: r.raw.length >= PAGE_SIZE,
+          endCursor: 'fp:' + (pageNum + 1),
+          missing: false,
+          clientSort: true
+        };
+      }).catch(feedMissing);
+    }
+
+    var all = [];
+    function loop(n) {
+      return onePage(n, 250).then(function (r) {
+        all = all.concat(r.products);
+        if (r.raw.length >= 250 && n < 4) return loop(n + 1);
+        return { products: all, hasMore: false, endCursor: null, missing: false, clientSort: true };
+      });
+    }
+    return loop(1).catch(feedMissing);
+  }
+
+  function feedMissing(e) {
+    if (e && e.status === 404) {
+      return { products: [], hasMore: false, endCursor: null, missing: true, clientSort: true };
+    }
+    throw e;
+  }
+
   /** One page of a vendor collection. Resolves to
-   *  { products, hasMore, endCursor, missing } — missing true when the
-   *  vendor has removed the collection (that aisle shows an empty state).
-   *  The catalogue handle routes to the top-level products read above. */
+   *  { products, hasMore, endCursor, missing, clientSort } — missing true
+   *  when the vendor has removed the collection. The Storefront API answers
+   *  first (its sort is server-side); the vendor's own feeds — the app's
+   *  endpoints, same-origin via the proxy — take over the moment the API
+   *  errors or hands the catalogue back empty, and keep the session. */
   function collectionPage(handle, opts) {
-    if (handle === Vendor.catalogHandle) return catalogPage(opts);
+    opts = opts || {};
+    if (transport() === 'feeds' || /^fp:/.test(String(opts.after || ''))) {
+      return feedCollectionPage(handle, opts);
+    }
+    var viaSf = handle === Vendor.catalogHandle
+      ? catalogPage(opts)
+      : sfCollectionPage(handle, opts);
+    return viaSf.then(function (page) {
+      if (!opts.after && !page.missing && !page.products.length) {
+        // The API's answer contradicts the live store (their storefront
+        // lists thousands of products). Trust the store, not the API.
+        useFeeds();
+        return feedCollectionPage(handle, opts);
+      }
+      return page;
+    }).catch(function (e) {
+      if (e && e.status === 404) throw e;
+      useFeeds();
+      return feedCollectionPage(handle, opts);
+    });
+  }
+
+  function sfCollectionPage(handle, opts) {
     opts = opts || {};
     var sort = SORT_KEYS[opts.sort || 'featured'] || SORT_KEYS.featured;
     var query =
@@ -847,7 +1166,8 @@
         products: products,
         hasMore: info.hasNextPage === true,
         endCursor: info.endCursor || null,
-        missing: false
+        missing: false,
+        clientSort: false
       };
     });
   }
@@ -871,9 +1191,21 @@
       '}';
   }
 
-  /** The live product with every variant. Null when the vendor has removed
-   *  it. `fresh` skips the cache — used when the answer decides money. */
+  /** The live product with every variant, from /products/{handle}.js —
+   *  the exact read the app makes, quantity rules and tags included. Null
+   *  when the vendor has removed it. `fresh` skips the cache — used when
+   *  the answer decides money. The Storefront API is the fallback door. */
   function product(handle, opts) {
+    opts = opts || {};
+    return feedGet('/products/' + encodeURIComponent(handle) + '.js', null, { fresh: opts.fresh })
+      .then(function (body) { return productFromAjax(body); })
+      .catch(function (e) {
+        if (e && e.status === 404) return null;
+        return sfProduct(handle, opts);
+      });
+  }
+
+  function sfProduct(handle, opts) {
     opts = opts || {};
     var lean = !!caps().leanProduct;
     var cacheKey = 'prod|' + handle;
@@ -896,12 +1228,33 @@
 
   /* ================================================================ SEARCH */
 
-  /** Search-as-you-type: the vendor's own suggestions — matching products
-   *  and matching collections (so "royal canin" offers their whole Royal
-   *  Canin shelf, not just ten suggestions). */
+  /** Search-as-you-type: the vendor's own suggest.json — the app's exact
+   *  read — with matching products and matching collections (so "royal
+   *  canin" offers their whole Royal Canin shelf, not just ten
+   *  suggestions). The API's predictive search is the fallback. */
   function suggest(query) {
     var q = String(query || '').trim();
     if (q.length < 2) return Promise.resolve({ query: q, products: [], collections: [] });
+    return feedGet('/search/suggest.json', {
+      'q': q,
+      'resources[type]': 'product,collection',
+      'resources[limit]': '10',
+      'resources[options][unavailable_products]': 'last'
+    }).then(function (body) {
+      var results = (body && body.resources && body.resources.results) || {};
+      return {
+        query: q,
+        products: (results.products || []).map(productFromSuggest).filter(Boolean),
+        collections: (results.collections || [])
+          .map(function (c) {
+            return { handle: String(c.handle || ''), title: decodeHtmlEntities(String(c.title || '')) };
+          })
+          .filter(function (c) { return c.handle && c.title; })
+      };
+    }).catch(function () { return sfSuggest(q); });
+  }
+
+  function sfSuggest(q) {
     var g =
       'query RrtSuggest($q: String!) {' +
       ' predictiveSearch(query: $q, limit: 10, limitScope: EACH,' +
@@ -965,12 +1318,32 @@
           endCursor: info.endCursor || null,
           total: typeof search.totalCount === 'number' ? search.totalCount : null
         };
+      })
+      .catch(function (e) {
+        if (opts.after) throw e; // deeper pages have no feed equivalent
+        // Ten suggestions beat an error page.
+        return suggest(q).then(function (r) {
+          if (!r.products.length) throw e;
+          return { query: q, products: r.products, hasMore: false, endCursor: null, total: null };
+        });
       });
   }
 
-  /** The vendor's related products. Never rejects: a product page without
-   *  recommendations is still a complete product page. */
+  /** The vendor's related products, from their own recommendations feed —
+   *  the app's read — with the API as fallback. Never rejects: a product
+   *  page without recommendations is still a complete product page. */
   function recommendations(productId) {
+    return feedGet('/recommendations/products.json', {
+      product_id: String(productId), limit: '8', intent: 'related'
+    }).then(function (body) {
+      var raw = (body && Array.isArray(body.products)) ? body.products : [];
+      return raw.map(productFromAjax).filter(Boolean)
+        .filter(function (p) { return p.id !== productId; })
+        .slice(0, 8);
+    }).catch(function () { return sfRecommendations(productId); });
+  }
+
+  function sfRecommendations(productId) {
     var g =
       'query RrtRecs($id: ID!) {' +
       ' productRecommendations(productId: $id, intent: RELATED) { ' + TILE_FIELDS + ' }' +
@@ -1432,7 +1805,12 @@
     productFromGraphTile: productFromGraphTile,
     productFromGraphFull: productFromGraphFull,
     productFromSnapshot: productFromSnapshot,
+    productFromFeed: productFromFeed,
+    productFromAjax: productFromAjax,
+    productFromSuggest: productFromSuggest,
     wrapProduct: wrapProduct,
+    transport: transport,
+    resetTransport: function () { try { session.removeItem(TRANSPORT_KEY); } catch (e) { /* ignore */ } },
     setFetch: function (fn) { fetchImpl = fn; },
     stores: { local: local, session: session }
   };

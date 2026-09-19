@@ -191,3 +191,33 @@ on 17 Sep 2026, and the search query is the app's known-good one verbatim):
    attribution chain, proven end to end.
 6. Come back, answer "I placed my order", and see the receipt under
    `/shop/track`.
+
+## Transport (updated 19 Sep 2026)
+
+Production showed the risk of leaning on the Storefront API alone: tokenless
+GraphQL answered the catalogue with an empty collection while the live store
+listed 10,000+ products. The web now reads the vendor the way the app does.
+
+- `vercel.json` rewrites `/pl-api/*` to `https://www.pets-lifestyle.com/*`,
+  giving the browser a same-origin door to the app's exact endpoints (their
+  feeds send no CORS headers, so this proxy is what makes them readable).
+- Primary reads are the app's: `/products/{handle}.js` (product + cart
+  re-check), `/search/suggest.json` (search-as-you-type), and
+  `/recommendations/products.json`, each with the Storefront API as fallback.
+- Listings ask the Storefront API first (its sort is server-side) and switch
+  to `/collections/{handle}/products.json` for the session the moment the
+  API errors or returns an empty catalogue page. On feeds, an aisle loads
+  whole (up to 1000 items) so client-side sort is complete — the app's own
+  behaviour — and the catalogue pages 24 at a time on a `fp:N` cursor.
+
+If pets-lifestyle.com shows it, /shop shows it.
+
+The same deploy fixed the shop's routes outright. With `cleanUrls` on, Vercel
+strips `.html` from the build output before rewrites run, so every rewrite
+destination naming a file (`/cart.html`) resolved to nothing: `/shop/cart`,
+`/shop/p/{handle}` and every aisle URL answered Vercel's 404 — the first
+routes on this site that ever actually needed a rewrite, since `/shop` itself
+is served by `cleanUrls` directly. Destinations are now extensionless
+(`/cart`), the shape Vercel's configuration docs require alongside
+`cleanUrls`. The `/pl-api/*` proxy is unaffected either way: external
+destinations bypass the static output entirely.

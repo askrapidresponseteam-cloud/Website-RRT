@@ -125,9 +125,9 @@ for (const file of ['assets/shop.css', ...SHOP_PAGES]) {
  * ------------------------------------------------------------------------- */
 
 const GEOMETRY = [
-  [/height:\s*72px/, 'sticky header height 72px'],
-  [/position:\s*sticky/, 'sticky header'],
-  [/--w:\s*85%/, '85% content width token'],
+  [/height:\s*112px/, 'header height 112px'],
+  [/grid-template-columns:\s*72px 248px 1fr 72px/, 'header column grid'],
+  [/width:\s*85%/, '85% content width'],
   [/grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/, 'four-column product grid'],
   [/column-gap:\s*26px/, '26px column gutter'],
   [/row-gap:\s*48px/, '48px row gutter'],

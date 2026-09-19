@@ -151,6 +151,64 @@ ok(!full.isValueAvailable(0, '3 kg', ['3 kg']), 'full: sold-out value struck');
 eq(full.defaultVariant.id, 71, 'full: default variant is first available');
 eq(full.cheapestVariant.id, 71, 'full: cheapest counts only in-stock variants');
 
+/* --------------------------------------- vendor feed parsers (app parity) */
+
+// /collections/{handle}/products.json — decimal-string prices, body_html.
+const feedProd = S.__internal.productFromFeed({
+  id: 7, handle: 'wormer', title: ' Wormer ', vendor: 'Acme',
+  product_type: 'Pharmacy', tags: 'dogs, Prescription only',
+  body_html: '<p>Broad spectrum.</p>',
+  published_at: '2026-02-01T00:00:00Z',
+  images: [{ src: '//cdn.shopify.com/1.png' }, { src: '/cdn/shop/2.png' }],
+  options: [{ name: 'Size', values: ['1 kg', '3 kg'] }],
+  variants: [
+    { id: 71, title: '1 kg', option1: '1 kg', price: '117.19', compare_at_price: '117.19', available: true,
+      featured_image: { src: '//cdn.shopify.com/v1.png' } },
+    { id: 72, title: '3 kg', option1: '3 kg', price: '300.00', compare_at_price: '350.00', available: false }
+  ]
+});
+eq(feedProd.title, 'Wormer', 'feed: title trimmed');
+eq(feedProd.variants[0].pricePaise, 11719, 'feed: decimal string parsed to exact paise');
+eq(feedProd.variants[0].compareAtPaise, null, 'feed: compare-at at price is noise');
+eq(feedProd.variants[1].compareAtPaise, 35000, 'feed: real compare-at kept');
+eq(feedProd.tags, ['dogs', 'Prescription only'], 'feed: CSV tags split');
+ok(feedProd.isRx, 'feed: rx read from the vendor tags');
+eq(feedProd.images[1], 'https://www.pets-lifestyle.com/cdn/shop/2.png', 'feed: site-relative image absolutised');
+ok(feedProd.createdAtMs > 0, 'feed: published_at kept for newest sort');
+ok(!feedProd.partial, 'feed products are complete');
+eq(S.__internal.productFromFeed({ id: 9, handle: 'x', variants: [] }), null,
+  'feed: a product with no priced variant cannot be sold');
+
+// /products/{handle}.js — integer paise, quantity rules, string images.
+const ajaxProd = S.__internal.productFromAjax({
+  id: 7, handle: 'wormer', title: 'Wormer', vendor: 'Acme', type: 'Pharmacy',
+  tags: ['dogs'], description: '<p>Broad spectrum.</p>',
+  images: ['//cdn.shopify.com/1.png'],
+  options: ['Size'],
+  variants: [
+    { id: 71, title: '1 kg', option1: '1 kg', price: 11719, compare_at_price: 11719, available: true },
+    { id: 72, title: '3 kg', option1: '3 kg', price: 30000, compare_at_price: 35000, available: false,
+      quantity_rule: { max: 2, min: 1, increment: 1 } }
+  ]
+});
+eq(ajaxProd.variants[0].pricePaise, 11719, 'ajax: integer paise kept as-is');
+eq(ajaxProd.variants[1].maxQty, 2, 'ajax: vendor quantity rule respected');
+eq(ajaxProd.productType, 'Pharmacy', 'ajax: `type` field read');
+eq(ajaxProd.valuesForOption(0), ['1 kg', '3 kg'], 'ajax: values read off variants for bare option names');
+eq(ajaxProd.descriptionHtml, '<p>Broad spectrum.</p>', 'ajax: description field read');
+
+// /search/suggest.json — partial tiles with a price range.
+const sugProd = S.__internal.productFromSuggest({
+  id: 5, handle: 'gravy', title: 'Gravy &amp; Chunks', vendor: 'JerHigh',
+  price_min: '70.00', price_max: '3072.00', compare_at_price_max: '90.00',
+  available: true, featured_image: { url: '//cdn.shopify.com/s.png' }
+});
+eq(sugProd.title, 'Gravy & Chunks', 'suggest: entities decoded');
+eq(sugProd.cheapestVariant.pricePaise, 7000, 'suggest: from-price is price_min');
+eq(sugProd.priceVaries, true, 'suggest: range means price varies');
+eq(sugProd.cheapestVariant.compareAtPaise, null, 'suggest: no strikethrough against a range');
+ok(sugProd.partial, 'suggest products are partial');
+
 /* ----------------------------------------------------------- browse rules */
 
 function tileWith(price, opts) {
@@ -228,24 +286,42 @@ eq(S.cart().count, 0, 'clear empties the cart');
 
 /* ------------------------------------------- revalidation (stubbed vendor) */
 
-function gqlResponse(data) {
+function jsonRes(body, status) {
   return Promise.resolve({
-    status: 200,
-    json: () => Promise.resolve({ data })
+    status: status || 200,
+    json: () => Promise.resolve(body)
   });
 }
 
+function gqlResponse(data) { return jsonRes({ data }); }
+
+/** Answer like the vendor: feed URLs get feed bodies, everything else the
+ *  Storefront API shape. Cart re-checks read /products/{handle}.js — the
+ *  same read the app makes before money moves. */
+function vendorStub(routes) {
+  return function (url) {
+    for (const prefix of Object.keys(routes)) {
+      if (String(url).indexOf(prefix) === 0) return routes[prefix](String(url));
+    }
+    throw new Error('unexpected fetch in test: ' + url);
+  };
+}
+
 // The vendor raised 1 kg to ₹120.00 and sold out of 3 kg since the snapshot.
-const movedNode = JSON.parse(JSON.stringify(fullNode));
-movedNode.variants.nodes[0].price = { amount: '120.00' };
-movedNode.variants.nodes[1].availableForSale = false;
+const movedAjax = {
+  id: 7, handle: 'wormer', title: 'Wormer', vendor: 'Acme', type: 'Pharmacy',
+  variants: [
+    { id: 71, title: '1 kg', option1: '1 kg', price: 12000, available: true },
+    { id: 72, title: '3 kg', option1: '3 kg', price: 30000, compare_at_price: 35000, available: false }
+  ]
+};
 
 S.clearCart();
 S.add(full, full.variants[0], 1);
 S.add(Object.assign({}, full, { variants: [Object.assign({}, full.variants[1], { available: true })] }),
   Object.assign({}, full.variants[1], { available: true }), 1);
 
-S.__internal.setFetch(() => gqlResponse({ product: movedNode }));
+S.__internal.setFetch(vendorStub({ '/pl-api/products/wormer.js': () => jsonRes(movedAjax) }));
 
 S.revalidateCart().then((r) => {
   const types = r.changes.map((c) => c.type).sort();
@@ -257,8 +333,8 @@ S.revalidateCart().then((r) => {
   eq(r.lines[0].previousPricePaise, 11719, 'previous price kept so the cart can say so');
   eq(r.lines[1].available, false, 'sold-out line marked, not deleted');
 
-  // Vendor removed the product entirely.
-  S.__internal.setFetch(() => gqlResponse({ product: null }));
+  // Vendor removed the product entirely: their feed answers 404.
+  S.__internal.setFetch(vendorStub({ '/pl-api/products/wormer.js': () => jsonRes({}, 404) }));
   return S.revalidateCart();
 }).then((r) => {
   eq(r.changes.filter((c) => c.type === 'gone').length, 1,
@@ -332,6 +408,87 @@ S.revalidateCart().then((r) => {
       'a real aisle still reads its collection');
     ok(q.variables.sortKey === 'COLLECTION_DEFAULT',
       'aisle featured order is the vendor\u2019s own collection order');
+  });
+}).then(function () {
+
+  /* -------------------------------------- feed fallback (app's endpoints)
+   * When the Storefront API errors — or answers the catalogue with an
+   * empty page while the live store lists thousands of products — the shop
+   * switches to the vendor's own storefront feeds through the same-origin
+   * /pl-api proxy: the byte-identical endpoints the app reads. If
+   * pets-lifestyle.com shows it, the shop shows it. */
+
+  var urls = [];
+  var feedItem = {
+    id: 7, handle: 'wormer', title: 'Wormer', vendor: 'Acme',
+    variants: [{ id: 71, title: 'Default Title', price: '158.00', available: true }]
+  };
+  S.__internal.resetTransport();
+  S.clearResponseCache();
+  S.__internal.setFetch(function (url) {
+    urls.push(String(url));
+    if (String(url).indexOf('/pl-api/collections/') === 0) {
+      return jsonRes({ products: [feedItem] });
+    }
+    // The API answers, but with nothing in it.
+    return gqlResponse({
+      products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [] },
+      collection: { products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [] } }
+    });
+  });
+
+  eq(S.__internal.transport(), 'sf', 'the API answers first');
+  return S.collectionPage('all', { sort: 'featured' }).then(function (page) {
+    eq(page.products.length, 1, 'an empty API catalogue falls through to the vendor feed');
+    eq(page.products[0].cheapestVariant.pricePaise, 15800, 'feed tile priced from the decimal string');
+    ok(page.clientSort, 'feed pages sort on the client');
+    eq(page.endCursor, 'fp:2', 'feed catalogue pages by feed cursor');
+    ok(urls.some(function (u) {
+      return u.indexOf('/pl-api/collections/all/products.json') === 0 &&
+        u.indexOf('limit=24') !== -1 && u.indexOf('page=1') !== -1;
+    }), 'catalogue feed read is the app\u2019s: 24 a page');
+    eq(S.__internal.transport(), 'feeds', 'and the feeds keep the session');
+
+    urls.length = 0;
+    return S.collectionPage('all', { after: 'fp:2' });
+  }).then(function () {
+    ok(urls.length === 1 && urls[0].indexOf('page=2') !== -1 &&
+      urls[0].indexOf('/pl-api/') === 0,
+      'the feed cursor continues on the feed, no API retry');
+
+    urls.length = 0;
+    return S.collectionPage('dog-treats', {});
+  }).then(function (page) {
+    ok(urls[0].indexOf('/pl-api/collections/dog-treats/products.json') === 0 &&
+      urls[0].indexOf('limit=250') !== -1,
+      'an aisle on feeds loads whole, like the app\u2019s sort');
+    eq(page.hasMore, false, 'a whole aisle has no more pages');
+
+    // A removed aisle is an empty shelf, not an error page.
+    S.__internal.setFetch(function () { return jsonRes({}, 404); });
+    return S.collectionPage('gone-aisle', {});
+  }).then(function (page) {
+    ok(page.missing, 'a 404 feed marks the aisle missing');
+
+    // Search-as-you-type is the vendor's own suggest.json, app parameters.
+    urls.length = 0;
+    S.__internal.setFetch(function (url) {
+      urls.push(String(url));
+      return jsonRes({ resources: { results: {
+        products: [{ id: 5, handle: 'gravy', title: 'Gravy', price_min: '70.00', available: true }],
+        collections: [{ handle: 'jerhigh', title: 'JerHigh' }]
+      } } });
+    });
+    S.clearResponseCache();
+    return S.suggest('gravy');
+  }).then(function (r) {
+    ok(urls[0].indexOf('/pl-api/search/suggest.json') === 0 &&
+      urls[0].indexOf('resources%5Blimit%5D=10') !== -1 &&
+      urls[0].indexOf('unavailable_products%5D=last') !== -1,
+      'suggest is the vendor\u2019s suggest.json with the app\u2019s parameters');
+    eq(r.products[0].cheapestVariant.pricePaise, 7000, 'suggested product priced');
+    eq(r.collections[0].handle, 'jerhigh', 'matching collections offered');
+    S.__internal.resetTransport();
   });
 }).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
