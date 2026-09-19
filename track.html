@@ -42,7 +42,7 @@
 .o-line { display: flex; gap: 12px; align-items: center; padding: 10px 0;
           border-bottom: 1px solid var(--border); font-size: 13px; }
 .o-line:last-of-type { border-bottom: 0; }
-.o-line img { width: 44px; height: 44px; object-fit: contain; background: var(--bg-card);
+.o-line img { width: 44px; height: 44px; object-fit: contain; background: #ffffff; padding: 2px;
               border: 1px solid var(--border); }
 .o-line .q { color: var(--text-low); }
 .o-line .amt { margin-left: auto; font-family: var(--mono); font-size: 12.5px; }
@@ -65,21 +65,21 @@
 
 <a class="skip" href="#main">Skip to orders</a>
 
-<header class="site-header">
-  <button class="language" type="button" aria-label="Change language">EN ●</button>
-  <a class="brand" href="/"><div>
-    <div class="brand-name">Rapid<br>Response</div>
-    <span class="brand-sub">RRT SHOP</span>
-  </div></a>
+<header class="site-header"><div class="hd-in">
+  <a class="brand" href="/">
+    <span class="brand-sq" aria-hidden="true">RRT</span>
+    <span class="brand-word">Rapid Response<em>Shop</em></span>
+  </a>
   <nav class="nav" aria-label="Shop">
     <a href="/shop">Shop</a>
     <a href="/shop/saved">Saved</a>
     <a href="/shop/track" aria-current="page">Your orders</a>
   </nav>
   <a class="bag" href="/shop/cart" aria-label="Basket">
-    <div class="bag-icon"></div><span class="bag-count" id="bagCount" hidden>0</span>
+    <span class="bag-icon" aria-hidden="true"></span>
+    <span class="bag-count" id="bagCount" hidden>0</span>
   </a>
-</header>
+</div></header>
 
 <main class="trk" id="main">
   <h1>Your orders</h1>

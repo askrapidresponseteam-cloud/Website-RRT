@@ -775,10 +775,52 @@
     priceHigh: { key: 'PRICE', reverse: true }
   };
 
+  /* The whole catalogue is NOT read through the "all" collection handle.
+   * On the storefront, /collections/all is a virtual collection Shopify
+   * invents — which is what the app's JSON feed reads — but through the
+   * Storefront API that handle resolves to whatever real collection the
+   * merchant made with that name. On this store that answered with an empty
+   * collection, and the shop's landing grid shipped blank (found in
+   * production, 19 Sep 2026). The API's canonical whole-catalogue read is
+   * the top-level products connection, which cannot be shadowed. */
+  var CATALOG_SORT_KEYS = {
+    featured: { key: 'BEST_SELLING', reverse: false },
+    newest: { key: 'CREATED_AT', reverse: true },
+    priceLow: { key: 'PRICE', reverse: false },
+    priceHigh: { key: 'PRICE', reverse: true }
+  };
+
+  function catalogPage(opts) {
+    opts = opts || {};
+    var sort = CATALOG_SORT_KEYS[opts.sort || 'featured'] || CATALOG_SORT_KEYS.featured;
+    var query =
+      'query RrtCatalog($after: String, $sortKey: ProductSortKeys, $reverse: Boolean) {' +
+      ' products(first: ' + PAGE_SIZE + ', after: $after, sortKey: $sortKey, reverse: $reverse) {' +
+      '  pageInfo { hasNextPage endCursor }' +
+      '  nodes { ' + TILE_FIELDS + ' }' +
+      ' }' +
+      '}';
+    var cacheKey = 'cat|' + (opts.sort || 'featured') + '|' + (opts.after || '');
+    return gql(query, {
+      after: opts.after || null, sortKey: sort.key, reverse: sort.reverse
+    }, { cacheKey: cacheKey, fresh: opts.fresh }).then(function (data) {
+      var conn = (data && data.products) || {};
+      var info = conn.pageInfo || {};
+      return {
+        products: (conn.nodes || []).map(productFromGraphTile).filter(Boolean),
+        hasMore: info.hasNextPage === true,
+        endCursor: info.endCursor || null,
+        missing: false
+      };
+    });
+  }
+
   /** One page of a vendor collection. Resolves to
    *  { products, hasMore, endCursor, missing } — missing true when the
-   *  vendor has removed the collection (that aisle shows an empty state). */
+   *  vendor has removed the collection (that aisle shows an empty state).
+   *  The catalogue handle routes to the top-level products read above. */
   function collectionPage(handle, opts) {
+    if (handle === Vendor.catalogHandle) return catalogPage(opts);
     opts = opts || {};
     var sort = SORT_KEYS[opts.sort || 'featured'] || SORT_KEYS.featured;
     var query =

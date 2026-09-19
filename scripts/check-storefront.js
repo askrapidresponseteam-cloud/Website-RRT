@@ -125,9 +125,9 @@ for (const file of ['assets/shop.css', ...SHOP_PAGES]) {
  * ------------------------------------------------------------------------- */
 
 const GEOMETRY = [
-  [/height:\s*112px/, 'header height 112px'],
-  [/grid-template-columns:\s*72px 248px 1fr 72px/, 'header column grid'],
-  [/width:\s*85%/, '85% content width'],
+  [/height:\s*72px/, 'sticky header height 72px'],
+  [/position:\s*sticky/, 'sticky header'],
+  [/--w:\s*85%/, '85% content width token'],
   [/grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/, 'four-column product grid'],
   [/column-gap:\s*26px/, '26px column gutter'],
   [/row-gap:\s*48px/, '48px row gutter'],
@@ -142,10 +142,10 @@ const GEOMETRY = [
 const cssOnly = fs.readFileSync(path.join(WEB, 'assets', 'shop.css'), 'utf8');
 const lost = GEOMETRY.filter(([re]) => !re.test(cssOnly)).map(([, name]) => name);
 if (lost.length) {
-  console.log(`  FAIL  reference layout drifted -> missing: ${lost.join('; ')}`);
+  console.log(`  FAIL  layout contract drifted -> missing: ${lost.join('; ')}`);
   failed++;
 } else {
-  console.log(`  ok    reference layout intact (${GEOMETRY.length} geometry checks)`);
+  console.log(`  ok    layout contract intact (${GEOMETRY.length} geometry checks)`);
 }
 
 console.log(failed ? `\n${failed} check(s) failed.\n` : '\nAll storefront checks pass.\n');

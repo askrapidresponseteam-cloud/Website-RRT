@@ -298,6 +298,42 @@ S.revalidateCart().then((r) => {
   eq(S.receipts().length, 0, 'delete-my-data clears receipts');
   eq(S.saved().length, 0, 'delete-my-data clears saved items');
 
+  /* --------------------------------------------- catalogue transport
+   * Regression: reading the whole range through collection(handle:"all")
+   * shipped an EMPTY landing grid in production (19 Sep 2026) — through
+   * the Storefront API that handle resolves to the merchant's own "all"
+   * collection, not Shopify's virtual everything-collection. The catalogue
+   * must therefore use the top-level products connection. */
+  var captured = [];
+  S.__internal.setFetch(function (url, init) {
+    captured.push(JSON.parse(init.body));
+    return gqlResponse({
+      products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [tileNode] },
+      collection: { products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [tileNode] } }
+    });
+  });
+  S.clearResponseCache();
+  return S.collectionPage('all', { sort: 'featured' }).then(function (page) {
+    var q = captured[captured.length - 1];
+    ok(q.query.indexOf('products(first:') !== -1 && q.query.indexOf('collection(handle') === -1,
+      'catalogue reads the top-level products connection, never a collection handle');
+    ok(q.variables.sortKey === 'BEST_SELLING',
+      'catalogue featured order is the store\u2019s best sellers');
+    eq(page.products.length, 1, 'catalogue page normalises tiles');
+    return S.collectionPage('all', { sort: 'newest' });
+  }).then(function () {
+    var q = captured[captured.length - 1];
+    ok(q.variables.sortKey === 'CREATED_AT' && q.variables.reverse === true,
+      'catalogue newest maps to CREATED_AT reversed');
+    return S.collectionPage('dog-treats', { sort: 'featured' });
+  }).then(function () {
+    var q = captured[captured.length - 1];
+    ok(q.query.indexOf('collection(handle') !== -1,
+      'a real aisle still reads its collection');
+    ok(q.variables.sortKey === 'COLLECTION_DEFAULT',
+      'aisle featured order is the vendor\u2019s own collection order');
+  });
+}).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
   process.exit(failed ? 1 : 0);
 }).catch((e) => {

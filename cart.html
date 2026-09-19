@@ -39,7 +39,7 @@
 .line { display: grid; grid-template-columns: 84px 1fr auto; gap: 16px;
         padding: 18px 0; border-bottom: 1px solid var(--border); align-items: center; }
 .line.dead { opacity: .55; }
-.line img { width: 84px; height: 84px; object-fit: contain; background: var(--bg-card);
+.line img { width: 84px; height: 84px; object-fit: contain; background: #ffffff; padding: 4px;
             border: 1px solid var(--border); }
 .line .t a { color: var(--text); text-decoration: none; font-size: 14px; }
 .line .t a:hover { color: var(--accent); }
@@ -82,21 +82,21 @@
 
 <a class="skip" href="#main">Skip to bag</a>
 
-<header class="site-header">
-  <button class="language" type="button" aria-label="Change language">EN ●</button>
-  <a class="brand" href="/"><div>
-    <div class="brand-name">Rapid<br>Response</div>
-    <span class="brand-sub">RRT SHOP</span>
-  </div></a>
+<header class="site-header"><div class="hd-in">
+  <a class="brand" href="/">
+    <span class="brand-sq" aria-hidden="true">RRT</span>
+    <span class="brand-word">Rapid Response<em>Shop</em></span>
+  </a>
   <nav class="nav" aria-label="Shop">
     <a href="/shop">Shop</a>
     <a href="/shop/saved">Saved</a>
     <a href="/shop/track">Your orders</a>
   </nav>
   <a class="bag" href="/shop/cart" aria-label="Basket" aria-current="page">
-    <div class="bag-icon"></div><span class="bag-count" id="bagCount" hidden>0</span>
+    <span class="bag-icon" aria-hidden="true"></span>
+    <span class="bag-count" id="bagCount" hidden>0</span>
   </a>
-</header>
+</div></header>
 
 <main class="cart-wrap" id="main">
   <h1>Your bag</h1>

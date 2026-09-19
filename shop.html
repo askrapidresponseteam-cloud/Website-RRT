@@ -2,14 +2,14 @@
 <!--
   The shop hub — the web twin of the app's SHOP tab.
 
-  Like store_hub_view / store_shelf_view / store_search_view on the phone:
-  the landing lists the vendor's WHOLE catalogue (their "all" collection),
-  paged 24 at a time as you scroll; the ten RRT shelves sit above it as
-  chips, each opening its aisles; search suggests as you type and a
-  submitted search lists every match the vendor's own search returns.
+  The landing opens with the ten RRT shelves as a wall of cards (drawn from
+  the vendor map, alive before any network) and the whole live catalogue
+  beneath, paged 24 at a time. A chosen shelf shows its aisles; search
+  suggests as you type and a submitted search lists every match the
+  vendor's own search returns.
 
-  Everything on this page is live from Pets Lifestyle's Shopify store. No
-  price and no picture is baked into this file, and nothing is stored.
+  Everything with a price or a photo is live from Pets Lifestyle's store.
+  While it arrives, the grid shows skeletons, never a void.
 -->
 <html lang="en">
 <head>
@@ -19,67 +19,28 @@
 <meta name="description" content="Everyday things for the animals you look after. Sold and delivered by Pets Lifestyle.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/assets/shop.css">
-<style>
-.search-row { width: 85%; margin: 0 auto; padding: 4px 0 14px; position: relative; }
-.search-row form { display: flex; border: 1px solid var(--border-strong); }
-.search-row input {
-  flex: 1; background: transparent; border: 0; color: var(--text);
-  font-family: var(--sans); font-size: 14px; padding: 13px 16px;
-}
-.search-row input::placeholder { color: var(--text-dim); }
-.search-row button[type="submit"] {
-  background: transparent; border: 0; border-left: 1px solid var(--border);
-  color: var(--text-mid); font-family: var(--mono); font-size: 11px;
-  letter-spacing: .1em; text-transform: uppercase; padding: 0 20px; cursor: pointer;
-}
-.search-row button[type="submit"]:hover { color: var(--accent); }
-.sugg {
-  position: absolute; left: 0; right: 0; top: 100%; z-index: 40;
-  background: var(--bg-soft); border: 1px solid var(--border-strong); border-top: 0;
-  max-height: 420px; overflow: auto;
-}
-.sugg a { display: flex; align-items: center; gap: 12px; padding: 10px 14px;
-  text-decoration: none; color: var(--text-mid); font-size: 13px;
-  border-bottom: 1px solid var(--border); }
-.sugg a:last-child { border-bottom: 0; }
-.sugg a:hover { background: var(--bg-card); color: var(--text); }
-.sugg img { width: 40px; height: 40px; object-fit: contain; background: var(--bg-card); flex: none; }
-.sugg .s-price { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--text); white-space: nowrap; }
-.sugg .s-shelf { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
-.sugg .s-shelf::before { content: "→ "; color: var(--accent); }
-.shelf-note { width: 85%; margin: 0 auto; padding: 6px 0 0;
-  font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--text-dim); }
-@media (max-width: 760px) { .search-row, .shelf-note { width: 88%; } }
-</style>
 </head>
 <body>
 
 <a class="skip" href="#grid">Skip to products</a>
 
-<header class="site-header">
-  <button class="language" type="button" aria-label="Change language">EN ●</button>
-
+<header class="site-header"><div class="hd-in">
   <a class="brand" href="/">
-    <div>
-      <div class="brand-name">Rapid<br>Response</div>
-      <span class="brand-sub">RRT SHOP</span>
-    </div>
+    <span class="brand-sq" aria-hidden="true">RRT</span>
+    <span class="brand-word">Rapid Response<em>Shop</em></span>
   </a>
-
   <nav class="nav" aria-label="Shop">
     <a href="/shop" aria-current="page">Shop</a>
     <a href="/shop/saved">Saved</a>
     <a href="/shop/track">Your orders</a>
   </nav>
-
   <a class="bag" href="/shop/cart" aria-label="Basket">
-    <div class="bag-icon"></div>
+    <span class="bag-icon" aria-hidden="true"></span>
     <span class="bag-count" id="bagCount" hidden>0</span>
   </a>
-</header>
+</div></header>
 
 <section class="shop-intro">
   <div>
@@ -89,24 +50,33 @@
       Every purchase helps keep the emergency network free to use.
     </p>
   </div>
+
+  <div class="search-row">
+    <form id="searchForm" role="search" autocomplete="off">
+      <span class="s-ic" aria-hidden="true"></span>
+      <input id="q" name="q" placeholder="Search food, medicines, brands…"
+             aria-label="Search the shop" inputmode="search">
+      <button type="submit">Search</button>
+    </form>
+    <div class="sugg" id="sugg" hidden></div>
+  </div>
+
+  <div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"></div>
+  <div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
 </section>
 
-<div class="search-row">
-  <form id="searchForm" role="search" autocomplete="off">
-    <input id="q" name="q" placeholder="Search the whole range — food, medicines, brands…"
-           aria-label="Search the shop" inputmode="search">
-    <button type="submit">Search</button>
-  </form>
-  <div class="sugg" id="sugg" hidden></div>
-</div>
+<section class="shelves" id="shelves" hidden>
+  <h2>Shop by shelf</h2>
+  <div class="shelf-grid" id="shelfGrid"></div>
+</section>
 
-<div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"></div>
-<div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
-<p class="shelf-note" id="shelfNote" hidden></p>
+<div class="range-head">
+  <h2 id="rangeTitle">The whole range</h2>
+  <span class="count" id="count"></span>
+</div>
 
 <div class="controls-row" id="controls">
   <label class="stock-toggle"><input type="checkbox" id="inStock"> In stock only</label>
-  <span class="count" id="count"></span>
   <select id="sort" aria-label="Sort products"></select>
 </div>
 
@@ -116,7 +86,7 @@
 <div class="state" id="state" hidden></div>
 <div class="grid-foot" id="foot" hidden>
   <button class="btn-line" id="more" type="button">Load more</button>
-  <span class="done" id="done" hidden>That is the whole shelf.</span>
+  <span class="done" id="done" hidden>That's the whole shelf.</span>
 </div>
 
 <section class="disclosure" aria-labelledby="who">
@@ -157,14 +127,15 @@
 
   var params = new URLSearchParams(location.search);
   var q = (params.get('q') || '').trim();
-  var aisle = (params.get('a') || '').trim();
+  var aisleParam = (params.get('a') || '').trim();
   var shelfKey = (params.get('shelf') || '').trim();
   var titleHint = (params.get('t') || '').trim();
 
-  var shelf = shelfKey ? S.shelfByKey(shelfKey) : (aisle ? S.shelfForAisle(aisle) : null);
-  if (shelf && !aisle) aisle = shelf.aisles[0].handle;
+  var shelf = shelfKey ? S.shelfByKey(shelfKey) : (aisleParam ? S.shelfForAisle(aisleParam) : null);
+  var aisle = aisleParam || (shelf ? shelf.aisles[0].handle : '');
   var searching = !!q;
-  var handle = searching ? null : (aisle || S.vendor.catalogHandle);
+  var hub = !searching && !shelf && !aisle;
+  var handle = searching ? null : (hub ? S.vendor.catalogHandle : aisle);
 
   function aisleLabel() {
     if (shelf) {
@@ -177,28 +148,46 @@
   }
 
   if (searching) {
+    document.title = q + ' — The RRT Shop';
     $('pageTitle').textContent = 'Search';
-    $('pageCopy').textContent = 'Every match from the live range, exactly as the seller\u2019s own search finds it.';
+    $('pageCopy').textContent = 'Every match from the live range, straight from the seller\u2019s own search.';
     $('q').value = q;
     $('controls').hidden = true;
+    $('rangeTitle').textContent = 'Results for \u201c' + q + '\u201d';
   } else if (shelf) {
-    $('pageTitle').textContent = shelf.num + ' \u00b7 ' + shelf.name;
-    $('pageCopy').textContent = shelf.preview;
+    document.title = shelf.name + ' — The RRT Shop';
+    $('pageTitle').textContent = shelf.name;
+    $('pageCopy').textContent = 'One of the ten RRT shelves \u2014 pick an aisle or browse the lot.';
+    $('rangeTitle').textContent = aisleLabel();
   } else if (aisle) {
+    document.title = aisleLabel() + ' — The RRT Shop';
     $('pageTitle').textContent = aisleLabel();
     $('pageCopy').textContent = 'A shelf from the live range.';
+    $('rangeTitle').textContent = aisleLabel();
+  }
+
+  /* ------------------------------------------------- shelf cards (hub) */
+
+  if (hub) {
+    $('shelves').hidden = false;
+    $('shelfGrid').innerHTML = S.shelves.map(function (s) {
+      return '<a class="shelf-card" href="/shop?shelf=' + encodeURIComponent(s.key) + '">' +
+        '<span class="sc-name">' + esc(s.name) + '</span>' +
+        '<span class="sc-aisles">' + s.aisles.length + (s.aisles.length === 1 ? ' aisle' : ' aisles') + '</span>' +
+        '<span class="sc-preview">' + esc(s.aisles.slice(0, 4).map(function (a) { return a.label; }).join(', ')) + '</span>' +
+        '<span class="sc-go" aria-hidden="true">\u2192</span></a>';
+    }).join('');
   }
 
   /* ----------------------------------------------------------- the rails */
 
-  var shelfBar = $('shelfBar');
-  var html = '<a class="category" href="/shop" aria-pressed="' + (!shelf && !aisle && !searching) + '">All</a>';
+  var html = '<a class="category" href="/shop" aria-pressed="' + (hub ? 'true' : 'false') + '">All</a>';
   S.shelves.forEach(function (s) {
     var on = shelf && shelf.key === s.key;
     html += '<a class="category" href="/shop?shelf=' + encodeURIComponent(s.key) + '"' +
       ' aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(s.name) + '</a>';
   });
-  shelfBar.innerHTML = html;
+  $('shelfBar').innerHTML = html;
 
   if (shelf) {
     var bar = $('aisleBar');
@@ -208,10 +197,6 @@
         '&a=' + encodeURIComponent(a.handle) + '"' +
         ' aria-pressed="' + (a.handle === aisle ? 'true' : 'false') + '">' + esc(a.label) + '</a>';
     }).join('');
-  } else if (aisle && !searching) {
-    var note = $('shelfNote');
-    note.hidden = false;
-    note.textContent = 'Shelf: ' + aisleLabel();
   }
 
   /* ------------------------------------------------------------- controls */
@@ -219,7 +204,8 @@
   var sortSel = $('sort');
   S.sorts.forEach(function (key) {
     var o = document.createElement('option');
-    o.value = key; o.textContent = S.sortLabels[key];
+    o.value = key;
+    o.textContent = { featured: 'Featured', newest: 'Newest', priceLow: 'Price: low to high', priceHigh: 'Price: high to low' }[key];
     sortSel.appendChild(o);
   });
 
@@ -236,6 +222,11 @@
 
   /* ------------------------------------------------------------- loading */
 
+  function skeletons(n) {
+    var one = '<div class="skel-tile" aria-hidden="true"><div class="ph"></div><div class="ln"></div><div class="ln"></div></div>';
+    return new Array(n + 1).join(one);
+  }
+
   function fetchPage() {
     if (searching) return S.searchAll(q, { after: state.cursor });
     return S.collectionPage(handle, { sort: state.sort, after: state.cursor });
@@ -243,7 +234,8 @@
 
   function resetAndLoad() {
     state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
-    $('grid').innerHTML = ''; $('state').hidden = true; $('foot').hidden = true;
+    $('grid').innerHTML = skeletons(8);
+    $('state').hidden = true; $('foot').hidden = true;
     loadNext();
   }
 
@@ -251,6 +243,7 @@
     if (state.loading) return;
     state.loading = true;
     $('grid').setAttribute('aria-busy', 'true');
+    if (!state.products.length) $('grid').innerHTML = skeletons(8);
     $('more').disabled = true;
     fetchPage().then(function (page) {
       state.loading = false;
@@ -259,23 +252,28 @@
       state.hasMore = page.hasMore;
       if (typeof page.total === 'number') state.total = page.total;
       if (page.missing) {
-        showState('This shelf is empty right now. The seller may have renamed it \u2014 the rest of the shop is unaffected.', true);
+        showState('This shelf is empty right now.',
+          'The seller may have renamed it \u2014 the rest of the shop is open.', false);
         return;
       }
       render();
     }).catch(function (err) {
       state.loading = false;
-      showState(esc(err && err.message ? err.message : 'Something went wrong.') , true, true);
+      showState(esc(err && err.message ? err.message : 'Something went wrong.'), '', true);
     });
   }
 
-  function showState(message, replaceGrid, retry) {
+  function showState(message, sub, retry) {
     var el = $('state');
     el.hidden = false;
-    el.innerHTML = '<p>' + message + '</p>' +
+    el.innerHTML = '<div class="st-card"><p>' + message + '</p>' +
+      (sub ? '<p class="st-sub">' + sub + '</p>' : '') +
       (retry ? '<p><button class="btn-line" id="retry" type="button">Try again</button></p>'
-             : '<p><a class="btn-line" href="/shop">Back to the shop</a></p>');
-    if (replaceGrid) { $('grid').innerHTML = ''; $('grid').setAttribute('aria-busy', 'false'); $('foot').hidden = true; }
+             : '<p><a class="btn-line" href="/shop">Back to the shop</a></p>') +
+      '</div>';
+    $('grid').innerHTML = '';
+    $('grid').setAttribute('aria-busy', 'false');
+    $('foot').hidden = true;
     var r = $('retry');
     if (r) r.addEventListener('click', function () { el.hidden = true; loadNext(); });
   }
@@ -288,15 +286,19 @@
     });
     $('grid').setAttribute('aria-busy', 'false');
     if (!visible.length && !state.hasMore) {
-      showState(searching
-        ? 'Nothing matched \u201c' + esc(q) + '\u201d. Try fewer words, or a brand name.'
-        : 'Nothing on this shelf right now.', true);
+      if (searching) {
+        showState('Nothing matched \u201c' + esc(q) + '\u201d.',
+          'Try fewer words, or a brand name.', false);
+      } else {
+        showState('Nothing on this shelf right now.',
+          'The rest of the shop is open \u2014 try another shelf or search the whole range.', false);
+      }
       return;
     }
     $('state').hidden = true;
     $('grid').innerHTML = visible.map(function (p) { return U.tile(p); }).join('');
     $('count').textContent = searching && state.total != null
-      ? state.total + ' result' + (state.total === 1 ? '' : 's')
+      ? state.total + (state.total === 1 ? ' result' : ' results')
       : visible.length + ' shown';
     $('foot').hidden = false;
     $('more').disabled = false;
@@ -333,7 +335,7 @@
         var out = '';
         r.collections.slice(0, 3).forEach(function (c) {
           out += '<a href="/shop?a=' + encodeURIComponent(c.handle) + '&t=' + encodeURIComponent(c.title) + '">' +
-            '<span class="s-shelf">' + esc(c.title) + '</span></a>';
+            '<span class="s-shelf">' + esc(c.title) + ' \u2192</span></a>';
         });
         r.products.forEach(function (p) {
           out += '<a href="/shop/p/' + encodeURIComponent(p.handle) + '">' +
