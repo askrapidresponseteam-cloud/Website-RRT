@@ -106,6 +106,11 @@
 .handoff-mark { width:44px; height:44px; background:var(--accent); display:grid; place-items:center;
                 animation:handoff-tilt 1s ease-in-out infinite alternate; }
 .handoff-mark .material-symbols-outlined { color:#ffffff; font-size:26px; }
+.handoff-escape { display:grid; gap:10px; justify-items:center; margin-top:14px; }
+.handoff-go { font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+              color:#ffffff; background:var(--accent); text-decoration:none; padding:12px 20px; }
+.handoff-back { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+                color:var(--text-dim); background:transparent; border:0; cursor:pointer; padding:6px; }
 @keyframes handoff-tilt { from { transform:rotate(-6deg); } to { transform:rotate(6deg); } }
 </style>
 </head>
@@ -162,6 +167,10 @@
     <div class="handoff-mark"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>
     <strong>Taking you to secure payment</strong>
     <span>Your item and reference travel with you.</span>
+    <div class="handoff-escape" id="handoffEscape" hidden>
+      <a class="handoff-go" id="handoffGo" href="#">Continue to secure payment</a>
+      <button class="handoff-back" id="handoffBack" type="button">Back to product</button>
+    </div>
   </div>
 </div>
 
@@ -454,7 +463,15 @@
       var hp = S.beginCheckout([line], { fromCart: false });
       if (hp) {
         $('handoff').hidden = false;
-        hp.then(function (handoff) { location.href = handoff.url; });
+        hp.then(function (handoff) {
+          $('handoffGo').href = handoff.url;
+          try { location.href = handoff.url; } catch (e) { /* the link below still works */ }
+          setTimeout(function () { $('handoffEscape').hidden = false; }, 1500);
+        });
+        $('handoffBack').onclick = function () {
+          $('handoff').hidden = true; $('handoffEscape').hidden = true;
+          btn.disabled = false; btn.textContent = 'Buy now';
+        };
         return;
       }
     }).catch(function (e) {

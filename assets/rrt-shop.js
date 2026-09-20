@@ -960,6 +960,8 @@
   }
 
   var TIMEOUT_MS = 20 * 1000;
+  /** Max wait for the native cart before the permalink goes out instead. */
+  var HANDOFF_DEADLINE_MS = 3500;
 
   var fetchImpl = function () { return global.fetch.apply(global, arguments); };
 
@@ -1854,7 +1856,7 @@
         { key: 'rrt_ref', value: rrtRef }
       ]
     };
-    return gql(mutation, { input: input }, { fresh: true }).then(function (data) {
+    var attempt = gql(mutation, { input: input }, { fresh: true }).then(function (data) {
       var res = data && data.cartCreate;
       var cart = res && res.cart;
       if (cart && cart.checkoutUrl) return { order: order, url: cart.checkoutUrl, native: true };
@@ -1862,6 +1864,14 @@
     }).catch(function () {
       return { order: order, url: permalink, native: false };
     });
+    // Never let a slow API hold the buyer: past the deadline, the permalink
+    // goes out and the native attempt is simply abandoned.
+    var deadline = new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve({ order: order, url: permalink, native: false, timedOut: true });
+      }, HANDOFF_DEADLINE_MS);
+    });
+    return Promise.race([attempt, deadline]);
   }
 
 
@@ -1962,6 +1972,7 @@
     wrapProduct: wrapProduct,
     transport: transport,
     resetTransport: function () { try { session.removeItem(TRANSPORT_KEY); } catch (e) { /* ignore */ } },
+    setHandoffDeadline: function (ms) { HANDOFF_DEADLINE_MS = ms; },
     setFetch: function (fn) { fetchImpl = fn; },
     stores: { local: local, session: session }
   };

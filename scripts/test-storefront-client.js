@@ -559,11 +559,28 @@ S.revalidateCart().then((r) => {
   eq(handoff.native, false, 'a Cart API failure falls back');
   ok(handoff.url.indexOf('https://www.pets-lifestyle.com/cart/71:2?') === 0,
     'to the permalink, which always works');
+
+  // Cart API HANGING (the production symptom): the buyer must not wait on
+  // it. Past the deadline the permalink goes out regardless.
+  S.__internal.setHandoffDeadline(120);
+  S.__internal.setFetch(() => new Promise(() => { /* never settles */ }));
+  const t0 = Date.now();
+  return S.beginCheckout(S.cart().lines, { fromCart: true }).then((h) => {
+    ok(Date.now() - t0 < 1000, 'a hanging Cart API is abandoned within the deadline');
+    eq(h.timedOut, true, 'and reported as timed out');
+    ok(h.url.indexOf('/cart/71:2?') !== -1, 'with the permalink in hand');
+    S.__internal.setHandoffDeadline(3500);
+    return handoff;
+  });
+}).then((handoff) => {
+  eq(handoff.native, false, 'a Cart API failure falls back');
+  ok(handoff.url.indexOf('https://www.pets-lifestyle.com/cart/71:2?') === 0,
+    'to the permalink, which always works');
   ok(handoff.url.indexOf('attributes%5Bsource%5D=RRT%20website') !== -1
      || handoff.url.indexOf('attributes[source]=RRT+website') !== -1
      || handoff.url.indexOf('attributes%5Bsource%5D=RRT+website') !== -1,
     'with attribution intact');
-  eq(S.receipts().length, 2, 'every hand-off keeps its own receipt');
+  eq(S.receipts().length, 3, 'every hand-off keeps its own receipt');
 
   S.deleteMyData();
   eq(S.cart().count, 0, 'delete-my-data clears the cart');

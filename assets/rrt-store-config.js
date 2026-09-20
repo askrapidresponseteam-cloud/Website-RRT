@@ -64,17 +64,19 @@
     };
   }
 
-  /** Read the two flags out of an app_config/flags document, tolerating both
-   *  the flat "flags.store" field the backend writes and a nested shape. */
+  /** Read the two flags out of an app_config/flags document. The backend
+   *  stores each flag VERBATIM as a top-level field whose name contains a
+   *  dot ("flags.store"); that is the one shape the app reads, so it is the
+   *  only shape honoured here. A nested {flags:{store}} map is deliberately
+   *  ignored: it can only come from a mis-shaped client write, and honouring
+   *  it once closed the website while the app stayed open. */
   function applyDoc(data) {
     data = data || {};
-    function field(flat, nested, fallback) {
-      if (typeof data[flat] === 'boolean') return data[flat];
-      if (data.flags && typeof data.flags[nested] === 'boolean') return data.flags[nested];
-      return fallback;
+    function field(flat, fallback) {
+      return typeof data[flat] === 'boolean' ? data[flat] : fallback;
     }
-    state.storeOpen = field('flags.store', 'store', DEFAULTS.storeOpen);
-    state.vegOnly = field('flags.store_veg_only', 'store_veg_only', DEFAULTS.vegOnly);
+    state.storeOpen = field('flags.store', DEFAULTS.storeOpen);
+    state.vegOnly = field('flags.store_veg_only', DEFAULTS.vegOnly);
     // Optional human message shown when the shop is closed. Text lives in
     // app_config/text in the app's scheme; we accept it here too if present.
     var msg = data['text.store_closed'];
