@@ -1801,10 +1801,36 @@
       status: 'handed'
     };
     saveReceipt(order);
-    var url = checkoutUrl(sellable, {
+    var permalink = checkoutUrl(sellable, {
       buyerName: opts.buyerName, buyerPhone: opts.buyerPhone, rrtRef: rrtRef
     });
-    return { order: order, url: url };
+    var mutation =
+      'mutation RrtCartCreate($input: CartInput!) {' +
+      ' cartCreate(input: $input) {' +
+      '  cart { checkoutUrl }' +
+      '  userErrors { message }' +
+      ' }' +
+      '}';
+    var input = {
+      lines: sellable.map(function (l) {
+        return {
+          merchandiseId: 'gid://shopify/ProductVariant/' + l.variantId,
+          quantity: l.qty
+        };
+      }),
+      attributes: [
+        { key: 'source', value: 'RRT website' },
+        { key: 'rrt_ref', value: rrtRef }
+      ]
+    };
+    return gql(mutation, { input: input }, { fresh: true }).then(function (data) {
+      var res = data && data.cartCreate;
+      var cart = res && res.cart;
+      if (cart && cart.checkoutUrl) return { order: order, url: cart.checkoutUrl, native: true };
+      return { order: order, url: permalink, native: false };
+    }).catch(function () {
+      return { order: order, url: permalink, native: false };
+    });
   }
 
 

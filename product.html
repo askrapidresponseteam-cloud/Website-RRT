@@ -95,6 +95,15 @@
 .recs-h { width:85%; margin:0 auto; padding:26px 0 0; font-family:var(--display);
           font-weight:700; text-transform:uppercase; font-size:20px; }
 @media (max-width:900px){ .pdp{ grid-template-columns:1fr; gap:26px; width:88%; } .recs-h{ width:88%; } }
+.handoff { position:fixed; inset:0; background:#ffffffe6; backdrop-filter:blur(6px);
+           display:flex; align-items:center; justify-content:center; z-index:60; }
+.handoff-card { text-align:center; display:grid; gap:8px; justify-items:center; }
+.handoff-card strong { font-family:var(--display); font-size:22px; text-transform:uppercase; letter-spacing:.02em; }
+.handoff-card span { font-size:14px; color:var(--text-dim); }
+.handoff-mark { width:44px; height:44px; background:var(--accent); display:grid; place-items:center;
+                animation:handoff-tilt 1s ease-in-out infinite alternate; }
+.handoff-mark .material-symbols-outlined { color:#ffffff; font-size:26px; }
+@keyframes handoff-tilt { from { transform:rotate(-6deg); } to { transform:rotate(6deg); } }
 </style>
 </head>
 <body>
@@ -145,7 +154,15 @@
       <h1 id="title"></h1>
       <div class="price-row" id="priceRow"><span class="skel"></span></div>
       <p class="stock" id="stock">Checking availability…</p>
-      <div id="sizes" hidden></div>
+    <div class="handoff" id="handoff" hidden>
+  <div class="handoff-card">
+    <div class="handoff-mark"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>
+    <strong>Taking you to secure payment</strong>
+    <span>Your item and reference travel with you.</span>
+  </div>
+</div>
+
+  <div id="sizes" hidden></div>
       <div id="options"></div>
       <div class="buy">
         <div class="qty">
@@ -429,8 +446,12 @@
         pricePaise: lv.pricePaise, qty: qtyValue(),
         available: true, imageUrl: lv.imageUrl || live.imageUrl, maxQty: lv.maxQty
       };
-      var handoff = S.beginCheckout([line], { fromCart: false });
-      if (handoff) location.href = handoff.url;
+      var hp = S.beginCheckout([line], { fromCart: false });
+      if (hp) {
+        $('handoff').hidden = false;
+        hp.then(function (handoff) { location.href = handoff.url; });
+        return;
+      }
     }).catch(function (e) {
       btn.disabled = false; btn.textContent = 'Buy now';
       U.toast(e && e.message ? e.message : 'Something went wrong. Try again.');

@@ -73,6 +73,15 @@
   .line .right { grid-column: 2; text-align: left; }
   .rm { margin-left: 0; }
 }
+.handoff { position:fixed; inset:0; background:#ffffffe6; backdrop-filter:blur(6px);
+           display:flex; align-items:center; justify-content:center; z-index:60; }
+.handoff-card { text-align:center; display:grid; gap:8px; justify-items:center; }
+.handoff-card strong { font-family:var(--display); font-size:22px; text-transform:uppercase; letter-spacing:.02em; }
+.handoff-card span { font-size:14px; color:var(--text-dim); }
+.handoff-mark { width:44px; height:44px; background:var(--accent); display:grid; place-items:center;
+                animation:handoff-tilt 1s ease-in-out infinite alternate; }
+.handoff-mark .material-symbols-outlined { color:#ffffff; font-size:26px; }
+@keyframes handoff-tilt { from { transform:rotate(-6deg); } to { transform:rotate(6deg); } }
 </style>
 </head>
 <body>
@@ -108,6 +117,14 @@
   <a href="/shop">Shop</a>
   <a href="/shop/saved">Saved</a>
 </nav>
+
+<div class="handoff" id="handoff" hidden>
+  <div class="handoff-card">
+    <div class="handoff-mark"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>
+    <strong>Taking you to secure payment</strong>
+    <span>Your bag and reference travel with you.</span>
+  </div>
+</div>
 
 <main class="cart-wrap" id="main">
   <h1>Your bag</h1>
@@ -265,8 +282,12 @@
         U.toast('Nothing in your bag is in stock right now');
         return;
       }
-      var handoff = S.beginCheckout(r.lines, { fromCart: true });
-      if (handoff) { location.href = handoff.url; return; }
+      var p = S.beginCheckout(r.lines, { fromCart: true });
+      if (p) {
+        $('handoff').hidden = false;
+        p.then(function (handoff) { location.href = handoff.url; });
+        return;
+      }
       btn.disabled = false;
       btn.textContent = 'Go to secure checkout';
     }).catch(function (e) {
