@@ -68,6 +68,14 @@
   </div>
 </section>
 
+<section class="hub-rails" id="hubRails" hidden>
+  <h2 class="rail-h">Shop by shelf</h2>
+  <div class="rail" id="shelfRail"></div>
+  <h2 class="rail-h">Brands in focus</h2>
+  <div class="rail rail-brands" id="brandRail"></div>
+  <h2 class="rail-h">The whole range</h2>
+</section>
+
 <div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"></div>
 <div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
 
@@ -195,6 +203,56 @@
     state.sort = sortSel.value;
     if (state.clientSort) render(); else resetAndLoad();
   });
+
+  /* ------------------------------------------------------------ hub rails */
+
+  var BRAND_CANDIDATES = ['Royal Canin', 'Pedigree', 'Zoetis', 'Bravecto',
+                          'Farmina', 'Sheba', 'Whiskas', 'Himalaya'];
+
+  function pill(off) {
+    return off > 0 ? '<span class="card-pill">Up to ' + off + '% off</span>' : '';
+  }
+
+  function shelfCard(sh, face) {
+    var img = face && face.image
+      ? '<img src="' + esc(S.sizedImage(face.image, 900)) + '" alt="" loading="lazy">'
+      : '';
+    return '<a class="hub-card" href="/shop?shelf=' + esc(sh.key) + '">' +
+      '<span class="card-art">' + img + pill(face ? face.maxOff : 0) + '</span>' +
+      '<span class="card-name">' + esc(sh.name) + '</span></a>';
+  }
+
+  function brandCard(brand, face) {
+    return '<a class="hub-card arch" href="/shop?b=' + encodeURIComponent(brand) + '">' +
+      '<span class="card-art">' +
+      '<img src="' + esc(S.sizedImage(face.image, 900)) + '" alt="" loading="lazy">' +
+      pill(face.maxOff) + '</span>' +
+      '<span class="card-name">' + esc(brand) + '</span></a>';
+  }
+
+  function loadHubRails() {
+    if (!hub) return;
+    $('hubRails').hidden = false;
+    $('shelfRail').innerHTML = S.shelves.map(function (sh) {
+      return '<span data-shelf="' + esc(sh.key) + '">' + shelfCard(sh, null) + '</span>';
+    }).join('');
+    S.shelves.forEach(function (sh) {
+      S.previewCollection(sh.aisles[0].handle).then(function (tiles) {
+        var face = S.previewFace(tiles);
+        if (!face) return;
+        var slot = document.querySelector('#shelfRail [data-shelf="' + sh.key + '"]');
+        if (slot) slot.innerHTML = shelfCard(sh, face);
+      });
+    });
+    BRAND_CANDIDATES.forEach(function (brand) {
+      S.brandPage(brand, {}).then(function (page) {
+        var face = S.previewFace(page.products);
+        if (!face || !face.image) return;
+        $('brandRail').insertAdjacentHTML('beforeend', brandCard(brand, face));
+      }).catch(function () { /* no card, no noise */ });
+    });
+  }
+  loadHubRails();
 
   /* ------------------------------------------------------------- loading */
 

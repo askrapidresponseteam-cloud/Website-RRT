@@ -1163,6 +1163,37 @@
     });
   }
 
+  /** A light look at a collection for hub cards: up to ten products via
+   *  one feed call. Resolves null on any failure - previews decorate, they
+   *  must never block or error a page. */
+  function previewCollection(handle) {
+    return feedGet('/collections/' + encodeURIComponent(handle) + '/products.json',
+      { limit: '10', page: '1' })
+      .then(function (body) {
+        var raw = body && Array.isArray(body.products) ? body.products : [];
+        return raw.map(productFromFeed).filter(Boolean);
+      })
+      .catch(function () { return null; });
+  }
+
+  /** The face of a card: the first in-stock product image and the best
+   *  live discount among [tiles]. Nothing is claimed that is not true. */
+  function previewFace(tiles) {
+    if (!tiles || !tiles.length) return null;
+    var image = null, maxOff = 0;
+    for (var i = 0; i < tiles.length; i++) {
+      var p = tiles[i];
+      if (!image && p.available && p.imageUrl) image = p.imageUrl;
+      var cv = p.cheapestVariant;
+      var off = (p.available && cv && cv.compareAtPaise && cv.compareAtPaise > cv.pricePaise)
+        ? Math.round(((cv.compareAtPaise - cv.pricePaise) * 100) / cv.compareAtPaise)
+        : 0;
+      if (off > maxOff) maxOff = off;
+    }
+    if (!image && tiles[0].imageUrl) image = tiles[0].imageUrl;
+    return { image: image, maxOff: maxOff };
+  }
+
   function catalogPage(opts) {
     opts = opts || {};
     var sort = CATALOG_SORT_KEYS[opts.sort || 'featured'] || CATALOG_SORT_KEYS.featured;
@@ -1883,6 +1914,8 @@
     sortLabels: SORT_LABELS,
     visibleProducts: visibleProducts,
     collectionPage: collectionPage,
+    previewCollection: previewCollection,
+    previewFace: previewFace,
     brandPage: brandPage,
     product: product,
     sizeQuery: function (title) {

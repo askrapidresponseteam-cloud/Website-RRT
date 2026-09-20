@@ -284,6 +284,40 @@ eq(S.cart().lines.length, 1, 'zero quantity removes the line');
 S.clearCart();
 eq(S.cart().count, 0, 'clear empties the cart');
 
+/* --------------------------------------------------------- hub previews */
+function hubPreviewTests() {
+  S.__internal.resetTransport();
+  var urls = [];
+  S.__internal.setFetch(function (url) {
+    urls.push(String(url));
+    return Promise.resolve({ status: 200, json: function () { return Promise.resolve({ products: [
+      { id: 11, handle: 'kong-toy', title: 'Kong Classic', vendor: 'Kong', product_type: 'Toys',
+        images: [{ src: '//cdn.shopify.com/s/files/toy.jpg' }], options: [], tags: [],
+        body_html: '', published_at: '2026-01-01T00:00:00Z',
+        variants: [{ id: 1, title: 'Default Title', price: '450.00', compare_at_price: '900.00',
+                     available: true, featured_image: null }] },
+      { id: 12, handle: 'gone-toy', title: 'Gone Toy', vendor: 'Kong', product_type: 'Toys',
+        images: [{ src: '//cdn.shopify.com/s/files/gone.jpg' }], options: [], tags: [],
+        body_html: '', published_at: '2026-01-01T00:00:00Z',
+        variants: [{ id: 2, title: 'Default Title', price: '100.00', compare_at_price: '990.00',
+                     available: false, featured_image: null }] }
+    ] }); } });
+  });
+  return S.previewCollection('dog-toys').then(function (tiles) {
+    eq(tiles.length, 2, 'preview parses the feed');
+    ok(urls[0].indexOf('/pl-api/collections/dog-toys/products.json') === 0 &&
+       urls[0].indexOf('limit=10') !== -1, 'one light call, ten items');
+    var face = S.previewFace(tiles);
+    eq(face.maxOff, 50, 'the pill is the best LIVE discount, in-stock only');
+    ok(face.image.indexOf('toy.jpg') !== -1, 'faced by an in-stock product');
+    S.__internal.setFetch(function () { return Promise.reject(new Error('down')); });
+    return S.previewCollection('cat-toys');
+  }).then(function (tiles) {
+    eq(tiles, null, 'a failed preview is null, never an error');
+    eq(S.previewFace(null), null, 'and faces nothing');
+  });
+}
+
 /* --------------------------------------------------------- brand page */
 function brandPageTests() {
   var calls = [];
@@ -652,7 +686,7 @@ S.revalidateCart().then((r) => {
     eq(r.collections[0].handle, 'jerhigh', 'matching collections offered');
     S.__internal.resetTransport();
   });
-}).then(brandPageTests).then(function () {
+}).then(hubPreviewTests).then(brandPageTests).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
   process.exit(failed ? 1 : 0);
 }).catch((e) => {
