@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /manage
 Disallow: /report/manage
-Disallow: /pl-api/
 Disallow: /shop/cart
 Disallow: /shop/saved
 Disallow: /shop/track
