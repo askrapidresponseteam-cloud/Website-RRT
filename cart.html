@@ -84,6 +84,7 @@
 .bd-total .label { color: var(--text); }
 .bd-total .amount { font-size: 22px; font-weight: 600; }
 .bd-note { font-size: 13px; color: var(--text-dim); margin: 8px 0 0; min-height: 0; }
+.bd-hint { font-size: 13px; color: var(--text-dim); margin: 12px 0 0; text-align: center; line-height: 1.5; }
 .bd-note.bad { color: var(--accent); }
 .bd-options { display: grid; gap: 8px; padding: 10px 0 4px; }
 .bd-opt { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--border-strong); cursor: pointer; font-size: 14px; }
@@ -204,6 +205,7 @@
     <p class="fineprint">Out-of-stock items stay in your bag but are not sent to checkout.</p>
     <div class="lock">Secure checkout · payment taken by the seller</div>
     <button class="btn-solid checkout-btn" id="checkout" type="button">Go to secure checkout</button>
+    <p class="bd-hint" id="bdHint" hidden></p>
   </div>
 </main>
 
@@ -398,7 +400,27 @@
   // cart that was quoted, so the vendor's page shows the same numbers.
   var quote = { current: null, pending: null, error: null, unserviceable: false };
 
+  // The checkout button says exactly what is coming. With a quote it names
+  // the amount, so the vendor's page reads as a receipt to confirm rather
+  // than a form to fill; without one it says the charge shows there.
+  function paintCheckoutButton() {
+    var b = $('checkout');
+    if (b.disabled) return;
+    var lines = S.cart().lines.filter(function (l) { return l.available; });
+    var q = quote.current && S.quoteMatches(quote.current, lines, S.delivery()) ? quote.current : null;
+    if (q && q.totalPaise != null) {
+      b.textContent = 'Pay ' + S.money(q.totalPaise) + ' on secure checkout';
+      $('bdHint').hidden = false;
+      $('bdHint').textContent = 'Next page: the seller\u2019s payment page, already filled in with your details, delivery and this total. Just press Pay now there.';
+    } else {
+      b.textContent = 'Go to secure checkout';
+      $('bdHint').hidden = !(quote.error && !quote.unserviceable);
+      $('bdHint').textContent = 'Next page: the seller\u2019s payment page, filled in with your details. Delivery is added there before you pay.';
+    }
+  }
+
   function paintQuote() {
+    paintCheckoutButton();
     var lines = S.cart().lines.filter(function (l) { return l.available; });
     var d = S.delivery();
     var note = $('bdNote'); note.className = 'bd-note';
@@ -500,7 +522,7 @@
       if (r.changes.length) {
         describeChanges(r.changes);
         btn.disabled = false;
-        btn.textContent = 'Go to secure checkout';
+        paintCheckoutButton();
         U.toast('Something changed. Check your bag, then press again');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
@@ -508,11 +530,11 @@
       var sellable = r.lines.filter(function (l) { return l.available; });
       if (!sellable.length) {
         btn.disabled = false;
-        btn.textContent = 'Go to secure checkout';
+        paintCheckoutButton();
         U.toast('Nothing in your bag is in stock right now');
         return;
       }
-      if (!U.storeOpenNow()) { U.toast('The shop is closed right now.'); btn.disabled=false; btn.textContent='Go to secure checkout'; return; }
+      if (!U.storeOpenNow()) { U.toast('The shop is closed right now.'); btn.disabled=false; paintCheckoutButton(); return; }
       if (!S.deliveryComplete()) {
         // Show the form with every missing field named, and do not leave.
         var v = S.validateDelivery(dRead());
@@ -520,7 +542,7 @@
         dShowErrors(v.errors);
         $('delivery').scrollIntoView({ behavior: 'smooth', block: 'start' });
         U.toast('Add your delivery details, then checkout opens ready to pay');
-        btn.disabled = false; btn.textContent = 'Go to secure checkout';
+        btn.disabled = false; paintCheckoutButton();
         return;
       }
       // The total the buyer saw is the total they will pay: hand off the
@@ -532,7 +554,7 @@
       btn.textContent = 'Confirming delivery charge\u2026';
       return Promise.race([ready, deadline]).then(function (q) {
         if (quote.unserviceable) {
-          btn.disabled = false; btn.textContent = 'Go to secure checkout';
+          btn.disabled = false; paintCheckoutButton();
           $('breakdown').scrollIntoView({ behavior: 'smooth', block: 'center' });
           U.toast('The seller does not deliver to this address. Edit your delivery details.');
           return;
@@ -540,11 +562,11 @@
         var handoff = S.beginCheckout(lines, { fromCart: true, quote: q });
         if (handoff) { location.href = handoff.url; return; }
         btn.disabled = false;
-        btn.textContent = 'Go to secure checkout';
+        paintCheckoutButton();
       });
     }).catch(function (e) {
       btn.disabled = false;
-      btn.textContent = 'Go to secure checkout';
+      paintCheckoutButton();
       U.toast(e && e.message ? e.message : 'Could not re-check prices. Try again.');
     });
   });
