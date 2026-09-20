@@ -12,9 +12,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="theme-color" content="#ffffff">
+<meta name="description" content="Food, medicines, supplements and gear for the animals you look after. The live range of a trusted Indian pet pharmacy, delivered across India, from the makers of the Rapid Response animal emergency network.">
+<link rel="canonical" href="https://rapid-response.in/shop">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rapid Response">
+<meta property="og:title" content="The RRT Shop · pet food, medicines and gear across India">
+<meta property="og:description" content="Everyday things for the animals you look after. Live prices, delivery priced to your address before you pay.">
+<meta property="og:url" content="https://rapid-response.in/shop">
+<meta property="og:image" content="https://rapid-response.in/assets/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The RRT Shop · pet food, medicines and gear across India">
+<meta name="twitter:description" content="Everyday things for the animals you look after. Live prices, delivery priced to your address before you pay.">
+<meta name="twitter:image" content="https://rapid-response.in/assets/og-cover.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "@id": "https://rapid-response.in/shop#page", "url": "https://rapid-response.in/shop", "name": "The RRT Shop", "description": "Food, medicines, supplements and gear for the animals you look after: the live range of a trusted Indian pet pharmacy, sold and delivered by the partner store.", "isPartOf": {"@type": "WebSite", "@id": "https://rapid-response.in/#website"}, "inLanguage": "en-IN"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Rapid Response", "item": "https://rapid-response.in/"}, {"@type": "ListItem", "position": 2, "name": "Shop", "item": "https://rapid-response.in/shop"}]}, {"@type": "ItemList", "name": "Shelves", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pharmacy", "url": "https://rapid-response.in/shop?shelf=pharmacy"}, {"@type": "ListItem", "position": 2, "name": "Supplements", "url": "https://rapid-response.in/shop?shelf=supplements"}, {"@type": "ListItem", "position": 3, "name": "Dog Food", "url": "https://rapid-response.in/shop?shelf=dog-food"}, {"@type": "ListItem", "position": 4, "name": "Cat Food", "url": "https://rapid-response.in/shop?shelf=cat-food"}, {"@type": "ListItem", "position": 5, "name": "Treats", "url": "https://rapid-response.in/shop?shelf=treats"}, {"@type": "ListItem", "position": 6, "name": "Grooming", "url": "https://rapid-response.in/shop?shelf=grooming"}, {"@type": "ListItem", "position": 7, "name": "Toys & Gear", "url": "https://rapid-response.in/shop?shelf=gear"}, {"@type": "ListItem", "position": 8, "name": "Birds, Fish & Small Pets", "url": "https://rapid-response.in/shop?shelf=small-pets"}, {"@type": "ListItem", "position": 9, "name": "Farm & Livestock", "url": "https://rapid-response.in/shop?shelf=farm"}, {"@type": "ListItem", "position": 10, "name": "Sale", "url": "https://rapid-response.in/shop?shelf=sale"}]}]}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The RRT Shop</title>
-<meta name="description" content="Everyday things for the animals you look after. Sold and delivered by a third-party partner store.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
@@ -75,11 +88,11 @@
   <h2 class="rail-h">Shop by shelf</h2>
   <div class="rail" id="shelfRail"></div>
   <h2 class="rail-h">Brands in focus</h2>
-  <div class="rail rail-brands" id="brandRail"></div>
+  <div class="rail rail-brands" id="brandRail"><a class="hub-card arch seo-only" href="/shop?b=Royal%20Canin"><span class="card-name">Royal Canin</span></a><a class="hub-card arch seo-only" href="/shop?b=Pedigree"><span class="card-name">Pedigree</span></a><a class="hub-card arch seo-only" href="/shop?b=Zoetis"><span class="card-name">Zoetis</span></a><a class="hub-card arch seo-only" href="/shop?b=Bravecto"><span class="card-name">Bravecto</span></a><a class="hub-card arch seo-only" href="/shop?b=Farmina"><span class="card-name">Farmina</span></a><a class="hub-card arch seo-only" href="/shop?b=Sheba"><span class="card-name">Sheba</span></a><a class="hub-card arch seo-only" href="/shop?b=Whiskas"><span class="card-name">Whiskas</span></a><a class="hub-card arch seo-only" href="/shop?b=Himalaya"><span class="card-name">Himalaya</span></a></div>
   <h2 class="rail-h">The whole range</h2>
 </section>
 
-<div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"></div>
+<div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"><a href="/shop" aria-pressed="true">All</a><a href="/shop?shelf=pharmacy">Pharmacy</a><a href="/shop?shelf=supplements">Supplements</a><a href="/shop?shelf=dog-food">Dog Food</a><a href="/shop?shelf=cat-food">Cat Food</a><a href="/shop?shelf=treats">Treats</a><a href="/shop?shelf=grooming">Grooming</a><a href="/shop?shelf=gear">Toys & Gear</a><a href="/shop?shelf=small-pets">Birds, Fish & Small Pets</a><a href="/shop?shelf=farm">Farm & Livestock</a><a href="/shop?shelf=sale">Sale</a></div>
 <div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
 
 <div class="notice" id="notice" hidden></div>
@@ -247,6 +260,7 @@
         if (slot) slot.innerHTML = shelfCard(sh, face);
       });
     });
+    $('brandRail').innerHTML = '';
     BRAND_CANDIDATES.forEach(function (brand) {
       S.brandPage(brand, {}).then(function (page) {
         var face = S.previewFace(page.products);

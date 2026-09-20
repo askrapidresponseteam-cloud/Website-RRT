@@ -36,6 +36,17 @@
   ],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.rapid-response.in"
+        }
+      ],
+      "destination": "https://rapid-response.in/:path*",
+      "permanent": true
+    },
+    {
       "source": "/about",
       "destination": "/",
       "permanent": true

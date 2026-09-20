@@ -15,6 +15,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="theme-color" content="#ffffff">
+<meta name="description" content="Live price, stock and delivery for this product on the RRT Shop, from a trusted Indian pet pharmacy. Sold and delivered by the partner store.">
+<link rel="canonical" href="https://rapid-response.in/shop" id="canonical">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Rapid Response">
+<meta property="og:title" content="The RRT Shop" id="ogTitle">
+<meta property="og:description" content="Live price and delivery on the RRT Shop." id="ogDesc">
+<meta property="og:url" content="https://rapid-response.in/shop" id="ogUrl">
+<meta property="og:image" content="https://rapid-response.in/assets/og-cover.jpg" id="ogImage">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product · The RRT Shop</title>
 <meta name="robots" content="noindex">
@@ -280,6 +290,40 @@
     });
     if (listOpen) out += '</ul>';
     $('desc').innerHTML = out;
+    // Search engines and link previews get the real product: canonical URL,
+    // description, social tags and Product schema with the live offer.
+    try {
+      var pageUrl = 'https://rapid-response.in/shop/p/' + encodeURIComponent(p.handle);
+      var plain = S.descriptionBlocks(p.descriptionHtml).map(function (b) { return b.text; }).join(' ').slice(0, 155);
+      var cheapest = p.cheapestVariant;
+      document.title = p.title + ' \u00b7 The RRT Shop';
+      document.querySelector('meta[name="description"]').setAttribute('content', plain || (p.title + ' on the RRT Shop, with live price and delivery.'));
+      $('canonical').setAttribute('href', pageUrl);
+      $('ogTitle').setAttribute('content', p.title);
+      $('ogDesc').setAttribute('content', plain || p.title);
+      $('ogUrl').setAttribute('content', pageUrl);
+      if (p.imageUrl) $('ogImage').setAttribute('content', S.sizedImage(p.imageUrl, 1200));
+      var ld = {
+        '@context': 'https://schema.org', '@type': 'Product',
+        name: p.title, url: pageUrl,
+        image: p.images && p.images.length ? p.images.slice(0, 4).map(function (u) { return S.sizedImage(u, 1200); }) : undefined,
+        description: plain || undefined,
+        brand: p.brand ? { '@type': 'Brand', name: p.brand } : undefined,
+        sku: String(p.id),
+        offers: cheapest ? {
+          '@type': 'Offer', url: pageUrl, priceCurrency: 'INR',
+          price: (cheapest.pricePaise / 100).toFixed(2),
+          availability: p.available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          itemCondition: 'https://schema.org/NewCondition',
+          seller: { '@type': 'Organization', name: 'Partner store via Rapid Response' }
+        } : undefined
+      };
+      var tag = document.getElementById('productLd') || document.createElement('script');
+      tag.type = 'application/ld+json'; tag.id = 'productLd';
+      tag.textContent = JSON.stringify(ld);
+      if (!tag.parentNode) document.head.appendChild(tag);
+    } catch (e) { /* never let metadata break the page */ }
+
     var wrap = $('descWrap'), more = $('descMore');
     if ($('desc').scrollHeight > 320) {
       more.hidden = false;
