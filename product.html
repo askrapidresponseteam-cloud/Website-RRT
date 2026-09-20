@@ -434,15 +434,11 @@
         available: true, imageUrl: lv.imageUrl || live.imageUrl, maxQty: lv.maxQty
       };
       if (!U.storeOpenNow()) { U.toast('The shop is closed right now.'); return; }
-      if (!S.deliveryComplete()) {
-        // First purchase: add the item to the bag and collect delivery
-        // details once, on the cart page. After that, Buy now is instant.
-        S.add(live, lv, qtyValue());
-        location.href = '/shop/cart?details=1';
-        return;
-      }
-      var handoff = S.beginCheckout([line], { fromCart: false });
-      if (handoff) { location.href = handoff.url; return; }
+      // Buy now: into the bag, then the bag page, where the delivery charge
+      // and the exact total are shown before any payment screen.
+      S.add(live, lv, qtyValue());
+      location.href = S.deliveryComplete() ? '/shop/cart' : '/shop/cart?details=1';
+      return;
     }).catch(function (e) {
       btn.disabled = false; btn.textContent = 'Buy now';
       U.toast(e && e.message ? e.message : 'Something went wrong. Try again.');

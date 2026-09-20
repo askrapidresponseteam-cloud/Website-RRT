@@ -284,6 +284,160 @@ eq(S.cart().lines.length, 1, 'zero quantity removes the line');
 S.clearCart();
 eq(S.cart().count, 0, 'clear empties the cart');
 
+/* -------------------------------------------------------- delivery quote */
+// Shopify's own delivery charge for this cart at this address, shown before
+// payment; the hand-off is the quoted cart so the vendor's page agrees.
+function deliveryQuoteTests() {
+  const cartJson = (over) => Object.assign({
+    id: 'gid://shopify/Cart/c1-abc?key=k', checkoutUrl: 'https://www.pets-lifestyle.com/checkouts/cn/abc',
+    cost: { subtotalAmount: { amount: '234.38' }, totalAmount: { amount: '234.38' }, totalTaxAmount: { amount: '0.0' } },
+    deliveryGroups: { nodes: [{ id: 'gid://shopify/CartDeliveryGroup/g1',
+      deliveryOptions: [{ handle: 'std', title: 'Standard', deliveryMethodType: 'SHIPPING', estimatedCost: { amount: '80.0' } }],
+      selectedDeliveryOption: { handle: 'std', estimatedCost: { amount: '80.0' } } }] }
+  }, over || {});
+  let calls = [];
+  function stub(handlers) {
+    S.__internal.setFetch(function (url, init) {
+      const body = init && init.body ? JSON.parse(init.body) : {};
+      calls.push(body);
+      for (const [name, fn] of handlers) {
+        if (String(body.query).indexOf(name) !== -1) {
+          const out = fn(body.variables);
+          return Promise.resolve({ status: 200, json: () => Promise.resolve({ data: out }) });
+        }
+      }
+      return Promise.reject(new Error('unexpected: ' + String(body.query).slice(0, 40)));
+    });
+  }
+  const addr = { firstName: 'Karthik', lastName: 'Dhanya', email: 'k@example.com', phone: '8105250299',
+    address1: '4/232 Ashraya', address2: '', city: 'Udupi', state: 'Karnataka', pin: '576222' };
+  S.saveDelivery(addr);
+  S.clearCart();
+  S.add(full, full.variants[0], 2);
+  const lines = S.cart().lines;
+
+  // 1) One rate: quoted, selected by Shopify, total = items + delivery.
+  stub([['RrtCartQuote', (v) => ({ cartCreate: { cart: cartJson(), userErrors: [] } })]]);
+  return S.quoteDelivery(lines, S.delivery()).then((q) => {
+    eq(q.itemsPaise, 23438, 'items total from Shopify');
+    eq(q.deliveryPaise, 8000, 'delivery charge from Shopify');
+    eq(q.totalPaise, 31438, 'total payable = items + delivery');
+    eq(q.options.length, 1, 'one option offered');
+    eq(q.selected.handle, 'std', 'and it is the one Shopify selected');
+    ok(/^RRT-/.test(q.rrtRef), 'the quote minted the order reference');
+    const input = calls[0].variables.input;
+    eq(input.delivery.addresses[0].address.deliveryAddress.provinceCode, 'KA', 'state sent as Shopify province code');
+    eq(input.delivery.addresses[0].address.deliveryAddress.zip, '576222', 'PIN sent');
+    eq(input.buyerIdentity.countryCode, 'IN', 'country IN');
+    eq(input.attributes.find(a => a.key === 'rrt_ref').value, q.rrtRef, 'attribution rides the cart');
+    eq(input.lines[0].merchandiseId, 'gid://shopify/ProductVariant/71', 'lines carry variant gids');
+
+    // Hand-off uses THAT cart, so the vendor's page cannot disagree.
+    const h = S.beginCheckout(lines, { fromCart: true, quote: q });
+    eq(h.quoted, true, 'checkout hands off the quoted cart');
+    eq(h.url, 'https://www.pets-lifestyle.com/checkouts/cn/abc', 'via its checkoutUrl');
+    eq(h.order.rrtRef, q.rrtRef, 'with the same reference');
+    eq(h.order.deliveryPaise, 8000, 'the receipt records the delivery charge');
+    eq(h.order.totalPaise, 31438, 'and the total the buyer saw');
+
+    // 2) Cached: a re-render does not create a second cart.
+    const n = calls.length;
+    return S.quoteDelivery(lines, S.delivery()).then((q2) => {
+      eq(calls.length, n, 'a fresh quote for the same cart+address is served from cache');
+      eq(q2.cartId, q.cartId, 'same cart');
+    });
+  }).then(() => {
+    // 3) Several rates: Shopify selects none; we pin the cheapest, and the
+    //    buyer can switch, which re-pins on the same cart.
+    calls = [];
+    const multi = cartJson({ deliveryGroups: { nodes: [{ id: 'gid://shopify/CartDeliveryGroup/g1',
+      deliveryOptions: [
+        { handle: 'exp', title: 'Express', deliveryMethodType: 'SHIPPING', estimatedCost: { amount: '150.0' } },
+        { handle: 'std', title: 'Standard', deliveryMethodType: 'SHIPPING', estimatedCost: { amount: '60.0' } }],
+      selectedDeliveryOption: null }] } });
+    stub([
+      ['RrtCartQuote', () => ({ cartCreate: { cart: multi, userErrors: [] } })],
+      ['RrtCartSelect', (v) => {
+        const h = v.sel[0].deliveryOptionHandle;
+        const c = cartJson({ deliveryGroups: { nodes: [{ id: 'gid://shopify/CartDeliveryGroup/g1',
+          deliveryOptions: multi.deliveryGroups.nodes[0].deliveryOptions,
+          selectedDeliveryOption: { handle: h, estimatedCost: { amount: h === 'exp' ? '150.0' : '60.0' } } }] } });
+        return { cartSelectedDeliveryOptionsUpdate: { cart: c, userErrors: [] } };
+      }]
+    ]);
+    S.add(full, full.variants[0], 1); // change the cart so the cache misses
+    const lines3 = S.cart().lines;
+    return S.quoteDelivery(lines3, S.delivery()).then((q) => {
+      eq(q.selected.handle, 'std', 'with no selection, the cheapest is pinned');
+      eq(q.deliveryPaise, 6000, 'cheapest charge');
+      eq(calls.length, 2, 'quote + one selection call');
+      return S.selectDeliveryOption(q, 'exp');
+    }).then((q) => {
+      eq(q.selected.handle, 'exp', 'the buyer switched to Express');
+      eq(q.deliveryPaise, 15000, 'charge follows the choice');
+      eq(q.totalPaise, 23438 + 15000, 'total follows the choice');
+      eq(calls[calls.length - 1].variables.cartId, 'gid://shopify/Cart/c1-abc?key=k', 're-pinned on the same cart');
+    });
+  }).then(() => {
+    // 4) Free delivery is a real zero, shown as such.
+    calls = [];
+    S.add(full, full.variants[0], 1);
+    stub([['RrtCartQuote', () => ({ cartCreate: { cart: cartJson({ deliveryGroups: { nodes: [{ id: 'g1',
+      deliveryOptions: [{ handle: 'free', title: 'Free delivery', deliveryMethodType: 'SHIPPING', estimatedCost: { amount: '0.0' } }],
+      selectedDeliveryOption: { handle: 'free', estimatedCost: { amount: '0.0' } } }] } }), userErrors: [] } })]]);
+    return S.quoteDelivery(S.cart().lines, S.delivery()).then((q) => {
+      eq(q.deliveryPaise, 0, 'free delivery quotes as zero');
+      eq(q.totalPaise, q.itemsPaise, 'and the total is the items total');
+    });
+  }).then(() => {
+    // 5) Options lag the cart: the follow-up read supplies them.
+    calls = [];
+    S.add(full, full.variants[0], 1);
+    stub([
+      ['RrtCartQuote', () => ({ cartCreate: { cart: cartJson({ deliveryGroups: { nodes: [] } }), userErrors: [] } })],
+      ['RrtCartRead', () => ({ cart: cartJson() })]
+    ]);
+    return S.quoteDelivery(S.cart().lines, S.delivery()).then((q) => {
+      eq(q.deliveryPaise, 8000, 'delivery found on the follow-up read');
+      eq(calls.length, 2, 'exactly one follow-up');
+    });
+  }).then(() => {
+    // 6) Unserviceable: Shopify offers nothing, the shop says so.
+    calls = [];
+    S.add(full, full.variants[0], 1);
+    stub([
+      ['RrtCartQuote', () => ({ cartCreate: { cart: cartJson({ deliveryGroups: { nodes: [] } }), userErrors: [] } })],
+      ['RrtCartRead', () => ({ cart: cartJson({ deliveryGroups: { nodes: [] } }) })]
+    ]);
+    return S.quoteDelivery(S.cart().lines, S.delivery()).then(() => {
+      ok(false, 'should have rejected');
+    }, (e) => {
+      ok(/does not deliver/.test(e.message), 'an unserviceable address is named as such');
+    });
+  }).then(() => {
+    // 7) Shopify user error (e.g. address rejected) surfaces its message.
+    S.add(full, full.variants[0], 1);
+    stub([['RrtCartQuote', () => ({ cartCreate: { cart: null, userErrors: [{ message: 'Zip is invalid for the province', field: ['input'] } ] } })]]);
+    return S.quoteDelivery(S.cart().lines, S.delivery()).then(() => ok(false, 'should reject'), (e) => {
+      eq(e.message, 'Zip is invalid for the province', 'the vendor\u2019s own message is shown');
+    });
+  }).then(() => {
+    // 8) No quote (API down): checkout still happens, by permalink, with a
+    //    fresh reference - and is marked unquoted so the UI can say delivery
+    //    will show on the vendor's page.
+    S.__internal.setFetch(() => Promise.reject(new Error('down')));
+    const h = S.beginCheckout(S.cart().lines, { fromCart: true, quote: null });
+    eq(h.quoted, false, 'unquoted hand-off is flagged');
+    ok(h.url.indexOf('/cart/') !== -1, 'and goes by permalink');
+    // A stale quote for a different cart is ignored, never handed off.
+    const stale = { key: 'other|x', at: Date.now(), checkoutUrl: 'https://x', rrtRef: 'RRT-ABCDEFGHJK' };
+    const h2 = S.beginCheckout(S.cart().lines, { fromCart: true, quote: stale });
+    eq(h2.quoted, false, 'a quote for another cart or address is never used');
+    S.clearDelivery();
+    S.clearCart();
+  });
+}
+
 /* --------------------------------------------------------- hub previews */
 function hubPreviewTests() {
   S.__internal.resetTransport();
@@ -727,7 +881,7 @@ S.revalidateCart().then((r) => {
     eq(r.collections[0].handle, 'jerhigh', 'matching collections offered');
     S.__internal.resetTransport();
   });
-}).then(hubPreviewTests).then(brandPageTests).then(function () {
+}).then(deliveryQuoteTests).then(hubPreviewTests).then(brandPageTests).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
   process.exit(failed ? 1 : 0);
 }).catch((e) => {

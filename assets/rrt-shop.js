@@ -1769,6 +1769,199 @@
    *  The `attributes[source]` note rides on the order in their admin - and
    *  onto the backend's ledger - so RRT can see which orders came through
    *  the website as opposed to the apps. */
+  /* ================================================== DELIVERY QUOTE */
+  /* Shopify's own delivery charge for THIS cart at THIS address, before the
+   * buyer sees a payment screen. A cart is created on the vendor's Shopify
+   * with the saved address; Shopify answers with the delivery options it
+   * would offer at checkout and what each costs. The one the buyer sees is
+   * pinned on that cart, and checkout is handed off ON THAT SAME CART - so
+   * the vendor's page shows the same delivery charge and the same total by
+   * construction. If the API cannot be reached, the shop says so plainly
+   * and hands off by permalink instead (delivery then shows on their page). */
+
+  /** Shopify's province codes for India, keyed by the names in INDIA_STATES. */
+  var STATE_CODES = {
+    'Andaman and Nicobar Islands': 'AN', 'Andhra Pradesh': 'AP', 'Arunachal Pradesh': 'AR',
+    'Assam': 'AS', 'Bihar': 'BR', 'Chandigarh': 'CH', 'Chhattisgarh': 'CG',
+    'Dadra and Nagar Haveli': 'DN', 'Daman and Diu': 'DD', 'Delhi': 'DL', 'Goa': 'GA',
+    'Gujarat': 'GJ', 'Haryana': 'HR', 'Himachal Pradesh': 'HP', 'Jammu and Kashmir': 'JK',
+    'Jharkhand': 'JH', 'Karnataka': 'KA', 'Kerala': 'KL', 'Ladakh': 'LA', 'Lakshadweep': 'LD',
+    'Madhya Pradesh': 'MP', 'Maharashtra': 'MH', 'Manipur': 'MN', 'Meghalaya': 'ML',
+    'Mizoram': 'MZ', 'Nagaland': 'NL', 'Odisha': 'OR', 'Puducherry': 'PY', 'Punjab': 'PB',
+    'Rajasthan': 'RJ', 'Sikkim': 'SK', 'Tamil Nadu': 'TN', 'Telangana': 'TS', 'Tripura': 'TR',
+    'Uttar Pradesh': 'UP', 'Uttarakhand': 'UK', 'West Bengal': 'WB'
+  };
+
+  var CART_FIELDS =
+    ' id checkoutUrl' +
+    ' cost { subtotalAmount { amount } totalAmount { amount } totalTaxAmount { amount } }' +
+    ' deliveryGroups(first: 5) { nodes { id' +
+    '   deliveryOptions { handle title deliveryMethodType estimatedCost { amount } }' +
+    '   selectedDeliveryOption { handle estimatedCost { amount } }' +
+    ' } }';
+
+  var QUOTE_TTL_MS = 3 * 60 * 1000;
+  var quoteCache = {};
+
+  function sellableOf(lines) {
+    return (lines || []).filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; });
+  }
+
+  function quoteKey(lines, d) {
+    var items = sellableOf(lines).map(function (l) { return l.variantId + ':' + l.qty; }).sort().join(',');
+    return items + '|' + [d.address1, d.address2, d.city, d.state, d.pin, d.phone, d.email].join('|');
+  }
+
+  /** Parse a Shopify cart into a quote. Null when the cart carries no
+   *  delivery options yet (the address may need a moment to resolve). */
+  function quoteFromCart(cart, rrtRef, key) {
+    if (!cart || !cart.id || !cart.checkoutUrl) return null;
+    var groups = (cart.deliveryGroups && cart.deliveryGroups.nodes) || [];
+    var options = [];
+    var deliveryPaise = 0;
+    var selected = null;
+    var allSelected = groups.length > 0;
+    groups.forEach(function (g, gi) {
+      (g.deliveryOptions || []).forEach(function (o) {
+        var paise = paiseFromDecimal(o.estimatedCost && o.estimatedCost.amount);
+        if (paise == null) return;
+        options.push({ groupId: g.id, handle: o.handle, title: o.title || 'Delivery', paise: paise, method: o.deliveryMethodType || '' });
+      });
+      var sel = g.selectedDeliveryOption;
+      if (sel && sel.handle) {
+        var sp = paiseFromDecimal(sel.estimatedCost && sel.estimatedCost.amount);
+        deliveryPaise += sp || 0;
+        if (gi === 0) selected = { groupId: g.id, handle: sel.handle, paise: sp || 0 };
+      } else {
+        allSelected = false;
+      }
+    });
+    if (!options.length) return null;
+    var items = paiseFromDecimal(cart.cost && cart.cost.totalAmount && cart.cost.totalAmount.amount);
+    var listed = paiseFromDecimal(cart.cost && cart.cost.subtotalAmount && cart.cost.subtotalAmount.amount);
+    var tax = paiseFromDecimal(cart.cost && cart.cost.totalTaxAmount && cart.cost.totalTaxAmount.amount) || 0;
+    if (items == null) return null;
+    return {
+      key: key,
+      at: Date.now(),
+      cartId: cart.id,
+      checkoutUrl: cart.checkoutUrl,
+      rrtRef: rrtRef,
+      itemsPaise: items,               // what Shopify will charge for the items, offers applied
+      listedPaise: listed == null ? items : listed,
+      offersPaise: listed != null && listed > items ? listed - items : 0,
+      taxPaise: tax,
+      options: groups.length === 1 ? options : [],   // a chooser only makes sense for one group
+      selected: selected,
+      deliveryPaise: allSelected ? deliveryPaise : null,
+      totalPaise: allSelected ? items + deliveryPaise : null,
+      groupsPendingSelection: !allSelected
+    };
+  }
+
+  function cartInput(lines, d, rrtRef) {
+    return {
+      lines: sellableOf(lines).map(function (l) {
+        return { merchandiseId: 'gid://shopify/ProductVariant/' + l.variantId, quantity: l.qty };
+      }),
+      attributes: [
+        { key: 'source', value: 'RRT website' },
+        { key: 'rrt_ref', value: rrtRef }
+      ],
+      buyerIdentity: { email: d.email, phone: '+91' + d.phone, countryCode: 'IN' },
+      delivery: {
+        addresses: [{
+          selected: true,
+          oneTimeUse: false,
+          address: {
+            deliveryAddress: {
+              firstName: d.firstName, lastName: d.lastName,
+              address1: d.address1, address2: d.address2 || null,
+              city: d.city, provinceCode: STATE_CODES[d.state] || null,
+              zip: d.pin, countryCode: 'IN', phone: '+91' + d.phone
+            }
+          }
+        }]
+      }
+    };
+  }
+
+  function userErrorMessage(errs) {
+    var e = (errs || [])[0];
+    return e && e.message ? e.message : null;
+  }
+
+  /** Shopify's delivery options and charge for [lines] shipped to [d].
+   *  Resolves to a quote (see quoteFromCart). Rejects with a StorefrontError
+   *  whose message can be shown: an unserviceable address says so; a network
+   *  failure says the store could not be reached. Cached for three minutes
+   *  per cart+address, so a re-render never re-creates a cart. */
+  function quoteDelivery(lines, d, opts) {
+    opts = opts || {};
+    if (!d || !validateDelivery(d).ok) return Promise.reject(StorefrontError('Delivery details are needed first.'));
+    if (!sellableOf(lines).length) return Promise.reject(StorefrontError('Nothing in the bag can be delivered.'));
+    var key = quoteKey(lines, d);
+    var hit = quoteCache[key];
+    if (hit && !opts.fresh && Date.now() - hit.at < QUOTE_TTL_MS) return Promise.resolve(hit);
+    var rrtRef = newRrtRef();
+    var mutation =
+      'mutation RrtCartQuote($input: CartInput!) {' +
+      ' cartCreate(input: $input) { cart {' + CART_FIELDS + ' } userErrors { message field } }' +
+      '}';
+    return gql(mutation, { input: cartInput(lines, d, rrtRef) }, { fresh: true }).then(function (data) {
+      var res = data && data.cartCreate;
+      var msg = userErrorMessage(res && res.userErrors);
+      if (msg) throw StorefrontError(msg);
+      var cart = res && res.cart;
+      var q = quoteFromCart(cart, rrtRef, key);
+      if (q) return q;
+      if (!cart || !cart.id) throw StorefrontError('The store could not price delivery right now.');
+      // Delivery options can lag the cart by a moment; read the cart once more.
+      var read = 'query RrtCartRead($id: ID!) { cart(id: $id) {' + CART_FIELDS + ' } }';
+      return new Promise(function (resolve) { setTimeout(resolve, 700); }).then(function () {
+        return gql(read, { id: cart.id }, { fresh: true });
+      }).then(function (d2) {
+        var q2 = quoteFromCart(d2 && d2.cart, rrtRef, key);
+        if (!q2) throw StorefrontError('The store does not deliver to this address.');
+        return q2;
+      });
+    }).then(function (q) {
+      // Every group must have a selected option, or the total is not final.
+      if (q.groupsPendingSelection && q.options.length) {
+        var cheapest = q.options.slice().sort(function (a, b) { return a.paise - b.paise; })[0];
+        return selectDeliveryOption(q, cheapest.handle);
+      }
+      quoteCache[key] = q;
+      return q;
+    });
+  }
+
+  /** Pin a delivery option on the quoted cart. Resolves to the refreshed
+   *  quote; the checkout hand-off then shows exactly this option. */
+  function selectDeliveryOption(quote, handle) {
+    var opt = null;
+    (quote.options || []).forEach(function (o) { if (o.handle === handle) opt = o; });
+    if (!opt) return Promise.reject(StorefrontError('That delivery option is not available.'));
+    var mutation =
+      'mutation RrtCartSelect($cartId: ID!, $sel: [CartSelectedDeliveryOptionInput!]!) {' +
+      ' cartSelectedDeliveryOptionsUpdate(cartId: $cartId, selectedDeliveryOptions: $sel) {' +
+      '  cart {' + CART_FIELDS + ' } userErrors { message field } } }';
+    return gql(mutation, { cartId: quote.cartId, sel: [{ deliveryGroupId: opt.groupId, deliveryOptionHandle: handle }] }, { fresh: true })
+      .then(function (data) {
+        var res = data && data.cartSelectedDeliveryOptionsUpdate;
+        var msg = userErrorMessage(res && res.userErrors);
+        if (msg) throw StorefrontError(msg);
+        var q = quoteFromCart(res && res.cart, quote.rrtRef, quote.key);
+        if (!q) throw StorefrontError('The store could not price delivery right now.');
+        quoteCache[quote.key] = q;
+        return q;
+      });
+  }
+
+  function quoteMatches(quote, lines, d) {
+    return !!quote && !!d && quote.key === quoteKey(lines, d) && Date.now() - quote.at < QUOTE_TTL_MS;
+  }
+
   /* ================================================= DELIVERY DETAILS */
   /* What the vendor's checkout asks for, collected once here so the buyer
    * only presses Pay there. Kept ON THIS DEVICE only (localStorage): RRT's
@@ -1941,7 +2134,11 @@
     opts = opts || {};
     var sellable = lines.filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; });
     if (!sellable.length) return null;
-    var rrtRef = newRrtRef();
+    // A valid quote means a cart already exists on the vendor's Shopify with
+    // this exact address and delivery option: hand THAT off, so the vendor's
+    // page shows the delivery charge and total the buyer has already seen.
+    var quote = opts.quote && quoteMatches(opts.quote, lines, delivery()) ? opts.quote : null;
+    var rrtRef = quote ? quote.rrtRef : newRrtRef();
     var now = Date.now();
     // The app's id is 'rrt-<millis>'. Two hand-offs in one millisecond would
     // share it and the second receipt would silently replace the first, so
@@ -1964,11 +2161,15 @@
       rrtRef: rrtRef,
       status: 'handed'
     };
+    if (quote && quote.deliveryPaise != null) {
+      order.deliveryPaise = quote.deliveryPaise;
+      order.totalPaise = quote.totalPaise;
+    }
     saveReceipt(order);
-    var url = checkoutUrl(sellable, {
+    var url = quote ? quote.checkoutUrl : checkoutUrl(sellable, {
       buyerName: opts.buyerName, buyerPhone: opts.buyerPhone, rrtRef: rrtRef
     });
-    return { order: order, url: url };
+    return { order: order, url: url, quoted: !!quote };
   }
 
 
@@ -2050,6 +2251,10 @@
     newRrtRef: newRrtRef,
     checkoutUrl: checkoutUrl,
     beginCheckout: beginCheckout,
+    quoteDelivery: quoteDelivery,
+    selectDeliveryOption: selectDeliveryOption,
+    quoteMatches: quoteMatches,
+    stateCodes: STATE_CODES,
     indiaStates: INDIA_STATES,
     delivery: delivery,
     deliveryComplete: deliveryComplete,
