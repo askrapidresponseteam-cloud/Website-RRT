@@ -17,7 +17,7 @@
   function money(p) { return S.money(p); }
 
   /** One product tile. Same information as the app's tile: image, flags
-   *  (sale %, sold out, veg, Rx), brand, name, "from" price and a
+   *  (sale %, sold out, Rx), brand, name, "from" price and a
    *  strikethrough only where it is honest. */
   function tile(p, opts) {
     opts = opts || {};
@@ -33,7 +33,6 @@
       var off = Math.round(((cheapest.compareAtPaise - cheapest.pricePaise) * 100) / cheapest.compareAtPaise);
       if (off > 0) flags += '<span class="flag">' + off + '% off</span>';
     }
-    if (p.isVeg) flags += '<span class="flag veg-flag">Veg</span>';
     if (p.isRx) flags += '<span class="flag rx-flag">Rx</span>';
 
     var meta;

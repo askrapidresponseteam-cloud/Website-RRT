@@ -414,9 +414,9 @@ button { font: inherit; color: inherit; }
   width: 85%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  column-gap: 26px;
-  row-gap: 48px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 56px;
   padding: 16px 0 80px;
 }
 
@@ -455,7 +455,6 @@ button { font: inherit; color: inherit; }
 }
 .product-image .flag + .flag { left: auto; right: 0; }
 .flag.oos-flag { background: #111111; color: #cccccc; }
-.flag.veg-flag { background: #111111; color: #22c55e; }
 .flag.rx-flag { background: #111111; color: #eeeeee; }
 .product-image .flag:nth-child(n+4) { display: none; }
 
@@ -474,9 +473,9 @@ button { font: inherit; color: inherit; }
 .product-name {
   font-family: var(--display);
   font-weight: 600;
-  font-size: 20px;
-  line-height: 1.12;
-  min-height: 45px;
+  font-size: 16px;
+  line-height: 1.18;
+  min-height: 38px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .product-meta {
@@ -489,11 +488,11 @@ button { font: inherit; color: inherit; }
 .product-meta .oos { font-family: var(--sans); }
 
 .add {
-  margin-top: 13px;
+  margin-top: 11px;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--text-mid);
-  padding: 11px 14px;
+  padding: 9px 12px;
   width: 100%;
   font-size: 11px;
   text-transform: uppercase;
@@ -628,6 +627,10 @@ footer.site-footer {
 
 /* --------------------------------------------------------- RESPONSIVE -- */
 
+@media (max-width: 1400px) {
+  .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 26px; }
+}
+
 @media (max-width: 1100px) {
   .nav { gap: 18px; }
   .nav a { font-size: 10px; }
@@ -666,7 +669,7 @@ footer.site-footer {
     column-gap: 14px;
     row-gap: 35px;
   }
-  .product-name { font-size: 17px; min-height: 39px; }
+  .product-name { font-size: 15px; min-height: 36px; }
   .disclosure { grid-template-columns: 1fr; gap: 12px; padding-left: 6%; padding-right: 6%; }
   footer.site-footer { display: block; line-height: 2; padding-left: 6%; padding-right: 6%; }
 }

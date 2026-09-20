@@ -43,7 +43,6 @@
 .eyebrow a#brand:hover { color:var(--accent); border-color:var(--accent); }
 .eyebrow .tag { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
                 padding:3px 8px; border:1px solid var(--border-strong); color:var(--text-mid); }
-.eyebrow .tag.veg { color:#16a34a; border-color:#22c55e66; }
 .price-row { min-height:34px; margin:16px 0 4px; font-family:var(--mono); font-size:24px; font-weight:500; }
 .price-row .was { font-size:15px; color:var(--text-low); text-decoration:line-through; margin-left:10px; }
 .price-row .off { font-size:12px; color:var(--accent); margin-left:10px; letter-spacing:.06em; }
@@ -243,7 +242,6 @@
     else brandEl.removeAttribute('href');
 
     var tags = '';
-    if (p.isVeg) tags += '<span class="tag veg">Veg</span> ';
     if (p.isRx) tags += '<span class="tag">Prescription \u00b7 the seller runs the process</span>';
     $('tags').innerHTML = tags;
 
