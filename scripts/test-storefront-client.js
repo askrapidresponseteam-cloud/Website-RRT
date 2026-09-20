@@ -379,6 +379,39 @@ function deliveryQuoteTests() {
       eq(calls[calls.length - 1].variables.cartId, 'gid://shopify/Cart/c1-abc?key=k', 're-pinned on the same cart');
     });
   }).then(() => {
+    // 3b) The live order that exposed the double count: items 1,534.15,
+    //     delivery 65, Shopify totalAmount 1,599.15 (delivery included).
+    calls = [];
+    S.add(full, full.variants[0], 1);
+    stub([['RrtCartQuote', () => ({ cartCreate: { cart: cartJson({
+      cost: { subtotalAmount: { amount: '1534.15' }, totalAmount: { amount: '1599.15' }, totalTaxAmount: { amount: '22.88' } },
+      deliveryGroups: { nodes: [{ id: 'g1',
+        deliveryOptions: [{ handle: 'std', title: 'Standard', deliveryMethodType: 'SHIPPING', estimatedCost: { amount: '65.0' } }],
+        selectedDeliveryOption: { handle: 'std', estimatedCost: { amount: '65.0' } } }] }
+    }), userErrors: [] } })]]);
+    return S.quoteDelivery(S.cart().lines, S.delivery()).then((q) => {
+      eq(q.totalPaise, 159915, 'total payable is Shopify\u2019s total, which already includes delivery');
+      eq(q.deliveryPaise, 6500, 'delivery shown once');
+      eq(q.itemsPaise, 153415, 'items = total minus delivery');
+      eq(q.offersPaise, 0, 'no phantom offer');
+      eq(q.taxPaise, 2288, 'tax carried as included');
+    });
+  }).then(() => {
+    // 3c) Offers: listed 300, charged 270 for items, delivery 80 -> Shopify
+    //     total 350. The gap between listed and items is the offer.
+    calls = [];
+    S.add(full, full.variants[0], 1);
+    stub([['RrtCartQuote', () => ({ cartCreate: { cart: cartJson({
+      cost: { subtotalAmount: { amount: '300.00' }, totalAmount: { amount: '350.00' }, totalTaxAmount: { amount: '0.0' } }
+    }), userErrors: [] } })]]);
+    return S.quoteDelivery(S.cart().lines, S.delivery()).then((q) => {
+      eq(q.listedPaise, 30000, 'listed before offers');
+      eq(q.itemsPaise, 27000, 'items after offers');
+      eq(q.offersPaise, 3000, 'the offer is the gap');
+      eq(q.deliveryPaise, 8000, 'delivery once');
+      eq(q.totalPaise, 35000, 'total is what Shopify will charge');
+    });
+  }).then(() => {
     // 4) Free delivery is a real zero, shown as such.
     calls = [];
     S.add(full, full.variants[0], 1);

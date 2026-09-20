@@ -1837,24 +1837,36 @@
       }
     });
     if (!options.length) return null;
-    var items = paiseFromDecimal(cart.cost && cart.cost.totalAmount && cart.cost.totalAmount.amount);
+    var total = paiseFromDecimal(cart.cost && cart.cost.totalAmount && cart.cost.totalAmount.amount);
     var listed = paiseFromDecimal(cart.cost && cart.cost.subtotalAmount && cart.cost.subtotalAmount.amount);
     var tax = paiseFromDecimal(cart.cost && cart.cost.totalTaxAmount && cart.cost.totalTaxAmount.amount) || 0;
-    if (items == null) return null;
+    if (total == null) return null;
+    if (listed == null) listed = total;
+    // Shopify's cart totalAmount is what the buyer pays and, once a delivery
+    // option is selected, already INCLUDES that delivery charge. Proven on a
+    // live order (items 1,534.15 + delivery 65 = totalAmount 1,599.15);
+    // adding delivery again once showed a total 65 too high. The one case
+    // where it is exclusive is when nothing is selected yet - detected as
+    // totalAmount equalling the listed subtotal with a delivery charge
+    // outstanding - and then we add it ourselves.
+    var deliveryInTotal = allSelected && !(total === listed && deliveryPaise > 0);
+    var payable = allSelected ? (deliveryInTotal ? total : total + deliveryPaise) : null;
+    var items = allSelected ? payable - deliveryPaise : total;   // items, offers applied
+    if (items < 0) items = total;
     return {
       key: key,
       at: Date.now(),
       cartId: cart.id,
       checkoutUrl: cart.checkoutUrl,
       rrtRef: rrtRef,
-      itemsPaise: items,               // what Shopify will charge for the items, offers applied
-      listedPaise: listed == null ? items : listed,
-      offersPaise: listed != null && listed > items ? listed - items : 0,
+      itemsPaise: items,
+      listedPaise: listed,
+      offersPaise: listed > items ? listed - items : 0,
       taxPaise: tax,
       options: groups.length === 1 ? options : [],   // a chooser only makes sense for one group
       selected: selected,
       deliveryPaise: allSelected ? deliveryPaise : null,
-      totalPaise: allSelected ? items + deliveryPaise : null,
+      totalPaise: payable,
       groupsPendingSelection: !allSelected
     };
   }
