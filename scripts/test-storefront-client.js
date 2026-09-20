@@ -446,8 +446,6 @@ function brandPageTests() {
     'the sibling search asks for the base title');
 })();
 
-let cartCreateVars = null;
-
 /* ------------------------------------------- revalidation (stubbed vendor) */
 
 function jsonRes(body, status) {
@@ -515,25 +513,17 @@ S.revalidateCart().then((r) => {
   S.clearCart();
   S.add(full, full.variants[0], 2);
 
-  // The native hand-off: cartCreate carries lines and attribution, and its
-  // checkoutUrl lands the buyer straight on payment.
-  cartCreateVars = null;
-  S.__internal.setFetch(function (url, init) {
-    const body = init && init.body ? String(init.body) : '';
-    if (body.indexOf('RrtCartCreate') !== -1) {
-      cartCreateVars = JSON.parse(body).variables;
-      return Promise.resolve({ status: 200, json: () => Promise.resolve({ data: { cartCreate: {
-        cart: { checkoutUrl: 'https://www.pets-lifestyle.com/checkouts/cn/abc123' },
-        userErrors: []
-      } } }) });
-    }
-    return Promise.reject(new Error('unexpected fetch in checkout test'));
-  });
-  return S.beginCheckout(S.cart().lines, { fromCart: true });
-}).then((handoff) => {
-  eq(handoff.native, true, 'the hand-off is a native cart, not a permalink');
-  eq(handoff.url, 'https://www.pets-lifestyle.com/checkouts/cn/abc123',
-    'and it lands straight on the payment page');
+  // The hand-off is a synchronous redirect to the vendor's cart permalink:
+  // no API round-trip, so pressing PAY is instant.
+  const handoff = S.beginCheckout(S.cart().lines, { fromCart: true });
+  ok(handoff && typeof handoff.then !== 'function', 'beginCheckout is synchronous - no waiting on anyone');
+  ok(handoff.url.indexOf('https://www.pets-lifestyle.com/cart/71:2?') === 0,
+    'and builds the permalink from the cart');
+  ok(handoff.url.indexOf('attributes%5Bsource%5D=RRT%20website') !== -1
+     || handoff.url.indexOf('attributes[source]=RRT+website') !== -1
+     || handoff.url.indexOf('attributes%5Bsource%5D=RRT+website') !== -1,
+    'with attribution intact');
+  ok(/rrt_ref%5D=RRT-|rrt_ref\]=RRT-/.test(handoff.url), 'and the order reference on the cart');
   eq(S.receipts()[0].status, 'handed', 'the receipt records the hand-off itself');
   eq(S.receipts()[0].subtotalPaise, 23438, 'receipt keeps the item subtotal shown');
   eq(S.cart().count, 2, 'the bag is never cleared behind the buyer\u2019s back');
@@ -542,45 +532,8 @@ S.revalidateCart().then((r) => {
   ok(!('pendingCheckout' in S) && !('resolvePendingCheckout' in S),
     'nobody gets interrogated about how checkout went');
 
-  // Attribution rides the cart itself.
-  const attrs = {};
-  (cartCreateVars.input.attributes || []).forEach(a => { attrs[a.key] = a.value; });
-  eq(attrs.source, 'RRT website', 'source attribute rides the native cart');
-  ok(/^RRT-[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{10}$/.test(attrs.rrt_ref),
-    'and so does the order reference');
-  eq(cartCreateVars.input.lines[0].merchandiseId, 'gid://shopify/ProductVariant/71',
-    'lines carry the variant gid');
-  eq(cartCreateVars.input.lines[0].quantity, 2, 'and the quantity');
-
-  // Cart API down: the permalink stands in, and nobody loses a sale.
-  S.__internal.setFetch(() => Promise.reject(new Error('cart api down')));
-  return S.beginCheckout(S.cart().lines, { fromCart: true });
-}).then((handoff) => {
-  eq(handoff.native, false, 'a Cart API failure falls back');
-  ok(handoff.url.indexOf('https://www.pets-lifestyle.com/cart/71:2?') === 0,
-    'to the permalink, which always works');
-
-  // Cart API HANGING (the production symptom): the buyer must not wait on
-  // it. Past the deadline the permalink goes out regardless.
-  S.__internal.setHandoffDeadline(120);
-  S.__internal.setFetch(() => new Promise(() => { /* never settles */ }));
-  const t0 = Date.now();
-  return S.beginCheckout(S.cart().lines, { fromCart: true }).then((h) => {
-    ok(Date.now() - t0 < 1000, 'a hanging Cart API is abandoned within the deadline');
-    eq(h.timedOut, true, 'and reported as timed out');
-    ok(h.url.indexOf('/cart/71:2?') !== -1, 'with the permalink in hand');
-    S.__internal.setHandoffDeadline(3500);
-    return handoff;
-  });
-}).then((handoff) => {
-  eq(handoff.native, false, 'a Cart API failure falls back');
-  ok(handoff.url.indexOf('https://www.pets-lifestyle.com/cart/71:2?') === 0,
-    'to the permalink, which always works');
-  ok(handoff.url.indexOf('attributes%5Bsource%5D=RRT%20website') !== -1
-     || handoff.url.indexOf('attributes[source]=RRT+website') !== -1
-     || handoff.url.indexOf('attributes%5Bsource%5D=RRT+website') !== -1,
-    'with attribution intact');
-  eq(S.receipts().length, 3, 'every hand-off keeps its own receipt');
+  S.beginCheckout(S.cart().lines, { fromCart: true });
+  eq(S.receipts().length, 2, 'every hand-off keeps its own receipt');
 
   S.deleteMyData();
   eq(S.cart().count, 0, 'delete-my-data clears the cart');

@@ -960,8 +960,6 @@
   }
 
   var TIMEOUT_MS = 20 * 1000;
-  /** Max wait for the native cart before the permalink goes out instead. */
-  var HANDOFF_DEADLINE_MS = 3500;
 
   var fetchImpl = function () { return global.fetch.apply(global, arguments); };
 
@@ -1802,10 +1800,11 @@
    *  startVendorCheckout does - mint a reference, keep a receipt, go.
    *
    *  The receipt records the hand-off itself: what was sent, when, and the
-   *  reference that rode along. A browser cannot watch the vendor's
-   *  checkout, so RRT never claims more than that - and never needs to,
-   *  because the authoritative order count comes from the vendor's Shopify
-   *  via the backend webhook, which sees the rrt_ref regardless. */
+   *  reference that rode along. The hand-off is a synchronous redirect to
+   *  the vendor's cart permalink - instant, no API round-trip - which is
+   *  what makes buying here feel immediate. RRT never claims more than the
+   *  hand-off; the authoritative order count comes from the vendor's
+   *  Shopify via the backend webhook, which sees the rrt_ref regardless. */
   function beginCheckout(lines, opts) {
     opts = opts || {};
     var sellable = lines.filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; });
@@ -1834,44 +1833,10 @@
       status: 'handed'
     };
     saveReceipt(order);
-    var permalink = checkoutUrl(sellable, {
+    var url = checkoutUrl(sellable, {
       buyerName: opts.buyerName, buyerPhone: opts.buyerPhone, rrtRef: rrtRef
     });
-    var mutation =
-      'mutation RrtCartCreate($input: CartInput!) {' +
-      ' cartCreate(input: $input) {' +
-      '  cart { checkoutUrl }' +
-      '  userErrors { message }' +
-      ' }' +
-      '}';
-    var input = {
-      lines: sellable.map(function (l) {
-        return {
-          merchandiseId: 'gid://shopify/ProductVariant/' + l.variantId,
-          quantity: l.qty
-        };
-      }),
-      attributes: [
-        { key: 'source', value: 'RRT website' },
-        { key: 'rrt_ref', value: rrtRef }
-      ]
-    };
-    var attempt = gql(mutation, { input: input }, { fresh: true }).then(function (data) {
-      var res = data && data.cartCreate;
-      var cart = res && res.cart;
-      if (cart && cart.checkoutUrl) return { order: order, url: cart.checkoutUrl, native: true };
-      return { order: order, url: permalink, native: false };
-    }).catch(function () {
-      return { order: order, url: permalink, native: false };
-    });
-    // Never let a slow API hold the buyer: past the deadline, the permalink
-    // goes out and the native attempt is simply abandoned.
-    var deadline = new Promise(function (resolve) {
-      setTimeout(function () {
-        resolve({ order: order, url: permalink, native: false, timedOut: true });
-      }, HANDOFF_DEADLINE_MS);
-    });
-    return Promise.race([attempt, deadline]);
+    return { order: order, url: url };
   }
 
 
@@ -1972,7 +1937,6 @@
     wrapProduct: wrapProduct,
     transport: transport,
     resetTransport: function () { try { session.removeItem(TRANSPORT_KEY); } catch (e) { /* ignore */ } },
-    setHandoffDeadline: function (ms) { HANDOFF_DEADLINE_MS = ms; },
     setFetch: function (fn) { fetchImpl = fn; },
     stores: { local: local, session: session }
   };
