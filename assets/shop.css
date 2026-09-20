@@ -710,3 +710,24 @@ footer.site-footer {
   .disclosure { grid-template-columns: 1fr; gap: 12px; padding-left: 6%; padding-right: 6%; }
   footer.site-footer { display: block; line-height: 2; padding-left: 6%; padding-right: 6%; }
 }
+
+
+/* ------------------------------------------------- store closed (kill switch) */
+.store-closed {
+  position: fixed; inset: 0; z-index: 80;
+  background: #fffffff2;
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.store-closed-card { text-align: center; display: grid; gap: 12px; justify-items: center; max-width: 420px; }
+.store-closed-mark { width: 52px; height: 52px; background: var(--accent); display: grid; place-items: center; }
+.store-closed-mark .material-symbols-outlined { color: #ffffff; font-size: 30px; }
+.store-closed-card strong { font-family: var(--display); font-size: 26px; text-transform: uppercase; letter-spacing: .02em; }
+.store-closed-msg { color: var(--text-dim); font-size: 15px; line-height: 1.5; }
+.store-closed-home {
+  margin-top: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent); text-decoration: none;
+  border: 1px solid var(--accent); padding: 11px 18px;
+}
+.store-closed-home:hover { background: var(--accent); color: #ffffff; }

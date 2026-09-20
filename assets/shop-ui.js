@@ -195,11 +195,62 @@
   }
 
   /* ========================================================== PUBLIC API */
+  /** The admin store switches, honoured on every page. `flags.store` false
+   *  closes the shop: an overlay explains it and buying is blocked. This
+   *  reads RRTStoreConfig (assets/rrt-store-config.js), which live-subscribes
+   *  to the same Firestore document the app reads, so an admin flip reaches
+   *  open web pages within seconds. Absent config = open, per the app's
+   *  defaults, so a config outage never takes the shop down. */
+  function storeGate(opts) {
+    opts = opts || {};
+    var cfg = global.RRTStoreConfig;
+    if (!cfg) { if (opts.onOpen) opts.onOpen(); return; }
+
+    var overlay = null;
+    function close(message) {
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'store-closed';
+        overlay.innerHTML =
+          '<div class="store-closed-card">' +
+          '<div class="store-closed-mark"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>' +
+          '<strong>The shop is closed right now</strong>' +
+          '<span class="store-closed-msg"></span>' +
+          '<a class="store-closed-home" href="/">Back to Rapid Response</a>' +
+          '</div>';
+        document.body.appendChild(overlay);
+      }
+      var msg = overlay.querySelector('.store-closed-msg');
+      msg.textContent = message ||
+        'We are between updates with our partner store. Please check back shortly.';
+      overlay.hidden = false;
+    }
+    function open() {
+      if (overlay) overlay.hidden = true;
+    }
+
+    cfg.subscribe(function (s) {
+      if (!s.ready) return;              // stay as-is until the first read lands
+      if (s.storeOpen) { open(); if (opts.onOpen) opts.onOpen(s); }
+      else { close(s.closedMessage); if (opts.onClosed) opts.onClosed(s); }
+    });
+  }
+
+  /** Whether checkout may proceed right now (shop open). Buttons call this at
+   *  press time so a mid-session close is respected. */
+  function storeOpenNow() {
+    var cfg = global.RRTStoreConfig;
+    if (!cfg) return true;
+    return cfg.get().storeOpen !== false;
+  }
+
   global.RRTUI = {
     tile: tile,
     bindTiles: bindTiles,
     bindHeader: bindHeader,
     toast: toast,
+    storeGate: storeGate,
+    storeOpenNow: storeOpenNow,
     registry: registry
   };
   /* END PUBLIC API */
