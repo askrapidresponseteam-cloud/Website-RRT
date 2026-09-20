@@ -378,6 +378,77 @@ function brandPageTests() {
   });
 }
 
+/* ------------------------------------------------------ delivery details */
+// What the vendor's checkout asks for, validated here so the buyer only
+// presses Pay there. Same rules as the app's delivery_details.dart.
+(function () {
+  S.clearDelivery();
+  eq(S.delivery(), null, 'nothing saved to begin with');
+  eq(S.deliveryComplete(), false, 'so checkout is not yet press-Pay-only');
+
+  const good = {
+    firstName: ' Karthik ', lastName: 'Dhanya', email: 'Karthik.Dhanya11@Gmail.com',
+    phone: '+91 81052 50299', address1: '4/232 Ashraya, Ankadakatte', address2: '',
+    city: 'Udupi', state: 'Karnataka', pin: '576222'
+  };
+  const r = S.saveDelivery(good);
+  eq(r.ok, true, 'a complete record saves');
+  eq(r.details.firstName, 'Karthik', 'names are trimmed');
+  eq(r.details.email, 'karthik.dhanya11@gmail.com', 'email is lowercased');
+  eq(r.details.phone, '8105250299', 'phone becomes ten digits from +91 and spaces');
+  eq(S.deliveryComplete(), true, 'and checkout becomes press-Pay-only');
+
+  // The permalink carries every documented prefill key.
+  S.clearCart();
+  S.add(full, full.variants[0], 1);
+  const url = S.beginCheckout(S.cart().lines, { fromCart: true }).url;
+  const q = decodeURIComponent(url.split('?')[1]);
+  const has = (frag) => q.indexOf(frag) !== -1;
+  ok(has('checkout[email]=karthik.dhanya11@gmail.com'), 'email prefilled');
+  ok(has('checkout[shipping_address][first_name]=Karthik'), 'first name prefilled');
+  ok(has('checkout[shipping_address][last_name]=Dhanya'), 'last name prefilled');
+  ok(has('checkout[shipping_address][address1]=4/232 Ashraya, Ankadakatte'), 'address prefilled');
+  ok(!has('checkout[shipping_address][address2]='), 'an empty apartment line is not sent');
+  ok(has('checkout[shipping_address][city]=Udupi'), 'city prefilled');
+  ok(has('checkout[shipping_address][province]=Karnataka'), 'state prefilled by name');
+  ok(has('checkout[shipping_address][zip]=576222'), 'PIN prefilled');
+  ok(has('checkout[shipping_address][country]=India'), 'country prefilled');
+  ok(has('checkout[shipping_address][phone]=+918105250299'), 'phone prefilled in +91 form');
+  ok(has('attributes[rrt_ref]=RRT-'), 'attribution still rides along');
+
+  // Validation: each rule, each message.
+  const bad = S.validateDelivery({ firstName: '', lastName: '', email: 'nope', phone: '12345',
+    address1: 'x', city: '', state: 'Mars', pin: '01234' });
+  eq(bad.ok, false, 'a bad record fails');
+  eq(Object.keys(bad.errors).sort(),
+    ['address1', 'city', 'email', 'firstName', 'lastName', 'phone', 'pin', 'state'],
+    'every broken field is named');
+  ok(/list/.test(bad.errors.state), 'an unknown state points to the list');
+  eq(S.validateDelivery(Object.assign({}, good, { phone: '5105250299' })).ok, false,
+    'an Indian mobile starts with 6-9');
+  eq(S.validateDelivery(Object.assign({}, good, { phone: '08105250299' })).ok, true,
+    'a leading 0 is tolerated');
+  eq(S.validateDelivery(Object.assign({}, good, { pin: '57622' })).ok, false, 'PIN is six digits');
+
+  // Nothing partial is ever saved, and a partial record never half-fills.
+  const partial = S.saveDelivery(Object.assign({}, good, { pin: '' }));
+  eq(partial.ok, false, 'an incomplete record is refused');
+  eq(S.delivery().pin, '576222', 'and the previous complete record stays');
+  S.clearDelivery();
+  const url2 = S.beginCheckout(S.cart().lines, { fromCart: true }).url;
+  ok(url2.indexOf('checkout[email]') === -1 && url2.indexOf('checkout%5Bemail%5D') === -1,
+    'with nothing saved, no prefill keys are sent');
+  ok(url2.indexOf('/cart/71:1?') !== -1, 'but the sale still goes through');
+
+  // Control characters cannot reach the vendor.
+  const dirty = S.saveDelivery(Object.assign({}, good, { address1: '4/232\nAshraya\u0007 Road' }));
+  eq(dirty.details.address1, '4/232 Ashraya Road', 'newlines and control characters are scrubbed');
+
+  eq(S.indiaStates.length, 37, 'the state list matches the vendor\u2019s checkout');
+  S.deleteMyData();
+  eq(S.delivery(), null, 'delete-my-data wipes delivery details');
+})();
+
 /* ---------------------------------------------------------- veg only */
 (function () {
   function tile(title, ptype, tags) {

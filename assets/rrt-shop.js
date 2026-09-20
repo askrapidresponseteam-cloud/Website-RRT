@@ -1769,6 +1769,131 @@
    *  The `attributes[source]` note rides on the order in their admin - and
    *  onto the backend's ledger - so RRT can see which orders came through
    *  the website as opposed to the apps. */
+  /* ================================================= DELIVERY DETAILS */
+  /* What the vendor's checkout asks for, collected once here so the buyer
+   * only presses Pay there. Kept ON THIS DEVICE only (localStorage): RRT's
+   * servers never see it, nothing logs it, and it travels exactly once - to
+   * the vendor, inside the HTTPS checkout link, which is Shopify's own
+   * documented cart-permalink mechanism. Delete-my-data wipes it.
+   *
+   * The same rules live in the app (lib/core/models/delivery_details.dart)
+   * so a detail that validates on one client validates on the other. */
+
+  var DELIVERY_KEY = 'rrt_store_delivery_v1';
+
+  /** The vendor's checkout lists these under State for India. */
+  var INDIA_STATES = [
+    'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam',
+    'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli', 'Daman and Diu',
+    'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir',
+    'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh',
+    'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha',
+    'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
+    'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
+  ];
+
+  var DELIVERY_FIELDS = ['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'state', 'pin'];
+
+  /** One clean string: trimmed, control characters and newlines removed,
+   *  length capped. Nothing that could break a URL or a form reaches the
+   *  vendor. */
+  function cleanText(v, max) {
+    return String(v == null ? '' : v)
+      .replace(/[\u0000-\u001f\u007f]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, max);
+  }
+
+  /** Indian mobile as ten digits, from any of "+91 81052 50299",
+   *  "081052-50299", "8105250299". Empty when it is not one. */
+  function tenDigitPhone(v) {
+    var d = String(v == null ? '' : v).replace(/\D/g, '');
+    if (d.length === 12 && d.indexOf('91') === 0) d = d.slice(2);
+    if (d.length === 11 && d.charAt(0) === '0') d = d.slice(1);
+    return d.length === 10 ? d : '';
+  }
+
+  /** Normalise raw input into the stored shape. */
+  function normalizeDelivery(raw) {
+    raw = raw || {};
+    return {
+      firstName: cleanText(raw.firstName, 50),
+      lastName: cleanText(raw.lastName, 50),
+      email: cleanText(raw.email, 254).toLowerCase(),
+      phone: tenDigitPhone(raw.phone) || cleanText(raw.phone, 20),
+      address1: cleanText(raw.address1, 120),
+      address2: cleanText(raw.address2, 120),
+      city: cleanText(raw.city, 60),
+      state: cleanText(raw.state, 60),
+      pin: String(raw.pin == null ? '' : raw.pin).replace(/\D/g, '').slice(0, 6)
+    };
+  }
+
+  /** Validate a normalised delivery record. Returns { ok, errors } where
+   *  errors maps field -> human message. Messages are the copy the form
+   *  shows; the app carries the same set. */
+  function validateDelivery(d) {
+    var e = {};
+    if (!d.firstName) e.firstName = 'First name is needed.';
+    if (!d.lastName) e.lastName = 'Last name is needed. The seller\u2019s checkout requires it.';
+    if (!d.email) e.email = 'Email is needed for the order confirmation.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) e.email = 'That email does not look right.';
+    if (!/^[6-9]\d{9}$/.test(d.phone)) e.phone = 'A 10-digit Indian mobile number is needed.';
+    if (!d.address1) e.address1 = 'Address is needed.';
+    else if (d.address1.length < 4) e.address1 = 'That address is too short.';
+    if (!d.city) e.city = 'City is needed.';
+    if (!d.state) e.state = 'Pick a state.';
+    else if (INDIA_STATES.indexOf(d.state) === -1) e.state = 'Pick a state from the list.';
+    if (!/^[1-9]\d{5}$/.test(d.pin)) e.pin = 'A 6-digit PIN code is needed.';
+    return { ok: Object.keys(e).length === 0, errors: e };
+  }
+
+  /** The saved delivery record, or null. */
+  function delivery() {
+    var raw = readJson(local, DELIVERY_KEY, null);
+    return raw && typeof raw === 'object' ? normalizeDelivery(raw) : null;
+  }
+
+  /** Whether a complete, valid record is saved: the condition for a
+   *  press-Pay-only checkout. */
+  function deliveryComplete() {
+    var d = delivery();
+    return !!d && validateDelivery(d).ok;
+  }
+
+  /** Validate and save. Returns { ok, errors, details }. Nothing is saved
+   *  when invalid, so a saved record is always a complete one. */
+  function saveDelivery(raw) {
+    var d = normalizeDelivery(raw);
+    var v = validateDelivery(d);
+    if (v.ok) writeJson(local, DELIVERY_KEY, d);
+    return { ok: v.ok, errors: v.errors, details: d };
+  }
+
+  function clearDelivery() {
+    try { local.removeItem(DELIVERY_KEY); } catch (err) { /* ignore */ }
+  }
+
+  /** The documented Shopify cart-permalink prefill keys, from a delivery
+   *  record. Only complete, valid records are mapped: a partial one would
+   *  prefill half a form, which is worse than an empty one. */
+  function deliveryQuery(d) {
+    if (!d || !validateDelivery(d).ok) return {};
+    var q = {};
+    q['checkout[email]'] = d.email;
+    q['checkout[shipping_address][first_name]'] = d.firstName;
+    q['checkout[shipping_address][last_name]'] = d.lastName;
+    q['checkout[shipping_address][address1]'] = d.address1;
+    if (d.address2) q['checkout[shipping_address][address2]'] = d.address2;
+    q['checkout[shipping_address][city]'] = d.city;
+    q['checkout[shipping_address][province]'] = d.state;
+    q['checkout[shipping_address][zip]'] = d.pin;
+    q['checkout[shipping_address][country]'] = 'India';
+    q['checkout[shipping_address][phone]'] = '+91' + d.phone;
+    return q;
+  }
+
   function checkoutUrl(lines, opts) {
     opts = opts || {};
     var items = lines
@@ -1780,18 +1905,25 @@
     query['attributes[source]'] = 'RRT website';
     query.ref = 'rrt-web';
     if (opts.rrtRef) query['attributes[rrt_ref]'] = opts.rrtRef;
-    var name = String(opts.buyerName || '').trim();
-    if (!opts.toVendorCart && name) {
-      // Documented prefill. Shopify's newer checkout may ignore it, in which
-      // case the buyer types their name once on the vendor's page.
-      var parts = name.split(/\s+/);
-      query['checkout[shipping_address][first_name]'] = parts[0];
-      if (parts.length > 1) query['checkout[shipping_address][last_name]'] = parts.slice(1).join(' ');
-      query['checkout[shipping_address][country]'] = 'India';
-    }
-    var phone = String(opts.buyerPhone || '').replace(/[^0-9+]/g, '');
-    if (!opts.toVendorCart && phone.length >= 10) {
-      query['checkout[shipping_address][phone]'] = phone;
+    // Full prefill from saved delivery details, so the vendor's checkout
+    // opens ready to pay. Falls back to name + phone only, then to nothing:
+    // a missing detail never blocks a sale, the buyer just types it there.
+    var d = opts.delivery === undefined ? delivery() : opts.delivery;
+    var full = (!opts.toVendorCart && d) ? deliveryQuery(d) : {};
+    if (Object.keys(full).length) {
+      Object.keys(full).forEach(function (k) { query[k] = full[k]; });
+    } else {
+      var name = String(opts.buyerName || '').trim();
+      if (!opts.toVendorCart && name) {
+        var parts = name.split(/\s+/);
+        query['checkout[shipping_address][first_name]'] = parts[0];
+        if (parts.length > 1) query['checkout[shipping_address][last_name]'] = parts.slice(1).join(' ');
+        query['checkout[shipping_address][country]'] = 'India';
+      }
+      var phone = String(opts.buyerPhone || '').replace(/[^0-9+]/g, '');
+      if (!opts.toVendorCart && phone.length >= 10) {
+        query['checkout[shipping_address][phone]'] = phone;
+      }
     }
     return Vendor.url('/cart/' + items, query);
   }
@@ -1846,7 +1978,7 @@
    *  receipts, the legacy pending flag and the response cache - the same
    *  promise the app's delete-my-data makes. */
   function deleteMyData() {
-    [CART_KEY, SAVED_KEY, RECEIPTS_KEY, 'rrt_store_pending_v1'].forEach(function (k) {
+    [CART_KEY, SAVED_KEY, RECEIPTS_KEY, DELIVERY_KEY, 'rrt_store_pending_v1'].forEach(function (k) {
       try { local.removeItem(k); } catch (e) { /* ignore */ }
     });
     cacheClear();
@@ -1918,6 +2050,12 @@
     newRrtRef: newRrtRef,
     checkoutUrl: checkoutUrl,
     beginCheckout: beginCheckout,
+    indiaStates: INDIA_STATES,
+    delivery: delivery,
+    deliveryComplete: deliveryComplete,
+    saveDelivery: saveDelivery,
+    clearDelivery: clearDelivery,
+    validateDelivery: function (raw) { return validateDelivery(normalizeDelivery(raw)); },
     deleteMyData: deleteMyData,
     vegOnly: vegOnly,
     setVegOnly: setVegOnly,

@@ -76,6 +76,29 @@
   .line .right { grid-column: 2; text-align: left; }
   .rm { margin-left: 0; }
 }
+.delivery { border-top: 1px solid var(--border); padding-top: 22px; margin-top: 26px; }
+.delivery-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.delivery-head h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 22px; letter-spacing: .02em; margin: 0; }
+.delivery-edit, .delivery-cancel { background: transparent; border: 0; cursor: pointer; color: var(--accent);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 6px 0; }
+.delivery-note { color: var(--text-dim); font-size: 13px; margin: 6px 0 14px; }
+.delivery-summary { font-size: 15px; line-height: 1.6; color: var(--text); }
+.delivery-summary .ds-line { display: block; }
+.delivery-summary .ds-dim { color: var(--text-dim); }
+.delivery-form { display: grid; gap: 18px; }
+.df-row { display: grid; gap: 18px; }
+.df-row.two { grid-template-columns: 1fr 1fr; }
+.df-row.three { grid-template-columns: 1fr 1.2fr .8fr; }
+.df { display: grid; gap: 6px; }
+.df > span { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--text-dim); }
+.df input, .df select { font: inherit; font-size: 16px; color: var(--text); background: transparent; border: 0;
+  border-bottom: 1.5px solid var(--border-strong); padding: 8px 0; border-radius: 0; outline: none; width: 100%; }
+.df input:focus, .df select:focus { border-bottom-color: var(--text); }
+.df.bad input, .df.bad select { border-bottom-color: var(--accent); }
+.df > em { font-style: normal; font-size: 12px; color: var(--accent); min-height: 0; }
+.df-actions { display: flex; align-items: center; gap: 18px; margin-top: 4px; }
+.df-actions .btn-solid { width: auto; padding: 13px 22px; }
+@media (max-width: 640px) { .df-row.two, .df-row.three { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -125,6 +148,35 @@
   </div>
 
   <div id="checkoutBlock" hidden>
+    <section class="delivery" id="delivery" aria-labelledby="deliveryTitle">
+      <div class="delivery-head">
+        <h2 id="deliveryTitle">Delivery details</h2>
+        <button class="delivery-edit" id="deliveryEdit" type="button" hidden>Edit</button>
+      </div>
+      <p class="delivery-note" id="deliveryNote">Saved on this device only. The seller's checkout opens filled in, so you just press Pay.</p>
+      <div class="delivery-summary" id="deliverySummary" hidden></div>
+      <form class="delivery-form" id="deliveryForm" autocomplete="on" novalidate hidden>
+        <div class="df-row two">
+          <label class="df"><span>First name</span><input name="firstName" autocomplete="given-name" maxlength="50"><em></em></label>
+          <label class="df"><span>Last name</span><input name="lastName" autocomplete="family-name" maxlength="50"><em></em></label>
+        </div>
+        <div class="df-row two">
+          <label class="df"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254"><em></em></label>
+          <label class="df"><span>Mobile</span><input name="phone" type="tel" autocomplete="tel-national" inputmode="numeric" maxlength="16" placeholder="10 digits"><em></em></label>
+        </div>
+        <label class="df"><span>Address</span><input name="address1" autocomplete="address-line1" maxlength="120" placeholder="House, street, area"><em></em></label>
+        <label class="df"><span>Apartment, suite, etc. (optional)</span><input name="address2" autocomplete="address-line2" maxlength="120"><em></em></label>
+        <div class="df-row three">
+          <label class="df"><span>City</span><input name="city" autocomplete="address-level2" maxlength="60"><em></em></label>
+          <label class="df"><span>State</span><select name="state" autocomplete="address-level1"><option value="">Choose</option></select><em></em></label>
+          <label class="df"><span>PIN code</span><input name="pin" inputmode="numeric" autocomplete="postal-code" maxlength="6" pattern="[0-9]*"><em></em></label>
+        </div>
+        <div class="df-actions">
+          <button class="btn-solid" id="deliverySave" type="submit">Save delivery details</button>
+          <button class="delivery-cancel" id="deliveryCancel" type="button" hidden>Cancel</button>
+        </div>
+      </form>
+    </section>
     <div class="summary">
       <span class="label">Item subtotal</span>
       <span class="amount" id="subtotal">-</span>
@@ -164,6 +216,80 @@
   function $(id) { return document.getElementById(id); }
 
   U.bindHeader();
+
+  /* --------------------------------------------------- delivery details */
+  // Collected once, kept on this device, sent to the seller inside the
+  // checkout link so their page opens ready to pay. Nothing here ever
+  // reaches RRT's servers.
+  var dForm = $('deliveryForm');
+  var dSummary = $('deliverySummary');
+  var stateSel = dForm.elements.state;
+  S.indiaStates.forEach(function (st) {
+    var o = document.createElement('option'); o.value = st; o.textContent = st; stateSel.appendChild(o);
+  });
+  function dField(name) { return dForm.elements[name]; }
+  function dRead() {
+    var out = {};
+    ['firstName','lastName','email','phone','address1','address2','city','state','pin'].forEach(function (k) {
+      out[k] = dField(k).value;
+    });
+    return out;
+  }
+  function dFill(d) {
+    ['firstName','lastName','email','phone','address1','address2','city','state','pin'].forEach(function (k) {
+      dField(k).value = (d && d[k]) || '';
+    });
+  }
+  function dShowErrors(errors) {
+    var first = null;
+    Array.prototype.forEach.call(dForm.querySelectorAll('.df'), function (lab) {
+      var input = lab.querySelector('input, select');
+      var msg = errors[input.name] || '';
+      lab.classList.toggle('bad', !!msg);
+      lab.querySelector('em').textContent = msg;
+      if (msg && !first) first = input;
+    });
+    if (first) first.focus();
+  }
+  function dPaint() {
+    var d = S.delivery();
+    var complete = S.deliveryComplete();
+    $('deliveryEdit').hidden = !complete;
+    dSummary.hidden = !complete;
+    dForm.hidden = complete;
+    $('deliveryCancel').hidden = !complete;
+    if (complete) {
+      dSummary.innerHTML =
+        '<span class="ds-line">' + esc(d.firstName + ' ' + d.lastName) + ' \u00b7 +91 ' + esc(d.phone) + '</span>' +
+        '<span class="ds-line">' + esc(d.address1) + (d.address2 ? ', ' + esc(d.address2) : '') + '</span>' +
+        '<span class="ds-line">' + esc(d.city) + ', ' + esc(d.state) + ' ' + esc(d.pin) + '</span>' +
+        '<span class="ds-line ds-dim">' + esc(d.email) + '</span>';
+      $('deliveryNote').textContent = 'The seller\u2019s checkout will open with these filled in. Just press Pay.';
+    } else {
+      dFill(d);
+      $('deliveryNote').textContent = 'Fill this in once. It stays on this device, and the seller\u2019s checkout opens ready to pay.';
+    }
+  }
+  dForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var r = S.saveDelivery(dRead());
+    if (!r.ok) { dShowErrors(r.errors); return; }
+    dShowErrors({});
+    dPaint();
+    U.toast('Delivery details saved on this device');
+  });
+  $('deliveryEdit').addEventListener('click', function () {
+    dFill(S.delivery()); dSummary.hidden = true; dForm.hidden = false;
+    $('deliveryEdit').hidden = true; $('deliveryCancel').hidden = false;
+    dField('firstName').focus();
+  });
+  $('deliveryCancel').addEventListener('click', function () { dShowErrors({}); dPaint(); });
+  dPaint();
+  // A product page's Buy now lands here with ?details=1 when nothing is
+  // saved yet: open the form and bring it into view.
+  if (new URLSearchParams(location.search).get('details') === '1' && !S.deliveryComplete()) {
+    setTimeout(function () { $('delivery').scrollIntoView({ behavior: 'smooth', block: 'start' }); dField('firstName').focus(); }, 60);
+  }
   U.storeGate();
 
 
@@ -269,6 +395,16 @@
         return;
       }
       if (!U.storeOpenNow()) { U.toast('The shop is closed right now.'); btn.disabled=false; btn.textContent='Go to secure checkout'; return; }
+      if (!S.deliveryComplete()) {
+        // Show the form with every missing field named, and do not leave.
+        var v = S.validateDelivery(dRead());
+        dSummary.hidden = true; dForm.hidden = false;
+        dShowErrors(v.errors);
+        $('delivery').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        U.toast('Add your delivery details, then checkout opens ready to pay');
+        btn.disabled = false; btn.textContent = 'Go to secure checkout';
+        return;
+      }
       var handoff = S.beginCheckout(r.lines, { fromCart: true });
       if (handoff) { location.href = handoff.url; return; }
       btn.disabled = false;
