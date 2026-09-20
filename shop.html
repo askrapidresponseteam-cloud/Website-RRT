@@ -120,6 +120,7 @@
 
   var params = new URLSearchParams(location.search);
   var q = (params.get('q') || '').trim();
+  var brandParam = (params.get('b') || '').trim();
   var aisleParam = (params.get('a') || '').trim();
   var shelfKey = (params.get('shelf') || '').trim();
   var titleHint = (params.get('t') || '').trim();
@@ -127,8 +128,8 @@
   var shelf = shelfKey ? S.shelfByKey(shelfKey) : (aisleParam ? S.shelfForAisle(aisleParam) : null);
   var aisle = aisleParam || (shelf ? shelf.aisles[0].handle : '');
   var searching = !!q;
-  var hub = !searching && !shelf && !aisle;
-  var handle = searching ? null : (hub ? S.vendor.catalogHandle : aisle);
+  var hub = !searching && !brandParam && !shelf && !aisle;
+  var handle = (searching || brandParam) ? null : (hub ? S.vendor.catalogHandle : aisle);
 
   function aisleLabel() {
     if (shelf) {
@@ -143,15 +144,19 @@
   if (searching) {
     document.title = q + ' · The RRT Shop';
     $('pageTitle').textContent = 'Search';
-    $('pageCopy').textContent = 'Results for \u201c' + q + '\u201d \u2014 every match from the live range, straight from the seller\u2019s own search.';
+    $('pageCopy').textContent = 'Results for \u201c' + q + '\u201d: every match from the live range, straight from the seller\u2019s own search.';
     document.querySelector('.hsearch input').value = q;
     $('stockWrap').hidden = true;
     $('vegWrap').hidden = true;
     $('sort').hidden = true;
+  } else if (brandParam) {
+    document.title = brandParam + ' \u00b7 The RRT Shop';
+    $('pageTitle').textContent = brandParam;
+    $('pageCopy').textContent = 'Everything the seller lists under this brand, at live prices.';
   } else if (shelf) {
     document.title = shelf.name + ' · The RRT Shop';
     $('pageTitle').textContent = shelf.name;
-    $('pageCopy').textContent = 'One of the ten RRT shelves \u2014 pick an aisle below, or browse the lot.';
+    $('pageCopy').textContent = 'One of the ten RRT shelves. Pick an aisle below, or browse the lot.';
   } else if (aisle) {
     document.title = aisleLabel() + ' · The RRT Shop';
     $('pageTitle').textContent = aisleLabel();
@@ -213,6 +218,7 @@
 
   function fetchPage() {
     if (searching) return S.searchAll(q, { after: state.cursor });
+    if (brandParam) return S.brandPage(brandParam, { sort: state.sort, after: state.cursor });
     return S.collectionPage(handle, { sort: state.sort, after: state.cursor });
   }
 
@@ -239,7 +245,7 @@
       if (typeof page.total === 'number') state.total = page.total;
       if (page.missing) {
         showState('This shelf is empty right now.',
-          'The seller may have renamed it \u2014 the rest of the shop is open.', false);
+          'The seller may have renamed it; the rest of the shop is open.', false);
         return;
       }
       render();
@@ -278,7 +284,7 @@
           'Try fewer words, or a brand name.', false);
       } else {
         showState('Nothing on this shelf right now.',
-          'The rest of the shop is open \u2014 try another shelf or search the whole range.', false);
+          'The rest of the shop is open. Try another shelf or search the whole range.', false);
       }
       return;
     }

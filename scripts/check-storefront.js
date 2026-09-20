@@ -65,6 +65,7 @@ for (const file of SHOP_PAGES) {
 
   // House style: no em dashes, anywhere, ever.
   if (s.includes(String.fromCharCode(0x2014))) problems.push('em dash in shipped text');
+  if (s.indexOf('\\' + 'u2014') !== -1) problems.push('escaped em dash in shipped text');
 
   // Branding. The layout came from a mock belonging to another organisation;
   // none of their identity may ship.

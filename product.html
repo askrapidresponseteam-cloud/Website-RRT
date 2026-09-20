@@ -39,6 +39,8 @@
 .pdp h1 { font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:34px; line-height:1.08;
           margin:0 0 6px; }
 .eyebrow { font-size:12px; color:var(--text); margin-bottom:12px; display:flex; gap:14px; align-items:center; }
+.eyebrow a#brand { color:inherit; text-decoration:none; border-bottom:1px solid var(--border-strong); padding-bottom:1px; }
+.eyebrow a#brand:hover { color:var(--accent); border-color:var(--accent); }
 .eyebrow .tag { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
                 padding:3px 8px; border:1px solid var(--border-strong); color:var(--text-mid); }
 .eyebrow .tag.veg { color:#16a34a; border-color:#22c55e66; }
@@ -140,7 +142,7 @@
       <div class="thumbs" id="thumbs"></div>
     </div>
     <div>
-      <div class="eyebrow"><span id="brand">RRT Selection</span><span id="tags"></span></div>
+      <div class="eyebrow"><a id="brand" href="/shop">RRT Selection</a><span id="tags"></span></div>
       <h1 id="title"></h1>
       <div class="price-row" id="priceRow"><span class="skel"></span></div>
       <p class="stock" id="stock">Checking availability…</p>
@@ -235,7 +237,10 @@
     var p = product;
     $('pdp').hidden = false;
     $('title').textContent = p.title;
-    $('brand').textContent = p.brand || 'RRT Selection';
+    var brandEl = $('brand');
+    brandEl.textContent = p.brand || 'RRT Selection';
+    if (p.brand) brandEl.href = '/shop?b=' + encodeURIComponent(p.brand);
+    else brandEl.removeAttribute('href');
 
     var tags = '';
     if (p.isVeg) tags += '<span class="tag veg">Veg</span> ';
@@ -416,7 +421,7 @@
         product = live; selection = lv.optionValues.slice();
         renderOptions(); paintVariant();
         btn.disabled = false; btn.textContent = 'Buy now';
-        U.toast('Price is now ' + S.money(lv.pricePaise) + ' \u2014 press again to continue');
+        U.toast('Price is now ' + S.money(lv.pricePaise) + '. Press again to continue');
         return;
       }
       var line = {

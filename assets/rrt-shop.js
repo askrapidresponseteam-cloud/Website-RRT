@@ -285,6 +285,13 @@
     '&deg;': '\u00b0', '&times;': '\u00d7', '&frac12;': '\u00bd', '&bull;': '\u2022'
   };
 
+  /** House style holds even for the vendor's text: dashes render plain. */
+  function dashFree(text) {
+    return String(text)
+      .replace(/\s*\u2014\s*/g, ' - ')
+      .replace(/\u2013/g, '-');
+  }
+
   function decodeHtmlEntities(s) {
     var out = String(s).replace(/&#(x?[0-9a-fA-F]+);/g, function (whole, g) {
       var code = (g[0] === 'x' || g[0] === 'X') ? parseInt(g.slice(1), 16) : parseInt(g, 10);
@@ -294,7 +301,7 @@
     Object.keys(NAMED_ENTITIES).forEach(function (k) {
       out = out.split(k).join(NAMED_ENTITIES[k]);
     });
-    return out;
+    return dashFree(out);
   }
 
   /** The vendor's product HTML, reduced to blocks RRT sets in its own type:
@@ -1112,6 +1119,50 @@
     priceHigh: { key: 'PRICE', reverse: true }
   };
 
+  /** One page of everything the vendor lists under a brand, filtered
+   *  server-side (products query: vendor:'...'), sorted like the
+   *  catalogue. Falls back to a brand-filtered search page if the
+   *  filtered read misbehaves, so a brand page degrades to fewer
+   *  results, never to an error. */
+  function brandPage(brand, opts) {
+    opts = opts || {};
+    var b = String(brand || '').trim();
+    var sort = CATALOG_SORT_KEYS[opts.sort || 'featured'] || CATALOG_SORT_KEYS.featured;
+    var query =
+      'query RrtBrand($q: String!, $after: String, $sortKey: ProductSortKeys, $reverse: Boolean) {' +
+      ' products(first: ' + PAGE_SIZE + ', after: $after, query: $q, sortKey: $sortKey, reverse: $reverse) {' +
+      '  pageInfo { hasNextPage endCursor }' +
+      '  nodes { ' + TILE_FIELDS + ' }' +
+      ' }' +
+      '}';
+    var q = "vendor:'" + b.replace(/\\/g, '').replace(/'/g, "\\'") + "'";
+    var cacheKey = 'brand|' + b + '|' + (opts.sort || 'featured') + '|' + (opts.after || '');
+    return gql(query, {
+      q: q, after: opts.after || null, sortKey: sort.key, reverse: sort.reverse
+    }, { cacheKey: cacheKey, fresh: opts.fresh }).then(function (data) {
+      var conn = (data && data.products) || {};
+      var info = conn.pageInfo || {};
+      return {
+        products: (conn.nodes || []).map(productFromGraphTile).filter(Boolean),
+        hasMore: info.hasNextPage === true,
+        endCursor: info.endCursor || null,
+        missing: false,
+        clientSort: false
+      };
+    }).catch(function () {
+      if (opts.after) return { products: [], hasMore: false, endCursor: null, missing: false, clientSort: false };
+      return searchAll(b).then(function (page) {
+        var key = b.toLowerCase();
+        return {
+          products: page.products.filter(function (p) {
+            return String(p.brand || '').trim().toLowerCase() === key;
+          }),
+          hasMore: false, endCursor: null, missing: false, clientSort: true
+        };
+      });
+    });
+  }
+
   function catalogPage(opts) {
     opts = opts || {};
     var sort = CATALOG_SORT_KEYS[opts.sort || 'featured'] || CATALOG_SORT_KEYS.featured;
@@ -1806,6 +1857,7 @@
     sortLabels: SORT_LABELS,
     visibleProducts: visibleProducts,
     collectionPage: collectionPage,
+    brandPage: brandPage,
     product: product,
     sizeQuery: function (title) {
       var ps = parseSize(title);

@@ -284,6 +284,66 @@ eq(S.cart().lines.length, 1, 'zero quantity removes the line');
 S.clearCart();
 eq(S.cart().count, 0, 'clear empties the cart');
 
+/* --------------------------------------------------------- brand page */
+function brandPageTests() {
+  var calls = [];
+  S.__internal.setFetch(function (url, init) {
+    var body = init && init.body ? String(init.body) : '';
+    calls.push(body);
+    if (body.indexOf('RrtBrand') !== -1) {
+      var vars = JSON.parse(body).variables;
+      if (vars.q !== "vendor:'Zoetis'") throw new Error('wrong vendor query: ' + vars.q);
+      return Promise.resolve({ status: 200, json: function () { return Promise.resolve({ data: { products: {
+        pageInfo: { hasNextPage: true, endCursor: 'c2' },
+        nodes: [{ id: 'gid://shopify/Product/9', handle: 'apoquel-16', title: 'Zoetis Apoquel 16mg',
+          vendor: 'Zoetis', productType: 'Pharmacy', tags: [],
+          featuredImage: null,
+          priceRange: { minVariantPrice: { amount: '2490.0' }, maxVariantPrice: { amount: '2490.0' } },
+          compareAtPriceRange: { minVariantPrice: { amount: '3216.0' } },
+          availableForSale: true, totalInventory: 5 }]
+      } } }); } });
+    }
+    throw new Error('unexpected fetch: ' + body.slice(0, 60));
+  });
+  return S.brandPage('Zoetis', {}).then(function (page) {
+    eq(page.products.length, 1, 'brand page parses tiles');
+    eq(page.products[0].brand, 'Zoetis', 'and they are the brand');
+    eq(page.hasMore, true, 'brand pages paginate');
+    eq(page.endCursor, 'c2', 'with the server cursor');
+    ok(calls[0].indexOf('query: $q') !== -1, 'the filter is server-side');
+
+    // The fallback: filtered read breaks, search stands in, brand-strict.
+    S.__internal.setFetch(function (url, init) {
+      var body = init && init.body ? String(init.body) : '';
+      if (body.indexOf('RrtBrand') !== -1) return Promise.reject(new Error('down'));
+      if (body.indexOf('RrtSearch') !== -1) {
+        return Promise.resolve({ status: 200, json: function () { return Promise.resolve({ data: { search: {
+          totalCount: 2, pageInfo: { hasNextPage: false, endCursor: null },
+          nodes: [
+            { id: 'gid://shopify/Product/9', handle: 'apoquel-16', title: 'Zoetis Apoquel 16mg',
+              vendor: 'Zoetis', productType: '', tags: [], featuredImage: null,
+              priceRange: { minVariantPrice: { amount: '2490.0' }, maxVariantPrice: { amount: '2490.0' } },
+              compareAtPriceRange: { minVariantPrice: { amount: '0' } },
+              availableForSale: true, totalInventory: 5 },
+            { id: 'gid://shopify/Product/10', handle: 'zoetis-brush', title: 'Zoetis Style Brush by Acme',
+              vendor: 'Acme', productType: '', tags: [], featuredImage: null,
+              priceRange: { minVariantPrice: { amount: '100.0' }, maxVariantPrice: { amount: '100.0' } },
+              compareAtPriceRange: { minVariantPrice: { amount: '0' } },
+              availableForSale: true, totalInventory: 5 }
+          ]
+        } } }); } });
+      }
+      return Promise.reject(new Error('no feed in this test'));
+    });
+    return S.brandPage('Zoetis', { sort: 'newest' });
+  }).then(function (page) {
+    eq(page.products.map(function (p) { return p.handle; }), ['apoquel-16'],
+      'fallback keeps only the exact brand');
+    eq(page.hasMore, false, 'and does not pretend to paginate');
+    S.__internal.setFetch(function () { return Promise.reject(new Error('offline')); });
+  });
+}
+
 /* ---------------------------------------------------------- veg only */
 (function () {
   function tile(title, ptype, tags) {
@@ -553,7 +613,7 @@ S.revalidateCart().then((r) => {
     eq(r.collections[0].handle, 'jerhigh', 'matching collections offered');
     S.__internal.resetTransport();
   });
-}).then(function () {
+}).then(brandPageTests).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
   process.exit(failed ? 1 : 0);
 }).catch((e) => {
