@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en" class="light"><head><meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
+<meta media="(prefers-color-scheme: dark)" content="#0A0908" name="theme-color">
+<meta media="(prefers-color-scheme: light)" content="#FFFFFF" name="theme-color">
+<title>Join as a verified vet — Rapid Response</title>
+<link href="/assets/favicon.svg" rel="icon" type="image/svg+xml">
+<link href="/assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+<meta content="Register your veterinary credentials with Rapid Response. Verified vets can take consultations through the RRT network." name="description">
+<meta content="noindex,follow" name="robots">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+<style>
+:root{--bg:#0a0908;--bg-soft:#14110f;--bg-card:#ffffff06;--text:#fff;--text-mid:#ffffffd1;--text-low:#ffffffa6;--text-dim:#ffffff7a;--text-faint:#ffffff2e;--border:#ffffff1a;--border-strong:#ffffff38;--border-focus:#e522228c;--accent:#e52222;--accent-h:#f0463a;--accent-on-dark:#ff5f50;--accent-soft:#e522221a;--ok:#1f9d55;--ok-soft:#1f9d551a;--amb:#c77d0a;--amb-soft:#c77d0a1a;--display:"Barlow Condensed","Arial Narrow",sans-serif;--sans:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;--hindi:"Noto Sans Devanagari",system-ui,sans-serif;--maxw:760px}
+html.light{--bg:#fff;--bg-soft:#fff;--bg-card:#00000004;--text:#111;--text-mid:#111111db;--text-low:#111111ad;--text-dim:#11111185;--text-faint:#1111112e;--border:#e2e2e2;--border-strong:#cfcfcf;--accent-h:#c91d1d;--ok:#157a41;--ok-soft:#157a410f;--amb:#9a5f06;--amb-soft:#9a5f060f;--net:#4a453f}
+*,:after,:before{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;font-size:18px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100dvh;font-weight:400;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.material-symbols-outlined{font-variation-settings:"FILL" 0,"wght" 400;line-height:1;display:inline-flex;vertical-align:middle}
+:focus{outline:0}:focus-visible{outline:2px solid var(--border-focus);outline-offset:2px}
+.hi{font-family:var(--hindi)}
+[data-lang]{display:none!important}
+html[lang=en] [data-lang=en],html[lang=hi] [data-lang=hi]{display:revert!important}
+html[lang=en] span[data-lang=en],html[lang=hi] span[data-lang=hi]{display:inline!important}
+/* header */
+#hdr{z-index:200;height:60px;padding:0 20px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);justify-content:space-between;align-items:center;display:flex;position:sticky;top:0}
+.logo{align-items:center;gap:10px;display:inline-flex}
+.logo-sq{background:var(--accent);place-items:center;width:28px;height:28px;display:grid}
+.logo-sq .material-symbols-outlined{color:#fff;font-size:18px}
+.logo-t{font-family:var(--display);letter-spacing:.01em;text-transform:uppercase;color:var(--text);font-size:17px;font-weight:800}
+.hdr-r{align-items:center;gap:4px;display:flex}
+.lb{font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;min-height:40px;color:var(--text-low);background:0 0;border:none;padding:8px;font-size:11px;font-weight:500}
+.lb.hi{font-family:var(--hindi);text-transform:none;letter-spacing:0;font-size:13px}
+.lb:hover{color:var(--text)}.lsep{color:var(--text-dim)}
+.mode-b{cursor:pointer;background:0 0;border:none;min-width:40px;min-height:40px;padding:8px;font-size:15px;line-height:1}
+/* layout */
+main{max-width:var(--maxw);margin:0 auto;padding:40px 22px 96px}
+.eyebrow{font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-size:11px;font-weight:500;margin-bottom:14px;display:block}
+h1{font-family:var(--display);text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(34px,7vw,52px);font-weight:800;line-height:.98}
+h1 .hi-b{font-family:var(--hindi);text-transform:none;letter-spacing:0;font-weight:700;font-size:.8em}
+.intro{color:var(--text-low);font-size:16px;max-width:56ch;margin-top:14px}
+.intro .hi{font-size:15px}
+/* sections */
+.sect{margin-top:38px;border-top:1px solid var(--border);padding-top:26px}
+.sect-h{font-family:var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);font-size:11px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sect-h .n{color:var(--accent)}
+.grid2{display:grid;gap:18px 20px}
+@media(width>=640px){.grid2{grid-template-columns:1fr 1fr}.grid2 .full{grid-column:1/-1}}
+.field label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:6px}
+.field label .req{color:var(--accent)}
+.field input,.field select{width:100%;background:var(--bg-card);border:1px solid var(--border);color:var(--text);font-family:var(--sans);font-size:15px;padding:12px 13px;transition:border-color .15s}
+.field input:focus,.field select:focus{border-color:var(--border-focus)}
+.field input::placeholder{color:var(--text-faint)}
+.field .hint{font-size:12px;color:var(--text-dim);margin-top:5px}
+.field.bad input,.field.bad select{border-color:var(--accent)}
+.field .err{font-size:12px;color:var(--accent);margin-top:5px;display:none}
+.field.bad .err{display:block}
+/* documents */
+.doc{border:1px solid var(--border);padding:14px 15px;margin-bottom:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.doc .meta{flex:1;min-width:180px}
+.doc .dt{font-family:var(--sans);font-weight:600;font-size:15px}
+.doc .ds{font-size:12px;color:var(--text-dim);margin-top:2px}
+.doc .tag{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--border-strong);color:var(--text-dim)}
+.doc .tag.req{border-color:var(--accent);color:var(--accent)}
+.doc .picked{font-size:12.5px;color:var(--ok);display:flex;align-items:center;gap:5px}
+.doc input[type=file]{display:none}
+.doc-hint{font-size:12.5px;color:var(--text-dim);margin:2px 0 16px}
+/* consent */
+.consent{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);padding:14px;margin-bottom:10px;cursor:pointer}
+.consent .box{width:20px;height:20px;border:1px solid var(--border-strong);flex:none;margin-top:1px;display:grid;place-items:center;background:var(--bg)}
+.consent.on .box{background:var(--accent);border-color:var(--accent)}
+.consent .box .material-symbols-outlined{font-size:15px;color:#fff;opacity:0}
+.consent.on .box .material-symbols-outlined{opacity:1}
+.consent .ct{font-size:14px;color:var(--text-mid)}
+.notice{background:var(--bg-card);border:1px solid var(--border);padding:13px 14px;font-size:12.5px;color:var(--text-dim);margin-bottom:18px}
+/* buttons */
+.btn{min-height:52px;font-family:var(--sans);border:1px solid var(--text);background:var(--text);color:var(--bg);cursor:pointer;justify-content:center;align-items:center;gap:10px;padding:15px 26px;font-size:15px;font-weight:600;transition:opacity .15s,transform .15s;display:inline-flex;width:100%}
+.btn:hover{opacity:.92}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:0 0;color:var(--text);border-color:var(--border-strong)}
+.btn .material-symbols-outlined{font-size:19px}
+.btn .spin{width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.formerr{color:var(--accent);font-size:13.5px;margin-top:14px;min-height:1px;text-align:center}
+/* status view */
+.statuscard{border:1px solid var(--border);padding:26px 22px;margin-top:30px;text-align:center}
+.statuscard .ic{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px}
+.statuscard .ic .material-symbols-outlined{font-size:28px}
+.st-pending .ic{background:var(--amb-soft);color:var(--amb)}
+.st-approved .ic{background:var(--ok-soft);color:var(--ok)}
+.st-more .ic,.st-rejected .ic{background:var(--accent-soft);color:var(--accent)}
+.statuscard h2{font-family:var(--display);text-transform:uppercase;letter-spacing:-.01em;font-size:26px;font-weight:800}
+.statuscard p{color:var(--text-low);font-size:15px;max-width:44ch;margin:10px auto 0}
+.reasons{text-align:left;max-width:44ch;margin:18px auto 0;border:1px solid var(--border);padding:14px 16px}
+.reasons .rl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.reasons ul{margin:0;padding-left:18px;font-size:14px;color:var(--text-mid)}
+.reasons li{margin:4px 0}
+.center-load{text-align:center;padding:70px 0;color:var(--text-dim)}
+.center-load .spin{width:26px;height:26px;border:2px solid var(--border-strong);border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 16px}
+.hidden{display:none!important}
+footer{border-top:1px solid var(--border);padding:34px 22px;text-align:center;color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+footer a{color:var(--text-mid)}
+footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
+</style></head>
+<body>
+<header id="hdr">
+  <a aria-label="Rapid Response" class="logo" href="/"><div class="logo-sq"><span class="material-symbols-outlined">pets</span></div><span class="logo-t">Rapid Response</span></a>
+  <div class="hdr-r">
+    <button aria-label="Toggle theme" class="mode-b" id="modeBtn" onclick="toggleMode()">☀️</button>
+    <button onclick="setLang('en')" class="lb">EN</button><span class="lsep">|</span><button class="lb hi" onclick="setLang('hi')">हिंदी</button>
+  </div>
+</header>
+
+<main>
+  <span class="eyebrow" data-lang="en">For veterinarians</span>
+  <span class="eyebrow hi" data-lang="hi">पशु चिकित्सकों के लिए</span>
+  <h1><span data-lang="en">Verified vet<br>application</span><span class="hi-b" data-lang="hi">सत्यापित वेट<br>आवेदन</span></h1>
+  <p class="intro">
+    <span data-lang="en">Register your veterinary credentials so our team can verify you. Once approved, you can take consultations through Rapid Response.</span>
+    <span class="hi" data-lang="hi">अपनी पशु चिकित्सा योग्यताएँ दर्ज करें ताकि हमारी टीम आपको सत्यापित कर सके। मंज़ूरी के बाद आप रैपिड रिस्पॉन्स के माध्यम से परामर्श दे सकते हैं।</span>
+  </p>
+
+  <!-- LOADING -->
+  <div id="vet-loading" class="center-load"><div class="spin"></div>
+    <span data-lang="en">Loading…</span><span class="hi" data-lang="hi">लोड हो रहा है…</span>
+  </div>
+
+  <!-- LOAD ERROR -->
+  <div id="vet-fatal" class="statuscard st-more hidden">
+    <div class="ic"><span class="material-symbols-outlined">wifi_off</span></div>
+    <h2 data-lang="en">Could not load</h2><h2 class="hi" data-lang="hi">लोड नहीं हो सका</h2>
+    <p><span data-lang="en">Check your connection and try again.</span><span class="hi" data-lang="hi">अपना कनेक्शन जाँचें और दोबारा कोशिश करें।</span></p>
+    <div style="max-width:260px;margin:20px auto 0"><button class="btn ghost" onclick="boot()"><span data-lang="en">Retry</span><span class="hi" data-lang="hi">पुनः प्रयास</span></button></div>
+  </div>
+
+  <!-- FORM -->
+  <form id="vet-form" class="hidden" autocomplete="on" novalidate>
+    <!-- credentials -->
+    <div class="sect"><div class="sect-h"><span class="n">01</span><span data-lang="en">Your credentials</span><span class="hi" data-lang="hi">आपकी योग्यताएँ</span></div>
+      <div class="grid2">
+        <div class="field full" data-f="full_name"><label><span data-lang="en">Full name</span><span class="hi" data-lang="hi">पूरा नाम</span> <span class="req">*</span></label><input id="f_full_name" type="text" placeholder="Dr. …"><div class="err" data-lang="en">Enter your full name.</div><div class="err hi" data-lang="hi">अपना पूरा नाम दर्ज करें।</div></div>
+        <div class="field" data-f="vci_reg_number"><label><span data-lang="en">Registration number</span><span class="hi" data-lang="hi">पंजीकरण संख्या</span> <span class="req">*</span></label><input id="f_reg" type="text" placeholder="3564/WBVC"><div class="hint" data-lang="en">As on your council registration.</div><div class="hint hi" data-lang="hi">जैसा आपके परिषद पंजीकरण में है।</div><div class="err" data-lang="en">Enter a valid registration number.</div><div class="err hi" data-lang="hi">एक मान्य पंजीकरण संख्या दर्ज करें।</div></div>
+        <div class="field" data-f="state_council"><label><span data-lang="en">State veterinary council</span><span class="hi" data-lang="hi">राज्य पशु चिकित्सा परिषद</span> <span class="req">*</span></label><input id="f_council" type="text" placeholder="e.g. West Bengal Veterinary Council"><div class="err" data-lang="en">Enter your state veterinary council.</div><div class="err hi" data-lang="hi">अपनी राज्य पशु चिकित्सा परिषद दर्ज करें।</div></div>
+        <div class="field" data-f="qualification"><label><span data-lang="en">Qualification</span><span class="hi" data-lang="hi">योग्यता</span> <span class="req">*</span></label><input id="f_qual" type="text" placeholder="BVSc &amp; AH"><div class="err" data-lang="en">Enter your qualification.</div><div class="err hi" data-lang="hi">अपनी योग्यता दर्ज करें।</div></div>
+        <div class="field" data-f="year_of_registration"><label><span data-lang="en">Year of registration</span><span class="hi" data-lang="hi">पंजीकरण का वर्ष</span> <span class="req">*</span></label><input id="f_year" type="number" inputmode="numeric" placeholder="2014"><div class="err" data-lang="en">Enter a valid year.</div><div class="err hi" data-lang="hi">मान्य वर्ष दर्ज करें।</div></div>
+        <div class="field full" data-f="additional_qualifications"><label><span data-lang="en">Additional qualifications</span><span class="hi" data-lang="hi">अतिरिक्त योग्यताएँ</span></label><input id="f_addq" type="text" placeholder="Optional — e.g. MVSc (Surgery)"></div>
+      </div>
+    </div>
+    <!-- practice -->
+    <div class="sect"><div class="sect-h"><span class="n">02</span><span data-lang="en">Your practice</span><span class="hi" data-lang="hi">आपका अभ्यास</span></div>
+      <div class="grid2">
+        <div class="field" data-f="practice_state"><label><span data-lang="en">Practice state</span><span class="hi" data-lang="hi">अभ्यास का राज्य</span> <span class="req">*</span></label><input id="f_pstate" type="text" placeholder="e.g. West Bengal"><div class="err" data-lang="en">Enter the state where you practise.</div><div class="err hi" data-lang="hi">वह राज्य दर्ज करें जहाँ आप अभ्यास करते हैं।</div></div>
+        <div class="field" data-f="practice_city"><label><span data-lang="en">Practice city</span><span class="hi" data-lang="hi">अभ्यास का शहर</span></label><input id="f_pcity" type="text" placeholder="Optional"></div>
+        <div class="field" data-f="clinic_name"><label><span data-lang="en">Clinic name</span><span class="hi" data-lang="hi">क्लिनिक का नाम</span></label><input id="f_clinic" type="text" placeholder="Optional"></div>
+        <div class="field" data-f="phone"><label><span data-lang="en">Phone</span><span class="hi" data-lang="hi">फ़ोन</span></label><input id="f_phone" type="tel" inputmode="numeric" placeholder="10-digit mobile"><div class="err" data-lang="en">Enter a valid 10-digit mobile number.</div><div class="err hi" data-lang="hi">10 अंकों का मान्य मोबाइल नंबर दर्ज करें।</div></div>
+      </div>
+    </div>
+    <!-- documents -->
+    <div class="sect"><div class="sect-h"><span class="n">03</span><span data-lang="en">Documents</span><span class="hi" data-lang="hi">दस्तावेज़</span></div>
+      <div class="doc-hint" data-lang="en">Clear photos or scans. JPG, PNG or PDF, up to 10 MB each.</div>
+      <div class="doc-hint hi" data-lang="hi">स्पष्ट तस्वीरें या स्कैन। JPG, PNG या PDF, प्रत्येक 10 MB तक।</div>
+      <div id="docs"></div>
+      <div class="err" id="docs-err" style="display:none;color:var(--accent);font-size:13px" data-lang="en">Attach your registration certificate and government ID.</div>
+      <div class="err hi" id="docs-err-hi" style="display:none;color:var(--accent);font-size:13px" data-lang="hi">अपना पंजीकरण प्रमाणपत्र और सरकारी पहचान पत्र संलग्न करें।</div>
+    </div>
+    <!-- consent -->
+    <div class="sect"><div class="sect-h"><span class="n">04</span><span data-lang="en">Declarations</span><span class="hi" data-lang="hi">घोषणाएँ</span></div>
+      <div class="notice"><span data-lang="en">We store your documents securely and share them only with our verification team.</span><span class="hi" data-lang="hi">हम आपके दस्तावेज़ सुरक्षित रूप से संग्रहीत करते हैं और उन्हें केवल अपनी सत्यापन टीम के साथ साझा करते हैं।</span></div>
+      <div class="consent" id="c_accurate" onclick="toggleConsent('accurate')"><div class="box"><span class="material-symbols-outlined">check</span></div><div class="ct"><span data-lang="en">The information and documents I have provided are accurate.</span><span class="hi" data-lang="hi">मेरे द्वारा दी गई जानकारी और दस्तावेज़ सही हैं।</span></div></div>
+      <div class="consent" id="c_registered" onclick="toggleConsent('registered')"><div class="box"><span class="material-symbols-outlined">check</span></div><div class="ct"><span data-lang="en">I am currently registered with the veterinary council named above.</span><span class="hi" data-lang="hi">मैं वर्तमान में ऊपर बताई गई पशु चिकित्सा परिषद में पंजीकृत हूँ।</span></div></div>
+    </div>
+    <div style="margin-top:26px"><button type="submit" id="submitBtn" class="btn"><span id="submitLabel" data-lang="en">Submit application</span><span id="submitLabelHi" class="hi" data-lang="hi">आवेदन जमा करें</span><span class="material-symbols-outlined">arrow_forward</span></button></div>
+    <div class="formerr" id="formErr"></div>
+  </form>
+
+  <!-- STATUS -->
+  <div id="vet-status" class="hidden"></div>
+</main>
+
+<footer>
+  <span data-lang="en">Rapid Response — Animal Emergency Network for India · <a href="/">Home</a></span>
+  <span class="hi" data-lang="hi">रैपिड रिस्पॉन्स — भारत का पशु आपातकालीन नेटवर्क · <a href="/">होम</a></span>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script>
+/* ---- site chrome (mirrors index.html) ---- */
+function setLang(e){document.documentElement.lang=e;try{localStorage.setItem("lang",e)}catch(x){}}
+function toggleMode(){var e=document.documentElement.classList.toggle("light");document.getElementById("modeBtn").textContent=e?"🌙":"☀️";try{localStorage.setItem("theme",e?"l":"d")}catch(x){}}
+(function(){try{var e=localStorage.getItem("lang");("hi"===e||"en"===e)&&(document.documentElement.lang=e)}catch(x){}})();
+(function(){try{if("d"===localStorage.getItem("theme")){document.documentElement.classList.remove("light");var e=document.getElementById("modeBtn");e&&(e.textContent="☀️")}}catch(x){}})();
+
+/* ============================================================================
+ * Verified-vet onboarding — website half of the same journey as the app.
+ * Same Firebase project, same anonymous-user identity model, the same
+ * vetConsult endpoints, the same validations / doc types / consent versions /
+ * error codes. No business logic is duplicated: the backend remains the single
+ * source of truth; this page only collects input, uploads docs, and calls it.
+ * ==========================================================================*/
+var FIREBASE_CONFIG={apiKey:'AIzaSyAJBTF9xCIgl27yaf72DPug9nLdG-KddGs',authDomain:'rrt-new-backend.firebaseapp.com',projectId:'rrt-new-backend',storageBucket:'rrt-new-backend.firebasestorage.app',messagingSenderId:'854343594593',appId:'1:854343594593:web:ff6e8722fbd00607377020'};
+var VET_API='https://asia-south1-rrt-new-backend.cloudfunctions.net/vetConsult';
+var PN_V='pn-v1', TOS_V='tos-v1';
+var CUR_YEAR=new Date().getFullYear();
+var MAX_BYTES=10*1024*1024;
+// Order + required-ness mirror backend REQUIRED_DOC_TYPES / ALLOWED_DOC_TYPES.
+var DOC_DEFS=[
+  {type:'registration_certificate',req:true, en:'Registration certificate', hi:'पंजीकरण प्रमाणपत्र'},
+  {type:'government_id',           req:true, en:'Government ID',            hi:'सरकारी पहचान पत्र'},
+  {type:'degree_certificate',      req:false,en:'Degree certificate',      hi:'डिग्री प्रमाणपत्र'},
+  {type:'additional_qualification',req:false,en:'Additional qualification',hi:'अतिरिक्त योग्यता'}
+];
+
+var app=firebase.initializeApp(FIREBASE_CONFIG);
+var auth=firebase.auth(); var storage=firebase.storage();
+var uid=null, resubmitting=false;
+var consent={accurate:false, registered:false};
+var pickedDocs={}; // type -> File
+
+function $(id){return document.getElementById(id);}
+function show(el){el.classList.remove('hidden');}
+function hide(el){el.classList.add('hidden');}
+function isHi(){return document.documentElement.lang==='hi';}
+
+/* ---- boot: anonymous auth, then load application ---- */
+function boot(){
+  hide($('vet-form')); hide($('vet-status')); hide($('vet-fatal')); show($('vet-loading'));
+  auth.signInAnonymously().catch(function(){ fatal(); });
+}
+auth.onAuthStateChanged(function(u){
+  if(u){ uid=u.uid; loadApplication(); }
+  else { auth.signInAnonymously().catch(function(){ fatal(); }); }
+});
+function fatal(){ hide($('vet-loading')); hide($('vet-form')); hide($('vet-status')); show($('vet-fatal')); }
+
+async function idToken(){ return auth.currentUser ? await auth.currentUser.getIdToken() : null; }
+
+async function loadApplication(){
+  try{
+    var t=await idToken(); if(!t){ return fatal(); }
+    var r=await fetch(VET_API+'/vet/application',{headers:{'Authorization':'Bearer '+t}});
+    if(!r.ok){ return fatal(); }
+    var j=await r.json();
+    if(!j||j.ok!==true){ return fatal(); }
+    hide($('vet-loading'));
+    if(j.status==='none'){ buildForm(); showForm(); }
+    else { renderStatus(j); }
+  }catch(e){ fatal(); }
+}
+
+/* ---- documents UI ---- */
+function buildDocs(){
+  var host=$('docs'); host.innerHTML='';
+  DOC_DEFS.forEach(function(d){
+    var row=document.createElement('div'); row.className='doc'; row.id='doc-'+d.type;
+    row.innerHTML=
+      '<div class="meta"><div class="dt">'+
+        '<span data-lang="en">'+d.en+'</span><span class="hi" data-lang="hi">'+d.hi+'</span></div>'+
+        '<div class="ds picked" id="picked-'+d.type+'" style="display:none"></div></div>'+
+      '<span class="tag'+(d.req?' req':'')+'">'+
+        (d.req?'<span data-lang="en">Required</span><span class="hi" data-lang="hi">आवश्यक</span>'
+             :'<span data-lang="en">Optional</span><span class="hi" data-lang="hi">वैकल्पिक</span>')+'</span>'+
+      '<button type="button" class="btn ghost" style="width:auto;min-height:42px;padding:9px 16px" onclick="pick(\''+d.type+'\')">'+
+        '<span class="material-symbols-outlined">upload</span>'+
+        '<span id="btn-'+d.type+'-add"><span data-lang="en">Attach</span><span class="hi" data-lang="hi">जोड़ें</span></span>'+
+        '<span id="btn-'+d.type+'-rep" style="display:none"><span data-lang="en">Replace</span><span class="hi" data-lang="hi">बदलें</span></span></button>'+
+      '<input type="file" id="file-'+d.type+'" accept="image/jpeg,image/png,application/pdf" onchange="onPick(\''+d.type+'\',this)">';
+    host.appendChild(row);
+  });
+}
+function pick(type){ $('file-'+type).click(); }
+function onPick(type,input){
+  var f=input.files&&input.files[0]; if(!f) return;
+  var okType=['image/jpeg','image/png','application/pdf'].indexOf(f.type)!==-1;
+  if(!okType){ alert(isHi()?'JPG, PNG या PDF ही।':'JPG, PNG or PDF only.'); input.value=''; return; }
+  if(f.size>MAX_BYTES){ alert(isHi()?'फ़ाइल 10 MB से बड़ी है।':'That file is over 10 MB.'); input.value=''; return; }
+  pickedDocs[type]=f;
+  var p=$('picked-'+type); p.style.display='flex';
+  p.innerHTML='<span class="material-symbols-outlined" style="font-size:15px">check_circle</span>'+f.name;
+  $('btn-'+type+'-add').style.display='none'; $('btn-'+type+'-rep').style.display='';
+  $('docs-err').style.display='none'; $('docs-err-hi').style.display='none';
+}
+
+/* ---- consent ---- */
+function toggleConsent(k){ consent[k]=!consent[k]; $('c_'+k).classList.toggle('on',consent[k]); }
+
+/* ---- form build + prefill (resubmit) ---- */
+function buildForm(){ buildDocs(); }
+function showForm(){ show($('vet-form')); hide($('vet-status')); }
+function prefill(app){
+  var c=app.credential||{}, p=app.profile||{};
+  $('f_full_name').value=p.full_name||''; $('f_reg').value=c.vci_reg_number||'';
+  $('f_council').value=c.state_council||''; $('f_qual').value=c.qualification||'';
+  $('f_year').value=c.year_of_registration||''; $('f_addq').value=c.additional_qualifications||'';
+  $('f_pstate').value=p.practice_state||''; $('f_pcity').value=p.practice_city||'';
+  $('f_clinic').value=p.clinic_name||''; $('f_phone').value=p.phone||'';
+}
+
+/* ---- validation (mirrors backend validateApplication) ---- */
+function val(id){ return ($(id).value||'').trim(); }
+function setBad(f,bad){ var el=document.querySelector('[data-f="'+f+'"]'); if(el) el.classList.toggle('bad',bad); }
+function validate(){
+  var ok=true;
+  var name=val('f_full_name'); setBad('full_name',!name); if(!name) ok=false;
+  var reg=val('f_reg').toUpperCase(); var regOk=/^[A-Z0-9/\-.]{3,40}$/.test(reg)&&/[0-9]/.test(reg);
+  setBad('vci_reg_number',!regOk); if(!regOk) ok=false;
+  var council=val('f_council'); setBad('state_council',!council); if(!council) ok=false;
+  var qual=val('f_qual'); setBad('qualification',!qual); if(!qual) ok=false;
+  var year=parseInt(val('f_year'),10); var yearOk=year>=1950&&year<=CUR_YEAR;
+  setBad('year_of_registration',!yearOk); if(!yearOk) ok=false;
+  var pstate=val('f_pstate'); setBad('practice_state',!pstate); if(!pstate) ok=false;
+  var phone=val('f_phone'); var phoneOk=!phone||/^[6-9]\d{9}$/.test(phone.replace(/\D/g,'').replace(/^91/,''));
+  setBad('phone',!phoneOk); if(!phoneOk) ok=false;
+  var haveReg=!!pickedDocs['registration_certificate'], haveId=!!pickedDocs['government_id'];
+  var docsOk=haveReg&&haveId;
+  $('docs-err').style.display=(!docsOk&&!isHi())?'block':'none';
+  $('docs-err-hi').style.display=(!docsOk&&isHi())?'block':'none';
+  if(!docsOk) ok=false;
+  return ok;
+}
+
+/* ---- error-code -> message (mirrors app _mapSubmitError) ---- */
+function errMsg(code){
+  var hi=isHi();
+  var M={
+    name_required:['Enter your full name.','अपना पूरा नाम दर्ज करें।'],
+    invalid_registration_number:['Enter a valid registration number.','एक मान्य पंजीकरण संख्या दर्ज करें।'],
+    state_council_required:['Enter your state veterinary council.','अपनी राज्य पशु चिकित्सा परिषद दर्ज करें।'],
+    qualification_required:['Enter your qualification.','अपनी योग्यता दर्ज करें।'],
+    invalid_year:['Enter a valid year of registration.','पंजीकरण का मान्य वर्ष दर्ज करें।'],
+    practice_state_required:['Enter the state where you practise.','वह राज्य दर्ज करें जहाँ आप अभ्यास करते हैं।'],
+    documents_required:['Attach your registration certificate and government ID.','अपना पंजीकरण प्रमाणपत्र और सरकारी पहचान पत्र संलग्न करें।'],
+    bad_document:['One of your documents was not accepted. Please re-attach it.','आपका एक दस्तावेज़ स्वीकार नहीं हुआ। कृपया दोबारा संलग्न करें।'],
+    missing_registration_certificate:['Attach your registration certificate.','अपना पंजीकरण प्रमाणपत्र संलग्न करें।'],
+    missing_government_id:['Attach your government ID.','अपना सरकारी पहचान पत्र संलग्न करें।'],
+    consent_version_required:['Please accept the declarations to continue.','जारी रखने के लिए कृपया घोषणाएँ स्वीकार करें।'],
+    declarations_required:['Please accept both declarations to continue.','जारी रखने के लिए कृपया दोनों घोषणाएँ स्वीकार करें।'],
+    duplicate_registration:['This registration number is already on file with another account.','यह पंजीकरण संख्या पहले से किसी अन्य खाते में दर्ज है।'],
+    already_approved:['You are already verified. Nothing more to do here.','आप पहले से सत्यापित हैं। यहाँ और कुछ करने की ज़रूरत नहीं।'],
+    unauthenticated:['Please refresh and try again.','कृपया रिफ़्रेश करके दोबारा कोशिश करें।']
+  };
+  return (M[code]||['Could not submit your application. Please try again.','आपका आवेदन जमा नहीं हो सका। कृपया दोबारा कोशिश करें।'])[hi?1:0];
+}
+
+/* ---- submit: upload docs to Storage, then POST apply/resubmit ---- */
+function extOf(f){ if(f.type==='application/pdf') return 'pdf'; if(f.type==='image/png') return 'png'; return 'jpg'; }
+async function uploadDoc(type,file){
+  // Unique filename: Storage rules make vet_documents/** immutable, so a resubmit
+  // must not reuse a path (that would be a denied overwrite). Fresh path each time.
+  var path='vet_documents/'+uid+'/'+type+'-'+Date.now()+'.'+extOf(file);
+  var ref=storage.ref().child(path);
+  await ref.put(file,{contentType:file.type});
+  return path;
+}
+async function submitForm(ev){
+  ev.preventDefault();
+  $('formErr').textContent='';
+  if(!consent.accurate||!consent.registered){ $('formErr').textContent=errMsg('declarations_required'); return; }
+  if(!validate()){ $('formErr').textContent=(isHi()?'कृपया ऊपर के आवश्यक फ़ील्ड भरें।':'Please complete the required fields above.'); return; }
+  setSubmitting(true);
+  try{
+    var docs=[];
+    for(var i=0;i<DOC_DEFS.length;i++){
+      var d=DOC_DEFS[i], f=pickedDocs[d.type];
+      if(f){ var sp=await uploadDoc(d.type,f); docs.push({type:d.type,storage_path:sp}); }
+    }
+    var body={
+      full_name:val('f_full_name'),
+      vci_reg_number:val('f_reg'),
+      state_council:val('f_council'),
+      qualification:val('f_qual'),
+      year_of_registration:parseInt(val('f_year'),10),
+      practice_state:val('f_pstate'),
+      practice_city:val('f_pcity')||null,
+      clinic_name:val('f_clinic')||null,
+      additional_qualifications:val('f_addq')||null,
+      phone:val('f_phone')||null,
+      documents:docs,
+      consent:{privacy_notice_version:PN_V,terms_version:TOS_V,declared_accurate:true,declared_registered:true}
+    };
+    var t=await idToken();
+    var url=VET_API+(resubmitting?'/vet/apply/resubmit':'/vet/apply');
+    var r=await fetch(url,{method:'POST',headers:{'Authorization':'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    var j={}; try{ j=await r.json(); }catch(e){}
+    if(r.ok&&j.ok){ resubmitting=false; await reload(); return; }
+    if(r.status===401){ $('formErr').textContent=errMsg('unauthenticated'); }
+    else { $('formErr').textContent=errMsg(j&&j.error); }
+  }catch(e){
+    $('formErr').textContent=(isHi()?'नेटवर्क समस्या। दोबारा कोशिश करें।':'Network problem. Please try again.');
+  }
+  setSubmitting(false);
+}
+function setSubmitting(on){
+  var b=$('submitBtn');
+  b.disabled=on;
+  $('submitLabel').textContent = on ? 'Submitting…' : (resubmitting?'Resubmit application':'Submit application');
+  $('submitLabelHi').textContent = on ? 'भेजा जा रहा है…' : (resubmitting?'आवेदन दोबारा जमा करें':'आवेदन जमा करें');
+}
+async function reload(){ show($('vet-loading')); hide($('vet-form')); await loadApplication(); }
+
+/* ---- status view ---- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function renderStatus(app){
+  hide($('vet-form')); hide($('vet-loading'));
+  var hi=isHi(); var s=app.status; var reasons=(app.reasons||[]);
+  var C={
+    pending_review:{cls:'st-pending',ic:'hourglass_top',t:['Under review','समीक्षाधीन'],
+      b:['Thanks — your application is with our verification team. We\u2019ll email or notify you once it\u2019s reviewed.','धन्यवाद — आपका आवेदन हमारी सत्यापन टीम के पास है। समीक्षा पूरी होते ही हम आपको सूचित करेंगे।']},
+    more_info:{cls:'st-more',ic:'help',t:['More information needed','और जानकारी चाहिए'],
+      b:['Our team needs a little more before they can verify you. See the notes below, then update and resubmit.','सत्यापन से पहले हमारी टीम को थोड़ी और जानकारी चाहिए। नीचे दिए नोट देखें, फिर अपडेट करके दोबारा जमा करें।']},
+    rejected:{cls:'st-rejected',ic:'block',t:['Application not approved','आवेदन स्वीकृत नहीं हुआ'],
+      b:['We could not verify this application. See the notes below for details.','हम इस आवेदन को सत्यापित नहीं कर सके। विवरण के लिए नीचे दिए नोट देखें।']},
+    approved:{cls:'st-approved',ic:'verified',t:['You\u2019re verified','आप सत्यापित हैं'],
+      b:['Your account is verified. You can now take consultations through Rapid Response.','आपका खाता सत्यापित हो गया है। अब आप रैपिड रिस्पॉन्स के माध्यम से परामर्श दे सकते हैं।']}
+  };
+  var cfg=C[s]||C.pending_review;
+  var canResubmit=(s==='more_info')||(s==='rejected'&&app.allow_resubmit);
+  var html='<div class="statuscard '+cfg.cls+'"><div class="ic"><span class="material-symbols-outlined">'+cfg.ic+'</span></div>'+
+    '<h2>'+esc(cfg.t[hi?1:0])+'</h2><p>'+esc(cfg.b[hi?1:0])+'</p>';
+  if(reasons.length){
+    html+='<div class="reasons"><div class="rl">'+(hi?'समीक्षा टीम के नोट':'Notes from the review team')+'</div><ul>'+
+      reasons.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'</ul></div>';
+  }
+  if(canResubmit){
+    html+='<div style="max-width:300px;margin:22px auto 0"><button class="btn" onclick="startResubmit()">'+
+      '<span class="material-symbols-outlined">edit</span>'+(hi?'अपडेट करें और दोबारा जमा करें':'Update &amp; resubmit')+'</button></div>';
+  }
+  html+='</div>';
+  var host=$('vet-status'); host.innerHTML=html; show(host);
+  window.__lastApp=app;
+}
+function startResubmit(){
+  resubmitting=true;
+  buildForm(); prefill(window.__lastApp||{});
+  consent={accurate:false,registered:false};
+  $('c_accurate').classList.remove('on'); $('c_registered').classList.remove('on');
+  pickedDocs={};
+  setSubmitting(false);
+  hide($('vet-status')); show($('vet-form'));
+  $('vet-form').scrollIntoView({behavior:'smooth'});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  $('vet-form').addEventListener('submit',submitForm);
+});
+</script>
+</body></html>
