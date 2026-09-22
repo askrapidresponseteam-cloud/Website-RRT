@@ -3,7 +3,7 @@
 <meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
 <meta media="(prefers-color-scheme: dark)" content="#0A0908" name="theme-color">
 <meta media="(prefers-color-scheme: light)" content="#FFFFFF" name="theme-color">
-<title>Join as a verified vet — Rapid Response</title>
+<title>Join as a verified vet - Rapid Response</title>
 <link href="/assets/favicon.svg" rel="icon" type="image/svg+xml">
 <link href="/assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
 <meta content="Register your veterinary credentials with Rapid Response. Verified vets can take consultations through the RRT network." name="description">
@@ -150,7 +150,7 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
     <div style="max-width:260px;margin:20px auto 0"><button class="btn ghost" onclick="boot()"><span data-lang="en">Retry</span><span class="hi" data-lang="hi">पुनः प्रयास</span></button></div>
   </div>
 
-  <!-- SIGN IN — returning vets: new phone, reinstall, or the web. Mobile (or
+  <!-- SIGN IN - returning vets: new phone, reinstall, or the web. Mobile (or
        registration number) identifies the vet record; the PIN authenticates. -->
   <div id="vet-signin" class="hidden">
     <div class="sect"><div class="sect-h"><span class="n">&#8617;</span><span data-lang="en">Sign in to your vet account</span><span class="hi" data-lang="hi">अपने वेट खाते में साइन इन करें</span></div>
@@ -161,11 +161,12 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
       </div>
       <div style="margin-top:18px"><button type="button" id="s_btn" class="btn" onclick="signIn()"><span data-lang="en">Sign in</span><span class="hi" data-lang="hi">साइन इन करें</span><span class="material-symbols-outlined">arrow_forward</span></button></div>
       <div class="formerr" id="s_err"></div>
+      <div id="s_reset" class="hidden" style="margin-top:12px"><button type="button" class="btn ghost" onclick="showForgot(true)"><span data-lang="en">Reset your PIN</span><span class="hi" data-lang="hi">अपना PIN रीसेट करें</span></button></div>
       <div class="linkrow"><a onclick="showForgot()"><span data-lang="en">Forgot PIN?</span><span class="hi" data-lang="hi">PIN भूल गए?</span></a><a onclick="showJoin()"><span data-lang="en">New here? Join as a vet</span><span class="hi" data-lang="hi">नए हैं? वेट के रूप में जुड़ें</span></a></div>
     </div>
   </div>
 
-  <!-- FORGOT PIN — no SMS: a code goes to the email on file; with no email our
+  <!-- FORGOT PIN - no SMS: a code goes to the email on file; with no email our
        team calls the registered mobile, verifies the vet and issues a code. -->
   <div id="vet-forgot" class="hidden">
     <div class="sect"><div class="sect-h"><span class="n">?</span><span data-lang="en">Reset your PIN</span><span class="hi" data-lang="hi">अपना PIN रीसेट करें</span></div>
@@ -182,9 +183,9 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
       <div id="f-step-2" class="hidden">
         <p class="vnote"><span data-lang="en">If your details matched, a reset code is on its way to your email. No email on file? Our team will call your registered mobile with a code. Codes look like ABCD-EFGH.</span><span class="hi" data-lang="hi">विवरण मेल खाने पर रीसेट कोड आपके ईमेल पर भेजा जा रहा है। ईमेल दर्ज नहीं है? हमारी टीम आपके पंजीकृत मोबाइल पर कॉल करके कोड देगी। कोड ABCD-EFGH जैसा दिखता है।</span></p>
         <div class="grid2">
-          <div class="field full" data-f="r_id2"><label><span data-lang="en">Mobile number or registration no.</span><span class="hi" data-lang="hi">मोबाइल नंबर या पंजीकरण संख्या</span></label><input id="r_id2" type="text" autocomplete="username"></div>
+          <div class="field full" data-f="r_id2"><label><span data-lang="en">Mobile number or registration no. (optional)</span><span class="hi" data-lang="hi">मोबाइल नंबर या पंजीकरण संख्या (वैकल्पिक)</span></label><input id="r_id2" type="text" autocomplete="username"></div>
           <div class="field full" data-f="r_code"><label><span data-lang="en">Reset code</span><span class="hi" data-lang="hi">रीसेट कोड</span></label><input id="r_code" type="text" autocomplete="one-time-code" maxlength="9" placeholder="ABCD-EFGH" style="font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase"></div>
-          <div class="field" data-f="r_pin"><label><span data-lang="en">New PIN (6–8 digits)</span><span class="hi" data-lang="hi">नया PIN (6–8 अंक)</span></label><input id="r_pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"></div>
+          <div class="field" data-f="r_pin"><label><span data-lang="en">New PIN (6-8 digits)</span><span class="hi" data-lang="hi">नया PIN (6-8 अंक)</span></label><input id="r_pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"></div>
           <div class="field" data-f="r_pin2"><label><span data-lang="en">Confirm new PIN</span><span class="hi" data-lang="hi">नए PIN की पुष्टि करें</span></label><input id="r_pin2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"></div>
         </div>
         <div style="margin-top:18px"><button type="button" id="r_btn2" class="btn" onclick="recoverComplete()"><span data-lang="en">Set new PIN</span><span class="hi" data-lang="hi">नया PIN सेट करें</span></button></div>
@@ -196,7 +197,7 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
 
   <!-- FORM -->
   <form id="vet-form" class="hidden" autocomplete="on" novalidate>
-    <div class="already" id="already"><span data-lang="en">Already applied or verified — new phone or reinstalled?</span><span class="hi" data-lang="hi">पहले से आवेदन किया है या सत्यापित हैं — नया फ़ोन या ऐप दोबारा इंस्टॉल किया?</span><a onclick="showSignIn()"><span data-lang="en">Sign in</span><span class="hi" data-lang="hi">साइन इन करें</span></a></div>
+    <div class="already" id="already"><span data-lang="en">Already applied or verified - new phone or reinstalled?</span><span class="hi" data-lang="hi">पहले से आवेदन किया है या सत्यापित हैं - नया फ़ोन या ऐप दोबारा इंस्टॉल किया?</span><a onclick="showSignIn()"><span data-lang="en">Sign in</span><span class="hi" data-lang="hi">साइन इन करें</span></a></div>
     <!-- credentials -->
     <div class="sect"><div class="sect-h"><span class="n">01</span><span data-lang="en">Your credentials</span><span class="hi" data-lang="hi">आपकी योग्यताएँ</span></div>
       <div class="grid2">
@@ -206,7 +207,7 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
         <div class="field" data-f="state_council"><label><span data-lang="en">State veterinary council</span><span class="hi" data-lang="hi">राज्य पशु चिकित्सा परिषद</span> <span class="req">*</span></label><input id="f_council" type="text" placeholder="e.g. West Bengal Veterinary Council"><div class="err" data-lang="en">Enter your state veterinary council.</div><div class="err hi" data-lang="hi">अपनी राज्य पशु चिकित्सा परिषद दर्ज करें।</div></div>
         <div class="field" data-f="qualification"><label><span data-lang="en">Qualification</span><span class="hi" data-lang="hi">योग्यता</span> <span class="req">*</span></label><input id="f_qual" type="text" placeholder="BVSc &amp; AH"><div class="err" data-lang="en">Enter your qualification.</div><div class="err hi" data-lang="hi">अपनी योग्यता दर्ज करें।</div></div>
         <div class="field" data-f="year_of_registration"><label><span data-lang="en">Year of registration</span><span class="hi" data-lang="hi">पंजीकरण का वर्ष</span> <span class="req">*</span></label><input id="f_year" type="number" inputmode="numeric" placeholder="2014"><div class="err" data-lang="en">Enter a valid year.</div><div class="err hi" data-lang="hi">मान्य वर्ष दर्ज करें।</div></div>
-        <div class="field full" data-f="additional_qualifications"><label><span data-lang="en">Additional qualifications</span><span class="hi" data-lang="hi">अतिरिक्त योग्यताएँ</span></label><input id="f_addq" type="text" placeholder="Optional — e.g. MVSc (Surgery)"></div>
+        <div class="field full" data-f="additional_qualifications"><label><span data-lang="en">Additional qualifications</span><span class="hi" data-lang="hi">अतिरिक्त योग्यताएँ</span></label><input id="f_addq" type="text" placeholder="Optional - e.g. MVSc (Surgery)"></div>
       </div>
     </div>
     <!-- practice -->
@@ -216,7 +217,7 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
         <div class="field" data-f="practice_city"><label><span data-lang="en">Practice city</span><span class="hi" data-lang="hi">अभ्यास का शहर</span></label><input id="f_pcity" type="text" placeholder="Optional"></div>
         <div class="field" data-f="clinic_name"><label><span data-lang="en">Clinic name</span><span class="hi" data-lang="hi">क्लिनिक का नाम</span></label><input id="f_clinic" type="text" placeholder="Optional"></div>
         <div class="field" data-f="phone"><label><span data-lang="en">Mobile</span><span class="hi" data-lang="hi">मोबाइल</span> <span class="req">*</span></label><div class="phonewrap"><span class="cc">+91</span><input id="f_phone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="98765 43210"></div><div class="hint" id="phone_hint" data-lang="en">You'll sign in with this number. Use your personal mobile.</div><div class="hint hi" data-lang="hi">आप इसी नंबर से साइन इन करेंगे। अपना निजी मोबाइल नंबर डालें।</div><div class="err" data-lang="en">Enter a valid 10-digit mobile number.</div><div class="err hi" data-lang="hi">10 अंकों का मान्य मोबाइल नंबर दर्ज करें।</div></div>
-        <div class="field full" data-f="email"><label><span data-lang="en">Email</span><span class="hi" data-lang="hi">ईमेल</span></label><input id="f_email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"><div class="hint" data-lang="en">Recommended — you'll get review updates, and you can reset a forgotten PIN yourself.</div><div class="hint hi" data-lang="hi">अनुशंसित — समीक्षा की जानकारी मिलेगी और भूला हुआ PIN आप खुद रीसेट कर सकेंगे।</div><div class="err" data-lang="en">Enter a valid email address.</div><div class="err hi" data-lang="hi">एक मान्य ईमेल पता दर्ज करें।</div></div>
+        <div class="field full" data-f="email"><label><span data-lang="en">Email</span><span class="hi" data-lang="hi">ईमेल</span></label><input id="f_email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"><div class="hint" data-lang="en">Recommended - you'll get review updates, and you can reset a forgotten PIN yourself.</div><div class="hint hi" data-lang="hi">अनुशंसित - समीक्षा की जानकारी मिलेगी और भूला हुआ PIN आप खुद रीसेट कर सकेंगे।</div><div class="err" data-lang="en">Enter a valid email address.</div><div class="err hi" data-lang="hi">एक मान्य ईमेल पता दर्ज करें।</div></div>
       </div>
     </div>
     <!-- documents -->
@@ -229,9 +230,9 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
     </div>
     <!-- consent -->
     <div class="sect" id="pin-sect"><div class="sect-h"><span class="n">04</span><span data-lang="en">Secure your account</span><span class="hi" data-lang="hi">अपना खाता सुरक्षित करें</span></div>
-      <p class="vnote"><span data-lang="en">Choose a 6–8 digit PIN. With your mobile number it signs you back in on a new phone, after reinstalling, or here on the web. Avoid 123456 or repeated digits.</span><span class="hi" data-lang="hi">6–8 अंकों का PIN चुनें। मोबाइल नंबर के साथ यह नए फ़ोन पर, ऐप दोबारा इंस्टॉल करने के बाद, या यहाँ वेब पर साइन इन कराता है। 123456 या दोहराए अंकों से बचें।</span></p>
+      <p class="vnote"><span data-lang="en">Choose a 6-8 digit PIN. With your mobile number it signs you back in on a new phone, after reinstalling, or here on the web. Avoid 123456 or repeated digits.</span><span class="hi" data-lang="hi">6-8 अंकों का PIN चुनें। मोबाइल नंबर के साथ यह नए फ़ोन पर, ऐप दोबारा इंस्टॉल करने के बाद, या यहाँ वेब पर साइन इन कराता है। 123456 या दोहराए अंकों से बचें।</span></p>
       <div class="grid2">
-        <div class="field" data-f="pin"><label>PIN <span class="req">*</span></label><input id="f_pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"><div class="err" data-lang="en">6–8 digits; not a sequence or repeated digit.</div><div class="err hi" data-lang="hi">6–8 अंक; क्रम या दोहराए अंक नहीं।</div></div>
+        <div class="field" data-f="pin"><label>PIN <span class="req">*</span></label><input id="f_pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"><div class="err" data-lang="en">6-8 digits; not a sequence or repeated digit.</div><div class="err hi" data-lang="hi">6-8 अंक; क्रम या दोहराए अंक नहीं।</div></div>
         <div class="field" data-f="pin2"><label><span data-lang="en">Confirm PIN</span><span class="hi" data-lang="hi">PIN की पुष्टि करें</span> <span class="req">*</span></label><input id="f_pin2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"><div class="err" data-lang="en">The two PINs don't match.</div><div class="err hi" data-lang="hi">दोनों PIN मेल नहीं खाते।</div></div>
       </div>
     </div>
@@ -249,8 +250,8 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
 </main>
 
 <footer>
-  <span data-lang="en">Rapid Response — Animal Emergency Network for India · <a href="/">Home</a></span>
-  <span class="hi" data-lang="hi">रैपिड रिस्पॉन्स — भारत का पशु आपातकालीन नेटवर्क · <a href="/">होम</a></span>
+  <span data-lang="en">Rapid Response - Animal Emergency Network for India · <a href="/">Home</a></span>
+  <span class="hi" data-lang="hi">रैपिड रिस्पॉन्स - भारत का पशु आपातकालीन नेटवर्क · <a href="/">होम</a></span>
 </footer>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -258,13 +259,13 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <script>
 /* ---- site chrome (mirrors index.html) ---- */
-function setLang(e){document.documentElement.lang=e;try{localStorage.setItem("lang",e)}catch(x){}}
-function toggleMode(){var e=document.documentElement.classList.toggle("light");document.getElementById("modeBtn").textContent=e?"🌙":"☀️";try{localStorage.setItem("theme",e?"l":"d")}catch(x){}}
-(function(){try{var e=localStorage.getItem("lang");("hi"===e||"en"===e)&&(document.documentElement.lang=e)}catch(x){}})();
-(function(){try{if("d"===localStorage.getItem("theme")){document.documentElement.classList.remove("light");var e=document.getElementById("modeBtn");e&&(e.textContent="☀️")}}catch(x){}})();
+function setLang(e){document.documentElement.lang=e;try{localStorage.setItem("lang",e)}catch(x){ /* best effort */ }}
+function toggleMode(){var e=document.documentElement.classList.toggle("light");document.getElementById("modeBtn").textContent=e?"🌙":"☀️";try{localStorage.setItem("theme",e?"l":"d")}catch(x){ /* best effort */ }}
+(function(){try{var e=localStorage.getItem("lang");("hi"===e||"en"===e)&&(document.documentElement.lang=e)}catch(x){ /* best effort */ }})();
+(function(){try{if("d"===localStorage.getItem("theme")){document.documentElement.classList.remove("light");var e=document.getElementById("modeBtn");e&&(e.textContent="☀️")}}catch(x){ /* best effort */ }})();
 
 /* ============================================================================
- * Verified-vet onboarding — website half of the same journey as the app.
+ * Verified-vet onboarding - website half of the same journey as the app.
  * Same Firebase project, same anonymous-user identity model, the same
  * vetConsult endpoints, the same validations / doc types / consent versions /
  * error codes. No business logic is duplicated: the backend remains the single
@@ -294,7 +295,7 @@ function show(el){el.classList.remove('hidden');}
 function hide(el){el.classList.add('hidden');}
 function isHi(){return document.documentElement.lang==='hi';}
 
-/* ---- identity (no SMS) — same model as the app ----------------------------
+/* ---- identity (no SMS) - same model as the app ----------------------------
  * Every browser keeps a FREE anonymous Firebase session (transport + document
  * uploads). A returning vet signs in with mobile (or registration no.) + PIN,
  * which binds this browser to their existing vet record. Names are only a
@@ -309,32 +310,35 @@ function route(u){ if(!u||u.uid===lastUid) return; lastUid=u.uid; uid=u.uid; sho
 async function api(path, body){
   var t=await idToken(); if(!t) throw new Error('no_session');
   var r=await fetch(VET_API+path,{method:'POST',headers:{'Authorization':'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify(body||{})});
-  var j={}; try{ j=await r.json(); }catch(e){}
+  var j={}; try{ j=await r.json(); }catch(e){ /* best effort */ }
   return {status:r.status, ok:r.ok&&j.ok===true, body:j};
 }
 function busy(id,on){ var b=$(id); if(b) b.disabled=!!on; }
-function lockMsg(j){ var m=(j&&j.retryAtMs)?Math.max(1,Math.ceil((j.retryAtMs-Date.now())/60000)):15; return T('Too many attempts. Try again in '+m+' min.','बहुत अधिक प्रयास। '+m+' मिनट बाद कोशिश करें।'); }
+function lockMsg(j){ var m=(j&&j.retryAtMs)?Math.max(1,Math.ceil((j.retryAtMs-Date.now())/60000)):15; return T('Too many wrong PINs. Try again in '+m+' min, or reset your PIN below.','बहुत बार गलत PIN। '+m+' मिनट बाद कोशिश करें, या नीचे PIN रीसेट करें।'); }
 function tenDigits(v){ return String(v||'').replace(/\D/g,'').replace(/^91(?=\d{10}$)/,'').replace(/^0(?=\d{10}$)/,''); }
 function mobileOk(v){ return /^[6-9]\d{9}$/.test(tenDigits(v)); }
 function idOk(v){ v=String(v||'').trim(); return mobileOk(v) || (/^[A-Za-z0-9/\-. ]{3,40}$/.test(v) && /\d/.test(v)); }
 function pinProblem(p){ if(!/^\d+$/.test(p)) return 'pin_must_be_numeric'; if(p.length<6||p.length>8) return 'pin_length'; if(/^(\d)\1+$/.test(p)) return 'pin_trivial_repeat'; var a=true,d=true; for(var i=1;i<p.length;i++){ if(p.charCodeAt(i)!==p.charCodeAt(i-1)+1) a=false; if(p.charCodeAt(i)!==p.charCodeAt(i-1)-1) d=false; } return (a||d)?'pin_trivial_sequence':null; }
-var NAME_RE=/^[\p{L}\p{M}][\p{L}\p{M} .'\-]{0,59}$/u;
+var NAME_RE=/^[\p{L}\p{M}][\p{L}\p{M} .'-]{0,59}$/u;
 
 function showSignIn(){ showOnly('vet-signin'); $('s_err').textContent=''; setTimeout(function(){ ($('s_id').value?$('s_pin'):$('s_id')).focus(); },50); }
 function showJoin(){ resubmitting=false; window.__lastApp=null; buildForm(); showForm(); }
-function showForgot(){ showOnly('vet-forgot'); show($('f-step-1')); hide($('f-step-2')); $('r_err').textContent=''; if(!$('r_id').value) $('r_id').value=$('s_id').value||''; }
+function showForgot(fromSignIn){ showOnly('vet-forgot'); show($('f-step-1')); hide($('f-step-2')); $('r_err').textContent=''; if(fromSignIn||!$('r_id').value) $('r_id').value=$('s_id').value||''; }
 function showCodeStep(){ showOnly('vet-forgot'); hide($('f-step-1')); show($('f-step-2')); $('r_err').textContent=''; if(!$('r_id2').value) $('r_id2').value=$('r_id').value||$('s_id').value||''; setTimeout(function(){ $('r_code').focus(); },50); }
 
 async function signIn(){
-  $('s_err').textContent='';
+  $('s_err').textContent=''; hide($('s_reset'));
   var id=val('s_id'), pin=val('s_pin');
   var ok=idOk(id); setBad('s_id',!ok); if(!ok) return;
-  if(!/^\d{6,8}$/.test(pin)){ $('s_err').textContent=T('Enter your 6–8 digit PIN.','अपना 6–8 अंकों का PIN दर्ज करें।'); return; }
+  if(!/^\d{6,8}$/.test(pin)){ $('s_err').textContent=T('Enter your 6-8 digit PIN.','अपना 6-8 अंकों का PIN दर्ज करें।'); return; }
   busy('s_btn',true);
   try{
     var r=await api('/vet/signin',{identifier:id,pin:pin});
     if(r.ok){ $('s_pin').value=''; lastUid=null; route(auth.currentUser); busy('s_btn',false); return; }
-    $('s_err').textContent=(r.body.error==='locked')?lockMsg(r.body):errMsg(r.body.error||'invalid_credentials');
+    var code=r.body.error||'invalid_credentials';
+    $('s_err').textContent=(code==='locked')?lockMsg(r.body):errMsg(code);
+    // Wrong PIN or locked: the fix is almost always a reset, so offer it right here.
+    if(code==='invalid_credentials'||code==='locked') show($('s_reset'));
   }catch(e){ $('s_err').textContent=errMsg('network'); }
   busy('s_btn',false);
 }
@@ -353,13 +357,15 @@ async function recoverStart(){
 async function recoverComplete(){
   $('r_err').textContent='';
   var id=val('r_id2'), code=val('r_code'), p1=val('r_pin'), p2=val('r_pin2');
-  if(!idOk(id)){ $('r_err').textContent=errMsg('invalid_identifier'); return; }
+  // the code identifies the account; the number is optional (checked if given)
+  if(id&&!idOk(id)){ $('r_err').textContent=errMsg('invalid_identifier'); return; }
   if(code.replace(/[^A-Za-z0-9]/g,'').length!==8){ $('r_err').textContent=errMsg('invalid_code'); return; }
   var pp=pinProblem(p1); if(pp){ $('r_err').textContent=errMsg(pp); return; }
   if(p1!==p2){ $('r_err').textContent=errMsg('pin_mismatch'); return; }
   busy('r_btn2',true);
   try{
-    var r=await api('/vet/recover/complete',{identifier:id,code:code,new_pin:p1});
+    var body={code:code,new_pin:p1}; if(id) body.identifier=id;
+    var r=await api('/vet/recover/complete',body);
     if(r.ok){ $('r_code').value=''; $('r_pin').value=''; $('r_pin2').value=''; lastUid=null; route(auth.currentUser); busy('r_btn2',false); return; }
     $('r_err').textContent=errMsg(r.body.error);
   }catch(e){ $('r_err').textContent=errMsg('network'); }
@@ -383,13 +389,14 @@ async function changeMobile(){
   if(!/^\d{6,8}$/.test(pin)){ $('cm_err').textContent=T('Enter your PIN to confirm.','पुष्टि के लिए अपना PIN दर्ज करें।'); return; }
   busy('cm_btn',true);
   try{ var r=await api('/vet/profile/mobile',{new_mobile:m,pin:pin}); if(r.ok){ await reload(); return; }
-    $('cm_err').textContent=(r.body.error==='locked')?lockMsg(r.body):errMsg(r.body.error); }
+    $('cm_err').textContent=(r.body.error==='locked')?lockMsg(r.body)
+      :(r.body.error==='invalid_credentials')?T('That PIN is incorrect.','यह PIN गलत है।'):errMsg(r.body.error); }
   catch(e){ $('cm_err').textContent=errMsg('network'); }
   busy('cm_btn',false);
 }
 async function signOutVet(){
   if(!confirm(T('Sign out of this device? You can sign back in with your mobile and PIN.','इस डिवाइस से साइन आउट करें? आप मोबाइल और PIN से फिर साइन इन कर सकते हैं।'))) return;
-  try{ await api('/vet/signout',{}); }catch(e){}
+  try{ await api('/vet/signout',{}); }catch(e){ /* best effort */ }
   lastUid=null; hide($('vet-idbar')); showOnly('vet-loading');
   await auth.signOut(); // onAuthStateChanged -> fresh anonymous session -> join/sign-in
 }
@@ -528,14 +535,14 @@ function errMsg(code){
     invalid_mobile:['Enter a valid 10-digit mobile number.','10 अंकों का मान्य मोबाइल नंबर दर्ज करें।'],
     mobile_in_use:['This mobile number is already registered to a vet account. If it\u2019s yours, sign in instead; otherwise use your personal mobile.','यह मोबाइल नंबर पहले से किसी वेट खाते में पंजीकृत है। यदि यह आपका है तो साइन इन करें, अन्यथा अपना निजी मोबाइल नंबर डालें।'],
     use_change_mobile:['To change your mobile number, use \u201cChange mobile\u201d on your status page.','मोबाइल नंबर बदलने के लिए स्थिति पेज पर “मोबाइल बदलें” का उपयोग करें।'],
-    pin_required:['Choose a 6\u20138 digit PIN.','6–8 अंकों का PIN चुनें।'],
-    pin_length:['Your PIN must be 6\u20138 digits.','PIN 6–8 अंकों का होना चाहिए।'],
+    pin_required:['Choose a 6-8 digit PIN.','6-8 अंकों का PIN चुनें।'],
+    pin_length:['Your PIN must be 6-8 digits.','PIN 6-8 अंकों का होना चाहिए।'],
     pin_must_be_numeric:['Your PIN must be digits only.','PIN में केवल अंक होने चाहिए।'],
-    pin_trivial_sequence:['Avoid sequences like 123456 \u2014 choose a less obvious PIN.','123456 जैसे क्रम से बचें — कम अनुमान योग्य PIN चुनें।'],
+    pin_trivial_sequence:['Avoid sequences like 123456 - choose a less obvious PIN.','123456 जैसे क्रम से बचें - कम अनुमान योग्य PIN चुनें।'],
     pin_trivial_repeat:['Avoid repeated digits like 111111.','111111 जैसे दोहराए अंकों से बचें।'],
     pin_mismatch:['The two PINs don\u2019t match.','दोनों PIN मेल नहीं खाते।'],
     pin_already_set:['A PIN is already set for this account.','इस खाते के लिए PIN पहले से सेट है।'],
-    invalid_credentials:['Mobile/registration number or PIN is incorrect.','मोबाइल/पंजीकरण संख्या या PIN गलत है।'],
+    invalid_credentials:['That mobile/registration number and PIN don\u2019t match. Forgot your PIN, or applied before PINs were introduced? Reset it below.','मोबाइल/पंजीकरण संख्या और PIN मेल नहीं खाते। PIN भूल गए, या PIN शुरू होने से पहले आवेदन किया था? नीचे रीसेट करें।'],
     invalid_identifier:['Enter your mobile number or registration number.','अपना मोबाइल नंबर या पंजीकरण संख्या दर्ज करें।'],
     invalid_code:['That code is incorrect or has expired. Request a new one.','कोड गलत है या उसकी अवधि समाप्त हो गई है। नया कोड मँगाएँ।'],
     rate_limited:['Too many attempts. Please wait a while and try again.','बहुत अधिक प्रयास। कुछ देर बाद दोबारा कोशिश करें।'],
@@ -588,7 +595,7 @@ async function submitForm(ev){
     var t=await idToken();
     var url=VET_API+(resubmitting?'/vet/apply/resubmit':'/vet/apply');
     var r=await fetch(url,{method:'POST',headers:{'Authorization':'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify(body)});
-    var j={}; try{ j=await r.json(); }catch(e){}
+    var j={}; try{ j=await r.json(); }catch(e){ /* best effort */ }
     if(r.ok&&j.ok){ resubmitting=false; await reload(); return; }
     if(j&&j.error==='sign_in_required'){ setSubmitting(false); showSignIn(); $('s_err').textContent=errMsg('sign_in_required'); return; }
     if(j&&j.error==='mobile_in_use'){ $('formErr').innerHTML=esc(errMsg('mobile_in_use'))+' <a style="color:var(--accent);text-decoration:underline;cursor:pointer" onclick="showSignIn()">'+esc(T('Sign in','साइन इन करें'))+'</a>'; setSubmitting(false); return; }
@@ -614,7 +621,7 @@ function renderStatus(app){
   var hi=isHi(); var s=app.status; var reasons=(app.reasons||[]);
   var C={
     pending_review:{cls:'st-pending',ic:'hourglass_top',t:['Under review','समीक्षाधीन'],
-      b:['Thanks — your application is with our verification team. We\u2019ll email or notify you once it\u2019s reviewed.','धन्यवाद — आपका आवेदन हमारी सत्यापन टीम के पास है। समीक्षा पूरी होते ही हम आपको सूचित करेंगे।']},
+      b:['Thanks - your application is with our verification team. We\u2019ll email or notify you once it\u2019s reviewed.','धन्यवाद - आपका आवेदन हमारी सत्यापन टीम के पास है। समीक्षा पूरी होते ही हम आपको सूचित करेंगे।']},
     more_info:{cls:'st-more',ic:'help',t:['More information needed','और जानकारी चाहिए'],
       b:['Our team needs a little more before they can verify you. See the notes below, then update and resubmit.','सत्यापन से पहले हमारी टीम को थोड़ी और जानकारी चाहिए। नीचे दिए नोट देखें, फिर अपडेट करके दोबारा जमा करें।']},
     rejected:{cls:'st-rejected',ic:'block',t:['Application not approved','आवेदन स्वीकृत नहीं हुआ'],
@@ -641,12 +648,12 @@ function renderStatus(app){
 function accountPanel(app){
   var p=app.profile||{}, out='';
   if(!app.pin_set){
-    out+='<div class="acct"><h3>'+esc(T('Secure your account','अपना खाता सुरक्षित करें'))+'</h3><p>'+esc(T('Choose a 6–8 digit PIN so you can sign in on a new phone, after reinstalling, or on the web.','6–8 अंकों का PIN चुनें ताकि नए फ़ोन पर, ऐप दोबारा इंस्टॉल करने के बाद या वेब पर साइन इन कर सकें।'))+'</p>'+
+    out+='<div class="acct"><h3>'+esc(T('Secure your account','अपना खाता सुरक्षित करें'))+'</h3><p>'+esc(T('Choose a 6-8 digit PIN so you can sign in on a new phone, after reinstalling, or on the web.','6-8 अंकों का PIN चुनें ताकि नए फ़ोन पर, ऐप दोबारा इंस्टॉल करने के बाद या वेब पर साइन इन कर सकें।'))+'</p>'+
       '<div class="grid2"><div class="field"><label>PIN</label><input id="sp_pin" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password"></div>'+
       '<div class="field"><label>'+esc(T('Confirm PIN','PIN की पुष्टि करें'))+'</label><input id="sp_pin2" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password"></div></div>'+
       '<div style="margin-top:14px"><button class="btn" id="sp_btn" onclick="setPin()">'+esc(T('Set PIN','PIN सेट करें'))+'</button></div><div class="formerr" id="sp_err"></div></div>';
   }
-  out+='<div class="acct"><h3>'+esc(T('Your account','आपका खाता'))+'</h3><p>'+esc(T('Mobile','मोबाइल'))+': <b>'+(p.phone?esc('+91 '+p.phone):'—')+'</b>'+(p.email?' · '+esc(p.email):'')+'</p>'+
+  out+='<div class="acct"><h3>'+esc(T('Your account','आपका खाता'))+'</h3><p>'+esc(T('Mobile','मोबाइल'))+': <b>'+(p.phone?esc('+91 '+p.phone):'-')+'</b>'+(p.email?' · '+esc(p.email):'')+'</p>'+
     '<div class="linkrow" style="margin-top:0">'+(app.pin_set?'<a onclick="toggleCm()">'+esc(T('Change mobile','मोबाइल बदलें'))+'</a>':'<span></span>')+
     '<a onclick="signOutVet()">'+esc(T('Sign out of this device','इस डिवाइस से साइन आउट करें'))+'</a></div>'+
     (app.pin_set?'<div id="cm" class="hidden" style="margin-top:14px"><div class="grid2"><div class="field"><label>'+esc(T('New mobile','नया मोबाइल'))+'</label><div class="phonewrap"><span class="cc">+91</span><input id="cm_mobile" type="tel" inputmode="numeric" maxlength="10"></div></div>'+
