@@ -283,6 +283,17 @@ html[lang=hi] .r.rr .t{font-size:16px}
 .results b{font-weight:600;color:inherit}
 .sh-ul{margin:4px 0 14px 20px;padding:0;color:#333;font-size:16px;max-width:52ch}
 .sh-ul li{margin:6px 0;line-height:1.5}
+
+/* voice search */
+.mic{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#5f6368;margin-right:2px}
+.mic svg{width:22px;height:22px}
+.mic:hover{background:#f1f3f4;color:var(--ink)}
+.mic.on{color:#fff;background:var(--red);animation:micpulse 1.2s ease-in-out infinite}
+@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(229,34,34,.45)}70%{box-shadow:0 0 0 12px rgba(229,34,34,0)}100%{box-shadow:0 0 0 0 rgba(229,34,34,0)}}
+.bar.listening{box-shadow:0 1px 6px rgba(32,33,36,.18);border-color:transparent}
+.vmsg{margin:10px 0 0;font-size:13.5px;color:var(--mid);text-align:center}
+.vmsg.err{color:var(--red)}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none}}
 </style>
 </head>
 <body>
@@ -313,10 +324,12 @@ html[lang=hi] .r.rr .t{font-size:16px}
     <div class="bar">
       <svg class="sico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       <input id="q" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list" aria-label="Search Rapid Response">
+      <button class="mic" id="mic" type="button" aria-label="Search by voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="go" id="go" aria-label="Go">&rarr;</button>
     </div>
     <div class="results" id="results" role="listbox"></div>
   </div>
+  <p class="vmsg" id="vmsg" role="status" aria-live="polite" hidden></p>
 
   <div class="meta" id="recentRow" hidden>
     <span data-i="recent"></span>
@@ -374,7 +387,7 @@ var T={
   straight:"Or go straight to",
   qReport:"Report an incident",qSos:"Raise an SOS",qLaws:"Know the laws",qLegal:"Legal Desk",qShop:"Shop",qVet:"For vets",
   foot:"\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.",
-  kFaq:"Common question",paa:"People also ask",answer:"Answer",readAll:"Read the full answer",noHits:"No exact match for",kContact:"Contact",
+  kFaq:"Common question",paa:"People also ask",answer:"Answer",readAll:"Read the full answer",noHits:"No exact match for",kContact:"Contact",vListen:"Listening\u2026 speak now",vHeard:"Heard:",vNo:"Didn't catch that. Tap the mic and try again.",vBlocked:"Microphone is blocked. Allow it for this site in your browser settings, then tap the mic again.",vNoMic:"No microphone found on this device.",vNet:"Voice search needs an internet connection.",vErr:"Voice search stopped. Tap the mic to try again.",vMic:"Search by voice",vStop:"Stop listening",
   footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",otherLang:"हिंदी",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
@@ -391,7 +404,7 @@ var T={
   straight:"या सीधे जाएँ",
   qReport:"घटना रिपोर्ट करें",qSos:"एसओएस भेजें",qLaws:"कानून जानें",qLegal:"लीगल डेस्क",qShop:"शॉप",qVet:"वेट के लिए",
   foot:"\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।",
-  kFaq:"आम सवाल",paa:"लोग यह भी पूछते हैं",answer:"जवाब",readAll:"पूरा जवाब पढ़ें",noHits:"सटीक जवाब नहीं मिला:",kContact:"संपर्क",
+  kFaq:"आम सवाल",paa:"लोग यह भी पूछते हैं",answer:"जवाब",readAll:"पूरा जवाब पढ़ें",noHits:"सटीक जवाब नहीं मिला:",kContact:"संपर्क",vListen:"सुन रहे हैं\u2026 अब बोलिए",vHeard:"सुना:",vNo:"आवाज़ नहीं पकड़ी। माइक दबाकर फिर बोलिए।",vBlocked:"माइक्रोफ़ोन बंद है। ब्राउज़र सेटिंग में इस साइट के लिए अनुमति दें, फिर माइक दबाएँ।",vNoMic:"इस डिवाइस पर माइक्रोफ़ोन नहीं मिला।",vNet:"वॉइस सर्च के लिए इंटरनेट चाहिए।",vErr:"वॉइस सर्च रुक गई। माइक दबाकर फिर कोशिश करें।",vMic:"बोलकर खोजें",vStop:"सुनना बंद करें",
   footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",otherLang:"English",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
@@ -700,7 +713,7 @@ var SYN={
   feed:["feeding","feed"],feeding:["feeding","feed"],feeder:["feeder","feeding"],
   dog:["dog","dogs"],dogs:["dog","dogs"],cruelty:["cruelty","report"],abuse:["cruelty","report"],
   cost:["free"],price:["free","price"],paid:["free"],free:["free"],
-  "एसओएस":["sos"],"वेट":["vet"],"डॉक्टर":["vet"],"लोकेशन":["location"],"नंबर":["phone"],"फ़ोन":["phone"],"ज़िला":["district"],"जिला":["district"],"व्हाट्सऐप":["whatsapp"]
+  "एसओएस":["sos"],"वेट":["vet"],"लोकेशन":["location"],"नंबर":["phone"],"फ़ोन":["phone"],"ज़िला":["district"],"जिला":["district"],"व्हाट्सऐप":["whatsapp"],"व्हाट्सएप":["whatsapp"],"ग्रुप":["group"],"ट्रैक":["track","location"],"सरकारी":["government"],"हेल्पलाइन":["helpline","government"],"जुड़ना":["join"],"जुड़":["join"],"पशु":["animal"],"कुत्ता":["dog"],"कुत्ते":["dog"],"कुत्तों":["dog"],"खाना":["feeding"],"खिलाना":["feeding"],"क्रूरता":["cruelty"],"शिकायत":["report","complaint"],"दुकान":["shop"],"शॉप":["shop"],"डॉक्टर":["vet"],"अस्पताल":["vet","hospital"],"प्राइवेसी":["privacy"],"गोपनीयता":["privacy"]
 };
 function stem(w){
   if(/[\u0900-\u097F]/.test(w)||w.length<5)return w;
@@ -878,6 +891,64 @@ document.addEventListener("keydown",function(e){
   var a=document.activeElement;
   if(e.key==="/"&&a!==q&&!/input|textarea/i.test(a.tagName)){e.preventDefault();q.focus()}
 });
+
+
+/* ---------------------------------------------------------- voice search
+   The browser's own speech recognition (Web Speech API): free, no key, no
+   server of ours, no language model. Chrome, Edge, Safari and Android
+   Chrome support it; elsewhere the mic simply does not appear. What was
+   heard is typed into the box and ranked by the same search as typing.
+   When the recogniser offers several guesses, the one our index matches
+   best wins, so a mishearing that matches nothing loses to one that does. */
+(function(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  var mic=$("mic"),msg=$("vmsg"),bar=document.querySelector(".bar");
+  if(!SR||!mic||!window.isSecureContext)return;
+  mic.hidden=false;
+  var rec=null,active=false,gotFinal=false,guard=null,heard="";
+  function say(text,err){msg.hidden=!text;msg.textContent=text||"";msg.classList.toggle("err",!!err)}
+  function ui(on){active=on;mic.classList.toggle("on",on);bar.classList.toggle("listening",on);
+    mic.setAttribute("aria-pressed",on?"true":"false");mic.setAttribute("aria-label",T[lang][on?"vStop":"vMic"])}
+  function clean(t){return String(t||"").replace(/[.?!,।]+$/,"").replace(/\s+/g," ").trim()}
+  function bestOf(alts){
+    var best=alts[0],bs=-1;
+    alts.forEach(function(a){var r=rank(a),sc=r.length?r[0].s*(.6+.4*r[0].cov):0;if(sc>bs+1e-9){bs=sc;best=a}});
+    return best;
+  }
+  function stop(){try{if(rec)rec.stop()}catch(e){}}
+  function start(){
+    if(active){stop();return}
+    say("");heard="";gotFinal=false;
+    rec=new SR();
+    rec.lang=lang==="hi"?"hi-IN":"en-IN";
+    rec.interimResults=true;rec.continuous=false;rec.maxAlternatives=4;
+    rec.onstart=function(){ui(true);say(T[lang].vListen);q.value="";q.focus();sel=0;render()};
+    rec.onresult=function(e){
+      var interim="",fin=null;
+      for(var i=e.resultIndex;i<e.results.length;i++){
+        var r=e.results[i];
+        if(r.isFinal){var alts=[];for(var j=0;j<r.length;j++)alts.push(clean(r[j].transcript));fin=bestOf(alts.filter(Boolean))}
+        else interim+=r[0].transcript;
+      }
+      if(fin){gotFinal=true;heard=fin;q.value=fin}else if(interim){q.value=clean(interim)}
+      sel=0;render();
+    };
+    rec.onerror=function(e){
+      var d=T[lang],m={"not-allowed":d.vBlocked,"service-not-allowed":d.vBlocked,"no-speech":d.vNo,"audio-capture":d.vNoMic,"network":d.vNet,"aborted":""}[e.error];
+      say(m===undefined?d.vErr:m,!!m);gotFinal=true;if(m)hide();
+    };
+    rec.onend=function(){
+      clearTimeout(guard);ui(false);
+      if(heard){say(T[lang].vHeard+" \u201c"+heard+"\u201d");remember(heard);drawRecent();q.focus();sel=0;render()}
+      else if(!gotFinal){say(T[lang].vNo,true)}
+    };
+    try{rec.start()}catch(e){say(T[lang].vErr,true);ui(false);return}
+    clearTimeout(guard);guard=setTimeout(stop,10000);   // never listen forever
+  }
+  mic.addEventListener("click",function(e){e.preventDefault();start()});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&active)stop()});
+  q.addEventListener("input",function(){if(!active)say("")});
+})();
 
 /* ------------------------------------------------------ recent searches */
 function getRecent(){try{return JSON.parse(store.get("rr-recent")||"[]")}catch(e){return []}}
