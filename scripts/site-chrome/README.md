@@ -24,3 +24,4 @@ matched against a fixed list with aliases and spelling tolerance (add places in 
 and a few intents (SOS, vet, shelters/rescuers, cases, report, shop, Ask the District)
 pin one "Quick action" above the results. No model is involved; the same words always
 give the same result.
+- `check_centring.py /,/shop,/faq 1190 770` - every button and capsule on a page: label (or icon) must sit in the exact centre, measured on the rendered page.

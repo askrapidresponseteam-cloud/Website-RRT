@@ -54,7 +54,7 @@ def footer(extra=''):
     return ('<!-- rr:footer -->\n<div class="rr-chrome rr-ftr" role="contentinfo">'
             '<span ' + t('\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.',
                          '\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।') + '</span>'
-            + extra + f'<nav aria-label="Site">{links}</nav></div>\n<script src="/assets/rr-site.js" defer></script>\n<!-- /rr:footer -->')
+            + extra + f'<nav aria-label="Site">{links}</nav></div>\n<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>\n<!-- /rr:footer -->')
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap">')

@@ -230,7 +230,8 @@ h1{white-space:normal;max-width:none;text-transform:none;font-size:clamp(28px,mi
 .bar:hover,.bar:focus-within{box-shadow:0 1px 6px rgba(32,33,36,.18);border-color:transparent}
 .sico{width:20px;height:20px;flex:none;color:#9aa0a6}
 .bar input{font-size:17px;padding:0;height:100%}
-.go{width:42px;height:42px;margin:0;border-radius:50%;font-size:18px}
+.go{width:42px;height:42px;margin:0;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;padding:0}
+.go svg{display:block}
 .results{border-radius:0 0 22px 22px;border:0;box-shadow:0 6px 16px rgba(32,33,36,.18);top:calc(100% - 4px);padding:6px 0 10px}
 .search:has(.results.open) .bar{border-radius:26px 26px 0 0;box-shadow:0 1px 6px rgba(32,33,36,.18);border-color:transparent}
 .r{padding:10px 22px}
@@ -327,7 +328,7 @@ html[lang=hi] .r.rr .t{font-size:16px}
       <svg class="sico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       <input id="q" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list" aria-label="Search Rapid Response">
       <button class="mic" id="mic" type="button" aria-label="Search by voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-      <button class="go" id="go" aria-label="Go">&rarr;</button>
+      <button class="go" id="go" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
     <div class="results" id="results" role="listbox"></div>
   </div>
@@ -371,6 +372,7 @@ html[lang=hi] .r.rr .t{font-size:16px}
 </aside>
 
 <script src="/assets/rr-voice.js"></script>
+<script src="/assets/rr-center.js" defer></script>
 <script>
 (function(){
 "use strict";

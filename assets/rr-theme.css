@@ -60,3 +60,4 @@ html.rr-themed #top .title .em{color:#111!important}
 html.rr-themed body>.page,html.rr-themed main.page{padding-top:clamp(36px,7vh,72px)!important;min-height:0!important}
 html.rr-themed .hero{padding-top:clamp(40px,8vh,80px)!important}
 html.rr-themed #top{padding-top:clamp(40px,8vh,80px)!important;min-height:0!important}
+html.rr-themed .chip{display:inline-flex;align-items:center;justify-content:center}
