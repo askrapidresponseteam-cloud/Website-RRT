@@ -61,3 +61,10 @@ html.rr-themed body>.page,html.rr-themed main.page{padding-top:clamp(36px,7vh,72
 html.rr-themed .hero{padding-top:clamp(40px,8vh,80px)!important}
 html.rr-themed #top{padding-top:clamp(40px,8vh,80px)!important;min-height:0!important}
 html.rr-themed .chip{display:inline-flex;align-items:center;justify-content:center}
+
+/* Bilingual pages show one language with "[data-lang=xx]{display:revert
+   !important}", which also overrode anything that was meant to stay hidden:
+   on /vet every field error showed before the form was touched. Hidden
+   stays hidden; field errors appear only on a field marked bad. */
+html[lang] [data-lang][hidden],html[lang] [data-lang][style*="display:none"],html[lang] [data-lang][style*="display: none"]{display:none!important}
+html[lang=en] .field:not(.bad) .err[data-lang=en],html[lang=hi] .field:not(.bad) .err[data-lang=hi]{display:none!important}

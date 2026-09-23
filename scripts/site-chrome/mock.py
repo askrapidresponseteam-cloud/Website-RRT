@@ -77,6 +77,16 @@ async def install(page, gql_mode='error'):
             return await route.fulfill(status=200, content_type='text/javascript', body=open('/tmp/jsp/package/dist/jspdf.umd.min.js').read())
         await route.fulfill(status=404, body='')
     await page.route('**/cdnjs.cloudflare.com/**', cdn)
+    async def unpkg(route):
+        u=route.request.url
+        f='/tmp/rx/react-dom-18.3.1/package/umd/react-dom.production.min.js' if 'react-dom' in u else '/tmp/rx/react-18.3.1/package/umd/react.production.min.js'
+        await route.fulfill(status=200, content_type='text/javascript', body=open(f).read())
+    await page.route('**/unpkg.com/**', unpkg)
+    async def fns(route):
+        u=route.request.url
+        body={'ok':True,'status':'none'} if u.endswith('/vet/application') else {'ok':True}
+        await route.fulfill(status=200, content_type='application/json', body=json.dumps(body), headers={'Access-Control-Allow-Origin':'*'})
+    await page.route('**/*.cloudfunctions.net/**', fns)
     await page.route('**/graphql.json', gql)
     await page.route('**/cdn.shopify.com/**', img)
     await page.route('**/pl-api/**', feed)

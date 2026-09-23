@@ -1,0 +1,33 @@
+# Keeps the site theme on every page. If a push leaves any page without the
+# shared header/footer/theme blocks (for example a tool rewrote the page from
+# an older copy), this puts them back and commits the fix within a minute.
+# Vercel then redeploys the corrected page.
+name: Keep site theme
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'scripts/site-chrome/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: keep-theme
+  cancel-in-progress: false
+jobs:
+  heal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Re-apply theme where missing
+        id: heal
+        run: |
+          if python3 scripts/site-chrome/heal.py; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Commit the fix
+        if: steps.heal.outputs.changed == 'true'
+        run: |
+          git config user.name "rrt-theme-bot"
+          git config user.email "rrt-theme-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "Re-apply site theme (automatic)"
+          git pull --rebase origin main
+          git push

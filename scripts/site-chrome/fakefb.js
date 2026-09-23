@@ -22,8 +22,10 @@
     if(name==='submitReport')return Promise.resolve({data:{reportId:'RR-TEST-001',manageToken:'tok123',manageUrl:'https://rapid-response.in/report/manage?t=tok123'}});
     return Promise.resolve({data:{ok:true,matches:[],nearby:[]}})}},useEmulator:function(){}};
   var app={firestore:function(){return fs},storage:function(){return st},functions:function(){return fns},auth:function(){return auth}};
-  var auth={currentUser:null,onAuthStateChanged:function(cb){cb(null);return function(){}},signInAnonymously:function(){return Promise.resolve({user:{uid:'anon'}})}};
-  window.firebase={apps:[],initializeApp:function(){this.apps.push(app);return app},app:function(){return app},
+  var listeners=[];var auth={currentUser:null,onAuthStateChanged:function(cb){listeners.push(cb);setTimeout(function(){cb(auth.currentUser)},0);return function(){}},
+    signInAnonymously:function(){auth.currentUser={uid:'anon1',isAnonymous:true,getIdToken:function(){return Promise.resolve('tok')}};listeners.forEach(function(f){setTimeout(function(){f(auth.currentUser)},0)});return Promise.resolve({user:auth.currentUser})},
+    signOut:function(){auth.currentUser=null;return Promise.resolve()},setPersistence:function(){return Promise.resolve()}};
+  window.firebase={apps:[],auth:null,initializeApp:function(){this.apps.push(app);return app},app:function(){return app},
     firestore:Object.assign(function(){return fs},{FieldValue:FieldValue,Timestamp:{now:function(){return {toMillis:function(){return Date.now()}}},fromMillis:function(m){return {toMillis:function(){return m}}}},GeoPoint:function(a,b){this.latitude=a;this.longitude=b}}),
     storage:function(){return st},functions:function(){return fns},auth:function(){return auth}};
 })();
