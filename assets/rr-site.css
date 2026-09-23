@@ -30,7 +30,7 @@ html[lang=hi] .rr-chrome.rr-strip{letter-spacing:0;font-size:13px}
 .rr-chrome .rr-mark{width:26px;height:26px;flex:none}
 .rr-chrome .rr-brand small{font-family:var(--rr-sans);font-size:11px;letter-spacing:.16em;color:var(--rr-mid);border-left:1px solid var(--rr-line);padding-left:11px;margin-left:2px}
 .rr-chrome .rr-nav{display:flex;align-items:center;gap:clamp(12px,2.2vw,32px)}
-.rr-chrome .rr-nav>a{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;padding:6px 0;border-bottom:1.5px solid transparent}
+.rr-chrome .rr-nav>a{font-size:14px;letter-spacing:.02em;padding:6px 0;border-bottom:1.5px solid transparent}
 .rr-chrome .rr-nav>a:hover{border-bottom-color:var(--rr-ink)}
 .rr-chrome .rr-nav>a[aria-current=page]{border-bottom-color:var(--rr-ink)}
 html[lang=hi] .rr-chrome .rr-nav>a,html[lang=hi] .rr-chrome .rr-btn{letter-spacing:0;font-size:14px;font-weight:500}
@@ -38,18 +38,18 @@ html[lang=hi] .rr-chrome .rr-nav>a,html[lang=hi] .rr-chrome .rr-btn{letter-spaci
 .rr-chrome .rr-lang button{color:var(--rr-low);letter-spacing:.08em;padding:6px 2px}
 .rr-chrome .rr-lang button[aria-pressed=true]{color:var(--rr-ink)}
 .rr-chrome .rr-cta{position:relative}
-.rr-chrome .rr-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 22px;border:1px solid var(--rr-ink);
+.rr-chrome .rr-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 18px;border-radius:20px;border:1px solid var(--rr-ink);
   background:var(--rr-bg);color:var(--rr-ink);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
   transition:background .15s,color .15s}
 .rr-chrome .rr-btn:hover{background:var(--rr-soft)}
 .rr-chrome .rr-btn.rr-dark{background:var(--rr-ink);color:#fff}
 .rr-chrome .rr-btn.rr-dark:hover{background:#333}
-.rr-chrome .rr-menu{position:absolute;right:0;top:calc(100% + 6px);min-width:220px;background:#fff;border:1px solid var(--rr-ink);display:none;z-index:950}
+.rr-chrome .rr-menu{border-radius:12px;overflow:hidden;position:absolute;right:0;top:calc(100% + 6px);min-width:220px;background:#fff;border:1px solid var(--rr-ink);display:none;z-index:950}
 .rr-chrome .rr-menu.rr-open{display:block}
 .rr-chrome .rr-menu a{display:block;padding:12px 18px;font-size:14px}
 .rr-chrome .rr-menu a+a{border-top:1px solid var(--rr-line)}
 .rr-chrome .rr-menu a:hover{background:var(--rr-soft)}
-.rr-chrome .rr-bag{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--rr-line)}
+.rr-chrome .rr-bag{position:relative;display:flex;align-items:center;justify-content:center;width:42px;height:42px;border:1px solid var(--rr-line);border-radius:50%}
 .rr-chrome .rr-bag:hover{border-color:var(--rr-ink)}
 .rr-chrome .rr-bag b{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--rr-ink);color:#fff;
   font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
@@ -80,3 +80,5 @@ html[lang=hi] .rr-chrome .rr-nav>a,html[lang=hi] .rr-chrome .rr-btn{letter-spaci
 .rr-chrome.rr-ftr{font-size:12px}
 }
 @media (max-width:380px){.rr-chrome .rr-brand span{display:none}}
+.rr-chrome .rr-nav>a.rr-bag{padding:0;border:1px solid var(--rr-line)}
+.rr-chrome .rr-nav>a.rr-bag:hover{border-color:var(--rr-ink)}

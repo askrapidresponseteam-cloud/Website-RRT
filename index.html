@@ -212,25 +212,63 @@ footer a:hover{color:var(--ink)}
 }
 @media (max-width:640px) and (max-height:760px){.sub{display:none}.item span{-webkit-line-clamp:2}}
 @media (max-width:640px) and (max-height:680px){.item span{-webkit-line-clamp:1}.label{display:none}}
+
+/* ===== calm layout (Google-like): one centred column, one search, four actions ===== */
+header{border-bottom:0;height:68px}
+nav{gap:clamp(14px,2vw,26px)}
+nav a{letter-spacing:.06em;text-transform:none;font-size:14px}
+html[lang=hi] nav a{font-size:14px}
+.langT{font-size:14px;color:var(--mid)}
+.langT:hover{color:var(--ink)}
+header .btn{height:40px;padding:0 18px;font-size:12px;border-radius:20px}
+.menu{border-radius:12px;overflow:hidden}
+main{justify-content:center}
+.inner{max-width:720px;margin:auto;text-align:center;display:flex;flex-direction:column;align-items:center}
+h1{white-space:normal;max-width:none;text-transform:none;font-size:clamp(28px,min(3.7vw,6vh),46px);line-height:1.15;letter-spacing:0}
+.search{width:100%;margin-top:clamp(22px,4.5vh,40px);text-align:left}
+.bar{border:1px solid #dfe1e5;border-radius:28px;padding:0 6px 0 18px;height:54px;gap:10px;transition:box-shadow .15s,border-color .15s}
+.bar:hover,.bar:focus-within{box-shadow:0 1px 6px rgba(32,33,36,.18);border-color:transparent}
+.sico{width:20px;height:20px;flex:none;color:#9aa0a6}
+.bar input{font-size:17px;padding:0;height:100%}
+.go{width:42px;height:42px;margin:0;border-radius:50%;font-size:18px}
+.results{border-radius:0 0 22px 22px;border:0;box-shadow:0 6px 16px rgba(32,33,36,.18);top:calc(100% - 4px);padding:6px 0 10px}
+.search:has(.results.open) .bar{border-radius:26px 26px 0 0;box-shadow:0 1px 6px rgba(32,33,36,.18);border-color:transparent}
+.r{padding:10px 22px}
+.meta{justify-content:center;margin-top:14px}
+.qrow{justify-content:center;gap:10px;margin-top:clamp(20px,4vh,32px);flex-wrap:wrap}
+.qrow .btn{height:40px;padding:0 18px;font-size:12px;letter-spacing:.12em;border-radius:20px}
+.learn{margin-top:clamp(18px,3.5vh,30px);font-size:14px;color:var(--low);display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px}
+.learn button{color:var(--mid);font-size:14px}
+.learn button:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.learn i{font-style:normal;color:#c4c7c5}
+footer{background:#f6f6f6;border-top:1px solid var(--line);color:var(--mid);font-size:13px;padding:14px var(--pad)}
+footer .links{gap:22px}
+@media (max-width:640px){
+  header{height:58px}
+  nav{gap:12px}
+  nav a{font-size:13px}
+  .inner{justify-content:flex-start}
+  main{padding-top:clamp(40px,10vh,90px)}
+  h1{font-size:clamp(26px,7.4vw,34px)}
+  .bar{height:48px;padding-left:14px}
+  .bar input{font-size:16px}
+  .go{width:38px;height:38px}
+  .qrow{flex-wrap:wrap;overflow:visible;margin:22px 0 0;padding:0}
+  .qrow .btn{flex:0 0 auto;height:38px;padding:0 14px;font-size:11px}
+  footer{flex-direction:column;align-items:center;text-align:center}
+  footer .links{display:flex;justify-content:center;gap:14px;font-size:12px}
+}
 </style>
 </head>
 <body>
 
-<div class="strip" id="strip">
-  <span data-i="strip1"></span>&nbsp;<span class="s2" data-i="strip2"></span>
-  <button class="x" aria-label="Dismiss" id="stripX">&times;</button>
-</div>
-
 <header>
   <a class="brand" href="/" aria-label="Rapid Response home"><svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#ff4d3d"/><g fill="#fff"><ellipse cx="25.5" cy="33.5" rx="6.8" ry="9.3"/><ellipse cx="43.5" cy="27.5" rx="7.3" ry="10"/><ellipse cx="63.5" cy="31" rx="7" ry="9.6"/><ellipse cx="79" cy="43" rx="6" ry="8.3"/><ellipse cx="50" cy="68.3" rx="25.5" ry="16.3"/><ellipse cx="50" cy="60" rx="20" ry="12"/></g></svg><span>Rapid Response</span></a>
   <nav aria-label="Main">
-    <a href="/know-the-laws" data-i="navLaws"></a>
-    <a href="/legal-desk" data-i="navLegal" class="opt"></a>
-    <a href="/faq" data-i="navFaq"></a>
-    <a href="/shop" data-i="navShop" class="opt"></a>
-    <div class="lang" role="group" aria-label="Language">
-      <button data-lang="en" aria-pressed="true">EN</button><span class="sep">|</span><button data-lang="hi" aria-pressed="false">हिंदी</button>
-    </div>
+    <a href="/know-the-laws" data-i="navLaws" class="opt"></a>
+    <a href="/faq" data-i="navFaq" class="opt"></a>
+    <a href="/shop" data-i="navShop"></a>
+    <button class="langT" id="langT" data-i="otherLang" lang="hi"></button>
     <div class="cta">
       <button class="btn dark" id="appBtn" aria-haspopup="true" aria-expanded="false" data-i="getApp"></button>
       <div class="menu" id="appMenu">
@@ -245,10 +283,10 @@ footer a:hover{color:var(--ink)}
 <main>
  <div class="inner">
   <h1 data-i="h1"></h1>
-  <p class="sub" data-i="sub"></p>
 
   <div class="search" role="search">
     <div class="bar">
+      <svg class="sico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       <input id="q" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list" aria-label="Search Rapid Response">
       <button class="go" id="go" aria-label="Go">&rarr;</button>
     </div>
@@ -260,34 +298,28 @@ footer a:hover{color:var(--ink)}
     <span id="recent" style="display:contents"></span>
     <button class="chip" id="clear" data-i="clear"></button>
   </div>
-  <p class="hint" data-i="hint"></p>
 
-  <section class="quick">
-    <p class="label" data-i="straight"></p>
-    <div class="qrow">
-      <a class="btn dark" href="/report" data-i="qReport"></a>
-      <button class="btn" data-sheet="sos" data-i="qSos"></button>
-      <a class="btn" href="/know-the-laws" data-i="qLaws"></a>
-      <a class="btn" href="/legal-desk" data-i="qLegal"></a>
-      <a class="btn" href="/shop" data-i="qShop"></a>
-      <a class="btn" href="/vet" data-i="qVet"></a>
-    </div>
-  </section>
+  <div class="qrow">
+    <a class="btn dark" href="/report" data-i="qReport"></a>
+    <button class="btn" data-sheet="sos" data-i="qSos"></button>
+    <a class="btn" href="/know-the-laws" data-i="qLaws"></a>
+    <a class="btn" href="/shop" data-i="qShop"></a>
+  </div>
 
-  <section class="asked">
-    <div class="tabs" role="tablist" id="tabs"></div>
-    <div class="grid" id="grid" role="tabpanel"></div>
-  </section>
+  <p class="learn">
+    <button data-sheet="ask" data-i="lApp"></button><i>·</i><button data-sheet="roles" data-i="lWho"></button><i>·</i><button data-sheet="gap" data-i="lWhy"></button><i>·</i><button data-sheet="promises" data-i="lPro"></button>
+  </p>
  </div>
 </main>
 
 <footer>
-  <span data-i="foot"></span>
+  <span data-i="footL"></span>
   <span class="links">
-    <a href="/app-guide" data-i="menuGuide"></a>
+    <a href="/legal-desk" data-i="navLegal"></a>
+    <a href="/vet" data-i="navVet"></a>
+    <a href="/app-guide" data-i="navGuide"></a>
     <a href="/faq" data-i="navFaq"></a>
-    <a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a>
-    <a href="https://www.instagram.com/rrtanimals" rel="noopener">@rrtanimals</a>
+    <a href="mailto:ask@rapid-response.in" data-i="navContact"></a>
   </span>
 </footer>
 
@@ -309,14 +341,15 @@ var T={
  en:{
   strip1:"Free, bilingual, built for India.",strip2:"An independent community initiative.",
   navLaws:"Know the laws",navLegal:"Legal Desk",navFaq:"FAQ",navShop:"Shop",getApp:"Get the app",menuGuide:"See every screen first",
-  h1:"How can we help\nan animal today?",
+  h1:"How can we help an animal today?",
   sub:"A peer network, district by district. One tap reaches the people closest to any animal emergency.",
-  ph:"Raise an SOS, feeding rights, dog pickups, report cruelty\u2026",phS:"SOS, laws, vets, shop\u2026",
+  ph:"Search SOS, feeding rights, dog pickups, vets\u2026",phS:"SOS, laws, vets, shop\u2026",
   recent:"Recent",clear:"Clear",
   hint:"Enter opens the top result \u00b7 \u2191 \u2193 to move \u00b7 Tab completes \u00b7 Esc clears \u00b7 / to search",
   straight:"Or go straight to",
   qReport:"Report an incident",qSos:"Raise an SOS",qLaws:"Know the laws",qLegal:"Legal Desk",qShop:"Shop",qVet:"For vets",
   foot:"\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.",
+  footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",otherLang:"हिंदी",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
   android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related"
@@ -324,14 +357,15 @@ var T={
  hi:{
   strip1:"मुफ़्त, द्विभाषी, भारत के लिए बना।",strip2:"एक स्वतंत्र सामुदायिक पहल।",
   navLaws:"कानून जानें",navLegal:"लीगल डेस्क",navFaq:"सवाल",navShop:"शॉप",getApp:"ऐप पाएँ",menuGuide:"पहले हर स्क्रीन देखें",
-  h1:"आज किसी जानवर की\nमदद कैसे करें?",
+  h1:"आज किसी जानवर की मदद कैसे करें?",
   sub:"एक पीयर नेटवर्क, जिला-दर-जिला। एक टैप किसी भी पशु आपात स्थिति के सबसे नज़दीकी लोगों तक पहुँचता है।",
-  ph:"एसओएस, खिलाने का अधिकार, कुत्तों को उठाना, क्रूरता रिपोर्ट\u2026",phS:"एसओएस, कानून, वेट, शॉप\u2026",
+  ph:"एसओएस, खिलाने का अधिकार, कुत्ते उठाना, वेट खोजें\u2026",phS:"एसओएस, कानून, वेट, शॉप\u2026",
   recent:"हाल के",clear:"हटाएँ",
   hint:"Enter पहला परिणाम खोलता है \u00b7 \u2191 \u2193 चुनें \u00b7 Tab पूरा करता है \u00b7 Esc साफ़ करता है \u00b7 / खोजें",
   straight:"या सीधे जाएँ",
   qReport:"घटना रिपोर्ट करें",qSos:"एसओएस भेजें",qLaws:"कानून जानें",qLegal:"लीगल डेस्क",qShop:"शॉप",qVet:"वेट के लिए",
   foot:"\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।",
+  footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",otherLang:"English",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
   android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित"
@@ -508,6 +542,7 @@ document.addEventListener("click",function(e){
 /* ---------------------------------------------------------------- tabs */
 var tab=+(store.get("rr-tab")||0);if(!(tab>=0&&tab<TABS.length))tab=0;
 function drawTabs(){
+  if(!$("tabs"))return;
   $("tabs").innerHTML=TABS.map(function(t,i){
     return '<button class="tab" role="tab" aria-selected="'+(i===tab)+'" tabindex="'+(i===tab?0:-1)+'" data-t="'+i+'">'+esc(t[lang])+'</button>'}).join("");
   var g=$("grid");
@@ -519,8 +554,8 @@ function drawTabs(){
   g.style.animation="none";void g.offsetWidth;g.style.animation="";
   g.scrollLeft=0;
 }
-$("tabs").addEventListener("click",function(e){var b=e.target.closest(".tab");if(b){tab=+b.dataset.t;store.set("rr-tab",tab);drawTabs()}});
-$("tabs").addEventListener("keydown",function(e){
+if($("tabs"))$("tabs").addEventListener("click",function(e){var b=e.target.closest(".tab");if(b){tab=+b.dataset.t;store.set("rr-tab",tab);drawTabs()}});
+if($("tabs"))$("tabs").addEventListener("keydown",function(e){
   if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
   tab=(tab+(e.key==="ArrowRight"?1:TABS.length-1))%TABS.length;store.set("rr-tab",tab);drawTabs();
   $("tabs").querySelector('[data-t="'+tab+'"]').focus();
@@ -541,10 +576,11 @@ function applyLang(l){
   if(document.activeElement===q)render();
 }
 document.querySelectorAll(".lang button").forEach(function(b){b.addEventListener("click",function(){applyLang(b.dataset.lang)})});
+if($("langT"))$("langT").addEventListener("click",function(){applyLang(lang==="hi"?"en":"hi")});
 
 /* --------------------------------------------------------------- strip */
-if(store.get("rr-strip")==="x")$("strip").classList.add("gone");
-$("stripX").onclick=function(){$("strip").classList.add("gone");store.set("rr-strip","x")};
+if($("strip")){if(store.get("rr-strip")==="x")$("strip").classList.add("gone");
+$("stripX").onclick=function(){$("strip").classList.add("gone");store.set("rr-strip","x")};}
 
 /* ---------------------------------------------------------- app button */
 var appBtn=$("appBtn"),menu=$("appMenu");
