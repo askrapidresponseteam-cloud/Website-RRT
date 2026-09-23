@@ -341,7 +341,7 @@ html[lang=hi] .r.rr .t{font-size:16px}
   </div>
 
   <div class="qrow">
-    <a class="btn dark" href="/report" data-i="qReport"></a>
+    <a class="btn dark" href="/report?new=1" data-i="qReport"></a>
     <button class="btn" data-sheet="sos" data-i="qSos"></button>
     <a class="btn" href="/know-the-laws" data-i="qLaws"></a>
     <a class="btn" href="/shop" data-i="qShop"></a>
@@ -475,7 +475,7 @@ var S={
  shop:{w:"shop food medicine medicines supplements gear buy order delivery",a:[{h:"/shop",dark:1,en:"Browse the shop",hi:"शॉप देखें"},{h:"/shop/track",en:"Track an order",hi:"ऑर्डर ट्रैक करें"}],r:["promises"],
   en:{k:"New \u00b7 The RRT Shop",t:"Everyday things for the animals you look after",p:["Food, medicines, supplements and gear: the same live range as the SHOP tab in the RRT app, sold and delivered by a third-party partner store on their own secure checkout."]},
   hi:{k:"नया \u00b7 आरआरटी शॉप",t:"आपकी देखभाल में जानवरों के लिए रोज़मर्रा का सामान",p:["खाना, दवाइयाँ, सप्लीमेंट और सामान: वही लाइव रेंज जो RRT ऐप के SHOP टैब में है। बिक्री और डिलीवरी एक थर्ड-पार्टी पार्टनर स्टोर करता है, उनके अपने सुरक्षित चेकआउट पर।"]}},
- report:{w:"report cruelty incident abuse case register on record complaint poisoning beating",a:[{h:"/report",dark:1,en:"Open On Record",hi:"ऑन रिकॉर्ड खोलें"}],r:["laws","promises"],
+ report:{w:"report cruelty incident abuse case register on record complaint poisoning beating",a:[{h:"/report?new=1",dark:1,en:"Report a case",hi:"मामला दर्ज करें"},{h:"/report",en:"Browse On Record",hi:"ऑन रिकॉर्ड देखें"}],r:["laws","promises"],
   en:{k:"On Record",t:"Report an incident",p:["A public register of documented animal cruelty across India. Browse cases, amplify them, and help bring them to light.","Your identity is protected on reports."]},
   hi:{k:"ऑन रिकॉर्ड",t:"घटना रिपोर्ट करें",p:["पूरे भारत में दर्ज पशु क्रूरता का सार्वजनिक रजिस्टर। मामले देखें, उन्हें आगे बढ़ाएँ, और सामने लाने में मदद करें।","रिपोर्ट पर आपकी पहचान सुरक्षित रहती है।"]}},
  laws:{w:"laws legal rights abc rules supreme court judgment act rwa",a:[{h:"/know-the-laws",dark:1,en:"All "+LAWS.length+" questions",hi:"सभी "+LAWS.length+" सवाल"},{h:"/legal-desk",en:"Legal Desk",hi:"लीगल डेस्क"}],r:["report","feeders"],
@@ -899,7 +899,7 @@ function pinFor(u,raw){
     case "helpers":return {t:(hi?"शेल्टर, रेस्क्यूअर और फोस्टर ":"Shelters, rescuers and fosters ")+where,s:hi?"ऐप में 'जिले से पूछें' पर पोस्ट करें: आपके ज़िले के फीडर, फोस्टर, वेट और रेस्क्यूअर जवाब देते हैं। किसी का नंबर सार्वजनिक नहीं होता।":"Post on Ask the District in the app: feeders, fosters, vets and rescuers in your district answer. Nobody's number is public.",u:"#s-ask"};
     case "cases":return P?{t:(hi?"ऑन रिकॉर्ड: ":"On Record: cases ")+where,s:hi?"सार्वजनिक रजिस्टर में इस जगह के दर्ज मामले खोलें।":"Open the public register filtered to this place.",u:"/report?q="+encodeURIComponent(P)+"#feed"}
                           :{t:hi?"ऑन रिकॉर्ड: दर्ज मामले":"On Record: documented cases",s:hi?"पूरे भारत के दर्ज पशु क्रूरता मामलों का सार्वजनिक रजिस्टर।":"The public register of documented animal cruelty across India.",u:"/report"};
-    case "report":return {t:hi?"घटना रिपोर्ट करें":"Report an incident",s:S.report[lang].p[0],u:"/report"};
+    case "report":return {t:hi?"घटना रिपोर्ट करें":"Report an incident",s:S.report[lang].p[0],u:"/report?new=1"};
     case "shop":var term=u.text.replace(/\b(?:buy|order|shop|shopping|for|some|a|an|the|from rrt|online)\b/g," ").replace(/\s+/g," ").trim();
       return {t:term?(hi?"शॉप में खोजें: ":"Shop: ")+term:(hi?"आरआरटी शॉप":"The RRT Shop"),s:hi?"पार्टनर स्टोर की लाइव कीमतें, पूरे भारत में डिलीवरी।":"Live prices from the partner store, delivered across India.",u:term?"/shop?q="+encodeURIComponent(term):"/shop"};
   }

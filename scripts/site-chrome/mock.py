@@ -71,8 +71,19 @@ async def install(page, gql_mode='error'):
         if path=='/recommendations/products.json':
             return await route.fulfill(status=200, content_type='application/json', body=json.dumps({'products':[ajax(p) for p in PRODUCTS[:8]]}))
         await route.fulfill(status=404, body='nf')
+    async def cdn(route):
+        u=route.request.url
+        if 'jspdf' in u:
+            return await route.fulfill(status=200, content_type='text/javascript', body=open('/tmp/jsp/package/dist/jspdf.umd.min.js').read())
+        await route.fulfill(status=404, body='')
+    await page.route('**/cdnjs.cloudflare.com/**', cdn)
     await page.route('**/graphql.json', gql)
     await page.route('**/cdn.shopify.com/**', img)
     await page.route('**/pl-api/**', feed)
     # third-party CDNs are offline in the sandbox; answer fast instead of hanging
-    await page.route(re.compile(r'https://(www\.gstatic\.com|fonts\.googleapis\.com|fonts\.gstatic\.com)/.*'), lambda r: r.fulfill(status=200, body=''))
+    FAKE=open(__file__.replace('mock.py','fakefb.js')).read()
+    async def gst(route):
+        u=route.request.url
+        if 'firebase-app-compat' in u: return await route.fulfill(status=200, content_type='text/javascript', body=FAKE)
+        await route.fulfill(status=200, content_type='text/javascript' if u.endswith('.js') else 'text/css', body='')
+    await page.route(re.compile(r'https://(www\.gstatic\.com|fonts\.googleapis\.com|fonts\.gstatic\.com)/.*'), gst)
