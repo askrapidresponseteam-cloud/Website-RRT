@@ -167,7 +167,7 @@
     if (!confirm('Delete the bag, saved items and receipts stored in this browser? Orders already with the seller are unaffected.')) return;
     S.deleteMyData();
     U.toast('Shop data on this device deleted');
-    paintPending(); render();
+    render();
   });
 })();
 </script><!-- rr:footer -->

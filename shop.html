@@ -56,10 +56,9 @@
 <!-- /rr:shopbar -->
 <a class="skip" href="#grid">Skip to products</a>
 
-
 <section class="shop-intro">
   <div>
-    <h1 class="shop-title" id="pageTitle">The RRT Shop</h1>
+    <h1 class="shop-title vh" id="pageTitle">The RRT Shop</h1>
     <p class="shop-copy" id="pageCopy">
       Everyday things for the animals you look after. Live prices from the partner store, delivered across India.
     </p>
@@ -68,14 +67,6 @@
     <span class="count" id="count" aria-live="polite"></span>
     <select class="sort" id="sort" aria-label="Sort products"></select>
   </div>
-</section>
-
-<section class="hub-rails" id="hubRails" hidden>
-  <h2 class="rail-h">Shop by shelf</h2>
-  <div class="rail" id="shelfRail"></div>
-  <h2 class="rail-h">Brands in focus</h2>
-  <div class="rail rail-brands" id="brandRail"><a class="hub-card arch seo-only" href="/shop?b=Royal%20Canin"><span class="card-name">Royal Canin</span></a><a class="hub-card arch seo-only" href="/shop?b=Pedigree"><span class="card-name">Pedigree</span></a><a class="hub-card arch seo-only" href="/shop?b=Zoetis"><span class="card-name">Zoetis</span></a><a class="hub-card arch seo-only" href="/shop?b=Bravecto"><span class="card-name">Bravecto</span></a><a class="hub-card arch seo-only" href="/shop?b=Farmina"><span class="card-name">Farmina</span></a><a class="hub-card arch seo-only" href="/shop?b=Sheba"><span class="card-name">Sheba</span></a><a class="hub-card arch seo-only" href="/shop?b=Whiskas"><span class="card-name">Whiskas</span></a><a class="hub-card arch seo-only" href="/shop?b=Himalaya"><span class="card-name">Himalaya</span></a></div>
-  <h2 class="rail-h">The whole range</h2>
 </section>
 
 <div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"><a href="/shop" aria-pressed="true">All</a><a href="/shop?shelf=pharmacy">Pharmacy</a><a href="/shop?shelf=supplements">Supplements</a><a href="/shop?shelf=dog-food">Dog Food</a><a href="/shop?shelf=cat-food">Cat Food</a><a href="/shop?shelf=treats">Treats</a><a href="/shop?shelf=grooming">Grooming</a><a href="/shop?shelf=gear">Toys & Gear</a><a href="/shop?shelf=small-pets">Birds, Fish & Small Pets</a><a href="/shop?shelf=farm">Farm & Livestock</a><a href="/shop?shelf=sale">Sale</a></div>
@@ -106,7 +97,6 @@
       .</p>
   </div>
 </section>
-
 
 <div class="toast" id="toast" hidden role="status"></div>
 
@@ -165,8 +155,12 @@
     $('pageTitle').textContent = aisleLabel();
     $('pageCopy').textContent = 'A shelf from the live range.';
   }
+  // The header already says Shop: the big title only appears when it names
+  // something (a search, brand, shelf or aisle). On the main page it stays
+  // for screen readers and search engines.
+  if (searching || brandParam || shelf || aisle) $('pageTitle').classList.remove('vh');
 
-  /* ----------------------------------------------------------- the rails */
+  /* ------------------------------------------------ shelf and brand chips */
 
   var html = '<a class="category" href="/shop" aria-pressed="' + (hub ? 'true' : 'false') + '">All</a>';
   S.shelves.forEach(function (s) {
@@ -203,55 +197,6 @@
     if (state.clientSort) render(); else resetAndLoad();
   });
 
-  /* ------------------------------------------------------------ hub rails */
-
-  var BRAND_CANDIDATES = ['Royal Canin', 'Pedigree', 'Zoetis', 'Bravecto',
-                          'Farmina', 'Sheba', 'Whiskas', 'Himalaya'];
-
-  function pill(off) {
-    return off > 0 ? '<span class="card-pill">Up to ' + off + '% off</span>' : '';
-  }
-
-  function shelfCard(sh, face) {
-    var img = face && face.image
-      ? '<img src="' + esc(S.sizedImage(face.image, 900)) + '" alt="" loading="lazy">'
-      : '';
-    return '<a class="hub-card" href="/shop?shelf=' + esc(sh.key) + '">' +
-      '<span class="card-art">' + img + pill(face ? face.maxOff : 0) + '</span>' +
-      '<span class="card-name">' + esc(sh.name) + '</span></a>';
-  }
-
-  function brandCard(brand, face) {
-    return '<a class="hub-card arch" href="/shop?b=' + encodeURIComponent(brand) + '">' +
-      '<span class="card-art">' +
-      '<img src="' + esc(S.sizedImage(face.image, 900)) + '" alt="" loading="lazy">' +
-      pill(face.maxOff) + '</span>' +
-      '<span class="card-name">' + esc(brand) + '</span></a>';
-  }
-
-  function loadHubRails() {
-    if (!hub) return;
-    $('hubRails').hidden = false;
-    $('shelfRail').innerHTML = S.shelves.map(function (sh) {
-      return '<span data-shelf="' + esc(sh.key) + '">' + shelfCard(sh, null) + '</span>';
-    }).join('');
-    S.shelves.forEach(function (sh) {
-      S.previewCollection(sh.aisles[0].handle).then(function (tiles) {
-        var face = S.previewFace(tiles);
-        if (!face) return;
-        var slot = document.querySelector('#shelfRail [data-shelf="' + sh.key + '"]');
-        if (slot) slot.innerHTML = shelfCard(sh, face);
-      });
-    });
-    $('brandRail').innerHTML = '';
-    BRAND_CANDIDATES.forEach(function (brand) {
-      S.brandPage(brand, {}).then(function (page) {
-        var face = S.previewFace(page.products);
-        if (!face || !face.image) return;
-        $('brandRail').insertAdjacentHTML('beforeend', brandCard(brand, face));
-      }).catch(function () { /* no card, no noise */ });
-    });
-  }
   // The hub opens straight onto the whole range; shelves and brands are
   // one-tap chips above it rather than image rails to scroll past.
   if (brandParam) {

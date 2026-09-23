@@ -200,7 +200,6 @@
   var product = null;
   var selection = [];
   var images = [];
-  var shotIndex = 0;
 
   if (!handle) return fail('That product link is incomplete.');
 
@@ -322,7 +321,6 @@
   }
 
   function setShot(i) {
-    shotIndex = i;
     if (!images.length) return;
     $('shot').src = S.sizedImage(images[i], 900);
     $('shot').alt = product.title;
@@ -452,13 +450,6 @@
         U.toast('Price is now ' + S.money(lv.pricePaise) + '. Press again to continue');
         return;
       }
-      var line = {
-        variantId: lv.id, productId: live.id, handle: live.handle,
-        title: live.title,
-        variantTitle: lv.title.trim().toLowerCase() === 'default title' ? '' : lv.title,
-        pricePaise: lv.pricePaise, qty: qtyValue(),
-        available: true, imageUrl: lv.imageUrl || live.imageUrl, maxQty: lv.maxQty
-      };
       if (!U.storeOpenNow()) { U.toast('The shop is closed right now.'); return; }
       // Buy now: into the bag, then the bag page, where the delivery charge
       // and the exact total are shown before any payment screen.
