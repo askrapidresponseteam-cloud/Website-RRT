@@ -277,6 +277,8 @@ html[lang=hi] .r.rr .t{font-size:16px}
 .fa-q{font-size:17px;margin:4px 0 6px;color:var(--ink)}
 .fa-a{font-size:15px;color:#202124;margin:0 0 4px}
 .fa-dots{list-style:none;color:var(--low)}
+.fa.pin{border-color:#111}
+.fa.pin .fa-k{color:var(--red)}
 .fa ul{margin:6px 0 0 18px;padding:0;font-size:14px;color:#4d5156}
 .fa li{margin:2px 0}
 .fa-more{display:inline-block;margin-top:8px;font-size:13.5px;color:#1a0dab}
@@ -368,6 +370,7 @@ html[lang=hi] .r.rr .t{font-size:16px}
   <div class="sh-act" id="shA"></div>
 </aside>
 
+<script src="/assets/rr-voice.js"></script>
 <script>
 (function(){
 "use strict";
@@ -387,7 +390,7 @@ var T={
   straight:"Or go straight to",
   qReport:"Report an incident",qSos:"Raise an SOS",qLaws:"Know the laws",qLegal:"Legal Desk",qShop:"Shop",qVet:"For vets",
   foot:"\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.",
-  kFaq:"Common question",paa:"People also ask",answer:"Answer",readAll:"Read the full answer",noHits:"No exact match for",kContact:"Contact",vListen:"Listening\u2026 speak now",vHeard:"Heard:",vNo:"Didn't catch that. Tap the mic and try again.",vBlocked:"Microphone is blocked. Allow it for this site in your browser settings, then tap the mic again.",vNoMic:"No microphone found on this device.",vNet:"Voice search needs an internet connection.",vErr:"Voice search stopped. Tap the mic to try again.",vMic:"Search by voice",vStop:"Stop listening",
+  kFaq:"Common question",paa:"People also ask",answer:"Answer",readAll:"Read the full answer",noHits:"No exact match for",kContact:"Contact",vListen:"Listening\u2026 speak now",vHeard:"Heard:",vNo:"Didn't catch that. Tap the mic and try again.",vBlocked:"Microphone is blocked. Allow it for this site in your browser settings, then tap the mic again.",vNoMic:"No microphone found on this device.",vNet:"Voice search needs an internet connection.",vErr:"Voice search stopped. Tap the mic to try again.",vMic:"Search by voice",vStop:"Stop listening",kAction:"Quick action",goNow:"Go",vLocal:"Listening on this device\u2026 speak now",vCloud:"Your browser turns speech into text (Google or Apple). RRT never receives your audio.",
   footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",otherLang:"हिंदी",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
@@ -404,7 +407,7 @@ var T={
   straight:"या सीधे जाएँ",
   qReport:"घटना रिपोर्ट करें",qSos:"एसओएस भेजें",qLaws:"कानून जानें",qLegal:"लीगल डेस्क",qShop:"शॉप",qVet:"वेट के लिए",
   foot:"\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।",
-  kFaq:"आम सवाल",paa:"लोग यह भी पूछते हैं",answer:"जवाब",readAll:"पूरा जवाब पढ़ें",noHits:"सटीक जवाब नहीं मिला:",kContact:"संपर्क",vListen:"सुन रहे हैं\u2026 अब बोलिए",vHeard:"सुना:",vNo:"आवाज़ नहीं पकड़ी। माइक दबाकर फिर बोलिए।",vBlocked:"माइक्रोफ़ोन बंद है। ब्राउज़र सेटिंग में इस साइट के लिए अनुमति दें, फिर माइक दबाएँ।",vNoMic:"इस डिवाइस पर माइक्रोफ़ोन नहीं मिला।",vNet:"वॉइस सर्च के लिए इंटरनेट चाहिए।",vErr:"वॉइस सर्च रुक गई। माइक दबाकर फिर कोशिश करें।",vMic:"बोलकर खोजें",vStop:"सुनना बंद करें",
+  kFaq:"आम सवाल",paa:"लोग यह भी पूछते हैं",answer:"जवाब",readAll:"पूरा जवाब पढ़ें",noHits:"सटीक जवाब नहीं मिला:",kContact:"संपर्क",vListen:"सुन रहे हैं\u2026 अब बोलिए",vHeard:"सुना:",vNo:"आवाज़ नहीं पकड़ी। माइक दबाकर फिर बोलिए।",vBlocked:"माइक्रोफ़ोन बंद है। ब्राउज़र सेटिंग में इस साइट के लिए अनुमति दें, फिर माइक दबाएँ।",vNoMic:"इस डिवाइस पर माइक्रोफ़ोन नहीं मिला।",vNet:"वॉइस सर्च के लिए इंटरनेट चाहिए।",vErr:"वॉइस सर्च रुक गई। माइक दबाकर फिर कोशिश करें।",vMic:"बोलकर खोजें",vStop:"सुनना बंद करें",kAction:"तुरंत करें",goNow:"खोलें",vLocal:"इसी डिवाइस पर सुन रहे हैं\u2026 अब बोलिए",vCloud:"आपका ब्राउज़र आवाज़ को टेक्स्ट में बदलता है (Google या Apple)। RRT को आपकी आवाज़ नहीं मिलती।",
   footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",otherLang:"English",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
@@ -811,6 +814,107 @@ function crumb(h){
   return "rapid-response.in \u203a "+h.u.replace(/^\//,"").split(/[?#]/)[0].replace(/-/g," ");
 }
 
+/* ------------------------------------------------ query understanding
+   Deterministic, no model: strip spoken filler, correct place names and
+   misspellings against a fixed dictionary, then recognise the handful of
+   things people come here to do. The same words always give the same
+   result, so every case below is testable. */
+var PLACES={
+ "Udupi":["udupi","udapi","udipi","udupee","udupi district"],"Kundapura":["kundapura","kundapur","kundapoor"],
+ "Manipal":["manipal","manipaal"],"Karkala":["karkala","karkal"],"Mangaluru":["mangaluru","mangalore","mangalor","manglore","kudla"],
+ "Bengaluru":["bengaluru","bangalore","banglore","bengalore","blr"],"Mysuru":["mysuru","mysore","maisur"],
+ "Hubballi":["hubballi","hubli"],"Dharwad":["dharwad","dharwar"],"Belagavi":["belagavi","belgaum"],"Kalaburagi":["kalaburagi","gulbarga"],
+ "Shivamogga":["shivamogga","shimoga"],"Davanagere":["davanagere","davangere"],"Ballari":["ballari","bellary"],"Tumakuru":["tumakuru","tumkur"],
+ "Hassan":["hassan"],"Chikkamagaluru":["chikkamagaluru","chikmagalur"],"Kodagu":["kodagu","coorg","madikeri"],"Karwar":["karwar","uttara kannada"],
+ "Mumbai":["mumbai","bombay"],"Pune":["pune","poona"],"Delhi":["delhi","new delhi","dilli"],"Gurugram":["gurugram","gurgaon"],"Noida":["noida"],
+ "Chennai":["chennai","madras"],"Hyderabad":["hyderabad","hydrabad"],"Kolkata":["kolkata","calcutta"],"Ahmedabad":["ahmedabad","amdavad"],
+ "Jaipur":["jaipur"],"Lucknow":["lucknow"],"Kochi":["kochi","cochin"],"Thiruvananthapuram":["thiruvananthapuram","trivandrum"],
+ "Goa":["goa","panaji","panjim"],"Chandigarh":["chandigarh"],"Indore":["indore"],"Bhopal":["bhopal"],"Nagpur":["nagpur"],"Patna":["patna"],
+ "Coimbatore":["coimbatore","kovai"],"Visakhapatnam":["visakhapatnam","vizag"],"Bhubaneswar":["bhubaneswar"],"Guwahati":["guwahati"],
+ "Dehradun":["dehradun"],"Surat":["surat"],"Vadodara":["vadodara","baroda"],"Nashik":["nashik","nasik"],"Varanasi":["varanasi","banaras"]
+};
+var PLACE_ALIAS={};Object.keys(PLACES).forEach(function(k){PLACES[k].forEach(function(a){PLACE_ALIAS[a]=k})});
+
+function lev(a,b){ // Damerau-Levenshtein (adjacent transpositions)
+  var m=a.length,n=b.length;if(Math.abs(m-n)>2)return 9;
+  var d=[];for(var i=0;i<=m;i++){d[i]=[i];}for(var j=0;j<=n;j++)d[0][j]=j;
+  for(i=1;i<=m;i++)for(j=1;j<=n;j++){
+    var c=a[i-1]===b[j-1]?0:1;
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+c);
+    if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])d[i][j]=Math.min(d[i][j],d[i-2][j-2]+1);
+  }
+  return d[m][n];
+}
+function tol(w){return w.length>=8?2:(w.length>=4?1:0)}
+
+var FILLER=/^(?:(?:please|pls|hey|hi|ok|okay|so|um+|uh+)\s+)*(?:(?:can|could|would) you\s+|i (?:want|need|would like) to\s+|i wanna\s+|help me(?: to)?\s+|let me\s+)?(?:(?:please)\s+)?(?:show(?: me)?|tell(?: me)?(?: about)?|find(?: me)?|search(?: for)?|look(?:ing)? for|get(?: me)?|give(?: me)?|open|list|where (?:is|are|can i find))\s+/;
+var PLACE_TAIL=/\b(?:near|nearby|around|in|at|from|close to|next to)\s+([a-z .]+)$/;
+
+function understand(raw){
+  var v=String(raw||"").toLowerCase().replace(/[’']/g,"").replace(/[?!.,]+/g," ").replace(/\s+/g," ").trim();
+  var out={text:v,place:null,near:false,intent:null};
+  if(!v)return out;
+  v=v.replace(FILLER,"");
+  if(/\b(?:near me|nearby|around me|close to me|my area|my location|near my (?:home|house|place))\b/.test(v)){out.near=true;v=v.replace(/\b(?:near me|nearby|around me|close to me|my area|my location|near my (?:home|house|place))\b/g," ")}
+  // places: longest alias first, exact then fuzzy on single words
+  var words=v.split(" ");
+  for(var n=3;n>=1&&!out.place;n--){
+    for(var i=0;i+n<=words.length;i++){
+      var g=words.slice(i,i+n).join(" ");
+      if(PLACE_ALIAS[g]){out.place=PLACE_ALIAS[g];words.splice(i,n);break}
+    }
+  }
+  if(!out.place){
+    for(i=0;i<words.length;i++){
+      var w=words[i];if(w.length<5||DF[stem(w)])continue;
+      var best=null,bd=9;
+      for(var a in PLACE_ALIAS){if(a.indexOf(" ")>=0)continue;var dd=lev(w,a);if(dd<bd){bd=dd;best=a}}
+      if(best&&bd<=tol(w)){out.place=PLACE_ALIAS[best];words.splice(i,1);break}
+    }
+  }
+  v=words.join(" ").replace(/\b(?:near|nearby|around|in|at|close to|next to)\s*$/,"").replace(/\s+/g," ").trim();
+  out.text=v;
+  var has=function(re){return re.test(v)};
+  if(has(/\b(?:raise|send|start|trigger|make)\s+(?:an?\s+)?(?:sos|alert|emergency)\b|^(?:sos|emergency)$|\b(?:injured|bleeding|hit by|accident|attacked|dying)\b/))out.intent="sos";
+  else if(has(/\bask (?:the |my )?district\b/))out.intent="ask";
+  else if(has(/\b(?:cases?|incidents?|complaints?|records?|reports)\b/)&&!has(/\bhow\b/))out.intent="cases";
+  else if(has(/\breport(?:ing)?\b|\bcruelty\b|\babuse\b/))out.intent="report";
+  else if(has(/\b(?:vets?|veterinar\w*|animal doctors?|doctors?|clinics?|animal hospitals?|hospitals?)\b/)&&!has(/\b(?:join|register|apply|verified)\b/))out.intent="vet";
+  else if(has(/\b(?:shelters?|rescuers?|rescue (?:team|group|centre|center)s?|fosters?|ngos?|volunteers? near|animal homes?)\b/))out.intent="helpers";
+  else if(has(/\b(?:buy|order|shop|shopping)\b|\b(?:dog|cat|puppy|kitten|pet) (?:food|treats?|shampoo|medicine|toys?)\b|\b(?:collar|leash|harness|dewormer|deworming|tick|flea)\b/))out.intent="shop";
+  return out;
+}
+
+/* One pinned "do this" result per recognised intent. Honest about what the
+   website itself can and cannot do: vet and helper searches live in the
+   app, so the card says so and opens the answer that explains how. */
+function pinFor(u,raw){
+  var d=T[lang],hi=lang==="hi",P=u.place,where=P?(hi?P+" में":"in "+P):(u.near?(hi?"आपके पास":"near you"):"");
+  switch(u.intent){
+    case "sos":return {t:hi?"एसओएस भेजें":"Raise an SOS",s:hi?"अभी मदद चाहिए? ऐप में एसओएस दबाएँ, आपके ज़िले के सबसे नज़दीकी लोगों तक तुरंत पहुँचता है।":"Help needed now? Tap SOS in the app. It reaches the nearest people in your district at once.",u:"#s-sos"};
+    case "ask":return {t:hi?"जिले से पूछें":"Ask the District",s:S.ask[lang].p[0],u:"#s-ask"};
+    case "vet":return {t:(hi?"वेट खोजें ":"Find a vet ")+where,s:hi?"RRT ऐप में लोकेशन-आधारित वेट खोज 5 किमी से शुरू होकर 25 किमी तक जाती है।":"The RRT app's vet search starts within 5 km of you and widens up to 25 km.",u:"#s-f10"};
+    case "helpers":return {t:(hi?"शेल्टर, रेस्क्यूअर और फोस्टर ":"Shelters, rescuers and fosters ")+where,s:hi?"ऐप में 'जिले से पूछें' पर पोस्ट करें: आपके ज़िले के फीडर, फोस्टर, वेट और रेस्क्यूअर जवाब देते हैं। किसी का नंबर सार्वजनिक नहीं होता।":"Post on Ask the District in the app: feeders, fosters, vets and rescuers in your district answer. Nobody's number is public.",u:"#s-ask"};
+    case "cases":return P?{t:(hi?"ऑन रिकॉर्ड: ":"On Record: cases ")+where,s:hi?"सार्वजनिक रजिस्टर में इस जगह के दर्ज मामले खोलें।":"Open the public register filtered to this place.",u:"/report?q="+encodeURIComponent(P)+"#feed"}
+                          :{t:hi?"ऑन रिकॉर्ड: दर्ज मामले":"On Record: documented cases",s:hi?"पूरे भारत के दर्ज पशु क्रूरता मामलों का सार्वजनिक रजिस्टर।":"The public register of documented animal cruelty across India.",u:"/report"};
+    case "report":return {t:hi?"घटना रिपोर्ट करें":"Report an incident",s:S.report[lang].p[0],u:"/report"};
+    case "shop":var term=u.text.replace(/\b(?:buy|order|shop|shopping|for|some|a|an|the|from rrt|online)\b/g," ").replace(/\s+/g," ").trim();
+      return {t:term?(hi?"शॉप में खोजें: ":"Shop: ")+term:(hi?"आरआरटी शॉप":"The RRT Shop"),s:hi?"पार्टनर स्टोर की लाइव कीमतें, पूरे भारत में डिलीवरी।":"Live prices from the partner store, delivered across India.",u:term?"/shop?q="+encodeURIComponent(term):"/shop"};
+  }
+  return null;
+}
+
+/* Spelling: a query word the index has never seen is swapped for the
+   closest word it has (edit distance 1, or 2 for long words). */
+function correct(text){
+  return text.split(" ").map(function(w){
+    if(!w||/[\u0900-\u097F]/.test(w)||STOP[w]||DF[stem(w)]||SYN[w]||w.length<4)return w;
+    var best=null,bd=9,t=tol(w);
+    for(var k=0;k<VOCAB.length;k++){var c=VOCAB[k];if(Math.abs(c.length-w.length)>t)continue;var dd=lev(w,c);if(dd<bd||(dd===bd&&DF[c]>DF[best])){bd=dd;best=c}}
+    return best&&bd<=t?best:w;
+  }).join(" ");
+}
+
 var EXPLORE=["sos","ask","report","laws","shop"];
 var PAA=["f1","f3","f4","f2","f10","f12"];
 var q=$("q"),box=$("results"),hits=[],sel=0;
@@ -825,26 +929,33 @@ function render(){
       html+='<div class="r rs" role="option" id="r'+i+'" aria-selected="'+(i===sel)+'" data-i="'+i+'"><span class="t">'+esc(lang==="hi"?h.th:h.t)+'</span><span class="k">'+esc(d[h.k])+'</span></div>';
     });
   }else{
-    var ranked=rank(v),top=ranked[0];
+    var U=understand(v),qtext=correct(U.text||vt),pin=pinFor(U,v);
+    var ranked=rank((qtext||vt)+(/\s$/.test(v)?" ":"")),top=ranked[0];
+    var hv=qtext+" "+(U.place||"");
     var seenT={};ranked=ranked.filter(function(x){var k=x.d.t.toLowerCase();if(seenT[k])return false;seenT[k]=1;return true});top=ranked[0];
     hits=ranked.slice(0,6).map(function(x){return x.d});
-    var featured=top&&top.d.k==="kFaq"&&top.cov>=.5&&(!ranked[1]||top.s>=ranked[1].s*1.15);
+    var featured=!pin&&top&&top.d.k==="kFaq"&&top.cov>=.5&&(!ranked[1]||top.s>=ranked[1].s*1.15);
+    if(pin){
+      hits.unshift({t:pin.t,th:pin.t,k:"kAction",u:pin.u,pin:1});
+      html+='<div class="fa pin" role="option" id="r0" aria-selected="'+(sel===0)+'" data-i="0"><div class="fa-k">'+esc(d.kAction)+'</div>'+
+        '<div class="fa-q">'+esc(pin.t)+'</div><p class="fa-a">'+esc(pin.s)+'</p><span class="fa-more">'+esc(d.goNow)+' \u2192</span></div>';
+    }
     if(featured){
       var fd=S[top.d.id][lang],body="",done=false;
       fd.b.forEach(function(b){
         if(done)return;
-        if(b[0]==="p")body+='<p class="fa-a">'+hl(b[1],v)+'</p>';
-        else{body+='<ul>'+b[1].slice(0,3).map(function(x){return '<li>'+hl(x,v)+'</li>'}).join("")+(b[1].length>3?'<li class="fa-dots">\u2026</li>':'')+'</ul>';done=true}
+        if(b[0]==="p")body+='<p class="fa-a">'+hl(b[1],hv)+'</p>';
+        else{body+='<ul>'+b[1].slice(0,3).map(function(x){return '<li>'+hl(x,hv)+'</li>'}).join("")+(b[1].length>3?'<li class="fa-dots">\u2026</li>':'')+'</ul>';done=true}
       });
       html+='<div class="fa" role="option" id="r0" aria-selected="'+(sel===0)+'" data-i="0"><div class="fa-k">'+esc(d.answer)+'</div>'+
         '<div class="fa-q">'+esc(fd.t)+'</div>'+body+
         '<span class="fa-more">'+esc(d.readAll)+' \u2192</span></div>';
     }
     hits.forEach(function(h,i){
-      if(featured&&i===0)return;
-      var title=(lang==="hi"&&h.th)?h.th:h.t,sn=snippet(h,v);
+      if((featured||pin)&&i===0)return;
+      var title=(lang==="hi"&&h.th)?h.th:h.t,sn=snippet(h,hv);
       html+='<div class="r rr" role="option" id="r'+i+'" aria-selected="'+(i===sel)+'" data-i="'+i+'">'+
-        '<span class="c">'+esc(crumb(h))+'</span><span class="t">'+hl(title,v)+'</span>'+(sn?'<span class="s">'+hl(sn,v)+'</span>':'')+'</div>';
+        '<span class="c">'+esc(crumb(h))+'</span><span class="t">'+hl(title,hv)+'</span>'+(sn?'<span class="s">'+hl(sn,hv)+'</span>':'')+'</div>';
     });
     var extra=[{t:d.lawsFor+" \u201c"+vt+"\u201d",k:"kLaw",u:"/know-the-laws",x:1},
                {t:d.shopFor+" \u201c"+vt+"\u201d",k:"kPage",u:"/shop?q="+encodeURIComponent(vt),x:1}];
@@ -894,60 +1005,33 @@ document.addEventListener("keydown",function(e){
 
 
 /* ---------------------------------------------------------- voice search
-   The browser's own speech recognition (Web Speech API): free, no key, no
-   server of ours, no language model. Chrome, Edge, Safari and Android
-   Chrome support it; elsewhere the mic simply does not appear. What was
-   heard is typed into the box and ranked by the same search as typing.
-   When the recogniser offers several guesses, the one our index matches
-   best wins, so a mishearing that matches nothing loses to one that does. */
+   Speech to text by the browser (assets/rr-voice.js: on-device first),
+   then the same deterministic search as typing. Of the recogniser's
+   guesses, the one this site understands best wins. */
 (function(){
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   var mic=$("mic"),msg=$("vmsg"),bar=document.querySelector(".bar");
-  if(!SR||!mic||!window.isSecureContext)return;
-  mic.hidden=false;
-  var rec=null,active=false,gotFinal=false,guard=null,heard="";
+  if(!mic||!window.RRVoice)return;
+  var cloudNote=false;
   function say(text,err){msg.hidden=!text;msg.textContent=text||"";msg.classList.toggle("err",!!err)}
-  function ui(on){active=on;mic.classList.toggle("on",on);bar.classList.toggle("listening",on);
-    mic.setAttribute("aria-pressed",on?"true":"false");mic.setAttribute("aria-label",T[lang][on?"vStop":"vMic"])}
-  function clean(t){return String(t||"").replace(/[.?!,।]+$/,"").replace(/\s+/g," ").trim()}
-  function bestOf(alts){
-    var best=alts[0],bs=-1;
-    alts.forEach(function(a){var r=rank(a),sc=r.length?r[0].s*(.6+.4*r[0].cov):0;if(sc>bs+1e-9){bs=sc;best=a}});
-    return best;
-  }
-  function stop(){try{if(rec)rec.stop()}catch(e){}}
-  function start(){
-    if(active){stop();return}
-    say("");heard="";gotFinal=false;
-    rec=new SR();
-    rec.lang=lang==="hi"?"hi-IN":"en-IN";
-    rec.interimResults=true;rec.continuous=false;rec.maxAlternatives=4;
-    rec.onstart=function(){ui(true);say(T[lang].vListen);q.value="";q.focus();sel=0;render()};
-    rec.onresult=function(e){
-      var interim="",fin=null;
-      for(var i=e.resultIndex;i<e.results.length;i++){
-        var r=e.results[i];
-        if(r.isFinal){var alts=[];for(var j=0;j<r.length;j++)alts.push(clean(r[j].transcript));fin=bestOf(alts.filter(Boolean))}
-        else interim+=r[0].transcript;
-      }
-      if(fin){gotFinal=true;heard=fin;q.value=fin}else if(interim){q.value=clean(interim)}
-      sel=0;render();
-    };
-    rec.onerror=function(e){
-      var d=T[lang],m={"not-allowed":d.vBlocked,"service-not-allowed":d.vBlocked,"no-speech":d.vNo,"audio-capture":d.vNoMic,"network":d.vNet,"aborted":""}[e.error];
-      say(m===undefined?d.vErr:m,!!m);gotFinal=true;if(m)hide();
-    };
-    rec.onend=function(){
-      clearTimeout(guard);ui(false);
-      if(heard){say(T[lang].vHeard+" \u201c"+heard+"\u201d");remember(heard);drawRecent();q.focus();sel=0;render()}
-      else if(!gotFinal){say(T[lang].vNo,true)}
-    };
-    try{rec.start()}catch(e){say(T[lang].vErr,true);ui(false);return}
-    clearTimeout(guard);guard=setTimeout(stop,10000);   // never listen forever
-  }
-  mic.addEventListener("click",function(e){e.preventDefault();start()});
-  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&active)stop()});
-  q.addEventListener("input",function(){if(!active)say("")});
+  function quality(a){var u=understand(a),r=rank(correct(u.text||a));return (r.length?r[0].s*(.6+.4*r[0].cov):0)+(u.intent?3:0)+(u.place?2:0)}
+  RRVoice.attach(mic,{
+    lang:function(){return lang==="hi"?"hi-IN":"en-IN"},
+    pick:function(alts){var best=alts[0],bs=-1;alts.forEach(function(a){var q2=quality(a);if(q2>bs+1e-9){bs=q2;best=a}});return best},
+    onNote:function(){cloudNote=true},
+    onStart:function(m){say(m==="local"?T[lang].vLocal:T[lang].vListen);q.value="";q.focus();sel=0;render()},
+    onState:function(on){bar.classList.toggle("listening",on);mic.setAttribute("aria-label",T[lang][on?"vStop":"vMic"])},
+    onInterim:function(t){q.value=t;sel=0;render()},
+    onFinal:function(t){q.value=t;sel=0;render()},
+    onError:function(code){
+      var d=T[lang],m={"not-allowed":d.vBlocked,"service-not-allowed":d.vBlocked,"no-speech":d.vNo,"audio-capture":d.vNoMic,"network":d.vNet}[code];
+      say(m||d.vErr,true);hide();
+    },
+    onEnd:function(heard,errored){
+      if(heard){say(T[lang].vHeard+" \u201c"+heard+"\u201d"+(cloudNote?"  \u00b7  "+T[lang].vCloud:""));cloudNote=false;remember(heard);drawRecent();q.focus();sel=0;render()}
+      else if(!errored)say(T[lang].vNo,true);
+    }
+  });
+  q.addEventListener("input",function(){if(!mic.classList.contains("on"))say("")});
 })();
 
 /* ------------------------------------------------------ recent searches */

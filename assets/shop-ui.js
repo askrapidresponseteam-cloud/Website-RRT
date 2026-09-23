@@ -200,6 +200,43 @@
       if (!form.contains(e.target)) suggEl.hidden = true;
     });
 
+    // Voice: the browser turns speech into text (on-device where it can,
+    // see rr-voice.js); the words then run the normal search.
+    if (global.RRVoice && global.RRVoice.supported()) {
+      var micBtn = document.createElement('button');
+      micBtn.type = 'button'; micBtn.className = 'mic'; micBtn.hidden = true;
+      micBtn.setAttribute('aria-label', 'Search the shop by voice');
+      micBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/>' +
+        '<path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+      form.insertBefore(micBtn, form.querySelector('button[type=submit]'));
+      var placeholder = input.placeholder;
+      global.RRVoice.attach(micBtn, {
+        lang: function () { return document.documentElement.lang === 'hi' ? 'hi-IN' : 'en-IN'; },
+        pick: function (alts) {
+          // Shop searches are product words: drop the spoken lead-in.
+          return alts[0];
+        },
+        onStart: function (m) { input.value = ''; input.placeholder = m === 'local' ? 'Listening on this device\u2026' : 'Listening\u2026 say a product or brand'; },
+        onInterim: function (t) { input.value = t; },
+        onFinal: function (t) {
+          input.value = t.replace(/^(?:(?:please|ok|okay)\s+)*(?:(?:show|find|get|give)(?: me)?|search(?: for)?|look(?:ing)? for|i (?:want|need)(?: to buy)?|buy|order)\s+/i, '').trim() || t;
+        },
+        onEnd: function (heard) {
+          input.placeholder = placeholder;
+          if (heard && input.value.trim()) location.href = '/shop?q=' + encodeURIComponent(input.value.trim());
+        },
+        onError: function (code) {
+          input.placeholder = placeholder;
+          toast({ 'not-allowed': 'Microphone is blocked. Allow it for this site in your browser settings.',
+                  'service-not-allowed': 'Microphone is blocked. Allow it for this site in your browser settings.',
+                  'no-speech': 'Didn\u2019t catch that. Tap the mic and try again.',
+                  'audio-capture': 'No microphone found on this device.',
+                  'network': 'Voice search needs an internet connection.' }[code] || 'Voice search stopped. Tap the mic to try again.');
+        },
+        onNote: function () { toast('Your browser turns speech into text. Rapid Response never receives your audio.'); }
+      });
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var text = input.value.trim();

@@ -346,3 +346,11 @@ body.has-bagbar { padding-bottom: 72px; }
 .shopbar-links a { font-size: 13.5px; letter-spacing: .02em; text-transform: none; }
 .category-bar a, .category, .sort { border-radius: 18px; }
 @media (max-width: 760px) { .find { height: 42px; padding-left: 14px; } .find button[type=submit] { width: 32px; height: 32px; } }
+
+/* Voice search button in the shop search */
+.find .mic { flex: none; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: #5f6368; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.find .mic svg { width: 20px; height: 20px; }
+.find .mic:hover { background: #f1f3f4; color: #111111; }
+.find .mic.on { background: var(--sale); color: #fff; animation: micpulse 1.2s ease-in-out infinite; }
+@keyframes micpulse { 0% { box-shadow: 0 0 0 0 rgba(229, 34, 34, .45); } 70% { box-shadow: 0 0 0 12px rgba(229, 34, 34, 0); } 100% { box-shadow: 0 0 0 0 rgba(229, 34, 34, 0); } }
+@media (prefers-reduced-motion: reduce) { .find .mic.on { animation: none; } }

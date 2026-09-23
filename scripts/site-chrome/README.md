@@ -13,3 +13,14 @@
 - `contrast.py /faq,/shop` - flags text that is too faint for its background.
 
 Needs `pip install playwright && playwright install chromium` and the dev server on :8080.
+- `test_understanding.py` - spoken and typed queries (places, "near me", vets, shelters,
+  cases, SOS, shop, misspellings) must resolve to the right result, every time.
+- `test_voice.py`, `test_voice_local.py` - voice search with a simulated recogniser:
+  live words, choosing among guesses, errors, Hindi, on-device vs browser recognition,
+  and the shop's mic.
+
+Query understanding (homepage, `index.html`): filler words are stripped, place names are
+matched against a fixed list with aliases and spelling tolerance (add places in `PLACES`),
+and a few intents (SOS, vet, shelters/rescuers, cases, report, shop, Ask the District)
+pin one "Quick action" above the results. No model is involved; the same words always
+give the same result.
