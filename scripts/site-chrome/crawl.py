@@ -1,4 +1,4 @@
-import asyncio,sys,re,urllib.request
+import asyncio,sys,urllib.request
 import os; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from playwright.async_api import async_playwright
 from mock import install
@@ -18,9 +18,6 @@ async def main():
             e=[];pg.on('pageerror',lambda x,e=e:e.append(str(x)[:100]))
             await install(pg);await pg.goto(B+path);await pg.wait_for_timeout(1500)
             hrefs=await pg.evaluate('[...document.querySelectorAll("a[href]")].map(a=>a.getAttribute("href"))')
-            # landing: also the hrefs inside every info sheet
-            if path=='/':
-                ids=await pg.evaluate('Object.keys(window.__S||{})')
             for h in hrefs:
                 if not h or h.startswith('#') or h.startswith('javascript'): continue
                 if h.startswith('mailto:') or h.startswith('http'):

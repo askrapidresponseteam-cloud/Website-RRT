@@ -12,7 +12,6 @@ async def m():
       await pg.fill('#q',qq);await pg.wait_for_timeout(50)
       pin=await pg.locator('.fa.pin .fa-q').all_inner_texts();fa=await pg.locator('.fa:not(.pin) .fa-q').all_inner_texts()
       top=await pg.locator('#results .rr .t').all_inner_texts()
-      href=await pg.evaluate('hits[0]&&hits[0].u') if False else ''
       print(f'{qq!r:40} PIN={pin[0] if pin else "-":45} FEAT={fa[0][:40] if fa else "-":42} TOP={top[0][:40] if top else "-"}')
     await pg.fill('#q','show me animal shelters near udapi');await pg.wait_for_timeout(80);await pg.screenshot(path='/tmp/u1.png')
     await pg.fill('#q','cases in udipi');await pg.keyboard.press('Enter');await pg.wait_for_timeout(1500);print('enter ->',pg.url, await pg.input_value('#searchIn'))

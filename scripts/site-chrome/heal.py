@@ -8,6 +8,8 @@ content or scripts) and exits 1 if it had to, so CI can commit the fix.
 
     python3 scripts/site-chrome/heal.py          # fix in place
     python3 scripts/site-chrome/heal.py --check  # report only
+    python3 scripts/site-chrome/heal.py --force  # re-install on every page
+                                                 # (after editing chrome.py)
 """
 import os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -20,6 +22,7 @@ from chrome import install, header, footer, strip_blocks  # noqa: E402
 # how-it-works redirect to / in vercel.json)
 CONTENT = {'faq.html': '/faq', 'know-the-laws.html': '/know-the-laws', 'legal-desk.html': '/legal-desk',
            'vet.html': '', 'manage.html': '', 'app-guide.html': '', 'report/index.html': '', 'report/manage.html': ''}
+PLAIN = {'preview.html': ''}   # shared chrome, own styling (no rr-theme.css)
 SHOP = {'shop.html': ('shop', 'shop'), 'product.html': ('', 'product'), 'cart.html': ('', 'cart'),
         'saved.html': ('saved', 'saved'), 'track.html': ('track', 'track')}
 ARROW = ('<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6" fill="none" '
@@ -37,7 +40,7 @@ def complete(s):
 
 def heal_shop(s, cur, page):
     s = strip_blocks(s)
-    s = re.sub(r'\n?<!-- rr:shopbar -->.*?<!-- /rr:shopbar -->\n?', '', s, flags=re.S)
+    s = re.sub(r'<!-- rr:shopbar -->.*?<!-- /rr:shopbar -->\n?', '', s, flags=re.S)
     s = re.sub(r'<header class="site-header">.*?</header>\s*(<nav class="mobile-nav".*?</nav>\n?)?', '', s, flags=re.S)
     s = re.sub(r'<footer class="site-footer">.*?</footer>\n?', '', s, flags=re.S)
     s = re.sub(r'<link rel="stylesheet" href="https://fonts.googleapis.com/css2\?family=(Barlow|Material)[^>]*>\n?', '', s)
@@ -48,27 +51,33 @@ def heal_shop(s, cur, page):
     bar = SHOPBAR
     for k in ('shop', 'saved', 'track'):
         bar = bar.replace('__%s__' % k, ' aria-current="page"' if k == cur else '')
-    s = re.sub(r'<body[^>]*>', lambda m: '<body data-page="%s">\n' % page + header('/shop', shop=True) + '\n' + bar, s, count=1)
+    s = re.sub(r'<body[^>]*>\n?', lambda m: '<body data-page="%s">\n' % page + header('/shop', shop=True) + '\n' + bar + '\n', s, count=1)
     i = s.rfind('</body>')
     return s[:i] + footer() + '\n' + s[i:]
 
 def main():
     check = '--check' in sys.argv
+    force = '--force' in sys.argv
     fixed = []
-    for rel, cur in CONTENT.items():
-        p = os.path.join(ROOT, rel)
-        if not os.path.exists(p): continue
-        s = open(p, encoding='utf-8').read()
-        if complete(s): continue
-        fixed.append(rel)
-        if not check: open(p, 'w', encoding='utf-8').write(install(s, current=cur, theme=True))
+    for group, theme in ((CONTENT, True), (PLAIN, False)):
+        for rel, cur in group.items():
+            p = os.path.join(ROOT, rel)
+            if not os.path.exists(p): continue
+            s = open(p, encoding='utf-8').read()
+            if complete(s) and not force: continue
+            new = install(s, current=cur, theme=theme)
+            if new == s: continue
+            fixed.append(rel)
+            if not check: open(p, 'w', encoding='utf-8').write(new)
     for rel, (cur, page) in SHOP.items():
         p = os.path.join(ROOT, rel)
         if not os.path.exists(p): continue
         s = open(p, encoding='utf-8').read()
-        if complete(s) and '<!-- rr:shopbar -->' in s: continue
+        if complete(s) and '<!-- rr:shopbar -->' in s and not force: continue
+        new = heal_shop(s, cur, page)
+        if new == s: continue
         fixed.append(rel)
-        if not check: open(p, 'w', encoding='utf-8').write(heal_shop(s, cur, page))
+        if not check: open(p, 'w', encoding='utf-8').write(new)
     if fixed:
         print(('missing theme: ' if check else 're-applied theme: ') + ', '.join(fixed))
         sys.exit(1)

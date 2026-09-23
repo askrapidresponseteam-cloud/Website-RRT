@@ -1,6 +1,6 @@
 // Fake Firebase compat SDK for offline testing of On Record / vet / manage pages.
 (function(){
-  window.__fb={calls:[],uploads:[],docs:{publicReports:[
+  var __fb=window.__fb={calls:[],uploads:[],docs:{publicReports:[
     {id:'c1',data:{incidentType:'Poisoning',severity:'high',state:'Karnataka',district:'Udupi',description:'Dogs poisoned near the market in Udupi.',createdAt:{toMillis:function(){return Date.now()-3600e3}},amplifyCount:4,status:'open',imageUrl:'https://cdn.shopify.com/s/files/mock/3.png'}},
     {id:'c2',data:{incidentType:'Beating',severity:'medium',state:'Maharashtra',district:'Mumbai',description:'Stray beaten by guard.',createdAt:{toMillis:function(){return Date.now()-86400e3}},amplifyCount:1,status:'open'}}
   ]}};
@@ -25,7 +25,7 @@
   var listeners=[];var auth={currentUser:null,onAuthStateChanged:function(cb){listeners.push(cb);setTimeout(function(){cb(auth.currentUser)},0);return function(){}},
     signInAnonymously:function(){auth.currentUser={uid:'anon1',isAnonymous:true,getIdToken:function(){return Promise.resolve('tok')}};listeners.forEach(function(f){setTimeout(function(){f(auth.currentUser)},0)});return Promise.resolve({user:auth.currentUser})},
     signOut:function(){auth.currentUser=null;return Promise.resolve()},setPersistence:function(){return Promise.resolve()}};
-  window.firebase={apps:[],auth:null,initializeApp:function(){this.apps.push(app);return app},app:function(){return app},
+  window.firebase={apps:[],initializeApp:function(){this.apps.push(app);return app},app:function(){return app},
     firestore:Object.assign(function(){return fs},{FieldValue:FieldValue,Timestamp:{now:function(){return {toMillis:function(){return Date.now()}}},fromMillis:function(m){return {toMillis:function(){return m}}}},GeoPoint:function(a,b){this.latitude=a;this.longitude=b}}),
     storage:function(){return st},functions:function(){return fns},auth:function(){return auth}};
 })();

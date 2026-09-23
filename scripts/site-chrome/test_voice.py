@@ -33,7 +33,7 @@ async def m():
     await run(pg,{'error':'not-allowed'},'/tmp/v2.png')
     await run(pg,{'error':'no-speech'})
     await run(pg,{'steps':[]})
-    await pg.click('#langT');await pg.wait_for_timeout(200)
+    await pg.click('.rr-lang button[data-l=hi]');await pg.wait_for_timeout(200)
     await run(pg,{'steps':[{'alts':['मेरा नंबर कब दिखता है'],'final':True}]},'/tmp/v3.png')
     print('errors',errs)
     # unsupported browser: no mic

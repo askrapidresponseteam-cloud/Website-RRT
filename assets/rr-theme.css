@@ -68,3 +68,8 @@ html.rr-themed .chip{display:inline-flex;align-items:center;justify-content:cent
    stays hidden; field errors appear only on a field marked bad. */
 html[lang] [data-lang][hidden],html[lang] [data-lang][style*="display:none"],html[lang] [data-lang][style*="display: none"]{display:none!important}
 html[lang=en] .field:not(.bad) .err[data-lang=en],html[lang=hi] .field:not(.bad) .err[data-lang=hi]{display:none!important}
+
+/* App guide pads <body> by 14px (8px on phones, 0 in print). */
+body:has(> section.page.cover){--rr-bx:14px}
+@media (max-width:760px){body:has(> section.page.cover){--rr-bx:8px}}
+@media print{body:has(> section.page.cover){--rr-bx:0px}}

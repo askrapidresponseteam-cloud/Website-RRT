@@ -13,8 +13,12 @@ and theme between these markers. Keep them exactly as they are:
   back to the retired dark theme.
 - The old `<header>` / `<footer>` inside a page are hidden on purpose (their
   scripts still run). Do not "restore" them.
+- The logo and header are identical on every page, the homepage included
+  (its header is generated from the same file at build time). Never give a
+  page its own header or logo, and never change their size or position.
 - Header/footer markup lives in `scripts/site-chrome/chrome.py`. To change it
-  site-wide, edit it there and re-install; do not hand-edit one page.
+  site-wide, edit it there and run `python3 scripts/site-chrome/heal.py --force`;
+  do not hand-edit one page.
 - Styles: `assets/rr-site.css` (header/footer), `assets/rr-theme.css` (older
   content pages), `assets/shop.css` (shop). Do not reintroduce the old dark
   palette, Barlow/JetBrains fonts, or a red logo square.
@@ -24,6 +28,7 @@ Check before pushing:
 
     python3 scripts/site-chrome/heal.py --check   # every page has the theme
     node scripts/check-storefront.js              # shop contract
+    python3 scripts/site-chrome/check_logo.py     # logo pixel-identical on every page
 
 If a page does lose the theme, `.github/workflows/keep-theme.yml` puts it back
 automatically after the push.

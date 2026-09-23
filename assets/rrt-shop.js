@@ -1714,10 +1714,6 @@
     writeJson(local, RECEIPTS_KEY, all.slice(0, 50));
     return order;
   }
-  function dropReceipt(id) {
-    writeJson(local, RECEIPTS_KEY, receipts().filter(function (r) { return r.id !== id; }));
-  }
-
   function receiptDateLabel(createdAt) {
     var d = new Date(createdAt);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1997,14 +1993,13 @@
     'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
   ];
 
-  var DELIVERY_FIELDS = ['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'state', 'pin'];
 
   /** One clean string: trimmed, control characters and newlines removed,
    *  length capped. Nothing that could break a URL or a form reaches the
    *  vendor. */
   function cleanText(v, max) {
     return String(v == null ? '' : v)
-      .replace(/[\u0000-\u001f\u007f]/g, ' ')
+      .replace(/[\u0000-\u001f\u007f]/g, ' ') // eslint-disable-line no-control-regex -- strip control characters on purpose
       .replace(/\s+/g, ' ')
       .trim()
       .slice(0, max);

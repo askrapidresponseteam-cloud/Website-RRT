@@ -82,3 +82,8 @@ html[lang=hi] .rr-chrome .rr-nav>a,html[lang=hi] .rr-chrome .rr-btn{letter-spaci
 @media (max-width:380px){.rr-chrome .rr-brand span{display:none}}
 .rr-chrome .rr-nav>a.rr-bag{padding:0;border:1px solid var(--rr-line)}
 .rr-chrome .rr-nav>a.rr-bag:hover{border-color:var(--rr-ink)}
+
+/* The header and footer are always full-bleed, even on a page that pads
+   <body> (the page sets --rr-bx to its body padding). */
+.rr-chrome.rr-hdr,.rr-chrome.rr-ftr{margin-left:calc(-1 * var(--rr-bx, 0px));margin-right:calc(-1 * var(--rr-bx, 0px))}
+@media print{.rr-chrome{display:none!important}}
