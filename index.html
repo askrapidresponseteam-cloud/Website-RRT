@@ -146,6 +146,16 @@ html[lang=hi] .sh-body h2{font-family:"Noto Sans Devanagari",var(--serif);font-w
 .sh-list span{display:block;font-size:14.5px;color:var(--mid)}
 .sh-list a:hover b{text-decoration:underline;text-underline-offset:4px}
 .sh-rel{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.sh-rel .chip{display:inline-flex;align-items:center;text-align:left}
+.sh-rel .chip[aria-current=true]{border-color:var(--ink);color:var(--ink)}
+.sh-qa{margin-top:26px;border-top:1px solid var(--line)}
+.sh-q{position:relative;padding:22px 0 10px;border-bottom:1px solid var(--line);border-radius:4px}
+.sh-q h3{margin-bottom:10px;font-size:18px;font-weight:600;line-height:1.35;color:var(--ink);outline:none}
+.sh-q h3:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.sh-q.hl{animation:qhl 2.4s ease-out}
+@keyframes qhl{0%,35%{background:#fff3c4;box-shadow:-12px 0 0 #fff3c4,12px 0 0 #fff3c4}100%{background:transparent;box-shadow:-12px 0 0 transparent,12px 0 0 transparent}}
+.sh-back{margin:4px 0 6px;font-size:13px;color:var(--mid)}
+.sh-back:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .sh-act{flex:none;display:flex;flex-wrap:wrap;gap:10px;padding:16px 28px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
 body.lock{overflow:hidden}
 
@@ -167,7 +177,7 @@ body.lock{overflow:hidden}
   .sh-act{padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px))}
   .sh-act .btn{flex:1 1 auto}
 }
-@media (prefers-reduced-motion:reduce){.mic.on{animation:none}.sheet,.scrim{transition:none}}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none}.sheet,.scrim{transition:none}.sh-q.hl{animation:none;background:#fff3c4}}
 </style>
 
 </head>
@@ -248,7 +258,7 @@ var T={
   footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
-  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related"
+  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top"
  },
  hi:{
   navFaq:"सवाल",
@@ -260,7 +270,7 @@ var T={
   footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
-  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित"
+  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित",backTop:"ऊपर जाएँ"
  }
 };
 
@@ -386,9 +396,8 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp
 
 /* --------------------------------------------------------------- sheet */
 var sheet=$("sheet"),scrim=$("scrim"),cur=null,lastFocus=null;
-function sheetHtml(id){
-  var s=S[id],x=s[lang],d=T[lang],h="";
-  h+='<h2 id="shT">'+esc(x.t)+'</h2>';
+function bodyHtml(id,x){
+  var h="";
   (x.p||[]).forEach(function(p,i){h+='<p'+(id==="gap"&&i===1?' class="em"':'')+'>'+esc(p)+'</p>'});
   (x.b||[]).forEach(function(b){h+=b[0]==="p"?'<p>'+esc(b[1])+'</p>':'<ul class="sh-ul">'+b[1].map(function(li){return '<li>'+esc(li)+'</li>'}).join("")+'</ul>'});
   if(x.l){
@@ -397,12 +406,42 @@ function sheetHtml(id){
       var inner='<b>'+esc(i[0])+'</b><span>'+esc(i[1])+'</span>';
       return i[2]?'<a href="'+esc(i[2])+'">'+inner+'</a>':'<div>'+inner+'</div>'}).join("")+'</div>';
   }
-  if(s.r&&s.r.length){
-    h+='<p class="sh-lt">'+esc(d.related)+'</p><div class="sh-rel">'+s.r.map(function(r){
-      return '<a class="chip" href="#s-'+r+'" style="display:inline-flex;align-items:center">'+esc(S[r][lang].c||S[r][lang].t)+'</a>'}).join("")+'</div>';
+  return h;
+}
+function relLabel(r){var y=S[r][lang];return y.c||y.t}
+/* A sheet shows its own answer, then "Related" capsules, then the related
+   answers in full (the Q&A section). Each capsule jumps to its own answer in
+   that section: smooth scroll, focus, a brief highlight. */
+function sheetHtml(id){
+  var s=S[id],x=s[lang],d=T[lang],h="",seen={};
+  h+='<h2 id="shT">'+esc(x.t)+'</h2>'+bodyHtml(id,x);
+  var rel=(s.r||[]).filter(function(r){if(!S[r]||r===id||seen[r])return false;seen[r]=1;return true});
+  if(rel.length){
+    h+='<p class="sh-lt" id="shRelLbl">'+esc(d.related)+'</p><div class="sh-rel" role="group" aria-labelledby="shRelLbl">'+rel.map(function(r){
+      return '<button type="button" class="chip" data-jump="'+r+'" aria-controls="shq-'+r+'">'+esc(relLabel(r))+'</button>'}).join("")+'</div>';
+    h+='<div class="sh-qa">'+rel.map(function(r){
+      return '<section class="sh-q" id="shq-'+r+'" aria-labelledby="shqh-'+r+'"><h3 id="shqh-'+r+'" tabindex="-1">'+esc(relLabel(r))+'</h3>'+
+        bodyHtml(r,S[r][lang])+'<button type="button" class="sh-back" data-jump-top>\u2191 '+esc(d.backTop)+'</button></section>'}).join("")+'</div>';
   }
   return h;
 }
+function jumpTo(r){
+  var sec=document.getElementById("shq-"+r),body=$("shB");if(!sec||!body)return;
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var top=sec.getBoundingClientRect().top-body.getBoundingClientRect().top+body.scrollTop-8;
+  // Short last answers still land at the top: pad the end just enough.
+  var pad=body.querySelector(".sh-pad");
+  if(!pad){pad=document.createElement("div");pad.className="sh-pad";pad.setAttribute("aria-hidden","true");body.appendChild(pad)}
+  pad.style.height="0px";
+  var end=pad.getBoundingClientRect().top-body.getBoundingClientRect().top+body.scrollTop+(parseFloat(getComputedStyle(body).paddingBottom)||0);
+  pad.style.height=Math.max(0,Math.ceil(top+body.clientHeight-end))+"px";
+  body.scrollTo({top:top,behavior:reduce?"auto":"smooth"});
+  Array.prototype.forEach.call(body.querySelectorAll(".sh-q.hl"),function(x){x.classList.remove("hl")});
+  void sec.offsetWidth;sec.classList.add("hl");
+  Array.prototype.forEach.call(body.querySelectorAll("[data-jump]"),function(c){c.setAttribute("aria-current",c.getAttribute("data-jump")===r?"true":"false")});
+  var hd=sec.querySelector("h3");if(hd)hd.focus({preventScroll:true});
+}
+
 function actHtml(id){
   var acts=S[id].a.map(function(a){return typeof a==="string"?A[a]:a});
   if(isAndroid)acts=acts.filter(function(a){return a!==A.ios});
@@ -431,9 +470,16 @@ function closeSheet(fromHash){
   if(lastFocus&&lastFocus.focus)lastFocus.focus();
 }
 $("shX").onclick=function(){closeSheet()};
+$("shB").addEventListener("click",function(e){
+  var j=e.target.closest("[data-jump]");
+  if(j){e.preventDefault();jumpTo(j.getAttribute("data-jump"));return}
+  if(e.target.closest("[data-jump-top]")){e.preventDefault();
+    var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("shB").scrollTo({top:0,behavior:reduce?"auto":"smooth"});var t=$("shT");if(t){t.setAttribute("tabindex","-1");t.focus({preventScroll:true})}}
+});
 scrim.onclick=function(){closeSheet()};
 function fromHash(){
-  var m=location.hash.match(/^#s-([a-z]+)$/);
+  var m=location.hash.match(/^#s-([a-z0-9]+)$/);
   if(m&&S[m[1]])openSheet(m[1],true);else closeSheet(true);
 }
 window.addEventListener("hashchange",fromHash);

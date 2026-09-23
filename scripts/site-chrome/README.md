@@ -26,3 +26,4 @@ pin one "Quick action" above the results. No model is involved; the same words a
 give the same result.
 - `check_centring.py /,/shop,/faq 1190 770` - every button and capsule on a page: label (or icon) must sit in the exact centre, measured on the rendered page.
 - `test_report_case.py 1190 900` - the whole Report a case flow on On Record (8 steps, photo upload, reporter details, submit, success, PDF) against a fake Firebase (`fakefb.js`).
+- `test_capsules.py` - every Related capsule in every homepage panel jumps to, highlights and focuses its own answer (English and Hindi, desktop and phone).
