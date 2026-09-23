@@ -3,7 +3,7 @@ import os; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from playwright.async_api import async_playwright
 from mock import install
 B='http://localhost:8080'
-PAGES=['/','/faq','/know-the-laws','/legal-desk','/vet','/report','/report/manage','/manage','/app-guide','/shop','/shop/cart','/shop/saved','/shop/track','/shop/p/p-1-pedigree-puppy-starter-veg','/shop?shelf=pharmacy','/shop?q=royal']
+PAGES=['/','/faq','/know-the-laws','/vet','/report','/report/manage','/manage','/app-guide','/shop','/shop/cart','/shop/saved','/shop/track','/shop/p/p-1-pedigree-puppy-starter-veg','/shop?shelf=pharmacy','/shop?q=royal']
 def status(u):
     try:
         r=urllib.request.urlopen(urllib.request.Request(u,method='GET'),timeout=10);return r.status

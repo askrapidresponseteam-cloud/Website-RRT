@@ -3,7 +3,7 @@ import asyncio,sys,os
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from playwright.async_api import async_playwright
 from mock import install
-PAGES=['/','/faq','/know-the-laws','/legal-desk','/vet','/report','/report/manage','/manage','/app-guide','/preview','/shop','/shop/p/p-1-pedigree-puppy-starter-veg','/shop/cart','/shop/saved','/shop/track']
+PAGES=['/','/faq','/know-the-laws','/vet','/report','/report/manage','/manage','/app-guide','/preview','/shop','/shop/p/p-1-pedigree-puppy-starter-veg','/shop/cart','/shop/saved','/shop/track']
 JS='''(()=>{var m=document.querySelector('.rr-mark,.brand .mark');var t=document.querySelector('.rr-brand>span,.brand>span');var h=document.querySelector('.rr-hdr,body>header');
  function r(e){if(!e)return null;var b=e.getBoundingClientRect();return [b.left,b.top+scrollY,b.width,b.height].map(function(v){return Math.round(v*100)/100})}
  var cs=t?getComputedStyle(t):null;return {mark:r(m),text:r(t),hdr:r(h),font:cs?[cs.fontFamily.split(',')[0],cs.fontSize,cs.letterSpacing]:null}})()'''

@@ -44,6 +44,11 @@
       "source": "/how-it-works",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/legal-desk",
+      "destination": "/know-the-laws",
+      "permanent": true
     }
   ]
 }
