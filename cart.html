@@ -23,15 +23,13 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=pets&display=block">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="/assets/rrt-store-config.js"></script>
+<script src="/assets/rrt-store-config.js"></script><!-- rr:head --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap"><link rel="stylesheet" href="/assets/rr-site.css"><!-- /rr:head -->
 <link rel="stylesheet" href="/assets/shop.css">
 <style>
 .cart-wrap { width: 85%; max-width: 880px; margin: 0 auto; padding: 34px 0 70px; }
-.cart-wrap h1 { font-family: var(--display); font-weight: 700; text-transform: uppercase;
+.cart-wrap h1 { font-family: var(--display); font-weight:400; text-transform:uppercase;
                 font-size: 34px; margin: 0 0 18px; }
 .changes { border: 1px solid var(--border-strong); background: var(--bg-soft);
            padding: 14px 18px; margin: 0 0 20px; font-size: 12.5px; line-height: 1.7; }
@@ -95,7 +93,7 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 .delivery { border-top: 1px solid var(--border); padding-top: 22px; margin-top: 26px; }
 .delivery-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.delivery-head h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 22px; letter-spacing: .02em; margin: 0; }
+.delivery-head h2 { font-family: var(--display); font-weight:400; text-transform:uppercase; font-size: 22px; letter-spacing: .02em; margin: 0; }
 .delivery-edit, .delivery-cancel { background: transparent; border: 0; cursor: pointer; color: var(--accent);
   font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 6px 0; }
 .delivery-note { color: var(--text-dim); font-size: 13px; margin: 6px 0 14px; }
@@ -118,42 +116,28 @@
 @media (max-width: 640px) { .df-row.two, .df-row.three { grid-template-columns: 1fr; } }
 </style>
 </head>
-<body>
-
-<a class="skip" href="#main">Skip to bag</a>
-
-<header class="site-header">
-  <button class="back" type="button" data-fallback="/shop" aria-label="Back"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
-
-  <a class="logo" href="/" aria-label="Rapid Response">
-    <div class="logo-sq"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>
-    <span class="logo-t">Rapid Response</span>
-    <span class="logo-tag">Shop</span>
-  </a>
-
+<body data-page="cart">
+<!-- rr:header -->
+<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#ff4d3d"/><g fill="#fff"><ellipse cx="25.5" cy="33.5" rx="6.8" ry="9.3"/><ellipse cx="43.5" cy="27.5" rx="7.3" ry="10"/><ellipse cx="63.5" cy="31" rx="7" ry="9.6"/><ellipse cx="79" cy="43" rx="6" ry="8.3"/><ellipse cx="50" cy="68.3" rx="25.5" ry="16.3"/><ellipse cx="50" cy="60" rx="20" ry="12"/></g></svg><span>Rapid Response</span><small>Shop</small></a><nav class="rr-nav" aria-label="Main"><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/legal-desk" class="rr-opt" data-rr-en="Legal Desk" data-rr-hi="लीगल डेस्क">Legal Desk</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" aria-current="page" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a class="rr-bag" href="/shop/cart" aria-label="Bag"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b id="bagCount" hidden>0</b></a></nav></div></div>
+<!-- /rr:header -->
+<!-- rr:shopbar -->
+<div class="shopbar">
   <form class="hsearch find" role="search" autocomplete="off">
-    <input name="q" placeholder="Search the range…" aria-label="Search the shop" inputmode="search">
+    <input name="q" placeholder="Search food, medicines, brands…" aria-label="Search the shop" inputmode="search" enterkeyhint="search">
     <button type="submit" aria-label="Search">→</button>
     <div class="sugg" hidden></div>
   </form>
-
-  <nav class="nav" aria-label="Shop">
-    <a href="/shop">Shop</a>
+  <nav class="shopbar-links" aria-label="Your shop">
+    <a href="/shop">All</a>
     <a href="/shop/saved">Saved</a>
+    <a href="/shop/track">Orders</a>
   </nav>
+</div>
+<div class="sold-note">Sold and delivered by a third-party partner store · payment on their secure checkout<span class="sn-more"> · Rapid Response never sees your card</span></div>
+<!-- /rr:shopbar --><a class="skip" href="#main">Skip to bag</a>
 
-  <a class="bag" href="/shop/cart" aria-label="Basket" aria-current="page">
-    <span class="bag-icon" aria-hidden="true"></span>
-    <span class="bag-count" id="bagCount" hidden>0</span>
-  </a>
-</header>
-<nav class="mobile-nav" aria-label="Shop">
-  <a href="/shop">Shop</a>
-  <a href="/shop/saved">Saved</a>
-</nav>
 <main class="cart-wrap" id="main">
   <h1>Your bag</h1>
-  </div>
 
   <div class="changes" id="changes" hidden></div>
 
@@ -221,10 +205,6 @@
   </div>
 </section>
 
-<footer class="site-footer">
-  <span>Rapid Response · Shop</span>
-  <span>Sold by a third-party partner store</span>
-</footer>
 
 <div class="toast" id="toast" hidden role="status"></div>
 
@@ -310,7 +290,16 @@
   dPaint();
   // A product page's Buy now lands here with ?details=1 when nothing is
   // saved yet: open the form and bring it into view.
-  if (new URLSearchParams(location.search).get('details') === '1' && !S.deliveryComplete()) {
+  // The bottom bar's Checkout lands here with ?go=1: with details saved,
+  // bring the pay button into view; without, open the form first.
+  var qp = new URLSearchParams(location.search);
+  if (qp.get('go') === '1' && S.deliveryComplete()) {
+    setTimeout(function () {
+      var b = $('checkout'); if (!b || $('checkoutBlock').hidden) return;
+      b.scrollIntoView({ behavior: 'smooth', block: 'center' }); b.focus({ preventScroll: true });
+    }, 120);
+  }
+  if ((qp.get('details') === '1' || qp.get('go') === '1') && !S.deliveryComplete()) {
     setTimeout(function () { $('delivery').scrollIntoView({ behavior: 'smooth', block: 'start' }); dField('firstName').focus(); }, 60);
   }
   U.storeGate();
@@ -571,7 +560,9 @@
     });
   });
 })();
-</script>
-
+</script><!-- rr:footer -->
+<div class="rr-chrome rr-ftr" role="contentinfo"><span data-rr-en="© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority.</span><nav aria-label="Site"><a href="/" data-rr-en="Home" data-rr-hi="होम">Home</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/legal-desk" data-rr-en="Legal Desk" data-rr-hi="लीगल डेस्क">Legal Desk</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/report" data-rr-en="On Record" data-rr-hi="ऑन रिकॉर्ड">On Record</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/vet" data-rr-en="For vets" data-rr-hi="वेट के लिए">For vets</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="mailto:ask@rapid-response.in" data-rr-en="ask@rapid-response.in" data-rr-hi="ask@rapid-response.in">ask@rapid-response.in</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav></div>
+<script src="/assets/rr-site.js" defer></script>
+<!-- /rr:footer -->
 </body>
 </html>

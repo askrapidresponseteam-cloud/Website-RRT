@@ -221,3 +221,20 @@ is served by `cleanUrls` directly. Destinations are now extensionless
 (`/cart`), the shape Vercel's configuration docs require alongside
 `cleanUrls`. The `/pl-api/*` proxy is unaffected either way: external
 destinations bypass the static output entirely.
+
+## Redesign (23 Sep 2026)
+
+The whole site now wears the landing page's look: white ground, ink type,
+the Marcellus serif for display, hairlines, and the paw logo
+(`assets/favicon.svg`) in one shared header and footer on every page
+(`assets/rr-site.css`, `assets/rr-site.js`, markup in
+`scripts/site-chrome/chrome.py`). The older content pages keep their markup
+and scripts; `assets/rr-theme.css` re-points their shared tokens.
+
+The shop keeps this SDK untouched and changes only its skin and flow:
+it opens straight onto the whole range with infinite scroll, shelf and brand
+chips, a sticky search bar, ADD that turns into a stepper, and a bag bar
+pinned to the bottom (count, subtotal, Checkout). Checkout lands on the bag
+with delivery details open (or the Pay button in view once they are saved),
+then hands off to the seller's checkout exactly as before.
+`scripts/check-storefront.js` now enforces the new design contract.

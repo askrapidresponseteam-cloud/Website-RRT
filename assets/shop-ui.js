@@ -14,6 +14,10 @@
    * buttons act on real models, not on data scraped back out of the DOM. */
   var registry = {};
 
+  var PAW = '<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#ff4d3d"/><g fill="#fff">' +
+    '<ellipse cx="25.5" cy="33.5" rx="6.8" ry="9.3"/><ellipse cx="43.5" cy="27.5" rx="7.3" ry="10"/><ellipse cx="63.5" cy="31" rx="7" ry="9.6"/>' +
+    '<ellipse cx="79" cy="43" rx="6" ry="8.3"/><ellipse cx="50" cy="68.3" rx="25.5" ry="16.3"/><ellipse cx="50" cy="60" rx="20" ry="12"/></g></svg>';
+
   function money(p) { return S.money(p); }
 
   /** One product tile. Same information as the app's tile: image, flags
@@ -27,10 +31,10 @@
       ? '<img src="' + esc(S.sizedImage(p.imageUrl, 480)) + '" alt="" loading="lazy">'
       : '<div class="no-shot" aria-hidden="true"></div>';
 
-    var flags = '';
+    var flags = '', off = 0;
     if (!p.available) flags += '<span class="flag oos-flag">Sold out</span>';
     else if (cheapest.compareAtPaise && cheapest.compareAtPaise > cheapest.pricePaise) {
-      var off = Math.round(((cheapest.compareAtPaise - cheapest.pricePaise) * 100) / cheapest.compareAtPaise);
+      off = Math.round(((cheapest.compareAtPaise - cheapest.pricePaise) * 100) / cheapest.compareAtPaise);
       if (off > 0) flags += '<span class="flag">' + off + '% off</span>';
     }
     if (p.isRx) flags += '<span class="flag rx-flag">Rx</span>';
@@ -41,24 +45,47 @@
     } else {
       meta = (p.priceVaries ? 'From ' : '') + money(cheapest.pricePaise) +
         (cheapest.compareAtPaise
-          ? ' <span class="was">' + money(cheapest.compareAtPaise) + '</span>' : '');
+          ? ' <span class="was">' + money(cheapest.compareAtPaise) + '</span>' : '') +
+        (off > 0 ? ' <span class="off">' + off + '% off</span>' : '');
     }
 
     return '<article class="product" data-id="' + p.id + '">' +
       '<a href="/shop/p/' + encodeURIComponent(p.handle) + '">' +
-      '<div class="product-image">' + img + flags +
-      '<button type="button" class="p-heart" data-heart="' + p.id + '" ' +
-      'aria-pressed="' + (S.isSaved(p.id) ? 'true' : 'false') + '" aria-label="Save for later">&#9825;</button>' +
-      '</div>' +
+      '<div class="product-image">' + img + flags + '</div>' +
       '<div class="product-info">' +
       (p.brand ? '<div class="product-brand">' + esc(p.brand) + '</div>' : '') +
       '<h3 class="product-name">' + esc(p.title) + '</h3>' +
       '<div class="product-meta">' + meta + '</div>' +
       '</div></a>' +
-      (opts.noAdd ? '' :
-        '<button type="button" class="add" data-add="' + p.id + '"' +
-        (p.available ? '' : ' aria-disabled="true"') + '>+ Add</button>') +
+      '<button type="button" class="p-heart" data-heart="' + p.id + '" ' +
+      'aria-pressed="' + (S.isSaved(p.id) ? 'true' : 'false') + '" aria-label="Save for later">&#9825;</button>' +
+      (opts.noAdd ? '' : '<div class="p-act" data-act="' + p.id + '">' + actionHtml(p) + '</div>') +
       '</article>';
+  }
+
+  /** The buy row: ADD, a stepper once the one variant is in the bag, or
+   *  "In bag" when several of its variants are. */
+  function actionHtml(p) {
+    var lines = S.cart().lines.filter(function (l) { return l.productId === p.id; });
+    if (lines.length === 1) {
+      return '<div class="step" data-vid="' + lines[0].variantId + '">' +
+        '<button type="button" data-step="-1" aria-label="One less">\u2212</button>' +
+        '<span>' + lines[0].qty + ' in bag</span>' +
+        '<button type="button" data-step="1" aria-label="One more">+</button></div>';
+    }
+    if (lines.length > 1) {
+      var n = lines.reduce(function (a, l) { return a + l.qty; }, 0);
+      return '<a class="in-bag" href="/shop/cart">' + n + ' in bag</a>';
+    }
+    return '<button type="button" class="add" data-add="' + p.id + '"' +
+      (p.available ? '' : ' aria-disabled="true"') + '>' + (p.available ? 'Add' : 'Sold out') + '</button>';
+  }
+
+  function repaintActions(root) {
+    (root || document).querySelectorAll('[data-act]').forEach(function (el) {
+      var p = registry[parseInt(el.getAttribute('data-act'), 10)];
+      if (p) el.innerHTML = actionHtml(p);
+    });
   }
 
   /** Delegated tile actions on [container]: the heart saves, and + ADD adds
@@ -77,17 +104,29 @@
         if (onChange) onChange('saved', hp, nowSaved);
         return;
       }
+      var stepBtn = e.target.closest ? e.target.closest('.step [data-step]') : null;
+      if (stepBtn) {
+        e.preventDefault();
+        var vid = parseInt(stepBtn.parentElement.getAttribute('data-vid'), 10);
+        var line = S.cart().lines.filter(function (l) { return l.variantId === vid; })[0];
+        if (!line) return;
+        var next = line.qty + parseInt(stepBtn.getAttribute('data-step'), 10);
+        if (next > line.qty && next > S.qtyCap(line)) { toast('The seller allows max ' + S.qtyCap(line) + ' of this per order'); return; }
+        S.setQuantity(vid, next);
+        if (next <= 0) toast('Removed from bag');
+        return;
+      }
       var add = e.target.closest ? e.target.closest('[data-add]') : null;
       if (add) {
         e.preventDefault();
         if (add.getAttribute('aria-disabled') === 'true') return;
         var tp = registry[parseInt(add.getAttribute('data-add'), 10)];
         if (!tp) return;
-        add.textContent = '\u2026';
+        add.textContent = 'Adding\u2026';
         // Tiles are partial (a price range, no variant ids): read the live
         // product before anything can go in the cart.
         S.product(tp.handle).then(function (live) {
-          add.textContent = '+ Add';
+          add.textContent = 'Add';
           if (!live) { toast('The seller no longer lists this'); return; }
           if (!live.available) { toast('Out of stock'); return; }
           if (live.optionCount > 0 || live.hasChoices) {
@@ -98,7 +137,7 @@
           toast('Added to bag');
           if (onChange) onChange('cart', live, true);
         }).catch(function (err) {
-          add.textContent = '+ Add';
+          add.textContent = 'Add';
           toast(err && err.message ? err.message : 'Something went wrong. Try again.');
         });
       }
@@ -110,7 +149,7 @@
   /** The header back button: browser history when we own it, the shop
    *  (or the homepage, per data-fallback) when we arrived from outside. */
   function bindBack() {
-    var btn = document.querySelector('.site-header .back');
+    var btn = document.querySelector('.back');
     if (!btn) return;
     btn.addEventListener('click', function () {
       var cameFromHere = document.referrer.indexOf(location.origin) === 0;
@@ -125,7 +164,7 @@
   /** The header search: the vendor's own suggestions as you type, the full
    *  results page on Enter. One implementation for every page. */
   function bindSearch() {
-    var form = document.querySelector('.site-header .hsearch');
+    var form = document.querySelector('.hsearch');
     if (!form) return;
     var input = form.querySelector('input');
     var suggEl = form.querySelector('.sugg');
@@ -179,9 +218,41 @@
       badge.hidden = n === 0;
     }
     paint();
-    global.addEventListener('rrt:cart', function (e) { paint(e.detail); });
+    global.addEventListener('rrt:cart', function (e) { paint(e.detail); repaintActions(); paintBagBar(e.detail); });
+    global.addEventListener('storage', function (e) {
+      if (e.key && e.key.indexOf('rrt_store_') === 0) { var st = S.cart(); paint(st); repaintActions(); paintBagBar(st); }
+    });
+    bindBagBar();
     bindBack();
     bindSearch();
+  }
+
+  /** The quick-checkout bar: item count, subtotal and a straight line to
+   *  the bag (where delivery is priced and the seller's checkout opens).
+   *  Not shown on the bag page itself. */
+  var bagbar = null;
+  function bindBagBar() {
+    if (bagbar || document.body.getAttribute('data-page') === 'cart') return;
+    bagbar = document.createElement('div');
+    bagbar.className = 'bagbar';
+    bagbar.setAttribute('role', 'region');
+    bagbar.setAttribute('aria-label', 'Your bag');
+    bagbar.innerHTML = '<div class="bb-t" aria-live="polite"></div>' +
+      '<a class="bb-view" href="/shop/cart">View bag</a>' +
+      '<a class="bb-go" href="/shop/cart?go=1">Checkout \u2192</a>';
+    document.body.appendChild(bagbar);
+    paintBagBar();
+  }
+  function paintBagBar(state) {
+    if (!bagbar) return;
+    state = state || S.cart();
+    var on = state.count > 0;
+    bagbar.classList.toggle('on', on);
+    document.body.classList.toggle('has-bagbar', on);
+    if (on) {
+      bagbar.querySelector('.bb-t').innerHTML = '<b>' + state.count + (state.count === 1 ? ' item' : ' items') +
+        '</b> \u00b7 ' + money(state.subtotalPaise) + ' <span style="opacity:.7">+ delivery</span>';
+    }
   }
 
   var toastTimer = null;
@@ -213,7 +284,7 @@
         overlay.className = 'store-closed';
         overlay.innerHTML =
           '<div class="store-closed-card">' +
-          '<div class="store-closed-mark"><span class="material-symbols-outlined" aria-hidden="true">pets</span></div>' +
+          '<div class="store-closed-mark">' + PAW + '</div>' +
           '<strong>The shop is closed right now</strong>' +
           '<span class="store-closed-msg"></span>' +
           '<a class="store-closed-home" href="/">Back to Rapid Response</a>' +
@@ -246,6 +317,7 @@
 
   global.RRTUI = {
     tile: tile,
+    repaintActions: repaintActions,
     bindTiles: bindTiles,
     bindHeader: bindHeader,
     toast: toast,

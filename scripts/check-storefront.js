@@ -96,76 +96,63 @@ for (const file of SHOP_PAGES) {
 }
 
 /* ---------------------------------------------------------------------------
- * Theme guard.
- *
- * The reference layout was a light, paper-white design. Only its geometry was
- * adopted; the palette and typefaces are Rapid Response's own. These checks stop
- * the reference's skin creeping back in via a copy-paste.
+ * Design contract (September 2026): the shop wears the landing page's look.
+ * White ground, ink type, the serif display face, the shared site header
+ * and footer (assets/rr-site.css), and red reserved for sale and errors.
+ * These checks stop the retired dark skin and its typefaces creeping back.
  * ------------------------------------------------------------------------- */
 
-const LIGHT = [
-  [/background:\s*#fff\b(?![^;]*accent)/i, 'white background'],
-  [/#f7f7f5|#ececea|#faf9f7|#f7f6f4|#fafaf7/i, 'off-white wash'],
-  [/color:\s*#(171717|222|444|666|999|bbb|ddd)\b/i, 'light-theme text colour'],
-  [/Times New Roman/i, 'reference serif typeface'],
-  [/font-family:\s*Arial/i, 'reference body typeface'],
-  [/#0a0908|#ff4d3d/i, 'retired dark palette'],
+const RETIRED = [
+  [/#0a0908/i, 'retired dark ground'],
+  [/Barlow/i, 'retired Barlow typeface'],
+  [/JetBrains/i, 'retired mono typeface'],
+  [/class="site-header"/, 'retired shop-only header'],
 ];
-
 for (const file of ['assets/shop.css', ...SHOP_PAGES]) {
   const s = fs.readFileSync(path.join(WEB, file), 'utf8');
-  const hits = LIGHT.filter(([re]) => re.test(s)).map(([, name]) => name);
+  const hits = RETIRED.filter(([re]) => re.test(s)).map(([, name]) => name);
   if (hits.length) {
     console.log(`  FAIL  ${file}  -> design contract broken: ${hits.join('; ')}`);
     failed++;
   }
 }
+for (const file of SHOP_PAGES) {
+  const s = fs.readFileSync(path.join(WEB, file), 'utf8');
+  const miss = [];
+  if (!s.includes('/assets/rr-site.css')) miss.push('shared chrome stylesheet');
+  if (!s.includes('<!-- rr:header -->')) miss.push('shared header');
+  if (!s.includes('<!-- rr:footer -->')) miss.push('shared footer');
+  if (!s.includes('class="hsearch find"')) miss.push('shop search');
+  if (!s.includes('id="bagCount"')) miss.push('bag count');
+  if (miss.length) { console.log(`  FAIL  ${file}  -> missing ${miss.join('; ')}`); failed++; }
+}
 
-/* ---------------------------------------------------------------------------
- * Layout fidelity.
- *
- * The geometry IS the thing that was taken from the reference, so it is worth
- * asserting rather than assuming. If a future change drifts the grid, this says
- * so before it ships.
- * ------------------------------------------------------------------------- */
-
-// The app's palette (client/lib/core/theme/app_theme.dart), required
-// verbatim so phone and web can never drift apart.
 const PALETTE = [
-  [/#e52222/i, 'app red'],
-  [/#111111/i, 'app black'],
-  [/#ffffff/i, 'pure white ground'],
-  [/#e2e2e2/i, 'app border grey'],
-  [/#16a34a/i, 'app success green'],
+  [/#111111/i, 'ink'],
+  [/#ffffff/i, 'white ground'],
+  [/#e52222/i, 'sale and error red'],
+  [/#e3e3e3/i, 'hairline grey'],
+  [/Marcellus/, 'landing display serif'],
 ];
 
 const GEOMETRY = [
-  // The header is the landing page's bar, so the logo sits at the exact
-  // position it holds on the homepage: 60px tall (68px from 768px up),
-  // 20/40px side padding. The grids below stay on the reference contract.
-  [/\.site-header \{\s*\n\s*height:\s*60px/, 'landing header height 60px'],
-  [/height:\s*68px/, 'landing header height 68px at 768px'],
-  [/max\(40px, env\(safe-area-inset-left\)\)/, 'landing header 40px left offset'],
-  [/width:\s*85%/, '85% content width'],
   [/grid-template-columns:\s*repeat\(5, minmax\(0, 1fr\)\)/, 'five-column product grid'],
   [/grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/, 'four columns at 1400px'],
-  [/column-gap:\s*32px/, '32px column gutter'],
-  [/row-gap:\s*56px/, '56px row gutter'],
-  [/aspect-ratio:\s*1 \/ 1/, 'square product images'],
-  [/object-fit:\s*contain/, 'contain-fit images'],
-  [/max-width:\s*1100px/, '1100px breakpoint'],
-  [/max-width:\s*760px/, '760px breakpoint'],
   [/grid-template-columns:\s*repeat\(3, 1fr\)/, 'three columns at 1100px'],
   [/grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/, 'two columns at 760px'],
+  [/aspect-ratio:\s*1 \/ 1/, 'square product images'],
+  [/object-fit:\s*contain/, 'contain-fit images'],
+  [/\.bagbar/, 'quick-checkout bag bar'],
+  [/position:\s*sticky; top:\s*var\(--hdr\)/, 'sticky shop search bar'],
 ];
 
 const cssOnly = fs.readFileSync(path.join(WEB, 'assets', 'shop.css'), 'utf8');
 const missingColours = PALETTE.filter(([re]) => !re.test(cssOnly)).map(([, name]) => name);
 if (missingColours.length) {
-  console.log(`  FAIL  app palette drifted -> missing: ${missingColours.join('; ')}`);
+  console.log(`  FAIL  palette drifted -> missing: ${missingColours.join('; ')}`);
   failed++;
 } else {
-  console.log(`  ok    app palette intact (${PALETTE.length} colour checks)`);
+  console.log(`  ok    palette intact (${PALETTE.length} checks)`);
 }
 const lost = GEOMETRY.filter(([re]) => !re.test(cssOnly)).map(([, name]) => name);
 if (lost.length) {

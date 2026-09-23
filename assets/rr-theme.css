@@ -1,0 +1,62 @@
+/* Rapid Response - one look for the older content pages.
+   These pages were built on a shared token set (--bg, --text, --accent,
+   --display ...). Re-pointing the tokens gives them the landing page's skin
+   without touching their markup or scripts: white ground, black type,
+   hairline borders, black buttons, the serif display face. :root:root
+   outranks both :root and html.light in the page's own stylesheet. */
+
+:root:root,html.light:root{
+  --bg:#fff;--bg-soft:#fff;--bg-card:#fafafa;--bg-card-h:#f4f4f4;--w:#111;
+  --text:#111;--text-mid:#222;--text-low:#5f6368;--text-dim:#80868b;--text-faint:#11111129;
+  --b:#e3e3e3;--border:#e3e3e3;--border-strong:#cfcfcf;--border-focus:#111;
+  --accent:#111;--accent-h:#333;--accent-on-dark:#111;--accent-soft:#0000000a;--accent-soft2:#00000006;
+  --sos:#e52222;--sos-soft:#e522220f;--net:#4a453f;
+  --display:"Marcellus","Trajan Pro","Optima",Georgia,serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari",system-ui,sans-serif;
+  --mono:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  color-scheme:light;
+}
+html.rr-themed{font-synthesis:none;background:#fff}
+html.rr-themed body{background:#fff;color:#111;font-family:var(--sans)}
+html[lang=hi].rr-themed body{font-family:"Noto Sans Devanagari",var(--sans)}
+
+/* The old chrome stays in the DOM (its scripts still find their elements)
+   but is not shown: the shared header and footer replace it. */
+html.rr-themed body>header,html.rr-themed #hdr,html.rr-themed #modeBtn,html.rr-themed .mode-b,
+html.rr-themed body>footer{display:none!important}
+
+/* Display type: the serif, never faux-bold, never cramped. */
+html.rr-themed :is(h1,h2,h3,.h1,.h2,.hero-h,.sec-title,.title){font-weight:400;letter-spacing:.005em}
+html.rr-themed h1{line-height:1.08}
+
+/* Dark photo heroes become plain white heroes: the page reads like the
+   landing, text first. */
+html.rr-themed :is([class*=hero] img,[class*=hero] video,[class*=hero] picture,.hero-bg,.hero-img,.hero-media,.p-grain,.grain,[class*=grain],[class*=vignette],[class*=scrim],[class*=overlay]:not(dialog):not([role=dialog])){display:none!important}
+html.rr-themed [class*=hero]{background:#fff!important;background-image:none!important;min-height:0!important}
+html.rr-themed [class*=hero] :is(h1,h2,p,span){text-shadow:none!important}
+
+/* Accents that were red on black read as ink on white. */
+html.rr-themed ::selection{background:#111;color:#fff}
+html.rr-themed a:focus-visible,html.rr-themed button:focus-visible{outline:2px solid #111;outline-offset:3px}
+
+/* Pages padded their content under a fixed 64px header that is now gone. */
+html.rr-themed body{padding-top:0!important}
+
+/* Hero text that was hard-coded white for a photo behind it. */
+html.rr-themed :is(#top .title,.disclaim strong,.page .h1,.page .lead strong,.hero h1,.hero .eyebrow){color:#111!important}
+html.rr-themed :is(#top .lede,.disclaim,.page .lead,.hero p,.hero .hero-meta,#top .meta-line){color:#5f6368!important}
+html.rr-themed #top .meta-line .sep{color:#cfcfcf!important}
+html.rr-themed .disclaim a{color:#111!important;text-decoration:underline}
+html.rr-themed .page .eye{color:#5f6368}
+html.rr-themed .hero .btn-ghost{color:#111;border-color:#111;background:#fff;backdrop-filter:none}
+html.rr-themed .hero .btn-ghost:hover{color:#fff;background:#111;border-color:#111}
+html.rr-themed :is(.hero-media,.hero-scrim){display:none!important}
+html.rr-themed #top .crumb,html.rr-themed #top .crumb span{color:#5f6368!important}
+html.rr-themed #top .crumb .dot{background:#111!important}
+html.rr-themed #top .title .em{color:#111!important}
+
+/* Tops were padded for the old fixed 64px header over a photo; the shared
+   header sits in flow, so the page starts right under it like the landing. */
+html.rr-themed body>.page,html.rr-themed main.page{padding-top:clamp(36px,7vh,72px)!important;min-height:0!important}
+html.rr-themed .hero{padding-top:clamp(40px,8vh,80px)!important}
+html.rr-themed #top{padding-top:clamp(40px,8vh,80px)!important;min-height:0!important}
