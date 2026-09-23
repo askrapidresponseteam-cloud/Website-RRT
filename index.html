@@ -313,7 +313,7 @@ html[lang=hi] .r.rr .t{font-size:16px}
       <div class="menu" id="appMenu">
         <a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a>
         <a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a>
-        <a href="/app-guide" data-i="menuGuide"></a>
+        <a href="/preview" data-i="menuGuide"></a>
       </div>
     </div>
   </nav>
@@ -435,7 +435,7 @@ var secCount={};LAWS.forEach(function(q){secCount[q[1]]=(secCount[q[1]]||0)+1});
 var A={
  android:{h:PLAY,k:"android",dark:1},
  ios:{h:IOS,k:"ios",dark:1},
- guide:{h:"/app-guide",k:"guide"}
+ guide:{h:"/preview",k:"guide"}
 };
 var S={
  sos:{w:"sos emergency injured hit accident bleeding attack van hospital urgent now",a:["android","ios","guide"],r:["ask","network"],
@@ -533,7 +533,7 @@ FAQS.forEach(function(f){
 var LINKS={
  q1:{h:"/know-the-laws#q1",en:["Can my RWA stop me from feeding dogs?","No. Feeding community dogs inside your society is protected. What the law says and what to do next."],hi:["क्या RWA मुझे कुत्तों को खिलाने से रोक सकती है?","नहीं। सोसाइटी के अंदर सामुदायिक कुत्तों को खिलाना संरक्षित है। कानून क्या कहता है और आगे क्या करें।"]},
  q10:{h:"/know-the-laws#q10",en:["Dogs picked up and not returned?","How to get them released back, and what the 19 May 2026 Supreme Court judgment changes."],hi:["कुत्ते उठाए गए, वापस नहीं आए?","उन्हें वापस कैसे लाएँ, और 19 मई 2026 का सुप्रीम कोर्ट फ़ैसला क्या बदलता है।"]},
- guide:{h:"/app-guide",en:["Every screen, before you install","The real screens, not a video. Open any of them and decide for yourself."],hi:["इंस्टॉल से पहले हर स्क्रीन","ये असली स्क्रीन हैं, कोई वीडियो नहीं। कोई भी खोलिए और खुद तय कीजिए।"]},
+ guide:{h:"/preview",en:["Every screen, before you install","The real screens, not a video. Open any of them and decide for yourself."],hi:["इंस्टॉल से पहले हर स्क्रीन","ये असली स्क्रीन हैं, कोई वीडियो नहीं। कोई भी खोलिए और खुद तय कीजिए।"]},
  legal:{h:"/legal-desk",en:["Legal Desk","Know the law, then use it. Complaints, FIRs and notices, step by step."],hi:["लीगल डेस्क","कानून जानिए, फिर इस्तेमाल कीजिए। शिकायत, FIR और नोटिस, कदम-दर-कदम।"]},
  faq:{h:"/faq",en:["FAQ","SOS, registering, districts, rescue teams, location and chat. Questions, answered."],hi:["अक्सर पूछे जाने वाले सवाल","एसओएस, रजिस्ट्रेशन, जिला, रेस्क्यू टीम, लोकेशन और चैट। सवाल, जवाब।"]},
  mail:{h:"mailto:ask@rapid-response.in",en:["Write to us","ask@rapid-response.in. If you can't find what you're looking for, a person reads every message."],hi:["हमें लिखें","ask@rapid-response.in. अगर जवाब न मिले, हर संदेश एक व्यक्ति पढ़ता है।"]}
@@ -685,7 +685,8 @@ document.addEventListener("click",function(e){if(!menu.contains(e.target)&&e.tar
 var PAGES=[
  ["Get the app on Android","एंड्रॉयड पर ऐप","kApp",PLAY,"android download play store install app"],
  ["Get the app on iPhone","आईफोन पर ऐप","kApp",IOS,"iphone ios download app store install"],
- ["App guide: every screen, every feature","ऐप गाइड: हर स्क्रीन","kPage","/app-guide","app guide demo screens how it works features tour"],
+ ["See every screen of the app","ऐप की हर स्क्रीन देखें","kPage","/preview","preview demo mockup screens screenshots tour try how it looks see app"],
+ ["App guide (printable)","ऐप गाइड (प्रिंट)","kPage","/app-guide","app guide pdf print manual features how it works"],
  ["On Record: the public register","ऑन रिकॉर्ड: सार्वजनिक रजिस्टर","kPage","/report","report cruelty register on record cases"],
  ["Legal Desk","लीगल डेस्क","kPage","/legal-desk","legal desk lawyer fir police complaint notice template"],
  ["FAQ","अक्सर पूछे जाने वाले सवाल","kPage","/faq","faq questions help register district government rescue team location gps chat"],

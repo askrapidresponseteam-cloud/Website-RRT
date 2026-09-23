@@ -37,7 +37,7 @@ def header(current='', shop=False):
                  + t('Get the app', 'ऐप पाएँ') + '</button>'
                  f'<div class="rr-menu" id="rrAppMenu"><a href="{PLAY}" rel="noopener">Android - Google Play</a>'
                  f'<a href="{IOS}" rel="noopener">iPhone - App Store</a>'
-                 '<a href="/app-guide" ' + t('See every screen first', 'पहले हर स्क्रीन देखें') + '</a></div></div>')
+                 '<a href="/preview" ' + t('See every screen first', 'पहले हर स्क्रीन देखें') + '</a></div></div>')
     return ('<!-- rr:header -->\n<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in">'
             f'<a class="rr-brand" href="/" aria-label="Rapid Response home">{PAW}<span>Rapid Response</span>{brand_tag}</a>'
             f'<nav class="rr-nav" aria-label="Main">{links}{right}</nav></div></div>\n<!-- /rr:header -->')
