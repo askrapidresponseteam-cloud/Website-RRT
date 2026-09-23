@@ -258,6 +258,31 @@ footer .links{gap:22px}
   footer{flex-direction:column;align-items:center;text-align:center}
   footer .links{display:flex;justify-content:center;gap:14px;font-size:12px}
 }
+
+/* search results, search-engine style */
+.results{max-height:min(560px,64vh)}
+.rh{padding:10px 22px 4px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--low)}
+.r.rs{padding:9px 22px}
+.r.rs .t{font-size:15px}
+.r.rr{display:block;padding:11px 22px}
+.r.rr .c{display:block;font-size:12px;color:var(--low);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r.rr .t{display:block;font-size:17px;color:#1a0dab;white-space:normal;line-height:1.3}
+html[lang=hi] .r.rr .t{font-size:16px}
+.r.rr .s{display:block;font-size:14px;color:#4d5156;line-height:1.5;margin-top:2px}
+.r.rr[aria-selected=true] .t{text-decoration:underline;text-underline-offset:3px}
+.r+.r,.fa+.r{border-top:1px solid #f1f1f1}
+.fa{margin:6px 14px 8px;padding:14px 16px;border:1px solid #dadce0;border-radius:12px;cursor:pointer}
+.fa[aria-selected=true],.fa:hover{border-color:#111;background:#fafafa}
+.fa-k{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--low)}
+.fa-q{font-size:17px;margin:4px 0 6px;color:var(--ink)}
+.fa-a{font-size:15px;color:#202124;margin:0 0 4px}
+.fa-dots{list-style:none;color:var(--low)}
+.fa ul{margin:6px 0 0 18px;padding:0;font-size:14px;color:#4d5156}
+.fa li{margin:2px 0}
+.fa-more{display:inline-block;margin-top:8px;font-size:13.5px;color:#1a0dab}
+.results b{font-weight:600;color:inherit}
+.sh-ul{margin:4px 0 14px 20px;padding:0;color:#333;font-size:16px;max-width:52ch}
+.sh-ul li{margin:6px 0;line-height:1.5}
 </style>
 </head>
 <body>
@@ -307,7 +332,7 @@ footer .links{gap:22px}
   </div>
 
   <p class="learn">
-    <button data-sheet="ask" data-i="lApp"></button><i>·</i><button data-sheet="roles" data-i="lWho"></button><i>·</i><button data-sheet="gap" data-i="lWhy"></button><i>·</i><button data-sheet="promises" data-i="lPro"></button>
+    <button data-sheet="f1" data-i="lApp"></button><i>·</i><button data-sheet="roles" data-i="lWho"></button><i>·</i><button data-sheet="gap" data-i="lWhy"></button><i>·</i><button data-sheet="promises" data-i="lPro"></button>
   </p>
  </div>
 </main>
@@ -349,6 +374,7 @@ var T={
   straight:"Or go straight to",
   qReport:"Report an incident",qSos:"Raise an SOS",qLaws:"Know the laws",qLegal:"Legal Desk",qShop:"Shop",qVet:"For vets",
   foot:"\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.",
+  kFaq:"Common question",paa:"People also ask",answer:"Answer",readAll:"Read the full answer",noHits:"No exact match for",kContact:"Contact",
   footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",otherLang:"हिंदी",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
@@ -365,6 +391,7 @@ var T={
   straight:"या सीधे जाएँ",
   qReport:"घटना रिपोर्ट करें",qSos:"एसओएस भेजें",qLaws:"कानून जानें",qLegal:"लीगल डेस्क",qShop:"शॉप",qVet:"वेट के लिए",
   foot:"\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।",
+  kFaq:"आम सवाल",paa:"लोग यह भी पूछते हैं",answer:"जवाब",readAll:"पूरा जवाब पढ़ें",noHits:"सटीक जवाब नहीं मिला:",kContact:"संपर्क",
   footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",otherLang:"English",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
@@ -439,6 +466,50 @@ var S={
 };
 S.laws.en.l=SECS.map(function(s){return [s[1],secCount[s[0]]+" questions","/know-the-laws#sec-"+s[0]]});
 S.laws.hi.l=SECS.map(function(s){return [s[2],secCount[s[0]]+" सवाल","/know-the-laws#sec-"+s[0]]});
+/* ------------------------------------------------ common questions (RRT) */
+var FAQS=[
+ {id:"f1",w:"what is rrt about rapid response team app network who join largest india",a:["android","ios","guide"],r:["f12","f2","f3"],
+  en:{t:"What is RRT?",b:[["p","RRT is India's Largest Animal Welfare Rapid Response Team."],["ul",["A location-based network connecting people who care about animals.","Built for SOS-based, local, rapid response.","Anyone can join: animal lovers, feeders, rescuers, caregivers, volunteers and more.","Veterinarians and animal-care businesses will also be onboarded shortly."]],["p","You don't have to be a professional rescuer. If you care about animals and are willing to help when you can, you belong on RRT."]]},
+  hi:{t:"RRT क्या है?",b:[["p","RRT भारत की सबसे बड़ी पशु कल्याण रैपिड रिस्पॉन्स टीम है।"],["ul",["जानवरों की परवाह करने वालों को जोड़ने वाला लोकेशन-आधारित नेटवर्क।","एसओएस पर आधारित, स्थानीय, तेज़ मदद के लिए बना।","कोई भी जुड़ सकता है: पशु प्रेमी, फीडर, रेस्क्यूअर, देखभाल करने वाले, वॉलंटियर और अन्य।","पशु चिकित्सक और पशु-देखभाल व्यवसाय भी जल्द ही जुड़ेंगे।"]],["p","आपको पेशेवर रेस्क्यूअर होने की ज़रूरत नहीं। अगर आप जानवरों की परवाह करते हैं और जब हो सके मदद के लिए तैयार हैं, तो RRT आपके लिए है।"]]}},
+ {id:"f2",w:"whatsapp group different difference why better messages buried lost routing",a:["android","ios"],r:["f1","f6"],
+  en:{t:"Why is RRT different from a WhatsApp group?",b:[["p","RRT is built specifically for animal welfare response."],["ul",["WhatsApp groups can have hundreds or thousands of members.","Important messages can quickly get buried or lost.","Everyone may receive messages that are irrelevant to where they are.","There is no automatic district-based routing.","It can be difficult to know who is actually nearby and able to help."]],["p","RRT is objective-focused: the right alert goes to the relevant local network."],["p","The goal: the right alert, to the right people, in the right place, when it matters."]]},
+  hi:{t:"RRT व्हाट्सऐप ग्रुप से अलग कैसे है?",b:[["p","RRT खास तौर पर पशु कल्याण में मदद के लिए बना है।"],["ul",["व्हाट्सऐप ग्रुप में सैकड़ों या हज़ारों सदस्य हो सकते हैं।","ज़रूरी संदेश जल्दी दब जाते हैं या खो जाते हैं।","सबको ऐसे संदेश मिलते हैं जो उनकी जगह से जुड़े नहीं होते।","ज़िले के हिसाब से अपने-आप संदेश भेजने की व्यवस्था नहीं है।","यह जानना मुश्किल होता है कि सच में कौन पास है और मदद कर सकता है।"]],["p","RRT का मकसद साफ़ है: सही अलर्ट, संबंधित स्थानीय नेटवर्क तक।"],["p","लक्ष्य: सही अलर्ट, सही लोगों तक, सही जगह, सही समय पर।"]]}},
+ {id:"f3",w:"directory members phone numbers privacy private contacts see browse visible",a:["android","ios"],r:["f8","f4"],
+  en:{t:"Is RRT a directory of members and their phone numbers?",b:[["p","No. RRT is privacy first."],["ul",["Members cannot browse or see other members' phone numbers.","Your number is not visible simply because you joined RRT.","Your number becomes visible only when you raise an active SOS.","People in your district who receive that SOS will see your name, phone number and location.","They can use this information to coordinate help with you.","Responders cannot see each other's phone numbers either.","If a responder is free and able to help, they can contact the person who raised the SOS.","If they cannot help, they do not need to contact anyone.","When the SOS ends, your number immediately disappears from the active response context."]]]},
+  hi:{t:"क्या RRT सदस्यों और उनके फ़ोन नंबरों की डायरेक्टरी है?",b:[["p","नहीं। RRT में निजता सबसे पहले है।"],["ul",["सदस्य दूसरे सदस्यों के फ़ोन नंबर नहीं देख सकते।","सिर्फ़ जुड़ने से आपका नंबर दिखाई नहीं देता।","आपका नंबर सिर्फ़ तब दिखता है जब आप सक्रिय एसओएस भेजते हैं।","आपके ज़िले में वह एसओएस पाने वाले लोग आपका नाम, फ़ोन नंबर और लोकेशन देखेंगे।","वे इस जानकारी से आपके साथ मदद का तालमेल कर सकते हैं।","मदद करने वाले एक-दूसरे का नंबर भी नहीं देख सकते।","अगर कोई खाली है और मदद कर सकता है, तो वह एसओएस भेजने वाले से संपर्क कर सकता है।","अगर वे मदद नहीं कर सकते, तो उन्हें किसी से संपर्क करने की ज़रूरत नहीं।","एसओएस खत्म होते ही आपका नंबर तुरंत सक्रिय मदद से हट जाता है।"]]]}},
+ {id:"f4",w:"track tracking location continuously live gps follow surveillance privacy movements",a:["android","ios"],r:["f9","f7"],
+  en:{t:"Does RRT continuously track my location?",b:[["p","No. Privacy is fundamental to RRT."],["ul",["RRT does not continuously track where you are.","Your live movements are not broadcast to other members.","Even during an active SOS, RRT does not continuously track your live location.","When you raise an SOS, your location at that time is shared with the relevant responders for coordination.","Once the SOS ends, that active response context ends."]],["p","RRT uses location for response, not surveillance."]]},
+  hi:{t:"क्या RRT लगातार मेरी लोकेशन ट्रैक करता है?",b:[["p","नहीं। RRT में निजता बुनियादी है।"],["ul",["RRT लगातार यह ट्रैक नहीं करता कि आप कहाँ हैं।","आपकी लाइव आवाजाही दूसरे सदस्यों को नहीं दिखाई जाती।","सक्रिय एसओएस के दौरान भी RRT आपकी लाइव लोकेशन लगातार ट्रैक नहीं करता।","एसओएस भेजते समय की आपकी लोकेशन तालमेल के लिए संबंधित मदद करने वालों से साझा होती है।","एसओएस खत्म होते ही वह सक्रिय मदद भी खत्म हो जाती है।"]],["p","RRT लोकेशन का इस्तेमाल मदद के लिए करता है, निगरानी के लिए नहीं।"]]}},
+ {id:"f5",w:"district assigned belong change city travel automatic which area move",a:["android","ios"],r:["f6","f7"],
+  en:{t:"How does RRT know which district I belong to?",b:[["p","Your district is automatically assigned based on where you are when you use the app."],["p","For example:"],["ul",["You are in Bengaluru and open RRT, and you are assigned to the relevant Bengaluru district.","A few days later, you travel to Mumbai and open RRT, and you are assigned to the relevant Mumbai district.","You don't need to manually change your district."]]]},
+  hi:{t:"RRT को कैसे पता चलता है कि मैं किस ज़िले में हूँ?",b:[["p","ऐप इस्तेमाल करते समय आप जहाँ हैं, उसी के आधार पर आपका ज़िला अपने-आप तय होता है।"],["p","उदाहरण के लिए:"],["ul",["आप बेंगलुरु में हैं और RRT खोलते हैं, तो आप संबंधित बेंगलुरु ज़िले में जुड़ जाते हैं।","कुछ दिन बाद आप मुंबई जाते हैं और RRT खोलते हैं, तो आप संबंधित मुंबई ज़िले में जुड़ जाते हैं।","आपको ज़िला खुद बदलने की ज़रूरत नहीं।"]]]}},
+ {id:"f6",w:"sos alerts other districts receive notifications irrelevant another city routed",a:["android","ios"],r:["f5","f7"],
+  en:{t:"Will I receive SOS alerts from other districts?",b:[["p","No."],["ul",["SOS alerts are routed to the relevant district.","If you are in Mumbai, you won't receive SOS alerts from Bengaluru.","This prevents irrelevant alerts and ensures the people receiving an alert are actually in a position to potentially help.","The network follows your current location without continuously tracking you."]]]},
+  hi:{t:"क्या मुझे दूसरे ज़िलों के एसओएस अलर्ट मिलेंगे?",b:[["p","नहीं।"],["ul",["एसओएस अलर्ट संबंधित ज़िले तक ही भेजे जाते हैं।","अगर आप मुंबई में हैं, तो आपको बेंगलुरु के एसओएस अलर्ट नहीं मिलेंगे।","इससे बेकार अलर्ट नहीं आते और अलर्ट उन्हीं को मिलता है जो सच में मदद की स्थिति में हो सकते हैं।","नेटवर्क आपको लगातार ट्रैक किए बिना आपकी मौजूदा लोकेशन के साथ चलता है।"]]]}},
+ {id:"f7",w:"why need location permission gps local help nearby access",a:["android","ios"],r:["f4","f9"],
+  en:{t:"Why does RRT need my location?",b:[["p","Because animal emergencies need local help."],["ul",["Someone a few kilometres away may be able to reach an animal quickly.","Someone hundreds of kilometres away cannot.","RRT automatically routes the SOS to the relevant local network.","This keeps alerts relevant, actionable and focused."]]]},
+  hi:{t:"RRT को मेरी लोकेशन क्यों चाहिए?",b:[["p","क्योंकि पशु आपात स्थिति में स्थानीय मदद चाहिए।"],["ul",["कुछ किलोमीटर दूर का व्यक्ति जानवर तक जल्दी पहुँच सकता है।","सैकड़ों किलोमीटर दूर का व्यक्ति नहीं पहुँच सकता।","RRT एसओएस को अपने-आप संबंधित स्थानीय नेटवर्क तक भेजता है।","इससे अलर्ट प्रासंगिक, उपयोगी और केंद्रित रहते हैं।"]]]}},
+ {id:"f8",w:"phone number visible when shown see mobile contact exactly privacy",a:["android","ios"],r:["f3","f9"],
+  en:{t:"When exactly is my phone number visible?",b:[["p","Only while you have an active SOS."],["p","Your number is not visible:"],["ul",["When you join RRT.","While you are simply using the app.","When you are not raising an SOS.","After your SOS ends.","To other responders who receive the same SOS."]],["p","During an active SOS, the relevant recipients see your name, phone number and location so they can coordinate with you if they are able to help."]]},
+  hi:{t:"मेरा फ़ोन नंबर ठीक कब दिखाई देता है?",b:[["p","सिर्फ़ तब, जब आपका एसओएस सक्रिय हो।"],["p","आपका नंबर इन हालात में नहीं दिखता:"],["ul",["जब आप RRT से जुड़ते हैं।","जब आप बस ऐप इस्तेमाल कर रहे होते हैं।","जब आप एसओएस नहीं भेज रहे होते।","आपका एसओएस खत्म होने के बाद।","वही एसओएस पाने वाले दूसरे मदद करने वालों को।"]],["p","सक्रिय एसओएस के दौरान संबंधित लोग आपका नाम, फ़ोन नंबर और लोकेशन देखते हैं, ताकि मदद कर सकें तो आपसे तालमेल कर सकें।"]]}},
+ {id:"f9",w:"share live location responders broadcast update movements sos",a:["android","ios"],r:["f4","f8"],
+  en:{t:"Does RRT share my live location with responders?",b:[["p","No."],["ul",["RRT shares your location when you raise an SOS.","It does not continuously broadcast your movements.","It does not continuously update your location for responders.","The purpose is to tell responders where help is needed, not to track the person seeking help."]]]},
+  hi:{t:"क्या RRT मेरी लाइव लोकेशन मदद करने वालों से साझा करता है?",b:[["p","नहीं।"],["ul",["RRT आपकी लोकेशन तब साझा करता है जब आप एसओएस भेजते हैं।","यह आपकी आवाजाही लगातार प्रसारित नहीं करता।","यह मदद करने वालों के लिए आपकी लोकेशन लगातार अपडेट नहीं करता।","मकसद यह बताना है कि मदद कहाँ चाहिए, मदद माँगने वाले को ट्रैक करना नहीं।"]]]}},
+ {id:"f10",w:"vet veterinarian find doctor clinic hospital near nearby radius km search animal doctor",a:[{h:"/vet",dark:1,en:"Vets: apply to join",hi:"वेट: जुड़ने के लिए आवेदन"},"android"],r:["vets","f1"],
+  en:{t:"Can I find a veterinarian through RRT?",b:[["p","Yes."],["ul",["RRT already has location-based vet discovery.","It starts by searching within a 5 km radius.","If no suitable result is found, the search expands progressively.","It can expand up to 25 km.","Veterinarians and animal-care businesses will also be onboarded onto the RRT network shortly."]]]},
+  hi:{t:"क्या मैं RRT से पशु चिकित्सक ढूँढ सकता हूँ?",b:[["p","हाँ।"],["ul",["RRT में पहले से लोकेशन-आधारित वेट खोज है।","यह 5 किमी के दायरे में खोज से शुरू होती है।","सही नतीजा न मिले तो दायरा धीरे-धीरे बढ़ता है।","यह 25 किमी तक जा सकता है।","पशु चिकित्सक और पशु-देखभाल व्यवसाय भी जल्द RRT नेटवर्क से जुड़ेंगे।"]]]}},
+ {id:"f11",w:"government helpline department numbers municipal call authorities complaint why not",a:["android","ios"],r:["laws","f1"],
+  en:{t:"Why not just use government helplines or department numbers?",b:[["p","Government departments can be important, but:"],["ul",["Contact numbers may not always be current.","Answer rates can be low.","Animal-related complaints can sometimes take longer to receive a response.","A phone number alone does not create a local response network."]],["p","RRT is designed to connect you with people who may actually be nearby and able to help."]]},
+  hi:{t:"सरकारी हेल्पलाइन या विभाग के नंबर ही क्यों न इस्तेमाल करें?",b:[["p","सरकारी विभाग ज़रूरी हो सकते हैं, लेकिन:"],["ul",["संपर्क नंबर हमेशा अपडेट नहीं होते।","कॉल का जवाब कम मिलता है।","पशु से जुड़ी शिकायतों पर कभी-कभी जवाब आने में देर लगती है।","सिर्फ़ एक फ़ोन नंबर से स्थानीय मदद का नेटवर्क नहीं बनता।"]],["p","RRT आपको उन लोगों से जोड़ने के लिए बना है जो सच में पास हों और मदद कर सकें।"]]}},
+ {id:"f12",w:"who should join sign up register volunteer rescuer feeder transport shelter foster business",a:["android","ios"],r:["roles","f1"],
+  en:{t:"Who should join RRT?",b:[["p","Anyone who cares about animals. You could be:"],["ul",["An animal lover","A feeder or caregiver","A rescuer or volunteer","A shelter or foster caregiver","Someone willing to help with transport","A veterinarian","An animal-care business","Or simply someone willing to help when you can"]],["p","You don't have to respond to every SOS. The more animal lovers who join in every district, the stronger the local response network becomes."],["p","Join RRT. Right alert. Right people. Right place. Right when it matters."]]},
+  hi:{t:"RRT से किसे जुड़ना चाहिए?",b:[["p","हर वो व्यक्ति जो जानवरों की परवाह करता है। आप हो सकते हैं:"],["ul",["एक पशु प्रेमी","एक फीडर या देखभाल करने वाले","एक रेस्क्यूअर या वॉलंटियर","शेल्टर या फोस्टर देखभाल करने वाले","परिवहन में मदद को तैयार कोई व्यक्ति","एक पशु चिकित्सक","एक पशु-देखभाल व्यवसाय","या बस कोई जो जब हो सके मदद को तैयार हो"]],["p","आपको हर एसओएस का जवाब देना ज़रूरी नहीं। हर ज़िले में जितने ज़्यादा पशु प्रेमी जुड़ेंगे, स्थानीय नेटवर्क उतना मज़बूत होगा।"],["p","RRT से जुड़िए। सही अलर्ट। सही लोग। सही जगह। सही समय पर।"]]}}
+];
+FAQS.forEach(function(f){
+  S[f.id]={w:f.w,a:f.a,r:f.r,faq:1,
+    en:{k:"Common question",t:f.en.t,b:f.en.b},
+    hi:{k:"आम सवाल",t:f.hi.t,b:f.hi.b}};
+});
 
 /* ------------------------------------------------------------- tabs */
 var LINKS={
@@ -479,6 +550,7 @@ function sheetHtml(id){
   var s=S[id],x=s[lang],d=T[lang],h="";
   h+='<h2 id="shT">'+esc(x.t)+'</h2>';
   (x.p||[]).forEach(function(p,i){h+='<p'+(id==="gap"&&i===1?' class="em"':'')+'>'+esc(p)+'</p>'});
+  (x.b||[]).forEach(function(b){h+=b[0]==="p"?'<p>'+esc(b[1])+'</p>':'<ul class="sh-ul">'+b[1].map(function(li){return '<li>'+esc(li)+'</li>'}).join("")+'</ul>'});
   if(x.l){
     if(x.lt)h+='<p class="sh-lt">'+esc(x.lt)+'</p>';
     h+='<div class="sh-list">'+x.l.map(function(i){
@@ -605,60 +677,177 @@ var PAGES=[
  ["Join as a verified vet","वेट के रूप में जुड़ें","kPage","/vet","vet veterinarian doctor register verified"],
  ["Write to us: ask@rapid-response.in","हमें लिखें","kPage","mailto:ask@rapid-response.in","contact email write mail support help"]
 ];
+/* -------------------------------------------------------------- search
+   Ranked like a search engine, not a filter: every document is scored on
+   the words it shares with the query (rarer words count more, titles more
+   than bodies), with light stemming, synonyms, prefix matching on the word
+   being typed, and a bonus for covering the whole question. Results show a
+   title, a breadcrumb and the best-matching sentence; a strong match on a
+   common question is answered right in the list. */
+var STOP={};("a an the is are am be do does did can could i im i'm me my mine you your to of in on at for and or it its this that with as by from which whom will would should shall there their them they we our us about get got just so if not no yes any rrt rapid response team app").split(" ").forEach(function(w){STOP[w]=1});
+var SYN={
+  whatsapp:["whatsapp","group"],group:["group","whatsapp"],
+  number:["phone"],numbers:["phone"],mobile:["phone"],contact:["phone","contact"],phone:["phone"],call:["phone","call"],
+  track:["track","location"],tracking:["track","location"],tracked:["track","location"],gps:["location","gps"],live:["live","location"],
+  location:["location"],where:["location"],
+  vet:["vet"],vets:["vet"],veterinarian:["vet"],veterinary:["vet"],doctor:["vet"],clinic:["vet"],hospital:["vet","hospital"],
+  private:["privacy","visible"],privacy:["privacy","visible"],safe:["privacy"],visible:["visible","privacy"],see:["visible","see"],
+  government:["government"],govt:["government"],helpline:["government","helpline"],municipal:["government","municipal"],mcd:["government","municipal"],department:["government"],
+  join:["join"],signup:["join"],register:["join","register"],volunteer:["join","volunteer"],
+  district:["district"],city:["district","city"],area:["district"],
+  alert:["alert","sos"],alerts:["alert","sos"],notification:["alert"],notifications:["alert"],
+  emergency:["sos","emergency"],injured:["sos","injured"],urgent:["sos"],accident:["sos","hit"],
+  feed:["feeding","feed"],feeding:["feeding","feed"],feeder:["feeder","feeding"],
+  dog:["dog","dogs"],dogs:["dog","dogs"],cruelty:["cruelty","report"],abuse:["cruelty","report"],
+  cost:["free"],price:["free","price"],paid:["free"],free:["free"],
+  "एसओएस":["sos"],"वेट":["vet"],"डॉक्टर":["vet"],"लोकेशन":["location"],"नंबर":["phone"],"फ़ोन":["phone"],"ज़िला":["district"],"जिला":["district"],"व्हाट्सऐप":["whatsapp"]
+};
+function stem(w){
+  if(/[\u0900-\u097F]/.test(w)||w.length<5)return w;
+  return w.replace(/(ing|ers|ies|ied|ed|es|s)$/,function(m){return m==="ies"||m==="ied"?"y":""});
+}
+function toksAll(s){return String(s).toLowerCase().replace(/[’']/g,"").split(/[^a-z0-9\u0900-\u097F]+/).filter(Boolean)}
+function toks(s){
+  return String(s).toLowerCase().replace(/[’']/g,"").split(/[^a-z0-9\u0900-\u097F]+/).filter(function(w){return w&&!STOP[w]});
+}
+function expand(w){
+  var out=[stem(w)];(SYN[w]||SYN[stem(w)]||[]).forEach(function(x){out.push(stem(x))});return out;
+}
+function bag(s){var m={};toksAll(s).forEach(function(w){w=stem(w);m[w]=(m[w]||0)+1});return m}
+
 var IDX=[];
+function addDoc(d){
+  d.T=bag(d.t+" "+(d.th||""));d.K=bag(d.w||"");d.B=bag(d.body||"");
+  d.len=Object.keys(d.B).length+1;IDX.push(d);
+}
+function blocksText(x){
+  var out=[];(x.b||[]).forEach(function(b){if(b[0]==="p")out.push(b[1]);else out=out.concat(b[1])});
+  return out.concat(x.p||[]).concat((x.l||[]).map(function(i){return i[0]+". "+i[1]}));
+}
 Object.keys(S).forEach(function(id){
   var e=S[id].en,h=S[id].hi;
-  var txt=function(x){return [x.t,x.k].concat(x.p||[]).concat((x.l||[]).map(function(i){return i[0]+" "+i[1]})).join(" ")};
-  IDX.push({t:e.t,th:h.t,k:"kInfo",u:"#s-"+id,w:(e.t+" "+S[id].w).toLowerCase(),body:(txt(e)+" "+txt(h)).toLowerCase(),boost:5});
+  addDoc({id:id,t:e.t,th:h.t,k:S[id].faq?"kFaq":"kInfo",u:"#s-"+id,w:S[id].w,
+    sen:blocksText(e),shi:blocksText(h),body:blocksText(e).join(" ")+" "+blocksText(h).join(" ")+" "+(e.k||""),boost:S[id].faq?1.4:1.2});
 });
-PAGES.forEach(function(p){IDX.push({t:p[0],th:p[1],k:p[2],u:p[3],w:(p[0]+" "+p[4]).toLowerCase(),body:p[1],boost:3})});
-SECS.forEach(function(s){IDX.push({t:"Laws: "+s[1],th:"कानून: "+s[2],k:"kLaw",u:"/know-the-laws#sec-"+s[0],w:(s[1]+" "+s[3]).toLowerCase(),body:s[2],boost:2})});
+PAGES.forEach(function(p){addDoc({t:p[0],th:p[1],k:p[2],u:p[3],w:p[4],sen:[],shi:[],body:"",boost:1})});
+SECS.forEach(function(s){addDoc({t:"Laws: "+s[1],th:"कानून: "+s[2],k:"kLaw",u:"/know-the-laws#sec-"+s[0],w:s[3],sen:[],shi:[],body:"",boost:.9})});
 LAWS.forEach(function(q){var s=SECS.filter(function(x){return x[0]===q[1]})[0];
-  IDX.push({t:q[2],th:q[2],k:"kLaw",u:"/know-the-laws#q"+q[0],w:(q[2]+" "+(s?s[3]:"")).toLowerCase(),body:"",boost:0})});
+  addDoc({t:q[2],th:q[2],k:"kLaw",u:"/know-the-laws#q"+q[0],w:s?s[3]:"",sen:[],shi:[],body:"",boost:.8})});
 
-var EXPLORE=["sos","ask","report","laws","roles","gap","promises","shop"];
-var q=$("q"),box=$("results"),hits=[],sel=0;
-function score(it,terms){
-  var s=0;
-  for(var i=0;i<terms.length;i++){
-    var t=terms[i],p=it.w.indexOf(t);
-    if(p>=0){s+=(p===0?6:(it.w.charAt(p-1)===" "?4:1));continue}
-    if((it.th||"").toLowerCase().indexOf(t)>=0||(it.body||"").indexOf(t)>=0){s+=2;continue}
-    return 0;
-  }
-  return s+it.boost;
+var DF={};IDX.forEach(function(d){var seen={};[d.T,d.K,d.B].forEach(function(m){Object.keys(m).forEach(function(w){seen[w]=1})});Object.keys(seen).forEach(function(w){DF[w]=(DF[w]||0)+1})});
+var VOCAB=Object.keys(DF),N=IDX.length;
+function idf(w){return Math.log(1+(N-(DF[w]||0)+.5)/((DF[w]||0)+.5))}
+
+function field(m,w,prefix){
+  if(m[w])return m[w];
+  if(prefix&&w.length>=2){var n=0;for(var k in m){if(k.indexOf(w)===0)n+=m[k]}return n*.8}
+  return 0;
 }
-function search(v){
-  var terms=v.toLowerCase().trim().split(/\s+/).filter(Boolean);
-  return IDX.map(function(it){return {it:it,s:score(it,terms)}}).filter(function(x){return x.s>0})
-    .sort(function(a,b){return b.s-a.s}).slice(0,7).map(function(x){return x.it});
+function rank(v){
+  var raw=toks(v);if(!raw.length)raw=toksAll(v);
+  if(!raw.length)return [];
+  var endsWord=/\s$/.test(v);
+  var groups=raw.map(function(w,i){return {alts:expand(w),prefix:i===raw.length-1&&!endsWord}});
+  var phrase=String(v).toLowerCase().trim();
+  var scored=[];
+  IDX.forEach(function(d){
+    var s=0,covered=0;
+    groups.forEach(function(g){
+      var best=0;
+      g.alts.forEach(function(w,ai){
+        var wt=ai===0?1:.7,tf=3*field(d.T,w,g.prefix)+2*field(d.K,w,g.prefix)+field(d.B,w,g.prefix);
+        if(tf>0){var x=wt*idf(w)*(tf*2.2)/(tf+1.2*(.25+.75*d.len/40));if(x>best)best=x}
+      });
+      if(best>0){covered++;s+=best}
+    });
+    if(!covered)return;
+    var cov=covered/groups.length;
+    s*=(.35+.65*cov*cov);
+    var tl=(d.t+" "+(d.th||"")).toLowerCase().replace(/[?.!]/g,"").trim();
+    if(tl.indexOf(phrase)>=0&&phrase.length>3)s*=1.6;
+    if(d.t.toLowerCase().replace(/[?.!]/g,"")===phrase||(d.th||"")===phrase)s*=2.2;
+    var inTitle=groups.every(function(g){return g.alts.some(function(w){return field(d.T,w,g.prefix)>0})});
+    if(inTitle)s*=1.5;
+    s*=d.boost;
+    scored.push({d:d,s:s,cov:cov});
+  });
+  scored.sort(function(a,b){return b.s-a.s});
+  return scored;
+}
+/* The sentence of a document that shares most words with the query. */
+function snippet(d,v){
+  var sens=(lang==="hi"&&d.shi&&d.shi.length)?d.shi:d.sen;
+  if(!sens||!sens.length)return "";
+  var qs={};toks(v).forEach(function(w){expand(w).forEach(function(x){qs[x]=1})});
+  var best=sens[0],bs=-1;
+  sens.forEach(function(sn){var sc=0;toks(sn).forEach(function(w){w=stem(w);for(var q in qs){if(w===q||(q.length>2&&w.indexOf(q)===0)){sc++;break}}});if(sc>bs){bs=sc;best=sn}});
+  return best.length>170?best.slice(0,167)+"\u2026":best;
 }
 function hl(text,v){
   var out=esc(text);
-  v.toLowerCase().trim().split(/\s+/).filter(function(t){return t.length>1}).forEach(function(t){
-    out=out.replace(new RegExp("("+t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")});
+  var ws={};toks(v).forEach(function(w){ws[w]=1;expand(w).forEach(function(x){if(x.length>2)ws[x]=1})});
+  Object.keys(ws).filter(function(t){return t.length>1}).sort(function(a,b){return b.length-a.length}).forEach(function(t){
+    out=out.replace(new RegExp("(^|[^\\w\u0900-\u097F>])("+t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"[\\w\u0900-\u097F]*)","ig"),"$1<b>$2</b>")});
   return out;
 }
+function crumb(h){
+  var d=T[lang];
+  if(h.u.indexOf("#s-")===0)return "rapid-response.in \u203a "+(h.k==="kFaq"?d.kFaq:d.kInfo);
+  if(/^https?:/.test(h.u))return h.u.replace(/^https?:\/\//,"").split("/")[0];
+  if(h.u.indexOf("mailto:")===0)return d.kContact;
+  return "rapid-response.in \u203a "+h.u.replace(/^\//,"").split(/[?#]/)[0].replace(/-/g," ");
+}
+
+var EXPLORE=["sos","ask","report","laws","shop"];
+var PAA=["f1","f3","f4","f2","f10","f12"];
+var q=$("q"),box=$("results"),hits=[],sel=0;
 function render(){
-  var v=q.value.trim(),d=T[lang];
-  if(!v){
-    hits=EXPLORE.map(function(id){return {t:S[id].en.t,th:S[id].hi.t,k:"kInfo",u:"#s-"+id}});
+  var v=q.value,d=T[lang],html="",vt=v.trim();
+  if(!vt){
+    hits=PAA.map(function(id){return {t:S[id].en.t,th:S[id].hi.t,k:"kFaq",u:"#s-"+id}})
+      .concat(EXPLORE.map(function(id){return {t:S[id].en.c||S[id].en.t,th:S[id].hi.c||S[id].hi.t,k:"kInfo",u:"#s-"+id}}));
+    html+='<div class="rh">'+esc(d.paa)+'</div>';
+    hits.forEach(function(h,i){
+      if(i===PAA.length)html+='<div class="rh">'+esc(d.explore)+'</div>';
+      html+='<div class="r rs" role="option" id="r'+i+'" aria-selected="'+(i===sel)+'" data-i="'+i+'"><span class="t">'+esc(lang==="hi"?h.th:h.t)+'</span><span class="k">'+esc(d[h.k])+'</span></div>';
+    });
   }else{
-    hits=search(v);
-    if(hits.length<3)hits=hits.concat([
-      {t:d.lawsFor+" \u201c"+v+"\u201d",k:"kLaw",u:"/know-the-laws",x:1},
-      {t:d.shopFor+" \u201c"+v+"\u201d",k:"kPage",u:"/shop?q="+encodeURIComponent(v),x:1}]);
+    var ranked=rank(v),top=ranked[0];
+    var seenT={};ranked=ranked.filter(function(x){var k=x.d.t.toLowerCase();if(seenT[k])return false;seenT[k]=1;return true});top=ranked[0];
+    hits=ranked.slice(0,6).map(function(x){return x.d});
+    var featured=top&&top.d.k==="kFaq"&&top.cov>=.5&&(!ranked[1]||top.s>=ranked[1].s*1.15);
+    if(featured){
+      var fd=S[top.d.id][lang],body="",done=false;
+      fd.b.forEach(function(b){
+        if(done)return;
+        if(b[0]==="p")body+='<p class="fa-a">'+hl(b[1],v)+'</p>';
+        else{body+='<ul>'+b[1].slice(0,3).map(function(x){return '<li>'+hl(x,v)+'</li>'}).join("")+(b[1].length>3?'<li class="fa-dots">\u2026</li>':'')+'</ul>';done=true}
+      });
+      html+='<div class="fa" role="option" id="r0" aria-selected="'+(sel===0)+'" data-i="0"><div class="fa-k">'+esc(d.answer)+'</div>'+
+        '<div class="fa-q">'+esc(fd.t)+'</div>'+body+
+        '<span class="fa-more">'+esc(d.readAll)+' \u2192</span></div>';
+    }
+    hits.forEach(function(h,i){
+      if(featured&&i===0)return;
+      var title=(lang==="hi"&&h.th)?h.th:h.t,sn=snippet(h,v);
+      html+='<div class="r rr" role="option" id="r'+i+'" aria-selected="'+(i===sel)+'" data-i="'+i+'">'+
+        '<span class="c">'+esc(crumb(h))+'</span><span class="t">'+hl(title,v)+'</span>'+(sn?'<span class="s">'+hl(sn,v)+'</span>':'')+'</div>';
+    });
+    var extra=[{t:d.lawsFor+" \u201c"+vt+"\u201d",k:"kLaw",u:"/know-the-laws",x:1},
+               {t:d.shopFor+" \u201c"+vt+"\u201d",k:"kPage",u:"/shop?q="+encodeURIComponent(vt),x:1}];
+    if(!hits.length)html+='<div class="rh">'+esc(d.noHits)+' \u201c'+esc(vt)+'\u201d</div>';
+    extra.forEach(function(h){var i=hits.length;hits.push(h);
+      html+='<div class="r rs" role="option" id="r'+i+'" aria-selected="'+(i===sel)+'" data-i="'+i+'"><span class="t">'+esc(h.t)+'</span><span class="k">'+esc(d[h.k])+'</span></div>'});
   }
   sel=Math.max(0,Math.min(sel,hits.length-1));
-  box.innerHTML=(v?"":'<div class="r" style="cursor:default;background:none"><span class="k">'+esc(d.explore)+'</span></div>')+
-   hits.map(function(h,i){
-    var title=h.x?h.t:((lang==="hi"&&h.th)?h.th:h.t);
-    return '<div class="r" role="option" id="r'+i+'" aria-selected="'+(i===sel)+'" data-i="'+i+'"><span class="t">'+hl(title,v)+'</span><span class="k">'+esc(d[h.k])+'</span></div>'}).join("");
-  box.classList.add("open");q.setAttribute("aria-expanded","true");q.setAttribute("aria-activedescendant","r"+sel);
+  box.innerHTML=html;
+  mark();
+  box.classList.add("open");q.setAttribute("aria-expanded","true");
 }
+
 function hide(){box.classList.remove("open");q.setAttribute("aria-expanded","false")}
 function mark(){
-  box.querySelectorAll(".r[data-i]").forEach(function(r){r.setAttribute("aria-selected",+r.dataset.i===sel)});
+  box.querySelectorAll("[data-i]").forEach(function(r){r.setAttribute("aria-selected",+r.dataset.i===sel)});
   q.setAttribute("aria-activedescendant","r"+sel);
   var el=$("r"+sel);if(el)el.scrollIntoView({block:"nearest"});
 }
@@ -678,7 +867,7 @@ q.addEventListener("keydown",function(e){
     e.preventDefault();var h=hits[sel];q.value=(lang==="hi"&&h.th)?h.th:h.t;render()}
   else if(e.key==="Escape"){if(q.value){q.value="";render()}else{hide();q.blur()}}
 });
-box.addEventListener("mousedown",function(e){var r=e.target.closest(".r[data-i]");if(r){e.preventDefault();open(+r.dataset.i)}});
+box.addEventListener("mousedown",function(e){var r=e.target.closest("[data-i]");if(r){e.preventDefault();open(+r.dataset.i)}});
 document.addEventListener("click",function(e){if(!e.target.closest(".search"))hide()});
 $("go").onclick=function(){
   if(box.classList.contains("open")&&hits.length){open(sel)}
