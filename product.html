@@ -165,7 +165,7 @@
       <p class="sold-by">Sold and delivered by <strong>a third-party partner store</strong>, the seller for
          this product. Payment is taken on their secure checkout, where delivery
          charges and any offers are added; their confirmation email is your
-         invoice. <a id="policyShip" target="_blank" rel="noopener">Shipping policy</a> ·
+         invoice. <span id="policyShipWrap"><a id="policyShip" target="_blank" rel="noopener">Shipping policy</a> ·</span>
          <a id="policyRefund" target="_blank" rel="noopener">Refund policy</a>.</p>
     </div>
   </div>
@@ -190,7 +190,8 @@
   U.bindHeader();
   U.storeGate();
   U.bindTiles($('recs'));
-  $('policyShip').href = S.vendor.shippingPolicyUrl;
+  if (S.vendor.shippingPolicyUrl) $('policyShip').href = S.vendor.shippingPolicyUrl;
+  else $('policyShipWrap').hidden = true;
   $('policyRefund').href = S.vendor.refundPolicyUrl;
 
   /* /shop/p/{handle} via the hosting rewrite, ?h={handle} as the fallback. */

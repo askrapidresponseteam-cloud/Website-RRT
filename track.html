@@ -99,10 +99,10 @@
        invoice and carries the tracking link. You can also
        <a id="accountLink" target="_blank" rel="noopener">sign in on their site</a>
        with the email or phone you gave at checkout to see every order from any
-       device, including orders placed through the RRT app.</p>
+       device.</p>
     <p><a id="shipLink" target="_blank" rel="noopener">Shipping policy</a> ·
        <a id="refundLink" target="_blank" rel="noopener">Refund policy</a> ·
-       <a id="waLink" target="_blank" rel="noopener">WhatsApp the seller</a> ·
+       <a id="waLink" target="_blank" rel="noopener">WhatsApp the seller</a><a id="telLink" hidden>Call the seller</a> ·
        <a id="mailLink">Email them</a></p>
   </div>
 
@@ -127,9 +127,17 @@
   U.bindHeader();
   U.storeGate();
   $('accountLink').href = S.vendor.accountUrl;
-  $('shipLink').href = S.vendor.shippingPolicyUrl;
+  if (S.vendor.shippingPolicyUrl) $('shipLink').href = S.vendor.shippingPolicyUrl;
+  else $('shipLink').hidden = true;
   $('refundLink').href = S.vendor.refundPolicyUrl;
-  $('waLink').href = S.vendor.whatsAppUrl('Hi, I have a question about my order (via RRT)');
+  // WhatsApp where the store publishes one, otherwise their phone line.
+  var wa = S.vendor.whatsAppUrl('Hi, I have a question about my order (via RRT)');
+  if (wa) { $('waLink').href = wa; }
+  else {
+    $('waLink').hidden = true;
+    if (S.vendor.phoneUrl) { $('telLink').href = S.vendor.phoneUrl; $('telLink').hidden = false;
+      $('telLink').textContent = 'Call the seller (' + S.vendor.supportPhoneLabel + ')'; }
+  }
   $('mailLink').href = 'mailto:' + S.vendor.supportEmail;
 
 

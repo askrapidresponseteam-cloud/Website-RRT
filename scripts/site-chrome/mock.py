@@ -49,7 +49,7 @@ async def install(page, gql_mode='error'):
         m=re.search(r'/mock/(\d+)\.png',route.request.url)
         await route.fulfill(status=200, content_type='image/svg+xml', body=svg_png(int(m.group(1)) if m else 0))
     async def feed(route):
-        u=urlparse(route.request.url); path=unquote(u.path)[len('/pl-api'):]; q=parse_qs(u.query)
+        u=urlparse(route.request.url); path=unquote(u.path)[len('/pl-api'):]; q=parse_qs(u.query)  # /pl-api and /st-api are both 7 chars
         m=re.match(r'^/collections/([^/]+)/products\.json$',path)
         if m:
             h=m.group(1); lim=int(q.get('limit',['30'])[0]); pg=int(q.get('page',['1'])[0])
@@ -90,6 +90,7 @@ async def install(page, gql_mode='error'):
     await page.route('**/graphql.json', gql)
     await page.route('**/cdn.shopify.com/**', img)
     await page.route('**/pl-api/**', feed)
+    await page.route('**/st-api/**', feed)
     # third-party CDNs are offline in the sandbox; answer fast instead of hanging
     FAKE=open(__file__.replace('mock.py','fakefb.js')).read()
     async def gst(route):

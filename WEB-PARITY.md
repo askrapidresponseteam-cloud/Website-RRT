@@ -238,3 +238,17 @@ pinned to the bottom (count, subtotal, Checkout). Checkout lands on the bag
 with delivery details open (or the Pay button in view once they are saved),
 then hands off to the seller's checkout exactly as before.
 `scripts/check-storefront.js` now enforces the new design contract.
+
+## Partner store switch (24 Sep 2026)
+
+The web shop now sells from Supertails (`supertails.com`, Shopify shop
+56580210861). The app's SHOP tab is unchanged and still uses the previous
+store, so the web copy no longer says the two are the same range.
+
+- `assets/rrt-shop.js`: `VENDORS` holds both stores; `ACTIVE_VENDOR` picks
+  one. Shelves are per store (`SHELF_SETS`). Switching back is that one word.
+- `vercel.json`: `/st-api/*` proxies Supertails; `/pl-api/*` stays for rollback.
+- A bag or saved list from the other store is cleared once on first visit
+  (its ids mean nothing to the new store); receipts are kept.
+- Supertails publishes no WhatsApp and no shipping-policy page: the orders
+  page offers their phone line instead and hides the shipping link.

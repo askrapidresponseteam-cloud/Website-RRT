@@ -20,7 +20,7 @@ async def main():
             hrefs=await pg.evaluate('[...document.querySelectorAll("a[href]")].map(a=>a.getAttribute("href"))')
             for h in hrefs:
                 if not h or h.startswith('#') or h.startswith('javascript'): continue
-                if h.startswith('mailto:') or h.startswith('http'):
+                if h.startswith(('mailto:','tel:')) or h.startswith('http'):
                     if 'localhost' not in h: external.add(h.split('?')[0][:90]); continue
                 internal.setdefault(h,set()).add(path)
             real=[x for x in e if 'firebase' not in x]

@@ -2,6 +2,10 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/st-api/:path*",
+      "destination": "https://supertails.com/:path*"
+    },
+    {
       "source": "/pl-api/:path*",
       "destination": "https://www.pets-lifestyle.com/:path*"
     },

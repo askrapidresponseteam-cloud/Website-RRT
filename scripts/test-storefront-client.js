@@ -12,6 +12,34 @@
  */
 'use strict';
 
+/* The live store is chosen in rrt-shop.js (ACTIVE_VENDOR). Load a second,
+ * unpinned copy in a fresh context and check it points at that store. */
+function activeVendorTests() {
+  const vm = require('vm');
+  const fs = require('fs');
+  const src = fs.readFileSync(require('path').join(__dirname, '..', 'assets', 'rrt-shop.js'), 'utf8');
+  const ctx = { console, setTimeout, clearTimeout, URLSearchParams, encodeURIComponent, decodeURIComponent };
+  ctx.globalThis = ctx; ctx.window = ctx;
+  vm.createContext(ctx);
+  vm.runInContext(src, ctx);
+  const A = ctx.RRTShop;
+  eq(A.vendor.key, 'supertails', 'active store is Supertails');
+  eq(A.vendor.domain, 'supertails.com', 'active store domain');
+  eq(A.vendor.storefrontApiUrl, 'https://supertails.com/api/2026-01/graphql.json', 'Storefront API on the store domain');
+  eq(A.vendor.feedUrl('/products.json'), '/st-api/products.json', 'feeds go through the /st-api proxy');
+  eq(A.shelves.length, 8, 'eight shelves for this store');
+  eq(A.shelfForAisle('pet-pharmacy-dewormer').key, 'pharmacy', 'store aisle handles map to shelves');
+  const seen = {};
+  A.shelves.forEach(function (sh) { sh.aisles.forEach(function (a) {
+    ok(!seen[a.handle], 'aisle handle used once: ' + a.handle); seen[a.handle] = 1; }); });
+  eq(A.vendor.whatsAppUrl('x'), null, 'no WhatsApp published: none offered');
+  eq(A.vendor.phoneUrl, 'tel:18005723575', 'support phone offered instead');
+  ok(A.vendor.url('/cart/1:2').indexOf('https://supertails.com/cart/1:2') === 0, 'cart permalink on the store');
+}
+
+// These tests pin the original partner store so every expected URL stays
+// exact; the active store (see ACTIVE_VENDOR) is checked separately below.
+globalThis.RRT_SHOP_VENDOR = 'petslifestyle';
 require(require('path').join(__dirname, '..', 'assets', 'rrt-shop.js'));
 const S = globalThis.RRTShop;
 
@@ -914,7 +942,7 @@ S.revalidateCart().then((r) => {
     eq(r.collections[0].handle, 'jerhigh', 'matching collections offered');
     S.__internal.resetTransport();
   });
-}).then(deliveryQuoteTests).then(hubPreviewTests).then(brandPageTests).then(function () {
+}).then(deliveryQuoteTests).then(hubPreviewTests).then(brandPageTests).then(activeVendorTests).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
   process.exit(failed ? 1 : 0);
 }).catch((e) => {

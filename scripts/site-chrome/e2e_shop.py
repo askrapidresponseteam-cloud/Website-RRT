@@ -10,8 +10,10 @@ async def main(w,h,tag):
         await install(pg)
         checkout=[]
         async def vendor(route):
+            if 'graphql.json' in route.request.url: return await route.fallback()
             checkout.append(route.request.url); await route.fulfill(status=200,body='<h1>vendor checkout</h1>',content_type='text/html')
         await pg.route('https://www.pets-lifestyle.com/**',vendor)
+        await pg.route('https://supertails.com/**',vendor)
         await pg.route('https://08e8df.myshopify.com/cart**',vendor)
         await pg.goto(B+'/shop'); await pg.wait_for_selector('.product')
         n1=await pg.locator('.product').count()
@@ -31,7 +33,7 @@ async def main(w,h,tag):
         await pg.press('.hsearch input','Enter'); await pg.wait_for_load_state(); await pg.wait_for_selector('.product')
         print(tag,'search page:', pg.url, await pg.inner_text('#pageTitle'), await pg.locator('.product').count())
         # shelf chip
-        await pg.goto(B+'/shop?shelf=pharmacy'); await pg.wait_for_selector('.product'); print(tag,'shelf pharmacy tiles', await pg.locator('.product').count(), 'aisles', await pg.locator('#aisleBar a').count())
+        await pg.goto(B+'/shop?shelf=pharmacy'); await pg.wait_for_selector('.product'); print(tag,'shelf pharmacy tiles', await pg.locator('.product').count(), 'aisles', await pg.locator('#aisleBar a').count(), 'shelf chips', await pg.locator('#shelfBar a').count())
         await pg.goto(B+'/shop?b=Pedigree'); await pg.wait_for_timeout(1500); print(tag,'brand page tiles', await pg.locator('.product').count(), await pg.inner_text('#state') if await pg.locator('#state').is_visible() else '')
         # product page with options
         await pg.goto(B+'/shop/p/p-6-zoetis-oatmeal-shampoo'); await pg.wait_for_selector('#title:not(:empty)')

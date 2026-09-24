@@ -31,24 +31,55 @@
 
   /* ================================================================ VENDOR */
 
-  var Vendor = {
-    /** Canonical storefront host. The bare domain redirects. */
-    domain: 'www.pets-lifestyle.com',
-    /** Numeric Shopify shop id; order status pages live under /{shopId}/orders/. */
-    shopId: '71290126637',
-    /** Permanent Shopify domain; the Storefront API is served here whatever
-     *  the vendor does with their custom domain. */
-    myshopifyDomain: '08e8df.myshopify.com',
-    /** Shopify "tokenless access": products, collections, search - no key to
-     *  issue or leak. A retired version keeps answering as the oldest
-     *  supported one, so this does not silently break when Shopify moves on. */
-    storefrontApiVersion: '2026-01',
-    /** Support contacts as published in the vendor's own site footer. */
-    supportWhatsApp: '919301820282',
-    supportEmail: 'info@pets-lifestyle.com',
-    /** Shopify's built-in collection of everything the vendor has published. */
-    catalogHandle: 'all'
+  /* Two partner stores are wired in; ACTIVE_VENDOR picks the one the shop
+   * sells from. Both are Shopify stores, so everything below (feeds,
+   * Storefront API, cart permalinks, receipts) works the same for either.
+   * Switching back is this one word plus nothing else: each store keeps its
+   * own same-origin proxy in vercel.json. A test harness can pin one with
+   * global.RRT_SHOP_VENDOR before this file loads. */
+  var VENDORS = {
+    supertails: {
+      /** Canonical storefront host. */
+      domain: 'supertails.com',
+      /** Numeric Shopify shop id; order status pages live under /{shopId}/orders/. */
+      shopId: '56580210861',
+      /** Storefront API host. Shopify serves it on the custom domain too. */
+      myshopifyDomain: 'supertails.com',
+      storefrontApiVersion: '2026-01',
+      /** Support contacts as published in the store's own site footer. */
+      supportWhatsApp: null,
+      supportPhone: '18005723575',
+      supportPhoneLabel: '1800-5723-575',
+      supportEmail: 'support@supertails.com',
+      /** Their site links a refund policy but no shipping policy page. */
+      shippingPolicyPath: null,
+      catalogHandle: 'all',
+      proxyBase: '/st-api'
+    },
+    petslifestyle: {
+      /** Canonical storefront host. The bare domain redirects. */
+      domain: 'www.pets-lifestyle.com',
+      shopId: '71290126637',
+      /** Permanent Shopify domain; the Storefront API is served here whatever
+       *  the vendor does with their custom domain. */
+      myshopifyDomain: '08e8df.myshopify.com',
+      /** Shopify "tokenless access": products, collections, search - no key to
+       *  issue or leak. A retired version keeps answering as the oldest
+       *  supported one, so this does not silently break when Shopify moves on. */
+      storefrontApiVersion: '2026-01',
+      supportWhatsApp: '919301820282',
+      supportPhone: null,
+      supportPhoneLabel: null,
+      supportEmail: 'info@pets-lifestyle.com',
+      shippingPolicyPath: '/policies/shipping-policy',
+      /** Shopify's built-in collection of everything the vendor has published. */
+      catalogHandle: 'all',
+      proxyBase: '/pl-api'
+    }
   };
+  var ACTIVE_VENDOR = (global.RRT_SHOP_VENDOR && VENDORS[global.RRT_SHOP_VENDOR]) ? global.RRT_SHOP_VENDOR : 'supertails';
+  var Vendor = VENDORS[ACTIVE_VENDOR];
+  Vendor.key = ACTIVE_VENDOR;
 
   Vendor.url = function (path, query) {
     var u = 'https://' + Vendor.domain + path;
@@ -62,12 +93,10 @@
   };
   Vendor.storefrontApiUrl =
     'https://' + Vendor.myshopifyDomain + '/api/' + Vendor.storefrontApiVersion + '/graphql.json';
-  /** The vendor's storefront feeds, reached same-origin: Vercel rewrites
-   *  /pl-api/* to https://www.pets-lifestyle.com/*, which is what lets a
-   *  browser read the EXACT endpoints the app reads (their JSON feeds send
-   *  no CORS headers, so a cross-origin fetch would be blocked; a
-   *  same-origin path has no CORS at all). */
-  Vendor.proxyBase = '/pl-api';
+  /* The vendor's storefront feeds, reached same-origin: Vercel rewrites
+   * Vendor.proxyBase (/st-api or /pl-api) to the store, which is what lets a
+   * browser read Shopify's JSON feeds (they send no CORS headers, so a
+   * cross-origin fetch would be blocked; a same-origin path has no CORS). */
   Vendor.feedUrl = function (path, query) {
     var u = Vendor.proxyBase + path;
     if (query) {
@@ -79,73 +108,132 @@
     return u;
   };
   Vendor.accountUrl = Vendor.url('/account');
-  Vendor.shippingPolicyUrl = Vendor.url('/policies/shipping-policy');
+  Vendor.shippingPolicyUrl = Vendor.shippingPolicyPath ? Vendor.url(Vendor.shippingPolicyPath) : null;
   Vendor.refundPolicyUrl = Vendor.url('/policies/refund-policy');
   Vendor.productUrl = function (handle) { return Vendor.url('/products/' + handle); };
   Vendor.whatsAppUrl = function (message) {
+    if (!Vendor.supportWhatsApp) return null;
     return 'https://wa.me/' + Vendor.supportWhatsApp +
       (message ? '?text=' + encodeURIComponent(message) : '');
   };
+  Vendor.phoneUrl = Vendor.supportPhone ? 'tel:' + Vendor.supportPhone : null;
 
   /* The ten shelves and their 71 aisle handles, verbatim from the app
    * (vendor.dart, verified 17 Sep 2026 against the vendor's own navigation).
    * The grouping and names are RRT's; the products inside each aisle are
    * whatever the vendor has in that collection right now. */
-  var SHELVES = [
+  /* Shelves and aisles per store. The grouping and names are RRT's; the
+   * aisle handles are the store's own collection handles (Pets Lifestyle:
+   * from the app's vendor.dart, 17 Sep 2026; Supertails: from its site
+   * navigation, 24 Sep 2026). The products are whatever the store has in
+   * each collection right now. */
+  var SHELF_SETS = {
+    petslifestyle: [
     { key: 'pharmacy', num: '01', name: 'Pharmacy', aisles: [
-      ['Flea & Tick', 'dog-fleas-ticks'], ['Deworming', 'dewormers'],
-      ['Antibiotics', 'antibiotics'], ['Skin & Allergy', 'skin-care-for-dogs'],
-      ['Wound Care', 'wound-care'], ['Gut & Liver', 'gut-and-liver-care-for-dogs'],
-      ['Diarrhoea', 'diarrhea'], ['Pain & Joints', 'pain-relief-arthritis-for-dogs'],
-      ['Ear & Eye', 'ear-eye-care'], ['Anxiety & Calming', 'anxiety-calming'],
-      ['Kidney', 'renal-kidney-care'], ['Urinary', 'urinary-tract-infections'],
-      ['Heart', 'cardiac-care'], ['Antifungal', 'anti-fungal'],
-      ['Cat Flea & Tick', 'tick-flea-cat'], ['Cat Deworming', 'deworming-tablets-for-cats']
-    ] },
-    { key: 'supplements', num: '02', name: 'Supplements', aisles: [
-      ['Calcium', 'calcium-for-dogs'], ['Multivitamins', 'dog-growth-and-multivitamins'],
-      ['Skin & Coat', 'skin-coat-tonic'], ['Probiotics', 'probiotics-prebiotics'],
-      ['Immunity', 'immunity-boosters'], ['Weaning', 'weaning-supplement'],
-      ['Blood & Platelets', 'hematinic-platelet-boosters'], ['For Cats', 'supplements-for-cats']
-    ] },
-    { key: 'dog-food', num: '03', name: 'Dog Food', aisles: [
-      ['All', 'dog-food'], ['Dry', 'dry-dog-food'], ['Wet', 'wet-food'],
-      ['Puppy', 'puppy-food'], ['Vet Diets', 'veterinary-and-therapeutic-diets'],
-      ['Milk Replacers', 'puppy-milk-replacers'], ['Grain Free', 'grain-free-food'],
-      ['Hypoallergenic', 'hypoallergenic-food']
-    ] },
-    { key: 'cat-food', num: '04', name: 'Cat Food', aisles: [
-      ['All', 'food-cat'], ['Wet', 'wet-cat-food'], ['Dry', 'cat-dry-food'],
-      ['Kitten', 'kitten-food-cat'], ['Vet Diet', 'veterinary-diet-cat']
-    ] },
-    { key: 'treats', num: '05', name: 'Treats', aisles: [
-      ['Dog Treats', 'dog-treats'], ['Vegetarian', 'vegetarian-treats'],
-      ['Biscuits', 'biscuits'], ['Dental', 'dental-treats'],
-      ['Chews', 'soft-hard-chews'], ['Puppy', 'puppy-treats'], ['Cat Treats', 'cat-treats']
-    ] },
-    { key: 'grooming', num: '06', name: 'Grooming', aisles: [
-      ['Shampoos', 'dog-shampoos-conditioners'], ['Tick & Flea', 'tick-flea'],
-      ['Brushes', 'brushes-combs'], ['Towels & Wipes', 'towels-wipes'],
-      ['Paw Care', 'paw-care'], ['Oral Care', 'oral-care'],
-      ['Cat Litter', 'cat-litter-products'], ['Pads & Diapers', 'training-pads-diapers']
-    ] },
-    { key: 'gear', num: '07', name: 'Toys & Gear', aisles: [
-      ['Dog Toys', 'dog-toys'], ['Cat Toys', 'toys-cat'], ['Collars', 'dog-collars'],
-      ['Leashes', 'leashes'], ['Harnesses', 'harnesses'], ['Beds', 'beds'],
-      ['Bowls', 'bowls-diners'], ['Crates & Carriers', 'crates-carriers']
-    ] },
-    { key: 'small-pets', num: '08', name: 'Birds, Fish & Small Pets', aisles: [
-      ['Birds', 'bird-supplies'], ['Fish', 'fish-aquatic'], ['Turtles', 'tortoise-turtles'],
-      ['Rabbits', 'rabbits'], ['Guinea Pigs', 'guinea-pig'], ['Hamsters', 'hamster']
-    ] },
-    { key: 'farm', num: '09', name: 'Farm & Livestock', aisles: [
-      ['All', 'farm-livestock-supplies'], ['Cattle', 'cow-healthcare'],
-      ['Poultry', 'chicken-vitamins-healthcare'], ['Horse', 'horse-and-wellness-products']
-    ] },
-    { key: 'sale', num: '10', name: 'Sale', aisles: [
-      ['Clearance', 'clearance-sale']
-    ] }
-  ].map(function (s) {
+        ['Flea & Tick', 'dog-fleas-ticks'], ['Deworming', 'dewormers'],
+        ['Antibiotics', 'antibiotics'], ['Skin & Allergy', 'skin-care-for-dogs'],
+        ['Wound Care', 'wound-care'], ['Gut & Liver', 'gut-and-liver-care-for-dogs'],
+        ['Diarrhoea', 'diarrhea'], ['Pain & Joints', 'pain-relief-arthritis-for-dogs'],
+        ['Ear & Eye', 'ear-eye-care'], ['Anxiety & Calming', 'anxiety-calming'],
+        ['Kidney', 'renal-kidney-care'], ['Urinary', 'urinary-tract-infections'],
+        ['Heart', 'cardiac-care'], ['Antifungal', 'anti-fungal'],
+        ['Cat Flea & Tick', 'tick-flea-cat'], ['Cat Deworming', 'deworming-tablets-for-cats']
+      ] },
+      { key: 'supplements', num: '02', name: 'Supplements', aisles: [
+        ['Calcium', 'calcium-for-dogs'], ['Multivitamins', 'dog-growth-and-multivitamins'],
+        ['Skin & Coat', 'skin-coat-tonic'], ['Probiotics', 'probiotics-prebiotics'],
+        ['Immunity', 'immunity-boosters'], ['Weaning', 'weaning-supplement'],
+        ['Blood & Platelets', 'hematinic-platelet-boosters'], ['For Cats', 'supplements-for-cats']
+      ] },
+      { key: 'dog-food', num: '03', name: 'Dog Food', aisles: [
+        ['All', 'dog-food'], ['Dry', 'dry-dog-food'], ['Wet', 'wet-food'],
+        ['Puppy', 'puppy-food'], ['Vet Diets', 'veterinary-and-therapeutic-diets'],
+        ['Milk Replacers', 'puppy-milk-replacers'], ['Grain Free', 'grain-free-food'],
+        ['Hypoallergenic', 'hypoallergenic-food']
+      ] },
+      { key: 'cat-food', num: '04', name: 'Cat Food', aisles: [
+        ['All', 'food-cat'], ['Wet', 'wet-cat-food'], ['Dry', 'cat-dry-food'],
+        ['Kitten', 'kitten-food-cat'], ['Vet Diet', 'veterinary-diet-cat']
+      ] },
+      { key: 'treats', num: '05', name: 'Treats', aisles: [
+        ['Dog Treats', 'dog-treats'], ['Vegetarian', 'vegetarian-treats'],
+        ['Biscuits', 'biscuits'], ['Dental', 'dental-treats'],
+        ['Chews', 'soft-hard-chews'], ['Puppy', 'puppy-treats'], ['Cat Treats', 'cat-treats']
+      ] },
+      { key: 'grooming', num: '06', name: 'Grooming', aisles: [
+        ['Shampoos', 'dog-shampoos-conditioners'], ['Tick & Flea', 'tick-flea'],
+        ['Brushes', 'brushes-combs'], ['Towels & Wipes', 'towels-wipes'],
+        ['Paw Care', 'paw-care'], ['Oral Care', 'oral-care'],
+        ['Cat Litter', 'cat-litter-products'], ['Pads & Diapers', 'training-pads-diapers']
+      ] },
+      { key: 'gear', num: '07', name: 'Toys & Gear', aisles: [
+        ['Dog Toys', 'dog-toys'], ['Cat Toys', 'toys-cat'], ['Collars', 'dog-collars'],
+        ['Leashes', 'leashes'], ['Harnesses', 'harnesses'], ['Beds', 'beds'],
+        ['Bowls', 'bowls-diners'], ['Crates & Carriers', 'crates-carriers']
+      ] },
+      { key: 'small-pets', num: '08', name: 'Birds, Fish & Small Pets', aisles: [
+        ['Birds', 'bird-supplies'], ['Fish', 'fish-aquatic'], ['Turtles', 'tortoise-turtles'],
+        ['Rabbits', 'rabbits'], ['Guinea Pigs', 'guinea-pig'], ['Hamsters', 'hamster']
+      ] },
+      { key: 'farm', num: '09', name: 'Farm & Livestock', aisles: [
+        ['All', 'farm-livestock-supplies'], ['Cattle', 'cow-healthcare'],
+        ['Poultry', 'chicken-vitamins-healthcare'], ['Horse', 'horse-and-wellness-products']
+      ] },
+      { key: 'sale', num: '10', name: 'Sale', aisles: [
+        ['Clearance', 'clearance-sale']
+      ] }
+    ],
+    supertails: [
+      { key: 'pharmacy', num: '01', name: 'Pharmacy', aisles: [
+        ['All Medicines', 'pet-pharmacy'], ['Flea & Tick', 'pet-pharmacy-tick-flea-control'],
+        ['Deworming', 'pet-pharmacy-dewormer'], ['Antibiotics', 'antifungal-antibiotics-for-pets'],
+        ['Skin Care', 'pet-skin-care'], ['Wound Care', 'wound-medicine-for-dogs-cats'],
+        ['Digestive', 'pet-digestive-care-medicine'], ['Liver', 'liver-medications-for-dogs-cats'],
+        ['Pain', 'pharmacy-pain-medication'], ['Joints', 'joint-pain-medicine-for-dogs-cats'],
+        ['Ear & Eye', 'pet-pharmacy-eye-ear-medication'], ['Anxiety & Calming', 'calming-and-anxiety'],
+        ['Kidney', 'kidney-medicine-for-dogs-cats'], ['Heart', 'cardiac-medicine-for-dogs-cats'],
+        ['Respiratory', 'respiratory-medicine-for-dogs-cats'], ['Endocrine', 'endocrine-medicine-for-pets']
+      ] },
+      { key: 'supplements', num: '02', name: 'Supplements', aisles: [
+        ['All', 'pharmacy-supplements'], ['Calcium', 'calcium-supplements-for-dogs-cats'],
+        ['Multivitamins', 'pet-pharmacy-multivitamin-mineral-supplements'],
+        ['Skin & Coat', 'pet-pharmacy-skin-coat-supplements'], ['Immunity', 'immune-booster-for-dogs-cats'],
+        ['Weaning', 'weaning-diet'], ['Appetite', 'appetite-stimulant-for-dogs-cats'],
+        ['Blood & Platelets', 'pet-hematinics-platelet-boosters'], ['Weight', 'weight-management'],
+        ['For Cats', 'cat-supplements']
+      ] },
+      { key: 'dog-food', num: '03', name: 'Dog Food', aisles: [
+        ['All', 'dog-food'], ['Dry', 'dog-dry-food'], ['Wet', 'dog-wet-food'],
+        ['Puppy', 'puppy-food'], ['Vet Diets', 'dog-prescription-diet'], ['Grain Free', 'grain-free-dog-food'],
+        ['Veg', 'veg-dog-food'], ['Baked', 'baked-dog-food'], ['Fresh', 'dog-fresh-food']
+      ] },
+      { key: 'cat-food', num: '04', name: 'Cat Food', aisles: [
+        ['All', 'cat-food'], ['Wet', 'cat-wet-food'], ['Dry', 'cat-dry-food'],
+        ['Kitten', 'cat-kitten-food'], ['Premium', 'cat-premium-food'], ['Vet Diet', 'cat-prescription-diet']
+      ] },
+      { key: 'treats', num: '05', name: 'Treats', aisles: [
+        ['Dog Treats', 'dog-treats'], ['Biscuits', 'dog-biscuits-cookies'], ['Bones & Chews', 'dog-bones-chews'],
+        ['Dental', 'dog-dental-treats'], ['Jerky', 'dog-jerky-treats'], ['Training', 'training-treats-1'],
+        ['Cat Treats', 'cat-treats'], ['Creamy Cat Treats', 'creamy-treats-for-cats']
+      ] },
+      { key: 'grooming', num: '06', name: 'Grooming', aisles: [
+        ['All Dog', 'dog-grooming'], ['Shampoos', 'dog-shampoos-conditioners'], ['Brushes', 'brushes-and-combs'],
+        ['Towels & Wipes', 'dog-towels-wipes'], ['Paw & Nail', 'dog-paw-nail-care'], ['Oral Care', 'dog-oral-care'],
+        ['Pads & Diapers', 'dog-diapers-training-pads'], ['Cat Grooming', 'cat-grooming-products'],
+        ['Cat Litter', 'cat-litter']
+      ] },
+      { key: 'gear', num: '07', name: 'Toys & Gear', aisles: [
+        ['Dog Toys', 'dog-toys'], ['Cat Toys', 'cat-toys'], ['Collars', 'dog-collars'],
+        ['Leashes', 'dog-leashes'], ['Harnesses', 'dog-harnesses'], ['Beds', 'dog-beds'],
+        ['Bowls', 'dog-bowls-feeders'], ['Carriers', 'pet-carriers-travel-supplies'], ['Clothing', 'dog-clothes']
+      ] },
+      { key: 'small-pets', num: '08', name: 'Birds, Fish & Small Pets', aisles: [
+        ['Birds', 'bird-supplies'], ['Fish', 'fish-food'], ['Rabbits', 'rabbit-products'],
+        ['Guinea Pigs', 'guinea-pig-generic'], ['Hamsters', 'hamster-generic']
+      ] }
+    ]
+  };
+  var SHELVES = SHELF_SETS[ACTIVE_VENDOR].map(function (s) {
     s.aisles = s.aisles.map(function (a) { return { label: a[0], handle: a[1] }; });
     s.preview = (function () {
       var head = s.aisles.slice(0, 3).map(function (a) { return a.label; }).join(' \u00b7 ');
@@ -907,6 +995,26 @@
   function writeJson(store, key, value) {
     try { store.setItem(key, JSON.stringify(value)); } catch (e) { /* full / private */ }
   }
+
+  /* A bag or saved list built against one store holds that store's product
+   * and variant ids, which mean nothing to another store. When the active
+   * store changes, both start fresh (receipts stay: they point at the store
+   * that took the order). Same for this tab's cached feeds and transport. */
+  var VENDOR_KEY = 'rrt_store_vendor';
+  (function () {
+    var was = null;
+    try { was = local.getItem(VENDOR_KEY); } catch (e) { /* private mode */ }
+    if (was === ACTIVE_VENDOR) return;
+    if (was !== null || readJson(local, CART_KEY, null) || readJson(local, SAVED_KEY, null)) {
+      try { local.removeItem(CART_KEY); local.removeItem(SAVED_KEY); } catch (e) { /* ignore */ }
+      try {
+        var doomed = [];
+        for (var i = 0; i < session.length; i++) { var k = session.key(i); if (k && k.indexOf('rrt_sf_') === 0) doomed.push(k); }
+        doomed.forEach(function (k) { session.removeItem(k); });
+      } catch (e) { /* ignore */ }
+    }
+    try { local.setItem(VENDOR_KEY, ACTIVE_VENDOR); } catch (e) { /* ignore */ }
+  })();
 
   /* ================================================================= CACHE */
   /* Three minutes, like the app: keeps back-navigation instant without ever
