@@ -97,6 +97,7 @@
 
 <div class="toast" id="toast" hidden role="status"></div>
 
+<script src="/assets/rrt-store-vendors.js"></script>
 <script src="/assets/rrt-shop.js"></script>
 <script src="/assets/shop-ui.js"></script>
 <script>
@@ -194,6 +195,13 @@
     if (state.clientSort) render(); else resetAndLoad();
   });
 
+  // Brand chips follow the active partner store's own brand list.
+  (function () {
+    var bar = $('brandBar'); if (!bar || !S.vendor.brands || !S.vendor.brands.length) return;
+    bar.innerHTML = '<span class="lbl">Brands</span>' + S.vendor.brands.map(function (b) {
+      return '<a href="/shop?b=' + encodeURIComponent(b) + '">' + esc(b) + '</a>';
+    }).join('');
+  })();
   // The hub opens straight onto the whole range; shelves and brands are
   // one-tap chips above it rather than image rails to scroll past.
   if (brandParam) {

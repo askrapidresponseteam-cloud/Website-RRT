@@ -21,7 +21,7 @@ from chrome import install, header, footer, strip_blocks  # noqa: E402
 # index.html is self-contained, app-demo.html is the phone mockup, about and
 # how-it-works redirect to / in vercel.json)
 CONTENT = {'faq.html': '/faq', 'know-the-laws.html': '/know-the-laws',
-           'vet.html': '', 'manage.html': '', 'app-guide.html': '', 'report/index.html': '', 'report/manage.html': ''}
+           'vet.html': '', 'app-guide.html': '', 'report/index.html': '', 'report/manage.html': ''}
 PLAIN = {'preview.html': ''}   # shared chrome, own styling (no rr-theme.css)
 SHOP = {'shop.html': ('shop', 'shop'), 'product.html': ('', 'product'), 'cart.html': ('', 'cart'),
         'saved.html': ('saved', 'saved'), 'track.html': ('track', 'track')}

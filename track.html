@@ -116,6 +116,7 @@
 
 <div class="toast" id="toast" hidden role="status"></div>
 
+<script src="/assets/rrt-store-vendors.js"></script>
 <script src="/assets/rrt-shop.js"></script>
 <script src="/assets/shop-ui.js"></script>
 <script>
@@ -129,7 +130,7 @@
   $('accountLink').href = S.vendor.accountUrl;
   if (S.vendor.shippingPolicyUrl) $('shipLink').href = S.vendor.shippingPolicyUrl;
   else $('shipLink').hidden = true;
-  $('refundLink').href = S.vendor.refundPolicyUrl;
+  if (S.vendor.refundPolicyUrl) $('refundLink').href = S.vendor.refundPolicyUrl; else $('refundLink').hidden = true;
   // WhatsApp where the store publishes one, otherwise their phone line.
   var wa = S.vendor.whatsAppUrl('Hi, I have a question about my order (via RRT)');
   if (wa) { $('waLink').href = wa; }

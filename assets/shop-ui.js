@@ -258,6 +258,13 @@
       if (e.key && e.key.indexOf('rrt_store_') === 0) { var st = S.cart(); paint(st); repaintActions(); paintBagBar(st); }
     });
     bindBagBar();
+    // After a backend store switch the page reloads once; say why the bag is empty.
+    try {
+      if (global.sessionStorage.getItem('rrt_store_changed')) {
+        global.sessionStorage.removeItem('rrt_store_changed');
+        setTimeout(function () { toast('The shop now sells from a new partner store. Items from the previous store were removed from your bag.'); }, 400);
+      }
+    } catch (e) { /* storage blocked */ }
     bindBack();
     bindSearch();
   }

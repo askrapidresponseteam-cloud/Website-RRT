@@ -18,11 +18,19 @@ function activeVendorTests() {
   const vm = require('vm');
   const fs = require('fs');
   const src = fs.readFileSync(require('path').join(__dirname, '..', 'assets', 'rrt-shop.js'), 'utf8');
-  const ctx = { console, setTimeout, clearTimeout, URLSearchParams, encodeURIComponent, decodeURIComponent };
-  ctx.globalThis = ctx; ctx.window = ctx;
-  vm.createContext(ctx);
-  vm.runInContext(src, ctx);
-  const A = ctx.RRTShop;
+  const bundle = fs.readFileSync(require('path').join(__dirname, '..', 'assets', 'rrt-store-vendors.js'), 'utf8');
+  function load(published) {
+    const store = {};
+    if (published) store.rrt_store_active_v1 = JSON.stringify(published);
+    const ctx = { console, setTimeout, clearTimeout, URLSearchParams, encodeURIComponent, decodeURIComponent,
+      localStorage: { getItem: (k) => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: (k) => { delete store[k]; } } };
+    ctx.globalThis = ctx; ctx.window = ctx;
+    vm.createContext(ctx);
+    vm.runInContext(bundle, ctx);
+    vm.runInContext(src, ctx);
+    return ctx.RRTShop;
+  }
+  const A = load(null);
   eq(A.vendor.key, 'supertails', 'active store is Supertails');
   eq(A.vendor.domain, 'supertails.com', 'active store domain');
   eq(A.vendor.storefrontApiUrl, 'https://supertails.com/api/2026-01/graphql.json', 'Storefront API on the store domain');
@@ -35,11 +43,23 @@ function activeVendorTests() {
   eq(A.vendor.whatsAppUrl('x'), null, 'no WhatsApp published: none offered');
   eq(A.vendor.phoneUrl, 'tel:18005723575', 'support phone offered instead');
   ok(A.vendor.url('/cart/1:2').indexOf('https://supertails.com/cart/1:2') === 0, 'cart permalink on the store');
+  // The backend-published config wins over the bundle's default.
+  const bundleObj = JSON.parse(bundle.slice(bundle.indexOf('{'), bundle.lastIndexOf(';')));
+  const P = load({ configVersion: 7, active: bundleObj.vendors.petslifestyle });
+  eq(P.vendor.key, 'petslifestyle', 'published vendor is used');
+  eq(P.vendor.feedUrl('/x.json'), '/pl-api/x.json', 'with its own proxy route');
+  eq(P.shelves.length, 10, 'and its own shelves');
+  // A malformed or unroutable publish never takes the shop down.
+  const broken = JSON.parse(JSON.stringify(bundleObj.vendors.petslifestyle)); broken.web.proxyBase = '/zz-api';
+  eq(load({ configVersion: 8, active: broken }).vendor.key, 'supertails', 'unknown proxy route: bundle default used');
+  eq(load({ configVersion: 9, active: { id: 'x' } }).vendor.key, 'supertails', 'malformed publish: bundle default used');
 }
 
 // These tests pin the original partner store so every expected URL stays
 // exact; the active store (see ACTIVE_VENDOR) is checked separately below.
 globalThis.RRT_SHOP_VENDOR = 'petslifestyle';
+globalThis.window = globalThis;
+require(require('path').join(__dirname, '..', 'assets', 'rrt-store-vendors.js'));
 require(require('path').join(__dirname, '..', 'assets', 'rrt-shop.js'));
 const S = globalThis.RRTShop;
 
@@ -345,7 +365,7 @@ function deliveryQuoteTests() {
   const lines = S.cart().lines;
 
   // 1) One rate: quoted, selected by Shopify, total = items + delivery.
-  stub([['RrtCartQuote', (v) => ({ cartCreate: { cart: cartJson(), userErrors: [] } })]]);
+  stub([['RrtCartQuote', () => ({ cartCreate: { cart: cartJson(), userErrors: [] } })]]);
   return S.quoteDelivery(lines, S.delivery()).then((q) => {
     eq(q.itemsPaise, 23438, 'items total from Shopify');
     eq(q.deliveryPaise, 8000, 'delivery charge from Shopify');

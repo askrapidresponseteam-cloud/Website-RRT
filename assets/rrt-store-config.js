@@ -1,5 +1,5 @@
 /* ============================================================================
- * RRT STORE CONFIG  —  the web half of the app's store switches
+ * RRT STORE CONFIG  -  the web half of the app's store switches
  * ----------------------------------------------------------------------------
  * The RRT mobile app reads two admin-controlled switches from Firestore
  * (project rrt-new-backend, document app_config/flags):
@@ -14,13 +14,13 @@
  * one document read, one live subscription.
  *
  * SECURITY: the config below is the project's PUBLIC web config (an apiKey
- * here is not a secret — it identifies the project, it does not grant access).
+ * here is not a secret - it identifies the project, it does not grant access).
  * Real protection is Firestore rules, which the app relies on too: clients may
  * READ app_config/flags and app_config/text, and may WRITE nothing. The admin
  * panel writes flags behind Firebase Auth. This file only ever reads.
  *
  * FAIL-SAFE: if Firebase is unreachable, the document is missing, or the field
- * is absent, the shop stays OPEN with the vendor's full range — exactly the
+ * is absent, the shop stays OPEN with the vendor's full range - exactly the
  * app's compiled defaults (flags.store default true, store_veg_only false).
  * A config outage must never take the shop down or silently filter it.
  * ==========================================================================*/
@@ -111,6 +111,30 @@
     var db;
     try { db = global.firebase.firestore(app); }
     catch (e) { state.ready = true; emit(); return; }
+
+    // The partner store the backend has published (store_config.js). Kept in
+    // localStorage for rrt-shop.js, which reads it synchronously at load. When
+    // it differs from the store this page is running on, reload once so the
+    // page, the app and every other tab use the same store.
+    db.collection('app_config').doc('store').onSnapshot(function (snap) {
+      var d = snap && snap.exists ? snap.data() : null;
+      if (!d || d.schemaVersion !== 1 || !d.active || typeof d.active.id !== 'string') return;
+      try {
+        global.localStorage.setItem('rrt_store_active_v1', JSON.stringify({
+          configVersion: d.configVersion, active: d.active, at: Date.now()
+        }));
+      } catch (e) { /* private mode: the bundle default keeps working */ }
+      var using = global.RRTShop && global.RRTShop.vendor && global.RRTShop.vendor.key;
+      var guard = 'rrt_store_reload_v' + d.configVersion;
+      if (using && using !== d.active.id) {
+        try {
+          if (global.sessionStorage.getItem(guard)) return;  // never loop
+          global.sessionStorage.setItem(guard, '1');
+          global.sessionStorage.setItem('rrt_store_changed', '1');
+        } catch (e) { return; }
+        global.location.reload();
+      }
+    }, function () { /* offline or blocked: keep the stored or bundled store */ });
 
     var ref = db.collection('app_config').doc('flags');
     // Live subscription: an admin flip reaches open web pages within seconds,
