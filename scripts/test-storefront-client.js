@@ -49,6 +49,14 @@ function activeVendorTests() {
   eq(P.vendor.key, 'petslifestyle', 'published vendor is used');
   eq(P.vendor.feedUrl('/x.json'), '/pl-api/x.json', 'with its own proxy route');
   eq(P.shelves.length, 10, 'and its own shelves');
+  // As published through Firestore: aisles are {label, handle}, not pairs.
+  const stored = JSON.parse(JSON.stringify(bundleObj.vendors.petslifestyle));
+  stored.shelves.forEach(function (sh) { sh.aisles = sh.aisles.map(function (a) { return { label: a[0], handle: a[1] }; }); });
+  const F = load({ configVersion: 10, active: stored });
+  eq(F.vendor.key, 'petslifestyle', 'Firestore-shaped publish is used');
+  eq(F.shelfByKey('pharmacy').aisles[0].label, 'Flea & Tick', 'aisle label read from {label, handle}');
+  eq(F.shelfByKey('pharmacy').aisles[0].handle, 'dog-fleas-ticks', 'aisle handle read from {label, handle}');
+  eq(F.shelfForAisle('dewormers').key, 'pharmacy', 'aisle lookup works on the stored shape');
   // A malformed or unroutable publish never takes the shop down.
   const broken = JSON.parse(JSON.stringify(bundleObj.vendors.petslifestyle)); broken.web.proxyBase = '/zz-api';
   eq(load({ configVersion: 8, active: broken }).vendor.key, 'supertails', 'unknown proxy route: bundle default used');

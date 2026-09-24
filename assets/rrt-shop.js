@@ -133,7 +133,11 @@
    * names are RRT's, the handles are the store's own collection handles.
    * Copied so a caller can never mutate the published config. */
   var SHELVES = JSON.parse(JSON.stringify(DESCRIPTOR.shelves)).map(function (s) {
-    s.aisles = s.aisles.map(function (a) { return { label: a[0], handle: a[1] }; });
+    // The bundle writes an aisle as [label, handle]; a published store comes
+    // from Firestore, which cannot hold a pair inside a list, as {label, handle}.
+    s.aisles = s.aisles.map(function (a) {
+      return Array.isArray(a) ? { label: a[0], handle: a[1] } : { label: a.label, handle: a.handle };
+    });
     s.preview = (function () {
       var head = s.aisles.slice(0, 3).map(function (a) { return a.label; }).join(' \u00b7 ');
       var rest = s.aisles.length - 3;
