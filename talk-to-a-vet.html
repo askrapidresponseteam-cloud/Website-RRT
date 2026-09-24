@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
+<meta content="#FFFFFF" name="theme-color">
+<title>Talk to a vet online - Rapid Response</title>
+<link href="/assets/favicon.svg" rel="icon" type="image/svg+xml">
+<link href="/assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+<link href="/assets/apple-touch-icon.png" rel="apple-touch-icon">
+<meta content="Chat with a verified vet from your phone, and start a video call from the same chat if the vet needs to see your animal. Anywhere in India, inside the Rapid Response app." name="description">
+<link href="https://rapid-response.in/talk-to-a-vet" rel="canonical">
+<meta content="Talk to a vet online - Rapid Response" property="og:title">
+<meta content="Chat with a verified vet, then video if needed. Anywhere in India, inside the Rapid Response app." property="og:description">
+<meta content="https://rapid-response.in/talk-to-a-vet" property="og:url">
+<meta content="https://rapid-response.in/assets/og-cover.jpg" property="og:image">
+<meta content="website" property="og:type">
+<style>
+/* Page styles only; the header and footer are the shared site chrome
+   (assets/rr-site.css). Same look: white ground, ink type, hairlines, a
+   serif display face, one red mark. */
+:root{--tv-ink:#111;--tv-mid:#5f6368;--tv-low:#80868b;--tv-line:#e3e3e3;--tv-soft:#f6f6f6;--tv-red:#ff4d3d;--tv-ok:#157a41;--tv-okbg:#eef7f1;
+  --tv-serif:"Marcellus","Trajan Pro","Optima",Georgia,serif;--tv-sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari",system-ui,sans-serif;
+  --tv-pad:clamp(18px,7vw,120px)}
+*,*:before,*:after{box-sizing:border-box}
+html,body{margin:0;background:#fff;color:var(--tv-ink)}
+body{font-family:var(--tv-sans);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:16px}
+html[lang=hi] body{font-family:"Noto Sans Devanagari",var(--tv-sans)}
+[data-lang]{display:none}
+html[lang=en] [data-lang=en],html[lang=hi] [data-lang=hi]{display:revert}
+a{color:inherit}
+.tv{max-width:1040px;margin:0 auto;padding:clamp(32px,6vh,64px) var(--tv-pad) 72px}
+.tv-eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--tv-mid);margin:0 0 14px}
+html[lang=hi] .tv-eyebrow{letter-spacing:0;font-size:13px}
+.tv h1{font-family:var(--tv-serif);font-weight:400;font-size:clamp(38px,6.4vw,64px);line-height:1.02;letter-spacing:.01em;margin:0;max-width:14ch}
+html[lang=hi] .tv h1{font-family:"Noto Sans Devanagari",var(--tv-sans);font-weight:600;font-size:clamp(34px,5.6vw,54px);line-height:1.15}
+.tv-lead{font-size:clamp(17px,2vw,20px);color:#333;max-width:40ch;margin:18px 0 0}
+.tv-status{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 14px;border:1px solid var(--tv-line);font-size:14.5px;min-height:40px}
+.tv-status[hidden]{display:none}
+.tv-status .dot{width:9px;height:9px;border-radius:50%;background:#bdbdbd;flex:none}
+.tv-status.on{border-color:#cfe6d7;background:var(--tv-okbg);color:var(--tv-ok);font-weight:600}
+.tv-status.on .dot{background:#1a9e55;box-shadow:0 0 0 4px #1a9e5522}
+.tv-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.tv-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 24px;border:1.5px solid var(--tv-ink);background:#fff;color:var(--tv-ink);
+  font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+html[lang=hi] .tv-btn{letter-spacing:0;font-size:15px;text-transform:none}
+.tv-btn.dark{background:var(--tv-ink);color:#fff}
+.tv-btn[hidden]{display:none}
+.tv-btn:hover{opacity:.9}
+.tv-have{font-size:14px;color:var(--tv-mid);margin:14px 0 0}
+.tv-sect{margin-top:clamp(44px,7vh,72px);border-top:1px solid var(--tv-line);padding-top:28px}
+.tv-sect h2{font-family:var(--tv-serif);font-weight:400;font-size:clamp(26px,3.4vw,34px);margin:0 0 20px;letter-spacing:.01em}
+html[lang=hi] .tv-sect h2{font-family:"Noto Sans Devanagari",var(--tv-sans);font-weight:600}
+.tv-steps{list-style:none;margin:0;padding:0;display:grid;gap:0;grid-template-columns:repeat(4,1fr);border:1px solid var(--tv-line)}
+.tv-steps li{padding:20px 18px 22px;border-left:1px solid var(--tv-line)}
+.tv-steps li:first-child{border-left:0}
+.tv-steps .n{font-family:var(--tv-serif);font-size:30px;color:var(--tv-red);line-height:1}
+.tv-steps .h{font-weight:700;margin:12px 0 6px;font-size:16px}
+.tv-steps .p{color:var(--tv-mid);font-size:14.5px;margin:0}
+.tv-trust{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--tv-line)}
+.tv-trust div{padding:18px 18px 20px;border-top:1px solid var(--tv-line);border-left:1px solid var(--tv-line)}
+.tv-trust div:nth-child(-n+2){border-top:0}
+.tv-trust div:nth-child(odd){border-left:0}
+.tv-trust b{display:block;font-size:16px;margin-bottom:4px}
+.tv-trust span{color:var(--tv-mid);font-size:14.5px}
+.tv-sos{margin-top:28px;padding:16px 18px;border-left:3px solid var(--tv-red);background:#fff6f5;font-size:15px}
+.tv-vets{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.tv-vets p{margin:0;color:var(--tv-mid);max-width:52ch}
+@media (max-width:860px){.tv-steps{grid-template-columns:1fr 1fr}.tv-steps li:nth-child(3){border-left:0}.tv-steps li:nth-child(n+3){border-top:1px solid var(--tv-line)}}
+@media (max-width:560px){
+  .tv-steps,.tv-trust{grid-template-columns:1fr}
+  .tv-steps li,.tv-trust div{border-left:0!important;border-top:1px solid var(--tv-line)!important}
+  .tv-steps li:first-child,.tv-trust div:first-child{border-top:0!important}
+  .tv-cta .tv-btn{width:100%}
+}
+</style>
+<!-- rr:head --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap"><link rel="stylesheet" href="/assets/rr-site.css"><!-- /rr:head -->
+</head>
+<body>
+<!-- rr:header -->
+<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="30 42 420 420" aria-hidden="true"><g fill="#434343"><circle cx="85" cy="193" r="45"/><circle cx="177" cy="107" r="45"/><circle cx="302" cy="107" r="45"/><circle cx="395" cy="193" r="45"/><path d="M378.5 348.1C381 351.2 384.7 354.5 386.7 357.8C388.7 361.1 389.5 364.5 390.7 368C391.9 371.5 393.3 375.2 394 378.9C394.6 382.5 394.6 386.1 394.5 389.7C394.5 393.3 394.5 397 393.9 400.5C393.2 404 391.9 407.4 390.6 410.7C389.2 414 387.6 417.2 385.7 420.2C383.8 423.2 381.5 426.1 378.9 428.6C376.4 431.2 373.6 433.6 370.5 435.6C367.3 437.6 364.1 439.6 360.1 440.7C356.1 441.7 350.8 441.6 346.3 441.8C341.8 441.9 337.5 442 333.2 441.8C328.9 441.6 324.5 440.9 320.6 440.6C316.7 440.3 313.2 440.1 309.8 439.8C306.4 439.4 303.2 439.2 300.1 438.8C296.9 438.3 293.7 437.4 290.8 436.9C287.9 436.4 285.2 436 282.6 435.6C280.1 435.2 277.6 434.8 275.3 434.5C273 434.2 270.7 434 268.6 433.8C266.5 433.7 264.5 433.8 262.4 433.6C260.4 433.5 258.3 433.1 256.4 433C254.4 432.8 252.6 432.9 250.7 432.9C248.8 432.9 246.9 433 245.1 432.9C243.2 432.9 241.4 432.6 239.5 432.6C237.7 432.6 235.8 432.9 234 432.9C232.1 433 230.2 432.9 228.4 432.9C226.5 432.9 224.6 432.8 222.6 433C220.7 433.1 218.6 433.5 216.6 433.6C214.6 433.8 212.6 433.7 210.4 433.8C208.3 434 206.1 434.2 203.7 434.5C201.4 434.8 199 435.2 196.4 435.6C193.8 436 191.2 436.4 188.3 436.9C185.4 437.4 182.1 438.3 179 438.8C175.8 439.2 172.6 439.4 169.2 439.8C165.8 440.1 162.3 440.3 158.4 440.6C154.5 440.9 150.1 441.6 145.8 441.8C141.5 442 137.2 442 132.7 441.8C128.3 441.5 123.4 441.4 119.3 440.4C115.3 439.3 111.8 437.6 108.6 435.6C105.3 433.7 102.6 431.2 100.1 428.6C97.5 426.1 95.3 423.2 93.3 420.2C91.4 417.2 89.8 414 88.5 410.7C87.1 407.4 85.8 404 85.2 400.5C84.5 397 84.5 393.3 84.5 389.7C84.5 386.1 84.4 382.5 85 378.9C85.7 375.2 87.1 371.5 88.3 368C89.5 364.5 90.4 361.1 92.3 357.8C94.3 354.5 97.5 351.2 100 348.1C102.5 345.1 105.1 342.2 107.3 339.5C109.5 336.7 110.9 334 113.1 331.5C115.3 329 118.1 326.7 120.3 324.4C122.6 322.1 124.5 320 126.5 317.8C128.4 315.7 130.2 313.6 132 311.6C133.9 309.6 135.7 307.8 137.4 305.8C139.1 303.9 140.7 302 142.2 300.1C143.7 298.2 145.1 296.3 146.4 294.4C147.7 292.4 148.7 290.2 150.1 288.4C151.6 286.6 153.6 285.1 155 283.3C156.4 281.4 157.3 279.1 158.7 277.2C160.1 275.4 162.1 274 163.5 272.1C164.9 270.2 166 267.9 167.3 265.8C168.6 263.7 169.9 261.3 171.3 259.3C172.8 257.2 174.5 255.3 176.2 253.3C177.8 251.3 179.6 249.4 181.3 247.2C183 245.1 184.6 242.6 186.4 240.5C188.3 238.4 190.4 236.7 192.4 234.5C194.5 232.3 196.3 229.5 198.5 227.4C200.7 225.3 203.2 223.8 205.7 222.1C208.2 220.4 210.8 218.5 213.5 217.2C216.2 215.9 219 215.1 221.9 214.3C224.7 213.5 227.7 212.8 230.6 212.4C233.6 212.1 236.5 212.1 239.5 212.1C242.5 212.1 245.5 212.1 248.4 212.4C251.3 212.8 254.3 213.5 257.1 214.3C260 215.1 262.9 215.9 265.6 217.2C268.2 218.5 270.8 220.4 273.3 222.1C275.8 223.8 278.3 225.3 280.5 227.4C282.7 229.5 284.6 232.3 286.6 234.5C288.6 236.7 290.6 238.5 292.6 240.5C294.5 242.5 296.6 244.2 298.3 246.4C300 248.5 301.3 251.2 302.8 253.3C304.4 255.5 306.2 257.3 307.7 259.3C309.2 261.3 310.6 263.4 312 265.4C313.5 267.4 314.8 269.4 316.2 271.4C317.6 273.4 319 275.3 320.3 277.2C321.6 279.2 322.6 281.4 324 283.3C325.4 285.1 327.5 286.6 328.9 288.4C330.3 290.2 331.3 292.4 332.6 294.4C333.9 296.3 335.3 298.2 336.8 300.1C338.3 302 340 303.9 341.6 305.8C343.2 307.8 344.7 309.8 346.5 311.8C348.3 313.8 350.5 315.7 352.5 317.8C354.6 319.9 356.4 322.1 358.7 324.4C360.9 326.7 363.7 329 365.9 331.5C368.1 334 369.6 336.7 371.7 339.5C373.8 342.2 376 345.1 378.5 348.1Z"/></g></svg><span>Rapid Response</span></a><nav class="rr-nav" aria-label="Main"><a href="/talk-to-a-vet" aria-current="page" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div></nav></div></div>
+<!-- /rr:header -->
+<main class="tv">
+  <p class="tv-eyebrow"><span data-lang="en">Online vet · in the Rapid Response app</span><span data-lang="hi">ऑनलाइन वेट · रैपिड रिस्पॉन्स ऐप में</span></p>
+  <h1><span data-lang="en">Talk to a vet</span><span data-lang="hi">वेट से बात करें</span></h1>
+  <p class="tv-lead">
+    <span data-lang="en">Chat with a verified vet from your phone. If they need to see your animal, start a video call from the same chat. Anywhere in India.</span>
+    <span data-lang="hi">अपने फ़ोन से एक सत्यापित वेट से चैट करें। अगर उन्हें आपके जानवर को देखना हो, तो उसी चैट से वीडियो कॉल शुरू करें। पूरे भारत में।</span>
+  </p>
+  <p class="tv-status" id="tvStatus" role="status" aria-live="polite" hidden><i class="dot" aria-hidden="true"></i><span id="tvStatusText"></span></p>
+
+  <div class="tv-cta">
+    <a class="tv-btn dark" id="tvPlay" href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener"><span data-lang="en">Get it on Google Play</span><span data-lang="hi">Google Play से पाएँ</span></a>
+    <a class="tv-btn" id="tvIos" href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener"><span data-lang="en">Download on the App Store</span><span data-lang="hi">App Store से डाउनलोड करें</span></a>
+  </div>
+  <p class="tv-have"><span data-lang="en">Already have the app? Open it and tap <b>Talk to a vet</b> on Home.</span><span data-lang="hi">ऐप पहले से है? उसे खोलें और होम पर <b>वेट से बात करें</b> दबाएँ।</span></p>
+
+  <section class="tv-sect" aria-labelledby="tvHow">
+    <h2 id="tvHow"><span data-lang="en">How it works</span><span data-lang="hi">यह कैसे काम करता है</span></h2>
+    <ol class="tv-steps">
+      <li><div class="n">1</div><p class="h"><span data-lang="en">Tell us what is wrong</span><span data-lang="hi">बताएँ क्या समस्या है</span></p>
+        <p class="p"><span data-lang="en">Pick the animal and describe the problem in a line or two. No forms, no sign-up.</span><span data-lang="hi">जानवर चुनें और एक-दो पंक्तियों में समस्या बताएँ। कोई फ़ॉर्म नहीं, कोई साइन-अप नहीं।</span></p></li>
+      <li><div class="n">2</div><p class="h"><span data-lang="en">A verified vet accepts</span><span data-lang="hi">एक सत्यापित वेट स्वीकार करते हैं</span></p>
+        <p class="p"><span data-lang="en">Your request goes to every vet online right now. The first to accept chats with you.</span><span data-lang="hi">आपका अनुरोध अभी ऑनलाइन हर वेट तक जाता है। जो पहले स्वीकार करे, वे आपसे चैट करते हैं।</span></p></li>
+      <li><div class="n">3</div><p class="h"><span data-lang="en">Video if needed</span><span data-lang="hi">ज़रूरत हो तो वीडियो</span></p>
+        <p class="p"><span data-lang="en">Start a video call from the chat with one tap, so the vet can see your animal.</span><span data-lang="hi">एक टैप में चैट से वीडियो कॉल शुरू करें, ताकि वेट आपके जानवर को देख सकें।</span></p></li>
+      <li><div class="n">4</div><p class="h"><span data-lang="en">Pay the vet directly</span><span data-lang="hi">सीधे वेट को भुगतान</span></p>
+        <p class="p"><span data-lang="en" id="tvFeeEn">A fixed fee, paid to the vet by UPI. Every consultation stays in your history.</span><span data-lang="hi" id="tvFeeHi">एक तय फ़ीस, वेट को UPI से। हर परामर्श आपके इतिहास में रहता है।</span></p></li>
+    </ol>
+    <p class="tv-sos"><span data-lang="en"><b>Emergency?</b> Raise an SOS in the app instead. It reaches the nearest people in your district at once.</span><span data-lang="hi"><b>आपात स्थिति?</b> इसके बजाय ऐप में एसओएस भेजें। यह तुरंत आपके ज़िले के सबसे नज़दीकी लोगों तक पहुँचता है।</span></p>
+  </section>
+
+  <section class="tv-sect" aria-labelledby="tvTrust">
+    <h2 id="tvTrust"><span data-lang="en">Why you can trust it</span><span data-lang="hi">आप भरोसा क्यों कर सकते हैं</span></h2>
+    <div class="tv-trust">
+      <div><b><span data-lang="en">Verified vets only</span><span data-lang="hi">केवल सत्यापित वेट</span></b><span><span data-lang="en">Every vet's registration and ID are checked by our team before they can take a consultation.</span><span data-lang="hi">हर वेट का पंजीकरण और पहचान हमारी टीम जाँचती है, उसके बाद ही वे परामर्श दे सकते हैं।</span></span></div>
+      <div><b><span data-lang="en">No phone numbers shared</span><span data-lang="hi">कोई फ़ोन नंबर साझा नहीं</span></b><span><span data-lang="en">Chat and video stay inside Rapid Response. Neither side sees the other's number.</span><span data-lang="hi">चैट और वीडियो रैपिड रिस्पॉन्स के अंदर रहते हैं। कोई भी दूसरे का नंबर नहीं देखता।</span></span></div>
+      <div><b><span data-lang="en">RRT never handles money</span><span data-lang="hi">RRT पैसा नहीं संभालता</span></b><span><span data-lang="en">You pay the vet directly by UPI, only after they ask in the chat.</span><span data-lang="hi">आप सीधे वेट को UPI से भुगतान करते हैं, तभी जब वे चैट में कहें।</span></span></div>
+      <div><b><span data-lang="en">If a vet goes quiet</span><span data-lang="hi">अगर वेट जवाब न दें</span></b><span><span data-lang="en">After 10 minutes without a reply, send your request to other vets with one tap, at no extra cost.</span><span data-lang="hi">10 मिनट तक जवाब न मिले, तो एक टैप में अनुरोध दूसरे वेट को भेजें, बिना अतिरिक्त खर्च।</span></span></div>
+    </div>
+  </section>
+
+  <section class="tv-sect tv-vets" aria-label="For vets">
+    <p><span data-lang="en"><b>Are you a vet?</b> Join as a verified vet and take consultations from anywhere in India, on your own hours.</span><span data-lang="hi"><b>क्या आप वेट हैं?</b> सत्यापित वेट के रूप में जुड़ें और अपने समय पर पूरे भारत से परामर्श लें।</span></p>
+    <a class="tv-btn" href="/vet"><span data-lang="en">Join as a vet</span><span data-lang="hi">वेट के रूप में जुड़ें</span></a>
+  </section>
+</main>
+<script>
+/* Live status from the vet platform: the same count the app shows (public,
+   no sign-in, cached on the server). Text only; nothing is sent. */
+(function () {
+  'use strict';
+  var API = 'https://asia-south1-rrt-new-backend.cloudfunctions.net/vetConsult/consult/public-status';
+  var status = null;
+  function lang() { return document.documentElement.lang === 'hi' ? 'hi' : 'en'; }
+  function paint() {
+    var box = document.getElementById('tvStatus'), txt = document.getElementById('tvStatusText');
+    if (!box || !txt) return;
+    if (!status) { box.hidden = true; return; }
+    var hi = lang() === 'hi', n = status.vets_online || 0, text;
+    if (!status.enabled) text = hi ? 'ऑनलाइन वेट अभी रुका हुआ है। कृपया बाद में देखें।' : 'Talk to a vet is paused right now. Please check back later.';
+    else if (n > 0) text = hi ? ('अभी ' + n + ' सत्यापित वेट ऑनलाइन') : (n + (n === 1 ? ' verified vet' : ' verified vets') + ' online now');
+    else if (status.next_available_label) text = hi ? ('वेट आमतौर पर ' + status.next_available_label + ' से ऑनलाइन रहते हैं। आप अभी भी पूछ सकते हैं।') : ('Vets are usually online from ' + status.next_available_label + '. You can still ask now.');
+    else text = hi ? 'अभी कोई वेट ऑनलाइन नहीं है। आप फिर भी पूछ सकते हैं।' : 'No vet is online right now. You can still ask.';
+    txt.textContent = text;
+    box.classList.toggle('on', !!status.enabled && n > 0);
+    box.hidden = false;
+    if (status.fee_inr > 0) {
+      var en = document.getElementById('tvFeeEn'), hin = document.getElementById('tvFeeHi');
+      if (en) en.textContent = '₹' + status.fee_inr + ', paid to the vet directly by UPI. Every consultation stays in your history.';
+      if (hin) hin.textContent = '₹' + status.fee_inr + ', सीधे वेट को UPI से। हर परामर्श आपके इतिहास में रहता है।';
+    }
+  }
+  window.setLang = function (l) { document.documentElement.lang = l === 'hi' ? 'hi' : 'en'; paint(); };
+  try { var l = localStorage.getItem('lang') || localStorage.getItem('rr-lang'); if (l === 'hi') document.documentElement.lang = 'hi'; } catch (e) { /* private mode */ }
+  /* On a phone, one button: the store for this phone. */
+  var ua = navigator.userAgent || '';
+  if (/Android/i.test(ua)) { var i = document.getElementById('tvIos'); if (i) i.hidden = true; }
+  if (/iPhone|iPad|iPod/i.test(ua)) { var p = document.getElementById('tvPlay'); if (p) { p.hidden = true; var o = document.getElementById('tvIos'); if (o) o.classList.add('dark'); } }
+  function load() {
+    if (!window.fetch) return;
+    fetch(API, { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.ok) { status = j; paint(); } })
+      .catch(function () { /* offline: the page still explains everything */ });
+  }
+  window.RRTTalkToVet = { paint: paint, set: function (j) { status = j; paint(); } };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load); else load();
+})();
+</script>
+<!-- rr:footer -->
+<div class="rr-chrome rr-ftr" role="contentinfo"><span data-rr-en="© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority.</span><nav aria-label="Site"><a href="/" data-rr-en="Home" data-rr-hi="होम">Home</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/report" data-rr-en="On Record" data-rr-hi="ऑन रिकॉर्ड">On Record</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/vet" data-rr-en="For vets" data-rr-hi="वेट के लिए">For vets</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="mailto:ask@rapid-response.in" data-rr-en="ask@rapid-response.in" data-rr-hi="ask@rapid-response.in">ask@rapid-response.in</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav></div>
+<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>
+<!-- /rr:footer -->
+</body>
+</html>

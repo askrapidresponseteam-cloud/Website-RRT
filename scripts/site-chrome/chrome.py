@@ -11,6 +11,7 @@ def t(en, hi):
     return f'data-rr-en="{en}" data-rr-hi="{hi}">{en}'
 
 NAV = [
+    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें', ''),
     ('/know-the-laws', 'Know the laws', 'कानून जानें', ''),
     ('/faq', 'FAQ', 'सवाल', ''),
     ('/shop', 'Shop', 'शॉप', 'rr-opt'),
@@ -42,7 +43,7 @@ def header(current='', shop=False):
             f'<nav class="rr-nav" aria-label="Main">{links}{right}</nav></div></div>\n<!-- /rr:header -->')
 
 FOOT_LINKS = [
-    ('/', 'Home', 'होम'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
+    ('/', 'Home', 'होम'), ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
     ('/faq', 'FAQ', 'सवाल'), ('/report', 'On Record', 'ऑन रिकॉर्ड'), ('/shop', 'Shop', 'शॉप'), ('/vet', 'For vets', 'वेट के लिए'),
     ('/app-guide', 'App guide', 'ऐप गाइड'), ('mailto:ask@rapid-response.in', 'ask@rapid-response.in', 'ask@rapid-response.in'),
     ('https://www.instagram.com/rrtanimals', '@rrtanimals', '@rrtanimals'),
