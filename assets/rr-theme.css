@@ -1,34 +1,35 @@
-/* Rapid Response - one look for the older content pages, in Signal
-   (assets/rr-signal.css, docs/SIGNAL-THEME.md).
+/* Rapid Response - one look for the older content pages: light ground,
+   red signal (assets/rr-signal.css, docs/SIGNAL-THEME.md).
    These pages were built on a shared token set (--bg, --text, --accent,
-   --display ...). Re-pointing the tokens gives them the Signal skin without
-   touching their markup or scripts: mist page, paper cards, ink titles in
-   Manrope 800, graphite body copy, IBM Plex Mono data labels. Each page's
-   own <style> ends with a short "Signal" block for the components only it
-   has. :root:root outranks both :root and html.light in the page's own
-   stylesheet.
+   --display ...). Re-pointing the tokens gives them the theme without
+   touching their markup or scripts: paper page, square cards with
+   hairlines, ink titles in Archivo, graphite body copy, IBM Plex Mono data
+   labels. Each page's own <style> ends with a short theme block for the
+   components only it has. :root:root outranks both :root and html.light in
+   the page's own stylesheet.
 
-   --accent is used for text, borders and dots, so it is ink: Signal yellow
-   is set only on each page's one primary action, never on text. */
+   --accent is used for text, borders and dots, so it is ink: red (white
+   label) is set only on each page's one primary action, live status,
+   errors and emergencies. */
 
 :root:root,html.light:root{
-  --bg:var(--sg-mist);--bg-soft:var(--sg-paper);--bg-card:var(--sg-paper);--bg-card-h:var(--sg-mist);--w:var(--sg-ink);
+  --bg:var(--sg-paper);--bg-soft:var(--sg-paper);--bg-card:var(--sg-paper);--bg-card-h:var(--sg-mist);--w:var(--sg-ink);
   --text:var(--sg-ink);--text-mid:var(--sg-graphite);--text-low:var(--sg-slate);--text-dim:var(--sg-slate);--text-faint:var(--sg-disabled);
   --b:var(--sg-line);--border:var(--sg-line);--border-strong:var(--sg-line);--border-focus:var(--sg-ink);
   --accent:var(--sg-ink);--accent-h:var(--sg-ink-hover);--accent-on-dark:var(--sg-ink);--accent-soft:var(--sg-fog);--accent-soft2:var(--sg-mist);
   --sos:var(--sg-stop);--sos-soft:var(--sg-stop-bg);--net:var(--sg-graphite);
   --ok:var(--sg-go-text);--ok-soft:var(--sg-go-bg);
   --amb:var(--sg-hold-text);--amb-soft:var(--sg-hold-bg);--warn:var(--sg-hold-text);--warn-soft:var(--sg-hold-bg);--high:var(--sg-hold-text);
-  --crit:var(--sg-stop-text);--crit-soft:var(--sg-stop-bg);--crit-border:#F2B8B8;
+  --crit:var(--sg-stop-text);--crit-soft:var(--sg-stop-bg);--crit-border:var(--sg-wash-line);
   --fir:#5B45B0;--fir-soft:#EFEBFA;
-  --display:var(--sg-sans);
+  --display:var(--sg-display);
   --sans:var(--sg-sans);
   --mono:var(--sg-mono);
   --hindi:var(--sg-hindi);
   color-scheme:light;
 }
-html.rr-themed{font-synthesis:none;background:var(--sg-mist)}
-html.rr-themed body{background:var(--sg-mist);color:var(--sg-ink);font-family:var(--sans)}
+html.rr-themed{font-synthesis:none;background:var(--sg-paper)}
+html.rr-themed body{background:var(--sg-paper);color:var(--sg-ink);font-family:var(--sans)}
 html[lang=hi].rr-themed body{font-family:var(--sg-hindi)}
 
 /* The old chrome stays in the DOM (its scripts still find their elements)
@@ -36,21 +37,21 @@ html[lang=hi].rr-themed body{font-family:var(--sg-hindi)}
 html.rr-themed body>header,html.rr-themed #hdr,html.rr-themed #modeBtn,html.rr-themed .mode-b,
 html.rr-themed body>footer{display:none!important}
 
-/* Display type: Manrope 800, tight tracking, sentence case (the copy is
-   written in sentence case; the uppercase was the retired look). */
-html.rr-themed :is(h1,h2,h3,.h1,.h2,.hero-h,.sec-title,.title){font-family:var(--sg-sans);font-weight:800;letter-spacing:var(--sg-track-title);text-transform:none;color:var(--sg-ink)}
+/* Display type: Archivo 800, tight tracking (-4% for the big titles, -2.5%
+   for the rest). Titles stay as written; only button labels are caps. */
+html.rr-themed :is(h1,h2,h3,.h1,.h2,.hero-h,.sec-title,.title){font-family:var(--sg-display);font-weight:800;letter-spacing:var(--sg-track-title);text-transform:none;color:var(--sg-ink)}
 html.rr-themed :is(h1,.h1,.hero-h,.title){letter-spacing:var(--sg-track-display)}
 html.rr-themed h1{line-height:1.08}
 html[lang=hi].rr-themed :is(h1,h2,h3,.h1,.h2,.hero-h,.sec-title,.title){font-family:var(--sg-hindi);font-weight:700;letter-spacing:0}
 
-/* Dark photo heroes become plain heroes on the mist page: text first.
+/* Dark photo heroes become plain heroes on the paper page: text first.
    Named exactly: a wildcard here once matched the On Record modals
    (class="overlay") and hid the whole report form. */
 html.rr-themed :is(.hero-media,.hero-scrim,.grain,.p-grain){display:none!important}
-html.rr-themed :is(.hero,#top){background:var(--sg-mist)!important;background-image:none!important;min-height:0!important}
+html.rr-themed :is(.hero,#top){background:var(--sg-paper)!important;background-image:none!important;min-height:0!important}
 html.rr-themed :is(.hero,#top) :is(h1,h2,p,span){text-shadow:none!important}
 
-/* Selection and focus: ink. Inputs get the Signal ink focus ring. */
+/* Selection and focus: ink. Inputs get the ink focus ring. */
 html.rr-themed ::selection{background:var(--sg-ink);color:#fff}
 html.rr-themed a:focus-visible,html.rr-themed button:focus-visible{outline:2px solid var(--sg-ink);outline-offset:3px}
 html.rr-themed :is(input,select,textarea)::placeholder{color:var(--sg-muted)}
@@ -65,8 +66,8 @@ html.rr-themed :is(#top .lede,.disclaim,.page .lead,.hero p,.hero .hero-meta,#to
 html.rr-themed #top .meta-line .sep{color:var(--sg-disabled)!important}
 html.rr-themed .disclaim a{color:var(--sg-ink)!important;text-decoration:underline}
 html.rr-themed .page .eye{color:var(--sg-slate)}
-html.rr-themed .hero .btn-ghost{color:var(--sg-ink);border-color:transparent;background:var(--sg-fog);backdrop-filter:none}
-html.rr-themed .hero .btn-ghost:hover{color:var(--sg-ink);background:var(--sg-fog-hover);border-color:transparent}
+html.rr-themed .hero .btn-ghost{color:var(--sg-ink);border-color:var(--sg-ink);background:var(--sg-paper);backdrop-filter:none}
+html.rr-themed .hero .btn-ghost:hover{color:var(--sg-ink);background:var(--sg-mist);border-color:var(--sg-ink)}
 html.rr-themed #top .crumb,html.rr-themed #top .crumb span{color:var(--sg-slate)!important}
 html.rr-themed #top .crumb .dot{background:var(--sg-ink)!important}
 html.rr-themed #top .title .em{color:var(--sg-ink)!important}

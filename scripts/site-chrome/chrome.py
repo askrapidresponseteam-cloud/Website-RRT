@@ -59,8 +59,8 @@ def footer(extra=''):
 # Fonts are self-hosted (assets/fonts, @font-face rules in assets/rr-fonts*.css,
 # built by scripts/fonts/build_fonts.py, which also rewrites the hashed names
 # below). The files the header needs are preloaded so the page paints once, in
-# its own fonts: Marcellus for the wordmark, Manrope 500 (body) and 800 (titles,
-# buttons) for the Signal theme; Hindi readers (stored choice) also preload the
+# its own fonts: Marcellus for the wordmark, Manrope 500 (body) and Archivo 800
+# (titles) for the theme; Hindi readers (stored choice) also preload the
 # Hindi weights (the header's labels are Noto 500 in Hindi, the app button 600).
 def _preload(f):
     return f'<link rel="preload" href="/assets/fonts/{f}" as="font" type="font/woff2" crossorigin>'
@@ -73,7 +73,7 @@ def fonts(devanagari=True, hindi=True):
     the Devanagari font. hindi=False: pages whose language switch does not work (app
     guide, remove-report), so Hindi readers see them in English."""
     s = _preload('marcellus-latin-400.8a539799.woff2')
-    s += _preload('manrope-latin-500.19874318.woff2') + _preload('manrope-latin-800.74c161db.woff2')
+    s += _preload('manrope-latin-500.19874318.woff2') + _preload('archivo-latin-800.c26cda24.woff2')
     if devanagari:
         s += _preload('noto-sans-devanagari-devanagari-400.f86f14cb.woff2')  # the header's "हिंदी"
         if hindi:

@@ -239,6 +239,21 @@ with delivery details open (or the Pay button in view once they are saved),
 then hands off to the seller's checkout exactly as before.
 `scripts/check-storefront.js` now enforces the new design contract.
 
+## Light ground, red signal (2.18.0, 25 Sep 2026)
+
+The site, the app and the admin moved from Signal (below) to the RRT theme
+"light ground, red signal" (`docs/SIGNAL-THEME.md`): white page, square
+corners everywhere, 1px hairlines instead of shadows, Archivo for headings,
+prices and UPPERCASE button labels, Manrope body, IBM Plex Mono labels, one
+red (#D81E2C, white text) per view for the primary action, red wash for
+selected chips and error notices. The same `--sg-*` tokens carry it, so every
+stylesheet followed; each page's own `<style>` was brought in line (buttons,
+headings, chips, radii). Archivo is self-hosted like the other fonts. The
+header and the paw logo are unchanged in size and place; the current page is
+underlined in red. In the shop, ADD on a product tile is an outlined button,
+so a grid never turns red; `scripts/check-storefront.js` checks the new
+palette.
+
 ## Signal (25 Sep 2026)
 
 The site now wears Signal, the theme the app and the admin share

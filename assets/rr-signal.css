@@ -1,52 +1,67 @@
-/* Rapid Response - Signal: the one theme for the app, the website and the
-   admin (docs/SIGNAL-THEME.md). This file only defines the tokens; every
-   other stylesheet (rr-site.css for the header and footer, rr-theme.css for
-   the older content pages, shop.css, and each page's own <style>) maps its
-   classes onto them. Every page links it first, from its rr:head block.
+/* Rapid Response - the theme for the app, the website and the admin: light
+   ground, red signal (2.18.0; docs/SIGNAL-THEME.md). This file defines the
+   tokens (the --sg-* names date from the earlier yellow "Signal" theme and
+   stayed so every stylesheet follows), plus the few base rules that make every
+   page share one type and shape: display type in Archivo and square corners.
+   Every other stylesheet (rr-site.css for the header and footer, rr-theme.css
+   for the older content pages, shop.css, and each page's own <style>) maps its
+   classes onto these tokens. Every page links it first, from its rr:head block.
 
-   Rules: one Signal (yellow) element per view, the primary next action; ink
-   on Signal, never white; Signal is never a background for reading; red
-   (stop) only for end, error, destructive or emergency. */
+   Rules: one red per view, two at most (the primary action and a live
+   status); white on red, never ink; tints (the red wash) are for surfaces,
+   never for type; red also marks errors, emergencies and destructive actions;
+   zero radius (round only by nature: avatars, dots); borders, not shadows. */
 
 :root{
   /* colour */
-  --sg-accent:#FFD52E;        /* primary action only */
-  --sg-accent-press:#F2C200;  /* hover / pressed accent */
-  --sg-wash:#FFF7D5;          /* highlighted rows */
-  --sg-wash-line:#FFE990;     /* border of a highlighted row */
-  --sg-ink:#101114;           /* titles, dark controls, primary text */
-  --sg-ink-hover:#25272D;
-  --sg-graphite:#3A3C42;      /* body copy */
-  --sg-slate:#6F727A;         /* secondary text, captions */
-  --sg-muted:#8B8E96;         /* tertiary text, placeholders */
-  --sg-disabled:#B2B4BA;
-  --sg-line:#E3E3E8;          /* borders, input outlines */
-  --sg-fog:#EFEFF2;           /* secondary fills, dividers, secondary buttons */
-  --sg-fog-hover:#E6E6EB;
-  --sg-mist:#F6F6F8;          /* page background, list rows */
-  --sg-paper:#FFFFFF;         /* cards, sheets, dialogs */
+  --sg-accent:#D81E2C;        /* signal red: the primary action, live status */
+  --sg-accent-press:#A2131B;  /* deep red: hover / pressed, links, error text */
+  --sg-on-accent:#FFFFFF;     /* white on red */
+  --sg-wash:#FDECEC;          /* red wash: selected rows and tiles, error notices */
+  --sg-wash-line:#F6D6D6;     /* border of a washed surface */
+  --sg-ink:#0D0D0F;           /* type, chrome, dark buttons */
+  --sg-ink-hover:#2A2A2C;
+  --sg-graphite:#46453F;      /* body copy */
+  --sg-slate:#6B6963;         /* secondary text, data labels */
+  --sg-muted:#8A8780;         /* placeholders, tertiary text */
+  --sg-disabled:#9C9992;
+  --sg-disabled-text:#6E6C68; /* text on a disabled fill */
+  --sg-line:#E4E2DE;          /* hairline: borders, dividers */
+  --sg-line-strong:#DDDBD6;   /* chip and small button borders */
+  --sg-fog:#EFEDEA;           /* inner hairlines, disabled and secondary fills */
+  --sg-fog-hover:#E4E2DE;
+  --sg-mist:#F5F4F2;          /* surface: inset rows, card footers */
+  --sg-paper:#FFFFFF;         /* the ground */
   --sg-go:#12A05C;--sg-go-text:#0C7B46;--sg-go-bg:#E6F5ED;
   --sg-hold:#E08A1E;--sg-hold-text:#9A5E06;--sg-hold-bg:#FBEEDB;
-  --sg-stop:#E03B3B;--sg-stop-hover:#C93333;--sg-stop-text:#B32424;--sg-stop-bg:#FBE5E5;
-  --sg-link:#2C6BED;
+  --sg-stop:#D81E2C;--sg-stop-hover:#A2131B;--sg-stop-text:#A2131B;--sg-stop-bg:#FDECEC;
+  --sg-link:#A2131B;
 
-  /* type: Manrope for the interface, IBM Plex Mono for data labels, Noto
-     Sans Devanagari for Hindi (a Hindi page puts it first) */
+  /* type: Archivo for display, titles and button labels, Manrope for the
+     interface, IBM Plex Mono for data labels, Noto Sans Devanagari for Hindi
+     (a Hindi page puts it first) */
+  --sg-display:"Archivo","Archivo Fallback","Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --sg-sans:"Manrope","Manrope Fallback","Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --sg-hindi:"Noto Sans Devanagari","Noto Sans Devanagari Fallback","Manrope","Manrope Fallback",system-ui,sans-serif;
   --sg-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  --sg-track-display:-.03em;--sg-track-title:-.025em;--sg-track-section:-.02em;--sg-track-label:.09em;
+  --sg-track-display:-.04em;--sg-track-title:-.025em;--sg-track-section:-.02em;--sg-track-label:.12em;--sg-track-button:.09em;
 
-  /* shape and depth */
-  --sg-r-tiny:8px;--sg-rs:12px;--sg-rl:16px;--sg-rc:22px;--sg-pill:999px;
-  --sg-shadow-card:0 1px 2px rgba(16,17,20,.05),0 10px 28px rgba(16,17,20,.05);
-  --sg-shadow-row:0 1px 2px rgba(16,17,20,.05);
-  --sg-shadow-float:0 8px 20px rgba(16,17,20,.14);
-  --sg-shadow-sheet:0 -10px 40px rgba(16,17,20,.14);
-  --sg-shadow-pill:0 1px 3px rgba(16,17,20,.1);
+  /* shape and depth: zero radius; hairlines, not shadows (the "shadow"
+     tokens are 1px rings, so boxes keep their size) */
+  --sg-r-tiny:0px;--sg-rs:0px;--sg-rl:0px;--sg-rc:0px;--sg-pill:0px;
+  --sg-shadow-card:0 0 0 1px var(--sg-line);
+  --sg-shadow-row:0 0 0 1px var(--sg-line);
+  --sg-shadow-float:0 0 0 1px var(--sg-line-strong);
+  --sg-shadow-sheet:0 -1px 0 var(--sg-line);
+  --sg-shadow-pill:0 0 0 1px var(--sg-line-strong);
 
   /* controls */
   --sg-btn-h:56px;--sg-btn-h-dense:48px;--sg-chip-h:38px;
   --sg-ease:120ms ease-out;
   --sg-focus:0 0 0 1.5px var(--sg-ink);
 }
+
+/* Display type: headings in Archivo on every themed page (Hindi keeps Noto
+   Sans Devanagari, which the stack falls through to per glyph). */
+:where(html.rr-themed) :where(h1,h2,h3){font-family:var(--sg-display)}
+:where(html.rr-themed[lang=hi]) :where(h1,h2,h3){font-family:var(--sg-hindi)}

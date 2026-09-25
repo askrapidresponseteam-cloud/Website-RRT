@@ -157,100 +157,113 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
 .grid2>*{min-width:0}
 
 /* rr:signal */
-/* Signal (assets/rr-signal.css): this page's own components. One yellow
-   button per view (Next, Submit, Sign in, the status card's action); Back
-   and the other actions are fog; errors are stop red, never the accent. */
+/* Theme (assets/rr-signal.css): this page's own components. One red button
+   per view, white label (Next, Submit, Sign in, the status card's action);
+   Back and the other actions are outline (paper, ink border); everything
+   square; errors are a red wash with ink type. */
 html.rr-themed main{padding-top:40px}
 html.rr-themed .eyebrow{font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);color:var(--sg-slate);margin-bottom:12px}
 html.rr-themed h1{font-size:clamp(34px,5.4vw,52px);line-height:1.04}
 html.rr-themed h1 .hi-b{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0}
 html.rr-themed .intro{font-size:17px;line-height:1.55;font-weight:500;color:var(--sg-graphite)}
-/* stepper: round steps, ink when current */
+/* stepper: round step markers (round by nature). Done = red disc with a
+   white check, current = white disc with a 2px red ring and red number,
+   next = white disc with a grey ring; done lines are red. */
 html.rr-themed .stepper li:before,html.rr-themed .stepper li:after{background:var(--sg-line);height:2px}
-html.rr-themed .stepper li.done:before,html.rr-themed .stepper li.done:after,html.rr-themed .stepper li.cur:before{background:var(--sg-ink)}
-html.rr-themed .stepper .sq{border-radius:50%;border:1.5px solid var(--sg-line);background:var(--sg-paper);font-family:var(--sg-sans);font-weight:800;font-size:14px;color:var(--sg-slate)}
+html.rr-themed .stepper li.done:before,html.rr-themed .stepper li.done:after,html.rr-themed .stepper li.cur:before{background:var(--sg-accent)}
+html.rr-themed .stepper .sq{border-radius:50%;border:1.5px solid var(--sg-disabled);background:var(--sg-paper);font-family:var(--sg-display);font-weight:800;font-size:14px;color:var(--sg-disabled-text)}
 html.rr-themed .stepper li.open .sq{border-color:var(--sg-ink);color:var(--sg-ink)}
-html.rr-themed .stepper li.cur .sq{background:var(--sg-ink);border-color:var(--sg-ink);color:#fff}
-html.rr-themed .stepper li.done .sq{background:var(--sg-paper);border-color:var(--sg-ink);color:var(--sg-ink)}
+html.rr-themed .stepper li.cur .sq{background:var(--sg-paper);border:2px solid var(--sg-accent);color:var(--sg-accent)}
+html.rr-themed .stepper li.done .sq{background:var(--sg-accent);border-color:var(--sg-accent);color:var(--sg-on-accent)}
+html.rr-themed .stepper li.done .sq .material-symbols-outlined{color:var(--sg-on-accent)}
 html.rr-themed .stepper button{color:var(--sg-slate);font-family:var(--sg-sans)}
 html.rr-themed .stepper .sl{font-weight:600}
 html.rr-themed .stepper li.cur .sl{font-weight:800;color:var(--sg-ink)}
-/* sections as paper cards */
-html.rr-themed .sect{border-top:0;margin-top:24px;padding:22px 22px 24px;background:var(--sg-paper);border-radius:var(--sg-rc);box-shadow:var(--sg-shadow-card)}
+/* sections as square paper cards with a hairline */
+html.rr-themed .sect{border-top:0;margin-top:24px;padding:22px 22px 24px;background:var(--sg-paper);border-radius:0;box-shadow:var(--sg-shadow-card)}
 html.rr-themed .sect-h{font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);color:var(--sg-slate);margin-bottom:14px}
 html.rr-themed .sect-h .n{color:var(--sg-ink)}
 html.rr-themed .vnote{color:var(--sg-graphite);font-size:15.5px;font-weight:500}
-/* fields: 56px, paper, line border, radius 16, ink focus ring, stop on error */
+/* fields: 56px, paper, hairline border, square, ink focus ring, red on error */
 html.rr-themed .field label{font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);color:var(--sg-slate);margin-bottom:8px}
 html.rr-themed .field label .req{color:var(--sg-slate)}
-html.rr-themed .field input,html.rr-themed .field select{min-height:var(--sg-btn-h);border:1px solid var(--sg-line);border-radius:var(--sg-rl);background:var(--sg-paper);color:var(--sg-ink);
+html.rr-themed .field input,html.rr-themed .field select{min-height:var(--sg-btn-h);border:1px solid var(--sg-line);border-radius:0;background:var(--sg-paper);color:var(--sg-ink);
   font-family:var(--sg-sans);font-size:16px;font-weight:500;padding:14px 16px;transition:border-color var(--sg-ease),box-shadow var(--sg-ease)}
 html.rr-themed .field input:focus,html.rr-themed .field select:focus{border-color:var(--sg-ink);box-shadow:inset 0 0 0 .5px var(--sg-ink)}
 html.rr-themed .field input::placeholder{color:var(--sg-muted)}
 html.rr-themed .field .hint{font-size:13px;color:var(--sg-slate)}
 html.rr-themed .field.bad input,html.rr-themed .field.bad select,html.rr-themed .field.bad .phonewrap{border-color:var(--sg-stop)}
 html.rr-themed .field .err,html.rr-themed .formerr{color:var(--sg-stop-text);font-weight:600}
-html.rr-themed .phonewrap{border:1px solid var(--sg-line);border-radius:var(--sg-rl);background:var(--sg-paper);overflow:hidden}
+html.rr-themed .phonewrap{border:1px solid var(--sg-line);border-radius:0;background:var(--sg-paper);overflow:hidden}
 html.rr-themed .phonewrap:focus-within{border-color:var(--sg-ink);box-shadow:inset 0 0 0 .5px var(--sg-ink)}
 html.rr-themed .phonewrap input:focus{box-shadow:none}
 html.rr-themed .phonewrap .cc{font-family:var(--sg-mono);color:var(--sg-slate);border-right:1px solid var(--sg-line);padding:0 14px;background:var(--sg-mist)}
 /* documents, consent, notices */
-html.rr-themed .doc{border:0;border-radius:var(--sg-rl);background:var(--sg-mist);padding:14px}
-html.rr-themed .doc .dt{font-family:var(--sg-sans);font-weight:700;font-size:16px;color:var(--sg-ink)}
+html.rr-themed .doc{border:0;border-radius:0;background:var(--sg-mist);padding:14px}
+html.rr-themed .doc .dt{font-family:var(--sg-display);font-weight:700;font-size:16px;letter-spacing:var(--sg-track-title);color:var(--sg-ink)}
+html[lang=hi].rr-themed .doc .dt{letter-spacing:0}
 html.rr-themed .doc .ds{font-size:13px;color:var(--sg-slate)}
-html.rr-themed .doc .tag{font-family:var(--sg-mono);font-size:10.5px;font-weight:500;letter-spacing:var(--sg-track-label);border:0;border-radius:var(--sg-pill);padding:4px 10px;background:var(--sg-fog);color:var(--sg-graphite)}
-html.rr-themed .doc .tag.req{background:var(--sg-ink);color:#fff}
+html.rr-themed .doc .tag{font-family:var(--sg-mono);font-size:10.5px;font-weight:500;letter-spacing:var(--sg-track-label);border:0;border-radius:0;padding:4px 10px;background:var(--sg-paper);box-shadow:inset 0 0 0 1px var(--sg-line-strong);color:var(--sg-graphite)}
+html.rr-themed .doc .tag.req{background:var(--sg-ink);box-shadow:none;color:#fff}
 html.rr-themed .doc .picked{color:var(--sg-go-text);font-weight:600}
 html.rr-themed .doc-hint{font-size:13px;color:var(--sg-slate)}
-html.rr-themed .consent{border:0;border-radius:var(--sg-rl);background:var(--sg-mist);padding:14px}
-html.rr-themed .consent .box{border:1.5px solid var(--sg-disabled);border-radius:6px;background:var(--sg-paper)}
-html.rr-themed .consent.on .box{background:var(--sg-ink);border-color:var(--sg-ink)}
+html.rr-themed .consent{border:0;border-radius:0;background:var(--sg-mist);padding:14px}
+html.rr-themed .consent .box{border:1.5px solid var(--sg-disabled);border-radius:0;background:var(--sg-paper)}
+html.rr-themed .consent.on .box{background:var(--sg-accent);border-color:var(--sg-accent)}
 html.rr-themed .consent .ct{font-size:15px;font-weight:500;color:var(--sg-graphite)}
-html.rr-themed .notice{border:0;border-radius:var(--sg-rl);background:var(--sg-fog);color:var(--sg-graphite);font-size:13.5px}
-html.rr-themed .already{border:0;border-radius:var(--sg-rl);background:var(--sg-paper);box-shadow:var(--sg-shadow-row);color:var(--sg-graphite);font-size:15px;padding:14px 16px}
+html.rr-themed .notice{border:0;border-radius:0;background:var(--sg-mist);color:var(--sg-graphite);font-size:13.5px}
+html.rr-themed .already{border:0;border-radius:0;background:var(--sg-paper);box-shadow:var(--sg-shadow-row);color:var(--sg-graphite);font-size:15px;padding:14px 16px}
 html.rr-themed :is(.idbar,.linkrow,.already) a{color:var(--sg-ink);font-weight:700}
 html.rr-themed .idbar{color:var(--sg-slate)}
-html.rr-themed .regtaken{border:1px solid #F2B8B8;border-radius:var(--sg-rl);background:var(--sg-stop-bg)}
-html.rr-themed .regtaken p{color:var(--sg-stop-text);font-weight:600}
-/* buttons: primary = Signal + ink text; ghost = fog; both pill 56px */
-html.rr-themed .btn{min-height:var(--sg-btn-h);border:0;border-radius:var(--sg-pill);background:var(--sg-accent);color:var(--sg-ink);font-family:var(--sg-sans);font-size:17px;font-weight:800;letter-spacing:0;
-  padding:14px 26px;transition:filter var(--sg-ease),transform var(--sg-ease),background var(--sg-ease)}
-html.rr-themed .btn:hover{opacity:1;filter:brightness(.96)}
-html.rr-themed .btn:active{filter:brightness(.9);transform:scale(.985)}
-html.rr-themed .btn:disabled{opacity:1;filter:none;background:var(--sg-fog);color:var(--sg-disabled)}
-html.rr-themed .btn.ghost{background:var(--sg-fog);color:var(--sg-ink);border:0}
-html.rr-themed .btn.ghost:hover{filter:none;background:var(--sg-fog-hover)}
+html.rr-themed .regtaken{border:1px solid var(--sg-wash-line);border-radius:0;background:var(--sg-wash)}
+html.rr-themed .regtaken p{color:var(--sg-ink);font-weight:600}
+/* buttons: 56px, square, Archivo 700 UPPERCASE, tracked. Primary = red +
+   white label; ghost = outline (paper, 1.5px ink ring, so the box keeps
+   its size); inside notices and the account box the action is ink. */
+html.rr-themed .btn{min-height:var(--sg-btn-h);border:0;border-radius:0;background:var(--sg-accent);color:var(--sg-on-accent);font-family:var(--sg-display);font-size:14px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:uppercase;
+  padding:14px 26px;transition:background var(--sg-ease),transform var(--sg-ease)}
+html[lang=hi].rr-themed .btn{font-family:var(--sg-hindi);font-size:16px;letter-spacing:0;text-transform:none}
+html.rr-themed .btn:hover{opacity:1;background:var(--sg-accent-press)}
+html.rr-themed .btn:active{background:var(--sg-accent-press);transform:scale(.985)}
+html.rr-themed .btn:disabled{opacity:1;background:var(--sg-fog);color:var(--sg-disabled-text)}
+html.rr-themed .btn.ghost{background:var(--sg-paper);color:var(--sg-ink);border:0;box-shadow:inset 0 0 0 1.5px var(--sg-ink)}
+html.rr-themed .btn.ghost:hover{background:var(--sg-mist)}
 html.rr-themed :is(.regtaken,.acct) .btn:not(.ghost){background:var(--sg-ink);color:#fff}
-html.rr-themed :is(.regtaken,.acct) .btn:not(.ghost):hover{filter:none;background:var(--sg-ink-hover)}
+html.rr-themed :is(.regtaken,.acct) .btn:not(.ghost):hover{background:var(--sg-ink-hover)}
 html.rr-themed .aq .btn{min-height:var(--sg-btn-h-dense)}
 html.rr-themed .aq select,html.rr-themed .aq input{min-height:var(--sg-btn-h-dense)}
-html.rr-themed .doc .btn.ghost{min-height:42px!important;background:var(--sg-paper);box-shadow:var(--sg-shadow-pill);font-size:15px}
-/* qualifications chips */
-html.rr-themed .chip{border:0;border-radius:var(--sg-pill);background:var(--sg-ink);color:#fff;padding:6px 6px 6px 14px;font-size:14px;font-weight:700}
+html.rr-themed .doc .btn.ghost{min-height:42px!important;background:var(--sg-paper);box-shadow:inset 0 0 0 1px var(--sg-line-strong);font-size:13px}
+html.rr-themed .doc .btn.ghost:hover{box-shadow:inset 0 0 0 1px var(--sg-ink)}
+html[lang=hi].rr-themed .doc .btn.ghost{font-size:15px}
+/* qualifications: square ink tags with a remove button */
+html.rr-themed .chip{border:0;border-radius:0;background:var(--sg-ink);color:#fff;padding:6px 6px 6px 14px;font-size:14px;font-weight:700}
 html.rr-themed .chip button{color:#fff}
 /* status view, account, summary */
-html.rr-themed .statuscard{border:0;border-radius:var(--sg-rc);background:var(--sg-paper);box-shadow:var(--sg-shadow-card);padding:30px 22px}
+html.rr-themed .statuscard{border:0;border-radius:0;background:var(--sg-paper);box-shadow:var(--sg-shadow-card);padding:30px 22px}
 html.rr-themed .st-pending .ic{background:var(--sg-hold-bg);color:var(--sg-hold-text)}
 html.rr-themed .st-approved .ic{background:var(--sg-go-bg);color:var(--sg-go-text)}
 html.rr-themed .st-more .ic{background:var(--sg-hold-bg);color:var(--sg-hold-text)}
 html.rr-themed .st-rejected .ic{background:var(--sg-stop-bg);color:var(--sg-stop-text)}
-html.rr-themed .statuscard h2{font-size:24px;letter-spacing:var(--sg-track-section);text-transform:none}
+html.rr-themed .statuscard h2{font-size:24px;letter-spacing:var(--sg-track-title);text-transform:none}
 html.rr-themed .statuscard p,html.rr-themed .acct p{color:var(--sg-graphite);font-weight:500}
-html.rr-themed .reasons{border:0;border-radius:var(--sg-rl);background:var(--sg-mist)}
+html.rr-themed .reasons{border:0;border-radius:0;background:var(--sg-mist)}
 html.rr-themed .reasons .rl,html.rr-themed .summary dt{font-family:var(--sg-mono);font-size:11px;font-weight:500;letter-spacing:var(--sg-track-label);color:var(--sg-slate)}
-html.rr-themed .acct{border:0;border-radius:var(--sg-rl);background:var(--sg-mist)}
-html.rr-themed .acct h3{font-size:19px;letter-spacing:-.01em;text-transform:none;font-weight:700}
-html.rr-themed .summary{border:0;border-radius:var(--sg-rc);background:var(--sg-paper);box-shadow:var(--sg-shadow-card);overflow:hidden}
+html.rr-themed .acct{border:0;border-radius:0;background:var(--sg-mist)}
+html.rr-themed .acct h3{font-size:19px;letter-spacing:var(--sg-track-title);text-transform:none;font-weight:700}
+html.rr-themed .summary{border:0;border-radius:0;background:var(--sg-paper);box-shadow:var(--sg-shadow-card);overflow:hidden}
 html.rr-themed .summary .grp{border-top:1px solid var(--sg-fog);padding:16px 20px}
-html.rr-themed .summary .gt{font-family:var(--sg-sans);text-transform:none;letter-spacing:0;font-size:16px;font-weight:800;color:var(--sg-ink)}
+html.rr-themed .summary .gt{font-family:var(--sg-display);text-transform:none;letter-spacing:var(--sg-track-title);font-size:16px;font-weight:800;color:var(--sg-ink)}
+html[lang=hi].rr-themed .summary .gt{font-family:var(--sg-hindi);letter-spacing:0}
 html.rr-themed .summary .gh a{color:var(--sg-ink);font-weight:700}
 html.rr-themed .summary dd{font-weight:600;color:var(--sg-ink)}
 html.rr-themed .center-load .spin{border-color:var(--sg-line);border-top-color:var(--sg-ink)}
 html.rr-themed input[readonly]{opacity:1;background:var(--sg-fog)!important;color:var(--sg-slate)}
 @media (max-width:560px){html.rr-themed .sect{padding:18px 16px 20px}}
 html.rr-themed .field :is(input,select):focus-visible{outline:none}
+/* Hindi: tracked mono labels set Devanagari with no letter-spacing. */
+html[lang=hi].rr-themed :is(.eyebrow,.sect-h,.field label,.reasons .rl,.summary dt){letter-spacing:0}
 /* /rr:signal */
-</style><!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-800.74c161db.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><link rel="stylesheet" href="/assets/rr-theme.css"><script>/* rr: one light theme site-wide */try{['rr-mode','theme'].forEach(function(k){localStorage.setItem(k,'l')});}catch(e){}document.documentElement.classList.add('light','rr-themed');</script><!-- /rr:head -->
+</style><!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/archivo-latin-800.c26cda24.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><link rel="stylesheet" href="/assets/rr-theme.css"><script>/* rr: one light theme site-wide */try{['rr-mode','theme'].forEach(function(k){localStorage.setItem(k,'l')});}catch(e){}document.documentElement.classList.add('light','rr-themed');</script><!-- /rr:head -->
 </head>
 <body>
 <!-- rr:header -->

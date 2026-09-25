@@ -15,13 +15,13 @@
 <meta content="website" property="og:type">
 <style>
 /* Page styles only; the header and footer are the shared site chrome
-   (assets/rr-site.css). Signal theme (assets/rr-signal.css): mist page,
-   paper cards, ink titles in Manrope, one yellow button (the store button
-   for this phone), red only for the emergency note. */
+   (assets/rr-site.css). Theme (assets/rr-signal.css): paper page, square
+   cards with hairlines, ink titles in Archivo, one red button (the store
+   button for this phone), a red wash only for the emergency note. */
 :root{--tv-ink:var(--sg-ink);--tv-mid:var(--sg-graphite);--tv-low:var(--sg-slate);--tv-line:var(--sg-line);--tv-soft:var(--sg-mist);--tv-red:var(--sg-stop);--tv-ok:var(--sg-go-text);--tv-okbg:var(--sg-go-bg);
   --tv-sans:var(--sg-sans);--tv-pad:clamp(18px,7vw,120px)}
 *,*:before,*:after{box-sizing:border-box}
-html,body{margin:0;background:var(--sg-mist);color:var(--tv-ink)}
+html,body{margin:0;background:var(--sg-paper);color:var(--tv-ink)}
 body{font-family:var(--tv-sans);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:16px;font-weight:500}
 html[lang=hi] body{font-family:var(--sg-hindi)}
 [data-lang]{display:none}
@@ -30,7 +30,7 @@ a{color:inherit}
 .tv{max-width:1040px;margin:0 auto;padding:clamp(32px,6vh,64px) var(--tv-pad) 72px}
 .tv-eyebrow{font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--tv-low);margin:0 0 14px}
 html[lang=hi] .tv-eyebrow{font-family:var(--sg-hindi);letter-spacing:0;font-size:13px}
-.tv h1{font-family:var(--tv-sans);font-weight:800;font-size:clamp(40px,5.6vw,60px);line-height:1.02;letter-spacing:var(--sg-track-display);margin:0;max-width:14ch;color:var(--tv-ink)}
+.tv h1{font-family:var(--sg-display);font-weight:800;font-size:clamp(40px,5.6vw,60px);line-height:1.02;letter-spacing:var(--sg-track-display);margin:0;max-width:14ch;color:var(--tv-ink)}
 html[lang=hi] .tv h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;font-size:clamp(34px,5.2vw,52px);line-height:1.15}
 .tv-lead{font-size:clamp(17px,1.8vw,19px);line-height:1.5;color:var(--tv-mid);max-width:44ch;margin:16px 0 0}
 .tv-status{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:0 14px;min-height:30px;border-radius:var(--sg-pill);background:var(--sg-fog);color:var(--tv-mid);font-size:14px;font-weight:600}
@@ -39,35 +39,37 @@ html[lang=hi] .tv h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:
 .tv-status.on{background:var(--tv-okbg);color:var(--tv-ok);font-weight:700}
 .tv-status.on .dot{background:var(--sg-go);box-shadow:0 0 0 3px #12A05C33}
 .tv-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-/* Signal buttons: 56px pill, Manrope 800, sentence case. The dark one is
-   the page's primary action, so it is Signal yellow with ink text. */
-.tv-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:var(--sg-btn-h);padding:0 26px;border:0;border-radius:var(--sg-pill);background:var(--sg-fog);color:var(--tv-ink);
-  font-size:17px;font-weight:800;letter-spacing:0;text-decoration:none;cursor:pointer;transition:background var(--sg-ease),filter var(--sg-ease),transform var(--sg-ease)}
-html[lang=hi] .tv-btn{font-size:16px;font-weight:700}
-.tv-btn:hover{background:var(--sg-fog-hover)}
+/* Buttons: 56px, square, Archivo 700 UPPERCASE, tracked. The dark one is
+   the page's primary action, so it is red with white text; the others are
+   outline (paper with an ink border). */
+.tv-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:var(--sg-btn-h);padding:0 26px;border:1.5px solid var(--tv-ink);border-radius:0;background:var(--sg-paper);color:var(--tv-ink);
+  font-family:var(--sg-display);font-size:14px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background var(--sg-ease),border-color var(--sg-ease),transform var(--sg-ease)}
+html[lang=hi] .tv-btn{font-family:var(--sg-hindi);font-size:16px;font-weight:700;letter-spacing:0;text-transform:none}
+.tv-btn:hover{background:var(--sg-mist)}
 .tv-btn:active{transform:scale(.985)}
-.tv-btn.dark{background:var(--sg-accent);color:var(--sg-ink)}
-.tv-btn.dark:hover{background:var(--sg-accent);filter:brightness(.96)}
-.tv-btn.dark:active{filter:brightness(.9)}
+.tv-btn.dark{background:var(--sg-accent);border-color:var(--sg-accent);color:var(--sg-on-accent)}
+.tv-btn.dark:hover,.tv-btn.dark:active{background:var(--sg-accent-press);border-color:var(--sg-accent-press)}
 .tv-btn[hidden]{display:none}
 .tv-btn:focus-visible{outline:2px solid var(--tv-ink);outline-offset:3px}
 .tv-have{font-size:15px;color:var(--tv-low);margin:14px 0 0}
 .tv-have b{color:var(--tv-ink);font-weight:700}
 .tv-sect{margin-top:clamp(44px,7vh,64px)}
-.tv-sect h2{font-family:var(--tv-sans);font-weight:800;font-size:clamp(24px,3vw,30px);line-height:1.2;margin:0 0 18px;letter-spacing:var(--sg-track-title);color:var(--tv-ink)}
+.tv-sect h2{font-family:var(--sg-display);font-weight:800;font-size:clamp(24px,3vw,30px);line-height:1.2;margin:0 0 18px;letter-spacing:var(--sg-track-title);color:var(--tv-ink)}
 html[lang=hi] .tv-sect h2{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0}
 .tv-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(4,1fr)}
 .tv-steps li{padding:20px;background:var(--sg-paper);border-radius:var(--sg-rc);box-shadow:var(--sg-shadow-card)}
-.tv-steps .n{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--tv-ink);color:#fff;font-size:15px;font-weight:800;line-height:1}
-.tv-steps .h{font-weight:700;margin:14px 0 6px;font-size:17px;line-height:1.3;color:var(--tv-ink)}
+.tv-steps .n{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--tv-ink);color:#fff;font-family:var(--sg-display);font-size:15px;font-weight:800;line-height:1}
+.tv-steps .h{font-family:var(--sg-display);font-weight:700;letter-spacing:var(--sg-track-title);margin:14px 0 6px;font-size:17px;line-height:1.3;color:var(--tv-ink)}
 .tv-steps .p{color:var(--tv-mid);font-size:15px;line-height:1.5;margin:0}
 .tv-trust{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .tv-trust div{padding:20px;background:var(--sg-paper);border-radius:var(--sg-rc);box-shadow:var(--sg-shadow-card)}
-.tv-trust b{display:block;font-size:17px;font-weight:700;margin-bottom:4px;color:var(--tv-ink)}
+.tv-trust b{display:block;font-family:var(--sg-display);font-size:17px;font-weight:700;letter-spacing:var(--sg-track-title);margin-bottom:4px;color:var(--tv-ink)}
+html[lang=hi] :is(.tv-steps .h,.tv-trust b){font-family:var(--sg-hindi);letter-spacing:0}
 .tv-trust div>span{color:var(--tv-mid);font-size:15px;line-height:1.5}
-/* Emergency: the one place this page uses red (Stop). */
-.tv-sos{margin:16px 0 0;padding:14px 18px;border-radius:var(--sg-rl);background:var(--sg-stop-bg);color:var(--tv-mid);font-size:15px;line-height:1.5}
-.tv-sos b{color:var(--sg-stop-text);font-weight:800}
+/* Emergency: a red wash notice with its wash border (type stays ink and
+   graphite on the tint). */
+.tv-sos{margin:16px 0 0;padding:14px 18px;border-radius:0;border:1px solid var(--sg-wash-line);background:var(--sg-wash);color:var(--tv-mid);font-size:15px;line-height:1.5}
+.tv-sos b{color:var(--tv-ink);font-weight:800}
 .tv-vets{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;background:var(--sg-paper);border-radius:var(--sg-rc);box-shadow:var(--sg-shadow-card)}
 .tv-vets p{margin:0;color:var(--tv-mid);max-width:52ch}
 .tv-vets b{color:var(--tv-ink);font-weight:700}
@@ -78,7 +80,7 @@ html[lang=hi] .tv-sect h2{font-family:var(--sg-hindi);font-weight:700;letter-spa
   .tv-vets .tv-btn{width:100%}
 }
 </style>
-<!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-800.74c161db.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><!-- /rr:head -->
+<!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/archivo-latin-800.c26cda24.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><!-- /rr:head -->
 </head>
 <body>
 <!-- rr:header -->
@@ -120,9 +122,9 @@ html[lang=hi] .tv-sect h2{font-family:var(--sg-hindi);font-weight:700;letter-spa
       <div><b><span data-lang="en">Verified vets only</span><span data-lang="hi">केवल सत्यापित वेट</span></b><span><span data-lang="en">Every vet's registration and ID are checked by our team before they can take a consultation. In the chat you can see your vet's qualifications, council and ratings.</span><span data-lang="hi">हर वेट का पंजीकरण और पहचान हमारी टीम जाँचती है, उसके बाद ही वे परामर्श दे सकते हैं। चैट में आप अपने वेट की योग्यताएँ, काउंसिल और रेटिंग देख सकते हैं।</span></span></div>
       <div><b><span data-lang="en">No phone numbers shared</span><span data-lang="hi">कोई फ़ोन नंबर साझा नहीं</span></b><span><span data-lang="en">Chat and video stay inside Rapid Response. Neither side sees the other's number.</span><span data-lang="hi">चैट और वीडियो रैपिड रिस्पॉन्स के अंदर रहते हैं। कोई भी दूसरे का नंबर नहीं देखता।</span></span></div>
       <div><b><span data-lang="en">RRT never handles money</span><span data-lang="hi">RRT पैसा नहीं संभालता</span></b><span><span data-lang="en">You pay the vet directly by UPI. You always see the amount first; some vets ask before the chat opens, others during or after. Every payment step is recorded in the chat for both of you.</span><span data-lang="hi">आप सीधे वेट को UPI से भुगतान करते हैं। रकम आपको पहले दिखती है; कुछ वेट चैट खुलने से पहले माँगते हैं, कुछ दौरान या बाद में। भुगतान का हर कदम चैट में आप दोनों के लिए दर्ज रहता है।</span></span></div>
-      <div><b><span data-lang="en">If your vet goes quiet</span><span data-lang="hi">अगर वेट जवाब न दें</span></b><span><span data-lang="en">Your consultation stays open and nothing is lost. Remind the vet with one tap. After 10 minutes without a reply you can also move to another vet, free, if you choose: your chat and any payment stay on record, and the next vet sees that you already paid.</span><span data-lang="hi">आपका परामर्श खुला रहता है और कुछ भी खोता नहीं। एक टैप में वेट को याद दिलाएँ। 10 मिनट तक जवाब न मिले तो आप चाहें तो मुफ़्त में दूसरे वेट के पास जा सकते हैं: आपकी चैट और कोई भी भुगतान दर्ज रहता है, और अगले वेट को दिखता है कि आप भुगतान कर चुके हैं।</span></span></div>
+      <div><b><span data-lang="en">If your vet is unresponsive</span><span data-lang="hi">अगर वेट जवाब न दें</span></b><span><span data-lang="en">Your consultation is still active. You can remind your vet with one tap. You are not required to start a new consultation or choose another vet: your existing chat, consultation and payment status remain as they are. If you choose to consult another vet, you can do so separately, subject to the usual consultation and payment rules.</span><span data-lang="hi">आपका परामर्श अभी भी सक्रिय रहता है। एक टैप में वेट को याद दिला सकते हैं। आपको नया परामर्श शुरू करने या दूसरा वेट चुनने की ज़रूरत नहीं है: आपकी मौजूदा चैट, परामर्श और भुगतान की स्थिति जैसी है वैसी ही रहती है। अगर आप दूसरे वेट से परामर्श लेना चाहें, तो अलग से ले सकते हैं, सामान्य परामर्श और भुगतान नियमों के अनुसार।</span></span></div>
       <div><b><span data-lang="en">Need more help after it ends?</span><span data-lang="hi">खत्म होने के बाद और मदद चाहिए?</span></b><span><span data-lang="en">For 48 hours after a consultation ends, either of you can send a message to continue in the same chat. It opens again as soon as the other side accepts.</span><span data-lang="hi">परामर्श खत्म होने के 48 घंटे तक आप दोनों में से कोई भी उसी चैट में जारी रखने के लिए संदेश भेज सकता है। दूसरे के स्वीकार करते ही चैट फिर खुल जाती है।</span></span></div>
-      <div><b><span data-lang="en">One consultation at a time</span><span data-lang="hi">एक समय में एक परामर्श</span></b><span><span data-lang="en">You never have two consultations running at once, and every message, call and payment stays in your history.</span><span data-lang="hi">आपके कभी दो परामर्श एक साथ नहीं चलते, और हर संदेश, कॉल और भुगतान आपके इतिहास में रहता है।</span></span></div>
+      <div><b><span data-lang="en">No duplicate consultations</span><span data-lang="hi">कोई दोहरा परामर्श नहीं</span></b><span><span data-lang="en">Asking again takes you back to the consultation you already have. A second one opens only if you choose to consult another vet while yours is unresponsive. Every message, call and payment stays in your history.</span><span data-lang="hi">दोबारा पूछने पर आप अपने मौजूदा परामर्श पर ही लौटते हैं। दूसरा परामर्श तभी खुलता है जब आपके वेट के जवाब न देने पर आप खुद दूसरे वेट से परामर्श लेना चुनें। हर संदेश, कॉल और भुगतान आपके इतिहास में रहता है।</span></span></div>
     </div>
   </section>
 

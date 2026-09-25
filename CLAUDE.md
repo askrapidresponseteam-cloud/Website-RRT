@@ -19,14 +19,18 @@ and theme between these markers. Keep them exactly as they are:
 - Header/footer markup lives in `scripts/site-chrome/chrome.py`. To change it
   site-wide, edit it there and run `python3 scripts/site-chrome/heal.py --force`;
   do not hand-edit one page.
-- Styles: `assets/rr-signal.css` (the Signal tokens, `--sg-*`, see
-  `docs/SIGNAL-THEME.md`; linked first from every rr:head block),
-  `assets/rr-site.css` (header/footer), `assets/rr-theme.css` (older content
-  pages), `assets/shop.css` (shop). Map new styles onto the `--sg-*` tokens:
-  one yellow (`--sg-accent`, ink text) per view, red (`--sg-stop`) only for
-  errors, destructive actions and emergencies. Do not reintroduce the old
-  dark palette, Barlow/JetBrains fonts, or a red logo square. Marcellus is
-  only for the wordmark in the header.
+- Styles: `assets/rr-signal.css` (the theme tokens, `--sg-*`, see
+  `docs/SIGNAL-THEME.md`: light ground, red signal; linked first from every
+  rr:head block), `assets/rr-site.css` (header/footer), `assets/rr-theme.css`
+  (older content pages), `assets/shop.css` (shop). Map new styles onto the
+  `--sg-*` tokens: white ground, square corners (every radius token is 0),
+  hairlines not shadows, Archivo (`--sg-display`) for headings and button
+  labels, one red (`--sg-accent`, white text) per view for the primary action
+  (red also for errors, destructive actions and emergencies). Do not
+  reintroduce the old dark palette, Barlow/JetBrains fonts, rounded pills, the
+  yellow of the earlier theme, or a red logo square: the paw and the
+  Marcellus wordmark stay as they are, and Marcellus is only for the wordmark
+  in the header.
 - Never use long dashes (em or en) anywhere; use a plain hyphen.
 - Fonts are served from this site (`assets/fonts/`, `assets/rr-fonts*.css`,
   built by `scripts/fonts/build_fonts.py`); never link Google Fonts again.

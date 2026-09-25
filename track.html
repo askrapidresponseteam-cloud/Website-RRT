@@ -20,22 +20,23 @@
 <meta name="robots" content="noindex">
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="/assets/rrt-store-config.js"></script><!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-800.74c161db.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><script src="/assets/rr-voice.js"></script><!-- /rr:head -->
+<script src="/assets/rrt-store-config.js"></script><!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/archivo-latin-800.c26cda24.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><script src="/assets/rr-voice.js"></script><!-- /rr:head -->
 <link rel="stylesheet" href="/assets/shop.css">
 <style>
-/* Orders, in Signal (tokens from assets/shop.css): each order a paper
-   card with a status chip; delete-my-data is the one destructive button. */
+/* Orders (tokens from assets/shop.css): each order a square paper card
+   with a hairline and a square status chip; delete-my-data is the one red
+   (destructive) button. */
 .trk { width: 85%; max-width: 760px; margin: 0 auto; padding: 34px 0 70px; }
-.trk h1 { font-family: var(--display); font-weight: 800; letter-spacing: -.025em;
+.trk h1 { font-family: var(--display); font-weight: 800; letter-spacing: var(--track-display);
           font-size: 34px; line-height: 1.1; margin: 0 0 18px; color: var(--ink); }
-.order { background: var(--paper); border-radius: var(--r-card); box-shadow: var(--shadow-card); margin-bottom: 12px; overflow: hidden; }
+.order { background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); margin-bottom: 12px; overflow: hidden; }
 .order > summary { list-style: none; cursor: pointer; padding: 16px 20px;
                    display: flex; align-items: center; gap: 14px; }
 .order > summary::-webkit-details-marker { display: none; }
 .order > summary:hover { background: var(--mist); }
 .order .when { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--ink); }
 .order .n { font-size: 14px; color: var(--text-low); }
-.order .chip { margin-left: auto; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: var(--pill);
+.order .chip { margin-left: auto; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 0;
                font-size: 13px; font-weight: 700; background: var(--fog); color: var(--graphite); }
 .order .chip.placed { background: var(--go-bg); color: var(--go); }
 .order .body { border-top: 1px solid var(--line-soft); padding: 8px 20px 18px; }
@@ -43,22 +44,26 @@
           border-bottom: 1px solid var(--line-soft); font-size: 14px; }
 .o-line:last-of-type { border-bottom: 0; }
 .o-line img { width: 44px; height: 44px; object-fit: contain; background: var(--paper); padding: 2px;
-              border: 1px solid var(--line); border-radius: 10px; }
+              border: 1px solid var(--line); border-radius: 0; }
 .o-line .q { color: var(--text-low); }
 .o-line .amt { margin-left: auto; font-size: 14px; font-weight: 700; }
 .o-meta { display: flex; justify-content: space-between; align-items: center;
           padding-top: 14px; font-size: 14px; flex-wrap: wrap; gap: 10px; }
 .o-meta .ref { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--text-low); letter-spacing: .09em; }
-.help { margin-top: 26px; padding: 20px 22px; background: var(--paper); border-radius: var(--r-card); box-shadow: var(--shadow-card); }
-.help h2 { font-family: var(--display); font-weight: 800; letter-spacing: -.02em; font-size: 20px; margin: 0 0 8px; }
+/* the uppercase label runs wider: a little smaller, so it still sits beside
+   the reference on a phone */
+.o-meta .btn-line { padding: 0 22px; font-size: 13px; }
+.help { margin-top: 26px; padding: 20px 22px; background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); }
+.help h2 { font-family: var(--display); font-weight: 800; letter-spacing: var(--track-title); font-size: 20px; margin: 0 0 8px; }
 .help p { font-size: 15px; color: var(--text-mid); line-height: 1.6; max-width: 60ch; margin: 0 0 8px; }
 .help p:last-child { margin-bottom: 0; }
 .help a { color: var(--link); font-weight: 600; }
 .danger { margin-top: 26px; padding: 0 2px; }
-.danger button { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 0; border-radius: var(--pill);
-                 background: var(--stop); color: #fff; font-family: var(--sans); font-size: 15px; font-weight: 800; cursor: pointer;
+.danger button { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 0; border-radius: 0;
+                 background: var(--stop); color: #fff; font-family: var(--display); font-size: 13px; font-weight: 700;
+                 letter-spacing: var(--track-button); text-transform: uppercase; cursor: pointer;
                  transition: background var(--ease), transform var(--ease); }
-.danger button:hover { background: var(--stop-hover); }
+.danger button:hover, .danger button:active { background: var(--stop-hover); }
 .danger button:active { transform: scale(.985); }
 .danger p { font-size: 13px; color: var(--text-low); margin-top: 10px; max-width: 52ch; line-height: 1.6; }
 </style>

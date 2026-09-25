@@ -1,58 +1,69 @@
 /* ==========================================================================
-   RRT SHOP - shared skin, in Signal (assets/rr-signal.css,
+   RRT SHOP - shared skin, light ground, red signal (assets/rr-signal.css,
    docs/SIGNAL-THEME.md).
 
-   Mist page, paper cards, ink type in Manrope, IBM Plex Mono for small data
-   labels and tabular figures for money. The header and footer are the
-   site's shared chrome (assets/rr-site.css); this file styles the shop bar
-   beneath it, the product feed, the product page, the bag and the orders
-   page. Product photography sits on mist plates inside paper cards so the
-   vendor's white-background shots read as objects.
+   Paper page, square paper cards with 1px hairlines (no shadows), titles,
+   prices and button labels in Archivo, body in Manrope, IBM Plex Mono for
+   small data labels and tabular figures for money. The header and footer
+   are the site's shared chrome (assets/rr-site.css); this file styles the
+   shop bar beneath it, the product feed, the product page, the bag and the
+   orders page. Product photography sits on mist plates inside paper cards
+   so the vendor's white-background shots read as objects.
 
-   One Signal (yellow) element per view: Checkout in the bag bar, Add to bag
-   on a product, the checkout button in the bag. ADD on a tile is fog, so a
-   grid of products never turns yellow. A discount is Go green (the
-   convention buyers here know); red (Stop) is only for errors and changes.
+   One red (white label) per view: Checkout in the bag bar, Add to bag on a
+   product, the checkout button in the bag. ADD on a tile is an outline
+   button, so a grid of products never turns red. Selected chips are the red
+   wash with a red border and label. A discount is Go green (the convention
+   buyers here know); red also marks errors, changes and deleting data.
 
-   Every token below points at the Signal token of the same meaning; the
+   Every token below points at the theme token of the same meaning; the
    literal after it is the fallback.
    ========================================================================== */
 
 :root {
   color-scheme: light;
-  --ink: var(--sg-ink, #101114);
-  --ink-h: var(--sg-ink-hover, #25272D);
-  --graphite: var(--sg-graphite, #3A3C42);
-  --slate: var(--sg-slate, #6F727A);
-  --muted: var(--sg-muted, #8B8E96);
-  --disabled: var(--sg-disabled, #B2B4BA);
-  --line: var(--sg-line, #E3E3E8);
-  --fog: var(--sg-fog, #EFEFF2);
-  --fog-h: var(--sg-fog-hover, #E6E6EB);
-  --mist: var(--sg-mist, #F6F6F8);
+  --ink: var(--sg-ink, #0D0D0F);
+  --ink-h: var(--sg-ink-hover, #2A2A2C);
+  --graphite: var(--sg-graphite, #46453F);
+  --slate: var(--sg-slate, #6B6963);
+  --muted: var(--sg-muted, #8A8780);
+  --disabled: var(--sg-disabled, #9C9992);
+  --disabled-text: var(--sg-disabled-text, #6E6C68);
+  --line: var(--sg-line, #E4E2DE);
+  --line-strong: var(--sg-line-strong, #DDDBD6);
+  --fog: var(--sg-fog, #EFEDEA);
+  --fog-h: var(--sg-fog-hover, #E4E2DE);
+  --mist: var(--sg-mist, #F5F4F2);
   --paper: var(--sg-paper, #ffffff);
-  --signal: var(--sg-accent, #FFD52E);
-  --wash: var(--sg-wash, #FFF7D5);
-  --wash-line: var(--sg-wash-line, #FFE990);
+  --signal: var(--sg-accent, #D81E2C);
+  --signal-press: var(--sg-accent-press, #A2131B);
+  --on-signal: var(--sg-on-accent, #ffffff);
+  --wash: var(--sg-wash, #FDECEC);
+  --wash-line: var(--sg-wash-line, #F6D6D6);
   --go: var(--sg-go-text, #0C7B46);
   --go-bg: var(--sg-go-bg, #E6F5ED);
   --hold: var(--sg-hold-text, #9A5E06);
   --hold-bg: var(--sg-hold-bg, #FBEEDB);
-  --stop: var(--sg-stop, #E03B3B);
-  --stop-hover: var(--sg-stop-hover, #C93333);
-  --stop-text: var(--sg-stop-text, #B32424);
-  --stop-bg: var(--sg-stop-bg, #FBE5E5);
-  --link: var(--sg-link, #2C6BED);
-  --r-card: 22px;
-  --r-row: 16px;
-  --r-thumb: 12px;
-  --pill: 999px;
-  --shadow-card: 0 1px 2px rgba(16, 17, 20, .05), 0 10px 28px rgba(16, 17, 20, .05);
-  --shadow-float: 0 8px 20px rgba(16, 17, 20, .14);
-  --shadow-pill: 0 1px 3px rgba(16, 17, 20, .1);
+  --stop: var(--sg-stop, #D81E2C);
+  --stop-hover: var(--sg-stop-hover, #A2131B);
+  --stop-text: var(--sg-stop-text, #A2131B);
+  --stop-bg: var(--sg-stop-bg, #FDECEC);
+  --link: var(--sg-link, #A2131B);
+  /* square everywhere; hairline rings instead of shadows (same box size) */
+  --r-card: 0px;
+  --r-row: 0px;
+  --r-thumb: 0px;
+  --pill: 0px;
+  --shadow-card: var(--sg-shadow-card, 0 0 0 1px #E4E2DE);
+  --shadow-float: var(--sg-shadow-float, 0 0 0 1px #DDDBD6);
+  --shadow-pill: var(--sg-shadow-pill, 0 0 0 1px #DDDBD6);
   --ease: 120ms ease-out;
-  /* the names the shop pages use, pointed at Signal */
-  --bg: var(--mist);
+  --track-display: var(--sg-track-display, -.04em);
+  --track-title: var(--sg-track-title, -.025em);
+  --track-button: var(--sg-track-button, .09em);
+  --hindi: var(--sg-hindi, "Noto Sans Devanagari", "Noto Sans Devanagari Fallback", system-ui, sans-serif);
+  /* the names the shop pages use, pointed at the theme */
+  --bg: var(--paper);
   --bg-soft: var(--paper);
   --bg-card: var(--paper);
   --plate: var(--mist);
@@ -69,7 +80,7 @@
   --accent-soft: var(--fog);
   --sale: var(--go);
   --ok: var(--sg-go, #12A05C);
-  --display: var(--sg-sans, "Manrope", "Manrope Fallback", system-ui, sans-serif);
+  --display: var(--sg-display, "Archivo", "Archivo Fallback", system-ui, sans-serif);
   --sans: var(--sg-sans, "Manrope", "Manrope Fallback", system-ui, sans-serif);
   --mono: var(--sg-mono, "IBM Plex Mono", ui-monospace, monospace);
   --pad: clamp(18px, 7vw, 120px);
@@ -79,7 +90,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 [hidden] { display: none !important; }
-html { font-synthesis: none; scroll-padding-top: 150px; background: var(--mist); }
+html { font-synthesis: none; scroll-padding-top: 150px; background: var(--paper); }
 body {
   font-family: var(--sans);
   color: var(--text);
@@ -96,7 +107,7 @@ button { font: inherit; color: inherit; }
 ::selection { background: var(--ink); color: #fff; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-.skip { position: absolute; left: -9999px; top: 0; z-index: 1000; background: var(--ink); color: #fff; padding: 10px 18px; font-size: 13px; border-radius: var(--r-row); }
+.skip { position: absolute; left: -9999px; top: 0; z-index: 1000; background: var(--ink); color: #fff; padding: 10px 18px; font-size: 13px; border-radius: 0; }
 .skip:focus { left: 8px; top: 8px; }
 
 .material-symbols-outlined {
@@ -115,12 +126,12 @@ button { font: inherit; color: inherit; }
   display: flex; align-items: center; gap: 22px;
   padding: 10px var(--pad);
 }
-/* Signal search field: paper pill, line border, ink focus ring */
+/* Search field: square paper field, hairline border, ink focus (1.5px) */
 .find {
   position: relative; flex: 1; min-width: 0;
   display: flex; align-items: center; gap: 8px;
   height: 48px; padding: 0 5px 0 20px;
-  background: var(--paper); border: 1px solid var(--line); border-radius: var(--pill);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 0;
   transition: border-color var(--ease), box-shadow var(--ease);
 }
 .find:hover { border-color: var(--disabled); }
@@ -132,40 +143,44 @@ button { font: inherit; color: inherit; }
 .find input::placeholder { color: var(--muted); }
 .find input:focus-visible { outline: none; }
 .find button[type=submit] {
-  flex: none; width: 38px; height: 38px; margin: 0; padding: 0; border: 0; border-radius: 50%; background: var(--ink); color: #fff;
+  flex: none; width: 38px; height: 38px; margin: 0; padding: 0; border: 0; border-radius: 0; background: var(--ink); color: #fff;
   display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background var(--ease);
 }
 .find button[type=submit]:hover { background: var(--ink-h); }
 .find button[type=submit] svg { display: block; }
-/* Voice search button in the shop search */
-.find .mic { flex: none; width: 38px; height: 38px; border: 0; border-radius: 50%; background: transparent; color: var(--graphite); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--ease); }
+/* Voice search button in the shop search: square; listening is live, so
+   it turns red with a white icon and a pulsing red ring */
+.find .mic { flex: none; width: 38px; height: 38px; border: 0; border-radius: 0; background: transparent; color: var(--graphite); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--ease); }
 .find .mic svg { width: 20px; height: 20px; }
 .find .mic:hover { background: var(--fog); color: var(--ink); }
-.find .mic.on { background: var(--ink); color: #fff; animation: micpulse 1.2s ease-in-out infinite; }
-@keyframes micpulse { 0% { box-shadow: 0 0 0 0 rgba(16, 17, 20, .35); } 70% { box-shadow: 0 0 0 12px rgba(16, 17, 20, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 17, 20, 0); } }
+.find .mic.on { background: var(--signal); color: var(--on-signal); animation: micpulse 1.2s ease-in-out infinite; }
+@keyframes micpulse { 0% { box-shadow: 0 0 0 0 rgba(216, 30, 44, .35); } 70% { box-shadow: 0 0 0 12px rgba(216, 30, 44, 0); } 100% { box-shadow: 0 0 0 0 rgba(216, 30, 44, 0); } }
 @media (prefers-reduced-motion: reduce) { .find .mic.on { animation: none; } }
 
-.shopbar-links { display: flex; align-items: center; gap: 4px; flex: none; padding: 4px; border-radius: var(--pill); background: var(--fog); }
+/* The two shelves as tabs: Archivo, slate; the current one ink 700 with a
+   2.5px red underline (drawn inside the box, so nothing moves). */
+.shopbar-links { display: flex; align-items: center; gap: 4px; flex: none; padding: 4px; border-radius: 0; background: transparent; }
 .shopbar-links a {
-  display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border-radius: var(--pill);
-  font-size: 14px; font-weight: 600; color: var(--slate); text-decoration: none; transition: color var(--ease), background var(--ease);
+  display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border-radius: 0;
+  font-family: var(--display); font-size: 14px; font-weight: 600; letter-spacing: 0; color: var(--slate); text-decoration: none;
+  transition: color var(--ease), box-shadow var(--ease);
 }
-.shopbar-links a:hover { color: var(--ink); }
-.shopbar-links a[aria-current=page] { background: var(--paper); color: var(--ink); font-weight: 700; box-shadow: var(--shadow-pill); }
+.shopbar-links a:hover { color: var(--ink); box-shadow: inset 0 -2.5px 0 var(--line); }
+.shopbar-links a[aria-current=page] { color: var(--ink); font-weight: 700; box-shadow: inset 0 -2.5px 0 var(--signal); }
 
 .sugg {
   position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 850;
-  background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-row);
-  box-shadow: var(--shadow-float); max-height: min(460px, 60vh); overflow: auto; padding: 6px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 0;
+  box-shadow: none; max-height: min(460px, 60vh); overflow: auto; padding: 6px;
 }
 .sugg a {
-  display: flex; align-items: center; gap: 14px; padding: 8px 10px; border-radius: var(--r-thumb);
+  display: flex; align-items: center; gap: 14px; padding: 8px 10px; border-radius: 0;
   text-decoration: none; color: var(--text); font-size: 15px; font-weight: 600;
 }
 .sugg a + a { margin-top: 2px; }
 .sugg a:hover, .sugg a:focus { background: var(--mist); outline: none; }
-.sugg img { width: 44px; height: 44px; object-fit: contain; background: var(--paper); border: 1px solid var(--line); padding: 3px; flex: none; border-radius: 10px; }
-.sugg .s-price { margin-left: auto; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.sugg img { width: 44px; height: 44px; object-fit: contain; background: var(--paper); border: 1px solid var(--line); padding: 3px; flex: none; border-radius: 0; }
+.sugg .s-price { margin-left: auto; font-family: var(--display); font-size: 14px; font-weight: 700; white-space: nowrap; }
 .sugg .s-shelf { color: var(--text-low); font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; }
 
 .sold-note {
@@ -181,7 +196,7 @@ button { font: inherit; color: inherit; }
   padding: 26px var(--pad) 14px;
 }
 .shop-title {
-  margin: 0; font-family: var(--display); font-weight: 800; letter-spacing: -.025em;
+  margin: 0; font-family: var(--display); font-weight: 800; letter-spacing: var(--track-display);
   font-size: clamp(30px, 3.6vw, 40px); line-height: 1.1;
 }
 .vh { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -190,17 +205,18 @@ button { font: inherit; color: inherit; }
 .controls { display: flex; align-items: center; gap: 12px; flex: none; }
 .count { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); white-space: nowrap; }
 .sort {
-  height: 38px; border: 1px solid var(--line); border-radius: var(--pill); background-color: var(--paper); padding: 0 36px 0 16px;
+  height: 38px; border: 1px solid var(--line-strong); border-radius: 0; background-color: var(--paper); padding: 0 36px 0 16px;
   font: inherit; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer;
   appearance: none; -webkit-appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, #101114 50%), linear-gradient(135deg, #101114 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, #0D0D0F 50%), linear-gradient(135deg, #0D0D0F 50%, transparent 50%);
   background-position: calc(100% - 19px) 16px, calc(100% - 14px) 16px; background-size: 5px 5px; background-repeat: no-repeat;
 }
 .sort:hover { background-color: var(--mist); }
 .sort:focus-visible { border-color: var(--ink); }
 
 /* Shelf and aisle chips: one scrollable row each, never wrapping into a
-   wall. Signal filter chips: 38px pill, selected = ink. */
+   wall. Square 38px filter chips: paper, 1px strong line, graphite label;
+   selected = red wash, red border, red label (700). */
 .category-bar {
   display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
   padding: 4px var(--pad) 12px;
@@ -208,21 +224,22 @@ button { font: inherit; color: inherit; }
 .category-bar::-webkit-scrollbar { display: none; }
 .category-bar a, .category {
   flex: none; display: inline-flex; align-items: center; height: 38px; padding: 0 16px;
-  border: 1px solid var(--line); border-radius: var(--pill); background: var(--paper);
-  font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; white-space: nowrap;
+  border: 1px solid var(--line-strong); border-radius: 0; background: var(--paper);
+  font-size: 14px; font-weight: 600; color: var(--graphite); text-decoration: none; white-space: nowrap;
   transition: background var(--ease), color var(--ease), border-color var(--ease);
 }
 .category-bar a:hover { background: var(--mist); color: var(--ink); }
-.category-bar a[aria-pressed=true] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.category-bar a[aria-pressed=true] { background: var(--wash); border-color: var(--signal); color: var(--signal); font-weight: 700; }
 .aisle-bar { padding-top: 0; }
 .aisle-bar a { height: 34px; font-size: 13.5px; }
 .brand-bar { padding-top: 0; }
 .brand-bar .lbl { flex: none; align-self: center; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); margin-right: 4px; }
 .brand-bar a { height: 34px; border-color: transparent; background: var(--fog); font-size: 13.5px; }
 .brand-bar a:hover { background: var(--fog-h); }
+.brand-bar a[aria-pressed=true]:hover { background: var(--wash); }
 .hub-rails, .seo-only { display: none; }
 
-.notice { margin: 0 var(--pad) 14px; padding: 14px 16px; border-radius: var(--r-row); background: var(--fog); color: var(--graphite); font-size: 14px; }
+.notice { margin: 0 var(--pad) 14px; padding: 14px 16px; border-radius: 0; background: var(--mist); color: var(--graphite); font-size: 14px; }
 
 /* ---------------------------------------------------------------- GRID -- */
 
@@ -237,15 +254,15 @@ button { font: inherit; color: inherit; }
 @media (max-width: 1100px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 760px) { .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 10px; row-gap: 10px; } }
 
-/* A tile is a paper card: the photo on a mist plate, then brand, name,
-   price and the buy row. */
+/* A tile is a square paper card with a hairline: the photo on a mist
+   plate, then brand, name, price and the buy row. */
 .product {
   position: relative; display: flex; flex-direction: column; min-width: 0;
-  background: var(--paper); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 8px 8px 12px;
+  background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); padding: 8px 8px 12px;
 }
 .product > a { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex: 1; }
 .product-image {
-  position: relative; aspect-ratio: 1 / 1; background: var(--plate); overflow: hidden; border-radius: var(--r-row);
+  position: relative; aspect-ratio: 1 / 1; background: var(--plate); overflow: hidden; border-radius: 0;
 }
 .product-image img {
   width: 100%; height: 100%; object-fit: contain; padding: 10%; mix-blend-mode: multiply;
@@ -253,10 +270,11 @@ button { font: inherit; color: inherit; }
 }
 .product:hover .product-image img { transform: scale(1.04); }
 .no-shot { width: 100%; height: 100%; background: var(--plate); }
-/* Status chips on the photo: discount = go, sold out = neutral, Rx = hold */
+/* Status chips on the photo (square): discount = go, sold out = neutral,
+   Rx = hold */
 .flag {
   position: absolute; left: 8px; top: 8px; z-index: 2;
-  display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: var(--pill);
+  display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 0;
   background: var(--go-bg); color: var(--go); font-size: 12px; font-weight: 700; letter-spacing: 0;
 }
 .flag + .flag { top: 36px; }
@@ -264,47 +282,52 @@ button { font: inherit; color: inherit; }
 .rx-flag { background: var(--hold-bg); color: var(--hold); }
 .p-heart {
   position: absolute; right: 14px; top: 14px; z-index: 3; width: 34px; height: 34px;
-  border: 0; border-radius: 50%; background: var(--paper); box-shadow: var(--shadow-pill); cursor: pointer; font-size: 17px; line-height: 34px; color: var(--graphite);
+  border: 0; border-radius: 0; background: var(--paper); box-shadow: var(--shadow-pill); cursor: pointer; font-size: 17px; line-height: 34px; color: var(--graphite);
   display: grid; place-items: center; padding: 0 0 1.5px; line-height: 1;
   transition: color var(--ease), background var(--ease);
 }
 .p-heart:hover { color: var(--ink); }
-.p-heart[aria-pressed=true] { background: var(--ink); color: #fff; }
+.p-heart[aria-pressed=true] { background: var(--ink); color: #fff; box-shadow: none; }
 .product-info { padding: 10px 6px 0; display: flex; flex-direction: column; gap: 3px; flex: 1; }
 .product-brand { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); }
 .product-name {
   margin: 0; font-size: 15px; font-weight: 600; line-height: 1.35; color: var(--text);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em;
 }
-.product-meta { font-size: 17px; font-weight: 800; margin-top: 4px; color: var(--ink); }
-.product-meta .was { font-size: 13px; font-weight: 500; color: var(--text-low); text-decoration: line-through; margin-left: 6px; }
-.product-meta .off { font-size: 13px; font-weight: 700; color: var(--sale); margin-left: 6px; }
-.product-meta .oos { font-size: 14px; font-weight: 600; color: var(--text-low); }
+.product-meta { font-family: var(--display); font-size: 17px; font-weight: 800; letter-spacing: -.01em; margin-top: 4px; color: var(--ink); }
+.product-meta .was { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--text-low); text-decoration: line-through; margin-left: 6px; }
+.product-meta .off { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0; color: var(--sale); margin-left: 6px; }
+.product-meta .oos { font-family: var(--sans); font-size: 14px; font-weight: 600; letter-spacing: 0; color: var(--text-low); }
 
-/* The buy row on every tile: ADD (fog), or an ink stepper once it is in
-   the bag. 40px pills. */
+/* The buy row on every tile: ADD (outline: paper with a 1.5px ink ring,
+   inset so the box keeps its size), or an ink stepper once it is in the
+   bag. 40px, square, Archivo 700 UPPERCASE labels. */
 .p-act { margin: 10px 4px 0; height: 40px; }
 .add {
-  width: 100%; height: 40px; border: 0; border-radius: var(--pill); background: var(--fog); color: var(--ink); cursor: pointer;
-  font-size: 15px; font-weight: 800; letter-spacing: 0; text-transform: none; transition: background var(--ease), transform var(--ease);
+  width: 100%; height: 40px; border: 0; border-radius: 0; background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink); color: var(--ink); cursor: pointer;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+  transition: background var(--ease), transform var(--ease);
 }
-.add:hover { background: var(--fog-h); }
+.add:hover { background: var(--mist); }
 .add:active { transform: scale(.985); }
-.add[aria-disabled=true] { background: var(--fog); color: var(--disabled); cursor: not-allowed; }
+.add[aria-disabled=true] { background: var(--fog); box-shadow: none; color: var(--disabled-text); cursor: not-allowed; }
 .step {
-  display: flex; align-items: stretch; height: 40px; border-radius: var(--pill); overflow: hidden; background: var(--ink); color: #fff;
+  display: flex; align-items: stretch; height: 40px; border-radius: 0; overflow: hidden; background: var(--ink); color: #fff;
 }
 .step button { width: 44px; border: 0; background: transparent; color: #fff; font-size: 18px; cursor: pointer; transition: background var(--ease); }
 .step button:hover { background: var(--ink-h); }
-.step span { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+.step span {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+}
 .in-bag {
-  display: flex; align-items: center; justify-content: center; height: 40px; border-radius: var(--pill); background: var(--ink); color: #fff;
-  font-size: 14px; font-weight: 700; text-decoration: none;
+  display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 0; background: var(--ink); color: #fff;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase; text-decoration: none;
 }
 
-.skel-tile { background: var(--paper); border-radius: var(--r-card); padding: 8px 8px 14px; }
-.skel-tile .ph { aspect-ratio: 1 / 1; background: var(--plate); border-radius: var(--r-row); }
-.skel-tile .ln { height: 12px; background: var(--fog); margin: 12px 6px 0; width: 80%; border-radius: var(--pill); }
+.skel-tile { background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); padding: 8px 8px 14px; }
+.skel-tile .ph { aspect-ratio: 1 / 1; background: var(--plate); border-radius: 0; }
+.skel-tile .ln { height: 12px; background: var(--fog); margin: 12px 6px 0; width: 80%; border-radius: 0; }
 .skel-tile .ln + .ln { width: 45%; }
 .skel-tile .ph, .skel-tile .ln { animation: pulse 1.4s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: .55; } }
@@ -317,59 +340,65 @@ button { font: inherit; color: inherit; }
 .state .st-sub { color: var(--text-low); font-size: 15px; font-weight: 500; }
 
 /* ------------------------------------------------------------- BUTTONS -- */
-/* Signal buttons: 56px pill, Manrope 800, sentence case.
-   .btn-solid = the view's primary action (Signal yellow, ink text);
-   .btn-line = secondary (fog). A page turns a second solid button on the
-   same view to ink (#buyNow, #deliverySave). */
+/* Buttons: 56px, square, Archivo 700 UPPERCASE, tracked.
+   .btn-solid = the view's primary action (red, white label; deep red on
+   hover and press); .btn-line = secondary (outline: paper with a 1.5px ink
+   ring, inset so the box keeps its size). A page turns a second solid
+   button on the same view to ink (#buyNow, #checkout while the delivery
+   form is open). Disabled = fog with grey text. */
 
 .btn-solid, .btn-line {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px; padding: 0 26px;
-  font: inherit; font-size: 17px; font-weight: 800; letter-spacing: 0; text-transform: none;
-  cursor: pointer; text-decoration: none; border: 0; border-radius: var(--pill);
-  transition: background var(--ease), filter var(--ease), transform var(--ease);
+  font: inherit; font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+  cursor: pointer; text-decoration: none; border: 0; border-radius: 0;
+  transition: background var(--ease), box-shadow var(--ease), transform var(--ease);
 }
-.btn-solid { background: var(--signal); color: var(--ink); }
-.btn-solid:hover { filter: brightness(.96); }
-.btn-solid:active { filter: brightness(.9); transform: scale(.985); }
-.btn-line { background: var(--fog); color: var(--ink); }
-.btn-line:hover { background: var(--fog-h); }
+html[lang=hi] :is(.btn-solid, .btn-line) { font-family: var(--hindi); font-size: 16px; letter-spacing: 0; text-transform: none; }
+.btn-solid { background: var(--signal); color: var(--on-signal); }
+.btn-solid:hover { background: var(--signal-press); }
+.btn-solid:active { background: var(--signal-press); transform: scale(.985); }
+.btn-line { background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink); color: var(--ink); }
+.btn-line:hover { background: var(--mist); }
 .btn-line:active { transform: scale(.985); }
-.btn-solid:disabled, .btn-line:disabled { background: var(--fog); color: var(--disabled); filter: none; cursor: not-allowed; transform: none; }
+.btn-solid:disabled, .btn-line:disabled { background: var(--fog); box-shadow: none; color: var(--disabled-text); cursor: not-allowed; transform: none; }
 
 /* ---------------------------------------------------------- BAG BAR -- */
 /* The quick checkout: always visible once something is in the bag. A
-   floating ink bar (Signal toast), with Checkout as the view's one yellow. */
+   square floating ink bar with a hairline ring (no drop shadow), with
+   Checkout as the view's one red. */
 
 .bagbar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 820;
   background: var(--ink); color: #fff;
   display: flex; align-items: center; gap: 16px;
   margin: 0 auto calc(12px + env(safe-area-inset-bottom, 0px)); width: min(760px, calc(100% - 24px));
-  padding: 10px 10px 10px 22px; border-radius: var(--r-card); box-shadow: var(--shadow-float);
+  padding: 10px 10px 10px 22px; border-radius: 0; box-shadow: var(--shadow-float);
   transform: translateY(140%); visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s;
 }
 .bagbar.on { transform: none; visibility: visible; transition: transform .25s ease; }
 .bagbar .bb-t { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: #ffffffcc; }
-.bagbar .bb-t b { font-size: 16px; font-weight: 800; color: #fff; }
+.bagbar .bb-t b { font-family: var(--display); font-size: 16px; font-weight: 800; color: #fff; }
 .bagbar a {
-  flex: none; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: var(--pill); text-decoration: none;
-  font-size: 15px; font-weight: 800; letter-spacing: 0; text-transform: none; transition: background var(--ease), filter var(--ease);
+  flex: none; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 0; text-decoration: none;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+  transition: background var(--ease);
 }
 .bagbar .bb-view { color: #fff; background: #ffffff1f; }
 .bagbar .bb-view:hover { background: #ffffff33; }
-.bagbar .bb-go { background: var(--signal); color: var(--ink); }
-.bagbar .bb-go:hover { filter: brightness(.96); }
-/* On a product page Add to bag is the yellow; the bar's Checkout is paper. */
-body[data-page=product] .bagbar .bb-go { background: var(--paper); }
+.bagbar .bb-go { background: var(--signal); color: var(--on-signal); }
+.bagbar .bb-go:hover { background: var(--signal-press); }
+/* On a product page Add to bag is the red; the bar's Checkout is paper. */
+body[data-page=product] .bagbar .bb-go { background: var(--paper); color: var(--ink); }
+body[data-page=product] .bagbar .bb-go:hover { background: var(--mist); }
 body.has-bagbar { padding-bottom: 84px; }
 
 /* ------------------------------------------------------- DISCLOSURE -- */
 
 .disclosure {
   display: grid; grid-template-columns: 240px 1fr; gap: 30px;
-  margin: 20px var(--pad) 40px; padding: 26px 28px; border-radius: var(--r-card); background: var(--paper); box-shadow: var(--shadow-card);
+  margin: 20px var(--pad) 40px; padding: 26px 28px; border-radius: 0; background: var(--paper); box-shadow: var(--shadow-card);
 }
-.disclosure h2 { margin: 0; font-family: var(--display); font-weight: 800; letter-spacing: -.02em; font-size: 20px; line-height: 1.25; }
+.disclosure h2 { margin: 0; font-family: var(--display); font-weight: 800; letter-spacing: var(--track-title); font-size: 20px; line-height: 1.25; }
 .disclosure p { margin: 0 0 10px; color: var(--text-mid); font-size: 15px; line-height: 1.6; max-width: 70ch; }
 .disclosure p:last-child { margin-bottom: 0; }
 .disclosure strong { color: var(--text); font-weight: 700; }
@@ -380,24 +409,24 @@ body.has-bagbar { padding-bottom: 84px; }
 
 .toast {
   position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%); z-index: 1200;
-  background: var(--ink); color: #fff; padding: 14px 20px; border-radius: var(--r-row); font-size: 15px; font-weight: 600; box-shadow: var(--shadow-float);
+  background: var(--ink); color: #fff; padding: 14px 20px; border-radius: 0; font-size: 15px; font-weight: 600; box-shadow: none;
   max-width: calc(100vw - 32px);
 }
 
 /* ------------------------------------------------------ STORE CLOSED -- */
 
-.store-closed { position: fixed; inset: 0; z-index: 1300; background: #F6F6F8ee; display: grid; place-items: center; padding: 20px; }
+.store-closed { position: fixed; inset: 0; z-index: 1300; background: #F5F4F2ee; display: grid; place-items: center; padding: 20px; }
 .store-closed-card {
-  max-width: 420px; background: var(--paper); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 30px; text-align: center;
+  max-width: 420px; background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); padding: 30px; text-align: center;
   display: flex; flex-direction: column; gap: 12px; align-items: center;
 }
-.store-closed-card strong { font-family: var(--display); font-weight: 800; letter-spacing: -.02em; font-size: 24px; }
+.store-closed-card strong { font-family: var(--display); font-weight: 800; letter-spacing: var(--track-title); font-size: 24px; }
 .store-closed-msg { color: var(--text-mid); }
 .store-closed-mark svg { width: 40px; height: 40px; display: block; }
 .store-closed-home { margin-top: 6px; }
 
 /* ----------------------------------------------------- ERROR COLOURS -- */
-/* Stop red: errors and things that changed under the buyer. */
+/* Red (deep red for text): errors and things that changed under the buyer. */
 
 .stock.bad, .line .moved, .line .oosNote, .bd-note.bad, .df > em, .changes strong { color: var(--stop-text) !important; }
 .df.bad input, .df.bad select { border-color: var(--stop) !important; }
@@ -420,7 +449,7 @@ body.has-bagbar { padding-bottom: 84px; }
   .product-grid { padding-left: 16px; padding-right: 16px; }
   .notice, .disclosure { margin-left: 16px; margin-right: 16px; }
   .sold-note { padding: 8px 16px; font-size: 12px; }
-  .product { padding: 6px 6px 10px; border-radius: 18px; }
+  .product { padding: 6px 6px 10px; border-radius: 0; }
   .product-info { padding: 8px 4px 0; }
   .product-name { font-size: 14px; }
   .product-meta { font-size: 16px; }
@@ -428,7 +457,7 @@ body.has-bagbar { padding-bottom: 84px; }
   .add, .step, .in-bag { height: 38px; }
   .p-act { height: 38px; margin: 8px 2px 0; }
   .bagbar { gap: 8px; padding: 8px 8px 8px 16px; width: calc(100% - 16px); margin-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
-  .bagbar a { padding: 0 16px; height: 42px; font-size: 14px; }
+  .bagbar a { padding: 0 16px; height: 42px; font-size: 12.5px; }
   .bagbar .bb-view { display: none; }
   .product-meta .off { display: none; }
   .sold-note .sn-more { display: none; }

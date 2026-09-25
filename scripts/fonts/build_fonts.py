@@ -2,8 +2,10 @@
 """Self-hosted web fonts (assets/fonts/). No page loads fonts from Google.
 
 Text fonts are copied unchanged from the npm @fontsource packages (the same
-static cuts Google Fonts serves): Manrope (the Signal interface face, latin +
-latin-ext, 400/500/600/700/800; latin-ext carries the rupee sign U+20B9),
+static cuts Google Fonts serves): Archivo (display type, titles and button
+labels of the 2.18.0 theme, latin + latin-ext, 500/600/700/800), Manrope (the
+interface face, latin + latin-ext, 400/500/600/700/800; latin-ext carries the
+rupee sign U+20B9),
 IBM Plex Mono (Signal data labels, latin + latin-ext, 400/500), Marcellus
 (latin, the brand wordmark in the header only) and Noto Sans Devanagari
 (latin + devanagari, 400/500/600/700, Hindi text). Material Symbols Outlined is
@@ -11,7 +13,7 @@ cut down to the icons the pages draw (ICONS below) and pinned to the axis
 settings each page used when it loaded the font from Google.
 
 Rebuild (fonttools + brotli; install the npm packages in a scratch dir, never in apps/web):
-    npm i --prefix /tmp/webfonts @fontsource/manrope @fontsource/ibm-plex-mono @fontsource/marcellus @fontsource/noto-sans-devanagari material-symbols
+    npm i --prefix /tmp/webfonts @fontsource/archivo @fontsource/manrope @fontsource/ibm-plex-mono @fontsource/marcellus @fontsource/noto-sans-devanagari material-symbols
     pip install fonttools brotli
     python3 scripts/fonts/build_fonts.py /tmp/webfonts/node_modules
 Check that every icon a page draws is in its icon font (fonttools only):
@@ -32,6 +34,8 @@ WEB = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(WEB, 'assets', 'fonts')
 
 TEXT = {  # output base name -> file in node_modules
+    **{'archivo-%s-%d' % (s, w): '@fontsource/archivo/files/archivo-%s-%d-normal.woff2' % (s, w)
+       for s in ('latin', 'latin-ext') for w in (500, 600, 700, 800)},
     **{'manrope-%s-%d' % (s, w): '@fontsource/manrope/files/manrope-%s-%d-normal.woff2' % (s, w)
        for s in ('latin', 'latin-ext') for w in (400, 500, 600, 700, 800)},
     **{'ibm-plex-mono-%s-%d' % (s, w): '@fontsource/ibm-plex-mono/files/ibm-plex-mono-%s-%d-normal.woff2' % (s, w)
@@ -41,6 +45,7 @@ TEXT = {  # output base name -> file in node_modules
        for s in ('latin', 'devanagari') for w in (400, 500, 600, 700)},
 }
 LICENSES = {
+    'OFL-Archivo.txt': '@fontsource/archivo/LICENSE',
     'OFL-Manrope.txt': '@fontsource/manrope/LICENSE',
     'OFL-IBMPlexMono.txt': '@fontsource/ibm-plex-mono/LICENSE',
     'OFL-Marcellus.txt': '@fontsource/marcellus/LICENSE',

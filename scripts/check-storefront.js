@@ -129,16 +129,18 @@ for (const file of SHOP_PAGES) {
   if (miss.length) { console.log(`  FAIL  ${file}  -> missing ${miss.join('; ')}`); failed++; }
 }
 
-// Signal tokens (assets/rr-signal.css); shop.css maps onto them and keeps
-// each value as the fallback, so the palette is checkable here.
+// Theme tokens (assets/rr-signal.css, 2.18.0: light ground, red signal);
+// shop.css maps onto them and keeps each value as the fallback, so the
+// palette is checkable here.
 const PALETTE = [
-  [/#101114/i, 'ink'],
-  [/#ffffff/i, 'paper'],
-  [/#f6f6f8/i, 'mist ground'],
-  [/#ffd52e/i, 'Signal yellow (one primary action)'],
-  [/#e03b3b/i, 'stop red for errors'],
-  [/#e3e3e8/i, 'line'],
-  [/Manrope/, 'Signal interface face'],
+  [/#0D0D0F/i, 'ink'],
+  [/#ffffff/i, 'paper (the ground)'],
+  [/#F5F4F2/i, 'mist surface'],
+  [/#D81E2C/i, 'signal red (the one primary action; also errors)'],
+  [/#A2131B/i, 'deep red (pressed, links, error text)'],
+  [/#E4E2DE/i, 'line'],
+  [/Archivo/, 'display face (titles, prices, button labels)'],
+  [/Manrope/, 'interface face'],
 ];
 
 const GEOMETRY = [
