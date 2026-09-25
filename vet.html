@@ -418,6 +418,14 @@ async function loadApplication(){
     var j=await r.json();
     if(!j||j.ok!==true){ return fatal(); }
     hide($('vet-loading'));
+    if(j.status==='duplicate'){
+      // One registration number, one vet record: this number belongs to
+      // another account, so sign in to that one.
+      hide($('vet-idbar')); showSignIn();
+      if(j.credential&&j.credential.vci_reg_number) $('s_id').value=j.credential.vci_reg_number;
+      $('s_err').textContent=regExistsMsg(j.account&&j.account.mobile_hint);
+      return;
+    }
     if(j.status==='none'||j.status==='expired'){
       hide($('vet-idbar'));
       if(j.signed_out){ showSignIn(); $('s_err').textContent=T('This device was signed out. Sign in to continue.','यह डिवाइस साइन आउट था। जारी रखने के लिए साइन इन करें।'); }
@@ -513,6 +521,13 @@ function validate(){
 }
 
 /* ---- error-code -> message (mirrors app _mapSubmitError) ---- */
+/* One registration number, one vet record: said the same way as in the app. */
+function regExistsMsg(hint){
+  var h=/^\d{2}$/.test(hint||'')?hint:null;
+  return isHi()
+    ? 'इस पंजीकरण संख्या से RRT पर पहले से एक पशु-चिकित्सक खाता है'+(h?' (मोबाइल नंबर जिसके अंतिम अंक '+h+' हैं)':'')+'। एक पंजीकरण संख्या केवल एक खाते की हो सकती है, इसलिए उसी खाते में उसके मोबाइल नंबर (या इस पंजीकरण संख्या) और PIN से साइन इन करें। अगर यह आपका नहीं है, तो RRT से संपर्क करें।'
+    : 'This registration number already has an RRT vet account'+(h?' (mobile number ending in '+h+')':'')+'. A registration number can belong to only one account, so sign in to that one with its mobile number (or this registration number) and PIN. If it isn\u2019t yours, contact RRT.';
+}
 function errMsg(code){
   var hi=isHi();
   var M={
@@ -529,6 +544,7 @@ function errMsg(code){
     consent_version_required:['Please accept the declarations to continue.','जारी रखने के लिए कृपया घोषणाएँ स्वीकार करें।'],
     declarations_required:['Please accept both declarations to continue.','जारी रखने के लिए कृपया दोनों घोषणाएँ स्वीकार करें।'],
     duplicate_registration:['This registration number is already on file with another account.','यह पंजीकरण संख्या पहले से किसी अन्य खाते में दर्ज है।'],
+    registration_exists:['This registration number already has an RRT vet account. Sign in to it instead.','इस पंजीकरण संख्या से पहले से एक खाता है। उसी में साइन इन करें।'],
     already_approved:['You are already verified. Nothing more to do here.','आप पहले से सत्यापित हैं। यहाँ और कुछ करने की ज़रूरत नहीं।'],
     unauthenticated:['Please refresh and try again.','कृपया रिफ़्रेश करके दोबारा कोशिश करें।'],
     first_name_required:['Enter your first name (letters only).','अपना पहला नाम दर्ज करें (केवल अक्षर)।'],
@@ -600,6 +616,11 @@ async function submitForm(ev){
     var r=await fetch(url,{method:'POST',headers:{'Authorization':'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify(body)});
     var j={}; try{ j=await r.json(); }catch(e){ /* best effort */ }
     if(r.ok&&j.ok){ resubmitting=false; await reload(); return; }
+    if(j&&(j.error==='registration_exists'||j.error==='duplicate_registration')){
+      // Nothing was created: this number already has an account. Sign in to it.
+      setSubmitting(false); showSignIn(); $('s_id').value=val('f_reg');
+      $('s_err').textContent=regExistsMsg(j.account&&j.account.mobile_hint); return;
+    }
     if(j&&j.error==='sign_in_required'){ setSubmitting(false); showSignIn(); $('s_err').textContent=errMsg('sign_in_required'); return; }
     if(j&&j.error==='mobile_in_use'){ $('formErr').innerHTML=esc(errMsg('mobile_in_use'))+' <a style="color:var(--accent);text-decoration:underline;cursor:pointer" onclick="showSignIn()">'+esc(T('Sign in','साइन इन करें'))+'</a>'; setSubmitting(false); return; }
     if(r.status===401){ $('formErr').textContent=errMsg('unauthenticated'); }
