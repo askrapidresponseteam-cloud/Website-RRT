@@ -1,0 +1,52 @@
+/* Rapid Response - Signal: the one theme for the app, the website and the
+   admin (docs/SIGNAL-THEME.md). This file only defines the tokens; every
+   other stylesheet (rr-site.css for the header and footer, rr-theme.css for
+   the older content pages, shop.css, and each page's own <style>) maps its
+   classes onto them. Every page links it first, from its rr:head block.
+
+   Rules: one Signal (yellow) element per view, the primary next action; ink
+   on Signal, never white; Signal is never a background for reading; red
+   (stop) only for end, error, destructive or emergency. */
+
+:root{
+  /* colour */
+  --sg-accent:#FFD52E;        /* primary action only */
+  --sg-accent-press:#F2C200;  /* hover / pressed accent */
+  --sg-wash:#FFF7D5;          /* highlighted rows */
+  --sg-wash-line:#FFE990;     /* border of a highlighted row */
+  --sg-ink:#101114;           /* titles, dark controls, primary text */
+  --sg-ink-hover:#25272D;
+  --sg-graphite:#3A3C42;      /* body copy */
+  --sg-slate:#6F727A;         /* secondary text, captions */
+  --sg-muted:#8B8E96;         /* tertiary text, placeholders */
+  --sg-disabled:#B2B4BA;
+  --sg-line:#E3E3E8;          /* borders, input outlines */
+  --sg-fog:#EFEFF2;           /* secondary fills, dividers, secondary buttons */
+  --sg-fog-hover:#E6E6EB;
+  --sg-mist:#F6F6F8;          /* page background, list rows */
+  --sg-paper:#FFFFFF;         /* cards, sheets, dialogs */
+  --sg-go:#12A05C;--sg-go-text:#0C7B46;--sg-go-bg:#E6F5ED;
+  --sg-hold:#E08A1E;--sg-hold-text:#9A5E06;--sg-hold-bg:#FBEEDB;
+  --sg-stop:#E03B3B;--sg-stop-hover:#C93333;--sg-stop-text:#B32424;--sg-stop-bg:#FBE5E5;
+  --sg-link:#2C6BED;
+
+  /* type: Manrope for the interface, IBM Plex Mono for data labels, Noto
+     Sans Devanagari for Hindi (a Hindi page puts it first) */
+  --sg-sans:"Manrope","Manrope Fallback","Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --sg-hindi:"Noto Sans Devanagari","Noto Sans Devanagari Fallback","Manrope","Manrope Fallback",system-ui,sans-serif;
+  --sg-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sg-track-display:-.03em;--sg-track-title:-.025em;--sg-track-section:-.02em;--sg-track-label:.09em;
+
+  /* shape and depth */
+  --sg-r-tiny:8px;--sg-rs:12px;--sg-rl:16px;--sg-rc:22px;--sg-pill:999px;
+  --sg-shadow-card:0 1px 2px rgba(16,17,20,.05),0 10px 28px rgba(16,17,20,.05);
+  --sg-shadow-row:0 1px 2px rgba(16,17,20,.05);
+  --sg-shadow-float:0 8px 20px rgba(16,17,20,.14);
+  --sg-shadow-sheet:0 -10px 40px rgba(16,17,20,.14);
+  --sg-shadow-pill:0 1px 3px rgba(16,17,20,.1);
+
+  /* controls */
+  --sg-btn-h:56px;--sg-btn-h-dense:48px;--sg-chip-h:38px;
+  --sg-ease:120ms ease-out;
+  --sg-focus:0 0 0 1.5px var(--sg-ink);
+}

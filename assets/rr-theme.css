@@ -1,59 +1,75 @@
-/* Rapid Response - one look for the older content pages.
+/* Rapid Response - one look for the older content pages, in Signal
+   (assets/rr-signal.css, docs/SIGNAL-THEME.md).
    These pages were built on a shared token set (--bg, --text, --accent,
-   --display ...). Re-pointing the tokens gives them the landing page's skin
-   without touching their markup or scripts: white ground, black type,
-   hairline borders, black buttons, the serif display face. :root:root
-   outranks both :root and html.light in the page's own stylesheet. */
+   --display ...). Re-pointing the tokens gives them the Signal skin without
+   touching their markup or scripts: mist page, paper cards, ink titles in
+   Manrope 800, graphite body copy, IBM Plex Mono data labels. Each page's
+   own <style> ends with a short "Signal" block for the components only it
+   has. :root:root outranks both :root and html.light in the page's own
+   stylesheet.
+
+   --accent is used for text, borders and dots, so it is ink: Signal yellow
+   is set only on each page's one primary action, never on text. */
 
 :root:root,html.light:root{
-  --bg:#fff;--bg-soft:#fff;--bg-card:#fafafa;--bg-card-h:#f4f4f4;--w:#111;
-  --text:#111;--text-mid:#222;--text-low:#5f6368;--text-dim:#80868b;--text-faint:#1111118c;
-  --b:#e3e3e3;--border:#e3e3e3;--border-strong:#cfcfcf;--border-focus:#111;
-  --accent:#111;--accent-h:#333;--accent-on-dark:#111;--accent-soft:#0000000a;--accent-soft2:#00000006;
-  --sos:#e52222;--sos-soft:#e522220f;--net:#4a453f;
-  --display:"Marcellus","Marcellus Fallback","Marcellus Fallback Serif","Trajan Pro","Optima",Georgia,serif;
-  --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,sans-serif;
-  --mono:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --bg:var(--sg-mist);--bg-soft:var(--sg-paper);--bg-card:var(--sg-paper);--bg-card-h:var(--sg-mist);--w:var(--sg-ink);
+  --text:var(--sg-ink);--text-mid:var(--sg-graphite);--text-low:var(--sg-slate);--text-dim:var(--sg-slate);--text-faint:var(--sg-disabled);
+  --b:var(--sg-line);--border:var(--sg-line);--border-strong:var(--sg-line);--border-focus:var(--sg-ink);
+  --accent:var(--sg-ink);--accent-h:var(--sg-ink-hover);--accent-on-dark:var(--sg-ink);--accent-soft:var(--sg-fog);--accent-soft2:var(--sg-mist);
+  --sos:var(--sg-stop);--sos-soft:var(--sg-stop-bg);--net:var(--sg-graphite);
+  --ok:var(--sg-go-text);--ok-soft:var(--sg-go-bg);
+  --amb:var(--sg-hold-text);--amb-soft:var(--sg-hold-bg);--warn:var(--sg-hold-text);--warn-soft:var(--sg-hold-bg);--high:var(--sg-hold-text);
+  --crit:var(--sg-stop-text);--crit-soft:var(--sg-stop-bg);--crit-border:#F2B8B8;
+  --fir:#5B45B0;--fir-soft:#EFEBFA;
+  --display:var(--sg-sans);
+  --sans:var(--sg-sans);
+  --mono:var(--sg-mono);
+  --hindi:var(--sg-hindi);
   color-scheme:light;
 }
-html.rr-themed{font-synthesis:none;background:#fff}
-html.rr-themed body{background:#fff;color:#111;font-family:var(--sans)}
-html[lang=hi].rr-themed body{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--sans)}
+html.rr-themed{font-synthesis:none;background:var(--sg-mist)}
+html.rr-themed body{background:var(--sg-mist);color:var(--sg-ink);font-family:var(--sans)}
+html[lang=hi].rr-themed body{font-family:var(--sg-hindi)}
 
 /* The old chrome stays in the DOM (its scripts still find their elements)
    but is not shown: the shared header and footer replace it. */
 html.rr-themed body>header,html.rr-themed #hdr,html.rr-themed #modeBtn,html.rr-themed .mode-b,
 html.rr-themed body>footer{display:none!important}
 
-/* Display type: the serif, never faux-bold, never cramped. */
-html.rr-themed :is(h1,h2,h3,.h1,.h2,.hero-h,.sec-title,.title){font-weight:400;letter-spacing:.005em}
+/* Display type: Manrope 800, tight tracking, sentence case (the copy is
+   written in sentence case; the uppercase was the retired look). */
+html.rr-themed :is(h1,h2,h3,.h1,.h2,.hero-h,.sec-title,.title){font-family:var(--sg-sans);font-weight:800;letter-spacing:var(--sg-track-title);text-transform:none;color:var(--sg-ink)}
+html.rr-themed :is(h1,.h1,.hero-h,.title){letter-spacing:var(--sg-track-display)}
 html.rr-themed h1{line-height:1.08}
+html[lang=hi].rr-themed :is(h1,h2,h3,.h1,.h2,.hero-h,.sec-title,.title){font-family:var(--sg-hindi);font-weight:700;letter-spacing:0}
 
-/* Dark photo heroes become plain white heroes: the page reads like the
-   landing, text first. Named exactly: a wildcard here once matched the
-   On Record modals (class="overlay") and hid the whole report form. */
+/* Dark photo heroes become plain heroes on the mist page: text first.
+   Named exactly: a wildcard here once matched the On Record modals
+   (class="overlay") and hid the whole report form. */
 html.rr-themed :is(.hero-media,.hero-scrim,.grain,.p-grain){display:none!important}
-html.rr-themed :is(.hero,#top){background:#fff!important;background-image:none!important;min-height:0!important}
+html.rr-themed :is(.hero,#top){background:var(--sg-mist)!important;background-image:none!important;min-height:0!important}
 html.rr-themed :is(.hero,#top) :is(h1,h2,p,span){text-shadow:none!important}
 
-/* Accents that were red on black read as ink on white. */
-html.rr-themed ::selection{background:#111;color:#fff}
-html.rr-themed a:focus-visible,html.rr-themed button:focus-visible{outline:2px solid #111;outline-offset:3px}
+/* Selection and focus: ink. Inputs get the Signal ink focus ring. */
+html.rr-themed ::selection{background:var(--sg-ink);color:#fff}
+html.rr-themed a:focus-visible,html.rr-themed button:focus-visible{outline:2px solid var(--sg-ink);outline-offset:3px}
+html.rr-themed :is(input,select,textarea)::placeholder{color:var(--sg-muted)}
+html.rr-themed a{text-underline-offset:3px}
 
 /* Pages padded their content under a fixed 64px header that is now gone. */
 html.rr-themed body{padding-top:0!important}
 
 /* Hero text that was hard-coded white for a photo behind it. */
-html.rr-themed :is(#top .title,.disclaim strong,.page .h1,.page .lead strong,.hero h1,.hero .eyebrow){color:#111!important}
-html.rr-themed :is(#top .lede,.disclaim,.page .lead,.hero p,.hero .hero-meta,#top .meta-line){color:#5f6368!important}
-html.rr-themed #top .meta-line .sep{color:#cfcfcf!important}
-html.rr-themed .disclaim a{color:#111!important;text-decoration:underline}
-html.rr-themed .page .eye{color:#5f6368}
-html.rr-themed .hero .btn-ghost{color:#111;border-color:#111;background:#fff;backdrop-filter:none}
-html.rr-themed .hero .btn-ghost:hover{color:#fff;background:#111;border-color:#111}
-html.rr-themed #top .crumb,html.rr-themed #top .crumb span{color:#5f6368!important}
-html.rr-themed #top .crumb .dot{background:#111!important}
-html.rr-themed #top .title .em{color:#111!important}
+html.rr-themed :is(#top .title,.disclaim strong,.page .h1,.page .lead strong,.hero h1,.hero .eyebrow){color:var(--sg-ink)!important}
+html.rr-themed :is(#top .lede,.disclaim,.page .lead,.hero p,.hero .hero-meta,#top .meta-line){color:var(--sg-graphite)!important}
+html.rr-themed #top .meta-line .sep{color:var(--sg-disabled)!important}
+html.rr-themed .disclaim a{color:var(--sg-ink)!important;text-decoration:underline}
+html.rr-themed .page .eye{color:var(--sg-slate)}
+html.rr-themed .hero .btn-ghost{color:var(--sg-ink);border-color:transparent;background:var(--sg-fog);backdrop-filter:none}
+html.rr-themed .hero .btn-ghost:hover{color:var(--sg-ink);background:var(--sg-fog-hover);border-color:transparent}
+html.rr-themed #top .crumb,html.rr-themed #top .crumb span{color:var(--sg-slate)!important}
+html.rr-themed #top .crumb .dot{background:var(--sg-ink)!important}
+html.rr-themed #top .title .em{color:var(--sg-ink)!important}
 
 /* Tops were padded for the old fixed 64px header over a photo; the shared
    header sits in flow, so the page starts right under it like the landing. */

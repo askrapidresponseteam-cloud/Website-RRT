@@ -239,6 +239,21 @@ with delivery details open (or the Pay button in view once they are saved),
 then hands off to the seller's checkout exactly as before.
 `scripts/check-storefront.js` now enforces the new design contract.
 
+## Signal (25 Sep 2026)
+
+The site now wears Signal, the theme the app and the admin share
+(`docs/SIGNAL-THEME.md`): mist page, paper cards (radius 22, soft shadow),
+ink titles in Manrope 800, graphite body copy, IBM Plex Mono for small data
+labels, 56px pill buttons with one yellow (ink text) per view, and red only
+for errors, destructive actions and emergencies. The tokens live in
+`assets/rr-signal.css`; `rr-site.css`, `rr-theme.css`, `shop.css` and each
+page's own `<style>` (a `/* rr:signal */` block at its end) map onto them.
+Manrope and IBM Plex Mono are self-hosted like the other fonts
+(`scripts/fonts/build_fonts.py`). The header and logo are unchanged in size
+and place; Marcellus stays for the wordmark only. In the shop a discount is
+Go green and ADD is a fog button, so a grid never turns yellow;
+`scripts/check-storefront.js` checks the Signal palette.
+
 ## Partner store switch (24 Sep 2026)
 
 The web shop now sells from Supertails (`supertails.com`, Shopify shop

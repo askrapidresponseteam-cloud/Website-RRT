@@ -1,17 +1,23 @@
 /* Rapid Response - shared site chrome (header, footer, brand, buttons).
-The same look as the landing page: white ground,black type,hairlines,a serif display face,one red mark (the logo). Every class is prefixed
-   rr- so page stylesheets can never reach into it,and every element inside
-   the chrome is reset first for the same reason. */
+   Signal theme (assets/rr-signal.css, docs/SIGNAL-THEME.md): paper header and
+   footer on the mist page, ink type, Manrope, pill controls. The wordmark
+   keeps its Marcellus serif and the logo its exact size and place on every
+   page (scripts/site-chrome/check_logo.py). Every class is prefixed rr- so
+   page stylesheets can never reach into it, and every element inside the
+   chrome is reset first for the same reason. */
 
 :root{
-  --rr-ink:#111;--rr-mid:#5f6368;--rr-low:#80868b;--rr-line:#e3e3e3;--rr-soft:#f6f6f6;--rr-bg:#fff;--rr-red:#ff4d3d;
+  --rr-ink:var(--sg-ink,#101114);--rr-mid:var(--sg-graphite,#3A3C42);--rr-low:var(--sg-slate,#6F727A);--rr-line:var(--sg-line,#E3E3E8);
+  --rr-soft:var(--sg-mist,#F6F6F8);--rr-fog:var(--sg-fog,#EFEFF2);--rr-fog-h:var(--sg-fog-hover,#E6E6EB);--rr-bg:var(--sg-paper,#fff);--rr-red:var(--sg-stop,#E03B3B);
   --rr-serif:"Marcellus","Marcellus Fallback","Marcellus Fallback Serif","Trajan Pro","Optima",Georgia,serif;
-  --rr-sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,sans-serif;
+  --rr-sans:var(--sg-sans,"Manrope","Manrope Fallback","Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,sans-serif);
+  --rr-mono:var(--sg-mono,"IBM Plex Mono",ui-monospace,monospace);
   --rr-pad:clamp(18px,7vw,120px);
 }
 .rr-chrome :where(*:not(svg,svg *)){all:revert;box-sizing:border-box}
 .rr-chrome{box-sizing:border-box;font-family:var(--rr-sans);color:var(--rr-ink);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.45;letter-spacing:normal;text-transform:none}
 html[lang=hi] .rr-chrome{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--rr-sans)}
+.rr-chrome a:focus-visible,.rr-chrome button:focus-visible{outline:2px solid var(--rr-ink);outline-offset:2px;border-radius:6px}
 .rr-chrome a{color:inherit;text-decoration:none}
 .rr-chrome [hidden]{display:none!important}
 .rr-chrome button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;margin:0}
@@ -19,7 +25,7 @@ html[lang=hi] .rr-chrome{font-family:"Noto Sans Devanagari","Noto Sans Devanagar
 
 /* strip */
 .rr-chrome.rr-strip{display:flex;align-items:center;justify-content:center;min-height:36px;padding:6px 44px;border-bottom:1px solid var(--rr-line);
-  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;text-align:center;background:var(--rr-bg)}
+  font-family:var(--rr-mono);font-size:11.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;text-align:center;background:var(--rr-bg);color:var(--rr-low)}
 html[lang=hi] .rr-chrome.rr-strip{letter-spacing:0;font-size:13px}
 
 /* header */
@@ -28,37 +34,44 @@ html[lang=hi] .rr-chrome.rr-strip{letter-spacing:0;font-size:13px}
 .rr-chrome .rr-hdr-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px;padding:0 var(--rr-pad)}
 .rr-chrome .rr-brand{display:flex;align-items:center;gap:11px;font-family:var(--rr-serif);font-size:20px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:var(--rr-ink)}
 .rr-chrome .rr-mark{width:26px;height:26px;flex:none}
-.rr-chrome .rr-brand small{font-family:var(--rr-sans);font-size:11px;letter-spacing:.16em;color:var(--rr-mid);border-left:1px solid var(--rr-line);padding-left:11px;margin-left:2px}
+.rr-chrome .rr-brand small{font-family:var(--rr-mono);font-size:11px;font-weight:500;letter-spacing:.09em;color:var(--rr-low);border-left:1px solid var(--rr-line);padding-left:11px;margin-left:2px}
 .rr-chrome .rr-nav{display:flex;align-items:center;gap:clamp(12px,2.2vw,32px)}
-.rr-chrome .rr-nav>a{font-size:14px;letter-spacing:.02em;padding:6px 0;border-bottom:1.5px solid transparent}
-.rr-chrome .rr-nav>a:hover{border-bottom-color:var(--rr-ink)}
-.rr-chrome .rr-nav>a[aria-current=page]{border-bottom-color:var(--rr-ink)}
+.rr-chrome .rr-nav>a{font-size:14px;font-weight:600;letter-spacing:0;color:var(--rr-mid);padding:6px 0;border-bottom:2px solid transparent;transition:color .12s ease-out,border-color .12s ease-out}
+.rr-chrome .rr-nav>a:hover{color:var(--rr-ink);border-bottom-color:var(--rr-line)}
+.rr-chrome .rr-nav>a[aria-current=page]{color:var(--rr-ink);border-bottom-color:var(--rr-ink)}
 html[lang=hi] .rr-chrome .rr-nav>a,html[lang=hi] .rr-chrome .rr-btn{letter-spacing:0;font-size:14px;font-weight:500}
-.rr-chrome .rr-lang{display:flex;align-items:center;gap:6px;color:var(--rr-low);font-size:12.5px}
-.rr-chrome .rr-lang button{color:var(--rr-low);letter-spacing:.08em;padding:6px 2px}
+html[lang=hi] .rr-chrome .rr-btn{font-weight:600}
+.rr-chrome .rr-lang{display:flex;align-items:center;gap:6px;color:var(--sg-disabled,#B2B4BA);font-size:12.5px;font-weight:600}
+.rr-chrome .rr-lang button{color:var(--rr-low);letter-spacing:.06em;padding:6px 2px;transition:color .12s ease-out}
+.rr-chrome .rr-lang button:hover{color:var(--rr-ink)}
 .rr-chrome .rr-lang button[aria-pressed=true]{color:var(--rr-ink)}
 .rr-chrome .rr-cta{position:relative}
-.rr-chrome .rr-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 18px;border-radius:20px;border:1px solid var(--rr-ink);
-  background:var(--rr-bg);color:var(--rr-ink);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
-  transition:background .15s,color .15s}
-.rr-chrome .rr-btn:hover{background:var(--rr-soft)}
+/* Signal controls, dense (40px) in the header: ink = ink + white text,
+   secondary = fog + ink text; pill; Manrope 800, sentence case. */
+.rr-chrome .rr-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 18px;border-radius:999px;border:1px solid transparent;
+  background:var(--rr-fog);color:var(--rr-ink);font-size:14px;font-weight:800;letter-spacing:0;text-transform:none;white-space:nowrap;
+  transition:background .12s ease-out,transform .12s ease-out}
+.rr-chrome .rr-btn:hover{background:var(--rr-fog-h)}
+.rr-chrome .rr-btn:active{transform:scale(.985)}
 .rr-chrome .rr-btn.rr-dark{background:var(--rr-ink);color:#fff}
-.rr-chrome .rr-btn.rr-dark:hover{background:#333}
-.rr-chrome .rr-menu{border-radius:12px;overflow:hidden;position:absolute;right:0;top:calc(100% + 6px);min-width:220px;background:#fff;border:1px solid var(--rr-ink);display:none;z-index:950}
+.rr-chrome .rr-btn.rr-dark:hover{background:var(--sg-ink-hover,#25272D)}
+.rr-chrome .rr-menu{border-radius:16px;overflow:hidden;position:absolute;right:0;top:calc(100% + 8px);min-width:220px;background:var(--rr-bg);border:1px solid var(--rr-line);
+  box-shadow:var(--sg-shadow-float,0 8px 20px rgba(16,17,20,.14));display:none;z-index:950;padding:6px}
 .rr-chrome .rr-menu.rr-open{display:block}
-.rr-chrome .rr-menu a{display:block;padding:12px 18px;font-size:14px}
-.rr-chrome .rr-menu a+a{border-top:1px solid var(--rr-line)}
+.rr-chrome .rr-menu a{display:block;padding:12px 14px;font-size:14px;font-weight:600;color:var(--rr-ink);border-radius:12px}
+.rr-chrome .rr-menu a+a{margin-top:2px}
 .rr-chrome .rr-menu a:hover{background:var(--rr-soft)}
-.rr-chrome .rr-bag{position:relative;display:flex;align-items:center;justify-content:center;width:42px;height:42px;border:1px solid var(--rr-line);border-radius:50%}
-.rr-chrome .rr-bag:hover{border-color:var(--rr-ink)}
+.rr-chrome .rr-bag{position:relative;display:flex;align-items:center;justify-content:center;width:42px;height:42px;border:1px solid transparent;border-radius:50%;background:var(--rr-fog);color:var(--rr-ink);transition:background .12s ease-out}
+.rr-chrome .rr-bag:hover{background:var(--rr-fog-h)}
 .rr-chrome .rr-bag b{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--rr-ink);color:#fff;
-  font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--rr-bg)}
 .rr-chrome .rr-bag b[hidden]{display:none}
 
 /* footer */
 .rr-chrome.rr-ftr{border-top:1px solid var(--rr-line);background:var(--rr-bg);padding:22px var(--rr-pad) calc(22px + env(safe-area-inset-bottom,0px));
-  display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 28px;font-size:13px;color:var(--rr-low)}
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 28px;font-size:13px;font-weight:500;color:var(--rr-low)}
 .rr-chrome.rr-ftr nav{display:flex;flex-wrap:wrap;gap:8px 20px}
+.rr-chrome.rr-ftr nav a{color:var(--rr-mid);font-weight:600}
 .rr-chrome.rr-ftr a:hover{color:var(--rr-ink)}
 
 /* phones */
@@ -74,14 +87,14 @@ html[lang=hi] .rr-chrome .rr-nav>a,html[lang=hi] .rr-chrome .rr-btn{letter-spaci
 .rr-chrome .rr-nav>a.rr-bag{display:flex}
 .rr-chrome .rr-lang .rr-sep,.rr-chrome .rr-lang button[aria-pressed=true]{display:none}
 .rr-chrome .rr-lang button{font-size:13px}
-.rr-chrome .rr-btn{height:40px;padding:0 13px;font-size:11px;letter-spacing:.1em}
+.rr-chrome .rr-btn{height:40px;padding:0 15px;font-size:13px;letter-spacing:0}
 .rr-chrome .rr-bag{width:40px;height:40px}
 .rr-chrome.rr-strip{font-size:10px;letter-spacing:.1em;padding:5px 12px}
 .rr-chrome.rr-ftr{font-size:12px}
 }
 @media (max-width:380px){.rr-chrome .rr-brand span{display:none}}
-.rr-chrome .rr-nav>a.rr-bag{padding:0;border:1px solid var(--rr-line)}
-.rr-chrome .rr-nav>a.rr-bag:hover{border-color:var(--rr-ink)}
+.rr-chrome .rr-nav>a.rr-bag{padding:0;border:1px solid transparent}
+.rr-chrome .rr-nav>a.rr-bag:hover{border-color:transparent}
 
 /* The header and footer are always full-bleed, even on a page that pads
    <body> (the page sets --rr-bx to its body padding). */

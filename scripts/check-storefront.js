@@ -96,10 +96,12 @@ for (const file of SHOP_PAGES) {
 }
 
 /* ---------------------------------------------------------------------------
- * Design contract (September 2026): the shop wears the landing page's look.
- * White ground, ink type, the serif display face, the shared site header
- * and footer (assets/rr-site.css), and red reserved for sale and errors.
- * These checks stop the retired dark skin and its typefaces creeping back.
+ * Design contract (September 2026): the shop wears Signal, the one theme of
+ * the app, the website and the admin (docs/SIGNAL-THEME.md): mist page,
+ * paper cards, ink type in Manrope, one yellow action per view, the shared
+ * site header and footer (assets/rr-site.css), and red (Stop) reserved for
+ * errors. These checks stop the retired dark skin and its typefaces creeping
+ * back.
  * ------------------------------------------------------------------------- */
 
 const RETIRED = [
@@ -127,12 +129,16 @@ for (const file of SHOP_PAGES) {
   if (miss.length) { console.log(`  FAIL  ${file}  -> missing ${miss.join('; ')}`); failed++; }
 }
 
+// Signal tokens (assets/rr-signal.css); shop.css maps onto them and keeps
+// each value as the fallback, so the palette is checkable here.
 const PALETTE = [
-  [/#111111/i, 'ink'],
-  [/#ffffff/i, 'white ground'],
-  [/#e52222/i, 'sale and error red'],
-  [/#e3e3e3/i, 'hairline grey'],
-  [/Marcellus/, 'landing display serif'],
+  [/#101114/i, 'ink'],
+  [/#ffffff/i, 'paper'],
+  [/#f6f6f8/i, 'mist ground'],
+  [/#ffd52e/i, 'Signal yellow (one primary action)'],
+  [/#e03b3b/i, 'stop red for errors'],
+  [/#e3e3e8/i, 'line'],
+  [/Manrope/, 'Signal interface face'],
 ];
 
 const GEOMETRY = [

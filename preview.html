@@ -15,32 +15,44 @@
 <meta property="og:url" content="https://rapid-response.in/preview">
 <meta property="og:image" content="https://rapid-response.in/assets/og-cover.jpg">
 <style>
-html,body{margin:0;background:#fff;color:#111;font-family:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+/* Signal (assets/rr-signal.css): mist page, ink title in Manrope, the
+   store button for this phone as the one yellow (a second one, on a
+   computer, is ink). The phone frame is a device, so it stays dark. */
+html,body{margin:0;background:var(--sg-mist);color:var(--sg-ink);font-family:var(--sg-sans);-webkit-font-smoothing:antialiased}
+html[lang=hi] body{font-family:var(--sg-hindi)}
 html{font-synthesis:none}
-body{min-height:100dvh;display:flex;flex-direction:column}
+body{min-height:100dvh;display:flex;flex-direction:column;font-weight:500}
 .pv{flex:1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:clamp(32px,6vw,96px);padding:clamp(20px,4vh,48px) clamp(18px,7vw,120px)}
-.pv-k{margin:0 0 14px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#5f6368}
-.pv h1{margin:0;font-family:"Marcellus","Marcellus Fallback","Marcellus Fallback Serif","Trajan Pro","Optima",Georgia,serif;font-weight:400;font-size:clamp(32px,4.2vw,56px);line-height:1.1;max-width:17ch}
-html[lang=hi] .pv h1{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",Georgia,serif;font-weight:500}
-.pv-lead{margin:18px 0 0;font-size:17px;line-height:1.55;color:#5f6368;max-width:40ch}
+.pv-k{margin:0 0 14px;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--sg-slate)}
+html[lang=hi] .pv-k{font-family:var(--sg-hindi);letter-spacing:0;font-size:13px}
+.pv h1{margin:0;font-family:var(--sg-sans);font-weight:800;font-size:clamp(34px,4.2vw,56px);line-height:1.06;letter-spacing:var(--sg-track-display);max-width:17ch}
+html[lang=hi] .pv h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;line-height:1.2}
+.pv-lead{margin:18px 0 0;font-size:17px;line-height:1.55;color:var(--sg-graphite);max-width:40ch}
 .pv-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.pv-btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 20px;border-radius:22px;border:1px solid #111;text-decoration:none;color:#111;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.pv-btn.dark{background:#111;color:#fff}
-.pv-btn.dark:hover{background:#333}
-html[lang=hi] .pv-btn{letter-spacing:0;font-size:14px}
-.pv-alt{margin:18px 0 0;font-size:14px}
-.pv-alt a{color:#5f6368}
-.pv-alt a:hover{color:#111}
+.pv-btn{display:inline-flex;align-items:center;justify-content:center;height:var(--sg-btn-h);padding:0 26px;border-radius:var(--sg-pill);border:0;background:var(--sg-fog);text-decoration:none;color:var(--sg-ink);font-size:17px;font-weight:800;
+  transition:background var(--sg-ease),filter var(--sg-ease),transform var(--sg-ease)}
+.pv-btn:hover{background:var(--sg-fog-hover)}
+.pv-btn:active{transform:scale(.985)}
+.pv-btn.dark{background:var(--sg-accent);color:var(--sg-ink)}
+.pv-btn.dark:hover{background:var(--sg-accent);filter:brightness(.96)}
+.pv-btn.dark~.pv-btn.dark{background:var(--sg-ink);color:#fff;filter:none}
+.pv-btn.dark~.pv-btn.dark:hover{background:var(--sg-ink-hover)}
+.pv-btn:focus-visible,.pv-alt a:focus-visible{outline:2px solid var(--sg-ink);outline-offset:3px}
+html[lang=hi] .pv-btn{font-size:16px;font-weight:700}
+.pv-alt{margin:18px 0 0;font-size:15px}
+.pv-alt a{color:var(--sg-graphite);font-weight:600;text-underline-offset:3px}
+.pv-alt a:hover{color:var(--sg-ink)}
 .pv-stage-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
 .pv-stage{position:relative;aspect-ratio:440/920;width:min(380px,calc((100dvh - 190px) * 440 / 920))}
 .pv-device{position:absolute;top:0;left:0;box-sizing:border-box;width:440px;height:920px;transform-origin:top left;transform:scale(var(--s,.8));border-radius:58px;padding:13px;
-  background:linear-gradient(155deg,#3a3a40 0,#101013 26%,#0b0b0d 60%,#101013 78%,#33333a 100%);
-  box-shadow:0 0 0 1px rgba(0,0,0,.12),0 54px 80px -30px rgba(40,34,28,.4),0 10px 26px -12px rgba(40,34,28,.28)}
-.pv-notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:126px;height:31px;background:#0b0b0d;border-radius:0 0 19px 19px;z-index:3}
-.pv-screen{position:absolute;inset:13px;border-radius:46px;overflow:hidden;background:#fff;z-index:1}
+  background:linear-gradient(155deg,#3a3c42 0,#101114 26%,#0b0c0e 60%,#101114 78%,#34363c 100%);
+  box-shadow:0 0 0 1px rgba(16,17,20,.12),0 54px 80px -30px rgba(16,17,20,.4),0 10px 26px -12px rgba(16,17,20,.28)}
+.pv-notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:126px;height:31px;background:#0b0c0e;border-radius:0 0 19px 19px;z-index:3}
+.pv-screen{position:absolute;inset:13px;border-radius:46px;overflow:hidden;background:var(--sg-paper);z-index:1}
 .pv-frame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:transparent}
-.pv-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:#80868b}
-.pv-cue{margin:0;font-size:13px;color:#80868b}
+.pv-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--sg-slate)}
+.pv-cue{margin:0;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--sg-slate)}
+html[lang=hi] .pv-cue{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:13px}
 @media (max-width:860px){
   .pv{grid-template-columns:1fr;justify-items:center;text-align:center;gap:22px;padding-top:24px}
   .pv h1{max-width:18ch;margin:0 auto}
@@ -48,7 +60,7 @@ html[lang=hi] .pv-btn{letter-spacing:0;font-size:14px}
   .pv-acts{justify-content:center}
   .pv-stage{width:min(340px,86vw,calc((100dvh - 150px) * 440 / 920))}
 }
-</style><!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-site.css"><!-- /rr:head -->
+</style><!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-800.74c161db.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><!-- /rr:head -->
 </head>
 <body>
 <!-- rr:header -->

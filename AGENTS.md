@@ -19,9 +19,14 @@ and theme between these markers. Keep them exactly as they are:
 - Header/footer markup lives in `scripts/site-chrome/chrome.py`. To change it
   site-wide, edit it there and run `python3 scripts/site-chrome/heal.py --force`;
   do not hand-edit one page.
-- Styles: `assets/rr-site.css` (header/footer), `assets/rr-theme.css` (older
-  content pages), `assets/shop.css` (shop). Do not reintroduce the old dark
-  palette, Barlow/JetBrains fonts, or a red logo square.
+- Styles: `assets/rr-signal.css` (the Signal tokens, `--sg-*`, see
+  `docs/SIGNAL-THEME.md`; linked first from every rr:head block),
+  `assets/rr-site.css` (header/footer), `assets/rr-theme.css` (older content
+  pages), `assets/shop.css` (shop). Map new styles onto the `--sg-*` tokens:
+  one yellow (`--sg-accent`, ink text) per view, red (`--sg-stop`) only for
+  errors, destructive actions and emergencies. Do not reintroduce the old
+  dark palette, Barlow/JetBrains fonts, or a red logo square. Marcellus is
+  only for the wordmark in the header.
 - Never use long dashes (em or en) anywhere; use a plain hyphen.
 - Fonts are served from this site (`assets/fonts/`, `assets/rr-fonts*.css`,
   built by `scripts/fonts/build_fonts.py`); never link Google Fonts again.

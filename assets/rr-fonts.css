@@ -15,14 +15,17 @@
      which are sized to the web font (size-adjust + ascent/descent/line-gap
      overrides), so when the font arrives lines and boxes keep their size:
      no layout shift.
-   The families: this file (Marcellus, every page), rr-fonts-devanagari.css
+   Manrope and IBM Plex Mono (the Signal theme, assets/rr-signal.css) use
+   font-display:swap with a metric-matched fallback instead: they are the text
+   of the whole page, so it should never wait for them.
+   The families: this file (Manrope, IBM Plex Mono, Marcellus; every page), rr-fonts-devanagari.css
    (Noto Sans Devanagari 400/500/600, every page but the shop, which never
    loaded it). Pages with icons carry their own small <style> for Material
    Symbols (cut to the icons that page draws, pinned to the axis settings it
    used) where Google's stylesheet was, and /vet the Noto 700 it alone used.
    Files are cached for a year (vercel.json); their names carry a content hash. */
 
-/* Marcellus: the brand and display serif (Google's latin cut, unchanged) */
+/* Marcellus: the brand wordmark in the shared header only (Google's latin cut, unchanged) */
 @font-face{font-family:"Marcellus";font-style:normal;font-weight:400;font-display:block;
   src:url(/assets/fonts/marcellus-latin-400.8a539799.woff2) format("woff2");
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -37,3 +40,57 @@
 @font-face{font-family:"Marcellus Fallback Serif";src:local("Noto Serif"),local("NotoSerif-Regular"),local("Droid Serif"),local("DroidSerif");
   size-adjust:95.02%;ascent-override:102.52%;descent-override:29.45%;line-gap-override:0%;
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* Manrope: the Signal interface face (titles, body, buttons), 400/500/600/700/800.
+   latin + latin-ext (latin-ext carries the rupee sign U+20B9). font-display:swap:
+   text paints at once in the metric-matched fallback below and keeps its size
+   when Manrope arrives. Hindi text falls through to Noto Sans Devanagari. */
+@font-face{font-family:"Manrope";font-style:normal;font-weight:400;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-400.849290ef.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:400;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-ext-400.72c5354a.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:500;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-500.19874318.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:500;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-ext-500.40787d0c.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:600;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-600.f7ac6258.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:600;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-ext-600.ff679412.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-700.d2a12c85.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:700;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-ext-700.dc7c46d7.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:800;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-800.74c161db.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:800;font-display:swap;
+  src:url(/assets/fonts/manrope-latin-ext-800.262536c3.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+/* Arial (Mac, Windows) or Liberation Sans (Linux), scaled to Manrope 500's average
+   width and given its ascent/descent, so the swap does not move lines. */
+@font-face{font-family:"Manrope Fallback";src:local("Arial"),local("ArialMT"),local("Liberation Sans"),local("LiberationSans");
+  size-adjust:106%;ascent-override:100.43%;descent-override:28.26%;line-gap-override:0%}
+
+/* IBM Plex Mono: Signal data labels (small uppercase captions, IDs, times,
+   metrics), 400/500, latin + latin-ext. */
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;
+  src:url(/assets/fonts/ibm-plex-mono-latin-400.08949f72.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;
+  src:url(/assets/fonts/ibm-plex-mono-latin-ext-400.6bc0f226.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;
+  src:url(/assets/fonts/ibm-plex-mono-latin-500.01d28544.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;
+  src:url(/assets/fonts/ibm-plex-mono-latin-ext-500.6bb06407.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
