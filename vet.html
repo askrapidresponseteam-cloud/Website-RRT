@@ -114,6 +114,48 @@ input[readonly]{opacity:.65;cursor:not-allowed}
 footer{border-top:1px solid var(--border);padding:34px 22px;text-align:center;color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 footer a{color:var(--text-mid)}
 footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
+/* stages (same five as the app): step bar, one stage at a time */
+.stepper{list-style:none;display:flex;margin:30px 0 4px;padding:0;counter-reset:none}
+.stepper li{flex:1;position:relative;min-width:0}
+.stepper li:before,.stepper li:after{content:"";position:absolute;top:14px;height:2px;background:var(--border);width:50%}
+.stepper li:before{left:0}.stepper li:after{right:0}
+.stepper li:first-child:before,.stepper li:last-child:after{display:none}
+.stepper li.done:before,.stepper li.done:after,.stepper li.cur:before{background:var(--text)}
+.stepper button{position:relative;z-index:1;width:100%;background:0 0;border:0;padding:0;cursor:default;display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--text-dim);font-family:var(--sans)}
+.stepper li.open button{cursor:pointer}
+.stepper .sq{width:30px;height:30px;display:grid;place-items:center;border:1.5px solid var(--border);background:var(--bg);font-family:var(--display);font-weight:800;font-size:15px}
+.stepper .sq .material-symbols-outlined{display:none!important;font-size:17px;color:var(--text)}
+.stepper li.open .sq{border-color:var(--text);color:var(--text)}
+.stepper li.cur .sq{background:var(--text);border-color:var(--text);color:var(--bg)}
+.stepper li.done .sq{background:var(--bg);border-color:var(--text);color:var(--text)}
+.stepper li.done .sq b{display:none}.stepper li.done .sq .material-symbols-outlined{display:inline-flex!important}
+.stepper .sl{font-size:clamp(10px,2.8vw,12.5px);font-weight:600;line-height:1.2;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 1px}
+.stepper li.open .sl{color:var(--text)}.stepper li.cur .sl{color:var(--text);font-weight:800}
+.stage{display:none}.stage.on{display:block}
+.stagenav{display:flex;gap:12px;margin-top:26px}
+.stagenav .btn{width:auto;flex:1}
+.stagenav #backBtn{flex:0 0 auto;min-width:110px}
+.summary{border:1px solid var(--border);background:var(--bg-card)}
+.summary .grp{padding:14px 16px;border-top:1px solid var(--border)}
+.summary .grp:first-child{border-top:0}
+.summary .gh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.summary .gt{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-size:13px}
+.summary .gh a{font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.summary dl{margin:0}
+.summary dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-top:8px}
+.summary dd{margin:1px 0 0;font-size:15px;font-weight:600;color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.chips:empty{display:none}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1.5px solid var(--text);padding:5px 4px 5px 11px;font-size:13.5px;font-weight:600}
+.chip button{background:0 0;border:0;cursor:pointer;font-size:17px;line-height:1;padding:2px 6px;color:var(--text)}
+.aq{display:flex;flex-wrap:wrap;gap:8px}
+.aq select,.aq input{flex:1 1 150px;min-width:0;width:auto!important}
+.aq .btn{flex:0 0 auto;width:auto;min-height:46px;padding:10px 18px}
+.regtaken{margin-top:10px;border:1px solid var(--accent);padding:12px 14px}
+.regtaken p{font-size:13.5px;color:var(--accent);margin-bottom:10px}
+.field select{appearance:auto;min-height:46px;max-width:100%;min-width:0;text-overflow:ellipsis}
+.grid2>*{min-width:0}
+
 </style><!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-site.css"><link rel="stylesheet" href="/assets/rr-theme.css"><script>/* rr: one light theme site-wide */try{['rr-mode','theme'].forEach(function(k){localStorage.setItem(k,'l')});}catch(e){}document.documentElement.classList.add('light','rr-themed');</script><!-- /rr:head -->
 </head>
 <body>
@@ -197,54 +239,105 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
     </div>
   </div>
 
-  <!-- FORM -->
+  <!-- FORM - five stages, one at a time (same stages as the app). State,
+       council, degree and year come from the shared list
+       (/assets/rrt-vet-registry.js, generated from shared/vet-registry.json). -->
   <form id="vet-form" class="hidden" autocomplete="on" novalidate>
-    <div class="already" id="already"><span data-lang="en">Already applied or verified - new phone or reinstalled?</span><span class="hi" data-lang="hi">पहले से आवेदन किया है या सत्यापित हैं - नया फ़ोन या ऐप दोबारा इंस्टॉल किया?</span><a onclick="showSignIn()"><span data-lang="en">Sign in</span><span class="hi" data-lang="hi">साइन इन करें</span></a></div>
-    <!-- credentials -->
-    <div class="sect"><div class="sect-h"><span class="n">01</span><span data-lang="en">Your credentials</span><span class="hi" data-lang="hi">आपकी योग्यताएँ</span></div>
-      <div class="grid2">
-        <div class="field" data-f="first_name"><label><span data-lang="en">First name</span><span class="hi" data-lang="hi">पहला नाम</span> <span class="req">*</span></label><input id="f_first" type="text" autocomplete="given-name" maxlength="60" placeholder="Asha"><div class="err" data-lang="en">Enter your first name (letters only).</div><div class="err hi" data-lang="hi">अपना पहला नाम दर्ज करें (केवल अक्षर)।</div></div>
-        <div class="field" data-f="last_name"><label><span data-lang="en">Last name</span><span class="hi" data-lang="hi">अंतिम नाम</span></label><input id="f_last" type="text" autocomplete="family-name" maxlength="60" placeholder="Rao"><div class="hint" data-lang="en">Leave blank if you use a single name.</div><div class="hint hi" data-lang="hi">यदि आप एक ही नाम का उपयोग करते हैं तो खाली छोड़ें।</div><div class="err" data-lang="en">Letters only.</div><div class="err hi" data-lang="hi">केवल अक्षर।</div></div>
-        <div class="field" data-f="vci_reg_number"><label><span data-lang="en">Registration number</span><span class="hi" data-lang="hi">पंजीकरण संख्या</span> <span class="req">*</span></label><input id="f_reg" type="text" placeholder="3564/WBVC"><div class="hint" data-lang="en">As on your council registration.</div><div class="hint hi" data-lang="hi">जैसा आपके परिषद पंजीकरण में है।</div><div class="err" data-lang="en">Enter a valid registration number.</div><div class="err hi" data-lang="hi">एक मान्य पंजीकरण संख्या दर्ज करें।</div></div>
-        <div class="field" data-f="state_council"><label><span data-lang="en">State veterinary council</span><span class="hi" data-lang="hi">राज्य पशु चिकित्सा परिषद</span> <span class="req">*</span></label><input id="f_council" type="text" placeholder="e.g. West Bengal Veterinary Council"><div class="err" data-lang="en">Enter your state veterinary council.</div><div class="err hi" data-lang="hi">अपनी राज्य पशु चिकित्सा परिषद दर्ज करें।</div></div>
-        <div class="field" data-f="qualification"><label><span data-lang="en">Qualification</span><span class="hi" data-lang="hi">योग्यता</span> <span class="req">*</span></label><input id="f_qual" type="text" placeholder="BVSc &amp; AH"><div class="err" data-lang="en">Enter your qualification.</div><div class="err hi" data-lang="hi">अपनी योग्यता दर्ज करें।</div></div>
-        <div class="field" data-f="year_of_registration"><label><span data-lang="en">Year of registration</span><span class="hi" data-lang="hi">पंजीकरण का वर्ष</span> <span class="req">*</span></label><input id="f_year" type="number" inputmode="numeric" placeholder="2014"><div class="err" data-lang="en">Enter a valid year.</div><div class="err hi" data-lang="hi">मान्य वर्ष दर्ज करें।</div></div>
-        <div class="field full" data-f="additional_qualifications"><label><span data-lang="en">Additional qualifications</span><span class="hi" data-lang="hi">अतिरिक्त योग्यताएँ</span></label><input id="f_addq" type="text" placeholder="Optional - e.g. MVSc (Surgery)"></div>
+    <ol class="stepper" id="stepper" aria-label="Steps">
+      <li data-s="0"><button type="button" onclick="goStage(0)"><span class="sq"><b>1</b><span class="material-symbols-outlined">check</span></span><span class="sl"><span data-lang="en">Practice</span><span class="hi" data-lang="hi">अभ्यास</span></span></button></li>
+      <li data-s="1"><button type="button" onclick="goStage(1)"><span class="sq"><b>2</b><span class="material-symbols-outlined">check</span></span><span class="sl"><span data-lang="en">Registration</span><span class="hi" data-lang="hi">पंजीकरण</span></span></button></li>
+      <li data-s="2"><button type="button" onclick="goStage(2)"><span class="sq"><b>3</b><span class="material-symbols-outlined">check</span></span><span class="sl"><span data-lang="en">About you</span><span class="hi" data-lang="hi">आपके बारे में</span></span></button></li>
+      <li data-s="3"><button type="button" onclick="goStage(3)"><span class="sq"><b>4</b><span class="material-symbols-outlined">check</span></span><span class="sl"><span data-lang="en">Documents</span><span class="hi" data-lang="hi">दस्तावेज़</span></span></button></li>
+      <li data-s="4"><button type="button" onclick="goStage(4)"><span class="sq"><b>5</b><span class="material-symbols-outlined">check</span></span><span class="sl"><span data-lang="en">Submit</span><span class="hi" data-lang="hi">जमा करें</span></span></button></li>
+    </ol>
+
+    <!-- 01 practice -->
+    <div class="stage" data-stage="0">
+      <div class="already" id="already"><span data-lang="en">Already applied or verified - new phone or reinstalled?</span><span class="hi" data-lang="hi">पहले से आवेदन किया है या सत्यापित हैं - नया फ़ोन या ऐप दोबारा इंस्टॉल किया?</span><a onclick="showSignIn()"><span data-lang="en">Sign in</span><span class="hi" data-lang="hi">साइन इन करें</span></a></div>
+      <div class="sect"><div class="sect-h"><span class="n">01</span><span data-lang="en">Where do you practise?</span><span class="hi" data-lang="hi">आप कहाँ अभ्यास करते हैं?</span></div>
+        <p class="vnote"><span data-lang="en">Pick your state first. We use it to show the veterinary council for it.</span><span class="hi" data-lang="hi">पहले अपना राज्य चुनें। इससे हम उस राज्य की पशु चिकित्सा परिषद दिखाते हैं।</span></p>
+        <div class="grid2">
+          <div class="field full" data-f="practice_state"><label><span data-lang="en">State or union territory</span><span class="hi" data-lang="hi">राज्य या केंद्र शासित प्रदेश</span> <span class="req">*</span></label><select id="f_pstate"></select><div class="err" data-lang="en">Choose the state where you practise.</div><div class="err hi" data-lang="hi">वह राज्य चुनें जहाँ आप अभ्यास करते हैं।</div></div>
+          <div class="field" data-f="practice_city"><label><span data-lang="en">Practice city</span><span class="hi" data-lang="hi">अभ्यास का शहर</span></label><input id="f_pcity" type="text" placeholder="Optional"></div>
+          <div class="field" data-f="clinic_name"><label><span data-lang="en">Clinic name</span><span class="hi" data-lang="hi">क्लिनिक का नाम</span></label><input id="f_clinic" type="text" placeholder="Optional"></div>
+        </div>
       </div>
     </div>
-    <!-- practice -->
-    <div class="sect"><div class="sect-h"><span class="n">02</span><span data-lang="en">Your practice</span><span class="hi" data-lang="hi">आपका अभ्यास</span></div>
-      <div class="grid2">
-        <div class="field" data-f="practice_state"><label><span data-lang="en">Practice state</span><span class="hi" data-lang="hi">अभ्यास का राज्य</span> <span class="req">*</span></label><input id="f_pstate" type="text" placeholder="e.g. West Bengal"><div class="err" data-lang="en">Enter the state where you practise.</div><div class="err hi" data-lang="hi">वह राज्य दर्ज करें जहाँ आप अभ्यास करते हैं।</div></div>
-        <div class="field" data-f="practice_city"><label><span data-lang="en">Practice city</span><span class="hi" data-lang="hi">अभ्यास का शहर</span></label><input id="f_pcity" type="text" placeholder="Optional"></div>
-        <div class="field" data-f="clinic_name"><label><span data-lang="en">Clinic name</span><span class="hi" data-lang="hi">क्लिनिक का नाम</span></label><input id="f_clinic" type="text" placeholder="Optional"></div>
-        <div class="field" data-f="phone"><label><span data-lang="en">Mobile</span><span class="hi" data-lang="hi">मोबाइल</span> <span class="req">*</span></label><div class="phonewrap"><span class="cc">+91</span><input id="f_phone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="98765 43210"></div><div class="hint" id="phone_hint" data-lang="en">You'll sign in with this number. Use your personal mobile.</div><div class="hint hi" data-lang="hi">आप इसी नंबर से साइन इन करेंगे। अपना निजी मोबाइल नंबर डालें।</div><div class="err" data-lang="en">Enter a valid 10-digit mobile number.</div><div class="err hi" data-lang="hi">10 अंकों का मान्य मोबाइल नंबर दर्ज करें।</div></div>
-        <div class="field full" data-f="email"><label><span data-lang="en">Email</span><span class="hi" data-lang="hi">ईमेल</span></label><input id="f_email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"><div class="hint" data-lang="en">Recommended - you'll get review updates, and you can reset a forgotten PIN yourself.</div><div class="hint hi" data-lang="hi">अनुशंसित - समीक्षा की जानकारी मिलेगी और भूला हुआ PIN आप खुद रीसेट कर सकेंगे।</div><div class="err" data-lang="en">Enter a valid email address.</div><div class="err hi" data-lang="hi">एक मान्य ईमेल पता दर्ज करें।</div></div>
+
+    <!-- 02 registration -->
+    <div class="stage" data-stage="1">
+      <div class="sect"><div class="sect-h"><span class="n">02</span><span data-lang="en">Your registration</span><span class="hi" data-lang="hi">आपका पंजीकरण</span></div>
+        <p class="vnote"><span data-lang="en">As on your council registration certificate.</span><span class="hi" data-lang="hi">जैसा आपके परिषद पंजीकरण प्रमाणपत्र पर है।</span></p>
+        <div class="grid2">
+          <div class="field full" data-f="state_council"><label><span data-lang="en">Veterinary council</span><span class="hi" data-lang="hi">पशु चिकित्सा परिषद</span> <span class="req">*</span></label><select id="f_council"></select><div class="hint" id="council_note"></div><div class="err" data-lang="en">Choose your veterinary council.</div><div class="err hi" data-lang="hi">अपनी पशु चिकित्सा परिषद चुनें।</div></div>
+          <div class="field full hidden" data-f="council_other" id="council_other_f"><label><span data-lang="en">Council name</span><span class="hi" data-lang="hi">परिषद का नाम</span> <span class="req">*</span></label><input id="f_council_other" type="text" maxlength="120" placeholder="As on your certificate"><div class="err" data-lang="en">Type the name of your council.</div><div class="err hi" data-lang="hi">अपनी परिषद का नाम लिखें।</div></div>
+          <div class="field full" data-f="vci_reg_number"><label><span data-lang="en">Registration number</span><span class="hi" data-lang="hi">पंजीकरण संख्या</span> <span class="req">*</span></label><input id="f_reg" type="text" autocapitalize="characters" placeholder="3564/WBVC"><div class="hint" id="reg_status"></div><div class="err" data-lang="en">Enter a valid registration number.</div><div class="err hi" data-lang="hi">एक मान्य पंजीकरण संख्या दर्ज करें।</div><div class="regtaken hidden" id="reg_taken"><p id="reg_taken_msg"></p><button type="button" class="btn" style="width:auto" onclick="signInWithReg()"><span data-lang="en">Sign in to that account</span><span class="hi" data-lang="hi">उस खाते में साइन इन करें</span></button></div></div>
+          <div class="field" data-f="qualification"><label><span data-lang="en">Qualification</span><span class="hi" data-lang="hi">योग्यता</span> <span class="req">*</span></label><select id="f_qual"></select><div class="err" data-lang="en">Choose your qualification.</div><div class="err hi" data-lang="hi">अपनी योग्यता चुनें।</div></div>
+          <div class="field" data-f="year_of_registration"><label><span data-lang="en">Year of registration</span><span class="hi" data-lang="hi">पंजीकरण का वर्ष</span> <span class="req">*</span></label><select id="f_year"></select><div class="err" data-lang="en">Choose your year of registration.</div><div class="err hi" data-lang="hi">पंजीकरण का वर्ष चुनें।</div></div>
+          <div class="field full hidden" data-f="qual_other" id="qual_other_f"><label><span data-lang="en">Degree</span><span class="hi" data-lang="hi">डिग्री</span> <span class="req">*</span></label><input id="f_qual_other" type="text" maxlength="120" placeholder="As on your degree certificate"><div class="err" data-lang="en">Type your degree.</div><div class="err hi" data-lang="hi">अपनी डिग्री लिखें।</div></div>
+          <div class="field full" data-f="additional_qualifications"><label><span data-lang="en">Additional qualifications</span><span class="hi" data-lang="hi">अतिरिक्त योग्यताएँ</span></label>
+            <div class="chips" id="aq_list"></div>
+            <div class="aq">
+              <select id="aq_type" aria-label="Type"></select>
+              <select id="aq_subject" aria-label="Subject"></select>
+              <input id="aq_text" type="text" maxlength="80" aria-label="Qualification">
+              <button type="button" class="btn ghost" id="aq_add" onclick="addQual()"><span data-lang="en">Add</span><span class="hi" data-lang="hi">जोड़ें</span></button>
+            </div>
+            <div class="hint" data-lang="en">Optional: M.V.Sc., Ph.D. or a PG diploma.</div><div class="hint hi" data-lang="hi">वैकल्पिक: M.V.Sc., Ph.D. या PG डिप्लोमा।</div>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- documents -->
-    <div class="sect"><div class="sect-h"><span class="n">03</span><span data-lang="en">Documents</span><span class="hi" data-lang="hi">दस्तावेज़</span></div>
-      <div class="doc-hint" data-lang="en">Clear photos or scans. JPG, PNG or PDF, up to 10 MB each.</div>
-      <div class="doc-hint hi" data-lang="hi">स्पष्ट तस्वीरें या स्कैन। JPG, PNG या PDF, प्रत्येक 10 MB तक।</div>
-      <div id="docs"></div>
-      <div class="err" id="docs-err" style="display:none;color:var(--accent);font-size:13px" data-lang="en">Attach your registration certificate and government ID.</div>
-      <div class="err hi" id="docs-err-hi" style="display:none;color:var(--accent);font-size:13px" data-lang="hi">अपना पंजीकरण प्रमाणपत्र और सरकारी पहचान पत्र संलग्न करें।</div>
-    </div>
-    <!-- consent -->
-    <div class="sect" id="pin-sect"><div class="sect-h"><span class="n">04</span><span data-lang="en">Secure your account</span><span class="hi" data-lang="hi">अपना खाता सुरक्षित करें</span></div>
-      <p class="vnote"><span data-lang="en">Choose a 6-8 digit PIN. With your mobile number it signs you back in on a new phone, after reinstalling, or here on the web. Avoid 123456 or repeated digits.</span><span class="hi" data-lang="hi">6-8 अंकों का PIN चुनें। मोबाइल नंबर के साथ यह नए फ़ोन पर, ऐप दोबारा इंस्टॉल करने के बाद, या यहाँ वेब पर साइन इन कराता है। 123456 या दोहराए अंकों से बचें।</span></p>
-      <div class="grid2">
-        <div class="field" data-f="pin"><label>PIN <span class="req">*</span></label><input id="f_pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"><div class="err" data-lang="en">6-8 digits; not a sequence or repeated digit.</div><div class="err hi" data-lang="hi">6-8 अंक; क्रम या दोहराए अंक नहीं।</div></div>
-        <div class="field" data-f="pin2"><label><span data-lang="en">Confirm PIN</span><span class="hi" data-lang="hi">PIN की पुष्टि करें</span> <span class="req">*</span></label><input id="f_pin2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"><div class="err" data-lang="en">The two PINs don't match.</div><div class="err hi" data-lang="hi">दोनों PIN मेल नहीं खाते।</div></div>
+
+    <!-- 03 about you -->
+    <div class="stage" data-stage="2">
+      <div class="sect"><div class="sect-h"><span class="n">03</span><span data-lang="en">About you</span><span class="hi" data-lang="hi">आपके बारे में</span></div>
+        <p class="vnote"><span data-lang="en">Your name as on your registration certificate. You will sign in with this mobile number and a PIN.</span><span class="hi" data-lang="hi">आपका नाम, जैसा पंजीकरण प्रमाणपत्र पर है। आप इसी मोबाइल नंबर और PIN से साइन इन करेंगे।</span></p>
+        <div class="grid2">
+          <div class="field" data-f="first_name"><label><span data-lang="en">First name</span><span class="hi" data-lang="hi">पहला नाम</span> <span class="req">*</span></label><input id="f_first" type="text" autocomplete="given-name" maxlength="60" placeholder="Asha"><div class="err" data-lang="en">Enter your first name (letters only).</div><div class="err hi" data-lang="hi">अपना पहला नाम दर्ज करें (केवल अक्षर)।</div></div>
+          <div class="field" data-f="last_name"><label><span data-lang="en">Last name</span><span class="hi" data-lang="hi">अंतिम नाम</span></label><input id="f_last" type="text" autocomplete="family-name" maxlength="60" placeholder="Rao"><div class="hint" data-lang="en">Leave blank if you use a single name.</div><div class="hint hi" data-lang="hi">यदि आप एक ही नाम का उपयोग करते हैं तो खाली छोड़ें।</div><div class="err" data-lang="en">Letters only.</div><div class="err hi" data-lang="hi">केवल अक्षर।</div></div>
+          <div class="field" data-f="phone"><label><span data-lang="en">Mobile</span><span class="hi" data-lang="hi">मोबाइल</span> <span class="req">*</span></label><div class="phonewrap"><span class="cc">+91</span><input id="f_phone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="98765 43210"></div><div class="hint" id="phone_hint" data-lang="en">You'll sign in with this number. Use your personal mobile.</div><div class="hint hi" data-lang="hi">आप इसी नंबर से साइन इन करेंगे। अपना निजी मोबाइल नंबर डालें।</div><div class="err" data-lang="en">Enter a valid 10-digit mobile number.</div><div class="err hi" data-lang="hi">10 अंकों का मान्य मोबाइल नंबर दर्ज करें।</div></div>
+          <div class="field" data-f="email"><label><span data-lang="en">Email</span><span class="hi" data-lang="hi">ईमेल</span></label><input id="f_email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"><div class="hint" data-lang="en">Recommended - you'll get review updates, and you can reset a forgotten PIN yourself.</div><div class="hint hi" data-lang="hi">अनुशंसित - समीक्षा की जानकारी मिलेगी और भूला हुआ PIN आप खुद रीसेट कर सकेंगे।</div><div class="err" data-lang="en">Enter a valid email address.</div><div class="err hi" data-lang="hi">एक मान्य ईमेल पता दर्ज करें।</div></div>
+        </div>
       </div>
     </div>
-    <div class="sect"><div class="sect-h"><span class="n">05</span><span data-lang="en">Declarations</span><span class="hi" data-lang="hi">घोषणाएँ</span></div>
-      <div class="notice"><span data-lang="en">We store your documents securely and share them only with our verification team.</span><span class="hi" data-lang="hi">हम आपके दस्तावेज़ सुरक्षित रूप से संग्रहीत करते हैं और उन्हें केवल अपनी सत्यापन टीम के साथ साझा करते हैं।</span></div>
-      <div class="consent" id="c_accurate" onclick="toggleConsent('accurate')"><div class="box"><span class="material-symbols-outlined">check</span></div><div class="ct"><span data-lang="en">The information and documents I have provided are accurate.</span><span class="hi" data-lang="hi">मेरे द्वारा दी गई जानकारी और दस्तावेज़ सही हैं।</span></div></div>
-      <div class="consent" id="c_registered" onclick="toggleConsent('registered')"><div class="box"><span class="material-symbols-outlined">check</span></div><div class="ct"><span data-lang="en">I am currently registered with the veterinary council named above.</span><span class="hi" data-lang="hi">मैं वर्तमान में ऊपर बताई गई पशु चिकित्सा परिषद में पंजीकृत हूँ।</span></div></div>
+
+    <!-- 04 documents -->
+    <div class="stage" data-stage="3">
+      <div class="sect"><div class="sect-h"><span class="n">04</span><span data-lang="en">Documents</span><span class="hi" data-lang="hi">दस्तावेज़</span></div>
+        <div class="doc-hint" data-lang="en">Clear photos or scans. JPG, PNG or PDF, up to 10 MB each.</div>
+        <div class="doc-hint hi" data-lang="hi">स्पष्ट तस्वीरें या स्कैन। JPG, PNG या PDF, प्रत्येक 10 MB तक।</div>
+        <div id="docs"></div>
+        <div class="err" id="docs-err" style="display:none;color:var(--accent);font-size:13px" data-lang="en">Attach your registration certificate and government ID.</div>
+        <div class="err hi" id="docs-err-hi" style="display:none;color:var(--accent);font-size:13px" data-lang="hi">अपना पंजीकरण प्रमाणपत्र और सरकारी पहचान पत्र संलग्न करें।</div>
+      </div>
     </div>
-    <div style="margin-top:26px"><button type="submit" id="submitBtn" class="btn"><span id="submitLabel" data-lang="en">Submit application</span><span id="submitLabelHi" class="hi" data-lang="hi">आवेदन जमा करें</span><span class="material-symbols-outlined">arrow_forward</span></button></div>
+
+    <!-- 05 check, PIN, declarations -->
+    <div class="stage" data-stage="4">
+      <div class="sect"><div class="sect-h"><span class="n">05</span><span data-lang="en">Check and submit</span><span class="hi" data-lang="hi">जाँचें और जमा करें</span></div>
+        <div class="summary" id="summary"></div>
+      </div>
+      <div class="sect" id="pin-sect"><div class="sect-h"><span class="n">&#8226;</span><span data-lang="en">Secure your account</span><span class="hi" data-lang="hi">अपना खाता सुरक्षित करें</span></div>
+        <p class="vnote"><span data-lang="en">Choose a 6-8 digit PIN. With your mobile number it signs you back in on a new phone, after reinstalling, or here on the web. Avoid 123456 or repeated digits.</span><span class="hi" data-lang="hi">6-8 अंकों का PIN चुनें। मोबाइल नंबर के साथ यह नए फ़ोन पर, ऐप दोबारा इंस्टॉल करने के बाद, या यहाँ वेब पर साइन इन कराता है। 123456 या दोहराए अंकों से बचें।</span></p>
+        <div class="grid2">
+          <div class="field" data-f="pin"><label>PIN <span class="req">*</span></label><input id="f_pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"><div class="err" data-lang="en">6-8 digits; not a sequence or repeated digit.</div><div class="err hi" data-lang="hi">6-8 अंक; क्रम या दोहराए अंक नहीं।</div></div>
+          <div class="field" data-f="pin2"><label><span data-lang="en">Confirm PIN</span><span class="hi" data-lang="hi">PIN की पुष्टि करें</span> <span class="req">*</span></label><input id="f_pin2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"><div class="err" data-lang="en">The two PINs don't match.</div><div class="err hi" data-lang="hi">दोनों PIN मेल नहीं खाते।</div></div>
+        </div>
+      </div>
+      <div class="sect"><div class="sect-h"><span class="n">&#8226;</span><span data-lang="en">Declarations</span><span class="hi" data-lang="hi">घोषणाएँ</span></div>
+        <div class="notice"><span data-lang="en">We store your documents securely and share them only with our verification team.</span><span class="hi" data-lang="hi">हम आपके दस्तावेज़ सुरक्षित रूप से संग्रहीत करते हैं और उन्हें केवल अपनी सत्यापन टीम के साथ साझा करते हैं।</span></div>
+        <div class="consent" id="c_accurate" onclick="toggleConsent('accurate')"><div class="box"><span class="material-symbols-outlined">check</span></div><div class="ct"><span data-lang="en">The information and documents I have provided are accurate.</span><span class="hi" data-lang="hi">मेरे द्वारा दी गई जानकारी और दस्तावेज़ सही हैं।</span></div></div>
+        <div class="consent" id="c_registered" onclick="toggleConsent('registered')"><div class="box"><span class="material-symbols-outlined">check</span></div><div class="ct"><span data-lang="en">I am currently registered with the veterinary council named above.</span><span class="hi" data-lang="hi">मैं वर्तमान में ऊपर बताई गई पशु चिकित्सा परिषद में पंजीकृत हूँ।</span></div></div>
+      </div>
+    </div>
+
     <div class="formerr" id="formErr"></div>
+    <div class="stagenav">
+      <button type="button" class="btn ghost" id="backBtn" onclick="prevStage()"><span data-lang="en">Back</span><span class="hi" data-lang="hi">पीछे</span></button>
+      <button type="button" class="btn" id="nextBtn" onclick="nextStage()"><span data-lang="en">Next</span><span class="hi" data-lang="hi">आगे</span><span class="material-symbols-outlined">arrow_forward</span></button>
+      <button type="submit" id="submitBtn" class="btn"><span id="submitLabel" data-lang="en">Submit application</span><span id="submitLabelHi" class="hi" data-lang="hi">आवेदन जमा करें</span><span class="material-symbols-outlined">arrow_forward</span></button>
+    </div>
   </form>
 
   <!-- STATUS -->
@@ -256,6 +349,7 @@ footer .hi{font-family:var(--hindi);text-transform:none;letter-spacing:0}
   <span class="hi" data-lang="hi">रैपिड रिस्पॉन्स - भारत का पशु आपातकालीन नेटवर्क · <a href="/">होम</a></span>
 </footer>
 
+<script src="/assets/rrt-vet-registry.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
@@ -470,9 +564,228 @@ function onPick(type,input){
 /* ---- consent ---- */
 function toggleConsent(k){ consent[k]=!consent[k]; $('c_'+k).classList.toggle('on',consent[k]); }
 
+/* ---- shared lists: states, councils, degrees (shared/vet-registry.json) ---- */
+var VR=window.RRT_VET_REGISTRY||{states:[],councils:[],degrees:[],pg:{degrees:[],disciplines:[]},year_min:1950};
+VR.pg=VR.pg||{degrees:[],disciplines:[]};
+var YEAR_MIN=VR.year_min||1950, MAX_AQ=6;
+function findBy(list,key,v){ for(var i=0;i<list.length;i++) if(list[i][key]===v) return list[i]; return null; }
+function stateBy(code){ return code?findBy(VR.states,'code',code):null; }
+function councilBy(id){ return id?findBy(VR.councils,'id',id):null; }
+function degreeBy(id){ return id?findBy(VR.degrees,'id',id):null; }
+function stateLabel(s){ return isHi()?(s.name_hi||s.name):s.name; }
+function opt(v,label){ var o=document.createElement('option'); o.value=v; o.textContent=label; return o; }
+function group(label){ var g=document.createElement('optgroup'); g.label=label; return g; }
+// Records made before the dropdowns hold typed text: the same lenient matching
+// as the backend (vet_registry.js) and the app, used only to prefill.
+var STOPW=' veterinary vety vet council state states board registration tribunal the of and ut union territory nct govt government india indian ';
+function coreOf(s,keep){ return String(s||'').toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,' ').trim().split(' ').filter(function(w){ return w&&((keep&&keep.indexOf(w)!==-1)||STOPW.indexOf(' '+w+' ')===-1); }).join(' '); }
+function lettersOf(s){ return String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,''); }
+function only(list){ var u=list.filter(function(x,i){ return list.indexOf(x)===i; }); return u.length===1?u[0]:null; }
+function matchState(t){
+  if(!t) return null;
+  var up=String(t).trim().toUpperCase(), b=stateBy(up)||(/^[A-Z]{2}$/.test(up)?stateBy('IN-'+up):null); if(b) return b;
+  var k=coreOf(t), l=lettersOf(t);
+  return only(VR.states.filter(function(s){ var al=s.aliases||[];
+    return (k&&(coreOf(s.name)===k||al.some(function(a){ return coreOf(a)===k; })))||lettersOf(s.code)===l||al.some(function(a){ return lettersOf(a)===l; }); }));
+}
+function matchCouncil(t){
+  if(!t||String(t).trim().length<2) return null;
+  var l=lettersOf(t);
+  var sh=only(VR.councils.filter(function(c){ return (c.short&&lettersOf(c.short)===l)||(c.aliases||[]).some(function(a){ return /^[A-Z.&\s]{2,8}$/.test(a)&&lettersOf(a)===l; }); }));
+  if(sh) return sh;
+  var k=coreOf(t), ki=coreOf(t,['india']);
+  var d=only(VR.councils.filter(function(c){ var nat=c.kind==='national', kk=nat?ki:k, keep=nat?['india']:null; if(!kk) return false;
+    return coreOf(c.name,keep)===kk||(c.aliases||[]).some(function(a){ return coreOf(a,keep)===kk; }); }));
+  if(d) return d;
+  var st=k?matchState(k):null;
+  return st&&(st.councils||[]).length===1?councilBy(st.councils[0]):null;
+}
+function matchDegree(t){
+  if(!t) return null;
+  var key=function(s){ return lettersOf(s).replace(/AND/g,''); }, k=key(t);
+  return only(VR.degrees.filter(function(d){ return key(d.name)===k||(d.aliases||[]).some(function(a){ return key(a)===k; }); }));
+}
+
+/* ---- the pickers (native selects; rebuilt when the language changes) ---- */
+var councilAuto=false; // council picked for them from their state
+function fillStates(){
+  var el=$('f_pstate'), cur=el.value; el.innerHTML='';
+  el.appendChild(opt('',T('Choose your state','अपना राज्य चुनें')));
+  var gs=group(T('States','राज्य')), gu=group(T('Union territories','केंद्र शासित प्रदेश'));
+  VR.states.forEach(function(s){ (s.type==='ut'?gu:gs).appendChild(opt(s.code,stateLabel(s))); });
+  el.appendChild(gs); el.appendChild(gu); el.value=cur;
+}
+function fillCouncils(){
+  var el=$('f_council'), cur=el.value, st=stateBy($('f_pstate').value), mine=(st&&st.councils)||[];
+  el.innerHTML='';
+  el.appendChild(opt('',T('Choose your council','अपनी परिषद चुनें')));
+  if(mine.length){
+    var g=group(isHi()?stateLabel(st)+' के लिए':'For '+stateLabel(st));
+    mine.forEach(function(id){ var c=councilBy(id); if(c) g.appendChild(opt(c.id,c.name+(c.short?' ('+c.short+')':''))); });
+    el.appendChild(g);
+  }
+  VR.councils.forEach(function(c){ if(c.kind==='national'){ var gn=group(T('National register','राष्ट्रीय रजिस्टर')); gn.appendChild(opt(c.id,c.name+' (IVPR)')); el.appendChild(gn); } });
+  var go=group(T('Registered in another state','दूसरे राज्य में पंजीकृत'));
+  VR.councils.filter(function(c){ return c.kind!=='national'&&mine.indexOf(c.id)===-1; })
+    .sort(function(a,b){ return a.name.localeCompare(b.name); })
+    .forEach(function(c){ go.appendChild(opt(c.id,c.name)); });
+  el.appendChild(go);
+  var gx=group(T('Not listed','सूची में नहीं')); gx.appendChild(opt('other',T('Other (type the name)','अन्य (नाम लिखें)'))); el.appendChild(gx);
+  el.value=cur; councilUi();
+}
+function councilUi(){
+  var id=$('f_council').value, st=stateBy($('f_pstate').value), c=councilBy(id), note='';
+  $('council_other_f').classList.toggle('hidden',id!=='other');
+  if(!id&&st&&!(st.councils||[]).length) note=T('We could not find a veterinary council for '+stateLabel(st)+'. Pick the one you are registered with.',stateLabel(st)+' के लिए हमें कोई पशु चिकित्सा परिषद नहीं मिली। जिसमें आप पंजीकृत हैं, वह चुनें।');
+  else if(c&&c.kind!=='national'&&st&&(c.states||[]).indexOf(st.code)===-1) note=T('Registered in another state? That is fine.','दूसरे राज्य में पंजीकृत हैं? कोई बात नहीं।');
+  else if(c&&councilAuto) note=T('Picked from your state. You can change it.','आपके राज्य से चुनी गई। आप इसे बदल सकते हैं।');
+  $('council_note').textContent=note;
+}
+function onStateChange(){
+  var st=stateBy($('f_pstate').value), l=(st&&st.councils)||[];
+  var repick=!$('f_council').value||councilAuto;
+  fillCouncils();
+  if(repick){ $('f_council').value=l.length===1?l[0]:''; councilAuto=l.length===1; councilUi(); }
+}
+function fillQuals(){
+  var el=$('f_qual'), cur=el.value; el.innerHTML='';
+  el.appendChild(opt('',T('Choose your degree','अपनी डिग्री चुनें')));
+  VR.degrees.forEach(function(d){ el.appendChild(opt(d.id,d.name+' · '+(d.current?T('current degree','वर्तमान डिग्री'):T('older name, still recognised','पुराना नाम, अब भी मान्य')))); });
+  el.appendChild(opt('other',T('Other recognised degree (type it)','अन्य मान्य डिग्री (लिखें)')));
+  el.value=cur; qualUi();
+}
+function qualUi(){ $('qual_other_f').classList.toggle('hidden',$('f_qual').value!=='other'); }
+function fillYears(){
+  var el=$('f_year'), cur=el.value; el.innerHTML='';
+  el.appendChild(opt('',T('Choose the year','वर्ष चुनें')));
+  for(var y=CUR_YEAR;y>=YEAR_MIN;y--) el.appendChild(opt(String(y),String(y)));
+  el.value=cur;
+}
+/* additional qualifications: M.V.Sc. / Ph.D. + subject, PG diploma, other */
+var addQuals=[];
+function aqPg(){ return findBy(VR.pg.degrees||[],'id',$('aq_type').value); }
+function fillAq(){
+  var t=$('aq_type'), cur=t.value; t.innerHTML='';
+  (VR.pg.degrees||[]).forEach(function(d){ t.appendChild(opt(d.id,d.name)); });
+  t.appendChild(opt('other',T('Other','अन्य')));
+  t.value=cur||(((VR.pg.degrees||[])[0]||{}).id||'other');
+  var sEl=$('aq_subject'), cs=sEl.value; sEl.innerHTML='';
+  sEl.appendChild(opt('',T('Subject','विषय')));
+  (VR.pg.disciplines||[]).forEach(function(d){ sEl.appendChild(opt(d.name,d.name)); });
+  sEl.appendChild(opt('other',T('Other subject (type it)','अन्य विषय (लिखें)')));
+  sEl.value=cs; aqUi(); renderAq();
+}
+function aqUi(){
+  var pg=aqPg(), withSubj=!!(pg&&pg.discipline), typing=!withSubj||$('aq_subject').value==='other';
+  $('aq_subject').classList.toggle('hidden',!withSubj);
+  $('aq_text').classList.toggle('hidden',!typing);
+  $('aq_text').placeholder=withSubj?T('Subject','विषय'):T('Name of the qualification','योग्यता का नाम');
+  var full=addQuals.length>=MAX_AQ;
+  ['aq_type','aq_subject','aq_text','aq_add'].forEach(function(id){ $(id).disabled=full; });
+}
+function addQual(){
+  var pg=aqPg(), withSubj=!!(pg&&pg.discipline), subj=$('aq_subject').value, text=val('aq_text'), q='';
+  if(withSubj){ var sj=subj==='other'?text:subj; if(sj.length<2) return; q=pg.name+' ('+sj+')'; }
+  else if(pg){ if(text.length<2) return; q=pg.name+' ('+text+')'; }
+  else { if(text.length<2) return; q=text; }
+  if(addQuals.indexOf(q)===-1&&addQuals.length<MAX_AQ) addQuals.push(q);
+  $('aq_text').value=''; $('aq_subject').value=''; aqUi(); renderAq();
+}
+function renderAq(){
+  var host=$('aq_list'); host.innerHTML='';
+  addQuals.forEach(function(q,i){
+    var c=document.createElement('span'); c.className='chip'; c.appendChild(document.createTextNode(q));
+    var b=document.createElement('button'); b.type='button'; b.textContent='×';
+    b.setAttribute('aria-label',isHi()?q+' हटाएँ':'Remove '+q);
+    b.onclick=function(){ addQuals.splice(i,1); renderAq(); aqUi(); };
+    c.appendChild(b); host.appendChild(c);
+  });
+}
+function fillAll(){ fillStates(); fillCouncils(); fillQuals(); fillYears(); fillAq(); }
+
+/* ---- registration number: already on RRT? (asked while typing) ---- */
+var regChecks={}, regTimer=null, regBusy=false;
+function regKeyOf(v){ return String(v||'').trim().toUpperCase().replace(/\s+/g,''); }
+function regOk(v){ v=String(v||'').trim().toUpperCase(); return /^[A-Z0-9/\-.]{3,40}$/.test(v)&&/[0-9]/.test(v); }
+async function checkReg(v){
+  var k=regKeyOf(v); if(regChecks[k]) return regChecks[k];
+  regBusy=true; regUi(); var res=null;
+  try{
+    var t=await idToken();
+    var r=await fetch(VET_API+'/vet/registration-check?n='+encodeURIComponent(String(v).trim()),{headers:{'Authorization':'Bearer '+t}});
+    var j=await r.json();
+    if(r.ok&&j&&j.ok){ res={exists:!!j.exists,hint:j.account&&j.account.mobile_hint}; regChecks[k]=res; }
+  }catch(e){ /* offline: the submit checks it anyway */ }
+  regBusy=false; regUi(); return res;
+}
+function onRegInput(){
+  clearTimeout(regTimer); regUi();
+  var v=val('f_reg'); if(!regOk(v)||regChecks[regKeyOf(v)]) return;
+  regTimer=setTimeout(function(){ checkReg(v); },900);
+}
+function regTaken(){ var c=regChecks[regKeyOf(val('f_reg'))]; return !!(c&&c.exists); }
+function regUi(){
+  var c=regChecks[regKeyOf(val('f_reg'))], taken=!!(c&&c.exists);
+  $('reg_status').textContent=(regBusy&&!c)?T('Checking…','जाँच हो रही है…'):'';
+  $('reg_taken').classList.toggle('hidden',!taken);
+  $('reg_taken_msg').textContent=taken?regExistsMsg(c.hint):'';
+}
+function signInWithReg(){ var c=regChecks[regKeyOf(val('f_reg'))]; showSignIn(); $('s_id').value=val('f_reg'); $('s_err').textContent=regExistsMsg(c&&c.hint); }
+
+/* ---- stages (same five as the app) ---- */
+var stage=0, reached=0, STAGES=5;
+function showStage(){
+  document.querySelectorAll('#vet-form .stage').forEach(function(el){ el.classList.toggle('on',+el.getAttribute('data-stage')===stage); });
+  document.querySelectorAll('#stepper li').forEach(function(li){
+    var i=+li.getAttribute('data-s');
+    li.classList.toggle('done',i<stage); li.classList.toggle('cur',i===stage); li.classList.toggle('open',i<=reached);
+    if(i===stage) li.setAttribute('aria-current','step'); else li.removeAttribute('aria-current');
+    li.querySelector('button').disabled=i>reached||i===stage;
+  });
+  $('backBtn').classList.toggle('hidden',stage===0&&!resubmitting);
+  $('nextBtn').classList.toggle('hidden',stage===STAGES-1);
+  $('submitBtn').classList.toggle('hidden',stage!==STAGES-1);
+  if(stage===STAGES-1) renderSummary();
+}
+function toStage(i){
+  stage=i; if(stage>reached) reached=stage; $('formErr').textContent=''; showStage();
+  var top=$('stepper').getBoundingClientRect().top+window.scrollY-80;
+  if(window.scrollY>top) window.scrollTo({top:top,behavior:'smooth'});
+}
+function goStage(i){ if(i<=reached&&i!==stage) toStage(i); }
+function prevStage(){
+  if(stage>0){ toStage(stage-1); return; }
+  if(resubmitting&&window.__lastApp){ resubmitting=false; renderStatus(window.__lastApp); }
+}
+async function nextStage(){
+  $('formErr').textContent='';
+  if(!validateStage(stage)){ $('formErr').textContent=T('Please complete the required fields above.','कृपया ऊपर के आवश्यक फ़ील्ड भरें।'); return; }
+  if(stage===1){
+    var v=val('f_reg');
+    if(!regChecks[regKeyOf(v)]){ clearTimeout(regTimer); busy('nextBtn',true); await checkReg(v); busy('nextBtn',false); }
+    if(regTaken()){ $('f_reg').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  }
+  toStage(Math.min(STAGES-1,stage+1));
+}
+function renderSummary(){
+  var st=stateBy($('f_pstate').value), c=councilBy($('f_council').value), d=degreeBy($('f_qual').value);
+  var docs=DOC_DEFS.filter(function(x){ return pickedDocs[x.type]; }).map(function(x){ return isHi()?x.hi:x.en; }).join(', ');
+  var groups=[
+    [0,T('Practice','अभ्यास'),[[T('State or union territory','राज्य या केंद्र शासित प्रदेश'),st?stateLabel(st):''],[T('Practice city','अभ्यास का शहर'),val('f_pcity')],[T('Clinic name','क्लिनिक का नाम'),val('f_clinic')]]],
+    [1,T('Registration','पंजीकरण'),[[T('Veterinary council','पशु चिकित्सा परिषद'),c?c.name:val('f_council_other')],[T('Registration number','पंजीकरण संख्या'),val('f_reg')],[T('Qualification','योग्यता'),d?d.name:val('f_qual_other')],[T('Year of registration','पंजीकरण का वर्ष'),$('f_year').value],[T('Additional qualifications','अतिरिक्त योग्यताएँ'),addQuals.join('; ')]]],
+    [2,T('About you','आपके बारे में'),[[T('Name','नाम'),(val('f_first')+' '+val('f_last')).trim()],[T('Mobile','मोबाइल'),val('f_phone')?'+91 '+tenDigits(val('f_phone')):''],[T('Email','ईमेल'),val('f_email')]]],
+    [3,T('Documents','दस्तावेज़'),[[T('Documents attached','संलग्न दस्तावेज़'),docs]]]
+  ];
+  $('summary').innerHTML=groups.map(function(g){
+    return '<div class="grp"><div class="gh"><span class="gt">'+esc(g[1])+'</span><a onclick="goStage('+g[0]+')">'+esc(T('Edit','बदलें'))+'</a></div><dl>'
+      +g[2].filter(function(r){ return r[1]; }).map(function(r){ return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'; }).join('')+'</dl></div>';
+  }).join('');
+}
+
 /* ---- form build + prefill (resubmit) ---- */
-function buildForm(){ buildDocs(); }
-function showForm(){ showOnly('vet-form'); applyFormMode(); }
+var formBuilt=false;
+function buildForm(force){ if(formBuilt&&!force) return; formBuilt=true; buildDocs(); fillAll(); }
+function showForm(){ showOnly('vet-form'); applyFormMode(); showStage(); }
 function applyFormMode(){
   var app=window.__lastApp, p=(app&&app.profile)||{};
   var lockPhone=resubmitting&&!!p.phone;           // mobile changes only via "Change mobile" (PIN step-up)
@@ -485,39 +798,63 @@ function needPin(){ return !$('pin-sect').classList.contains('hidden'); }
 function prefill(app){
   var c=app.credential||{}, p=app.profile||{};
   $('f_first').value=p.first_name||''; $('f_last').value=p.last_name||''; $('f_reg').value=c.vci_reg_number||'';
-  $('f_council').value=c.state_council||''; $('f_qual').value=c.qualification||'';
-  $('f_year').value=c.year_of_registration||''; $('f_addq').value=c.additional_qualifications||'';
-  $('f_pstate').value=p.practice_state||''; $('f_pcity').value=p.practice_city||'';
-  $('f_clinic').value=p.clinic_name||''; $('f_phone').value=p.phone||''; $('f_email').value=p.email||'';
+  $('f_pcity').value=p.practice_city||''; $('f_clinic').value=p.clinic_name||''; $('f_phone').value=p.phone||''; $('f_email').value=p.email||'';
+  var st=stateBy(p.practice_state_code)||matchState(p.practice_state);
+  $('f_pstate').value=st?st.code:''; fillCouncils();
+  var co=councilBy(c.council_id)||matchCouncil(c.state_council);
+  $('f_council').value=co?co.id:(c.state_council?'other':'');
+  $('f_council_other').value=co?'':(c.state_council||'');
+  councilAuto=false; councilUi();
+  var dg=degreeBy(c.qualification_id)||matchDegree(c.qualification);
+  $('f_qual').value=dg?dg.id:(c.qualification?'other':'');
+  $('f_qual_other').value=dg?'':(c.qualification||'');
+  qualUi();
+  $('f_year').value=c.year_of_registration?String(c.year_of_registration):'';
+  addQuals=String(c.additional_qualifications||'').split(/[;\n]/).map(function(x){ return x.trim(); }).filter(Boolean).slice(0,MAX_AQ);
+  renderAq(); aqUi(); regUi();
 }
 
-/* ---- validation (mirrors backend validateApplication) ---- */
+/* ---- validation, stage by stage (mirrors backend validateApplication) ---- */
 function val(id){ return ($(id).value||'').trim(); }
 function setBad(f,bad){ var el=document.querySelector('[data-f="'+f+'"]'); if(el) el.classList.toggle('bad',bad); }
-function validate(){
+function validateStage(i){
   var ok=true;
-  var first=val('f_first'), last=val('f_last');
-  var fOk=NAME_RE.test(first)&&(first+last).replace(/[^\p{L}]/gu,'').length>=2; setBad('first_name',!fOk); if(!fOk) ok=false;
-  var lOk=!last||NAME_RE.test(last); setBad('last_name',!lOk); if(!lOk) ok=false;
-  var reg=val('f_reg').toUpperCase(); var regOk=/^[A-Z0-9/\-.]{3,40}$/.test(reg)&&/[0-9]/.test(reg);
-  setBad('vci_reg_number',!regOk); if(!regOk) ok=false;
-  var council=val('f_council'); setBad('state_council',!council); if(!council) ok=false;
-  var qual=val('f_qual'); setBad('qualification',!qual); if(!qual) ok=false;
-  var year=parseInt(val('f_year'),10); var yearOk=year>=1950&&year<=CUR_YEAR;
-  setBad('year_of_registration',!yearOk); if(!yearOk) ok=false;
-  var pstate=val('f_pstate'); setBad('practice_state',!pstate); if(!pstate) ok=false;
-  var phoneOk=mobileOk(val('f_phone')); setBad('phone',!phoneOk); if(!phoneOk) ok=false;
-  if(needPin()){
-    var p1=val('f_pin'), p2=val('f_pin2'); var pOk=!pinProblem(p1); setBad('pin',!pOk); if(!pOk) ok=false;
+  if(i===0){ var sOk=!!stateBy($('f_pstate').value); setBad('practice_state',!sOk); if(!sOk) ok=false; }
+  if(i===1){
+    var cid=$('f_council').value, cOk=cid==='other'||!!councilBy(cid); setBad('state_council',!cOk); if(!cOk) ok=false;
+    var coOk=cid!=='other'||val('f_council_other').length>=2; setBad('council_other',!coOk); if(!coOk) ok=false;
+    var rOk=regOk(val('f_reg')); setBad('vci_reg_number',!rOk); if(!rOk) ok=false;
+    var qid=$('f_qual').value, qOk=qid==='other'||!!degreeBy(qid); setBad('qualification',!qOk); if(!qOk) ok=false;
+    var qoOk=qid!=='other'||val('f_qual_other').length>=2; setBad('qual_other',!qoOk); if(!qoOk) ok=false;
+    var year=parseInt($('f_year').value,10), yOk=year>=YEAR_MIN&&year<=CUR_YEAR; setBad('year_of_registration',!yOk); if(!yOk) ok=false;
+  }
+  if(i===2){
+    var first=val('f_first'), last=val('f_last');
+    var fOk=NAME_RE.test(first)&&(first+last).replace(/[^\p{L}]/gu,'').length>=2; setBad('first_name',!fOk); if(!fOk) ok=false;
+    var lOk=!last||NAME_RE.test(last); setBad('last_name',!lOk); if(!lOk) ok=false;
+    var phoneOk=mobileOk(val('f_phone')); setBad('phone',!phoneOk); if(!phoneOk) ok=false;
+    var em=val('f_email'), emOk=!em||/.+@.+\..+/.test(em); setBad('email',!emOk); if(!emOk) ok=false;
+  }
+  if(i===3){
+    var docsOk=!!pickedDocs['registration_certificate']&&!!pickedDocs['government_id'];
+    $('docs-err').style.display=(!docsOk&&!isHi())?'block':'none';
+    $('docs-err-hi').style.display=(!docsOk&&isHi())?'block':'none';
+    if(!docsOk) ok=false;
+  }
+  if(i===4&&needPin()){
+    var p1=val('f_pin'), p2=val('f_pin2'), pOk=!pinProblem(p1); setBad('pin',!pOk); if(!pOk) ok=false;
     var mOk=pOk&&p1===p2; setBad('pin2',pOk&&!mOk); if(!mOk) ok=false;
   }
-  var em=val('f_email'); var emOk=!em||/.+@.+\..+/.test(em); setBad('email',!emOk); if(!emOk) ok=false;
-  var haveReg=!!pickedDocs['registration_certificate'], haveId=!!pickedDocs['government_id'];
-  var docsOk=haveReg&&haveId;
-  $('docs-err').style.display=(!docsOk&&!isHi())?'block':'none';
-  $('docs-err-hi').style.display=(!docsOk&&isHi())?'block':'none';
-  if(!docsOk) ok=false;
   return ok;
+}
+function firstBadStage(){ for(var i=0;i<STAGES;i++) if(!validateStage(i)) return i; return -1; }
+/* the stage holding the field a server error code is about */
+function stageForError(code){
+  if(code==='practice_state_required') return 0;
+  if(['invalid_registration_number','state_council_required','qualification_required','invalid_year'].indexOf(code)!==-1) return 1;
+  if(['first_name_required','invalid_last_name','mobile_required','invalid_mobile','mobile_in_use','use_change_mobile'].indexOf(code)!==-1) return 2;
+  if(['missing_registration_certificate','missing_government_id','documents_required','bad_document'].indexOf(code)!==-1) return 3;
+  return -1;
 }
 
 /* ---- error-code -> message (mirrors app _mapSubmitError) ---- */
@@ -533,10 +870,10 @@ function errMsg(code){
   var M={
     name_required:['Enter your full name.','अपना पूरा नाम दर्ज करें।'],
     invalid_registration_number:['Enter a valid registration number.','एक मान्य पंजीकरण संख्या दर्ज करें।'],
-    state_council_required:['Enter your state veterinary council.','अपनी राज्य पशु चिकित्सा परिषद दर्ज करें।'],
-    qualification_required:['Enter your qualification.','अपनी योग्यता दर्ज करें।'],
-    invalid_year:['Enter a valid year of registration.','पंजीकरण का मान्य वर्ष दर्ज करें।'],
-    practice_state_required:['Enter the state where you practise.','वह राज्य दर्ज करें जहाँ आप अभ्यास करते हैं।'],
+    state_council_required:['Choose your veterinary council.','अपनी पशु चिकित्सा परिषद चुनें।'],
+    qualification_required:['Choose your qualification.','अपनी योग्यता चुनें।'],
+    invalid_year:['Choose your year of registration.','पंजीकरण का वर्ष चुनें।'],
+    practice_state_required:['Choose the state where you practise.','वह राज्य चुनें जहाँ आप अभ्यास करते हैं।'],
     documents_required:['Attach your registration certificate and government ID.','अपना पंजीकरण प्रमाणपत्र और सरकारी पहचान पत्र संलग्न करें।'],
     bad_document:['One of your documents was not accepted. Please re-attach it.','आपका एक दस्तावेज़ स्वीकार नहीं हुआ। कृपया दोबारा संलग्न करें।'],
     missing_registration_certificate:['Attach your registration certificate.','अपना पंजीकरण प्रमाणपत्र संलग्न करें।'],
@@ -584,9 +921,13 @@ async function uploadDoc(type,file){
 }
 async function submitForm(ev){
   ev.preventDefault();
+  // Enter in a field on an earlier stage moves on a stage; it never submits.
+  if(stage!==STAGES-1){ nextStage(); return; }
   $('formErr').textContent='';
+  var bad=firstBadStage();
+  if(bad!==-1){ if(bad!==stage) toStage(bad); $('formErr').textContent=T('Please complete the required fields above.','कृपया ऊपर के आवश्यक फ़ील्ड भरें।'); return; }
   if(!consent.accurate||!consent.registered){ $('formErr').textContent=errMsg('declarations_required'); return; }
-  if(!validate()){ $('formErr').textContent=(isHi()?'कृपया ऊपर के आवश्यक फ़ील्ड भरें।':'Please complete the required fields above.'); return; }
+  var st=stateBy($('f_pstate').value), co=councilBy($('f_council').value), dg=degreeBy($('f_qual').value);
   setSubmitting(true);
   try{
     var docs=[];
@@ -598,13 +939,17 @@ async function submitForm(ev){
       first_name:val('f_first'),
       last_name:val('f_last')||'',
       vci_reg_number:val('f_reg'),
-      state_council:val('f_council'),
-      qualification:val('f_qual'),
-      year_of_registration:parseInt(val('f_year'),10),
-      practice_state:val('f_pstate'),
+      // picked from the shared lists (ids), or "other" with what they typed
+      state_council:co?co.name:val('f_council_other'),
+      council_id:co?co.id:'other',
+      qualification:dg?dg.name:val('f_qual_other'),
+      qualification_id:dg?dg.id:'other',
+      year_of_registration:parseInt($('f_year').value,10),
+      practice_state:st.name,
+      practice_state_code:st.code,
       practice_city:val('f_pcity')||null,
       clinic_name:val('f_clinic')||null,
-      additional_qualifications:val('f_addq')||null,
+      additional_qualifications:addQuals.join('; ')||null,
       mobile:tenDigits(val('f_phone')),
       email:val('f_email')||null,
       documents:docs,
@@ -618,10 +963,12 @@ async function submitForm(ev){
     if(r.ok&&j.ok){ resubmitting=false; await reload(); return; }
     if(j&&(j.error==='registration_exists'||j.error==='duplicate_registration')){
       // Nothing was created: this number already has an account. Sign in to it.
+      regChecks[regKeyOf(val('f_reg'))]={exists:true,hint:j.account&&j.account.mobile_hint};
       setSubmitting(false); showSignIn(); $('s_id').value=val('f_reg');
       $('s_err').textContent=regExistsMsg(j.account&&j.account.mobile_hint); return;
     }
     if(j&&j.error==='sign_in_required'){ setSubmitting(false); showSignIn(); $('s_err').textContent=errMsg('sign_in_required'); return; }
+    var at=stageForError(j&&j.error); if(at!==-1&&at!==stage) toStage(at);
     if(j&&j.error==='mobile_in_use'){ $('formErr').innerHTML=esc(errMsg('mobile_in_use'))+' <a style="color:var(--accent);text-decoration:underline;cursor:pointer" onclick="showSignIn()">'+esc(T('Sign in','साइन इन करें'))+'</a>'; setSubmitting(false); return; }
     if(r.status===401){ $('formErr').textContent=errMsg('unauthenticated'); }
     else { $('formErr').textContent=errMsg(j&&j.error); }
@@ -687,16 +1034,27 @@ function accountPanel(app){
 }
 function startResubmit(){
   resubmitting=true;
-  buildForm(); prefill(window.__lastApp||{});
+  pickedDocs={};
+  buildForm(true); prefill(window.__lastApp||{});
   consent={accurate:false,registered:false};
   $('c_accurate').classList.remove('on'); $('c_registered').classList.remove('on');
-  pickedDocs={};
+  stage=0; reached=0;
   showForm();
   $('vet-form').scrollIntoView({behavior:'smooth'});
 }
 
 document.addEventListener('DOMContentLoaded',function(){
   $('vet-form').addEventListener('submit',submitForm);
+  $('f_pstate').addEventListener('change',onStateChange);
+  $('f_council').addEventListener('change',function(){ councilAuto=false; councilUi(); });
+  $('f_qual').addEventListener('change',qualUi);
+  $('aq_type').addEventListener('change',aqUi);
+  $('aq_subject').addEventListener('change',aqUi);
+  $('aq_text').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); addQual(); } });
+  $('f_reg').addEventListener('input',onRegInput);
+  // Picker labels follow the language (EN / हिंदी) without losing choices.
+  new MutationObserver(function(){ if(!formBuilt) return; fillAll(); regUi(); if(stage===STAGES-1) renderSummary(); })
+    .observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   $('s_pin').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); signIn(); } });
   $('s_id').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); $('s_pin').focus(); } });
   $('r_pin2').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); recoverComplete(); } });
