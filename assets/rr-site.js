@@ -42,6 +42,17 @@
         var b = e.target.closest('button[data-l]');
         if (b) apply(b.getAttribute('data-l'));
       });
+      // Fetch the Hindi weights as soon as a reader reaches for the switch, so the
+      // page redraws in Hindi without a blank moment while they download.
+      var warmed = false;
+      var warm = function () {
+        if (warmed || !document.fonts || !document.fonts.load) return;
+        warmed = true;
+        ['400', '500', '600', '700'].forEach(function (w) {   // 700 is only on /vet; elsewhere it resolves to 600
+          document.fonts.load(w + ' 16px "Noto Sans Devanagari"', 'अa').catch(function () {});
+        });
+      };
+      ['pointerenter', 'pointerdown', 'focusin'].forEach(function (t) { langBox.addEventListener(t, warm, { passive: true }); });
     }
     if (window.MutationObserver) {
       new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });

@@ -11,14 +11,14 @@
   --b:#e3e3e3;--border:#e3e3e3;--border-strong:#cfcfcf;--border-focus:#111;
   --accent:#111;--accent-h:#333;--accent-on-dark:#111;--accent-soft:#0000000a;--accent-soft2:#00000006;
   --sos:#e52222;--sos-soft:#e522220f;--net:#4a453f;
-  --display:"Marcellus","Trajan Pro","Optima",Georgia,serif;
-  --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari",system-ui,sans-serif;
+  --display:"Marcellus","Marcellus Fallback","Marcellus Fallback Serif","Trajan Pro","Optima",Georgia,serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,sans-serif;
   --mono:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
   color-scheme:light;
 }
 html.rr-themed{font-synthesis:none;background:#fff}
 html.rr-themed body{background:#fff;color:#111;font-family:var(--sans)}
-html[lang=hi].rr-themed body{font-family:"Noto Sans Devanagari",var(--sans)}
+html[lang=hi].rr-themed body{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--sans)}
 
 /* The old chrome stays in the DOM (its scripts still find their elements)
    but is not shown: the shared header and footer replace it. */

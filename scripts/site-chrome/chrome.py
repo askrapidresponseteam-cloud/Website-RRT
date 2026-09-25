@@ -56,15 +56,46 @@ def footer(extra=''):
                          '\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।') + '</span>'
             + extra + f'<nav aria-label="Site">{links}</nav></div>\n<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>\n<!-- /rr:footer -->')
 
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap">')
+# Fonts are self-hosted (assets/fonts, @font-face rules in assets/rr-fonts*.css,
+# built by scripts/fonts/build_fonts.py, which also rewrites the hashed names
+# below). The files the header needs are preloaded so the page paints once, in
+# its own fonts; Hindi readers (stored choice) also preload the Hindi weights
+# (the header's labels are Noto 500 in Hindi, the app button 600).
+def _preload(f):
+    return f'<link rel="preload" href="/assets/fonts/{f}" as="font" type="font/woff2" crossorigin>'
+
+HINDI_FONTS = ('noto-sans-devanagari-latin-400.1ea6a2f0.woff2', 'noto-sans-devanagari-latin-500.18745d03.woff2',
+               'noto-sans-devanagari-devanagari-500.c9e45ff2.woff2', 'noto-sans-devanagari-devanagari-600.fcfcaacd.woff2')
+
+def fonts(devanagari=True, hindi=True):
+    """Preloads + the @font-face sheets. devanagari=False: the shop, which never loaded
+    the Devanagari font. hindi=False: pages whose language switch does not work (app
+    guide, remove-report), so Hindi readers see them in English."""
+    s = _preload('marcellus-latin-400.8a539799.woff2')
+    if devanagari:
+        s += _preload('noto-sans-devanagari-devanagari-400.f86f14cb.woff2')  # the header's "हिंदी"
+        if hindi:
+            s += ("<script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')"
+                  + '[' + ','.join("'%s'" % f for f in HINDI_FONTS) + "].forEach(function(f){var l=document.createElement('link');"
+                  "l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script>")
+    s += '<link rel="stylesheet" href="/assets/rr-fonts.css">'
+    if devanagari:
+        s += '<link rel="stylesheet" href="/assets/rr-fonts-devanagari.css">'
+    return s
+
+FONTS = fonts()  # index.html carries this same block in its <head> (heal.py does not install the homepage)
 
 EARLY = ("<script>/* rr: one light theme site-wide */try{['rr-mode','theme'].forEach(function(k){localStorage.setItem(k,'l')});}catch(e){}"
          "document.documentElement.classList.add('light','rr-themed');</script>")
 
-def head_block(theme=True):
+def head_block(theme=True, hindi=True):
     css = '<link rel="stylesheet" href="/assets/rr-site.css">' + ('<link rel="stylesheet" href="/assets/rr-theme.css">' if theme else '')
-    return '<!-- rr:head -->' + FONTS + css + (EARLY if theme else '') + '<!-- /rr:head -->'
+    return '<!-- rr:head -->' + fonts(True, hindi) + css + (EARLY if theme else '') + '<!-- /rr:head -->'
+
+def bilingual(s):
+    """True if the page's language switch works (rr-site.js hides it otherwise), so a
+    Hindi reader gets the page in Hindi and its Hindi fonts are worth preloading."""
+    return bool(re.search(r'function setLang\b|\bsetLang\s*=|data-lang=["\']?hi\b', s))
 
 def strip_blocks(s):
     """Remove every installed block (and the one newline install() adds after it)."""
@@ -75,7 +106,7 @@ def strip_blocks(s):
 def install(s, current='', theme=True, shop=False, foot_extra=''):
     """Idempotent: install(install(x)) == install(x)."""
     s = strip_blocks(s)
-    s = s.replace('</head>', head_block(theme) + '\n</head>', 1)
+    s = s.replace('</head>', head_block(theme, bilingual(s)) + '\n</head>', 1)
     s = re.sub(r'(<body[^>]*>)\n?', lambda m: m.group(1) + '\n' + header(current, shop) + '\n', s, count=1)
     i = s.rfind('</body>')
     return s[:i] + footer(foot_extra) + '\n' + s[i:]

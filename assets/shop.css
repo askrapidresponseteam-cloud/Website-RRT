@@ -31,7 +31,7 @@
   --accent-soft: #0000000a;
   --sale: #e52222;
   --ok: #16a34a;
-  --display: "Marcellus", "Trajan Pro", "Optima", Georgia, serif;
+  --display: "Marcellus", "Marcellus Fallback", "Marcellus Fallback Serif", "Trajan Pro", "Optima", Georgia, serif;
   --sans: "Helvetica Neue", Helvetica, Arial, "Noto Sans Devanagari", system-ui, sans-serif;
   --mono: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   --pad: clamp(18px, 7vw, 120px);

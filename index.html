@@ -19,9 +19,7 @@
 <meta property="og:description" content="People who show up for animals find each other. One tap reaches your whole district. Free, bilingual, built for India.">
 <meta property="og:image" content="https://rapid-response.in/assets/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap">
+<link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css">
 <link rel="stylesheet" href="/assets/rr-site.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://rapid-response.in/#org","name":"Rapid Response","alternateName":"RapidResponse Labs","url":"https://rapid-response.in/","logo":"https://rapid-response.in/assets/favicon-512.png","image":"https://rapid-response.in/assets/og-cover.jpg","description":"An independent community animal-emergency peer network for India.","email":"ask@rapid-response.in","areaServed":{"@type":"Country","name":"India"},"sameAs":["https://www.instagram.com/rrtanimals"]},{"@type":"WebSite","@id":"https://rapid-response.in/#website","url":"https://rapid-response.in/","name":"Rapid Response","publisher":{"@id":"https://rapid-response.in/#org"},"inLanguage":["en-IN","hi-IN"]},{"@type":"MobileApplication","name":"Rapid Response","operatingSystem":"Android, iOS","applicationCategory":"LifestyleApplication","description":"Raise an SOS to the nearest people on the animal-welfare network in your district, or Ask the District for non-urgent help.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"publisher":{"@id":"https://rapid-response.in/#org"},"downloadUrl":["https://play.google.com/store/apps/details?id=com.rrt.sos","https://apps.apple.com/in/app/rapid-response/id6758672498"]}]}</script>
 <style>
@@ -30,8 +28,8 @@
    other page; this sheet styles only what is below it. */
 :root{
   --ink:#111;--mid:#5f6368;--low:#80868b;--line:#e3e3e3;--red:#e52222;
-  --serif:"Marcellus","Trajan Pro","Optima",Georgia,serif;
-  --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari",system-ui,sans-serif;
+  --serif:"Marcellus","Marcellus Fallback","Marcellus Fallback Serif","Trajan Pro","Optima",Georgia,serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,sans-serif;
   --pad:clamp(18px,7vw,120px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -40,7 +38,7 @@ html,body{height:100%}
 html{font-synthesis:none}
 body{background:#fff;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45;
   -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px)}
-html[lang=hi] body{font-family:"Noto Sans Devanagari",var(--sans)}
+html[lang=hi] body{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--sans)}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
@@ -49,7 +47,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 main{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;padding:clamp(12px,3vh,40px) var(--pad)}
 .inner{width:100%;max-width:720px;margin:auto;text-align:center;display:flex;flex-direction:column;align-items:center}
 h1{font-family:var(--serif);font-weight:400;font-size:clamp(28px,min(3.7vw,6vh),46px);line-height:1.15}
-html[lang=hi] h1{font-family:"Noto Sans Devanagari",var(--serif);font-weight:500}
+html[lang=hi] h1{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--serif);font-weight:500}
 
 /* search */
 .search{position:relative;width:100%;margin-top:clamp(22px,4.5vh,40px);text-align:left}
@@ -135,7 +133,7 @@ footer a:hover{color:var(--ink)}
 .sh-x{width:36px;height:36px;font-size:24px}
 .sh-body{flex:1;overflow:auto;padding:28px 28px 20px}
 .sh-body h2{margin-bottom:16px;font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.4vw,40px);line-height:1.1;text-transform:uppercase}
-html[lang=hi] .sh-body h2{font-family:"Noto Sans Devanagari",var(--serif);font-weight:500;text-transform:none}
+html[lang=hi] .sh-body h2{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--serif);font-weight:500;text-transform:none}
 .sh-body p{max-width:52ch;margin-bottom:12px;font-size:16px;color:#333}
 .sh-body p.em{font-weight:600;color:var(--ink)}
 .sh-body .sh-lt{margin:22px 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}

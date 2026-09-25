@@ -1,0 +1,39 @@
+/* Rapid Response - web fonts, served from this site (assets/fonts/, built by
+   scripts/fonts/build_fonts.py). No page loads fonts from Google.
+
+   How a page gets its fonts without a visible swap:
+   - The page head preloads the files the first screen needs (Marcellus for
+     the brand, Devanagari 400 for the "हिंदी" switch; Hindi readers also get
+     the Hindi weights). Chrome holds the first paint (about 100ms at most)
+     for preloaded fonts, so the page normally paints once, in its own fonts.
+   - font-display: block. A font that is still on its way (a slow first visit,
+     a weight used further down the page, the switch to Hindi) keeps its text
+     invisible for a moment and then shows it in the right font: text is
+     never painted in a stand-in face that is then swapped (only if a font
+     takes over 3 seconds does the fallback show).
+   - Text waiting for its font is laid out with the fallback faces below,
+     which are sized to the web font (size-adjust + ascent/descent/line-gap
+     overrides), so when the font arrives lines and boxes keep their size:
+     no layout shift.
+   The families: this file (Marcellus, every page), rr-fonts-devanagari.css
+   (Noto Sans Devanagari 400/500/600, every page but the shop, which never
+   loaded it). Pages with icons carry their own small <style> for Material
+   Symbols (cut to the icons that page draws, pinned to the axis settings it
+   used) where Google's stylesheet was, and /vet the Noto 700 it alone used.
+   Files are cached for a year (vercel.json); their names carry a content hash. */
+
+/* Marcellus: the brand and display serif (Google's latin cut, unchanged) */
+@font-face{font-family:"Marcellus";font-style:normal;font-weight:400;font-display:block;
+  src:url(/assets/fonts/marcellus-latin-400.8a539799.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* Metric-matched fallbacks, named right after "Marcellus" in every stack and
+   covering the same characters (anything else falls through the stack
+   exactly as before): Georgia (Mac, Windows, iOS) or Noto Serif (Android),
+   each scaled to Marcellus' average width and given its ascent/descent. */
+@font-face{font-family:"Marcellus Fallback";src:local("Georgia");
+  size-adjust:102.52%;ascent-override:95.02%;descent-override:27.29%;line-gap-override:0%;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Marcellus Fallback Serif";src:local("Noto Serif"),local("NotoSerif-Regular"),local("Droid Serif"),local("DroidSerif");
+  size-adjust:95.02%;ascent-override:102.52%;descent-override:29.45%;line-gap-override:0%;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}

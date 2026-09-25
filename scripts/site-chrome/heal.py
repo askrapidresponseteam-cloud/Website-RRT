@@ -15,7 +15,7 @@ import os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-from chrome import install, header, footer, strip_blocks  # noqa: E402
+from chrome import install, header, footer, strip_blocks, fonts  # noqa: E402
 
 # page -> current nav item (pages with their own complete design are not listed:
 # index.html is self-contained, app-demo.html is the phone mockup, about and
@@ -44,8 +44,9 @@ def heal_shop(s, cur, page):
     s = re.sub(r'<header class="site-header">.*?</header>\s*(<nav class="mobile-nav".*?</nav>\n?)?', '', s, flags=re.S)
     s = re.sub(r'<footer class="site-footer">.*?</footer>\n?', '', s, flags=re.S)
     s = re.sub(r'<link rel="stylesheet" href="https://fonts.googleapis.com/css2\?family=(Barlow|Material)[^>]*>\n?', '', s)
+    s = re.sub(r'<link rel="preconnect" href="https://fonts\.(googleapis|gstatic)\.com"[^>]*>\n?', '', s)  # fonts are self-hosted
     s = s.replace('<link rel="stylesheet" href="/assets/shop.css">',
-                  '<!-- rr:head --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap">'
+                  '<!-- rr:head -->' + fonts(devanagari=False) +
                   '<link rel="stylesheet" href="/assets/rr-site.css"><script src="/assets/rr-voice.js"></script><!-- /rr:head -->\n'
                   '<link rel="stylesheet" href="/assets/shop.css">', 1)
     bar = SHOPBAR

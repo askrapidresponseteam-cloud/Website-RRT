@@ -23,12 +23,18 @@ and theme between these markers. Keep them exactly as they are:
   content pages), `assets/shop.css` (shop). Do not reintroduce the old dark
   palette, Barlow/JetBrains fonts, or a red logo square.
 - Never use long dashes (em or en) anywhere; use a plain hyphen.
+- Fonts are served from this site (`assets/fonts/`, `assets/rr-fonts*.css`,
+  built by `scripts/fonts/build_fonts.py`); never link Google Fonts again.
+  Material Symbols is cut down to the icons the pages draw: a new icon name
+  goes into `ICONS` in that script and the fonts are rebuilt, or the page
+  shows the name spelled out.
 
 Check before pushing:
 
     python3 scripts/site-chrome/heal.py --check   # every page has the theme
     node scripts/check-storefront.js              # shop contract
     python3 scripts/site-chrome/check_logo.py     # logo pixel-identical on every page
+    python3 scripts/fonts/build_fonts.py --check  # every icon a page draws is in its font
 
 If a page does lose the theme, `.github/workflows/keep-theme.yml` puts it back
 automatically after the push.

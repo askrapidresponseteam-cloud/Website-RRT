@@ -5,13 +5,13 @@ The same look as the landing page: white ground,black type,hairlines,a serif dis
 
 :root{
   --rr-ink:#111;--rr-mid:#5f6368;--rr-low:#80868b;--rr-line:#e3e3e3;--rr-soft:#f6f6f6;--rr-bg:#fff;--rr-red:#ff4d3d;
-  --rr-serif:"Marcellus","Trajan Pro","Optima",Georgia,serif;
-  --rr-sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari",system-ui,sans-serif;
+  --rr-serif:"Marcellus","Marcellus Fallback","Marcellus Fallback Serif","Trajan Pro","Optima",Georgia,serif;
+  --rr-sans:"Helvetica Neue",Helvetica,Arial,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,sans-serif;
   --rr-pad:clamp(18px,7vw,120px);
 }
 .rr-chrome :where(*:not(svg,svg *)){all:revert;box-sizing:border-box}
 .rr-chrome{box-sizing:border-box;font-family:var(--rr-sans);color:var(--rr-ink);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.45;letter-spacing:normal;text-transform:none}
-html[lang=hi] .rr-chrome{font-family:"Noto Sans Devanagari",var(--rr-sans)}
+html[lang=hi] .rr-chrome{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--rr-sans)}
 .rr-chrome a{color:inherit;text-decoration:none}
 .rr-chrome [hidden]{display:none!important}
 .rr-chrome button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;margin:0}
