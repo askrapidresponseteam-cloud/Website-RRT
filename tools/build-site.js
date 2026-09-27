@@ -102,10 +102,16 @@ async function html(text, label) {
   });
 }
 
+// Never published whatever folder they turn up in: dot-files (.env and the
+// like) and anything that looks like a key, a credential or a local log.
+// (.well-known is the one dot-folder a site may need: security.txt, app links.)
+const NEVER = /^\.(?!well-known$)|\.(pem|key|p12|pfx|jks|keystore|har|log|sqlite)$|service-account|credentials.*\.json$/i;
+
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const abs = path.join(dir, e.name);
     const rel = path.relative(ROOT, abs);
+    if (NEVER.test(e.name)) continue;
     if (e.isDirectory()) {
       if (SKIP_DIRS.has(e.name) || abs === OUT) continue;
       walk(abs, out);
