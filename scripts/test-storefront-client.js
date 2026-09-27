@@ -61,6 +61,19 @@ function activeVendorTests() {
   const broken = JSON.parse(JSON.stringify(bundleObj.vendors.petslifestyle)); broken.web.proxyBase = '/zz-api';
   eq(load({ configVersion: 8, active: broken }).vendor.key, 'supertails', 'unknown proxy route: bundle default used');
   eq(load({ configVersion: 9, active: { id: 'x' } }).vendor.key, 'supertails', 'malformed publish: bundle default used');
+  // A publish can only point at the store its proxy route forwards to: never
+  // another checkout domain, Storefront API host or policy link.
+  const variant = (fn) => { const d = JSON.parse(JSON.stringify(bundleObj.vendors.petslifestyle)); fn(d); return load({ configVersion: 11, active: d }).vendor; };
+  eq(variant((d) => { d.domain = 'evil.example'; }).key, 'supertails', 'domain other than the proxy target: bundle default used');
+  eq(variant((d) => { d.web.proxyBase = '/st-api'; }).key, 'supertails', 'proxy route of another store: bundle default used');
+  eq(variant((d) => { d.storefrontApi.host = 'evil.example'; }).key, 'supertails', 'Storefront API host off Shopify: bundle default used');
+  eq(variant((d) => { d.storefrontApi.host = 'attacker-shop.myshopify.com'; }).key, 'supertails', 'another Shopify store as the API: bundle default used');
+  eq(variant((d) => { d.storefrontApi.version = '../x'; }).key, 'supertails', 'odd API version: bundle default used');
+  eq(variant((d) => { d.policies.account = '//evil.example/login'; }).key, 'supertails', 'protocol-relative account link: bundle default used');
+  eq(variant((d) => { d.policies.refund = '@evil.example/x'; }).key, 'supertails', 'user-info trick in a policy link: bundle default used');
+  eq(variant((d) => { d.shopId = '1/../../x'; }).key, 'supertails', 'non-numeric shop id: bundle default used');
+  eq(variant((d) => { d.web.proxyBase = 'constructor'; }).key, 'supertails', 'prototype key as a proxy route: bundle default used');
+  eq(variant(() => {}).key, 'petslifestyle', 'the untouched descriptor is still accepted');
 }
 
 // These tests pin the original partner store so every expected URL stays
@@ -395,6 +408,13 @@ function deliveryQuoteTests() {
     eq(h.order.rrtRef, q.rrtRef, 'with the same reference');
     eq(h.order.deliveryPaise, 8000, 'the receipt records the delivery charge');
     eq(h.order.totalPaise, 31438, 'and the total the buyer saw');
+    // A checkout link that is not on the store's own site is never followed:
+    // the buyer gets the store cart link we build instead.
+    const evil = Object.assign({}, q, { checkoutUrl: 'https://evil.example/cart/c/abc' });
+    const he = S.beginCheckout(lines, { fromCart: true, quote: evil });
+    ok(he.url.indexOf('https://www.pets-lifestyle.com/cart/') === 0, 'a foreign checkout link is replaced: ' + he.url);
+    const tricky = Object.assign({}, q, { checkoutUrl: 'https://www.pets-lifestyle.com@evil.example/x' });
+    ok(S.beginCheckout(lines, { fromCart: true, quote: tricky }).url.indexOf('https://www.pets-lifestyle.com/cart/') === 0, 'user-info trick refused');
 
     // 2) Cached: a re-render does not create a second cart.
     const n = calls.length;

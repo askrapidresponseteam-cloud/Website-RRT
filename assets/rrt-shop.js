@@ -43,15 +43,33 @@
    * exists in vercel.json (KNOWN_PROXIES); otherwise the bundle's default is
    * used, so a bad publish can never take the shop down. */
   var BUNDLE = global.RRT_STORE_VENDORS || { defaultActive: null, vendors: {} };
-  var KNOWN_PROXIES = { '/st-api': 1, '/pl-api': 1 };
+  /* Each proxy route in vercel.json, the store it forwards to, and that
+   * store's Storefront API hosts. A published vendor must name one of these
+   * routes, that route's store as its domain and one of its API hosts, so a
+   * bad or tampered publish can never point checkout, account or policy
+   * links, or the Storefront API (listings, prices, carts), at another site. */
+  var KNOWN_PROXIES = {
+    '/st-api': { domain: 'supertails.com', api: ['supertails.com'] },
+    '/pl-api': { domain: 'www.pets-lifestyle.com', api: ['www.pets-lifestyle.com', '08e8df.myshopify.com'] }
+  };
   var PUBLISHED_KEY = 'rrt_store_active_v1';
 
+  /** A path on the store's own site ("/account"), never "//host" or "@host". */
+  function sitePath(p) {
+    return p == null || (typeof p === 'string' && /^\/(?!\/)[A-Za-z0-9._~\/-]{0,200}$/.test(p));
+  }
   function usable(d) {
     return !!(d && typeof d.id === 'string' && d.platform === 'shopify_public' &&
-      typeof d.domain === 'string' && /^[a-z0-9.-]+$/.test(d.domain) &&
-      d.storefrontApi && typeof d.storefrontApi.host === 'string' && typeof d.storefrontApi.version === 'string' &&
-      d.web && KNOWN_PROXIES[d.web.proxyBase] && Array.isArray(d.shelves) && d.shelves.length &&
-      d.support && d.policies && d.checkout && d.checkout.mode === 'cart_permalink');
+      typeof d.domain === 'string' && d.web && typeof d.web.proxyBase === 'string' &&
+      Object.prototype.hasOwnProperty.call(KNOWN_PROXIES, d.web.proxyBase) &&
+      KNOWN_PROXIES[d.web.proxyBase].domain === d.domain &&
+      d.storefrontApi && typeof d.storefrontApi.host === 'string' &&
+      KNOWN_PROXIES[d.web.proxyBase].api.indexOf(d.storefrontApi.host) !== -1 &&
+      typeof d.storefrontApi.version === 'string' && /^\d{4}-\d{2}$/.test(d.storefrontApi.version) &&
+      (d.shopId == null || /^\d{1,20}$/.test(String(d.shopId))) &&
+      Array.isArray(d.shelves) && d.shelves.length &&
+      d.support && d.policies && sitePath(d.policies.account) && sitePath(d.policies.refund) &&
+      sitePath(d.policies.shipping) && d.checkout && d.checkout.mode === 'cart_permalink');
   }
   function publishedDescriptor() {
     try {
@@ -2105,6 +2123,16 @@
     return q;
   }
 
+  /** An https link on the store's own site (its domain, with or without
+   *  www, or its Storefront API host): nowhere else is a buyer sent to pay. */
+  function trustedCheckoutUrl(u) {
+    var m = /^https:\/\/([^\/?#:@\s]+)(?:[\/?#]|$)/i.exec(typeof u === 'string' ? u : '');
+    if (!m) return false;
+    var host = m[1].toLowerCase();
+    var bare = Vendor.domain.replace(/^www\./, '');
+    return host === Vendor.domain || host === bare || host === 'www.' + bare || host === Vendor.myshopifyDomain;
+  }
+
   function checkoutUrl(lines, opts) {
     opts = opts || {};
     var items = lines
@@ -2184,7 +2212,9 @@
       order.totalPaise = quote.totalPaise;
     }
     saveReceipt(order);
-    var url = quote ? quote.checkoutUrl : checkoutUrl(sellable, {
+    // The cart's own checkout link only when it is on the store's own site;
+    // otherwise the cart link we build ourselves (same goods, same store).
+    var url = quote && trustedCheckoutUrl(quote.checkoutUrl) ? quote.checkoutUrl : checkoutUrl(sellable, {
       buyerName: opts.buyerName, buyerPhone: opts.buyerPhone, rrtRef: rrtRef
     });
     return { order: order, url: url, quoted: !!quote };

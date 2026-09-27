@@ -3,3 +3,5 @@ WEB-PARITY.md
 AGENTS.md
 CLAUDE.md
 .github
+node_modules
+dist

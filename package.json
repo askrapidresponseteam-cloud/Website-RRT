@@ -1,0 +1,14 @@
+{
+  "name": "rapid-response-website",
+  "private": true,
+  "description": "rapid-response.in. The pages are plain HTML, CSS and JS; Vercel runs `npm run build`, which writes a minified copy to dist/ and serves that. The source stays readable (the keep-theme workflow and heal.py work on it).",
+  "scripts": {
+    "build": "node tools/build-site.js",
+    "serve:dist": "node scripts/dev-serve.js dist 8080"
+  },
+  "devDependencies": {
+    "clean-css": "5.3.3",
+    "html-minifier-terser": "7.2.0",
+    "terser": "5.51.2"
+  }
+}

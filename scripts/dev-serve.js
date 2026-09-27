@@ -1,7 +1,10 @@
 // Minimal Vercel emulator: cleanUrls + rewrites + redirects + headers from vercel.json. /pl-api is left to the test harness.
 const http=require('http'),fs=require('fs'),path=require('path');
-const ROOT=process.argv[2], PORT=+process.argv[3]||8080;
-const cfg=JSON.parse(fs.readFileSync(path.join(ROOT,'vercel.json'),'utf8'));
+const ROOT=path.resolve(process.argv[2]||'.'), PORT=+process.argv[3]||8080;
+// vercel.json sits next to the pages, or one level up when serving the built
+// dist/ folder (node scripts/dev-serve.js dist 8080).
+const CFG=[path.join(ROOT,'vercel.json'),path.join(ROOT,'..','vercel.json')].find(f=>fs.existsSync(f));
+const cfg=JSON.parse(fs.readFileSync(CFG,'utf8'));
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.json':'application/json','.xml':'application/xml','.txt':'text/plain','.webmanifest':'application/manifest+json','.mp4':'video/mp4','.webm':'video/webm','.woff2':'font/woff2'};
 function match(pattern,p){ // supports :param and :param*
   const re='^'+pattern.replace(/[.+?^${}()|[\]\\]/g,'\\$&').replace(/\/:(\w+)\*/g,'(?:/(.*))?').replace(/:(\w+)/g,'([^/]+)')+'$';

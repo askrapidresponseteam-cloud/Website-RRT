@@ -1,0 +1,3 @@
+React 18.3.1 and ReactDOM 18.3.1 (UMD production builds), byte-identical to
+the npm packages, so the SRI hashes the app demo checks still match.
+Used only by /app-demo. MIT licence (LICENSE, which covers both packages).

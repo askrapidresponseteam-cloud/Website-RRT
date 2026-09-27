@@ -457,9 +457,9 @@ html[lang=hi].rr-themed :is(.eyebrow,.sect-h,.field label,.reasons .rl,.summary 
 </footer>
 
 <script src="/assets/rrt-vet-registry.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="/assets/vendor/firebase-10.14.1/firebase-app-compat.js"></script>
+<script src="/assets/vendor/firebase-10.14.1/firebase-auth-compat.js"></script>
+<script src="/assets/vendor/firebase-10.14.1/firebase-storage-compat.js"></script>
 <script>
 /* ---- site chrome (mirrors index.html) ---- */
 function setLang(e){document.documentElement.lang=e;try{localStorage.setItem("lang",e)}catch(x){ /* best effort */ }}
@@ -663,7 +663,9 @@ function onPick(type,input){
   if(f.size>MAX_BYTES){ alert(isHi()?'फ़ाइल 10 MB से बड़ी है।':'That file is over 10 MB.'); input.value=''; return; }
   pickedDocs[type]=f;
   var p=$('picked-'+type); p.style.display='flex';
-  p.innerHTML='<span class="material-symbols-outlined" style="font-size:15px">check_circle</span>'+f.name;
+  // The file name is text the visitor chose: never parsed as HTML.
+  p.innerHTML='<span class="material-symbols-outlined" style="font-size:15px">check_circle</span>';
+  p.appendChild(document.createTextNode(f.name));
   $('btn-'+type+'-add').style.display='none'; $('btn-'+type+'-rep').style.display='';
   $('docs-err').style.display='none'; $('docs-err-hi').style.display='none';
 }

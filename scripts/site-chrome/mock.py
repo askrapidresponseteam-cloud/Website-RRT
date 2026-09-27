@@ -98,3 +98,6 @@ async def install(page, gql_mode='error'):
         if 'firebase-app-compat' in u: return await route.fulfill(status=200, content_type='text/javascript', body=FAKE)
         await route.fulfill(status=200, content_type='text/javascript' if u.endswith('.js') else 'text/css', body='')
     await page.route(re.compile(r'https://(www\.gstatic\.com|fonts\.googleapis\.com|fonts\.gstatic\.com)/.*'), gst)
+    # The pages load Firebase from this site (assets/vendor/firebase-<version>/):
+    # the same fake stands in for it there.
+    await page.route(re.compile(r'.*/assets/vendor/firebase-[0-9.]+/firebase-[a-z-]+\.js$'), gst)

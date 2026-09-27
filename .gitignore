@@ -1,1 +1,4 @@
 __pycache__/
+# npm run build output and its dependencies (Vercel builds its own)
+node_modules/
+dist/

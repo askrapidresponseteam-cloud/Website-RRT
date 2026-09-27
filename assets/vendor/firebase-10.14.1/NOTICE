@@ -1,0 +1,10 @@
+Firebase JavaScript SDK 10.14.1 (compat builds), unmodified except that the
+source map comment at the end of each file was removed (the maps are not
+shipped). Source: the "firebase" package on npm (the same builds Google serves
+from www.gstatic.com/firebasejs/10.14.1/).
+
+Copyright Google LLC. Licensed under the Apache License, Version 2.0 (LICENSE
+in this folder). Each file keeps its original license header.
+
+Served from this site instead of a third-party CDN so a CDN change can never
+alter the code these pages run.

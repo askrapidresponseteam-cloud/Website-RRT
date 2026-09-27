@@ -86,4 +86,26 @@
     }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+  /* No right-click menu on the site. This deters casual copying; it is not a
+     security control (anything a browser shows can still be saved). Kept:
+     - text fields, so people can still paste an address or a phone number;
+     - a long-press on a phone (a touch or pen "right-click"), which is how
+       people select and copy a helpline number or share a link. */
+  // Browsers that report a long-press as a plain mouse event (Safari, Firefox
+  // on Android) are told apart by the finger that just touched the screen.
+  var lastTouch = 0;
+  var noteTouch = function () { lastTouch = Date.now(); };
+  document.addEventListener('touchstart', noteTouch, { capture: true, passive: true });
+  document.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'touch' || e.pointerType === 'pen') noteTouch();
+  }, { capture: true, passive: true });
+  document.addEventListener('contextmenu', function (e) {
+    if (e.pointerType === 'touch' || e.pointerType === 'pen') return;
+    if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
+    if (e.mozInputSource === 5 || Date.now() - lastTouch < 1500) return;
+    var t = e.target;
+    if (t && t.closest && t.closest('input, textarea, select, [contenteditable=""], [contenteditable="true"]')) return;
+    e.preventDefault();
+  }, true);
 })();

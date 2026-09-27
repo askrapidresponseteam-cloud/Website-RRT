@@ -38,6 +38,25 @@ and theme between these markers. Keep them exactly as they are:
   goes into `ICONS` in that script and the fonts are rebuilt, or the page
   shows the name spelled out.
 
+**Build, security and third-party code.**
+
+- Vercel runs `npm ci && npm run build` (`tools/build-site.js`) and serves the
+  minified copy it writes to `dist/`. Always edit the readable source here;
+  never commit `dist/` or `node_modules/`. `bash verify.sh` runs the same build
+  and fails the deploy if a page would break. Preview the build with
+  `npm run build && node scripts/dev-serve.js dist 8080`.
+- Libraries are served from this site, pinned by version, under
+  `assets/vendor/<name>-<version>/` (Firebase, jsPDF, lottie, React for the
+  app demo). Never load a script from a CDN. To upgrade one, add a new
+  versioned folder (the old one stays cached for a year) and change the pages.
+- `vercel.json` sets the security headers for every page, and forwards only
+  the store feeds the shop reads (`/st-api`, `/pl-api`: collection products,
+  product .js, search suggest, recommendations). A new feed path must be
+  added there too, and a new partner store needs its own route plus an entry
+  in `KNOWN_PROXIES` in `assets/rrt-shop.js` (route and store domain must match).
+- The right-click menu is switched off site-wide in `assets/rr-site.js` (text
+  fields and a phone long-press keep theirs). Do not add per-page copies.
+
 Check before pushing:
 
     python3 scripts/site-chrome/heal.py --check   # every page has the theme
