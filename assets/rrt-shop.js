@@ -254,33 +254,249 @@
    * ham, "delivery" becomes liver and "veggie" becomes egg. */
 
   var RE_RX = /\bschedule[\s-]*h\b|\bprescription[\s-]+(only|drug|medicine|medication|product|veterinary)\b|\bveterinary\s+prescription\b|\brx[\s-]+only\b/i;
-  var RE_VEG_WORD = /\b(veg|vegetarian|vegan|plant[\s-]based|meat[\s-]free)\b/i;
-  var RE_NON_VEG = /\b(chicken|mutton|lamb|beef|pork|bacon|turkey|duck|venison|goat meat|salmon|tuna|sardines?|mackerel|anchov(y|ies)|prawns?|shrimps?|crab|krill|seafood|fish|fish oil|cod liver|eggs?|yolk|liver|tripe|jerky|rawhide|bully sticks?|pizzle|meat|meaty|poultry|gelatine?|bone broth|non[\s-]?veg(etarian)?)\b/i;
-  /** Toys and gear are not food; a plush duck is not a duck. */
-  var RE_NOT_FOOD = /\b(toys?|plush|squeaky|ball|rope|collar|leash|harness|bed|bowl|crate|carrier|brush|comb|shampoo|litter|scratcher|cage|aquarium)\b/i;
-  /** Words that make gear edible after all: "chicken flavoured dental chew". */
-  var RE_EDIBLE = /\b(flavou?r(ed|s)?|chews?|treats?|dental|jerky|biscuits?|food|meal|gravy|broth|sticks?)\b/i;
 
   function plainHead(html, max) {
     var text = String(html || '').replace(/<[^>]*>/g, ' ');
     return text.length > max ? text.slice(0, max) : text;
   }
 
+  /* ------------------------------------------------ VEGETARIAN (the switch)
+   * What flags.store_veg_only reads. THE APP'S TWIN: StoreRules in
+   * client/lib/core/models/store_models.dart does exactly this, with the same
+   * words (shared/store-diet-rules.json, copied in below by
+   * scripts/sync-shared.js) and the same real-listing test cases
+   * (shared/store-diet-cases.json).
+   *
+   * A listing is read in this order; the first answer wins:
+   *   1. the store's own diet tag says non-veg        ("Non-Veg", "Veg/Non-Veg:Non-Veg")
+   *   2. the title names an animal ingredient          ("Chicken & Egg")
+   *   3. the ingredient list names one                 ("Composition: dehydrated poultry protein")
+   *   4. the store's own diet tag says veg             ("Veg", "Veg/Non-Veg:Veg")
+   *   5. the type or another tag names one             ("Flavor:Chicken")
+   *   6. the title, type or a tag says vegetarian      ("Vegetarian Dog Biscuits")
+   *   7. the description names one anywhere
+   *   8. an ingredient list is there and names none    -> vegetarian
+   *   otherwise: not known.
+   * "Chicken-free", "free from chicken, beef and fish" and "an alternative to
+   * fish oil" are not animal ingredients. "Non-Veg" is never read as "Veg".
+   *
+   * With the switch on, food and treats stay only when they are known to be
+   * vegetarian (a veg-only shop must not guess); medicines and supplements
+   * go only when they name an animal ingredient; toys, beds, grooming and
+   * other gear always stay. */
+  /* rr:diet-rules GENERATED from shared/store-diet-rules.json by scripts/sync-shared.js - do not edit */
+  var DIET_RULES = {"schemaVersion":1,"dietTagKeys":["veg\\s*/\\s*non[\\s-]*veg(?:etarian)?","diet(?:ary)?(?:\\s*(?:type|preference))?","food\\s*(?:preference|type)","preference","veg\\s*type"],"vegTagValues":["veg","vegetarian","vegan","pure\\s*veg","100\\s*%\\s*veg(?:etarian)?","plant[\\s-]*based"],"nonVegTagValues":["non[\\s-]*veg(?:etarian)?","contains\\s+meat","eggetarian"],"foodTagKeys":["food\\s*/\\s*non[\\s-]*food"],"foodTagValues":["food"],"nonFoodTagValues":["non[\\s-]*food"],"nonVegPhrases":["non[\\s-]*veg(?:etarian)?"],"vegWords":["veg","vegetarian","vegan","plant[\\s-]*based","meat[\\s-]*free","meatless","pure[\\s-]*veg","100\\s*%\\s*veg(?:etarian)?"],"animal":["meats?","meaty","non[\\s-]*veg(?:etarian)?","chickens?","hens?","poultry","turkey","ducks?","duckling","goose","geese","quail","pheasant","ostrich","emu","pigeon","fowl","beef","veal","mutton","lamb","sheep","goat(?!'?s?\\s*milk)","pork","ham","bacon","sausages?","salami","pepperoni","venison","deer","rabbit","hare","kangaroo","bison","buffalo(?!\\s*milk)","boar","elk","horse\\s*meat","camel(?!'?s?\\s*milk)","cow\\s+(?:ears?|hoof|hooves|hide|skin|tails?|trachea|bones?|lungs?|nose|snouts?)","pig(?:s)?\\s*(?:ears?|snouts?|trotters?|skin|tails?)","hoof","hooves","antlers?","trachea","gizzards?","giblets?","offal","tripe","marrow(?:\\s*bones?)?","liver(?!\\s+(?:support|care|health|tonic|function|protect\\w*|detox\\w*|disease|problems?|stimulant|formula))","bully\\s*sticks?","pizzle","rawhide","jerky\\s+strips?","fish(?:es)?","fishmeal","codfish","whitefish","salmon","tuna","sardines?","mackerel","anchov(?:y|ies)","herring","pollock","cod(?=\\s+(?:liver|fish|oil|fillets?))","haddock","trout","tilapia","catfish","basa","hilsa","rohu","pomfret","bonito","skipjack","katsuobushi","menhaden","capelin","sprats?","whitebait","shark","krill","prawns?","shrimps?","crabs?","lobsters?","squid","octopus","cuttlefish","shellfish","seafood","mussels?","oysters?","clams?","scallops?","eels?","roe","caviar","eggs?","yolks?","albumen","egg\\s*shell(?:\\s*membrane)?","gelatine?","collagen","chondroitin","lard","tallow","suet","isinglass","carmine","cochineal","animal\\s+(?:fats?|proteins?|digests?|derivatives?|by[\\s-]*products?|origin|tissues?|liver|meal)","of\\s+animal\\s+origin","insect\\s+(?:protein|meal|flour|larvae|oil)","black\\s+soldier\\s+fly","crickets?","mealworms?","blood\\s+(?:meal|plasma)","dried\\s+blood","plasma\\s+protein","bone\\s+(?:meal|broth)"],"negationCues":["no","not","never","nor","zero","0\\s*%","without","free\\s+(?:from|of)","excludes?","excluding","avoids?","avoiding","instead\\s+of","alternative\\s+to","replaces?","allerg(?:y|ic|ies)\\s+to","sensitive\\s+to","intoleran(?:t|ce)\\s+to"],"negationAfter":["free","less"],"positiveCues":["with","contains?","containing","made","real","including","includes?","rich","plus","added","fresh","and\\s+real","enriched","fortified","source"],"clauseBreaks":["but","however","while","whereas"],"ingredientHeadings":["ingredients?","composition","key\\s+ingredients","made\\s+with","what'?s\\s+inside","contents?","formulation"],"sectionStops":["guaranteed\\s+analysis","analytical\\s+constituents","nutritional\\s+(?:information|value|analysis|additives)","nutrition\\s+facts","typical\\s+analysis","feeding","benefits?","key\\s+benefits","features","key\\s+features","how\\s+to","directions?","storage","dosage","usage","additives","why\\s+(?:choose|buy|feed|use|this|our|it|we)","about\\s+(?:the|this|our|brand|product)","product\\s+details","specifications?","note","caution","disclaimer"],"flavourWords":["flavou?r(?:ed|s)?","scented","infused","coated","basted"],"gearPhrases":["(?:food|treats?|water|kibble|snack)[\\s-]+(?:bowls?|feeders?|dispens\\w*|containers?|storage|mats?|scoops?|pouch(?:es)?|bags?|holders?|stands?|toys?|balls?|puzzles?|jars?|bins?|trays?)"],"strongFoodWords":["foods?","treats?","biscuits?","cookies?","kibble","gravy","jerky","snacks?","pate","puree","broth","meals?","bites","diets?","rawhide","bully","pizzle","dentastix","stews?","chunks","morsels","lickables?","churu"],"weakFoodWords":["chews?","chewy","dental\\s+sticks?","sticks?","bones?","wet","dry","milk\\s+replacer","puppy\\s+milk","kitten\\s+milk","seeds?","pellets?","flakes","feed"],"ingestibleWords":["tablets?","tabs","chewables?","capsules?","syrups?","oral\\s+(?:suspension|solution|liquid|gel|paste)","dewormers?"],"healthWords":["supplements?","tablets?","tabs","syrups?","capsules?","tonic","dewormers?","deworming","medicines?","medication","probiotics?","prebiotics?","vitamins?","multivitamins?","drops","oral","suspension","powder","gel","paste","ointment","cream","antibiotics?","pharmacy","health","wellness","chewables?","liquid","solution","injection"],"nonFoodWords":["toys?","plush","squeak\\w*","balls?","ropes?","frisbees?","tug","collars?","leash(?:es)?","harness(?:es)?","beds?","mats?","bowls?","feeders?","fountains?","crates?","carriers?","brush(?:es)?","combs?","shampoos?","conditioners?","sprays?","wipes","litter","scoopers?","scratchers?","cages?","aquariums?","tanks?","filters?","clothes","t[\\s-]*shirts?","jackets?","sweaters?","hoodies?","raincoats?","shoes","socks","booties","muzzles?","clippers?","trimmers?","nail\\s+cutters?","diapers?","pads","poop","bags?","tents?","houses?","towels?","perfumes?","deodori[sz]ers?","colognes?","grooming","gloves?","bandanas?","spot[\\s-]*on","tick","ticks","flea","fleas","lice","cleaners?","toothbrush(?:es)?","tags?","kits?","stands?","cushions?","blankets?","leads?","gates?","cameras?","trackers?"]};
+  /* /rr:diet-rules */
+
+  var Diet = (function (R) {
+    function alt(list) { return '(?:' + (list || []).join('|') + ')'; }
+    /* Whole words; a trailing lookahead instead of \b so "0%" ends a word. */
+    function words(list, flags) { return new RegExp('\\b' + alt(list) + '(?![a-z0-9_])', flags || 'i'); }
+    function whole(list) { return new RegExp('^' + alt(list) + '$', 'i'); }
+    function keyed(list) { return new RegExp('^' + alt(list) + '\\s*[:=]\\s*(.+)$', 'i'); }
+    var RE = {
+      dietKey: keyed(R.dietTagKeys),
+      vegVal: whole(R.vegTagValues),
+      nonVegVal: whole(R.nonVegTagValues),
+      foodKey: keyed(R.foodTagKeys),
+      foodVal: whole(R.foodTagValues),
+      nonFoodVal: whole(R.nonFoodTagValues),
+      nonVegPhrase: words(R.nonVegPhrases, 'gi'),
+      vegWord: words(R.vegWords),
+      animal: words(R.animal, 'gi'),
+      negCue: words(R.negationCues, 'gi'),
+      negAfter: new RegExp('^\\s*-?\\s*' + alt(R.negationAfter) + '(?![a-z0-9_])', 'i'),
+      positive: words(R.positiveCues),
+      clauseBreak: new RegExp('[.;:!?\\n\\u2022|()\\[\\]]|\\b' + alt(R.clauseBreaks) + '(?![a-z0-9_])', 'gi'),
+      ingHead: new RegExp('\\b' + alt(R.ingredientHeadings) + '(?![a-z0-9_])[ \\t]*(?::|-|\\n)', 'gi'),
+      stop: words(R.sectionStops),
+      strongFood: words(R.strongFoodWords),
+      weakFood: words(R.weakFoodWords),
+      ingestible: words(R.ingestibleWords),
+      health: words(R.healthWords),
+      nonFood: words(R.nonFoodWords),
+      /* "Food bowl", "treat pouch": gear, whatever the first word says. */
+      gear: words(R.gearPhrases, 'gi'),
+      /* "Chicken Flavoured Dental Chew Toy": an animal flavour makes gear
+       * something that is eaten after all. */
+      flavoured: new RegExp('\\b' + alt(R.animal) + '[\\s-]*' + alt(R.flavourWords) + '(?![a-z0-9_])', 'i')
+    };
+
+    var ENTITIES = { '&amp;': '&', '&nbsp;': ' ', '&#160;': ' ', '&#39;': "'", '&apos;': "'",
+      '&rsquo;': "'", '&lsquo;': "'", '&quot;': '"', '&ldquo;': '"', '&rdquo;': '"', '&lt;': '<', '&gt;': '>' };
+
+    /** The listing's words: block tags become line breaks (a heading or a
+     *  list item ends a clause), every other tag goes. */
+    function plainText(html, max) {
+      var s = String(html || '')
+        .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+        .replace(/<\s*\/?\s*(?:br|p|li|ul|ol|div|tr|td|th|h[1-6]|section|table)\b[^>]*>/gi, '\n')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/&(?:amp|nbsp|#160|#39|apos|rsquo|lsquo|quot|ldquo|rdquo|lt|gt);/gi, function (e) { return ENTITIES[e.toLowerCase()] || ' '; })
+        .replace(/[ \t\r\f\v ]+/g, ' ');
+      return s.length > max ? s.slice(0, max) : s;
+    }
+
+    function normTag(t) { return String(t || '').replace(/_/g, ' ').replace(/\s+/g, ' ').trim(); }
+
+    /** Is the animal word at [at] negated: "chicken-free", "no chicken",
+     *  "free from chicken, beef and fish", "an alternative to fish oil"?
+     *  Only within its clause, and not across a word like "with" or "real"
+     *  ("no added sugar, with real chicken" names chicken). */
+    function negated(text, at, len) {
+      if (RE.negAfter.test(text.slice(at + len, at + len + 12))) return true;
+      var before = text.slice(Math.max(0, at - 80), at);
+      var start = 0, b;
+      RE.clauseBreak.lastIndex = 0;
+      while ((b = RE.clauseBreak.exec(before)) !== null) {
+        start = b.index + b[0].length;
+        if (!b[0].length) RE.clauseBreak.lastIndex++;
+      }
+      var clause = before.slice(start);
+      var cue = null, c;
+      RE.negCue.lastIndex = 0;
+      while ((c = RE.negCue.exec(clause)) !== null) {
+        cue = c;
+        if (!c[0].length) RE.negCue.lastIndex++;
+      }
+      if (!cue) return false;
+      var between = clause.slice(cue.index + cue[0].length);
+      if (RE.positive.test(between)) return false;
+      return between.split(/\s+/).filter(Boolean).length <= 8;
+    }
+
+    /** The first animal ingredient [text] names (not negated), or null. */
+    function animalIn(text) {
+      if (!text) return null;
+      var m;
+      RE.animal.lastIndex = 0;
+      while ((m = RE.animal.exec(text)) !== null) {
+        if (!m[0].length) { RE.animal.lastIndex++; continue; }
+        if (!negated(text, m.index, m[0].length)) return m[0].toLowerCase().replace(/\s+/g, ' ');
+      }
+      return null;
+    }
+
+    function saysVeg(text) {
+      return RE.vegWord.test(String(text || '').replace(RE.nonVegPhrase, ' '));
+    }
+
+    /** The ingredient lists in a description ("Ingredients: a, b, c"),
+     *  joined; '' when there is none. A list, not a sentence that happens to
+     *  say "ingredients": at least three short items. */
+    function ingredientsIn(text) {
+      var out = [], m;
+      RE.ingHead.lastIndex = 0;
+      while ((m = RE.ingHead.exec(text)) !== null) {
+        var rest = text.slice(m.index + m[0].length, m.index + m[0].length + 900);
+        var stop = RE.stop.exec(rest);
+        if (stop && stop.index > 0) rest = rest.slice(0, stop.index);
+        var items = rest.split(/[,\n•;]+/).map(function (x) { return x.trim(); }).filter(Boolean);
+        var short = items.filter(function (x) { return x.split(/\s+/).length <= 6; });
+        if (items.length >= 3 && short.length >= Math.ceil(items.length * 0.7)) out.push(rest);
+      }
+      return out.join('\n');
+    }
+
+    /** food | health | nonfood | other, from the store's own
+     *  "Food/non-food" tag when it has one, else the title and type. */
+    function categoryOf(title, type, struct) {
+      var t = title + ' \n ' + type;
+      var fed = t.replace(RE.gear, ' ');
+      if (struct === 'nonfood') return 'nonfood';
+      if (RE.ingestible.test(t)) return 'health';
+      if (RE.flavoured.test(title)) return 'food';
+      if (struct !== 'food' && RE.nonFood.test(t) && !RE.strongFood.test(fed)) return 'nonfood';
+      if (RE.strongFood.test(fed)) return 'food';
+      if (RE.health.test(t)) return 'health';
+      if (struct === 'food' || RE.weakFood.test(t)) return 'food';
+      return 'other';
+    }
+
+    function result(diet, category, source, term) {
+      return { diet: diet, category: category, source: source, term: term || null };
+    }
+
+    /** { diet: veg | non_veg | unknown, category, source, term }. */
+    function classify(p) {
+      var title = String(p.title || ''), type = String(p.productType || '');
+      var vendor = null, struct = null, other = [];
+      (p.tags || []).forEach(function (raw) {
+        var t = normTag(raw);
+        if (!t) return;
+        var k = RE.dietKey.exec(t);
+        var v = k ? k[1].trim() : t;
+        if (RE.nonVegVal.test(v)) { vendor = 'non_veg'; return; }
+        if (RE.vegVal.test(v)) { if (vendor !== 'non_veg') vendor = 'veg'; return; }
+        if (k) return;
+        var f = RE.foodKey.exec(t);
+        if (f) {
+          var fv = f[1].trim();
+          if (RE.nonFoodVal.test(fv)) struct = 'nonfood';
+          else if (RE.foodVal.test(fv) && struct !== 'nonfood') struct = 'food';
+          return;
+        }
+        other.push(t);
+      });
+      var category = categoryOf(title, type, struct);
+      var desc = plainText(p.descriptionHtml, 20000);
+      var ing = ingredientsIn(desc);
+      var tagText = other.join(' \n ');
+      var hit;
+      if (vendor === 'non_veg') return result('non_veg', category, 'store_tag', null);
+      if ((hit = animalIn(title))) return result('non_veg', category, 'title', hit);
+      if ((hit = animalIn(ing))) return result('non_veg', category, 'ingredients', hit);
+      if (vendor === 'veg') return result('veg', category, 'store_tag', null);
+      if ((hit = animalIn(type + ' \n ' + tagText))) return result('non_veg', category, 'tags', hit);
+      if (saysVeg(title + ' \n ' + type + ' \n ' + tagText)) return result('veg', category, 'label', null);
+      if ((hit = animalIn(desc))) return result('non_veg', category, 'description', hit);
+      if (ing) return result('veg', category, 'ingredients', null);
+      return result('unknown', category, null, null);
+    }
+
+    /** Hidden while veg-only is on. */
+    function hidden(d) {
+      if (d.category === 'nonfood') return false;
+      if (d.diet === 'non_veg') return true;
+      if (d.diet === 'veg') return false;
+      return d.category === 'food';
+    }
+
+    return { classify: classify, hidden: hidden, animalIn: animalIn, plainText: plainText };
+  })(DIET_RULES);
+
+  /** The product's diet, worked out once per product object. */
+  function dietOf(p) {
+    if (!p) return Diet.classify({});
+    if (!p._diet) {
+      try { Object.defineProperty(p, '_diet', { value: Diet.classify(p), enumerable: false, writable: true }); }
+      catch (e) { return Diet.classify(p); }
+    }
+    return p._diet;
+  }
+
   var Rules = {
     isRx: function (p) {
       return RE_RX.test(p.tags.join(' ') + ' ' + p.productType + ' ' + plainHead(p.descriptionHtml, 6000));
     },
+    /** The VEG label: known vegetarian, and something eaten. */
     isVeg: function (p) {
-      var head = p.title + ' ' + p.tags.join(' ') + ' ' + p.productType;
-      return RE_VEG_WORD.test(head) && !RE_NON_VEG.test(p.title);
+      var d = dietOf(p);
+      return d.diet === 'veg' && d.category !== 'nonfood';
     },
-    /** Used only when the veg-only flag is on. Hides products whose title,
-     *  type, tags or opening description name an animal ingredient. */
-    hideWhenVegOnly: function (p) {
-      var head = p.title + ' ' + p.productType + ' ' + p.tags.join(' ');
-      if (RE_NOT_FOOD.test(head) && !RE_EDIBLE.test(p.title)) return false;
-      if (RE_VEG_WORD.test(head) && !RE_NON_VEG.test(p.title)) return false;
-      return RE_NON_VEG.test(head + ' ' + plainHead(p.descriptionHtml, 600));
+    diet: dietOf,
+    /** Used only when the veg-only flag is on (see above). */
+    hideWhenVegOnly: function (p) { return Diet.hidden(dietOf(p)); },
+    /** Why a product is not in the vegetarian shop, in plain words, for the
+     *  product page. Null when it is. */
+    vegOnlyReason: function (p) {
+      var d = dietOf(p);
+      if (!Diet.hidden(d)) return null;
+      if (d.diet === 'non_veg') {
+        if (d.source === 'store_tag') return 'The store lists it as non-vegetarian.';
+        return 'Its listing names ' + (d.term || 'an animal ingredient') + '.';
+      }
+      return 'Its listing does not show that it is vegetarian.';
     }
   };
 
@@ -435,8 +651,10 @@
       title: String(node.title || '').trim(),
       brand: String(node.vendor || '').trim(),
       productType: String(node.productType || ''),
-      tags: [],
-      descriptionHtml: '',
+      tags: Array.isArray(node.tags) ? node.tags.map(String) : [],
+      // The plain-text start of the description (asked for while veg-only is
+      // on), escaped so it is safe anywhere HTML is expected.
+      descriptionHtml: typeof node.description === 'string' ? escapeText(node.description) : '',
       images: image ? [image] : [],
       options: [],
       variants: previewVariants(
@@ -729,6 +947,10 @@
     });
   }
 
+  function escapeText(t) {
+    return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
   /** From a /search/suggest.json product: a partial tile. */
   function productFromSuggest(m) {
     if (!m || typeof m !== 'object') return null;
@@ -747,7 +969,7 @@
       brand: String(m.vendor || '').trim(),
       productType: String(m.type || ''),
       tags: feedTags(m.tags),
-      descriptionHtml: '',
+      descriptionHtml: typeof m.body === 'string' ? m.body : '',
       images: image ? [image] : [],
       options: [],
       variants: previewVariants(
@@ -1115,11 +1337,44 @@
 
   /* ============================================================= CATALOGUE */
 
-  var TILE_FIELDS =
+  var TILE_BASE =
     'id handle title vendor productType availableForSale publishedAt ' +
     'featuredImage { url } ' +
     'priceRange { minVariantPrice { amount } maxVariantPrice { amount } } ' +
     'compareAtPriceRange { maxVariantPrice { amount } }';
+
+  /* What a listing tile carries besides price and picture: the store's tags
+   * (the VEG label and the veg-only switch read them first; Supertails marks
+   * every listing "Veg" or "Non-Veg"), and while veg-only is on the start of
+   * the description too, for stores whose tags say nothing about diet. A
+   * store that refuses tags without a token gets the lean tile, remembered
+   * like leanProduct. The cache key carries the shape, so a tile read
+   * without the description is never reused once veg-only turns on. */
+  var DIET_TEXT_CHARS = 6000;
+  /* Remembered per store, so switching partner store starts afresh. */
+  function leanTiles() { return !!caps()['leanTiles:' + Vendor.key]; }
+  function tileFields() {
+    return TILE_BASE + (leanTiles() ? '' : ' tags') +
+      (vegOnly() ? ' description(truncateAt: ' + DIET_TEXT_CHARS + ')' : '');
+  }
+  function tileKey(key) {
+    return key ? key + '|' + (leanTiles() ? 'l' : 't') + (vegOnly() ? 'd' : '') : null;
+  }
+  /** gql() for a query of tiles: [build] makes the query from the tile
+   *  fields. A GraphQL error on the full tile retries lean, once. */
+  function gqlTiles(build, variables, opts) {
+    opts = opts || {};
+    function run() {
+      return gql(build(tileFields()), variables, { cacheKey: tileKey(opts.cacheKey), fresh: opts.fresh });
+    }
+    return run().catch(function (e) {
+      if (e && e.graphQLErrors && !leanTiles()) {
+        setCap('leanTiles:' + Vendor.key);
+        return run();
+      }
+      throw e;
+    });
+  }
 
   var PAGE_SIZE = 24;
 
@@ -1157,16 +1412,16 @@
     opts = opts || {};
     var b = String(brand || '').trim();
     var sort = CATALOG_SORT_KEYS[opts.sort || 'featured'] || CATALOG_SORT_KEYS.featured;
-    var query =
+    var query = function (F) { return (
       'query RrtBrand($q: String!, $after: String, $sortKey: ProductSortKeys, $reverse: Boolean) {' +
       ' products(first: ' + PAGE_SIZE + ', after: $after, query: $q, sortKey: $sortKey, reverse: $reverse) {' +
       '  pageInfo { hasNextPage endCursor }' +
-      '  nodes { ' + TILE_FIELDS + ' }' +
+      '  nodes { ' + F + ' }' +
       ' }' +
-      '}';
+      '}'); };
     var q = "vendor:'" + b.replace(/\\/g, '').replace(/'/g, "\\'") + "'";
     var cacheKey = 'brand|' + b + '|' + (opts.sort || 'featured') + '|' + (opts.after || '');
-    return gql(query, {
+    return gqlTiles(query, {
       q: q, after: opts.after || null, sortKey: sort.key, reverse: sort.reverse
     }, { cacheKey: cacheKey, fresh: opts.fresh }).then(function (data) {
       var conn = (data && data.products) || {};
@@ -1226,15 +1481,15 @@
   function catalogPage(opts) {
     opts = opts || {};
     var sort = CATALOG_SORT_KEYS[opts.sort || 'featured'] || CATALOG_SORT_KEYS.featured;
-    var query =
+    var query = function (F) { return (
       'query RrtCatalog($after: String, $sortKey: ProductSortKeys, $reverse: Boolean) {' +
       ' products(first: ' + PAGE_SIZE + ', after: $after, sortKey: $sortKey, reverse: $reverse) {' +
       '  pageInfo { hasNextPage endCursor }' +
-      '  nodes { ' + TILE_FIELDS + ' }' +
+      '  nodes { ' + F + ' }' +
       ' }' +
-      '}';
+      '}'); };
     var cacheKey = 'cat|' + (opts.sort || 'featured') + '|' + (opts.after || '');
-    return gql(query, {
+    return gqlTiles(query, {
       after: opts.after || null, sortKey: sort.key, reverse: sort.reverse
     }, { cacheKey: cacheKey, fresh: opts.fresh }).then(function (data) {
       var conn = (data && data.products) || {};
@@ -1330,17 +1585,17 @@
   function sfCollectionPage(handle, opts) {
     opts = opts || {};
     var sort = SORT_KEYS[opts.sort || 'featured'] || SORT_KEYS.featured;
-    var query =
+    var query = function (F) { return (
       'query RrtCollection($handle: String!, $after: String, $sortKey: ProductCollectionSortKeys, $reverse: Boolean) {' +
       ' collection(handle: $handle) {' +
       '  products(first: ' + PAGE_SIZE + ', after: $after, sortKey: $sortKey, reverse: $reverse) {' +
       '   pageInfo { hasNextPage endCursor }' +
-      '   nodes { ' + TILE_FIELDS + ' }' +
+      '   nodes { ' + F + ' }' +
       '  }' +
       ' }' +
-      '}';
+      '}'); };
     var cacheKey = 'col|' + handle + '|' + (opts.sort || 'featured') + '|' + (opts.after || '');
-    return gql(query, {
+    return gqlTiles(query, {
       handle: handle, after: opts.after || null,
       sortKey: sort.key, reverse: sort.reverse
     }, { cacheKey: cacheKey, fresh: opts.fresh }).then(function (data) {
@@ -1443,15 +1698,15 @@
   }
 
   function sfSuggest(q) {
-    var g =
+    var g = function (F) { return (
       'query RrtSuggest($q: String!) {' +
       ' predictiveSearch(query: $q, limit: 10, limitScope: EACH,' +
       '  types: [PRODUCT, COLLECTION], unavailableProducts: LAST) {' +
-      '  products { ' + TILE_FIELDS + ' }' +
+      '  products { ' + F + ' }' +
       '  collections { handle title }' +
       ' }' +
-      '}';
-    return gql(g, { q: q }, { cacheKey: 'suggest|' + q }).then(function (data) {
+      '}'); };
+    return gqlTiles(g, { q: q }, { cacheKey: 'suggest|' + q }).then(function (data) {
       var ps = data && data.predictiveSearch;
       if (!ps) return { query: q, products: [], collections: [] };
       return {
@@ -1475,26 +1730,22 @@
 
   /* The vendor's full search - every match, a page at a time. This query is
    * the one the app ships and has verified against the live shop. */
-  var SEARCH_QUERY =
-    'query RrtSearch($q: String!, $after: String) {\n' +
-    '  search(query: $q, first: 24, after: $after, types: [PRODUCT], unavailableProducts: LAST) {\n' +
-    '    totalCount\n' +
-    '    pageInfo { hasNextPage endCursor }\n' +
-    '    nodes {\n' +
-    '      ... on Product {\n' +
-    '        id\n        handle\n        title\n        vendor\n        productType\n        availableForSale\n' +
-    '        publishedAt\n' +
-    '        featuredImage { url }\n' +
-    '        priceRange { minVariantPrice { amount } maxVariantPrice { amount } }\n' +
-    '        compareAtPriceRange { maxVariantPrice { amount } }\n' +
-    '      }\n    }\n  }\n}';
+  function SEARCH_QUERY(F) {
+    return 'query RrtSearch($q: String!, $after: String) {\n' +
+      '  search(query: $q, first: 24, after: $after, types: [PRODUCT], unavailableProducts: LAST) {\n' +
+      '    totalCount\n' +
+      '    pageInfo { hasNextPage endCursor }\n' +
+      '    nodes {\n' +
+      '      ... on Product { ' + F + ' }\n' +
+      '    }\n  }\n}';
+  }
 
   function searchAll(query, opts) {
     opts = opts || {};
     var q = String(query || '').trim();
     if (!q) return Promise.resolve({ query: q, products: [], hasMore: false, endCursor: null, total: 0 });
     var cacheKey = 'search-all|' + q + '|' + (opts.after || '');
-    return gql(SEARCH_QUERY, { q: q, after: opts.after || null }, { cacheKey: cacheKey })
+    return gqlTiles(SEARCH_QUERY, { q: q, after: opts.after || null }, { cacheKey: cacheKey })
       .then(function (data) {
         var search = data && data.search;
         if (!search) throw StorefrontError('Store search is not available right now.');
@@ -1532,11 +1783,11 @@
   }
 
   function sfRecommendations(productId) {
-    var g =
+    var g = function (F) { return (
       'query RrtRecs($id: ID!) {' +
-      ' productRecommendations(productId: $id, intent: RELATED) { ' + TILE_FIELDS + ' }' +
-      '}';
-    return gql(g, { id: 'gid://shopify/Product/' + productId },
+      ' productRecommendations(productId: $id, intent: RELATED) { ' + F + ' }' +
+      '}'); };
+    return gqlTiles(g, { id: 'gid://shopify/Product/' + productId },
       { cacheKey: 'recs|' + productId })
       .then(function (data) {
         var list = (data && data.productRecommendations) || [];
@@ -2242,6 +2493,9 @@
     } catch (e) { /* node, or very old browser */ }
   }
 
+  /* The admin's veg-only switch as last read (rrt-store-config.js keeps it
+   * here from Firestore), so a page opens already filtered instead of
+   * flashing the full range until the live read lands. */
   function vegOnly() { return readJson(local, VEG_KEY, false) === true; }
   function setVegOnly(v) { writeJson(local, VEG_KEY, v === true); }
 

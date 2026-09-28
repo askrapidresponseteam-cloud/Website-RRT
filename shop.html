@@ -186,7 +186,11 @@
     sortSel.appendChild(o);
   });
 
-  var state = { sort: 'featured', products: [], cursor: null, hasMore: false, loading: false, total: null };
+  var state = { sort: 'featured', products: [], cursor: null, hasMore: false, loading: false, total: null, autoFills: 0 };
+  // Veg-only can leave a page of 24 with few or none to show: keep reading
+  // (up to this many pages in a row) until there is a screenful or the
+  // listing ends, instead of showing a near-empty grid.
+  var VEG_FILL_TARGET = 12, VEG_FILL_MAX_PAGES = 30;
 
   sortSel.addEventListener('change', function () {
     state.sort = sortSel.value;
@@ -209,12 +213,20 @@
   }
 
   // The admin's veg-only switch (flags.store_veg_only), shared with the app:
-  // when on, every listing on this page hides animal-ingredient products.
-  var cfgVegOnly = false;
+  // when on, every listing on this page shows vegetarian products only (see
+  // Rules in rrt-shop.js). It opens as last read on this device, so there is
+  // no flash of the full range, then follows the live value. A change
+  // reloads the listing: tiles read while it is on carry the description too.
+  var cfgVegOnly = window.RRTStoreConfig ? window.RRTStoreConfig.get().vegOnly === true : S.vegOnly();
+  var started = false;
   if (window.RRTStoreConfig) {
     window.RRTStoreConfig.subscribe(function (sc) {
       if (!sc.ready) return;
-      if (sc.vegOnly !== cfgVegOnly) { cfgVegOnly = sc.vegOnly; render(); }
+      if (sc.vegOnly !== cfgVegOnly) {
+        cfgVegOnly = sc.vegOnly;
+        S.setVegOnly(cfgVegOnly);
+        if (started) resetAndLoad();
+      }
     });
   }
   U.storeGate();
@@ -234,7 +246,7 @@
 
   function resetAndLoad() {
     state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
-    state.clientSort = false;
+    state.clientSort = false; state.autoFills = 0;
     $('grid').innerHTML = skeletons(8);
     $('state').hidden = true; $('foot').hidden = true;
     loadNext();
@@ -242,6 +254,7 @@
 
   function loadNext() {
     if (state.loading) return;
+    started = true;
     state.loading = true;
     $('grid').setAttribute('aria-busy', 'true');
     if (!state.products.length) $('grid').innerHTML = skeletons(8);
@@ -288,6 +301,13 @@
       sort: state.clientSort ? state.sort : 'featured'
     });
     $('grid').setAttribute('aria-busy', 'false');
+    var filling = cfgVegOnly && state.hasMore && visible.length < VEG_FILL_TARGET &&
+      state.autoFills < VEG_FILL_MAX_PAGES;
+    if (!visible.length && !state.hasMore && cfgVegOnly && state.products.length) {
+      showState('No vegetarian products here.',
+        'The shop is showing vegetarian products only. Try another shelf, or search the whole range.', false);
+      return;
+    }
     if (!visible.length && !state.hasMore) {
       if (searching) {
         showState('Nothing matched \u201c' + esc(q) + '\u201d.',
@@ -299,12 +319,20 @@
       return;
     }
     $('state').hidden = true;
-    $('grid').innerHTML = visible.map(function (p) { return U.tile(p); }).join('');
-    $('count').textContent = visible.length + (state.hasMore ? '+' : '') + (visible.length === 1 ? ' product' : ' products');
+    $('grid').innerHTML = visible.length ? visible.map(function (p) { return U.tile(p); }).join('')
+      : (filling ? skeletons(8) : '');
+    $('count').textContent = filling
+      ? 'Finding vegetarian products\u2026 ' + visible.length + ' so far'
+      : visible.length + (state.hasMore ? '+' : '') + (cfgVegOnly ? ' vegetarian' : '') +
+        (visible.length === 1 ? ' product' : ' products');
     $('foot').hidden = false;
     $('more').disabled = false;
     $('more').hidden = !state.hasMore;
     $('done').hidden = state.hasMore;
+    if (filling) {
+      state.autoFills++;
+      setTimeout(loadNext, 0);
+    }
   }
 
   $('more').addEventListener('click', loadNext);

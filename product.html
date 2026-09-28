@@ -57,6 +57,9 @@
 .eyebrow a#brand:hover { border-color:var(--ink); }
 .eyebrow .tag { font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:.09em; text-transform:uppercase;
                 display:inline-flex; align-items:center; height:26px; padding:0 10px; border-radius:0; background:var(--fog); color:var(--graphite); }
+.eyebrow .tag.veg { background:var(--paper); color:var(--go); box-shadow:inset 0 0 0 1.5px var(--go); }
+.veg-note { margin:10px 0 0; padding:12px 14px; background:var(--hold-bg); color:var(--hold); font-size:14px; line-height:1.45; font-weight:600; }
+.veg-note a { color:inherit; text-decoration:underline; text-underline-offset:3px; }
 .price-row { min-height:34px; margin:16px 0 4px; font-family:var(--display); font-size:28px; font-weight:800; letter-spacing:var(--track-title); color:var(--ink); }
 .price-row .was { font-family:var(--sans); font-size:16px; font-weight:500; color:var(--text-low); text-decoration:line-through; margin-left:10px; letter-spacing:0; }
 .price-row .off { display:inline-flex; align-items:center; height:26px; padding:0 10px; border-radius:0; background:var(--go-bg);
@@ -149,6 +152,7 @@
       <h1 id="title"></h1>
       <div class="price-row" id="priceRow"><span class="skel"></span></div>
       <p class="stock" id="stock">Checking availability…</p>
+      <p class="veg-note" id="vegNote" hidden></p>
   <div id="sizes" hidden></div>
       <div id="options"></div>
       <div class="buy">
@@ -245,6 +249,7 @@
 
     var tags = '';
     if (p.isRx) tags += '<span class="tag">Prescription \u00b7 the seller runs the process</span>';
+    if (p.isVeg) tags += '<span class="tag veg">Vegetarian</span>';
     $('tags').innerHTML = tags;
 
     images = p.images.length ? p.images : (p.imageUrl ? [p.imageUrl] : []);
@@ -418,6 +423,34 @@
       buyNow.disabled = false;
     }
     if (qtyValue() > cap) $('qty').value = String(cap);
+    paintVeg();
+  }
+
+  /* The admin's veg-only switch: a product the vegetarian shop leaves out
+   * (reached by a saved item, a shared link or an old tab) says why, and
+   * cannot be added. Follows the switch live. */
+  function vegReason() {
+    return product && U.vegOnlyNow() ? S.rules.vegOnlyReason(product) : null;
+  }
+  function paintVeg() {
+    var note = $('vegNote');
+    var why = vegReason();
+    if (!why) { note.hidden = true; return; }
+    note.innerHTML = esc('RRT\u2019s shop is showing vegetarian products only. ' + why) +
+      ' <a href="/shop">Browse vegetarian products</a>';
+    note.hidden = false;
+    var add = $('add'), buyNow = $('buyNow');
+    add.disabled = true; add.textContent = 'Not in the vegetarian shop';
+    buyNow.disabled = true;
+  }
+  if (window.RRTStoreConfig) {
+    var lastVeg = null;
+    window.RRTStoreConfig.subscribe(function (sc) {
+      if (!sc.ready || !product || sc.vegOnly === lastVeg) return;
+      lastVeg = sc.vegOnly;
+      paintVariant();
+      loadRecs();
+    });
   }
 
   $('minus').addEventListener('click', function () { $('qty').value = String(Math.max(1, qtyValue() - 1)); });
@@ -430,7 +463,7 @@
 
   $('add').addEventListener('click', function () {
     var v = selectedVariant();
-    if (!v || !v.available) return;
+    if (!v || !v.available || vegReason()) return;
     S.add(product, v, qtyValue());
     U.toast('Added to bag');
   });
@@ -439,7 +472,7 @@
    * then straight to the vendor's secure checkout with just this line. */
   $('buyNow').addEventListener('click', function () {
     var v = selectedVariant();
-    if (!v || !v.available) return;
+    if (!v || !v.available || vegReason()) return;
     var btn = $('buyNow');
     btn.disabled = true; btn.textContent = 'Checking price\u2026';
     S.product(product.handle, { fresh: true }).then(function (live) {
@@ -502,8 +535,9 @@
   loadSizes();
 
   S.recommendations(product.id).then(function (list) {
-      if (!list.length) return;
-      $('recsH').hidden = false;
+      if (U.vegOnlyNow()) list = list.filter(function (p) { return !S.rules.hideWhenVegOnly(p); });
+      $('recsH').hidden = !list.length;
+      if (!list.length) { $('recs').innerHTML = ''; return; }
       $('recs').innerHTML = list.map(function (p) { return U.tile(p); }).join('');
     });
   }

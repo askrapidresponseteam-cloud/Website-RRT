@@ -41,10 +41,22 @@
   // verbatim whenever Firestore has nothing to say.
   var DEFAULTS = { storeOpen: true, vegOnly: false, closedMessage: '' };
 
+  /* The veg-only switch as last read on this device (the key rrt-shop.js
+   * reads too), so a shop page opens already filtered instead of showing the
+   * full range for the moment the live read takes. `ready` stays false until
+   * Firestore has answered. */
+  var VEG_KEY = 'rrt_store_veg_only';
+  function lastVegOnly() {
+    try { return global.localStorage.getItem(VEG_KEY) === 'true'; } catch (e) { return DEFAULTS.vegOnly; }
+  }
+  function rememberVegOnly(v) {
+    try { global.localStorage.setItem(VEG_KEY, v ? 'true' : 'false'); } catch (e) { /* private mode */ }
+  }
+
   var state = {
     ready: false,
     storeOpen: DEFAULTS.storeOpen,
-    vegOnly: DEFAULTS.vegOnly,
+    vegOnly: lastVegOnly(),
     closedMessage: DEFAULTS.closedMessage
   };
   var listeners = [];
@@ -77,6 +89,7 @@
     }
     state.storeOpen = field('flags.store', DEFAULTS.storeOpen);
     state.vegOnly = field('flags.store_veg_only', DEFAULTS.vegOnly);
+    rememberVegOnly(state.vegOnly);
     // Optional human message shown when the shop is closed. Text lives in
     // app_config/text in the app's scheme; we accept it here too if present.
     var msg = data['text.store_closed'];

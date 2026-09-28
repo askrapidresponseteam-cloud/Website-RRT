@@ -36,6 +36,7 @@
       if (off > 0) flags += '<span class="flag">' + off + '% off</span>';
     }
     if (p.isRx) flags += '<span class="flag rx-flag">Rx</span>';
+    if (p.isVeg) flags += '<span class="flag veg-flag">Veg</span>';
 
     var meta;
     if (!p.available) {
@@ -177,6 +178,11 @@
         lastQuery = text;
         S.suggest(text).then(function (r) {
           if (r.query !== lastQuery) return; // a newer keystroke owns the box
+          // The admin's veg-only switch applies to suggestions too.
+          if (vegOnlyNow()) {
+            r = { query: r.query, collections: r.collections,
+              products: r.products.filter(function (p) { return !S.rules.hideWhenVegOnly(p); }) };
+          }
           if (!r.products.length && !r.collections.length) { suggEl.hidden = true; return; }
           var out = '';
           r.collections.slice(0, 3).forEach(function (c) {
@@ -349,6 +355,13 @@
     });
   }
 
+  /** Whether the admin's veg-only switch is on (the live value, or as last
+   *  read on this device until the live read lands). */
+  function vegOnlyNow() {
+    var cfg = global.RRTStoreConfig;
+    return cfg ? cfg.get().vegOnly === true : S.vegOnly();
+  }
+
   /** Whether checkout may proceed right now (shop open). Buttons call this at
    *  press time so a mid-session close is respected. */
   function storeOpenNow() {
@@ -365,6 +378,7 @@
     toast: toast,
     storeGate: storeGate,
     storeOpenNow: storeOpenNow,
+    vegOnlyNow: vegOnlyNow,
     registry: registry
   };
   /* END PUBLIC API */

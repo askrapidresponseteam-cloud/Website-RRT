@@ -260,6 +260,48 @@ html.rr-themed .center-load .spin{border-color:var(--sg-line);border-top-color:v
 html.rr-themed input[readonly]{opacity:1;background:var(--sg-fog)!important;color:var(--sg-slate)}
 @media (max-width:560px){html.rr-themed .sect{padding:18px 16px 20px}}
 html.rr-themed .field :is(input,select):focus-visible{outline:none}
+/* ---- a verified vet's own stats (GET /vet/stats; the same numbers as the app) ---- */
+.vs{border:1px solid var(--sg-line,var(--border));background:var(--sg-paper,transparent);padding:22px 20px 24px;margin-top:16px;text-align:left}
+.vs-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin-bottom:18px}
+.vs-h h3{font-family:var(--sg-display,var(--display));font-size:22px;font-weight:800;letter-spacing:var(--sg-track-title,0);color:var(--sg-ink,var(--text))}
+html[lang=hi] .vs-h h3{font-family:var(--sg-hindi,var(--hindi));letter-spacing:0}
+html[lang=hi] .vs-l,html[lang=hi] .vs-rev .st span,html[lang=hi] .vs-ax{font-family:var(--sg-hindi,var(--hindi));letter-spacing:0;font-size:12px}
+.vs-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.vs-tabs button{font-family:var(--sg-sans,var(--sans));font-size:13px;font-weight:700;min-height:38px;padding:0 14px;cursor:pointer;background:var(--sg-paper,transparent);color:var(--sg-ink,var(--text));border:1px solid var(--sg-line-strong,var(--border-strong));border-radius:0}
+.vs-tabs button.on{background:var(--sg-ink,var(--text));color:var(--sg-paper,var(--bg));border-color:var(--sg-ink,var(--text))}
+.vs-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.vs-kpi{border:1px solid var(--sg-line,var(--border));padding:14px}
+.vs-l,.vs-sect>.vs-l{font-family:var(--sg-mono,var(--mono));font-size:11px;font-weight:500;letter-spacing:var(--sg-track-label,.1em);text-transform:uppercase;color:var(--sg-slate,var(--text-low))}
+.vs-kpi .v{font-family:var(--sg-display,var(--display));font-size:28px;font-weight:800;letter-spacing:var(--sg-track-title,0);line-height:1.15;margin-top:6px;color:var(--sg-ink,var(--text));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vs-kpi .s{font-size:12.5px;line-height:1.35;color:var(--sg-slate,var(--text-low));margin-top:4px}
+.vs-sect{margin-top:26px}
+.vs-sect>.vs-l{display:block;margin-bottom:12px}
+.vs-bars{display:flex;align-items:flex-end;gap:2px;border-bottom:2px solid var(--sg-line,var(--border))}
+.vs-bars.dense{gap:1px}
+.vs-bars .b{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.vs-bars .b i{display:block}
+.vs-bars .b .c{background:var(--sg-ink,var(--text))}
+.vs-bars .b .m{background:#F3D6AE}
+.vs-bars .b.pk .c{background:var(--sg-accent,var(--accent))}
+.vs-ax{display:flex;justify-content:space-between;font-family:var(--sg-mono,var(--mono));font-size:10.5px;color:var(--sg-slate,var(--text-low));margin-top:6px}
+.vs-ax4{display:grid;grid-template-columns:repeat(4,1fr);font-family:var(--sg-mono,var(--mono));font-size:10.5px;color:var(--sg-slate,var(--text-low));margin-top:6px}
+.vs-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12.5px;color:var(--sg-slate,var(--text-low))}
+.vs-leg span:before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px;background:var(--sg-ink,var(--text))}
+.vs-leg span.m:before{background:#F3D6AE}
+.vs-line{font-size:14px;color:var(--sg-graphite,var(--text-mid));margin-top:8px}
+.vs-two{display:grid;grid-template-columns:1fr;gap:0 28px}
+@media (min-width:680px){.vs-two{grid-template-columns:1fr 1fr}}
+.vs-hb{display:grid;grid-template-columns:minmax(90px,38%) 1fr 40px;align-items:center;gap:10px;margin-bottom:10px;font-size:13.5px;color:var(--sg-graphite,var(--text-mid))}
+.vs-hb .t{height:10px;background:var(--sg-fog,var(--border));position:relative}
+.vs-hb .t i{position:absolute;left:0;top:0;bottom:0;background:var(--sg-ink,var(--text))}
+.vs-hb .n{text-align:right;font-weight:700;color:var(--sg-ink,var(--text))}
+.vs-rev{border:1px solid var(--sg-line,var(--border));padding:14px 16px;margin-bottom:10px}
+.vs-rev .st{font-weight:700;color:var(--sg-ink,var(--text));letter-spacing:.05em}
+.vs-rev .st span{font-family:var(--sg-mono,var(--mono));font-size:10.5px;font-weight:500;letter-spacing:var(--sg-track-label,.1em);color:var(--sg-slate,var(--text-low));margin-left:10px;text-transform:uppercase}
+.vs-rev p{font-size:14.5px;line-height:1.5;color:var(--sg-graphite,var(--text-mid));margin-top:6px;overflow-wrap:anywhere}
+.vs-note{font-size:14px;color:var(--sg-slate,var(--text-low))}
+.vs-foot{font-size:12.5px;color:var(--sg-slate,var(--text-low));margin-top:20px}
+@media (max-width:560px){.vs{padding:18px 16px 20px}.vs-kpi .v{font-size:24px}.vs-kpis{grid-template-columns:1fr 1fr}.vs-tabs{width:100%;flex-wrap:nowrap}.vs-tabs button{flex:1 1 0;min-width:0;padding:0 4px;white-space:nowrap}}
 /* Hindi: tracked mono labels set Devanagari with no letter-spacing. */
 html[lang=hi].rr-themed :is(.eyebrow,.sect-h,.field label,.reasons .rl,.summary dt){letter-spacing:0}
 /* /rr:signal */
@@ -1121,9 +1163,10 @@ function renderStatus(app){
     html+='<div style="max-width:300px;margin:22px auto 0"><button class="btn" onclick="startResubmit()">'+
       '<span class="material-symbols-outlined">edit</span>'+(hi?'अपडेट करें और दोबारा जमा करें':'Update &amp; resubmit')+'</button></div>';
   }
-  html+='</div>'+accountPanel(app);
+  html+='</div>'+(s==='approved'?'<div id="vstats"></div>':'')+accountPanel(app);
   var host=$('vet-status'); host.innerHTML=html; showOnly('vet-status');
   window.__lastApp=app;
+  if(s==='approved') loadStats();
 }
 function accountPanel(app){
   var p=app.profile||{}, out='';
@@ -1141,6 +1184,134 @@ function accountPanel(app){
       '<div style="margin-top:14px"><button class="btn ghost" id="cm_btn" onclick="changeMobile()">'+esc(T('Update mobile','मोबाइल अपडेट करें'))+'</button></div><div class="formerr" id="cm_err"></div></div>':'')+'</div>';
   return out;
 }
+/* ---- a verified vet's own stats ------------------------------------------
+ * GET /vet/stats: the same numbers the app's Stats screen shows, worked out
+ * on the server (backend/functions/vet_stats.js). Shown under "You're
+ * verified" when this browser is signed in to the vet account; nothing is
+ * shown otherwise. */
+var VS={data:null,period:'30d'};
+var VS_MONTHS={en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],hi:['जन','फ़र','मार्च','अप्रैल','मई','जून','जुल','अग','सित','अक्टू','नव','दिस']};
+var VS_ANIMALS={dog:['Dog','कुत्ता'],cat:['Cat','बिल्ली'],cattle:['Cow / cattle','गाय / मवेशी'],bird:['Bird','पक्षी'],other:['Other','अन्य']};
+function vsMonths(){ return VS_MONTHS[isHi()?'hi':'en']; }
+function vsAnimal(a){ var x=VS_ANIMALS[a]||VS_ANIMALS.other; return T(x[0],x[1]); }
+/* '2026-09-28' -> "28 Sep"; '2026-09' -> "Sep 2026" */
+function vsKey(k){ var p=String(k||'').split('-'), m=parseInt(p[1],10); if(!(m>=1&&m<=12)) return String(k||''); return p.length===3?(parseInt(p[2],10)+' '+vsMonths()[m-1]):(vsMonths()[m-1]+' '+p[0]); }
+function vsDate(ms){ var d=new Date(ms); return d.getDate()+' '+vsMonths()[d.getMonth()]+' '+d.getFullYear(); }
+function vsHour(h){ var x=h%12===0?12:h%12; return x+' '+(h<12?'am':'pm'); }
+function vsDur(s){ if(s<60) return T(s+' sec',s+' सेकंड'); if(s<3600){ var m=Math.round(s/60); return T(m+' min',m+' मिनट'); } var h=Math.floor(s/3600), mm=Math.floor((s%3600)/60); return T(h+' h '+mm+' min',h+' घंटे '+mm+' मिनट'); }
+function vsInr(n){ n=Math.round(Number(n)||0); var s=String(Math.abs(n)); if(s.length>3){ var last=s.slice(-3), rest=s.slice(0,-3); s=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',')+','+last; } return (n<0?'-':'')+s; }
+async function loadStats(){
+  var host=$('vstats'); if(!host) return;
+  host.innerHTML='<div class="vs"><p class="vs-note">'+esc(T('Loading your stats','आपके आँकड़े लोड हो रहे हैं'))+'</p></div>';
+  try{
+    var t=await idToken(); if(!t) throw new Error('no_session');
+    var r=await fetch(VET_API+'/vet/stats',{headers:{'Authorization':'Bearer '+t}});
+    var j=await r.json().catch(function(){ return {}; });
+    // Not signed in to the vet account in this browser: nothing to show here.
+    if(r.status===401||r.status===403){ host.innerHTML=''; return; }
+    if(!r.ok||!j.stats) throw new Error('stats_'+r.status);
+    VS.data=j.stats; renderStats();
+  }catch(e){
+    host.innerHTML='<div class="vs"><p class="vs-note">'+esc(T('Could not load your stats. Refresh the page to try again.','आपके आँकड़े लोड नहीं हो सके। दोबारा कोशिश करने के लिए पेज रिफ़्रेश करें।'))+'</p></div>';
+  }
+}
+function setStatsPeriod(k){ VS.period=k; renderStats(); }
+function vsKpi(label,value,sub){ return '<div class="vs-kpi"><div class="vs-l">'+esc(label)+'</div><div class="v">'+esc(value)+'</div><div class="s">'+esc(sub)+'</div></div>'; }
+function vsBars(values,missed,height,peak,label){
+  var max=0, i;
+  for(i=0;i<values.length;i++){ var v=(values[i]||0)+((missed&&missed[i])||0); if(v>max) max=v; }
+  var out='<div class="vs-bars'+(values.length>40?' dense':'')+'" style="height:'+height+'px" role="img" aria-label="'+esc(label)+'">';
+  for(i=0;i<values.length;i++){
+    var c=values[i]||0, m=(missed&&missed[i])||0;
+    out+='<div class="b'+(i===peak?' pk':'')+'">'+(m&&max?'<i class="m" style="height:'+(m/max*100).toFixed(2)+'%"></i>':'')+(c&&max?'<i class="c" style="height:'+(c/max*100).toFixed(2)+'%"></i>':'')+'</div>';
+  }
+  return out+'</div>';
+}
+function vsHBars(rows){
+  var max=rows.reduce(function(a,r){ return Math.max(a,r[1]); },0);
+  return rows.map(function(r){ return '<div class="vs-hb"><span>'+esc(r[0])+'</span><span class="t"><i style="width:'+(max?(r[1]/max*100).toFixed(2):0)+'%"></i></span><span class="n">'+r[1]+'</span></div>'; }).join('');
+}
+function renderStats(){
+  var host=$('vstats'), s=VS.data; if(!host||!s) return;
+  var P=s.periods||{}, p=P[VS.period]||{}, all=P.all||{};
+  var tabs=[['7d','7 days','7 दिन'],['30d','30 days','30 दिन'],['90d','90 days','90 दिन'],['all','All time','अब तक']];
+  var h='<section class="vs" aria-label="'+esc(T('Your stats','आपके आँकड़े'))+'"><div class="vs-h"><h3>'+esc(T('Your stats','आपके आँकड़े'))+'</h3>';
+  if(!(all.consults||all.rating_count)){
+    host.innerHTML=h+'</div><p class="vs-note">'+esc(T('Your numbers appear here after your first consultation.','आपके पहले परामर्श के बाद आपके आँकड़े यहाँ दिखेंगे।'))+'</p></section>';
+    return;
+  }
+  h+='<div class="vs-tabs" role="tablist">'+tabs.map(function(x){ var on=VS.period===x[0]; return '<button type="button" role="tab" aria-selected="'+on+'" class="'+(on?'on':'')+'" onclick="setStatsPeriod(\''+x[0]+'\')">'+esc(T(x[1],x[2]))+'</button>'; }).join('')+'</div></div>';
+
+  // headline numbers
+  var change;
+  if(p.consults_prev==null||!p.days){ change=T((s.today||{}).consults+' today','आज '+(s.today||{}).consults); }
+  else { var d=p.consults-p.consults_prev;
+    change=d>0?T(d+' more than the '+p.days+' days before','पिछले '+p.days+' दिनों से '+d+' ज़्यादा')
+      :d<0?T((-d)+' fewer than the '+p.days+' days before','पिछले '+p.days+' दिनों से '+(-d)+' कम')
+      :T('Same as the '+p.days+' days before','पिछले '+p.days+' दिनों जितने'); }
+  h+='<div class="vs-kpis">'+
+    vsKpi(T('Consultations','परामर्श'),String(p.consults||0),change)+
+    vsKpi(T('Rating','रेटिंग'),p.rating_avg==null?'-':(Number(p.rating_avg).toFixed(1)+' ★'),p.rating_count?T(p.rating_count+' ratings',p.rating_count+' रेटिंग'):T('No ratings yet','अभी कोई रेटिंग नहीं'))+
+    vsKpi(T('Answered','जवाब दिए'),p.answered_pct==null?'-':(p.answered_pct+'%'),p.answered_pct==null?T('No requests yet','अभी कोई अनुरोध नहीं'):T((p.missed||0)+' missed',(p.missed||0)+' छूटे'))+
+    vsKpi(T('Response time','जवाब का समय'),p.avg_response_s==null?'-':vsDur(p.avg_response_s),p.avg_response_s==null?T('Not measured yet','अभी मापा नहीं गया'):T('Average wait before you accept','स्वीकार करने से पहले औसत इंतज़ार'))+
+    ((p.paid_count||s.fee_inr)?vsKpi(T('Fees confirmed','पुष्टि की गई फ़ीस'),'₹'+vsInr(p.paid_inr),T((p.paid_count||0)+' payments you marked received',(p.paid_count||0)+' भुगतान जिन्हें आपने मिला बताया')):'')+
+    '</div>';
+
+  var quiet=!(p.consults||p.missed||p.rating_count||p.paid_count);
+  if(quiet){
+    h+='<p class="vs-note" style="margin-top:18px">'+esc(T('No consultations in this period.','इस अवधि में कोई परामर्श नहीं।'))+'</p>';
+  } else {
+    // per day / per month
+    var ser=p.series||[], monthly=p.series_unit==='month';
+    var anyMissed=ser.some(function(x){ return x.missed>0; });
+    if(ser.length){
+      var title=monthly?T('Consultations per month','हर महीने के परामर्श'):T('Consultations per day','हर दिन के परामर्श');
+      h+='<div class="vs-sect"><span class="vs-l">'+esc(title)+'</span>'+
+        vsBars(ser.map(function(x){ return x.consults; }),anyMissed?ser.map(function(x){ return x.missed; }):null,120,-1,title)+
+        '<div class="vs-ax"><span>'+esc(vsKey(ser[0].key))+'</span><span>'+esc(vsKey(ser[ser.length-1].key))+'</span></div>'+
+        '<div class="vs-leg"><span>'+esc(T('Consultations','परामर्श'))+'</span>'+(anyMissed?'<span class="m">'+esc(T('Missed','छूटे'))+'</span>':'')+'</div>';
+      if(p.best) h+='<p class="vs-line">'+esc(monthly?T('Best month: ','सबसे अच्छा महीना: '):T('Best day: ','सबसे अच्छा दिन: '))+esc(vsKey(p.best.key))+', '+p.best.consults+'</p>';
+      h+='</div>';
+    }
+    // hours of the day
+    if(p.consults){
+      var hrs=p.hours||[];
+      h+='<div class="vs-sect"><span class="vs-l">'+esc(T('When you consult','आप कब परामर्श देते हैं'))+'</span>'+
+        vsBars(hrs,null,72,p.busiest_hour==null?-1:p.busiest_hour,T('Consultations by hour of the day','दिन के हर घंटे के परामर्श'))+
+        '<div class="vs-ax4"><span>'+vsHour(0)+'</span><span>'+vsHour(6)+'</span><span>'+vsHour(12)+'</span><span>'+vsHour(18)+'</span></div>'+
+        (p.busiest_hour!=null?'<p class="vs-line">'+esc(T('Busiest hour: ','सबसे व्यस्त घंटा: '))+vsHour(p.busiest_hour)+' - '+vsHour((p.busiest_hour+1)%24)+'</p>':'')+
+        '</div>';
+    }
+    // animals and ratings, side by side on a wide screen
+    var two='';
+    if((p.animals||[]).length) two+='<div class="vs-sect"><span class="vs-l">'+esc(T('Animals','जानवर'))+'</span>'+vsHBars(p.animals.map(function(a){ return [vsAnimal(a.animal),a.count]; }))+'</div>';
+    if(p.rating_count){ var dist=p.rating_dist||[0,0,0,0,0]; two+='<div class="vs-sect"><span class="vs-l">'+esc(T('Ratings','रेटिंग'))+'</span>'+vsHBars([5,4,3,2,1].map(function(n){ return [n+' ★',dist[n-1]||0]; }))+'</div>'; }
+    if(two) h+='<div class="vs-two">'+two+'</div>';
+    var e=p.ended||{};
+    if((e.by_you||0)+(e.by_pet_parent||0)+(e.time_up||0)>0){
+      h+='<div class="vs-sect"><span class="vs-l">'+esc(T('How consultations ended','परामर्श कैसे समाप्त हुए'))+'</span>'+
+        vsHBars([[T('Ended by you','आपने समाप्त किए'),e.by_you||0],[T('Ended by the pet parent','पालतू के मालिक ने समाप्त किए'),e.by_pet_parent||0],[T('Chat time ran out','चैट का समय पूरा हुआ'),e.time_up||0]])+'</div>';
+    }
+  }
+  // what pet parents wrote (the newest, whatever the period)
+  var revs=(s.reviews||[]).filter(function(r){ return r.text&&String(r.text).trim(); });
+  h+='<div class="vs-sect"><span class="vs-l">'+esc(T('What pet parents said','पालतू के मालिकों ने क्या कहा'))+'</span>';
+  h+=revs.length?revs.map(function(r){
+      var st=Math.max(0,Math.min(5,r.stars|0));
+      var meta=[r.at?vsDate(r.at):null,r.animal?vsAnimal(r.animal):null].filter(Boolean).join(' · ');
+      return '<div class="vs-rev"><div class="st" aria-label="'+st+' / 5">'+'★'.repeat(st)+'☆'.repeat(5-st)+'<span>'+esc(meta)+'</span></div><p>'+esc(r.text)+'</p></div>';
+    }).join(''):'<p class="vs-note">'+esc(T('Ratings with a note appear here.','नोट वाली रेटिंग यहाँ दिखेंगी।'))+'</p>';
+  h+='</div>';
+  // misses and response times exist only from when they were first counted
+  var start=p.days?Date.now()-p.days*86400000:0;
+  if(s.tracking_since&&start<s.tracking_since){
+    h+='<p class="vs-foot">'+esc(T('Missed requests and response times are counted from '+vsDate(s.tracking_since)+'.','छूटे अनुरोध और जवाब का समय '+vsDate(s.tracking_since)+' से गिने जाते हैं।'))+'</p>';
+  }
+  host.innerHTML=h+'</section>';
+}
+// EN / हिंदी: the stats follow the language without another request.
+new MutationObserver(function(){ if(VS.data) renderStats(); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+
 function startResubmit(){
   resubmitting=true;
   pickedDocs={};

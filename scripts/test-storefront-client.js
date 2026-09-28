@@ -128,13 +128,29 @@ eq(S.sizedImage('https://elsewhere.example/a.png', 480), 'https://elsewhere.exam
 
 /* -------------------------------------------------- whole-word label rules */
 
+/* The veg-only switch against real listings: shared/store-diet-cases.json,
+ * the same cases the app's test/store_diet_test.dart runs, so the website
+ * and the app can never disagree about a product. */
+function dietCases() {
+  const cases = JSON.parse(require('fs').readFileSync(
+    require('path').join(__dirname, '..', '..', '..', 'shared', 'store-diet-cases.json'), 'utf8')).cases;
+  ok(cases.length >= 30, 'the shared diet cases are there');
+  cases.forEach(function (c) {
+    const p = Object.assign({ title: '', tags: [], productType: '', descriptionHtml: '' }, c.product);
+    const d = S.rules.diet(p);
+    const got = { diet: d.diet, category: d.category, hidden: S.rules.hideWhenVegOnly(p), isVeg: S.rules.isVeg(p) };
+    if (c.expect.term) got.term = d.term;
+    eq(got, c.expect, 'diet: ' + c.name);
+  });
+}
+
 function fakeProduct(title, extra) {
   return Object.assign({
     title, tags: [], productType: '', descriptionHtml: ''
   }, extra || {});
 }
 ok(!S.rules.isVeg(fakeProduct('Herbal Shampoo')), '"shampoo" is not ham');
-ok(!S.rules.hideWhenVegOnly(fakeProduct('Same-day delivery biscuits')), '"delivery" is not liver');
+ok(S.rules.diet(fakeProduct('Same-day delivery biscuits')).diet !== 'non_veg', '"delivery" is not liver');
 ok(S.rules.isVeg(fakeProduct('Vegetarian Dog Biscuits')), 'vegetarian in title marks veg');
 ok(!S.rules.isVeg(fakeProduct('Veggie & Chicken Treats')), 'chicken in title blocks veg');
 ok(!S.rules.hideWhenVegOnly(fakeProduct('Plush Duck Dog Toy')), 'a plush duck is not a duck');
@@ -142,6 +158,11 @@ ok(S.rules.hideWhenVegOnly(fakeProduct('Chicken Flavoured Dental Chew Toy')), 'f
 ok(!S.rules.hideWhenVegOnly(fakeProduct('Vegetarian Training Treats')), 'veg-marked food stays under veg-only');
 ok(S.rules.hideWhenVegOnly(fakeProduct('Puppy Starter', { descriptionHtml: '<p>Made with real chicken.</p>' })),
   'animal ingredient in opening description hides under veg-only');
+ok(S.rules.hideWhenVegOnly(fakeProduct('Royal Canin Maxi Adult', { productType: 'Dogs- Dry Food', tags: ['Non-Veg', 'Veg/Non-Veg:Non-Veg'] })),
+  'a Non-Veg tag is never read as Veg');
+ok(!S.rules.isVeg(fakeProduct('Royal Canin Maxi Adult', { productType: 'Dogs- Dry Food', tags: ['Non-Veg'] })),
+  'and never earns the VEG label');
+dietCases();
 ok(S.rules.isRx(fakeProduct('Amoxicillin 250', { tags: ['Schedule H'] })), 'Schedule H tag marks Rx');
 ok(!S.rules.isRx(fakeProduct('Multivitamin syrup')), 'plain product is not Rx');
 
@@ -581,6 +602,60 @@ function hubPreviewTests() {
   });
 }
 
+/* ------------------------------------------- tiles carry what veg-only reads */
+function vegTileTests() {
+  var bodies = [];
+  var refuseTags = false;
+  function tileNode(id, title, extra) {
+    return Object.assign({ id: 'gid://shopify/Product/' + id, handle: 'h' + id, title: title, vendor: 'X',
+      productType: 'Dogs- Dry Food', featuredImage: null, availableForSale: true,
+      priceRange: { minVariantPrice: { amount: '100.0' }, maxVariantPrice: { amount: '100.0' } },
+      compareAtPriceRange: { maxVariantPrice: { amount: '0' } } }, extra || {});
+  }
+  S.__internal.setFetch(function (url, init) {
+    var body = init && init.body ? String(init.body) : '';
+    bodies.push(body);
+    if (body.indexOf('RrtSearch') === -1) return Promise.reject(new Error('unexpected: ' + body.slice(0, 40)));
+    var q = JSON.parse(body).query;
+    if (refuseTags && /\btags\b/.test(q)) {
+      return jsonRes({ errors: [{ message: 'Access denied for tags field.' }] });
+    }
+    var withTags = /\btags\b/.test(q), withDesc = q.indexOf('description(truncateAt') !== -1;
+    return gqlResponse({ search: { totalCount: 2, pageInfo: { hasNextPage: false, endCursor: null }, nodes: [
+      tileNode(1, 'Royal Canin Maxi Adult', withTags ? { tags: ['Non-Veg', 'Veg/Non-Veg:Non-Veg'] } : {}),
+      tileNode(2, 'Paneer & Rice Bowl', Object.assign(withTags ? { tags: ['Veg'] } : {},
+        withDesc ? { description: 'Ingredients: paneer, rice, carrots <fresh>' } : {}))
+    ] } });
+  });
+  S.setVegOnly(false);
+  return S.searchAll('dog food veg-a').then(function (page) {
+    ok(/\btags\b/.test(JSON.parse(bodies[0]).query), 'tiles ask for the store tags');
+    ok(JSON.parse(bodies[0]).query.indexOf('description(') === -1, 'but not the description while veg-only is off');
+    eq(page.products[0].tags, ['Non-Veg', 'Veg/Non-Veg:Non-Veg'], 'tile tags are read');
+    ok(S.rules.hideWhenVegOnly(page.products[0]), 'so a Non-Veg tile is hidden under veg-only');
+    ok(page.products[1].isVeg, 'and a Veg tile carries the VEG label');
+    S.setVegOnly(true);
+    return S.searchAll('dog food veg-a');
+  }).then(function (page) {
+    ok(JSON.parse(bodies[bodies.length - 1]).query.indexOf('description(truncateAt') !== -1,
+      'veg-only on: tiles carry the description, not a cached tile without it');
+    ok(page.products[1].descriptionHtml.indexOf('&lt;fresh&gt;') !== -1, 'the tile description is kept as escaped text');
+    refuseTags = true;
+    bodies = [];
+    return S.searchAll('dog food veg-b');
+  }).then(function (page) {
+    eq(bodies.length, 2, 'a store that refuses tags: one retry');
+    ok(!/\btags\b/.test(JSON.parse(bodies[1]).query), 'the retry is the lean tile');
+    eq(page.products.length, 2, 'and the listing still loads');
+    bodies = [];
+    return S.searchAll('dog food veg-c');
+  }).then(function () {
+    eq(bodies.length, 1, 'the lean tile is remembered');
+    S.setVegOnly(false);
+    try { S.__internal.stores.local.removeItem('rrt_sf_caps_v1'); } catch (e) { /* ignore */ }
+  });
+}
+
 /* --------------------------------------------------------- brand page */
 function brandPageTests() {
   var calls = [];
@@ -990,7 +1065,7 @@ S.revalidateCart().then((r) => {
     eq(r.collections[0].handle, 'jerhigh', 'matching collections offered');
     S.__internal.resetTransport();
   });
-}).then(deliveryQuoteTests).then(hubPreviewTests).then(brandPageTests).then(activeVendorTests).then(function () {
+}).then(deliveryQuoteTests).then(hubPreviewTests).then(brandPageTests).then(vegTileTests).then(activeVendorTests).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
   process.exit(failed ? 1 : 0);
 }).catch((e) => {
