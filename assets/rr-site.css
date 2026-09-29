@@ -72,7 +72,12 @@ html[lang=hi] .rr-chrome .rr-btn{font-weight:600}
 /* footer */
 .rr-chrome.rr-ftr{border-top:1px solid var(--rr-line);background:var(--rr-bg);padding:22px var(--rr-pad) calc(22px + env(safe-area-inset-bottom,0px));
   display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 28px;font-size:13px;font-weight:500;color:var(--rr-low)}
-.rr-chrome.rr-ftr nav{display:flex;flex-wrap:wrap;gap:8px 20px}
+.rr-chrome.rr-ftr nav{display:flex;flex-wrap:wrap;gap:8px 20px;width:100%}
+.rr-ftr nav a{font-size:13px}
+.rr-ftr nav.rr-ftr2{margin-top:12px;gap:6px 16px}
+.rr-ftr nav.rr-ftr2 a{font-size:11.5px;font-weight:500;color:var(--rr-low,#8a8781)}
+.rr-ftr nav.rr-ftr2 a:hover{color:var(--rr-ink)}
+.rr-ftr .rr-ftr-copy{display:block;margin-top:12px;font-size:11px;color:var(--rr-low,#8a8781)}
 .rr-chrome.rr-ftr nav a{color:var(--rr-mid);font-weight:600}
 .rr-chrome.rr-ftr a:hover{color:var(--rr-ink)}
 

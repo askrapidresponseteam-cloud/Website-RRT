@@ -42,23 +42,30 @@ def header(current='', shop=False):
             f'<a class="rr-brand" href="/" aria-label="Rapid Response home">{PAW}<span>Rapid Response</span>{brand_tag}</a>'
             f'<nav class="rr-nav" aria-label="Main">{links}{right}</nav></div></div>\n<!-- /rr:header -->')
 
+# Two tiers: the few links most visitors want, then everything else in a
+# quieter second row, so the footer never reads as a wall of links.
 FOOT_LINKS = [
-    ('/', 'Home', 'होम'), ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
-    ('/faq', 'FAQ', 'सवाल'), ('/report', 'On Record', 'ऑन रिकॉर्ड'),
-    ('/report?new=1', 'Report an incident', 'घटना रिपोर्ट करें'),
-    ('/shop', 'Shop', 'शॉप'), ('/vet', 'For vets', 'वेट के लिए'),
-    ('/app-guide', 'App guide', 'ऐप गाइड'), ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
-    ('/policy', 'Terms &amp; Privacy', 'शर्तें और प्राइवेसी'),
-    ('/vet-terms', 'Vet terms', 'वेट शर्तें'), ('mailto:ask@rapid-response.in', 'ask@rapid-response.in', 'ask@rapid-response.in'),
+    ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
+    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
+    ('/shop', 'Shop', 'शॉप'), ('/faq', 'FAQ', 'सवाल'),
+    ('mailto:ask@rapid-response.in', 'Contact', 'संपर्क'),
+]
+FOOT_MORE = [
+    ('/report?new=1', 'Report an incident', 'घटना रिपोर्ट करें'), ('/report', 'On Record', 'ऑन रिकॉर्ड'),
+    ('/vet', 'For vets', 'वेट के लिए'), ('/app-guide', 'App guide', 'ऐप गाइड'),
+    ('/policy', 'Terms &amp; Privacy', 'शर्तें और प्राइवेसी'), ('/vet-terms', 'Vet terms', 'वेट शर्तें'),
     ('https://www.instagram.com/rrtanimals', '@rrtanimals', '@rrtanimals'),
 ]
 
 def footer(extra=''):
     links = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_LINKS)
+    more = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_MORE)
     return ('<!-- rr:footer -->\n<div class="rr-chrome rr-ftr" role="contentinfo">'
-            '<span ' + t('\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.',
+            f'<nav aria-label="Site">{links}</nav>'
+            + extra + f'<nav class="rr-ftr2" aria-label="More">{more}</nav>'
+            '<span class="rr-ftr-copy" ' + t('\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.',
                          '\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।') + '</span>'
-            + extra + f'<nav aria-label="Site">{links}</nav></div>\n<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>\n<!-- /rr:footer -->')
+            '</div>\n<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>\n<!-- /rr:footer -->')
 
 # Fonts are self-hosted (assets/fonts, @font-face rules in assets/rr-fonts*.css,
 # built by scripts/fonts/build_fonts.py, which also rewrites the hashed names
