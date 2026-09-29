@@ -45,7 +45,8 @@ def header(current='', shop=False):
 FOOT_LINKS = [
     ('/', 'Home', 'होम'), ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
     ('/faq', 'FAQ', 'सवाल'), ('/report', 'On Record', 'ऑन रिकॉर्ड'), ('/shop', 'Shop', 'शॉप'), ('/vet', 'For vets', 'वेट के लिए'),
-    ('/app-guide', 'App guide', 'ऐप गाइड'), ('/policy', 'Terms &amp; Privacy', 'शर्तें और प्राइवेसी'),
+    ('/app-guide', 'App guide', 'ऐप गाइड'), ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
+    ('/policy', 'Terms &amp; Privacy', 'शर्तें और प्राइवेसी'),
     ('/vet-terms', 'Vet terms', 'वेट शर्तें'), ('mailto:ask@rapid-response.in', 'ask@rapid-response.in', 'ask@rapid-response.in'),
     ('https://www.instagram.com/rrtanimals', '@rrtanimals', '@rrtanimals'),
 ]
