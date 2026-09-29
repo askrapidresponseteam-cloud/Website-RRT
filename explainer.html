@@ -45,12 +45,16 @@ a{color:inherit}
 .ex-sect ul{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:6px}
 .ex-sect ul li{padding:9px 14px;background:var(--sg-mist);border-radius:var(--sg-rc);font-size:14.5px;color:var(--sg-graphite)}
 .ex-note{margin-top:14px;padding:12px 16px;background:var(--sg-wash);border-radius:var(--sg-rc);font-size:14px;color:var(--sg-ink);font-weight:600}
-.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:clamp(36px,6vh,52px)}
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
 @media (max-width:640px){.ex-grid{grid-template-columns:1fr}}
 .ex-grid .ex-sect{margin-top:0}
-.ex-rule{margin-top:clamp(36px,6vh,52px);padding:clamp(22px,3.4vw,32px);background:var(--sg-ink);color:#fff;border-radius:var(--sg-rc);break-inside:avoid}
+.ex-feat{margin-top:16px}
+.ex-feat .ex-sect ul li{font-size:13.5px;padding:8px 12px}
+.ex-rule{margin-top:0;padding:clamp(22px,3.4vw,32px);background:var(--sg-ink);color:#fff;border-radius:var(--sg-rc);break-inside:avoid}
 .ex-rule h2{font-family:var(--sg-display);font-weight:800;font-size:clamp(22px,3vw,28px);margin:0 0 10px;letter-spacing:var(--sg-track-title);color:#fff}
 .ex-rule p{margin:0;color:#ffffffd9;font-size:15.5px}
+.ex-h2{font-family:var(--sg-display);font-weight:800;font-size:clamp(26px,3.6vw,34px);letter-spacing:var(--sg-track-title);color:var(--sg-ink);margin:clamp(40px,7vh,60px) 0 16px}
+@media print{.ex-h2{font-size:22px;margin:18px 0 8px}}
 .ex-foot{margin-top:clamp(32px,5vh,44px);font-family:var(--sg-mono);font-size:12px;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--sg-slate);line-height:2}
 /* Print: the poster. Hide the site chrome and the buttons, tighten spacing. */
 @media print{
@@ -84,6 +88,26 @@ a{color:inherit}
     <a class="ex-btn ghost" href="/">Get the app</a>
   </div>
 
+  <h2 class="ex-h2">First things first</h2>
+  <section class="ex-rule">
+    <h2>Responder first: the one rule</h2>
+    <p>RRT is not a reporting platform. Posting a problem is not helping an animal. Do one bit yourself, then ask the network to carry the next bit. That is the whole idea.</p>
+  </section>
+  <div class="ex-grid">
+    <section class="ex-sect">
+      <p class="ex-kick"><span class="ex-tag">Your district</span></p>
+      <p>Your district is assigned the moment you sign up, from where you are standing. Open the app somewhere else and it moves with you. Nothing is tracked in between.</p>
+      <p>SOS and asks stay inside your district. A vet consult is the only thing that crosses district lines.</p>
+    </section>
+    <section class="ex-sect">
+      <p class="ex-kick"><span class="ex-tag">Your privacy</span></p>
+      <p>RRT is not a directory of phone numbers, on purpose.</p>
+      <p>You can still see how strong your district is: open the Chats tab and tap Responders. You get names, never numbers. A number appears in one place only, on a live SOS, to the people who might come.</p>
+    </section>
+  </div>
+
+  <h2 class="ex-h2">What the app does</h2>
+  <div class="ex-grid ex-feat">
   <section class="ex-sect">
     <p class="ex-kick"><span class="ex-num">01</span><span class="ex-tag">SOS &middot; <b>Right now</b></span></p>
     <h2>Something is happening in front of you.</h2>
@@ -99,7 +123,6 @@ a{color:inherit}
     <p>Type a short brief. It reaches everyone in your district who has the app. They see your name, your number, where you are and what you wrote. Add photos and a voice note so they can decide whether they can help.</p>
     <p class="ex-note">Only they see your number, never the other way round, and only while the SOS is on. It stops itself after 60 minutes if you have not.</p>
   </section>
-
   <section class="ex-sect">
     <p class="ex-kick"><span class="ex-num">02</span><span class="ex-tag">Ask the District &middot; <b>This week</b></span></p>
     <h2>Urgent, but not a siren.</h2>
@@ -114,7 +137,8 @@ a{color:inherit}
     <p>The same district, at a slower speed. Anyone nearby can answer, and their answer opens a private chat with you alone.</p>
     <p class="ex-note">No phone numbers appear anywhere in Ask the District.</p>
   </section>
-
+  </div>
+  <div class="ex-grid ex-feat">
   <section class="ex-sect">
     <p class="ex-kick"><span class="ex-num">03</span><span class="ex-tag">Shop</span></p>
     <h2>Supertails, inside the app.</h2>
@@ -122,7 +146,6 @@ a{color:inherit}
     <p>You pay Supertails, on their own secure checkout. RRT holds no stock, takes no cut and never sees your card.</p>
     <p class="ex-note">There is a vegetarian mode that hides anything it cannot confirm is vegetarian.</p>
   </section>
-
   <section class="ex-sect">
     <p class="ex-kick"><span class="ex-num">04</span><span class="ex-tag">Vet &middot; <b>Coming soon</b></span></p>
     <h2>A vet, without leaving the house.</h2>
@@ -130,24 +153,9 @@ a{color:inherit}
     <p>Chat, or video if they need to see the animal. No phone number is shown, not yours and not the vet's.</p>
     <p class="ex-note">A vet may charge up to Rs 199 for their time, paid to them directly. RRT charges no fee of any kind, for any service, ever.</p>
   </section>
-
-  <div class="ex-grid">
-    <section class="ex-sect">
-      <p class="ex-kick"><span class="ex-tag">Your district</span></p>
-      <p>Your district is assigned the moment you sign up, from where you are standing. Open the app somewhere else and it moves with you. Nothing is tracked in between.</p>
-      <p>SOS and asks stay inside your district. A vet consult is the only thing that crosses district lines.</p>
-    </section>
-    <section class="ex-sect">
-      <p class="ex-kick"><span class="ex-tag">Your privacy</span></p>
-      <p>RRT is not a directory of phone numbers, on purpose.</p>
-      <p>You can still see how strong your district is: open the Chats tab and tap Responders. You get names, never numbers. A number appears in one place only, on a live SOS, to the people who might come.</p>
-    </section>
   </div>
 
-  <section class="ex-rule">
-    <h2>The one rule</h2>
-    <p>RRT is not a reporting platform. Posting a problem is not helping an animal. Do one bit yourself, then ask the network to carry the next bit. That is the whole idea.</p>
-  </section>
+
 
   <p class="ex-foot">rapid-response.in &middot; Android and iPhone &middot; Free, always<br>English and Hindi &middot; 18 and over</p>
 </main>
