@@ -49,8 +49,8 @@ if (script) {
 
 function finish() {
   const home = read('index.html');
-  ok(home.includes('<a class="btn" href="/talk-to-a-vet" data-i="qVet">'), 'homepage quick button');
-  ok(/qVet:"Talk to a vet"/.test(home) && /qVet:"वेट से बात करें"/.test(home), 'homepage button in both languages');
+  ok(home.includes('<a class="btn" href="/vet" data-i="qVet">'), 'homepage quick button (Join as a vet)');
+  ok(/qVet:"Join as a vet"/.test(home) && /qVet:"वेट बनकर जुड़ें"/.test(home), 'homepage button in both languages');
   ok(home.includes('out.intent="talkvet"') && home.includes('case "talkvet"'), 'homepage search: "online vet", "sick dog" and the like lead here');
   ok(/var EXPLORE=\[[^\]]*"talkvet"/.test(home), 'homepage Explore list');
   ok(read('sitemap.xml').includes('https://rapid-response.in/talk-to-a-vet'), 'in the sitemap');

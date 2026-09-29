@@ -11,7 +11,7 @@ def t(en, hi):
     return f'data-rr-en="{en}" data-rr-hi="{hi}">{en}'
 
 NAV = [
-    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें', ''),
+    ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें', ''),
     ('/know-the-laws', 'Know the laws', 'कानून जानें', ''),
     ('/faq', 'FAQ', 'सवाल', ''),
     ('/shop', 'Shop', 'शॉप', 'rr-opt'),
@@ -46,13 +46,13 @@ def header(current='', shop=False):
 # quieter second row, so the footer never reads as a wall of links.
 FOOT_LINKS = [
     ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
-    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
+    ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
     ('/shop', 'Shop', 'शॉप'), ('/faq', 'FAQ', 'सवाल'),
     ('mailto:ask@rapid-response.in', 'Contact', 'संपर्क'),
 ]
 FOOT_MORE = [
     ('/report?new=1', 'Report an incident', 'घटना रिपोर्ट करें'), ('/report', 'On Record', 'ऑन रिकॉर्ड'),
-    ('/vet', 'For vets', 'वेट के लिए'), ('/app-guide', 'App guide', 'ऐप गाइड'),
+    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/app-guide', 'App guide', 'ऐप गाइड'),
     ('/policy', 'Terms &amp; Privacy', 'शर्तें और प्राइवेसी'), ('/vet-terms', 'Vet terms', 'वेट शर्तें'),
     ('https://www.instagram.com/rrtanimals', '@rrtanimals', '@rrtanimals'),
 ]
