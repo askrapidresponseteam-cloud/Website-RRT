@@ -399,7 +399,7 @@ window.RR={async loadFeed(){try{var db=firebase.firestore();return(await db.coll
    /report?new=1    opens the Report a case form straight away (every
                     "Report an incident" button on the site). */
 (function(){
-  var qs=new URLSearchParams(location.search),q=(qs.get('q')||'').trim(),isNew=qs.get('new')==='1';
+  var qs=new URLSearchParams(location.search),q=(qs.get('q')||'').trim(),isNew=false; /* reporting paused: was qs.get('new')==='1' */
   function apply(){var el=document.getElementById('searchIn');if(!q||!el||typeof applyFilters!=='function')return;
     if(el.value!==q){el.value=q;}try{applyFilters()}catch(e){}}
   document.addEventListener('DOMContentLoaded',function(){
@@ -416,8 +416,35 @@ window.RR={async loadFeed(){try{var db=firebase.firestore();return(await db.coll
   });
 })();
 </script>
-<!-- /rr:report-q --><!-- rr:footer -->
-<div class="rr-chrome rr-ftr" role="contentinfo"><nav aria-label="Site"><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav><nav class="rr-ftr2" aria-label="More"><a href="/report?new=1" data-rr-en="Report an incident" data-rr-hi="घटना रिपोर्ट करें">Report an incident</a><a href="/report" data-rr-en="On Record" data-rr-hi="ऑन रिकॉर्ड">On Record</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/policy" data-rr-en="Terms &amp; Privacy" data-rr-hi="शर्तें और प्राइवेसी">Terms &amp; Privacy</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav><span class="rr-ftr-copy" data-rr-en="© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority.</span></div>
+<!-- /rr:report-q --><script>
+/* rr: reporting paused (2026-09-30). New public reports are switched off
+   for now because of junk submissions; browsing the record stays open.
+   Remove this block (and restore the footer link in site-chrome/chrome.py)
+   to switch reporting back on. */
+(function(){
+  window.RRT_REPORTING_PAUSED=true;
+  function note(){
+    var n=document.getElementById('rrPausedNote');
+    if(!n){
+      n=document.createElement('div');n.id='rrPausedNote';
+      n.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;background:#0D0D0F;color:#fff;padding:14px 20px;font:600 14px/1.5 Manrope,system-ui,sans-serif;max-width:92vw;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      n.innerHTML='New reports are paused for now while we improve review. The record stays open to browse.<br>नई रिपोर्ट फ़िलहाल रोकी गई हैं। रिकॉर्ड देखना जारी है।';
+      document.body.appendChild(n);
+      setTimeout(function(){if(n&&n.parentNode)n.parentNode.removeChild(n)},6000);
+    }
+  }
+  function hide(){
+    document.querySelectorAll('.fab,[onclick="openCompose()"]').forEach(function(el){el.style.display='none'});
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    hide();setTimeout(hide,1200);
+    if(typeof openCompose==='function'){window.openCompose=function(){note()};}
+    else{var t=setInterval(function(){if(typeof openCompose==='function'){window.openCompose=function(){note()};clearInterval(t)}},300);}
+  });
+})();
+</script>
+<!-- rr:footer -->
+<div class="rr-chrome rr-ftr" role="contentinfo"><nav aria-label="Site"><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav><nav class="rr-ftr2" aria-label="More"><a href="/report" data-rr-en="On Record" data-rr-hi="ऑन रिकॉर्ड">On Record</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/policy" data-rr-en="Terms &amp; Privacy" data-rr-hi="शर्तें और प्राइवेसी">Terms &amp; Privacy</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav><span class="rr-ftr-copy" data-rr-en="© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority.</span></div>
 <script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>
 <!-- /rr:footer -->
 </body></html>

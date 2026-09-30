@@ -51,7 +51,7 @@ FOOT_LINKS = [
     ('mailto:ask@rapid-response.in', 'Contact', 'संपर्क'),
 ]
 FOOT_MORE = [
-    ('/report?new=1', 'Report an incident', 'घटना रिपोर्ट करें'), ('/report', 'On Record', 'ऑन रिकॉर्ड'),
+    ('/report', 'On Record', 'ऑन रिकॉर्ड'),
     ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/app-guide', 'App guide', 'ऐप गाइड'),
     ('/policy', 'Terms &amp; Privacy', 'शर्तें और प्राइवेसी'), ('/vet-terms', 'Vet terms', 'वेट शर्तें'),
     ('https://www.instagram.com/rrtanimals', '@rrtanimals', '@rrtanimals'),
