@@ -50,7 +50,8 @@
    * links, or the Storefront API (listings, prices, carts), at another site. */
   var KNOWN_PROXIES = {
     '/st-api': { domain: 'supertails.com', api: ['supertails.com'] },
-    '/pl-api': { domain: 'www.pets-lifestyle.com', api: ['www.pets-lifestyle.com', '08e8df.myshopify.com'] }
+    '/pl-api': { domain: 'www.pets-lifestyle.com', api: ['www.pets-lifestyle.com', '08e8df.myshopify.com'] },
+    '/huft-api': { domain: 'headsupfortails.com', api: ['headsupfortails.com'] }
   };
   var PUBLISHED_KEY = 'rrt_store_active_v1';
 

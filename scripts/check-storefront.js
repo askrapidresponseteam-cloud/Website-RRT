@@ -177,5 +177,39 @@ for (const [name, text] of [['shop.css', cssOnly], ['rrt-shop.js', sdk], ['shop-
   }
 }
 
+// Every store in the registry must be fully wired on the website, or a
+// backend switch to it silently falls back to the bundle default (exactly
+// the half-switched state this check exists to prevent): its proxy route in
+// rrt-shop.js KNOWN_PROXIES, vercel.json rewrites for all four endpoints,
+// the sandboxed response headers on the route, and the store domain in the
+// CSP report-only connect-src.
+{
+  const path = require('path');
+  const registry = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'shared', 'store-vendors.json'), 'utf8'));
+  const vercel = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'vercel.json'), 'utf8'));
+  const rewrites = (vercel.rewrites || []).map((r) => r.source);
+  const headerSrcs = (vercel.headers || []).map((h) => h.source);
+  const cspRO = ((vercel.headers || []).find((h) => h.source === '/:path*') || { headers: [] })
+    .headers.filter((x) => x.key === 'Content-Security-Policy-Report-Only').map((x) => x.value).join(' ');
+  for (const id of Object.keys(registry.vendors)) {
+    const d = registry.vendors[id];
+    const base = d.web && d.web.proxyBase;
+    const problems = [];
+    if (!base) problems.push('no web.proxyBase');
+    else {
+      const km = new RegExp("'" + base + "'\\s*:\\s*\\{[^}]*domain:\\s*'" + d.domain.replace(/\./g, '\\.') + "'");
+      if (!km.test(sdk)) problems.push(`${base} with domain ${d.domain} missing from rrt-shop.js KNOWN_PROXIES`);
+      for (const ep of ['/collections/:handle/products.json', '/search/suggest.json', '/recommendations/products.json']) {
+        if (!rewrites.includes(base + ep)) problems.push(`vercel.json rewrite missing: ${base}${ep}`);
+      }
+      if (!rewrites.some((r) => r.startsWith(base + '/products/'))) problems.push(`vercel.json rewrite missing: ${base}/products/:file`);
+      if (!headerSrcs.includes(base + '/:path*')) problems.push(`vercel.json headers missing for ${base}/:path*`);
+      if (!cspRO.includes('https://' + d.domain.replace(/^www\./, 'www.'))) problems.push(`CSP report-only connect-src missing https://${d.domain}`);
+    }
+    if (problems.length) { console.log(`  FAIL  store '${id}' not fully wired -> ` + problems.join('; ')); failed++; }
+    else console.log(`  ok    store '${id}' fully wired (proxy, rewrites, headers, CSP)`);
+  }
+}
+
 console.log(failed ? `\n${failed} check(s) failed.\n` : '\nAll storefront checks pass.\n');
 process.exit(failed ? 1 : 0);
