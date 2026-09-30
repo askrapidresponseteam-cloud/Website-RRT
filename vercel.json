@@ -168,6 +168,11 @@
   ],
   "redirects": [
     {
+      "source": "/report",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/about",
       "destination": "/",
       "permanent": true
