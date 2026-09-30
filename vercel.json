@@ -39,6 +39,22 @@
       "destination": "https://www.pets-lifestyle.com/recommendations/products.json"
     },
     {
+      "source": "/huft-api/collections/:handle/products.json",
+      "destination": "https://headsupfortails.com/collections/:handle/products.json"
+    },
+    {
+      "source": "/huft-api/products/:file([^/]+\\.js)",
+      "destination": "https://headsupfortails.com/products/:file"
+    },
+    {
+      "source": "/huft-api/search/suggest.json",
+      "destination": "https://headsupfortails.com/search/suggest.json"
+    },
+    {
+      "source": "/huft-api/recommendations/products.json",
+      "destination": "https://headsupfortails.com/recommendations/products.json"
+    },
+    {
       "source": "/manage",
       "destination": "/report/manage"
     },
