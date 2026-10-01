@@ -87,9 +87,9 @@
     });
   }
 
-  /** Delegated tile actions on [container]: the heart saves, and + ADD adds
-   *  the live default variant - or opens the product page when there is a
-   *  choice to make, exactly like the vendor's own "Options" button. */
+  /** Delegated tile actions on [container]: the heart saves, and ADD adds
+   *  the live default variant - or, when there is a size or flavour to
+   *  choose, opens the quick-add picker right over the grid. */
   function bindTiles(container, onChange) {
     container.addEventListener('click', function (e) {
       var heart = e.target.closest ? e.target.closest('[data-heart]') : null;
@@ -118,29 +118,279 @@
       var add = e.target.closest ? e.target.closest('[data-add]') : null;
       if (add) {
         e.preventDefault();
-        if (add.getAttribute('aria-disabled') === 'true') return;
+        if (add.getAttribute('aria-disabled') === 'true' || add.getAttribute('aria-busy') === 'true') return;
         var tp = registry[parseInt(add.getAttribute('data-add'), 10)];
         if (!tp) return;
-        add.textContent = 'Adding\u2026';
+        add.setAttribute('aria-busy', 'true');
         // Tiles are partial (a price range, no variant ids): read the live
         // product before anything can go in the cart.
         S.product(tp.handle).then(function (live) {
-          add.textContent = 'Add';
+          add.removeAttribute('aria-busy');
           if (!live) { toast('The seller no longer lists this'); return; }
           if (!live.available) { toast('Out of stock'); return; }
+          var why = vegBlock(live);
+          if (why) { toast(why); return; }
+          // A size or flavour to choose: pick it right here, on top of the
+          // grid, instead of leaving the page. The product page stays one
+          // tap away inside the picker.
           if (live.optionCount > 0 || live.hasChoices) {
-            global.location.href = '/shop/p/' + encodeURIComponent(live.handle);
+            if (!openQuickAdd(live, add, onChange)) {
+              global.location.href = '/shop/p/' + encodeURIComponent(live.handle);
+            }
             return;
           }
           S.add(live, live.defaultVariant, 1);
           toast('Added to bag');
           if (onChange) onChange('cart', live, true);
         }).catch(function (err) {
-          add.textContent = 'Add';
+          add.removeAttribute('aria-busy');
           toast(err && err.message ? err.message : 'Something went wrong. Try again.');
         });
       }
     });
+  }
+
+  /** Why the admin's veg-only switch keeps [p] out of the bag, or null. */
+  function vegBlock(p) {
+    return vegOnlyNow() && S.rules && S.rules.vegOnlyReason ? S.rules.vegOnlyReason(p) : null;
+  }
+
+  /* ---------------------------------------------------------- QUICK ADD */
+  /* ADD on a product with choices opens this picker over the grid: photo,
+   * name, live price, the option chips (sold-out ones struck through), and
+   * one "Add to bag". A phone gets a bottom sheet, a wider screen a centred
+   * panel. A size is never guessed: a choice with more than one sellable
+   * value waits for the shopper (a wrong size is a return), while a choice
+   * with only one sellable value is filled in. Built on <dialog>, so focus
+   * stays inside, Esc and the backdrop close it, and focus goes back to the
+   * tile afterwards. Returns false where <dialog> is missing (the caller then
+   * opens the product page, as before). */
+  var qa = null;
+
+  function qaEls() {
+    if (qa) return qa;
+    if (typeof global.HTMLDialogElement !== 'function') return null;
+    var dlg = document.createElement('dialog');
+    dlg.className = 'qa';
+    dlg.setAttribute('aria-labelledby', 'qaTitle');
+    dlg.innerHTML =
+      '<div class="qa-in">' +
+        '<div class="qa-head">' +
+          '<div class="qa-shot"><img alt=""></div>' +
+          '<div class="qa-id">' +
+            '<div class="qa-brand"></div>' +
+            '<h2 class="qa-title" id="qaTitle"></h2>' +
+            '<div class="qa-price product-meta"></div>' +
+          '</div>' +
+          '<button type="button" class="qa-x" aria-label="Close">' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" fill="none"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="qa-tags"></div>' +
+        '<div class="qa-opts"></div>' +
+        '<p class="qa-status" aria-live="polite"></p>' +
+        '<div class="qa-foot">' +
+          '<button type="button" class="btn-solid qa-add" disabled>Add to bag</button>' +
+          '<a class="qa-more" href="#">View full details</a>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(dlg);
+    qa = {
+      dlg: dlg,
+      img: dlg.querySelector('.qa-shot img'),
+      brand: dlg.querySelector('.qa-brand'),
+      title: dlg.querySelector('.qa-title'),
+      price: dlg.querySelector('.qa-price'),
+      tags: dlg.querySelector('.qa-tags'),
+      opts: dlg.querySelector('.qa-opts'),
+      status: dlg.querySelector('.qa-status'),
+      add: dlg.querySelector('.qa-add'),
+      more: dlg.querySelector('.qa-more'),
+      product: null, sel: [], actId: null, onChange: null
+    };
+
+    dlg.querySelector('.qa-x').addEventListener('click', function () { dlg.close(); });
+    // A click on the backdrop lands on the <dialog> itself (the panel is .qa-in).
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', qaClosed);
+    qa.opts.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('button[data-v]') : null;
+      if (!b) return;
+      qaChoose(parseInt(b.parentElement.getAttribute('data-opt'), 10), b.getAttribute('data-v'));
+    });
+    qa.add.addEventListener('click', qaAdd);
+    return qa;
+  }
+
+  /* Selection helpers. [sel] holds one value per option, null = not chosen. */
+  function qaFits(v, sel, skip) {
+    for (var j = 0; j < sel.length; j++) {
+      if (j === skip || sel[j] == null) continue;
+      if (v.optionValues[j] !== sel[j]) return false;
+    }
+    return true;
+  }
+  /** Values of option [oi] that some in-stock variant has, given the rest. */
+  function qaSellable(p, oi, sel) {
+    var out = [];
+    p.variants.forEach(function (v) {
+      if (v.available && oi < v.optionValues.length && qaFits(v, sel, oi) &&
+          out.indexOf(v.optionValues[oi]) === -1) out.push(v.optionValues[oi]);
+    });
+    return out;
+  }
+  /** Fill every unchosen option that has exactly one sellable value. */
+  function qaAutofill(p, sel) {
+    var changed = true;
+    while (changed) {
+      changed = false;
+      for (var oi = 0; oi < sel.length; oi++) {
+        if (sel[oi] != null) continue;
+        var vals = qaSellable(p, oi, sel);
+        if (vals.length === 1) { sel[oi] = vals[0]; changed = true; }
+      }
+    }
+  }
+  function qaVariant() {
+    if (!qa || !qa.product) return null;
+    for (var i = 0; i < qa.sel.length; i++) if (qa.sel[i] == null) return null;
+    return qa.product.variantMatching(qa.sel);
+  }
+  function qaOptionName(oi) {
+    var p = qa.product;
+    return oi < p.options.length && p.options[oi].name ? p.options[oi].name : 'Option ' + (oi + 1);
+  }
+  function qaLine(v) {
+    return v ? S.cart().lines.filter(function (l) { return l.variantId === v.id; })[0] || null : null;
+  }
+
+  function qaChoose(oi, value) {
+    var p = qa.product;
+    qa.sel[oi] = value;
+    // A combination the seller never made: keep this choice, clear the others.
+    var any = p.variants.some(function (v) { return qaFits(v, qa.sel, -1); });
+    if (!any) {
+      for (var j = 0; j < qa.sel.length; j++) if (j !== oi) qa.sel[j] = null;
+    }
+    qaAutofill(p, qa.sel);
+    qaPaint();
+    // Keep focus on the chip that was pressed (the chips are redrawn).
+    var again = qa.opts.querySelector('[data-opt="' + oi + '"] button[aria-pressed="true"]');
+    if (again) again.focus();
+  }
+
+  function qaPaint() {
+    var p = qa.product, v = qaVariant();
+    var html = '';
+    for (var oi = 0; oi < p.optionCount; oi++) {
+      var sellable = qaSellable(p, oi, qa.sel);
+      html += '<div class="qa-opt"><h3>' + esc(qaOptionName(oi)) +
+        (qa.sel[oi] != null ? ': <b>' + esc(qa.sel[oi]) + '</b>' : '') + '</h3>' +
+        '<div class="opt-vals" role="group" aria-label="' + esc(qaOptionName(oi)) + '" data-opt="' + oi + '">' +
+        p.valuesForOption(oi).map(function (val) {
+          var on = qa.sel[oi] === val;
+          var gone = sellable.indexOf(val) === -1;
+          return '<button type="button" data-v="' + esc(val) + '" aria-pressed="' + (on ? 'true' : 'false') + '"' +
+            (gone ? ' class="gone" aria-label="' + esc(val) + ', out of stock"' : '') + '>' + esc(val) + '</button>';
+        }).join('') + '</div></div>';
+    }
+    qa.opts.innerHTML = html;
+
+    // Price and photo follow the chosen variant.
+    var shown = v || p.cheapestVariant;
+    var off = shown.compareAtPaise && shown.compareAtPaise > shown.pricePaise
+      ? Math.round(((shown.compareAtPaise - shown.pricePaise) * 100) / shown.compareAtPaise) : 0;
+    qa.price.innerHTML = (!v && p.priceVaries ? 'From ' : '') + esc(S.money(shown.pricePaise)) +
+      (shown.compareAtPaise && off > 0 ? ' <span class="was">' + esc(S.money(shown.compareAtPaise)) + '</span>' +
+        ' <span class="off">' + off + '% off</span>' : '');
+    var img = (v && v.imageUrl) || p.imageUrl;
+    if (img) { qa.img.src = S.sizedImage(img, 240); qa.img.hidden = false; } else { qa.img.hidden = true; }
+
+    var btn = qa.add, st = qa.status;
+    st.className = 'qa-status';
+    if (!v) {
+      var missing = [];
+      for (var i = 0; i < qa.sel.length; i++) if (qa.sel[i] == null) missing.push(qaOptionName(i).toLowerCase());
+      btn.disabled = true;
+      btn.textContent = missing.length ? 'Select ' + missing.join(' and ') : 'Not available';
+      st.textContent = missing.length ? '' : 'The seller does not make this combination.';
+      return;
+    }
+    if (!v.available) {
+      btn.disabled = true; btn.textContent = 'Out of stock';
+      st.textContent = 'Out of stock in this ' + (p.optionCount === 1 ? qaOptionName(0).toLowerCase() : 'choice') + '. Pick another.';
+      st.className = 'qa-status bad';
+      return;
+    }
+    var line = qaLine(v), cap = v.maxQty || 99;
+    if (line && line.qty >= cap) {
+      btn.disabled = true; btn.textContent = 'Max in bag';
+      st.textContent = 'The seller allows max ' + cap + ' of this per order, and all are in your bag.';
+      return;
+    }
+    btn.disabled = false;
+    btn.textContent = (line ? 'Add another' : 'Add to bag') + ' · ' + S.money(v.pricePaise);
+    st.textContent = line ? line.qty + ' already in your bag' :
+      (v.maxQty ? 'In stock · max ' + v.maxQty + ' per order' : 'In stock');
+  }
+
+  function qaAdd() {
+    var v = qaVariant(), p = qa.product;
+    if (!v || !v.available) return;
+    var why = vegBlock(p);
+    if (why) { toast(why); return; }
+    var before = qaLine(v);
+    S.add(p, v, 1);
+    var after = qaLine(v);
+    var label = v.title && v.title.trim().toLowerCase() !== 'default title' ? ' · ' + v.title : '';
+    toast((before ? 'Added another' : 'Added to bag') + label + (after && after.qty > 1 ? ' (' + after.qty + ' in bag)' : ''));
+    var cb = qa.onChange;
+    qa.dlg.close();
+    if (cb) cb('cart', p, true);
+  }
+
+  function qaClosed() {
+    document.documentElement.classList.remove('qa-open');
+    var id = qa.actId;
+    qa.product = null; qa.onChange = null;
+    // The tile's ADD may have become a stepper meanwhile: focus whatever
+    // stands in its place, so keyboard users land where they left.
+    var act = id != null ? document.querySelector('[data-act="' + id + '"]') : null;
+    var target = act ? act.querySelector('button, a') : null;
+    if (target) target.focus();
+  }
+
+  function openQuickAdd(p, opener, onChange) {
+    var q = qaEls();
+    if (!q || !q.dlg.showModal) return false;
+    q.product = p;
+    q.onChange = onChange || null;
+    q.actId = p.id;
+    q.sel = [];
+    for (var i = 0; i < p.optionCount; i++) q.sel.push(null);
+    qaAutofill(p, q.sel);
+
+    q.brand.textContent = p.brand || '';
+    q.brand.hidden = !p.brand;
+    q.title.textContent = p.title;
+    q.img.alt = '';
+    var tags = '';
+    if (p.isRx) tags += '<span class="tag">Prescription · the seller runs the process</span>';
+    if (p.isVeg) tags += '<span class="tag veg">Vegetarian</span>';
+    q.tags.innerHTML = tags;
+    q.tags.hidden = !tags;
+    q.more.href = '/shop/p/' + encodeURIComponent(p.handle);
+    qaPaint();
+
+    document.documentElement.classList.add('qa-open');
+    q.dlg.showModal();
+    // Start on the first choice still to make, else on Add to bag.
+    var first = null;
+    for (var oi = 0; oi < q.sel.length && !first; oi++) {
+      if (q.sel[oi] == null) first = q.opts.querySelector('[data-opt="' + oi + '"] button:not(.gone)');
+    }
+    (first || (q.add.disabled ? q.dlg.querySelector('.qa-x') : q.add)).focus();
+    return true;
   }
 
   /* ------------------------------------------------------------- chrome */
@@ -374,6 +624,7 @@
     tile: tile,
     repaintActions: repaintActions,
     bindTiles: bindTiles,
+    openQuickAdd: openQuickAdd,
     bindHeader: bindHeader,
     toast: toast,
     storeGate: storeGate,

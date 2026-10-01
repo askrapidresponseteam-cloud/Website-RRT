@@ -436,6 +436,95 @@ body.has-bagbar { padding-bottom: 84px; }
 .df.bad input, .df.bad select { border-color: var(--stop) !important; }
 .price-row .off { color: var(--sale) !important; font-weight: 700; }
 
+/* --------------------------------------------------------- QUICK ADD -- */
+/* ADD on a product with sizes or flavours opens this picker over the grid
+   (assets/shop-ui.js openQuickAdd). A centred square panel on wide screens,
+   a bottom sheet on phones. Chips match the product page: paper with a
+   hairline, selected = red wash with a red border and label, sold out =
+   struck through. Add to bag is the view's one red. */
+
+html.qa-open { overflow: hidden; }
+.qa {
+  width: min(480px, calc(100vw - 32px)); max-width: none; max-height: min(86vh, 720px);
+  padding: 0; border: 0; border-radius: 0; background: var(--paper); color: var(--text);
+  box-shadow: var(--shadow-card); overflow: auto; overscroll-behavior: contain;
+}
+.qa::backdrop { background: #0D0D0F73; }
+.qa[open] { animation: qa-in .16s ease-out; }
+@keyframes qa-in { from { opacity: 0; transform: translateY(8px); } }
+.qa-in { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+.qa-head { display: grid; grid-template-columns: 88px minmax(0, 1fr) 40px; gap: 14px; align-items: start; }
+.qa-shot { width: 88px; height: 88px; background: var(--plate); display: grid; place-items: center; overflow: hidden; }
+.qa-shot img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.qa-id { min-width: 0; padding-top: 2px; }
+.qa-brand { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); margin-bottom: 4px; }
+.qa-title {
+  margin: 0; font-family: var(--sans); font-size: 16px; font-weight: 600; line-height: 1.35; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.qa-price { margin-top: 6px; }
+.qa-x {
+  width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 0; background: transparent;
+  color: var(--ink); cursor: pointer; transition: background var(--ease);
+}
+.qa-x:hover { background: var(--mist); }
+.qa-x svg { width: 20px; height: 20px; }
+
+.qa-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.qa-tags .tag {
+  font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
+  padding: 4px 8px; background: var(--fog); color: var(--graphite);
+}
+.qa-tags .tag.veg { background: var(--paper); color: var(--go); box-shadow: inset 0 0 0 1.5px var(--go); }
+
+.qa-opts { display: flex; flex-direction: column; gap: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
+.qa-opt h3 {
+  margin: 0 0 10px; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--text-low);
+}
+.qa-opt h3 b { color: var(--ink); font-weight: 600; }
+.qa .opt-vals { display: flex; gap: 8px; flex-wrap: wrap; }
+.qa .opt-vals button {
+  font-family: var(--sans); font-size: 14px; font-weight: 600; min-height: 40px; min-width: 48px; padding: 0 14px;
+  display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line-strong); border-radius: 0;
+  background: var(--paper); color: var(--graphite); cursor: pointer; transition: background var(--ease);
+}
+.qa .opt-vals button:hover { background: var(--mist); color: var(--ink); }
+.qa .opt-vals button[aria-pressed="true"] { border-color: var(--signal); background: var(--wash); color: var(--signal); font-weight: 700; }
+.qa .opt-vals button.gone { opacity: .45; text-decoration: line-through; }
+
+.qa-status { margin: -4px 0 0; min-height: 20px; font-size: 14px; font-weight: 600; color: var(--text-low); }
+.qa-status:empty { display: none; }
+.qa-status.bad { color: var(--stop-text); }
+
+.qa-foot { display: flex; flex-direction: column; gap: 10px; }
+.qa-add { width: 100%; }
+.qa-more {
+  align-self: center; padding: 8px 4px; font-size: 14px; font-weight: 600; color: var(--ink);
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong);
+}
+.qa-more:hover { text-decoration-color: var(--ink); }
+
+/* The tile's ADD while the live product loads. */
+.add[aria-busy=true] { cursor: progress; color: var(--text-low); }
+
+@media (max-width: 760px) {
+  .qa {
+    width: 100%; max-height: 88vh; margin: auto 0 0; inset: auto 0 0 0;
+    box-shadow: var(--sg-shadow-sheet, 0 -1px 0 #E4E2DE);
+  }
+  .qa[open] { animation: qa-up .2s ease-out; }
+  .qa-in { padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .qa-head { grid-template-columns: 72px minmax(0, 1fr) 40px; gap: 12px; }
+  .qa-shot { width: 72px; height: 72px; }
+  .qa-title { font-size: 15px; }
+  /* Tiles drop the % off on phones for room; the picker has the room. */
+  .qa .product-meta .off { display: inline; }
+}
+@keyframes qa-up { from { transform: translateY(100%); } }
+@media (prefers-reduced-motion: reduce) { .qa[open] { animation: none; } }
+
 /* ------------------------------------------------------------ PHONES -- */
 
 @media (max-width: 760px) {
