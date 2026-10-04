@@ -54,7 +54,8 @@
     '/huft-api': { platform: 'shopify_public', domain: 'headsupfortails.com', api: ['headsupfortails.com'] },
     '/zg-api': { platform: 'shopify_public', domain: 'zigly.com', api: ['zigly.com', 'zigly-store.myshopify.com'] },
     '/pt-api': { platform: 'shopify_headless', domain: 'pawsandtails24.com', api: ['pawsandtails24.com'] },
-    '/jd-api': { platform: 'woocommerce', domain: 'www.justdogsstore.com', api: [] }
+    '/jd-api': { platform: 'woocommerce', domain: 'www.justdogsstore.com', api: [] },
+    '/wk-api': { platform: 'woocommerce', domain: 'whiskeepetzone.com', api: [] }
   };
   /* The three kinds of partner store, and the one checkout each uses:
    *   shopify_public    Shopify Online Store: feeds + Storefront API, cart permalink
@@ -2198,8 +2199,11 @@
       if (!page.missing && (page.products.length || opts.after)) return page;
       return wooSearch(b, {}).then(function (r) {
         var key = b.toLowerCase();
+        var mine = r.products.filter(function (p) { return String(p.brand || '').trim().toLowerCase() === key; });
+        // A store that does not record brands on its products: the search for
+        // the brand's name is the closest honest answer.
         return {
-          products: r.products.filter(function (p) { return String(p.brand || '').trim().toLowerCase() === key; }),
+          products: mine.length ? mine : r.products,
           hasMore: false, endCursor: null, missing: false, clientSort: true
         };
       });

@@ -54,7 +54,7 @@ and theme between these markers. Keep them exactly as they are:
   a Shopify Online Store's feeds (`/st-api`, `/pl-api`, `/huft-api`,
   `/zg-api`: collection products, product .js, search suggest,
   recommendations), a headless Shopify store's Storefront API (`/pt-api`),
-  a WooCommerce store's product and category reads (`/jd-api`, never its
+  a WooCommerce store's product and category reads (`/jd-api`, `/wk-api`, never its
   cart). A new partner store needs its own route plus an entry in
   `KNOWN_PROXIES` in `assets/rrt-shop.js` (route, store domain and platform
   must match); `scripts/check-storefront.js` fails the deploy otherwise.

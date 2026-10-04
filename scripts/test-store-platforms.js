@@ -335,6 +335,9 @@ function publishTests() {
   eq(pub(firestore('justdogs')), 'justdogs', 'a published WooCommerce store is used');
   eq(pub(firestore('pawsandtails')), 'pawsandtails', 'a published headless store is used');
   eq(pub(firestore('zigly')), 'zigly', 'a published Zigly is used');
+  eq(pub(firestore('whiskee')), 'whiskee', 'a published Whiskee Pet Zone (WooCommerce) is used');
+  eq(load('whiskee').vendor.productUrl('sucralpet-syrup-dogs-and-cats'), 'https://whiskeepetzone.com/product/sucralpet-syrup-dogs-and-cats/', 'Whiskee product links in its own form');
+  eq(load('whiskee').vendor.feedUrl('/x'), '/wk-api/x', 'Whiskee reads through /wk-api');
   const mutate = (id, fn) => { const d = firestore(id); fn(d); return pub(d); };
   eq(mutate('justdogs', (d) => { d.platform = 'shopify_public'; }), def, 'a Woo route cannot be read as Shopify');
   eq(mutate('pawsandtails', (d) => { d.web.proxyBase = '/jd-api'; d.domain = 'www.justdogsstore.com'; }), def, 'nor a headless store through the Woo route');
