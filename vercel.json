@@ -55,6 +55,34 @@
       "destination": "https://headsupfortails.com/recommendations/products.json"
     },
     {
+      "source": "/zg-api/collections/:handle/products.json",
+      "destination": "https://zigly.com/collections/:handle/products.json"
+    },
+    {
+      "source": "/zg-api/products/:file([^/]+\\.js)",
+      "destination": "https://zigly.com/products/:file"
+    },
+    {
+      "source": "/zg-api/search/suggest.json",
+      "destination": "https://zigly.com/search/suggest.json"
+    },
+    {
+      "source": "/zg-api/recommendations/products.json",
+      "destination": "https://zigly.com/recommendations/products.json"
+    },
+    {
+      "source": "/pt-api/api/:version(\\d{4}-\\d{2})/graphql.json",
+      "destination": "https://pawsandtails24.com/api/:version/graphql.json"
+    },
+    {
+      "source": "/jd-api/wp-json/wc/store/v1/products",
+      "destination": "https://www.justdogsstore.com/wp-json/wc/store/v1/products"
+    },
+    {
+      "source": "/jd-api/wp-json/wc/store/v1/products/categories",
+      "destination": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/categories"
+    },
+    {
       "source": "/manage",
       "destination": "/report/manage"
     },
@@ -117,7 +145,7 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: blob:; media-src 'self' blob: https://firebasestorage.googleapis.com; connect-src 'self' https://asia-south1-rrt-new-backend.cloudfunctions.net https://asia-south1-report-5bf7e.cloudfunctions.net https://firestore.googleapis.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://api.bigdatacloud.net https://is.gd https://supertails.com https://www.pets-lifestyle.com https://08e8df.myshopify.com https://headsupfortails.com; frame-src 'self' https://rrt-new-backend.firebaseapp.com https://report-5bf7e.firebaseapp.com; worker-src 'self' blob:; manifest-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: blob:; media-src 'self' blob: https://firebasestorage.googleapis.com; connect-src 'self' https://asia-south1-rrt-new-backend.cloudfunctions.net https://asia-south1-report-5bf7e.cloudfunctions.net https://firestore.googleapis.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://api.bigdatacloud.net https://is.gd https://supertails.com https://www.pets-lifestyle.com https://08e8df.myshopify.com https://headsupfortails.com https://zigly.com https://zigly-store.myshopify.com https://pawsandtails24.com https://www.justdogsstore.com; frame-src 'self' https://rrt-new-backend.firebaseapp.com https://report-5bf7e.firebaseapp.com; worker-src 'self' blob:; manifest-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'"
         }
       ]
     },
@@ -183,6 +211,69 @@
     },
     {
       "source": "/huft-api/:path*",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "sandbox; default-src 'none'; frame-ancestors 'none'"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
+    },
+    {
+      "source": "/zg-api/:path*",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "sandbox; default-src 'none'; frame-ancestors 'none'"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
+    },
+    {
+      "source": "/pt-api/:path*",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "sandbox; default-src 'none'; frame-ancestors 'none'"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
+    },
+    {
+      "source": "/jd-api/:path*",
       "headers": [
         {
           "key": "Content-Security-Policy",

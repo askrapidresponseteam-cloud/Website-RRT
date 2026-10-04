@@ -50,10 +50,14 @@ and theme between these markers. Keep them exactly as they are:
   app demo). Never load a script from a CDN. To upgrade one, add a new
   versioned folder (the old one stays cached for a year) and change the pages.
 - `vercel.json` sets the security headers for every page, and forwards only
-  the store feeds the shop reads (`/st-api`, `/pl-api`: collection products,
-  product .js, search suggest, recommendations). A new feed path must be
-  added there too, and a new partner store needs its own route plus an entry
-  in `KNOWN_PROXIES` in `assets/rrt-shop.js` (route and store domain must match).
+  what each partner store's platform needs (see shared/store-vendors.json):
+  a Shopify Online Store's feeds (`/st-api`, `/pl-api`, `/huft-api`,
+  `/zg-api`: collection products, product .js, search suggest,
+  recommendations), a headless Shopify store's Storefront API (`/pt-api`),
+  a WooCommerce store's product and category reads (`/jd-api`, never its
+  cart). A new partner store needs its own route plus an entry in
+  `KNOWN_PROXIES` in `assets/rrt-shop.js` (route, store domain and platform
+  must match); `scripts/check-storefront.js` fails the deploy otherwise.
 - The right-click menu is switched off site-wide in `assets/rr-site.js` (text
   fields and a phone long-press keep theirs). Do not add per-page copies.
 

@@ -180,14 +180,20 @@ for (const [name, text] of [['shop.css', cssOnly], ['rrt-shop.js', sdk], ['shop-
 // Every store in the registry must be fully wired on the website, or a
 // backend switch to it silently falls back to the bundle default (exactly
 // the half-switched state this check exists to prevent): its proxy route in
-// rrt-shop.js KNOWN_PROXIES, vercel.json rewrites for all four endpoints,
-// the sandboxed response headers on the route, and the store domain in the
-// CSP report-only connect-src.
+// rrt-shop.js KNOWN_PROXIES (same store, same platform), the vercel.json
+// rewrites its platform reads through, the sandboxed response headers on the
+// route, and the store domain in the CSP report-only connect-src.
+//   shopify_public    the four feeds: collection products, product .js,
+//                     search suggest, recommendations
+//   shopify_headless  the store's Storefront API (POST /api/:version/graphql.json)
+//   woocommerce       the Store API's product and category reads, and never
+//                     the cart (a buyer's cart is their session on their site)
 {
   const path = require('path');
   const registry = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'shared', 'store-vendors.json'), 'utf8'));
   const vercel = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'vercel.json'), 'utf8'));
   const rewrites = (vercel.rewrites || []).map((r) => r.source);
+  const destOf = {}; (vercel.rewrites || []).forEach((r) => { destOf[r.source] = r.destination; });
   const headerSrcs = (vercel.headers || []).map((h) => h.source);
   const cspRO = ((vercel.headers || []).find((h) => h.source === '/:path*') || { headers: [] })
     .headers.filter((x) => x.key === 'Content-Security-Policy-Report-Only').map((x) => x.value).join(' ');
@@ -197,17 +203,38 @@ for (const [name, text] of [['shop.css', cssOnly], ['rrt-shop.js', sdk], ['shop-
     const problems = [];
     if (!base) problems.push('no web.proxyBase');
     else {
-      const km = new RegExp("'" + base + "'\\s*:\\s*\\{[^}]*domain:\\s*'" + d.domain.replace(/\./g, '\\.') + "'");
-      if (!km.test(sdk)) problems.push(`${base} with domain ${d.domain} missing from rrt-shop.js KNOWN_PROXIES`);
-      for (const ep of ['/collections/:handle/products.json', '/search/suggest.json', '/recommendations/products.json']) {
-        if (!rewrites.includes(base + ep)) problems.push(`vercel.json rewrite missing: ${base}${ep}`);
+      const km = new RegExp("'" + base + "'\\s*:\\s*\\{\\s*platform:\\s*'" + d.platform + "',\\s*domain:\\s*'" + d.domain.replace(/\./g, '\\.') + "'");
+      if (!km.test(sdk)) problems.push(`${base} (${d.platform}, ${d.domain}) missing from rrt-shop.js KNOWN_PROXIES`);
+      const mine = rewrites.filter((r) => r.startsWith(base + '/'));
+      // Every route of this store forwards to this store and nowhere else.
+      for (const r of mine) {
+        if (!String(destOf[r] || '').startsWith('https://' + d.domain + '/')) problems.push(`vercel.json ${r} does not forward to https://${d.domain}/`);
       }
-      if (!rewrites.some((r) => r.startsWith(base + '/products/'))) problems.push(`vercel.json rewrite missing: ${base}/products/:file`);
+      if (d.platform === 'shopify_public') {
+        for (const ep of ['/collections/:handle/products.json', '/search/suggest.json', '/recommendations/products.json']) {
+          if (!rewrites.includes(base + ep)) problems.push(`vercel.json rewrite missing: ${base}${ep}`);
+        }
+        if (!mine.some((r) => r.startsWith(base + '/products/'))) problems.push(`vercel.json rewrite missing: ${base}/products/:file`);
+      } else if (d.platform === 'shopify_headless') {
+        if (!mine.some((r) => /\/api\/:version[^/]*\/graphql\.json$/.test(r))) problems.push(`vercel.json rewrite missing: ${base}/api/:version/graphql.json`);
+        if (mine.some((r) => /collections|suggest|recommendations|\/products\//.test(r))) problems.push(`${base}: a headless store has no feeds to forward`);
+      } else if (d.platform === 'woocommerce') {
+        const api = d.woo && d.woo.api;
+        for (const ep of ['/products', '/products/categories']) {
+          if (!rewrites.includes(base + api + ep)) problems.push(`vercel.json rewrite missing: ${base}${api}${ep}`);
+        }
+        if (mine.some((r) => /cart|checkout|:path\*/.test(r))) problems.push(`${base}: only product and category reads may be forwarded`);
+      } else {
+        problems.push(`unknown platform ${d.platform}`);
+      }
       if (!headerSrcs.includes(base + '/:path*')) problems.push(`vercel.json headers missing for ${base}/:path*`);
-      if (!cspRO.includes('https://' + d.domain.replace(/^www\./, 'www.'))) problems.push(`CSP report-only connect-src missing https://${d.domain}`);
+      if (!cspRO.includes('https://' + d.domain)) problems.push(`CSP report-only connect-src missing https://${d.domain}`);
+      if (d.storefrontApi && d.platform === 'shopify_public' && !cspRO.includes('https://' + d.storefrontApi.host)) {
+        problems.push(`CSP report-only connect-src missing https://${d.storefrontApi.host} (Storefront API)`);
+      }
     }
     if (problems.length) { console.log(`  FAIL  store '${id}' not fully wired -> ` + problems.join('; ')); failed++; }
-    else console.log(`  ok    store '${id}' fully wired (proxy, rewrites, headers, CSP)`);
+    else console.log(`  ok    store '${id}' (${d.platform}) fully wired (proxy, rewrites, headers, CSP)`);
   }
 }
 

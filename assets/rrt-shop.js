@@ -49,10 +49,20 @@
    * bad or tampered publish can never point checkout, account or policy
    * links, or the Storefront API (listings, prices, carts), at another site. */
   var KNOWN_PROXIES = {
-    '/st-api': { domain: 'supertails.com', api: ['supertails.com'] },
-    '/pl-api': { domain: 'www.pets-lifestyle.com', api: ['www.pets-lifestyle.com', '08e8df.myshopify.com'] },
-    '/huft-api': { domain: 'headsupfortails.com', api: ['headsupfortails.com'] }
+    '/st-api': { platform: 'shopify_public', domain: 'supertails.com', api: ['supertails.com'] },
+    '/pl-api': { platform: 'shopify_public', domain: 'www.pets-lifestyle.com', api: ['www.pets-lifestyle.com', '08e8df.myshopify.com'] },
+    '/huft-api': { platform: 'shopify_public', domain: 'headsupfortails.com', api: ['headsupfortails.com'] },
+    '/zg-api': { platform: 'shopify_public', domain: 'zigly.com', api: ['zigly.com', 'zigly-store.myshopify.com'] },
+    '/pt-api': { platform: 'shopify_headless', domain: 'pawsandtails24.com', api: ['pawsandtails24.com'] },
+    '/jd-api': { platform: 'woocommerce', domain: 'www.justdogsstore.com', api: [] }
   };
+  /* The three kinds of partner store, and the one checkout each uses:
+   *   shopify_public    Shopify Online Store: feeds + Storefront API, cart permalink
+   *   shopify_headless  Shopify behind a custom front end (Hydrogen): no feeds,
+   *                     the Storefront API on its own site, checkout by cartCreate
+   *   woocommerce       WordPress + WooCommerce: the public Store API, checkout on
+   *                     the store's own cart page */
+  var CHECKOUT_MODES = { shopify_public: 'cart_permalink', shopify_headless: 'storefront_cart', woocommerce: 'woo_cart' };
   var PUBLISHED_KEY = 'rrt_store_active_v1';
 
   /** A path on the store's own site ("/account"), never "//host" or "@host". */
@@ -60,17 +70,26 @@
     return p == null || (typeof p === 'string' && /^\/(?!\/)[A-Za-z0-9._~\/-]{0,200}$/.test(p));
   }
   function usable(d) {
-    return !!(d && typeof d.id === 'string' && d.platform === 'shopify_public' &&
+    if (!(d && typeof d.id === 'string' && Object.prototype.hasOwnProperty.call(CHECKOUT_MODES, d.platform) &&
       typeof d.domain === 'string' && d.web && typeof d.web.proxyBase === 'string' &&
-      Object.prototype.hasOwnProperty.call(KNOWN_PROXIES, d.web.proxyBase) &&
-      KNOWN_PROXIES[d.web.proxyBase].domain === d.domain &&
-      d.storefrontApi && typeof d.storefrontApi.host === 'string' &&
-      KNOWN_PROXIES[d.web.proxyBase].api.indexOf(d.storefrontApi.host) !== -1 &&
+      Object.prototype.hasOwnProperty.call(KNOWN_PROXIES, d.web.proxyBase))) return false;
+    var known = KNOWN_PROXIES[d.web.proxyBase];
+    // The route, the store and the KIND of store must all agree: a publish
+    // cannot point a WooCommerce route at a Shopify reader, or the reverse.
+    if (known.domain !== d.domain || known.platform !== d.platform) return false;
+    if (d.platform === 'woocommerce') {
+      if (!(d.woo && typeof d.woo.api === 'string' && /^\/wp-json\/wc\/store(?:\/v\d+)?$/.test(d.woo.api) &&
+        sitePath(d.woo.productBase) && sitePath(d.woo.cart) && sitePath(d.woo.checkout) &&
+        d.woo.productBase && d.woo.cart && d.woo.checkout)) return false;
+    } else if (!(d.storefrontApi && typeof d.storefrontApi.host === 'string' &&
+      known.api.indexOf(d.storefrontApi.host) !== -1 &&
       typeof d.storefrontApi.version === 'string' && /^\d{4}-\d{2}$/.test(d.storefrontApi.version) &&
-      (d.shopId == null || /^\d{1,20}$/.test(String(d.shopId))) &&
-      Array.isArray(d.shelves) && d.shelves.length &&
+      (d.shopId == null || /^\d{1,20}$/.test(String(d.shopId))))) {
+      return false;
+    }
+    return !!(Array.isArray(d.shelves) && d.shelves.length &&
       d.support && d.policies && sitePath(d.policies.account) && sitePath(d.policies.refund) &&
-      sitePath(d.policies.shipping) && d.checkout && d.checkout.mode === 'cart_permalink');
+      sitePath(d.policies.shipping) && d.checkout && d.checkout.mode === CHECKOUT_MODES[d.platform]);
   }
   function publishedDescriptor() {
     try {
@@ -84,15 +103,28 @@
     BUNDLE.vendors[BUNDLE.defaultActive] || null;
   if (!DESCRIPTOR) throw new Error('rrt-shop: no partner store configured (load assets/rrt-store-vendors.js first)');
   var ACTIVE_VENDOR = DESCRIPTOR.id;
+  var PLATFORM = DESCRIPTOR.platform || 'shopify_public';
+  /** WordPress + WooCommerce: read through its Store API. */
+  var IS_WOO = PLATFORM === 'woocommerce';
+  /** Shopify with a custom front end: no storefront feeds exist. */
+  var IS_HEADLESS = PLATFORM === 'shopify_headless';
+  /** The store serves Shopify's JSON feeds (/collections/..json, /products/..js). */
+  var HAS_FEEDS = PLATFORM === 'shopify_public';
 
   var Vendor = {
     key: DESCRIPTOR.id,
+    platform: PLATFORM,
+    isWoo: IS_WOO,
+    isHeadless: IS_HEADLESS,
+    displayName: DESCRIPTOR.displayName || DESCRIPTOR.id,
     domain: DESCRIPTOR.domain,
     /** Numeric Shopify shop id; order status pages live under /{shopId}/orders/. */
-    shopId: DESCRIPTOR.shopId,
+    shopId: DESCRIPTOR.shopId || null,
     /** Storefront API host (Shopify "tokenless access": no key to issue or leak). */
-    myshopifyDomain: DESCRIPTOR.storefrontApi.host,
-    storefrontApiVersion: DESCRIPTOR.storefrontApi.version,
+    myshopifyDomain: DESCRIPTOR.storefrontApi ? DESCRIPTOR.storefrontApi.host : null,
+    storefrontApiVersion: DESCRIPTOR.storefrontApi ? DESCRIPTOR.storefrontApi.version : null,
+    /** WooCommerce paths: Store API base, product pages, cart, checkout. */
+    woo: DESCRIPTOR.woo || null,
     supportWhatsApp: DESCRIPTOR.support.whatsapp || null,
     supportPhone: DESCRIPTOR.support.phone || null,
     supportPhoneLabel: DESCRIPTOR.support.phoneLabel || null,
@@ -117,8 +149,12 @@
     }
     return u;
   };
-  Vendor.storefrontApiUrl =
-    'https://' + Vendor.myshopifyDomain + '/api/' + Vendor.storefrontApiVersion + '/graphql.json';
+  /* A headless store's API sits on its own site, which sends no CORS headers,
+   * so the browser reaches it same-origin through the Vercel route (as with
+   * the feeds). A Shopify Online Store's API host is CORS-open: direct. */
+  Vendor.storefrontApiUrl = IS_WOO ? null : IS_HEADLESS
+    ? Vendor.proxyBase + '/api/' + Vendor.storefrontApiVersion + '/graphql.json'
+    : 'https://' + Vendor.myshopifyDomain + '/api/' + Vendor.storefrontApiVersion + '/graphql.json';
   /* The vendor's storefront feeds, reached same-origin: Vercel rewrites
    * Vendor.proxyBase (/st-api or /pl-api) to the store, which is what lets a
    * browser read Shopify's JSON feeds (they send no CORS headers, so a
@@ -136,7 +172,10 @@
   Vendor.accountUrl = Vendor.url(Vendor.accountPath);
   Vendor.shippingPolicyUrl = Vendor.shippingPolicyPath ? Vendor.url(Vendor.shippingPolicyPath) : null;
   Vendor.refundPolicyUrl = Vendor.refundPolicyPath ? Vendor.url(Vendor.refundPolicyPath) : null;
-  Vendor.productUrl = function (handle) { return Vendor.url('/products/' + handle); };
+  Vendor.productUrl = function (handle) {
+    return IS_WOO ? Vendor.url(Vendor.woo.productBase + handle + '/') : Vendor.url('/products/' + handle);
+  };
+  Vendor.cartPageUrl = IS_WOO ? Vendor.url(Vendor.woo.cart) : Vendor.url('/cart');
   Vendor.whatsAppUrl = function (message) {
     if (!Vendor.supportWhatsApp) return null;
     return 'https://wa.me/' + Vendor.supportWhatsApp +
@@ -1411,6 +1450,7 @@
    *  results, never to an error. */
   function brandPage(brand, opts) {
     opts = opts || {};
+    if (IS_WOO) return wooBrandPage(brand, opts);
     var b = String(brand || '').trim();
     var sort = CATALOG_SORT_KEYS[opts.sort || 'featured'] || CATALOG_SORT_KEYS.featured;
     var query = function (F) { return (
@@ -1452,6 +1492,16 @@
    *  one feed call. Resolves null on any failure - previews decorate, they
    *  must never block or error a page. */
   function previewCollection(handle) {
+    if (IS_WOO) {
+      return wooCollectionPage(handle, { limit: 10 })
+        .then(function (page) { return page.missing ? null : page.products; })
+        .catch(function () { return null; });
+    }
+    if (!HAS_FEEDS) {
+      return sfCollectionPage(handle, {})
+        .then(function (page) { return page.missing ? null : page.products.slice(0, 10); })
+        .catch(function () { return null; });
+    }
     return feedGet('/collections/' + encodeURIComponent(handle) + '/products.json',
       { limit: '10', page: '1' })
       .then(function (body) {
@@ -1562,6 +1612,11 @@
    *  errors or hands the catalogue back empty, and keep the session. */
   function collectionPage(handle, opts) {
     opts = opts || {};
+    if (IS_WOO) return wooCollectionPage(handle, opts);
+    if (!HAS_FEEDS) {
+      // A headless store has no feeds to fall back to: the API is the store.
+      return handle === Vendor.catalogHandle ? catalogPage(opts) : sfCollectionPage(handle, opts);
+    }
     if (transport() === 'feeds' || /^fp:/.test(String(opts.after || ''))) {
       return feedCollectionPage(handle, opts);
     }
@@ -1641,6 +1696,8 @@
    *  the answer decides money. The Storefront API is the fallback door. */
   function product(handle, opts) {
     opts = opts || {};
+    if (IS_WOO) return wooProduct(handle, opts);
+    if (!HAS_FEEDS) return sfProduct(handle, opts);
     return feedGet('/products/' + encodeURIComponent(handle) + '.js', null, { fresh: opts.fresh })
       .then(function (body) { return productFromAjax(body); })
       .catch(function (e) {
@@ -1679,6 +1736,8 @@
   function suggest(query) {
     var q = String(query || '').trim();
     if (q.length < 2) return Promise.resolve({ query: q, products: [], collections: [] });
+    if (IS_WOO) return wooSuggest(q);
+    if (!HAS_FEEDS) return sfSuggest(q);
     return feedGet('/search/suggest.json', {
       'q': q,
       'resources[type]': 'product,collection',
@@ -1745,6 +1804,7 @@
     opts = opts || {};
     var q = String(query || '').trim();
     if (!q) return Promise.resolve({ query: q, products: [], hasMore: false, endCursor: null, total: 0 });
+    if (IS_WOO) return wooSearch(q, opts);
     var cacheKey = 'search-all|' + q + '|' + (opts.after || '');
     return gqlTiles(SEARCH_QUERY, { q: q, after: opts.after || null }, { cacheKey: cacheKey })
       .then(function (data) {
@@ -1773,6 +1833,8 @@
    *  the app's read - with the API as fallback. Never rejects: a product
    *  page without recommendations is still a complete product page. */
   function recommendations(productId) {
+    if (IS_WOO) return wooRelated(productId);
+    if (!HAS_FEEDS) return sfRecommendations(productId);
     return feedGet('/recommendations/products.json', {
       product_id: String(productId), limit: '8', intent: 'related'
     }).then(function (body) {
@@ -1797,6 +1859,351 @@
           .slice(0, 8);
       })
       .catch(function () { return []; });
+  }
+
+  /* =========================================================== WOOCOMMERCE */
+  /* A WordPress + WooCommerce store, read through WooCommerce's public Store
+   * API (/wp-json/wc/store/v1) - the same API their own block cart and
+   * checkout use. The browser reaches it same-origin through the Vercel
+   * route (Vendor.proxyBase), which forwards only the read-only product and
+   * category endpoints.
+   *
+   * Every answer is turned into the one product shape the pages already
+   * read, so nothing above this layer knows which kind of store it is:
+   *   prices      minor units with currency_minor_unit (JustDogs: 0, so
+   *               "3400" is ₹3,400) -> integer paise
+   *   variations  the product lists its variation ids and their attribute
+   *               slugs; prices and stock come from ?parent=ID&type=variation
+   *   collections product categories, by slug (children included)
+   *   brand       the "Brand" attribute (pa_brand), else Woo's own brands
+   *   tags        tags, categories and "Attribute: value" pairs, which the
+   *               VEG label and the veg-only switch read like Shopify tags */
+
+  var WOO_SORT = {
+    featured: { orderby: 'menu_order', order: 'asc' },
+    newest: { orderby: 'date', order: 'desc' },
+    priceLow: { orderby: 'price', order: 'asc' },
+    priceHigh: { orderby: 'price', order: 'desc' }
+  };
+
+  function wooGet(path, query, opts) {
+    return feedGet(Vendor.woo.api + path, query, opts);
+  }
+
+  /** "3400" with currency_minor_unit 0 -> 340000 paise. Integer maths only. */
+  function wooMoney(prices, key) {
+    if (!prices || prices[key] == null || String(prices[key]).trim() === '') return null;
+    var raw = String(prices[key]).trim();
+    if (!/^-?\d+$/.test(raw)) return null;
+    var n = parseInt(raw, 10);
+    var minor = typeof prices.currency_minor_unit === 'number' ? prices.currency_minor_unit : 2;
+    if (minor === 2) return n;
+    if (minor < 2) return n * Math.pow(10, 2 - minor);
+    return Math.round(n / Math.pow(10, minor - 2));
+  }
+
+  function wooText(t) { return decodeHtmlEntities(String(t || '').replace(/<[^>]*>/g, '')).trim(); }
+
+  function wooBrand(m) {
+    var attrs = Array.isArray(m.attributes) ? m.attributes : [];
+    for (var i = 0; i < attrs.length; i++) {
+      var a = attrs[i];
+      if (a && (a.taxonomy === 'pa_brand' || /^brands?$/i.test(String(a.name || ''))) && a.terms && a.terms[0]) {
+        return wooText(a.terms[0].name);
+      }
+    }
+    if (Array.isArray(m.brands) && m.brands[0] && m.brands[0].name) return wooText(m.brands[0].name);
+    return '';
+  }
+
+  /** The most specific shop category (not a brand, breed or life stage):
+   *  what Shopify would call the product type. */
+  function wooType(m) {
+    var best = null, depth = -1;
+    (Array.isArray(m.categories) ? m.categories : []).forEach(function (c) {
+      var link = String(c && c.link || '');
+      if (/\/(brands|[a-z-]*breeds?|[a-z-]*life-stage)\//i.test(link)) return;
+      var d = link.split('/').filter(Boolean).length;
+      if (d > depth) { depth = d; best = c; }
+    });
+    return best ? wooText(best.name) : '';
+  }
+
+  function wooTags(m) {
+    var out = [];
+    (Array.isArray(m.tags) ? m.tags : []).forEach(function (t) { if (t && t.name) out.push(wooText(t.name)); });
+    (Array.isArray(m.categories) ? m.categories : []).forEach(function (c) { if (c && c.name) out.push(wooText(c.name)); });
+    (Array.isArray(m.attributes) ? m.attributes : []).forEach(function (a) {
+      if (!a || !a.name || a.has_variations) return;
+      (a.terms || []).forEach(function (t) { if (t && t.name) out.push(wooText(a.name) + ': ' + wooText(t.name)); });
+    });
+    return out;
+  }
+
+  function wooMaxQty(atc) {
+    var max = atc && typeof atc.maximum === 'number' ? atc.maximum : null;
+    return (max != null && max > 0 && max < 99) ? max : null;
+  }
+
+  function wooImages(m, tile) {
+    return (Array.isArray(m.images) ? m.images : []).map(function (i) {
+      return absoluteImageUrl(i && (tile ? (i.thumbnail || i.src) : (i.src || i.thumbnail)));
+    }).filter(Boolean);
+  }
+
+  /** Where WooCommerce's own "add to cart" link for a variation points,
+   *  as the query it carries (attribute_pa_size=small, variation_id, ...). */
+  function wooAddQuery(atc) {
+    var url = atc && atc.url ? decodeHtmlEntities(String(atc.url)).replace(/&#0?38;/g, '&') : '';
+    var q = url.indexOf('?') === -1 ? '' : url.slice(url.indexOf('?') + 1);
+    var out = {};
+    q.split('&').forEach(function (kv) {
+      var i = kv.indexOf('=');
+      if (i <= 0) return;
+      var k = decodeURIComponent(kv.slice(0, i));
+      if (/^attribute_[a-z0-9_-]+$/i.test(k)) out[k] = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, ' '));
+    });
+    return out;
+  }
+
+  function wooBase(m, extra) {
+    var p = {
+      id: m.id,
+      handle: String(m.slug || ''),
+      title: wooText(m.name),
+      brand: wooBrand(m),
+      productType: wooType(m),
+      tags: wooTags(m),
+      descriptionHtml: String(m.description || m.short_description || ''),
+      createdAtMs: null,
+      platformData: { type: m.type }
+    };
+    Object.keys(extra).forEach(function (k) { p[k] = extra[k]; });
+    return wrapProduct(p);
+  }
+
+  /** A grid tile from a Store API product. A simple product is complete
+   *  (its one variant is the product); a variable one carries its price
+   *  range until the product page loads the variations. */
+  function productFromWoo(m) {
+    if (!m || typeof m !== 'object' || typeof m.id !== 'number' || !m.slug) return null;
+    var price = wooMoney(m.prices, 'price');
+    if (price == null) return null;
+    var available = m.is_in_stock !== false && m.is_purchasable !== false;
+    var images = wooImages(m, true);
+    if (m.type === 'variable' || (Array.isArray(m.variations) && m.variations.length)) {
+      var range = m.prices && m.prices.price_range;
+      var min = range ? wooMoney({ v: range.min_amount, currency_minor_unit: m.prices.currency_minor_unit }, 'v') : price;
+      var max = range ? wooMoney({ v: range.max_amount, currency_minor_unit: m.prices.currency_minor_unit }, 'v') : null;
+      return wooBase(m, {
+        images: images, options: [],
+        variants: previewVariants(min == null ? price : min, max, wooMoney(m.prices, 'regular_price'), available),
+        partial: true
+      });
+    }
+    return wooBase(m, {
+      images: images, options: [],
+      variants: [{
+        id: m.id, title: 'Default Title', optionValues: [],
+        pricePaise: price,
+        compareAtPaise: realCompareAt(wooMoney(m.prices, 'regular_price'), price),
+        available: available, imageUrl: null,
+        maxQty: wooMaxQty(m.add_to_cart),
+        wooAdd: { product: m.id, variation: null, attrs: {} }
+      }],
+      partial: false
+    });
+  }
+
+  /** The full product: the parent's record plus its variations. */
+  function productFromWooFull(m, variationRecords) {
+    if (!m || typeof m !== 'object' || typeof m.id !== 'number' || !m.slug) return null;
+    var images = wooImages(m, false);
+    if (m.type !== 'variable' && !(Array.isArray(m.variations) && m.variations.length)) {
+      var simple = productFromWoo(m);
+      if (!simple) return null;
+      simple.images = images.length ? images : simple.images;
+      simple.imageUrl = simple.images[0] || null;
+      return simple;
+    }
+    var optionAttrs = (Array.isArray(m.attributes) ? m.attributes : []).filter(function (a) { return a && a.has_variations; });
+    var listed = {};
+    (Array.isArray(m.variations) ? m.variations : []).forEach(function (v) { if (v && v.id) listed[v.id] = v.attributes || []; });
+    var variants = (variationRecords || []).map(function (v) {
+      var price = wooMoney(v.prices, 'price');
+      if (typeof v.id !== 'number' || price == null) return null;
+      var own = listed[v.id] || [];
+      var values = optionAttrs.map(function (a) {
+        var slug = null;
+        own.forEach(function (x) { if (x && x.name === a.name) slug = x.value; });
+        var term = null;
+        (a.terms || []).forEach(function (t) { if (t && t.slug === slug) term = t; });
+        return term ? wooText(term.name) : (slug ? String(slug) : 'Any');
+      });
+      var img = Array.isArray(v.images) && v.images[0] ? absoluteImageUrl(v.images[0].src) : null;
+      return {
+        id: v.id,
+        title: values.length ? values.join(' / ') : wooText(v.variation || 'Default Title'),
+        optionValues: values,
+        pricePaise: price,
+        compareAtPaise: realCompareAt(wooMoney(v.prices, 'regular_price'), price),
+        available: v.is_in_stock !== false && v.is_purchasable !== false,
+        imageUrl: img,
+        maxQty: wooMaxQty(v.add_to_cart),
+        wooAdd: { product: m.id, variation: v.id, attrs: wooAddQuery(v.add_to_cart) }
+      };
+    }).filter(Boolean);
+    if (!variants.length) return null;
+    // The vendor's own order of choices (Small before Medium), not the API's.
+    var order = {};
+    (Array.isArray(m.variations) ? m.variations : []).forEach(function (v, i) { if (v) order[v.id] = i; });
+    variants.sort(function (a, b) { return (order[a.id] || 0) - (order[b.id] || 0); });
+    return wooBase(m, {
+      images: images,
+      options: optionAttrs.map(function (a) {
+        return { name: wooText(a.name), values: (a.terms || []).map(function (t) { return wooText(t.name); }) };
+      }),
+      variants: variants,
+      partial: false
+    });
+  }
+
+  function wooPageNum(after) {
+    var m = /^wp:(\d+)$/.exec(String(after || ''));
+    return m ? parseInt(m[1], 10) : 1;
+  }
+
+  /** One page of a category ("aisle") or, for the catalogue handle, of the
+   *  whole store, sorted by WooCommerce. Same shape as collectionPage. */
+  function wooCollectionPage(handle, opts) {
+    opts = opts || {};
+    var n = wooPageNum(opts.after);
+    var size = opts.limit || PAGE_SIZE;
+    var sort = WOO_SORT[opts.sort || 'featured'] || WOO_SORT.featured;
+    var q = { per_page: String(size), page: String(n), orderby: sort.orderby, order: sort.order };
+    if (handle !== Vendor.catalogHandle) q.category = handle;
+    else if (!opts.sort || opts.sort === 'featured') { q.orderby = 'popularity'; q.order = 'desc'; }
+    return wooGet('/products', q, { fresh: opts.fresh }).then(function (body) {
+      var raw = Array.isArray(body) ? body : [];
+      return {
+        products: raw.map(productFromWoo).filter(Boolean),
+        hasMore: raw.length >= size,
+        endCursor: 'wp:' + (n + 1),
+        missing: false,
+        clientSort: false
+      };
+    }).catch(function (e) {
+      if (e && (e.status === 404 || e.status === 400)) {
+        return { products: [], hasMore: false, endCursor: null, missing: true, clientSort: false };
+      }
+      throw e;
+    });
+  }
+
+  /** The live product with every variation. Null when the store has
+   *  removed it. [fresh] skips the cache: used when the answer decides money. */
+  function wooProduct(handle, opts) {
+    opts = opts || {};
+    return wooGet('/products', { slug: handle }, { fresh: opts.fresh }).then(function (body) {
+      var m = Array.isArray(body) ? body[0] : null;
+      if (!m) return null;
+      var variable = m.type === 'variable' || (Array.isArray(m.variations) && m.variations.length);
+      if (!variable) return productFromWooFull(m, []);
+      return wooGet('/products', { parent: String(m.id), type: 'variation', per_page: '100' }, { fresh: opts.fresh })
+        .then(function (vs) {
+          var p = productFromWooFull(m, Array.isArray(vs) ? vs : []);
+          if (!p) throw StorefrontError('The store could not load this right now.');
+          return p;
+        });
+    }).catch(function (e) {
+      if (e && e.status === 404) return null;
+      throw e;
+    });
+  }
+
+  /** Every product category (slug, name, count), read once per tab. */
+  var wooCatsPromise = null;
+  function wooCategories() {
+    if (wooCatsPromise) return wooCatsPromise;
+    var hit = cacheGet('woo-cats');
+    if (hit !== undefined) { wooCatsPromise = Promise.resolve(hit); return wooCatsPromise; }
+    var all = [];
+    function page(n) {
+      return fetchJson(Vendor.feedUrl(Vendor.woo.api + '/products/categories', { per_page: '100', page: String(n) }),
+        { headers: { 'Accept': 'application/json' } }).then(function (body) {
+        var list = Array.isArray(body) ? body : [];
+        list.forEach(function (c) {
+          if (c && c.slug && c.name) all.push({ slug: String(c.slug), name: wooText(c.name), count: typeof c.count === 'number' ? c.count : 0 });
+        });
+        if (list.length >= 100 && n < 10) return page(n + 1);
+        return all;
+      });
+    }
+    wooCatsPromise = page(1).then(function (list) { cacheSet('woo-cats', list); return list; })
+      .catch(function () { wooCatsPromise = null; return []; });
+    return wooCatsPromise;
+  }
+
+  /** Search as you type: ten products, plus the store's categories whose
+   *  names start with the words typed ("royal" offers Royal Canin). */
+  function wooSuggest(q) {
+    var words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    return Promise.all([
+      wooGet('/products', { search: q, per_page: '10' }).catch(function () { return []; }),
+      wooCategories()
+    ]).then(function (r) {
+      var products = (Array.isArray(r[0]) ? r[0] : []).map(productFromWoo).filter(Boolean);
+      var collections = r[1].filter(function (c) {
+        if (!c.count) return false;
+        var name = ' ' + c.name.toLowerCase();
+        return words.every(function (w) { return name.indexOf(' ' + w) !== -1; });
+      }).sort(function (a, b) { return b.count - a.count; }).slice(0, 5)
+        .map(function (c) { return { handle: c.slug, title: c.name }; });
+      return { query: q, products: products, collections: collections };
+    });
+  }
+
+  function wooSearch(q, opts) {
+    opts = opts || {};
+    var n = wooPageNum(opts.after);
+    return wooGet('/products', { search: q, per_page: String(PAGE_SIZE), page: String(n) }).then(function (body) {
+      var raw = Array.isArray(body) ? body : [];
+      return {
+        query: q,
+        products: raw.map(productFromWoo).filter(Boolean),
+        hasMore: raw.length >= PAGE_SIZE,
+        endCursor: 'wp:' + (n + 1),
+        total: null
+      };
+    });
+  }
+
+  /** WooCommerce's own related products. Never rejects. */
+  function wooRelated(productId) {
+    return wooGet('/products', { related: String(productId), per_page: '8' }).then(function (body) {
+      return (Array.isArray(body) ? body : []).map(productFromWoo).filter(Boolean)
+        .filter(function (p) { return p.id !== productId; }).slice(0, 8);
+    }).catch(function () { return []; });
+  }
+
+  function slugify(t) {
+    return String(t || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  /** A brand is a category on a WooCommerce store (Brands > Royal Canin).
+   *  If it is not one, the store's search filtered to that brand. */
+  function wooBrandPage(brand, opts) {
+    var b = String(brand || '').trim();
+    return wooCollectionPage(slugify(b), opts).then(function (page) {
+      if (!page.missing && (page.products.length || opts.after)) return page;
+      return wooSearch(b, {}).then(function (r) {
+        var key = b.toLowerCase();
+        return {
+          products: r.products.filter(function (p) { return String(p.brand || '').trim().toLowerCase() === key; }),
+          hasMore: false, endCursor: null, missing: false, clientSort: true
+        };
+      });
+    });
   }
 
   /* ================================================================== CART */
@@ -2187,6 +2594,9 @@
    *  per cart+address, so a re-render never re-creates a cart. */
   function quoteDelivery(lines, d, opts) {
     opts = opts || {};
+    if (!Vendor.capabilities.deliveryQuote || IS_WOO) {
+      return Promise.reject(StorefrontError('This store shows its delivery charge on its own checkout page.'));
+    }
     if (!d || !validateDelivery(d).ok) return Promise.reject(StorefrontError('Delivery details are needed first.'));
     if (!sellableOf(lines).length) return Promise.reject(StorefrontError('Nothing in the bag can be delivered.'));
     var key = quoteKey(lines, d);
@@ -2382,7 +2792,13 @@
     if (!m) return false;
     var host = m[1].toLowerCase();
     var bare = Vendor.domain.replace(/^www\./, '');
-    return host === Vendor.domain || host === bare || host === 'www.' + bare || host === Vendor.myshopifyDomain;
+    if (host === Vendor.domain || host === bare || host === Vendor.myshopifyDomain) return true;
+    // Their own subdomains (www., checkout.): still their site.
+    if (host.length > bare.length + 1 && host.slice(-(bare.length + 1)) === '.' + bare) return true;
+    // A headless store's checkout runs on Shopify's own host for the shop;
+    // the link comes from that store's API, through the route fixed in
+    // vercel.json, so it is theirs.
+    return IS_HEADLESS && /^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(host);
   }
 
   function checkoutUrl(lines, opts) {
@@ -2419,24 +2835,9 @@
     return Vendor.url('/cart/' + items, query);
   }
 
-  /** Hand [lines] to the vendor's checkout, exactly as the app's
-   *  startVendorCheckout does - mint a reference, keep a receipt, go.
-   *
-   *  The receipt records the hand-off itself: what was sent, when, and the
-   *  reference that rode along. The hand-off is a synchronous redirect to
-   *  the vendor's cart permalink - instant, no API round-trip - which is
-   *  what makes buying here feel immediate. RRT never claims more than the
-   *  hand-off; the authoritative order count comes from the vendor's
-   *  Shopify via the backend webhook, which sees the rrt_ref regardless. */
-  function beginCheckout(lines, opts) {
-    opts = opts || {};
-    var sellable = lines.filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; });
-    if (!sellable.length) return null;
-    // A valid quote means a cart already exists on the vendor's Shopify with
-    // this exact address and delivery option: hand THAT off, so the vendor's
-    // page shows the delivery charge and total the buyer has already seen.
-    var quote = opts.quote && quoteMatches(opts.quote, lines, delivery()) ? opts.quote : null;
-    var rrtRef = quote ? quote.rrtRef : newRrtRef();
+  /** The receipt RRT keeps for a hand-off: what was sent, when, and the
+   *  reference that rode along. RRT never claims more than the hand-off. */
+  function handoffReceipt(sellable, rrtRef, quote) {
     var now = Date.now();
     // The app's id is 'rrt-<millis>'. Two hand-offs in one millisecond would
     // share it and the second receipt would silently replace the first, so
@@ -2457,19 +2858,190 @@
       vendorOrderNumber: null,
       statusUrl: null,
       rrtRef: rrtRef,
+      vendor: Vendor.key,
       status: 'handed'
     };
     if (quote && quote.deliveryPaise != null) {
       order.deliveryPaise = quote.deliveryPaise;
       order.totalPaise = quote.totalPaise;
     }
-    saveReceipt(order);
+    return saveReceipt(order);
+  }
+
+  /** Hand [lines] to the vendor's checkout, exactly as the app's
+   *  startVendorCheckout does - mint a reference, keep a receipt, go.
+   *
+   *  For a Shopify Online Store the hand-off is a synchronous redirect to
+   *  the cart permalink (or to the quoted cart's own checkout link) -
+   *  instant, no API round-trip. Returns null when nothing is sellable.
+   *  Other stores need a round-trip first: use startCheckout. */
+  function beginCheckout(lines, opts) {
+    opts = opts || {};
+    var sellable = lines.filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; });
+    if (!sellable.length) return null;
+    // A valid quote means a cart already exists on the vendor's Shopify with
+    // this exact address and delivery option: hand THAT off, so the vendor's
+    // page shows the delivery charge and total the buyer has already seen.
+    var quote = opts.quote && quoteMatches(opts.quote, lines, delivery()) ? opts.quote : null;
+    var rrtRef = quote ? quote.rrtRef : newRrtRef();
+    var order = handoffReceipt(sellable, rrtRef, quote);
     // The cart's own checkout link only when it is on the store's own site;
     // otherwise the cart link we build ourselves (same goods, same store).
     var url = quote && trustedCheckoutUrl(quote.checkoutUrl) ? quote.checkoutUrl : checkoutUrl(sellable, {
       buyerName: opts.buyerName, buyerPhone: opts.buyerPhone, rrtRef: rrtRef
     });
     return { order: order, url: url, quoted: !!quote };
+  }
+
+  /** A cart on a headless Shopify store, created for checkout when there is
+   *  no delivery quote to hand off: the goods, the reference, and whatever
+   *  of the buyer's details are known, so their checkout opens filled in. */
+  function headlessCheckoutCart(sellable, rrtRef) {
+    var d = delivery();
+    var input;
+    if (d && validateDelivery(d).ok) {
+      input = cartInput(sellable, d, rrtRef);
+    } else {
+      input = {
+        lines: sellable.map(function (l) {
+          return { merchandiseId: 'gid://shopify/ProductVariant/' + l.variantId, quantity: l.qty };
+        }),
+        attributes: [{ key: 'source', value: 'RRT website' }, { key: 'rrt_ref', value: rrtRef }]
+      };
+    }
+    var mutation = 'mutation RrtCheckoutCart($input: CartInput!) {' +
+      ' cartCreate(input: $input) { cart { id checkoutUrl } userErrors { message field } } }';
+    return gql(mutation, { input: input }, { fresh: true }).then(function (data) {
+      var res = data && data.cartCreate;
+      var msg = userErrorMessage(res && res.userErrors);
+      if (msg) throw StorefrontError(msg);
+      var url = res && res.cart && res.cart.checkoutUrl;
+      if (!trustedCheckoutUrl(url)) throw StorefrontError('The store could not start checkout right now.');
+      return url;
+    });
+  }
+
+  /* ---------------------------------------------- WooCommerce hand-off */
+  /* A WooCommerce cart lives in the buyer's session cookie on the store's own
+   * site, and a web page on another site cannot write to it. What it can do
+   * is open the store's own "add to cart" links in a window of the store's
+   * site - exactly the links their product pages use - one line at a time,
+   * then show their cart page with everything in it. The buyer pays there.
+   * Anything already in their JustDogs cart from an earlier visit stays (no
+   * other site can remove it); it shows on that cart page, where it can be
+   * removed. A one-line bag needs no extra window: the current tab goes
+   * straight to their cart page with the line added. */
+
+  var WOO_STEP_MS = 3500;
+
+  function wooUtm(q) {
+    q.utm_source = 'rapid-response';
+    q.utm_medium = 'website';
+    q.utm_campaign = 'rrt-shop';
+    return q;
+  }
+
+  /** The store's own add-to-cart link for one line, landing on its cart page. */
+  function wooAddUrl(line, add) {
+    var q = {};
+    if (add && add.variation) {
+      q['add-to-cart'] = String(add.product);
+      q.variation_id = String(add.variation);
+      Object.keys(add.attrs || {}).forEach(function (k) { q[k] = add.attrs[k]; });
+    } else {
+      q['add-to-cart'] = String(add && add.product ? add.product : line.variantId);
+    }
+    q.quantity = String(line.qty);
+    return Vendor.url(Vendor.woo.cart, wooUtm(q));
+  }
+
+  /** The add-to-cart link of each line, from the live product record (cached
+   *  minutes ago by the price check). A line whose product cannot be read
+   *  falls back to its own id, which WooCommerce also accepts. */
+  function wooAddUrls(sellable) {
+    var handles = [];
+    sellable.forEach(function (l) { if (handles.indexOf(l.handle) === -1) handles.push(l.handle); });
+    return Promise.all(handles.map(function (h) {
+      return wooProduct(h).catch(function () { return null; });
+    })).then(function (products) {
+      var byHandle = {};
+      handles.forEach(function (h, i) { byHandle[h] = products[i]; });
+      return sellable.map(function (l) {
+        var p = byHandle[l.handle];
+        var v = p && p.variantById(l.variantId);
+        var add = v && v.wooAdd ? v.wooAdd : (l.productId && l.productId !== l.variantId
+          ? { product: l.productId, variation: l.variantId, attrs: {} }
+          : { product: l.variantId, variation: null, attrs: {} });
+        return wooAddUrl(l, add);
+      });
+    });
+  }
+
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  /** Walk [win] through [urls], then their cart page. [onStep](i, n) reports
+   *  progress. Rejects if the window was closed on the way. */
+  function wooFill(win, urls, onStep) {
+    var i = 0;
+    function next() {
+      if (!win || win.closed) return Promise.reject(StorefrontError('The ' + Vendor.displayName + ' window was closed before your bag was added.'));
+      if (i >= urls.length) {
+        win.location.href = Vendor.url(Vendor.woo.cart, wooUtm({}));
+        return Promise.resolve();
+      }
+      if (onStep) onStep(i + 1, urls.length);
+      win.location.href = urls[i++];
+      return sleep(WOO_STEP_MS).then(next);
+    }
+    return next();
+  }
+
+  /** Whether a checkout of [lines] needs a window of the store's own site
+   *  (open it in the click handler, before anything asynchronous, or the
+   *  browser blocks it). */
+  function checkoutNeedsWindow(lines) {
+    if (!IS_WOO) return false;
+    return (lines || []).filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; }).length > 1;
+  }
+
+  /** Every store's hand-off, as a promise of { order, url, quoted, opened }.
+   *    shopify_public    the permalink or quoted cart (same as beginCheckout)
+   *    shopify_headless  the quoted cart's checkout, else a new cart's
+   *    woocommerce       their cart page with the bag in it; with more than one
+   *                      line, filled in [opts.window] (opened by the caller
+   *                      during the click), and `opened` is true
+   *  Navigate to `url` unless `opened`. Resolves null when nothing is sellable. */
+  function startCheckout(lines, opts) {
+    opts = opts || {};
+    var sellable = lines.filter(function (l) { return l.available && l.variantId > 0 && l.qty > 0; });
+    if (!sellable.length) return Promise.resolve(null);
+    if (HAS_FEEDS) return Promise.resolve(beginCheckout(lines, opts));
+    if (IS_HEADLESS) {
+      var quote = opts.quote && quoteMatches(opts.quote, lines, delivery()) ? opts.quote : null;
+      if (quote && trustedCheckoutUrl(quote.checkoutUrl)) {
+        return Promise.resolve({ order: handoffReceipt(sellable, quote.rrtRef, quote), url: quote.checkoutUrl, quoted: true });
+      }
+      var ref = newRrtRef();
+      return headlessCheckoutCart(sellable, ref).then(function (url) {
+        return { order: handoffReceipt(sellable, ref, null), url: url, quoted: false };
+      }, function () {
+        // Last resort: the store's own cart link (Hydrogen serves /cart/{lines}).
+        return { order: handoffReceipt(sellable, ref, null), url: checkoutUrl(sellable, { rrtRef: ref }), quoted: false };
+      });
+    }
+    var rrtRef = newRrtRef();
+    return wooAddUrls(sellable).then(function (urls) {
+      if (urls.length === 1) {
+        return { order: handoffReceipt(sellable, rrtRef, null), url: urls[0], quoted: false, opened: false };
+      }
+      var win = opts.window;
+      if (!win || win.closed) {
+        throw StorefrontError('Your browser blocked the ' + Vendor.displayName + ' window. Allow pop-ups for this site, then press checkout again.');
+      }
+      return wooFill(win, urls, opts.onStep).then(function () {
+        return { order: handoffReceipt(sellable, rrtRef, null), url: Vendor.cartPageUrl, quoted: false, opened: true };
+      });
+    });
   }
 
 
@@ -2554,6 +3126,8 @@
     newRrtRef: newRrtRef,
     checkoutUrl: checkoutUrl,
     beginCheckout: beginCheckout,
+    startCheckout: startCheckout,
+    checkoutNeedsWindow: checkoutNeedsWindow,
     quoteDelivery: quoteDelivery,
     selectDeliveryOption: selectDeliveryOption,
     quoteMatches: quoteMatches,
@@ -2584,6 +3158,9 @@
     transport: transport,
     resetTransport: function () { try { session.removeItem(TRANSPORT_KEY); } catch (e) { /* ignore */ } },
     setFetch: function (fn) { fetchImpl = fn; },
+    setWooStepMs: function (ms) { WOO_STEP_MS = ms; },
+    productFromWoo: productFromWoo,
+    productFromWooFull: productFromWooFull,
     stores: { local: local, session: session }
   };
 

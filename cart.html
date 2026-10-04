@@ -227,6 +227,14 @@
   var S = window.RRTShop, U = window.RRTUI, esc = S.esc;
   function $(id) { return document.getElementById(id); }
 
+  // A WooCommerce store keeps the buyer's details in its own session, which
+  // no other site can fill: the form would do nothing, so it is not shown
+  // and checkout does not wait for it. Their checkout page asks instead.
+  var WOO = !!S.vendor.isWoo;
+  var QUOTES = !!(S.vendor.capabilities && S.vendor.capabilities.deliveryQuote) && !WOO;
+  var STORE = S.vendor.displayName || 'the seller';
+  if (WOO) $('delivery').hidden = true;
+
   U.bindHeader();
 
   /* --------------------------------------------------- delivery details */
@@ -304,13 +312,13 @@
   // The bottom bar's Checkout lands here with ?go=1: with details saved,
   // bring the pay button into view; without, open the form first.
   var qp = new URLSearchParams(location.search);
-  if (qp.get('go') === '1' && S.deliveryComplete()) {
+  if (qp.get('go') === '1' && (WOO || S.deliveryComplete())) {
     setTimeout(function () {
       var b = $('checkout'); if (!b || $('checkoutBlock').hidden) return;
       b.scrollIntoView({ behavior: 'smooth', block: 'center' }); b.focus({ preventScroll: true });
     }, 120);
   }
-  if ((qp.get('details') === '1' || qp.get('go') === '1') && !S.deliveryComplete()) {
+  if (!WOO && (qp.get('details') === '1' || qp.get('go') === '1') && !S.deliveryComplete()) {
     setTimeout(function () { $('delivery').scrollIntoView({ behavior: 'smooth', block: 'start' }); dField('firstName').focus(); }, 60);
   }
   U.storeGate();
@@ -408,6 +416,14 @@
     if (b.disabled) return;
     var lines = S.cart().lines.filter(function (l) { return l.available; });
     var q = quote.current && S.quoteMatches(quote.current, lines, S.delivery()) ? quote.current : null;
+    if (WOO) {
+      b.textContent = 'Go to ' + STORE + ' checkout';
+      $('bdHint').hidden = false;
+      $('bdHint').textContent = S.checkoutNeedsWindow(lines)
+        ? 'A ' + STORE + ' tab opens and your bag is added to their cart, one item at a time. Delivery and payment are on their checkout.'
+        : 'Next page: ' + STORE + '\u2019s own cart with your item in it. Delivery and payment are on their checkout.';
+      return;
+    }
     if (q && q.totalPaise != null) {
       b.textContent = 'Pay ' + S.money(q.totalPaise) + ' on secure checkout';
       $('bdHint').hidden = false;
@@ -428,6 +444,13 @@
     $('bdOffers').hidden = true;
     var q = quote.current && S.quoteMatches(quote.current, lines, d) ? quote.current : null;
     if (!lines.length) { $('bdDelivery').textContent = '-'; $('bdTotal').textContent = '-'; note.textContent = ''; return; }
+    if (!QUOTES) {
+      $('bdDelivery').textContent = 'At checkout';
+      $('bdTotalLabel').textContent = 'Total before delivery';
+      $('bdTotal').textContent = S.money(S.cart().subtotalPaise);
+      note.textContent = STORE + ' shows the delivery charge on its checkout page, before you pay.';
+      return;
+    }
     if (!S.deliveryComplete()) {
       $('bdDelivery').textContent = '-';
       $('bdTotalLabel').textContent = 'Total before delivery';
@@ -478,7 +501,7 @@
   function refreshQuote() {
     var lines = S.cart().lines.filter(function (l) { return l.available; });
     var d = S.delivery();
-    if (!lines.length || !S.deliveryComplete()) { quote.current = null; quote.pending = null; paintQuote(); return null; }
+    if (!QUOTES || !lines.length || !S.deliveryComplete()) { quote.current = null; quote.pending = null; paintQuote(); return null; }
     if (quote.current && S.quoteMatches(quote.current, lines, d)) { paintQuote(); return Promise.resolve(quote.current); }
     quote.error = null; quote.unserviceable = false;
     var p = S.quoteDelivery(lines, d).then(function (q) {
@@ -514,7 +537,26 @@
   /* ------------------------------------------------------- the hand-off */
 
   var btn = $('checkout');
+  /* A WooCommerce bag of several lines is added to the store's cart in a
+   * window of the store's own site. Browsers only allow a window opened
+   * straight from the click, so it is opened here, before the price check,
+   * holding a short note, and closed again if checkout stops. */
+  function openVendorWindow() {
+    if (!S.checkoutNeedsWindow(S.cart().lines)) return null;
+    var w = null;
+    try { w = window.open('', 'rrt-vendor-checkout'); } catch (e) { w = null; }
+    if (!w) return null;
+    try {
+      w.document.title = STORE;
+      w.document.body.style.cssText = 'font:16px/1.5 system-ui,sans-serif;margin:0;padding:48px 24px;text-align:center;color:#111';
+      w.document.body.textContent = 'Adding your RRT bag to ' + STORE + '\u2026';
+    } catch (e) { /* not ours to write to: fine */ }
+    return w;
+  }
+  function closeWindow(w) { try { if (w && !w.closed) w.close(); } catch (e) { /* ignore */ } }
+
   btn.addEventListener('click', function () {
+    var win = openVendorWindow();
     btn.disabled = true;
     btn.textContent = 'Checking prices\u2026';
     S.revalidateCart().then(function (r) {
@@ -525,16 +567,19 @@
         paintCheckoutButton();
         U.toast('Something changed. Check your bag, then press again');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        closeWindow(win);
         return;
       }
       var sellable = r.lines.filter(function (l) { return l.available; });
       if (!sellable.length) {
+        closeWindow(win);
         btn.disabled = false;
         paintCheckoutButton();
         U.toast('Nothing in your bag is in stock right now');
         return;
       }
-      if (!U.storeOpenNow()) { U.toast('The shop is closed right now.'); btn.disabled=false; paintCheckoutButton(); return; }
+      if (!U.storeOpenNow()) { closeWindow(win); U.toast('The shop is closed right now.'); btn.disabled=false; paintCheckoutButton(); return; }
+      if (WOO) return wooHandoff(sellable, win);
       if (!S.deliveryComplete()) {
         // Show the form with every missing field named, and do not leave.
         var v = S.validateDelivery(dRead());
@@ -559,17 +604,40 @@
           U.toast('The seller does not deliver to this address. Edit your delivery details.');
           return;
         }
-        var handoff = S.beginCheckout(lines, { fromCart: true, quote: q });
-        if (handoff) { location.href = handoff.url; return; }
-        btn.disabled = false;
-        paintCheckoutButton();
+        btn.textContent = 'Opening secure checkout\u2026';
+        return S.startCheckout(lines, { fromCart: true, quote: q }).then(function (handoff) {
+          if (handoff) { location.href = handoff.url; return; }
+          btn.disabled = false;
+          paintCheckoutButton();
+        });
       });
     }).catch(function (e) {
+      closeWindow(win);
       btn.disabled = false;
       paintCheckoutButton();
       U.toast(e && e.message ? e.message : 'Could not re-check prices. Try again.');
     });
   });
+
+  /* WooCommerce: their cart page with the bag in it. One line goes in this
+   * tab; several fill the window opened by the click, and this page says how
+   * it is going and where to pay. */
+  function wooHandoff(sellable, win) {
+    btn.textContent = 'Opening ' + STORE + '\u2026';
+    return S.startCheckout(sellable, {
+      fromCart: true,
+      window: win,
+      onStep: function (i, n) { btn.textContent = 'Adding ' + i + ' of ' + n + ' to ' + STORE + '\u2026'; }
+    }).then(function (handoff) {
+      if (!handoff) { closeWindow(win); btn.disabled = false; paintCheckoutButton(); return; }
+      if (!handoff.opened) { closeWindow(win); location.href = handoff.url; return; }
+      btn.disabled = false;
+      paintCheckoutButton();
+      $('bdHint').hidden = false;
+      $('bdHint').textContent = 'Your bag is in ' + STORE + '\u2019s cart, in the other tab. Check it there and pay on their checkout. If anything from an earlier visit is in their cart too, remove it there.';
+      try { win.focus(); } catch (e) { /* ignore */ }
+    });
+  }
 })();
 </script><!-- rr:footer -->
 <div class="rr-chrome rr-ftr" role="contentinfo"><nav aria-label="Site"><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav><nav class="rr-ftr2" aria-label="More"><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/policy" data-rr-en="Terms &amp; Privacy" data-rr-hi="शर्तें और प्राइवेसी">Terms &amp; Privacy</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav><span class="rr-ftr-copy" data-rr-en="© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority.</span></div>
