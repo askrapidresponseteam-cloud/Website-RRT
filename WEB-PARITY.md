@@ -162,10 +162,13 @@ So web orders appear in the same admin count, split from app orders by the
 What a shopper sees on a listing is decided the same way on both, by the
 same rules:
 
-- **The landing** is the store's best sellers through the Storefront API on
-  both (`products(sortKey: BEST_SELLING)`), and the store's "all" feed on
-  both when the API fails or answers empty. (The app used to read the "all"
-  feed only, which is alphabetical: a different first screen.)
+- **The landing** is the store's "all" feed on both
+  (`/collections/all/products.json`, 24 a page): everything the store lists,
+  in its own order, as the app read it in 2.22.4. The API's whole-catalogue
+  read (`products(sortKey: BEST_SELLING)`) only has what the store publishes
+  to that channel and left out listings such as Vivaldis' Rs 1 and Rs 10
+  ones. On the website the API still sorts newest / price over the whole
+  range, and stands in when the feed fails on the first page.
 - **Everything the store lists is shown** on both, in its order: sold-out
   items too (marked sold out, no Add), and items the store tags to keep off
   its own listings (Supertails: `st-hide`, `findify-remove`), which can be

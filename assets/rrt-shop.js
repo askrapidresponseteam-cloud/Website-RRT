@@ -1637,6 +1637,24 @@
     // A listing that started on the API carries the API's cursor: it goes
     // on there, so its order never changes and nothing repeats mid-scroll.
     var apiCursor = !!opts.after && !/^fp:/.test(String(opts.after));
+    // The landing, in the store's own order: its "all" feed, everything the
+    // store lists, as the app reads it (the API's whole-catalogue read only
+    // has what is published to its channel, and left out listings such as
+    // Vivaldis' Rs 1 and Rs 10 ones). Other orders are sorted by the API
+    // over the whole catalogue, as before. If the feed fails on the first
+    // page, the API stands in for that listing.
+    if (handle === Vendor.catalogHandle && !apiCursor && (opts.sort || 'featured') === 'featured') {
+      return feedCollectionPage(handle, opts).then(function (page) {
+        if (page.missing && !opts.after) return catalogPage(opts);
+        // With the API healthy a new order reloads through it (sorted over
+        // everything); with the API down, the feed's pages sort on the page.
+        page.clientSort = transport() === 'feeds';
+        return page;
+      }, function (e) {
+        if (opts.after) throw e;
+        return catalogPage(opts);
+      });
+    }
     if (!apiCursor && (transport() === 'feeds' || /^fp:/.test(String(opts.after || '')))) {
       return feedCollectionPage(handle, opts);
     }

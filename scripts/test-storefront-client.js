@@ -972,7 +972,20 @@ S.revalidateCart().then((r) => {
    * collection, not Shopify's virtual everything-collection. The catalogue
    * must therefore use the top-level products connection. */
   var captured = [];
+  var feedReads = [];
+  // Everything the store lists, its Rs 1 and Rs 10 listings too (Vivaldis'
+  // were missing from the API's whole-catalogue read in 2.23.2).
+  var landingFeed = [
+    { id: 901, handle: 'vivaldis-one', title: 'Vivaldis One Rupee', vendor: 'Vivaldis',
+      variants: [{ id: 9011, title: 'Default Title', price: '1.00', available: true }] },
+    { id: 902, handle: 'vivaldis-ten', title: 'Vivaldis Ten Rupees', vendor: 'Vivaldis',
+      variants: [{ id: 9021, title: 'Default Title', price: '10.00', available: true }] }
+  ];
   S.__internal.setFetch(function (url, init) {
+    if (!init || !init.body) {
+      feedReads.push(String(url));
+      return jsonRes({ products: landingFeed });
+    }
     captured.push(JSON.parse(init.body));
     return gqlResponse({
       products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [tileNode] },
@@ -981,17 +994,44 @@ S.revalidateCart().then((r) => {
   });
   S.clearResponseCache();
   return S.collectionPage('all', { sort: 'featured' }).then(function (page) {
-    var q = captured[captured.length - 1];
-    ok(q.query.indexOf('products(first:') !== -1 && q.query.indexOf('collection(handle') === -1,
-      'catalogue reads the top-level products connection, never a collection handle');
-    ok(q.variables.sortKey === 'BEST_SELLING',
-      'catalogue featured order is the store\u2019s best sellers');
-    eq(page.products.length, 1, 'catalogue page normalises tiles');
+    ok(feedReads.some(function (u) {
+      return u.indexOf('/pl-api/collections/all/products.json') === 0 &&
+        u.indexOf('limit=24') !== -1 && u.indexOf('page=1') !== -1;
+    }), 'the landing in the store\u2019s own order reads its "all" feed, as the app (24 a page)');
+    eq(captured.length, 0, 'and not the API');
+    eq(page.products.map(function (p) { return p.cheapestVariant.pricePaise; }), [100, 1000],
+      'Rs 1 and Rs 10 listings are on it');
+    eq(page.endCursor, 'fp:2', 'it pages by feed cursor');
+    eq(page.clientSort, false, 'with the API healthy, a new order reloads through the API');
     return S.collectionPage('all', { sort: 'newest' });
   }).then(function () {
     var q = captured[captured.length - 1];
+    ok(q.query.indexOf('products(first:') !== -1 && q.query.indexOf('collection(handle') === -1,
+      'another order reads the top-level products connection, never a collection handle');
     ok(q.variables.sortKey === 'CREATED_AT' && q.variables.reverse === true,
       'catalogue newest maps to CREATED_AT reversed');
+    // The landing's feed failing: the API stands in for its first page; a
+    // later feed page failing is an error to retry, never another order.
+    S.__internal.setFetch(function (url, init) {
+      if (!init || !init.body) return jsonRes({}, 503);
+      return gqlResponse({ products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [tileNode] } });
+    });
+    S.clearResponseCache();
+    return S.collectionPage('all', { sort: 'featured' });
+  }).then(function (page) {
+    eq(page.products.length, 1, 'feed down on the first page: the API stands in');
+    return S.collectionPage('all', { sort: 'featured', after: 'fp:3' }).then(function () { return 'loaded'; },
+      function () { return 'failed'; });
+  }).then(function (outcome) {
+    eq(outcome, 'failed', 'a later feed page failing fails that page');
+    S.__internal.setFetch(function (url, init) {
+      captured.push(JSON.parse(init.body));
+      return gqlResponse({
+        products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [tileNode] },
+        collection: { products: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [tileNode] } }
+      });
+    });
+    S.clearResponseCache();
     return S.collectionPage('dog-treats', { sort: 'featured' });
   }).then(function () {
     var q = captured[captured.length - 1];
@@ -1029,16 +1069,19 @@ S.revalidateCart().then((r) => {
   });
 
   eq(S.__internal.transport(), 'sf', 'the API answers first');
-  return S.collectionPage('all', { sort: 'featured' }).then(function (page) {
-    eq(page.products.length, 1, 'an empty API catalogue falls through to the vendor feed');
+  return S.collectionPage('dog-treats', { sort: 'featured' }).then(function (page) {
+    eq(page.products.length, 1, 'an empty API aisle falls through to the vendor feed');
     eq(page.products[0].cheapestVariant.pricePaise, 15800, 'feed tile priced from the decimal string');
     ok(page.clientSort, 'feed pages sort on the client');
-    eq(page.endCursor, 'fp:2', 'feed catalogue pages by feed cursor');
-    ok(urls.some(function (u) {
-      return u.indexOf('/pl-api/collections/all/products.json') === 0 &&
-        u.indexOf('limit=24') !== -1 && u.indexOf('page=1') !== -1;
-    }), 'catalogue feed read is the app\u2019s: 24 a page');
     eq(S.__internal.transport(), 'feeds', 'and the feeds keep the session');
+    urls.length = 0;
+    return S.collectionPage('all', { sort: 'featured' });
+  }).then(function (page) {
+    ok(urls.length === 1 && urls[0].indexOf('/pl-api/collections/all/products.json') === 0 &&
+      urls[0].indexOf('limit=24') !== -1 && urls[0].indexOf('page=1') !== -1,
+      'catalogue feed read is the app\u2019s: 24 a page');
+    ok(page.clientSort, 'with the API down, the landing\u2019s pages sort on the page');
+    eq(page.endCursor, 'fp:2', 'feed catalogue pages by feed cursor');
 
     urls.length = 0;
     return S.collectionPage('all', { after: 'fp:2' });
@@ -1048,6 +1091,7 @@ S.revalidateCart().then((r) => {
       'the feed cursor continues on the feed, no API retry');
 
     urls.length = 0;
+    S.clearResponseCache(); // read above already: ask the feed again
     return S.collectionPage('dog-treats', {});
   }).then(function (page) {
     ok(urls[0].indexOf('/pl-api/collections/dog-treats/products.json') === 0 &&

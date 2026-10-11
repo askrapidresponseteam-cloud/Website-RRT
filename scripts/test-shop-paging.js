@@ -27,6 +27,17 @@ if (!PW) { console.log('shop paging: skipped (Playwright not installed)'); proce
 const { chromium } = PW;
 
 const PAGES = 5, SIZE = 24;
+/* The landing reads the store's "all" feed (24 a page, through /st-api),
+ * as the app does. Page 1 carries a Rs 1 and a Rs 10 listing (Vivaldis'
+ * were missing in 2.23.2), a sold-out one and one the store tags st-hide. */
+function feedItem(p, i) {
+  const id = p * 100 + i;
+  const price = p === 1 && i === 3 ? '1.00' : (p === 1 && i === 4 ? '10.00' : '100.00');
+  return { id, handle: 'p' + id, title: 'Product ' + id, vendor: i === 3 || i === 4 ? 'Vivaldis' : 'Brand',
+    product_type: 'Dog Food', tags: i === 7 ? ['st-hide'] : ['Veg'], images: [],
+    options: [{ name: 'Title', position: 1, values: ['Default Title'] }],
+    variants: [{ id: id * 10, title: 'Default Title', option1: 'Default Title', price, available: i !== 5 }] };
+}
 function node(p, i) {
   const id = p * 100 + i;
   return { id: 'gid://shopify/Product/' + id, handle: 'p' + id, title: 'Product ' + id, vendor: 'Brand',
@@ -52,10 +63,20 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
   }
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const calls = []; let failPage = 0;
+  const apiCalls = [];
   await page.route('**/*', async (route) => {
     const url = route.request().url();
+    if (url.startsWith(BASE + '/st-api/collections/all/products.json')) {
+      const p = Number(new URL(url).searchParams.get('page') || '1');
+      calls.push({ p, t: Date.now() });
+      await new Promise((r) => setTimeout(r, 300)); // a real store takes a moment
+      if (p === failPage) return route.fulfill({ status: 503, body: 'down' });
+      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({
+        products: p <= PAGES ? Array.from({ length: SIZE }, (_, i) => feedItem(p, i)) : [] }) });
+    }
     if (url.startsWith(BASE)) return route.continue();
     if (url.includes('/graphql.json')) {
+      apiCalls.push(url);
       const body = JSON.parse(route.request().postData() || '{}');
       const after = body.variables && body.variables.after;
       const p = after ? Number(String(after).slice(1)) : 1;
@@ -81,6 +102,10 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
   (n1 % SIZE === 0 && n1 >= SIZE) ? pass('first page drawn: ' + n1 + ' tiles (sold-out and st-hide included)') : fail('first page tiles ' + n1);
   const before = calls.map((c) => c.p);
   before.includes(2) ? pass('page 2 read ahead before any scroll: ' + JSON.stringify(before)) : fail('no read-ahead: ' + JSON.stringify(before));
+  const prices = await page.evaluate(() => document.getElementById('grid').textContent);
+  (/₹1(?![0-9])/.test(prices) && /₹10(?![0-9])/.test(prices))
+    ? pass('the Rs 1 and Rs 10 listings are on the landing') : fail('Rs 1 / Rs 10 listings missing');
+  apiCalls.length === 0 ? pass('the landing read the store\'s "all" feed, not the API') : fail('API used: ' + apiCalls.length);
   const hidden = await page.evaluate(() => !!document.querySelector('a[href*="p107"]'));
   hidden ? pass('a product the store tags st-hide is listed') : fail('st-hide product missing');
   const soldOut = await page.evaluate(() => {
