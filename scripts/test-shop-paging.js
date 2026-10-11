@@ -28,11 +28,11 @@ const { chromium } = PW;
 
 const PAGES = 5, SIZE = 24;
 /* The landing reads the store's "all" feed (24 a page, through /st-api),
- * as the app does. Page 1 carries a Rs 1 and a Rs 10 listing (Vivaldis'
+ * as the app does. Page 1 carries Rs 0.01, Rs 1 and Rs 10 listings (Vivaldis'
  * were missing in 2.23.2), a sold-out one and one the store tags st-hide. */
 function feedItem(p, i) {
   const id = p * 100 + i;
-  const price = p === 1 && i === 3 ? '1.00' : (p === 1 && i === 4 ? '10.00' : '100.00');
+  const price = p === 1 && i === 2 ? '0.01' : (p === 1 && i === 3 ? '1.00' : (p === 1 && i === 4 ? '10.00' : '100.00'));
   return { id, handle: 'p' + id, title: 'Product ' + id, vendor: i === 3 || i === 4 ? 'Vivaldis' : 'Brand',
     product_type: 'Dog Food', tags: i === 7 ? ['st-hide'] : ['Veg'], images: [],
     options: [{ name: 'Title', position: 1, values: ['Default Title'] }],
@@ -103,8 +103,8 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
   const before = calls.map((c) => c.p);
   before.includes(2) ? pass('page 2 read ahead before any scroll: ' + JSON.stringify(before)) : fail('no read-ahead: ' + JSON.stringify(before));
   const prices = await page.evaluate(() => document.getElementById('grid').textContent);
-  (/₹1(?![0-9])/.test(prices) && /₹10(?![0-9])/.test(prices))
-    ? pass('the Rs 1 and Rs 10 listings are on the landing') : fail('Rs 1 / Rs 10 listings missing');
+  (/₹0\.01/.test(prices) && /₹1(?![0-9.])/.test(prices) && /₹10(?![0-9])/.test(prices))
+    ? pass('the Rs 0.01, Rs 1 and Rs 10 listings are on the landing') : fail('Rs 0.01 / Rs 1 / Rs 10 listings missing');
   apiCalls.length === 0 ? pass('the landing read the store\'s "all" feed, not the API') : fail('API used: ' + apiCalls.length);
   const hidden = await page.evaluate(() => !!document.querySelector('a[href*="p107"]'));
   hidden ? pass('a product the store tags st-hide is listed') : fail('st-hide product missing');

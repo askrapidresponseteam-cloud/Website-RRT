@@ -133,6 +133,69 @@ html[lang=hi] .btn{font-family:var(--sg-hindi);font-size:15px;font-weight:700;le
 .learn button:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
 .learn i{font-style:normal;color:var(--sg-disabled)}
 
+/* results page, the way a search engine shows one: the page turns into
+   results under the search field (no drawer). A result that is one of our
+   answers opens in place under its + ; a page is a plain link. */
+body.serping main{justify-content:flex-start;padding-top:clamp(8px,2vh,18px)}
+body.serping .inner{margin:0 auto;text-align:left;align-items:stretch}
+body.serping :is(h1,.qrow,.learn,#recentRow){display:none}
+body.serping .search{margin-top:clamp(6px,2vh,18px)}
+.serp{width:100%;margin-top:12px;text-align:left}
+.sr-n{margin:0 0 4px;font-size:13px;color:var(--low)}
+.sr-k{display:block;font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+html[lang=hi] .sr-k{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:12.5px}
+.sr-box{margin:10px 0 6px;padding:16px 18px;background:var(--sg-mist)}
+.sr-box.pin{background:var(--sg-wash);box-shadow:inset 0 0 0 1px var(--sg-wash-line)}
+.sr-box h2{margin:4px 0 8px;font-family:var(--sg-display);font-weight:800;font-size:clamp(20px,2.4vw,24px);line-height:1.2;letter-spacing:var(--sg-track-title);color:var(--ink)}
+html[lang=hi] .sr-box h2{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;line-height:1.35}
+.sr-lead{margin:0 0 6px;font-size:15.5px;color:var(--mid)}
+.sr-go{display:inline-block;margin-top:6px;font-size:14px;font-weight:700;color:var(--sg-link)}
+a.sr-box{display:block}
+a.sr-box:hover .sr-go{text-decoration:underline;text-underline-offset:3px}
+.sr-body p{max-width:62ch;margin:0 0 8px;font-size:15.5px;line-height:1.55;color:var(--mid)}
+.sr-body p.em{font-weight:700;color:var(--ink)}
+.sr-body .sh-ul{margin:4px 0 10px 20px;font-size:15.5px}
+.sr-body .sh-ul li{margin:4px 0}
+.sr-body .sh-lt{margin:14px 0 6px;font-family:var(--sg-mono);font-size:11.5px;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.sr-body .sh-list b{font-size:15.5px}
+.sr-body .sh-list span{font-size:14px}
+.sr-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+/* One red button per view: the answer box at the top keeps it; buttons in
+   an opened result or "People also ask" are outlined. */
+:is(.sr-list,.sr-paa) .btn.dark{background:var(--sg-paper);box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink)}
+:is(.sr-list,.sr-paa) .btn.dark:hover{background:var(--sg-mist)}
+.sr-list{border-top:1px solid var(--line);margin-top:10px}
+.sr-r,.sr-x{display:block;border-bottom:1px solid var(--sg-fog)}
+.sr-r,.sr-x>summary{padding:13px 0}
+.sr-x>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;column-gap:14px}
+.sr-x>summary::-webkit-details-marker{display:none}
+.sr-x>summary>*{grid-column:1}
+.sr-r .c,.sr-x .c{display:block;margin-bottom:2px;font-size:12.5px;color:var(--low);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-r .t,.sr-x .t{display:block;font-family:var(--sg-display);font-size:18px;font-weight:700;line-height:1.3;letter-spacing:var(--sg-track-title);color:var(--ink)}
+html[lang=hi] :is(.sr-r,.sr-x) .t{font-family:var(--sg-hindi);font-size:17px;letter-spacing:0}
+.sr-r:hover .t,.sr-x>summary:hover .t{text-decoration:underline;text-underline-offset:3px}
+.sr-r .s,.sr-x .s{display:block;margin-top:3px;font-size:14.5px;line-height:1.5;color:var(--mid)}
+.sr-x[open] .s{display:none}
+.sr-plus{grid-column:2!important;grid-row:1/span 3;align-self:center;position:relative;width:28px;height:28px;border:1px solid var(--sg-line-strong)}
+.sr-plus::before,.sr-plus::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;margin:-.75px 0 0 -6px;background:var(--ink);transition:transform var(--sg-ease)}
+.sr-plus::after{transform:rotate(90deg)}
+.sr-x[open] .sr-plus::after{transform:rotate(0)}
+.sr-x>.sr-body,.sr-x>.sr-act{margin-left:0}
+.sr-x>.sr-body{padding:0 0 4px}
+.sr-x>.sr-act{margin:4px 0 16px}
+.sr-full>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px;padding:10px 0;border-top:1px solid var(--sg-line);font-size:14.5px;font-weight:700;color:var(--ink)}
+.sr-full>summary::-webkit-details-marker{display:none}
+.sr-full>summary .sr-plus{grid-row:auto}
+.sr-full[open]>summary .sr-plus::after{transform:rotate(0)}
+.sr-full[open]>summary{border-bottom:0}
+.sr-paa{margin-top:22px}
+.sr-paa .sr-k{margin-bottom:4px}
+.sr-paa .sr-x .t{font-family:var(--sans);font-size:16px;font-weight:600;letter-spacing:0}
+.sr-none{margin:14px 0 4px;font-size:15.5px;color:var(--mid)}
+.sr-more{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
+.sr-more a{display:inline-flex;align-items:center;height:var(--sg-chip-h);padding:0 14px;border:1px solid var(--sg-line-strong);font-size:14px;font-weight:600;color:var(--mid)}
+.sr-more a:hover{background:var(--sg-mist);color:var(--ink)}
+
 /* footer */
 footer{flex:none;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;padding:14px var(--pad);
   background:var(--sg-paper);border-top:1px solid var(--line);font-size:13px;color:var(--low)}
@@ -229,6 +292,7 @@ body.lock{overflow:hidden}
     <div class="results" id="results" role="listbox"></div>
   </div>
   <p class="vmsg" id="vmsg" role="status" aria-live="polite" hidden></p>
+  <section class="serp" id="serp" aria-label="Search results" hidden></section>
 
   <div class="meta" id="recentRow" hidden>
     <span data-i="recent">Recent</span>
@@ -280,7 +344,7 @@ var T={
   footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",navPolicy:"Terms & Privacy",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
-  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top"
+  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top",resFor:"Results for",moreFor:"More searches"
  },
  hi:{
   navFaq:"सवाल",
@@ -292,7 +356,7 @@ var T={
   footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",navPolicy:"शर्तें और प्राइवेसी",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
-  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित",backTop:"ऊपर जाएँ"
+  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित",backTop:"ऊपर जाएँ",resFor:"इसके नतीजे:",moreFor:"और खोजें"
  }
 };
 
@@ -532,6 +596,7 @@ function applyLang(l){
   document.querySelectorAll("[data-i]").forEach(function(el){var v=d[el.getAttribute("data-i")];if(v!=null)el.textContent=v;});
   $("q").placeholder=(window.innerWidth<=640?d.phS:d.ph);
   if(cur)openSheet(cur,true);
+  if(serpOn)serp.innerHTML=serpHtml(serpQ,serpFocus);
   if(document.activeElement===q)render();
 }
 /* The shared header's EN | हिंदी switch (assets/rr-site.js) calls this. */
@@ -831,18 +896,26 @@ function mark(){
   q.setAttribute("aria-activedescendant","r"+sel);
   var el=$("r"+sel);if(el)el.scrollIntoView({block:"nearest"});
 }
+/* A suggestion: one of our answers opens on the results page, in place;
+   a page or an app link is followed, as a search engine would. */
 function open(i){
   var h=hits[i];if(!h)return;
+  if(h.u.indexOf("#s-")===0){runSearch(q.value.trim(),h.u.slice(3));return}
   remember(q.value.trim());drawRecent();
   hide();
-  if(h.u.indexOf("#s-")===0){q.blur();openSheet(h.u.slice(3))}else location.href=h.u;
+  location.href=h.u;
 }
-q.addEventListener("input",function(){sel=0;render()});
-q.addEventListener("focus",function(){sel=0;render()});
+var moved=false; // the arrow keys picked a suggestion
+q.addEventListener("input",function(){sel=0;moved=false;render()});
+q.addEventListener("focus",function(){sel=0;moved=false;render()});
 q.addEventListener("keydown",function(e){
-  if(e.key==="ArrowDown"){e.preventDefault();if(!box.classList.contains("open"))render();sel=(sel+1)%hits.length;mark()}
-  else if(e.key==="ArrowUp"){e.preventDefault();sel=(sel-1+hits.length)%hits.length;mark()}
-  else if(e.key==="Enter"){e.preventDefault();if(!box.classList.contains("open"))render();open(sel)}
+  if(e.key==="ArrowDown"){e.preventDefault();if(!box.classList.contains("open"))render();sel=(sel+1)%hits.length;moved=true;mark()}
+  else if(e.key==="ArrowUp"){e.preventDefault();sel=(sel-1+hits.length)%hits.length;moved=true;mark()}
+  else if(e.key==="Enter"){e.preventDefault();
+    // Typed and Enter: the results page. A suggestion picked with the
+    // arrows (or an empty field's suggestions): that suggestion.
+    if(q.value.trim()&&!moved){runSearch(q.value);return}
+    if(!box.classList.contains("open"))render();open(sel)}
   else if(e.key==="Tab"&&!e.shiftKey&&q.value.trim()&&hits[sel]&&!hits[sel].x){
     e.preventDefault();var h=hits[sel];q.value=(lang==="hi"&&h.th)?h.th:h.t;render()}
   else if(e.key==="Escape"){if(q.value){q.value="";render()}else{hide();q.blur()}}
@@ -850,9 +923,127 @@ q.addEventListener("keydown",function(e){
 box.addEventListener("mousedown",function(e){var r=e.target.closest("[data-i]");if(r){e.preventDefault();open(+r.dataset.i)}});
 document.addEventListener("click",function(e){if(!e.target.closest(".search"))hide()});
 $("go").onclick=function(){
-  if(box.classList.contains("open")&&hits.length){open(sel)}
-  else{q.focus()}
+  if(q.value.trim())runSearch(q.value);
+  else if(box.classList.contains("open")&&hits.length)open(sel);
+  else q.focus();
 };
+
+/* ------------------------------------------------------- results page
+   Like a search engine's: Enter, Go, a spoken query or a suggestion turns
+   the page into results under the search field, in the page itself (no
+   drawer). Our own answers open in place under their + ; pages are links.
+   The address carries ?q= (and &a= for a chosen answer), so results can be
+   shared and Back returns to the plain home page. */
+var serp=$("serp"),serpOn=false,serpQ="",serpFocus=null;
+function actsHtml(id){var a=S[id].a&&S[id].a.length?actHtml(id):"";return a?'<div class="sr-act">'+a+'</div>':''}
+function answerHtml(id){return '<div class="sr-body">'+bodyHtml(id,S[id][lang])+'</div>'+actsHtml(id)}
+/* The answer at the top, the way a search engine's answer box shows it:
+   its first lines (up to two paragraphs, or one and three points of a
+   list), the rest under "Read the full answer +". */
+function splitAnswer(x){
+  var head={},rest={},paras=0,cut=false;
+  if(x.p){head.p=x.p.slice(0,1);rest.p=x.p.slice(1)}
+  if(x.b){
+    head.b=[];rest.b=[];
+    x.b.forEach(function(b){
+      if(cut){rest.b.push(b);return}
+      if(b[0]==="p"){head.b.push(b);if(++paras>=2)cut=true;return}
+      head.b.push(["ul",b[1].slice(0,3)]);
+      if(b[1].length>3)rest.b.push(["ul",b[1].slice(3)]);
+      cut=true;
+    });
+  }
+  if(x.l){rest.l=x.l;rest.lt=x.lt}
+  var more=(rest.p&&rest.p.length)||(rest.b&&rest.b.length)||rest.l;
+  return {head:head,rest:more?rest:null};
+}
+function topAnswerHtml(id){
+  var sp=splitAnswer(S[id][lang]);
+  var h='<div class="sr-body">'+bodyHtml(id,sp.head)+'</div>';
+  if(sp.rest)h+='<details class="sr-full"><summary><span>'+esc(T[lang].readAll)+'</span><span class="sr-plus" aria-hidden="true"></span></summary>'+
+    '<div class="sr-body">'+bodyHtml(id,sp.rest)+'</div></details>';
+  return h+actsHtml(id);
+}
+function docOf(id){for(var i=0;i<IDX.length;i++)if(IDX[i].id===id)return IDX[i];return null}
+/* One of our answers as a result: crumb, title, best sentence; + opens it. */
+function xHtml(id,hv,title){
+  var x=S[id][lang],d=docOf(id),sn=d?snippet(d,hv):"";
+  var h={u:"#s-"+id,k:S[id].faq?"kFaq":"kInfo"};
+  return '<details class="sr-x" data-x="'+id+'"><summary>'+(title?'':'<span class="c">'+esc(crumb(h))+'</span>')+
+    '<span class="t">'+hl(x.t,hv)+'</span><span class="sr-plus" aria-hidden="true"></span>'+
+    (sn&&!title?'<span class="s">'+hl(sn,hv)+'</span>':'')+'</summary>'+answerHtml(id)+'</details>';
+}
+function linkHtml(h,hv){
+  var title=(lang==="hi"&&h.th)?h.th:h.t,sn=snippet(h,hv),ext=/^https?:/.test(h.u);
+  return '<a class="sr-r" href="'+esc(h.u)+'"'+(ext?' rel="noopener"':'')+'><span class="c">'+esc(crumb(h))+'</span>'+
+    '<span class="t">'+hl(title,hv)+'</span>'+(sn?'<span class="s">'+hl(sn,hv)+'</span>':'')+'</a>';
+}
+function serpHtml(v,focusId){
+  var d=T[lang],vt=String(v).trim(),html="",shown={};
+  var U=understand(vt),qtext=correct(U.text||vt),pin=focusId?null:pinFor(U,vt),hv=qtext+" "+(U.place||"");
+  var seenT={},ranked=rank(qtext||vt).filter(function(x){var k=x.d.t.toLowerCase();if(seenT[k])return false;seenT[k]=1;return true});
+  var top=ranked[0];
+  var ans=focusId||(!pin&&top&&top.d.id&&top.d.k==="kFaq"&&top.cov>=.5&&(!ranked[1]||top.s>=ranked[1].s*1.15)?top.d.id:null);
+  html+='<p class="sr-n">'+esc(d.resFor)+' \u201c'+esc(vt)+'\u201d</p>';
+  if(pin){
+    var pid=pin.u.indexOf("#s-")===0?pin.u.slice(3):null;
+    if(pid&&S[pid]){
+      shown[pid]=1;
+      html+='<div class="sr-box pin"><span class="sr-k">'+esc(d.kAction)+'</span><h2>'+esc(pin.t.trim())+'</h2><p class="sr-lead">'+esc(pin.s)+'</p>'+topAnswerHtml(pid)+'</div>';
+    }else{
+      html+='<a class="sr-box pin" href="'+esc(pin.u)+'"><span class="sr-k">'+esc(d.kAction)+'</span><h2>'+esc(pin.t.trim())+'</h2>'+
+        '<p class="sr-lead">'+esc(pin.s)+'</p><span class="sr-go">'+esc(d.goNow)+' \u2192</span></a>';
+    }
+  }
+  if(ans&&S[ans]&&!shown[ans]){
+    shown[ans]=1;
+    html+='<div class="sr-box"><span class="sr-k">'+esc(S[ans].faq?d.answer:S[ans][lang].k||d.answer)+'</span><h2>'+esc(S[ans][lang].t)+'</h2>'+topAnswerHtml(ans)+'</div>';
+  }
+  var list="";
+  ranked.slice(0,10).forEach(function(x){
+    var h=x.d;
+    if(h.id){if(shown[h.id])return;shown[h.id]=1;list+=xHtml(h.id,hv)}
+    else list+=linkHtml(h,hv);
+  });
+  if(list)html+='<div class="sr-list">'+list+'</div>';
+  else html+='<p class="sr-none">'+esc(d.noHits)+' \u201c'+esc(vt)+'\u201d</p>';
+  // People also ask: the chosen answer's related questions, then the usual ones.
+  var more=((ans&&S[ans].r)||[]).concat(PAA).filter(function(id,i,all){return S[id]&&!shown[id]&&all.indexOf(id)===i}).slice(0,4);
+  if(more.length){
+    html+='<div class="sr-paa"><span class="sr-k">'+esc(d.paa)+'</span>'+more.map(function(id){shown[id]=1;return xHtml(id,hv,true)}).join("")+'</div>';
+  }
+  html+='<div class="sr-more" aria-label="'+esc(d.moreFor)+'"><a href="/know-the-laws">'+esc(d.lawsFor)+' \u201c'+esc(vt)+'\u201d</a>'+
+    '<a href="/shop?q='+encodeURIComponent(vt)+'">'+esc(d.shopFor)+' \u201c'+esc(vt)+'\u201d</a></div>';
+  return html;
+}
+function runSearch(v,focusId,push){
+  var vt=String(v||"").trim();
+  if(focusId&&!S[focusId])focusId=null;
+  if(!vt&&focusId)vt=S[focusId][lang].t;
+  if(!vt){exitSerp(push);return}
+  q.value=vt;hide();q.blur();moved=false;
+  remember(vt);drawRecent();
+  serpOn=true;serpQ=vt;serpFocus=focusId||null;
+  serp.innerHTML=serpHtml(vt,serpFocus);serp.hidden=false;
+  document.body.classList.add("serping");
+  if(push!==false){
+    var url=location.pathname+"?q="+encodeURIComponent(vt)+(serpFocus?"&a="+serpFocus:"");
+    if(location.pathname+location.search!==url)history.pushState({serp:1},"",url);
+  }
+  window.scrollTo(0,0);
+}
+function exitSerp(push){
+  if(!serpOn)return;
+  serpOn=false;serpQ="";serpFocus=null;
+  serp.hidden=true;serp.innerHTML="";document.body.classList.remove("serping");
+  if(push!==false&&location.search)history.pushState(null,"",location.pathname);
+}
+function fromQuery(){
+  var p=new URLSearchParams(location.search),v=p.get("q")||"",a=p.get("a");
+  if(v.trim()||(a&&S[a]))runSearch(v,a&&S[a]?a:null,false);
+  else{exitSerp(false);q.value=""}
+}
+window.addEventListener("popstate",fromQuery);
 document.addEventListener("keydown",function(e){
   if(cur)return;
   var a=document.activeElement;
@@ -883,7 +1074,7 @@ document.addEventListener("keydown",function(e){
       say(m||d.vErr,true);hide();
     },
     onEnd:function(heard,errored){
-      if(heard){say(T[lang].vHeard+" \u201c"+heard+"\u201d"+(cloudNote?"  \u00b7  "+T[lang].vCloud:""));cloudNote=false;remember(heard);drawRecent();q.focus();sel=0;render()}
+      if(heard){say(T[lang].vHeard+" \u201c"+heard+"\u201d"+(cloudNote?"  \u00b7  "+T[lang].vCloud:""));cloudNote=false;runSearch(q.value||heard)}
       else if(!errored)say(T[lang].vNo,true);
     }
   });
@@ -900,12 +1091,13 @@ function drawRecent(){
   var r=getRecent();$("recentRow").hidden=!r.length;
   $("recent").innerHTML=r.map(function(x,i){return '<button class="chip'+(i===0?' on':'')+'" data-v="'+esc(x)+'">'+esc(x)+'</button>'}).join("");
 }
-$("recent").addEventListener("click",function(e){var b=e.target.closest("button");if(b){q.value=b.dataset.v;sel=0;q.focus();render()}});
+$("recent").addEventListener("click",function(e){var b=e.target.closest("button");if(b)runSearch(b.dataset.v)});
 $("clear").onclick=function(){store.set("rr-recent","[]");drawRecent();q.focus()};
 
 applyLang(lang);
 drawRecent();
 fromHash();
+fromQuery();
 })();
 
 </script>

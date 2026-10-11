@@ -976,6 +976,8 @@ S.revalidateCart().then((r) => {
   // Everything the store lists, its Rs 1 and Rs 10 listings too (Vivaldis'
   // were missing from the API's whole-catalogue read in 2.23.2).
   var landingFeed = [
+    { id: 900, handle: 'ten-percent-off', title: '10% off on First Food Order', vendor: 'Supertails',
+      variants: [{ id: 9001, title: 'Default Title', price: '0.01', available: false }] },
     { id: 901, handle: 'vivaldis-one', title: 'Vivaldis One Rupee', vendor: 'Vivaldis',
       variants: [{ id: 9011, title: 'Default Title', price: '1.00', available: true }] },
     { id: 902, handle: 'vivaldis-ten', title: 'Vivaldis Ten Rupees', vendor: 'Vivaldis',
@@ -999,8 +1001,10 @@ S.revalidateCart().then((r) => {
         u.indexOf('limit=24') !== -1 && u.indexOf('page=1') !== -1;
     }), 'the landing in the store\u2019s own order reads its "all" feed, as the app (24 a page)');
     eq(captured.length, 0, 'and not the API');
-    eq(page.products.map(function (p) { return p.cheapestVariant.pricePaise; }), [100, 1000],
-      'Rs 1 and Rs 10 listings are on it');
+    eq(page.products.map(function (p) { return p.cheapestVariant.pricePaise; }), [1, 100, 1000],
+      'Rs 0.01, Rs 1 and Rs 10 listings are on it');
+    eq(S.money(page.products[0].cheapestVariant.pricePaise), '\u20b90.01', 'Rs 0.01 is shown as such');
+    eq(S.visibleProducts(page.products, { sort: 'featured' }).length, 3, 'and all three are listed, sold out too');
     eq(page.endCursor, 'fp:2', 'it pages by feed cursor');
     eq(page.clientSort, false, 'with the API healthy, a new order reloads through the API');
     return S.collectionPage('all', { sort: 'newest' });
