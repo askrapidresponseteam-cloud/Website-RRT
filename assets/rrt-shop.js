@@ -1108,14 +1108,14 @@
   var SORTS = ['featured', 'newest', 'priceLow', 'priceHigh'];
   var SORT_LABELS = { featured: 'FEATURED', newest: 'NEWEST', priceLow: 'PRICE LOW', priceHigh: 'PRICE HIGH' };
 
-  /** What the grid shows: the vendor's products after the user's filters and
-   *  sort. Pure, so the rules are testable without a screen. */
+  /** What the grid shows: everything the vendor lists, sold out included (a
+   *  sold-out tile says so and has no Add), as in the app; only RRT's
+   *  veg-only switch takes anything away. Then the sort. Pure, so the rules
+   *  are testable without a screen. */
   function visibleProducts(products, opts) {
     opts = opts || {};
     var visible = products.filter(function (p) {
-      if (opts.inStockOnly && !p.available) return false;
-      if (opts.vegOnly && Rules.hideWhenVegOnly(p)) return false;
-      return true;
+      return !(opts.vegOnly && Rules.hideWhenVegOnly(p));
     });
     switch (opts.sort) {
       case 'priceLow':
@@ -1140,7 +1140,10 @@
   var SAVED_KEY = 'rrt_store_saved_v2';
   var RECEIPTS_KEY = 'rrt_store_receipts_v2';
   var VEG_KEY = 'rrt_store_veg_only';
-  var CAPS_KEY = 'rrt_sf_caps_v1';
+  /* v2: v1 could hold a "no tags" mark left by a passing store error (the
+   * old rule went lean on any GraphQL error); starting afresh re-learns a
+   * real refusal on the first query. */
+  var CAPS_KEY = 'rrt_sf_caps_v2';
   var CACHE_PREFIX = 'rrt_sf_cache_v1:';
 
   function memStore() {
@@ -1314,6 +1317,16 @@
     try { session.setItem(TRANSPORT_KEY, 'feeds'); } catch (e) { /* ignore */ }
   }
 
+  /* Whether GraphQL errors say a field is refused without a token (tags,
+   * quantity rules), rather than that the store failed this once
+   * (INTERNAL_SERVER_ERROR). Only the first is a reason to ask lean, and to
+   * remember it. Same rule as the app (vendor_storefront.dart). */
+  function refusesField(errors) {
+    var text = '';
+    try { text = JSON.stringify(errors || []).toLowerCase(); } catch (e) { return false; }
+    return text.indexOf('tags') !== -1 || text.indexOf('quantityrule') !== -1 || text.indexOf('access_denied') !== -1;
+  }
+
   function gql(query, variables, opts) {
     opts = opts || {};
     var cacheKey = opts.cacheKey || null;
@@ -1351,6 +1364,7 @@
       if (Array.isArray(body.errors) && body.errors.length) {
         var err = StorefrontError('The store could not load this right now.');
         err.graphQLErrors = body.errors;
+        err.fieldRefused = refusesField(body.errors);
         throw err;
       }
       if (cacheKey) cacheSet(cacheKey, body.data);
@@ -1409,7 +1423,7 @@
       return gql(build(tileFields()), variables, { cacheKey: tileKey(opts.cacheKey), fresh: opts.fresh });
     }
     return run().catch(function (e) {
-      if (e && e.graphQLErrors && !leanTiles()) {
+      if (e && e.fieldRefused && !leanTiles()) {
         setCap('leanTiles:' + Vendor.key);
         return run();
       }
@@ -1475,8 +1489,10 @@
         missing: false,
         clientSort: false
       };
-    }).catch(function () {
-      if (opts.after) return { products: [], hasMore: false, endCursor: null, missing: false, clientSort: false };
+    }).catch(function (e) {
+      // A later page failing is not the end of the brand: the shop page
+      // keeps what it shows and offers to try again.
+      if (opts.after) throw e;
       return searchAll(b).then(function (page) {
         var key = b.toLowerCase();
         return {
@@ -1618,7 +1634,10 @@
       // A headless store has no feeds to fall back to: the API is the store.
       return handle === Vendor.catalogHandle ? catalogPage(opts) : sfCollectionPage(handle, opts);
     }
-    if (transport() === 'feeds' || /^fp:/.test(String(opts.after || ''))) {
+    // A listing that started on the API carries the API's cursor: it goes
+    // on there, so its order never changes and nothing repeats mid-scroll.
+    var apiCursor = !!opts.after && !/^fp:/.test(String(opts.after));
+    if (!apiCursor && (transport() === 'feeds' || /^fp:/.test(String(opts.after || '')))) {
       return feedCollectionPage(handle, opts);
     }
     var viaSf = handle === Vendor.catalogHandle
@@ -1635,6 +1654,10 @@
     }).catch(function (e) {
       if (e && e.status === 404) throw e;
       useFeeds();
+      // Mid-listing, the feed's page 1 would repeat what is on screen in
+      // another order: fail this page instead (the shop offers to try
+      // again); the next listing starts on the feeds.
+      if (apiCursor) throw e;
       return feedCollectionPage(handle, opts);
     });
   }
@@ -1715,7 +1738,7 @@
       .catch(function (e) {
         // A field outside tokenless access answers with GraphQL errors, not
         // a transport failure: fall back to the lean query and remember.
-        if (!lean && e && e.graphQLErrors) {
+        if (!lean && e && e.fieldRefused) {
           setCap('leanProduct');
           cacheRemove(cacheKey);
           return gql(productQuery(true), { handle: handle }, { cacheKey: cacheKey, fresh: opts.fresh });

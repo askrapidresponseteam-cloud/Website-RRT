@@ -157,6 +157,31 @@ So web orders appear in the same admin count, split from app orders by the
 - **UPI needs no bridge.** The app intercepts `upi://` intents inside its
   WebView; a browser hands them to the OS natively.
 
+## Same items on both (11 Oct 2026)
+
+What a shopper sees on a listing is decided the same way on both, by the
+same rules:
+
+- **The landing** is the store's best sellers through the Storefront API on
+  both (`products(sortKey: BEST_SELLING)`), and the store's "all" feed on
+  both when the API fails or answers empty. (The app used to read the "all"
+  feed only, which is alphabetical: a different first screen.)
+- **Everything the store lists is shown** on both, in its order: sold-out
+  items too (marked sold out, no Add), and items the store tags to keep off
+  its own listings (Supertails: `st-hide`, `findify-remove`), which can be
+  added like any other. There is no in-stock switch; only RRT's veg-only
+  switch takes anything away.
+- **A passing store error** (INTERNAL_SERVER_ERROR) never makes either client
+  stop asking for tags; only a refused field does (so the VEG and Rx labels
+  and veg-only stay right).
+- **A listing never changes door mid-scroll**: a later API page that fails is
+  offered again (TRY AGAIN / "Could not load more. Try again") instead of
+  being replaced by the feed's first page.
+- **Seamless paging**: both read the next page ahead as soon as one lands and
+  ask for more while about three screens are still left below. Checked in a
+  real browser by `scripts/test-shop-paging.js` and in the app by
+  `test/store_parity_test.dart`.
+
 ## What RRT runs and stores
 
 Hosting for six static pages and two script files. That is all. No

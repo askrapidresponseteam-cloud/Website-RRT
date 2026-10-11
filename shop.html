@@ -186,7 +186,7 @@
     sortSel.appendChild(o);
   });
 
-  var state = { sort: 'featured', products: [], cursor: null, hasMore: false, loading: false, total: null, autoFills: 0 };
+  var state = { sort: 'featured', products: [], cursor: null, hasMore: false, loading: false, total: null, autoFills: 0, drawn: [] };
   // Veg-only can leave a page of 24 with few or none to show: keep reading
   // (up to this many pages in a row) until there is a screenful or the
   // listing ends, instead of showing a near-empty grid.
@@ -238,15 +238,61 @@
     return new Array(n + 1).join(one);
   }
 
-  function fetchPage() {
-    if (searching) return S.searchAll(q, { after: state.cursor });
-    if (brandParam) return S.brandPage(brandParam, { sort: state.sort, after: state.cursor });
-    return S.collectionPage(handle, { sort: state.sort, after: state.cursor });
+  function fetchPage(after) {
+    if (searching) return S.searchAll(q, { after: after });
+    if (brandParam) return S.brandPage(brandParam, { sort: state.sort, after: after });
+    return S.collectionPage(handle, { sort: state.sort, after: after });
+  }
+
+  /* Seamless paging (as in the app):
+   *  - read-ahead: the page after the one on screen is asked for as soon as
+   *    that one lands, so scrolling on shows it at once;
+   *  - the next page is asked for while about three screens are still left
+   *    below, and again right after a page lands if the list is still short
+   *    of that (a page the filters thinned out), without waiting for a scroll.
+   * [gen] changes whenever the listing starts over (a new sort, the veg-only
+   * switch), so an answer meant for the old listing is never added to it. */
+  var gen = 0;
+  var ahead = null; // { gen, cursor, at, promise }
+  var AHEAD_FRESH_MS = 3 * 60 * 1000;
+
+  function readAhead() {
+    ahead = null;
+    if (!state.hasMore) return;
+    var promise = fetchPage(state.cursor);
+    promise.catch(function () { /* used, and read again, by loadNext */ });
+    ahead = { gen: gen, cursor: state.cursor, at: Date.now(), promise: promise };
+  }
+
+  function nextPage() {
+    var a = ahead;
+    ahead = null;
+    if (a && a.gen === gen && a.cursor === state.cursor && Date.now() - a.at < AHEAD_FRESH_MS) {
+      var after = state.cursor;
+      return a.promise.catch(function () { return fetchPage(after); });
+    }
+    return fetchPage(state.cursor);
+  }
+
+  function aheadPx() { return Math.max(1800, 3 * (window.innerHeight || 800)); }
+  function nearEnd() {
+    var foot = $('foot');
+    if (foot.hidden) return false;
+    return foot.getBoundingClientRect().top - (window.innerHeight || 800) < aheadPx();
+  }
+  function maybeMore() {
+    if (!state.hasMore || state.loading || state.paused || !nearEnd()) return;
+    // Bounded like the veg-only fill: a listing that hides almost everything
+    // never walks the whole store by itself (Load more still works).
+    if (cfgVegOnly && state.products.length >= VEG_FILL_MAX_PAGES * 24) return;
+    loadNext();
   }
 
   function resetAndLoad() {
+    gen++; ahead = null;
     state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
-    state.clientSort = false; state.autoFills = 0;
+    state.clientSort = false; state.autoFills = 0; state.loading = false; state.drawn = []; state.paused = false;
+    $('more').textContent = 'Load more';
     $('grid').innerHTML = skeletons(8);
     $('state').hidden = true; $('foot').hidden = true;
     loadNext();
@@ -254,14 +300,25 @@
 
   function loadNext() {
     if (state.loading) return;
+    if (state.paused) { state.paused = false; $('more').textContent = 'Load more'; }
     started = true;
     state.loading = true;
+    var mine = gen;
     $('grid').setAttribute('aria-busy', 'true');
     if (!state.products.length) $('grid').innerHTML = skeletons(8);
     $('more').disabled = true;
-    fetchPage().then(function (page) {
+    nextPage().then(function (page) {
+      if (mine !== gen) return; // the listing started over meanwhile
       state.loading = false;
-      state.products = state.products.concat(page.products);
+      // Never the same product twice (a page boundary can repeat one when
+      // the store changes mid-scroll), as in the app.
+      var seen = {};
+      state.products.forEach(function (p) { seen[p.id] = true; });
+      state.products = state.products.concat(page.products.filter(function (p) {
+        if (seen[p.id]) return false;
+        seen[p.id] = true;
+        return true;
+      }));
       state.cursor = page.endCursor;
       state.hasMore = page.hasMore;
       if (page.clientSort) state.clientSort = true;
@@ -272,8 +329,22 @@
         return;
       }
       render();
+      readAhead();
+      // Still short of three screens below? The next page, now.
+      requestAnimationFrame(maybeMore);
     }).catch(function (err) {
+      if (mine !== gen) return;
       state.loading = false;
+      if (state.drawn && state.drawn.length) {
+        // A later page failed: keep what is on screen and offer the next
+        // page again (no automatic retries until it is pressed).
+        state.paused = true;
+        $('grid').setAttribute('aria-busy', 'false');
+        $('more').disabled = false;
+        $('more').hidden = false;
+        $('more').textContent = 'Could not load more. Try again';
+        return;
+      }
       showState(esc(err && err.message ? err.message : 'Something went wrong.'), '', true);
     });
   }
@@ -286,6 +357,7 @@
       (retry ? '<p><button class="btn-line" id="retry" type="button">Try again</button></p>'
              : '<p><a class="btn-line" href="/shop">Back to the shop</a></p>');
     $('grid').innerHTML = '';
+    state.drawn = [];
     $('grid').setAttribute('aria-busy', 'false');
     $('foot').hidden = true;
     var r = $('retry');
@@ -294,7 +366,6 @@
 
   function render() {
     var visible = S.visibleProducts(state.products, {
-      inStockOnly: true,
       vegOnly: cfgVegOnly,
       // Server-sorted pages arrive in order; feed pages sort here, the
       // way the app sorts a shelf it loaded whole.
@@ -319,8 +390,7 @@
       return;
     }
     $('state').hidden = true;
-    $('grid').innerHTML = visible.length ? visible.map(function (p) { return U.tile(p); }).join('')
-      : (filling ? skeletons(8) : '');
+    draw(visible, filling);
     $('count').textContent = filling
       ? 'Finding vegetarian products\u2026 ' + visible.length + ' so far'
       : visible.length + (state.hasMore ? '+' : '') + (cfgVegOnly ? ' vegetarian' : '') +
@@ -335,14 +405,38 @@
     }
   }
 
+  /* The grid: when the tiles on screen are the start of what is to be
+   * shown (the usual case, a page added below), only the new ones are
+   * added, so nothing already on screen is redrawn or flickers. A new
+   * order or filter redraws it whole. */
+  function draw(visible, filling) {
+    var grid = $('grid');
+    var drawn = state.drawn || [];
+    var ids = visible.map(function (p) { return String(p.id); });
+    var extends_ = drawn.length > 0 && ids.length >= drawn.length;
+    for (var i = 0; extends_ && i < drawn.length; i++) if (ids[i] !== drawn[i]) extends_ = false;
+    if (extends_) {
+      if (ids.length > drawn.length) {
+        grid.insertAdjacentHTML('beforeend', visible.slice(drawn.length).map(function (p) { return U.tile(p); }).join(''));
+      }
+    } else {
+      grid.innerHTML = visible.length ? visible.map(function (p) { return U.tile(p); }).join('')
+        : (filling ? skeletons(8) : '');
+    }
+    state.drawn = ids;
+  }
+
   $('more').addEventListener('click', loadNext);
 
   // Page as you scroll, like the phone: the button stays as the fallback.
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting && state.hasMore && !state.loading) loadNext();
-    }, { rootMargin: '600px' }).observe($('foot'));
+  var queued = false;
+  function onScroll() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () { queued = false; maybeMore(); });
   }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
 
   loadNext();
 

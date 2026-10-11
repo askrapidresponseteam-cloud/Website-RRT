@@ -315,7 +315,7 @@ const listing = [tileWith(300), tileWith(100), tileWith(200, { available: false 
 eq(S.visibleProducts(listing, { sort: 'priceLow' }).map((p) => p.cheapestVariant.pricePaise),
   [50, 100, 200, 300], 'sort price low');
 eq(S.visibleProducts(listing, { sort: 'priceHigh' })[0].cheapestVariant.pricePaise, 300, 'sort price high');
-eq(S.visibleProducts(listing, { inStockOnly: true, sort: 'featured' }).length, 3, 'in-stock filter');
+eq(S.visibleProducts(listing, { sort: 'featured' }).length, 4, 'everything listed is shown, sold out included');
 eq(S.visibleProducts(listing, { sort: 'newest' })[0].createdAtMs, 5, 'newest first; undated keep order after');
 
 /* ---------------------------------------------------------------- shelves */
@@ -652,7 +652,23 @@ function vegTileTests() {
   }).then(function () {
     eq(bodies.length, 1, 'the lean tile is remembered');
     S.setVegOnly(false);
-    try { S.__internal.stores.local.removeItem('rrt_sf_caps_v1'); } catch (e) { /* ignore */ }
+    try { S.__internal.stores.local.removeItem('rrt_sf_caps_v2'); } catch (e) { /* ignore */ }
+    // A passing store error is not a refused field: it fails this one read
+    // and the next one still asks for tags (the old rule went lean for good).
+    refuseTags = false;
+    S.__internal.setFetch(function (url, init) {
+      var body = init && init.body ? String(init.body) : '';
+      bodies.push(body);
+      return jsonRes({ errors: [{ message: 'Internal error. Looks like something went wrong on our end.',
+        extensions: { code: 'INTERNAL_SERVER_ERROR' } }] });
+    });
+    bodies = [];
+    return S.searchAll('dog food veg-d').then(function () { return 'loaded'; }, function () { return 'failed'; });
+  }).then(function (outcome) {
+    eq(outcome, 'failed', 'a store error fails the read');
+    eq(bodies.filter(function (b) { return b.indexOf('RrtSearch') !== -1; }).length, 1,
+      'with no lean retry (the suggestions it falls back to are not a retry)');
+    eq(S.__internal.stores.local.getItem('rrt_sf_caps_v2'), null, 'and nothing remembered');
   });
 }
 
