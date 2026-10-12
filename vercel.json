@@ -8,7 +8,7 @@
   "rewrites": [
     {
       "source": "/ngo-app/:path*",
-      "destination": "https://ngo-finder-omega.vercel.app/:path*"
+      "destination": "https://www.kindaura.in/:path*"
     },
     {
       "source": "/st-api/collections/:handle/products.json",
