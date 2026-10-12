@@ -24,7 +24,7 @@ CONTENT = {'faq.html': '/faq', 'know-the-laws.html': '/know-the-laws',
            'vet.html': '', 'app-guide.html': '', 'report/index.html': '', 'report/manage.html': ''}
 PLAIN = {'preview.html': '', 'talk-to-a-vet.html': '/talk-to-a-vet',
          'policy.html': '', 'vet-terms.html': '',
-         'explainer.html': ''}   # shared chrome, own styling (no rr-theme.css)
+         'explainer.html': '', 'ngos.html': '/ngos'}   # shared chrome, own styling (no rr-theme.css)
 SHOP = {'shop.html': ('shop', 'shop'), 'product.html': ('', 'product'), 'cart.html': ('', 'cart'),
         'saved.html': ('saved', 'saved'), 'track.html': ('track', 'track')}
 ARROW = ('<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6" fill="none" '

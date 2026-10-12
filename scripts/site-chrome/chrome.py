@@ -13,6 +13,7 @@ def t(en, hi):
 NAV = [
     ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें', ''),
     ('/know-the-laws', 'Know the laws', 'कानून जानें', ''),
+    ('/ngos', 'Find NGOs', 'एनजीओ खोजें', ''),
     ('/faq', 'FAQ', 'सवाल', ''),
     ('/shop', 'Shop', 'शॉप', 'rr-opt'),
 ]
@@ -47,7 +48,7 @@ def header(current='', shop=False):
 FOOT_LINKS = [
     ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
     ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
-    ('/shop', 'Shop', 'शॉप'), ('/faq', 'FAQ', 'सवाल'),
+    ('/ngos', 'Find NGOs', 'एनजीओ खोजें'), ('/shop', 'Shop', 'शॉप'), ('/faq', 'FAQ', 'सवाल'),
     ('mailto:ask@rapid-response.in', 'Contact', 'संपर्क'),
 ]
 FOOT_MORE = [
