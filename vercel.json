@@ -7,10 +7,6 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/ngo-app/:path*",
-      "destination": "https://www.kindaura.in/:path*"
-    },
-    {
       "source": "/st-api/collections/:handle/products.json",
       "destination": "https://supertails.com/collections/:handle/products.json"
     },

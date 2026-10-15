@@ -1,0 +1,97 @@
+# Watches the RRT backend from outside Google, every 10 minutes, at no cost
+# (GitHub Actions on this public repository). It is the second pair of eyes
+# next to Google Cloud Monitoring (scripts/backup/monitoring-setup.js), and it
+# keeps working even if the Google Cloud project itself is in trouble.
+#
+#   /api/health fails 3 times in a row (about 2 minutes)
+#       -> an issue "RRT backend is not answering" is opened here. GitHub
+#          emails new issues to everyone watching this repository, and the
+#          issue mentions the owner. When it answers again, the issue closes.
+#   the nightly Google Drive backup is overdue or failing
+#       -> an issue "RRT backup to Google Drive is overdue" (closed once a
+#          backup works again).
+#
+# /api/health checks the database and the one-minute clock too (index.js).
+# GitHub pauses scheduled jobs in a repository with no commits for 60 days;
+# every website deploy is a commit, so this keeps running. To try it now:
+# Actions > Backend watch > Run workflow.
+name: Backend watch
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+permissions:
+  issues: write
+concurrency:
+  group: backend-watch
+  cancel-in-progress: false
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ask the backend
+        id: health
+        run: |
+          url="https://asia-south1-rrt-new-backend.cloudfunctions.net/api/health"
+          ok=false; body=""; code=""
+          for i in 1 2 3; do
+            code="$(curl -sS -o body.json -w '%{http_code}' --max-time 20 "$url" || echo 000)"
+            body="$(cat body.json 2>/dev/null || true)"
+            if [ "$code" = "200" ] && printf '%s' "$body" | jq -e '.status == "ok"' >/dev/null 2>&1; then ok=true; break; fi
+            [ "$i" = 3 ] || sleep 40
+          done
+          backup="$(printf '%s' "$body" | jq -r '.checks.backup // "unknown"' 2>/dev/null || echo unknown)"
+          detail="$(printf '%s' "$body" | jq -c '.checks // empty' 2>/dev/null || true)"
+          [ -n "$detail" ] || detail="$(printf '%s' "$body" | head -c 300)"
+          [ -n "$detail" ] || detail="no answer"
+          echo "ok=$ok" >> "$GITHUB_OUTPUT"
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "backup=$backup" >> "$GITHUB_OUTPUT"
+          { echo "detail<<RRT_EOF"; echo "$detail"; echo "RRT_EOF"; } >> "$GITHUB_OUTPUT"
+          echo "health: ok=$ok http=$code backup=$backup $detail"
+      - name: Open or close the issues
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+          OK: ${{ steps.health.outputs.ok }}
+          CODE: ${{ steps.health.outputs.code }}
+          BACKUP: ${{ steps.health.outputs.backup }}
+          DETAIL: ${{ steps.health.outputs.detail }}
+        run: |
+          now="$(date -u '+%Y-%m-%d %H:%M UTC')"
+          open_issue(){ gh issue list --state open --limit 50 --json number,title --jq ".[] | select(.title == \"$1\") | .number" | head -1; }
+
+          down="RRT backend is not answering"
+          n="$(open_issue "$down")"
+          if [ "$OK" = "true" ]; then
+            if [ -n "$n" ]; then gh issue close "$n" --comment "Answering again at $now."; fi
+          elif [ -z "$n" ]; then
+            gh issue create --title "$down" --body "@$OWNER the RRT backend failed its health check 3 times in a row at $now (HTTP $CODE).
+
+          What the check said: \`$DETAIL\`
+
+          - firestore down: the database is not answering.
+          - scheduler stale: the one-minute clock has stopped, so SOS alerts stop ending on time.
+          - no answer at all: Cloud Functions is down or a deploy broke it.
+
+          Look here: https://asia-south1-rrt-new-backend.cloudfunctions.net/api/health, the function logs at https://console.firebase.google.com/project/rrt-new-backend/functions/logs and https://status.cloud.google.com
+
+          This issue closes by itself when the backend answers again."
+          fi
+
+          late="RRT backup to Google Drive is overdue"
+          m="$(open_issue "$late")"
+          case "$BACKUP" in
+            stale|failed)
+              if [ -z "$m" ]; then
+                gh issue create --title "$late" --body "@$OWNER the nightly backup of the RRT database to Google Drive is $BACKUP ($now).
+
+          The admin console shows why under Chat Security > Backups, with a Back up now button. The team inbox also got an email for each failed run.
+
+          This issue closes by itself after the next good backup."
+              fi ;;
+            ok)
+              if [ -n "$m" ]; then gh issue close "$m" --comment "A backup worked again ($now)."; fi ;;
+          esac
