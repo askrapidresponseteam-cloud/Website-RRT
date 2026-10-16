@@ -86,7 +86,8 @@ html[lang=hi] .lo-btn{font-family:var(--sg-hindi);font-size:16px;letter-spacing:
 .lo-alt button{border:0;background:none;padding:6px 0;font:inherit;font-weight:700;color:var(--sg-link);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .lo-err{margin:12px 0 0;color:var(--sg-stop-text);font-weight:700;font-size:15px}
 .lo-note{margin:12px 0 0;font-size:14px;color:var(--lo-low);line-height:1.5}
-.lo-to{font-family:var(--sg-mono);font-size:13px;color:var(--lo-mid);word-break:break-all}
+.lo-to{margin:0;padding:0;list-style:none;font-family:var(--sg-mono);font-size:13px;color:var(--lo-mid);word-break:break-all;display:grid;gap:4px}
+.lo-to span{font-family:var(--sg-sans);color:var(--lo-low)}
 /* after sending */
 .lo-card.next{background:var(--sg-mist);box-shadow:none}
 .lo-card h3{font-family:var(--sg-display);font-weight:800;font-size:22px;letter-spacing:var(--sg-track-title);margin:0 0 6px}
@@ -140,8 +141,8 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   <p class="lo-eyebrow"><span data-lang="en">Public objection · draft rules G.S.R.&nbsp;864(E)</span><span data-lang="hi">सार्वजनिक आपत्ति · मसौदा नियम G.S.R.&nbsp;864(E)</span></p>
   <h1><span data-lang="en">Object to the draft lab animal rules</span><span data-lang="hi">प्रयोगशाला पशु नियमों के मसौदे पर आपत्ति भेजें</span></h1>
   <p class="lo-lead">
-    <span data-lang="en">New draft rules would let labs approve most of their own animal experiments, and let animals be bought from traders. The public has 30 days to object. Send yours by email: it takes a minute.</span>
-    <span data-lang="hi">नए मसौदा नियम प्रयोगशालाओं को अपने ज़्यादातर पशु प्रयोग खुद मंज़ूर करने देंगे, और पशु व्यापारियों से ख़रीदे जा सकेंगे। आपत्ति के लिए जनता के पास 30 दिन हैं। अपनी आपत्ति ईमेल से भेजें: एक मिनट लगेगा।</span>
+    <span data-lang="en">New draft rules would let labs approve most of their own animal experiments, and let animals be sourced from open markets. That weakens oversight, animal protection and public health. The public has 30 days to object. Send yours by email: it takes a minute.</span>
+    <span data-lang="hi">नए मसौदा नियम प्रयोगशालाओं को अपने ज़्यादातर पशु प्रयोग खुद मंज़ूर करने देंगे, और पशु खुले बाज़ारों से लिए जा सकेंगे। इससे निगरानी, पशु संरक्षण और सार्वजनिक स्वास्थ्य कमज़ोर होते हैं। आपत्ति के लिए जनता के पास 30 दिन हैं। अपनी आपत्ति ईमेल से भेजें: एक मिनट लगेगा।</span>
   </p>
   <div class="lo-chips" aria-live="polite">
     <span class="lo-chip" id="loDays"><i class="dot" aria-hidden="true"></i><span id="loDaysText"></span></span>
@@ -179,7 +180,11 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     <div class="lo-send"><button class="lo-btn dark" type="button" id="loPrimary"></button></div>
     <div class="lo-alt" id="loAlt"></div>
     <p class="lo-err" id="loErr" role="alert" hidden></p>
-    <p class="lo-note"><span data-lang="en">Your email opens with the letter filled in. Read it, then press Send. It goes from your own address to</span><span data-lang="hi">आपका ईमेल पत्र भरा हुआ खुलेगा। उसे पढ़ें, फिर भेजें दबाएँ। यह आपके अपने पते से जाता है, इस पते पर:</span> <span class="lo-to" id="loTo"></span></p>
+    <p class="lo-note"><span data-lang="en">Your email opens with the letter filled in. Read it, then press Send. It goes from your own address to CCSEA, the Department of Animal Husbandry and Dairying and its ministers.</span><span data-lang="hi">आपका ईमेल पत्र भरा हुआ खुलेगा। उसे पढ़ें, फिर भेजें दबाएँ। यह आपके अपने पते से CCSEA, पशुपालन और डेयरी विभाग और उसके मंत्रियों को जाता है।</span></p>
+    <details class="lo-more">
+      <summary><span data-lang="en">Who it goes to</span><span data-lang="hi">यह किसे जाता है</span> <small><span data-lang="en">8 addresses</span><span data-lang="hi">8 पते</span></small></summary>
+      <div class="body"><ul class="lo-to" id="loToList"></ul></div>
+    </details>
 
     <details class="lo-more" id="loLetterBox">
       <summary><span data-lang="en">Read the letter</span><span data-lang="hi">पत्र पढ़ें</span> <small><span data-lang="en">you can change anything</span><span data-lang="hi">आप कुछ भी बदल सकते हैं</span></small></summary>
@@ -201,6 +206,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
       <p class="lo-note" style="margin-top:18px"><span data-lang="en">No problem. Copy these three into a new email in any app, or open one of these:</span><span data-lang="hi">कोई बात नहीं। इन तीनों को किसी भी ईमेल ऐप में नए ईमेल में कॉपी करें, या इनमें से एक खोलें:</span> <span id="loWeb"></span></p>
       <div class="lo-copy">
         <span class="k"><span data-lang="en">To</span><span data-lang="hi">किसे</span></span><span class="v" id="loCvTo"></span><button class="lo-btn" type="button" data-copy="to"><span data-lang="en">Copy</span><span data-lang="hi">कॉपी</span></button>
+        <span class="k"><span data-lang="en">Cc</span><span data-lang="hi">प्रतिलिपि</span></span><span class="v" id="loCvCc"></span><button class="lo-btn" type="button" data-copy="cc"><span data-lang="en">Copy</span><span data-lang="hi">कॉपी</span></button>
         <span class="k"><span data-lang="en">Subject</span><span data-lang="hi">विषय</span></span><span class="v" id="loCvSub"></span><button class="lo-btn" type="button" data-copy="subject"><span data-lang="en">Copy</span><span data-lang="hi">कॉपी</span></button>
         <span class="k"><span data-lang="en">Letter</span><span data-lang="hi">पत्र</span></span><span class="v" id="loCvBody"></span><button class="lo-btn" type="button" data-copy="body"><span data-lang="en">Copy</span><span data-lang="hi">कॉपी</span></button>
       </div>
@@ -291,7 +297,8 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   var CAMPAIGN = 'lab-rules-2026';
   // Where objections go, and to whom (from the draft's notice; check against
   // the Gazette before changing). One place, used everywhere on the page.
-  var TO = 'cpcsea-mef@gov.in';
+  var TO = ['cpcsea-mef@gov.in', 'js-nlm@dahd.nic.in', 'sk.dutta@nic.in', 'minister-fahdpr@nic.in', 'rrsingh@sansad.nic.in', 'mos-fahd@dahd.nic.in', 'secyahd@nic.in'];
+  var CC = ['gandhim@exmpls.sansad.in'];
   var API = 'https://asia-south1-rrt-new-backend.cloudfunctions.net/api/campaign/' + CAMPAIGN;
   var PAGE = 'https://rapid-response.in/lab-animal-rules';
   var IST = 5.5 * 3600e3, DAY = 864e5;
@@ -333,22 +340,22 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
       lhi: ['विद्यार्थी होने के नाते, मेरी इच्छा है कि विज्ञान ऐसे तरीकों की ओर बढ़े जिनमें पशुओं की ज़रूरत न हो।'] },
   ];
   var POINTS = [
-    { id: 'source', en: 'Where lab animals come from', hi: 'प्रयोगशाला के पशु कहाँ से आते हैं',
-      len: ['Procurement needs a verifiable chain of custody. Community, rescued and shelter animals must never supply laboratories.', 'Every laboratory animal must have a traceable, verifiable source. Community, rescued and shelter animals must never end up in a laboratory.'],
-      lhi: ['हर प्रयोगशाला पशु का स्रोत जाँचा जा सके, ऐसी व्यवस्था हो। सामुदायिक, बचाए गए और आश्रय के पशु कभी प्रयोगशाला में न पहुँचें।'] },
-    { id: 'review', en: 'Independent ethical review', hi: 'स्वतंत्र नैतिक जाँच',
-      len: ['Ethical scrutiny must be independent. No institution should approve its own experiments.', 'An institution should not be the judge of its own experiments. Approval must rest with an independent body.'],
-      lhi: ['नैतिक जाँच स्वतंत्र हो। कोई संस्था अपने ही प्रयोगों को मंज़ूरी न दे।'] },
-    { id: 'replace', en: 'Non-animal methods first', hi: 'पहले पशु-रहित तरीके',
-      len: ['Replacement must be enforceable: non-animal methods must be used first, wherever they exist.', 'Non-animal methods must come first, and the Rules must make this binding, not advisory.'],
-      lhi: ['जहाँ भी पशु-रहित तरीके मौजूद हैं, उन्हें पहले अपनाना अनिवार्य हो, केवल सलाह नहीं।'] },
-    { id: 'bio', en: 'Disease and biowaste risks', hi: 'बीमारी और जैव-कचरे का ख़तरा',
-      len: ['Biosecurity risks from breeding, trading and housing animals need explicit assessment.', 'The risks of disease and biowaste to workers and nearby communities must be assessed and controlled.'],
-      lhi: ['पशुओं के प्रजनन, व्यापार और रखरखाव से जुड़े जैव-सुरक्षा ख़तरों का स्पष्ट आकलन हो।'] },
-    { id: 'law', en: 'Within the law', hi: 'क़ानून के दायरे में',
-      len: ['The Rules must honour Section 17 of the Prevention of Cruelty to Animals Act, 1960, and Article 51A(g) of the Constitution.', 'The Rules must stay within Section 17 of the PCA Act, 1960, and the duty of compassion in Article 51A(g) of the Constitution.'],
-      lhi: ['नियम पशु क्रूरता निवारण अधिनियम, 1960 की धारा 17 और संविधान के अनुच्छेद 51A(g) के अनुरूप हों।'] },
+    { id: 'scrutiny', en: 'Independent scrutiny', hi: 'स्वतंत्र जाँच',
+      len: ['Diluting independent scrutiny is a step backwards. Allowing institutions to approve their own experiments with reduced central oversight risks creating open torture chambers for animals, where suffering can be inflicted with inadequate independent scrutiny or accountability.'],
+      lhi: ['स्वतंत्र जाँच को कमज़ोर करना एक पीछे की ओर उठाया गया कदम है। संस्थाओं को कम केंद्रीय निगरानी में अपने ही प्रयोग मंज़ूर करने की छूट देने से पशुओं के लिए खुले यातना-गृह बनने का ख़तरा है, जहाँ अपर्याप्त स्वतंत्र जाँच या जवाबदेही के बीच पीड़ा दी जा सकती है।'] },
+    { id: 'health', en: 'Public health and disease risk', hi: 'सार्वजनिक स्वास्थ्य और रोग का ख़तरा',
+      len: ['These rules also raise serious public health concerns. Allowing animals to be sourced from open markets and non-registered establishments raises questions about disease surveillance, traceability and biosecurity. Poorly controlled sourcing and quarantine can increase the risk of zoonotic disease transmission. At a time when the world is increasingly alert to emerging infectious diseases, do we really want India to weaken safeguards that protect both animal and human health?'],
+      lhi: ['ये नियम सार्वजनिक स्वास्थ्य से जुड़ी गंभीर चिंताएँ भी पैदा करते हैं। खुले बाज़ारों और गैर-पंजीकृत प्रतिष्ठानों से पशु लेने की अनुमति से रोग-निगरानी, स्रोत की पहचान और जैव-सुरक्षा पर सवाल उठते हैं। ढीले स्रोत और क्वारंटीन नियंत्रण से पशुओं से मनुष्यों में फैलने वाले (ज़ूनोटिक) रोगों का ख़तरा बढ़ सकता है। ऐसे समय में जब दुनिया उभरते संक्रामक रोगों को लेकर पहले से अधिक सतर्क है, क्या हम सचमुच चाहते हैं कि भारत उन सुरक्षा उपायों को कमज़ोर करे जो पशु और मानव, दोनों के स्वास्थ्य की रक्षा करते हैं?'] },
+    { id: 'science', en: 'Misleading results for humans', hi: 'मनुष्यों के लिए भ्रामक परिणाम',
+      len: ['Animal experimentation can produce misleading results when applied to humans. A treatment that works in an animal may fail in humans, and one that appears safe may still prove harmful. Public health depends on reliable science, not assumptions that animal testing automatically establishes human safety.'],
+      lhi: ['मनुष्यों पर लागू करने पर पशु-प्रयोग भ्रामक परिणाम दे सकते हैं। जो इलाज पशु में काम करता है, वह मनुष्य में विफल हो सकता है, और जो सुरक्षित लगता है, वह फिर भी हानिकारक साबित हो सकता है। सार्वजनिक स्वास्थ्य विश्वसनीय विज्ञान पर निर्भर है, इस धारणा पर नहीं कि पशु-परीक्षण अपने आप मानव सुरक्षा स्थापित कर देता है।'] },
+    { id: 'alternatives', en: 'Human-relevant alternatives', hi: 'मनुष्यों के लिए प्रासंगिक विकल्प',
+      len: ['Science is advancing towards human-relevant alternatives, including organ-on-chip technology, organoids and human-cell-based models. Our laws should encourage these advances, reduce unnecessary animal suffering and strengthen scientific standards, not take us backwards.'],
+      lhi: ['विज्ञान मनुष्यों के लिए प्रासंगिक विकल्पों की ओर बढ़ रहा है, जैसे ऑर्गन-ऑन-चिप तकनीक, ऑर्गनॉइड और मानव-कोशिका आधारित मॉडल। हमारे क़ानूनों को इन प्रगतियों को प्रोत्साहित करना चाहिए, पशुओं की अनावश्यक पीड़ा कम करनी चाहिए और वैज्ञानिक मानकों को मज़बूत करना चाहिए, न कि हमें पीछे ले जाना चाहिए।'] },
   ];
+  // The closing paragraph, always included.
+  var CLOSE_EN = 'The proposed Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 risk weakening scientific oversight, animal protection and public health safeguards when all three need to be strengthened. These Draft Rules must be withdrawn.';
+  var CLOSE_HI = 'प्रस्तावित पशु क्रूरता निवारण (प्रयोगशाला पशुओं पर प्रयोग, प्रजनन और व्यापार का नियंत्रण और पर्यवेक्षण) नियम, 2026 वैज्ञानिक निगरानी, पशु संरक्षण और सार्वजनिक स्वास्थ्य सुरक्षा, तीनों को ऐसे समय में कमज़ोर करने का ख़तरा पैदा करते हैं जब तीनों को मज़बूत करने की ज़रूरत है। इन मसौदा नियमों को वापस लिया जाना चाहिए।';
   var state = { role: '', points: POINTS.map(function (p) { return p.id; }), letterLang: null, edited: false };
 
   function subject(l) {
@@ -363,20 +370,22 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     if (l === 'hi') {
       out.push('सेवा में', 'सचिव, पशुपालन और डेयरी विभाग, भारत सरकार', 'द्वारा: सदस्य सचिव, CCSEA', '',
         'महोदय/महोदया,', '',
-        '6 अक्टूबर 2026 को अधिसूचित पशु क्रूरता निवारण (प्रयोगशाला पशुओं पर प्रयोग, प्रजनन और व्यापार का नियंत्रण और पर्यवेक्षण) नियम, 2026 के मसौदे (G.S.R. 864(E)) पर मेरी कड़ी आपत्ति दर्ज की जाए। मेरा अनुरोध है कि इन्हें वापस लेकर दोबारा तैयार किया जाए।');
+        '6 अक्टूबर 2026 को अधिसूचित पशु क्रूरता निवारण (प्रयोगशाला पशुओं पर प्रयोग, प्रजनन और व्यापार का नियंत्रण और पर्यवेक्षण) नियम, 2026 के मसौदे (G.S.R. 864(E)) पर मेरी आपत्ति नीचे दिए गए कारणों से दर्ज की जाए।');
       if (role) out.push('', pick(role.lhi, 1));
-      if (pts.length) { out.push(''); pts.forEach(function (p, i) { out.push((i + 1) + '. ' + pick(p.lhi, i + 2)); }); }
+      pts.forEach(function (p, i) { out.push('', (i + 1) + '. ' + pick(p.lhi, i + 2)); });
       if (own) out.push('', own);
+      out.push('', CLOSE_HI);
       out.push('', 'कृपया इस आपत्ति की प्राप्ति की सूचना दें और इसे दर्ज करें।', '', 'भवदीय,', name || '[आपका नाम]', city || '[आपका शहर]');
     } else {
       out.push('To', 'The Secretary, Department of Animal Husbandry and Dairying, Government of India', 'Through: The Member Secretary, CCSEA', '',
         'Sir/Madam,', '',
-        pick(['I place on record my strongest objection to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026, and urge that they be withdrawn and redrafted.',
-              'I write to object, in the strongest terms, to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026. I urge that they be withdrawn and redrafted.',
-              'Please record my strong objection to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026. I request that they be withdrawn and redrafted.'], 0));
+        pick(['I write to place on record my objection to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026, for the reasons set out below.',
+              'Please record my objection to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026. My reasons are set out below.',
+              'I object to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026, for the following reasons.'], 0));
       if (role) out.push('', pick(role.len, 1));
-      if (pts.length) { out.push(''); pts.forEach(function (p, i) { out.push((i + 1) + '. ' + pick(p.len, i + 2)); }); }
+      pts.forEach(function (p, i) { out.push('', (i + 1) + '. ' + pick(p.len, i + 2)); });
       if (own) out.push('', own);
+      out.push('', CLOSE_EN);
       out.push('', pick(['Please acknowledge receipt and record this objection.', 'I request an acknowledgement, and that this objection be placed on record.'], 9),
         '', 'Yours faithfully,', name || '[Your name]', city || '[Your city]');
     }
@@ -392,10 +401,10 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   // ---- the ways to send ---------------------------------------------------
   function enc(s) { return encodeURIComponent(s.replace(/\r?\n/g, '\r\n')); }
   var WAYS = {
-    app: function (s, b) { return 'mailto:' + TO + '?subject=' + enc(s) + '&body=' + enc(b); },
-    gmail: function (s, b) { return 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(TO) + '&su=' + enc(s) + '&body=' + enc(b); },
-    outlook: function (s, b) { return 'https://outlook.live.com/mail/0/deeplink/compose?to=' + encodeURIComponent(TO) + '&subject=' + enc(s) + '&body=' + enc(b); },
-    yahoo: function (s, b) { return 'https://compose.mail.yahoo.com/?to=' + encodeURIComponent(TO) + '&subject=' + enc(s) + '&body=' + enc(b); },
+    app: function (s, b) { return 'mailto:' + TO.join(',') + '?cc=' + encodeURIComponent(CC.join(',')) + '&subject=' + enc(s) + '&body=' + enc(b); },
+    gmail: function (s, b) { return 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(TO.join(',')) + '&cc=' + encodeURIComponent(CC.join(',')) + '&su=' + enc(s) + '&body=' + enc(b); },
+    outlook: function (s, b) { return 'https://outlook.live.com/mail/0/deeplink/compose?to=' + encodeURIComponent(TO.join(',')) + '&cc=' + encodeURIComponent(CC.join(',')) + '&subject=' + enc(s) + '&body=' + enc(b); },
+    yahoo: function (s, b) { return 'https://compose.mail.yahoo.com/?to=' + encodeURIComponent(TO.join(',')) + '&cc=' + encodeURIComponent(CC.join(',')) + '&subject=' + enc(s) + '&body=' + enc(b); },
   };
   var LABEL = { app: ['Open my email app', 'मेरा ईमेल ऐप खोलें'], gmail: ['Write it in Gmail', 'Gmail में लिखें'], outlook: ['Outlook', 'Outlook'], yahoo: ['Yahoo Mail', 'Yahoo Mail'], copy: ['Copy it instead', 'इसके बजाय कॉपी करें'], otherapp: ['My email app', 'मेरा ईमेल ऐप'] };
   // On a phone the email app is the sure way; on a computer the email app is
@@ -413,12 +422,11 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     if (state.edited) bad = null;   // they wrote their own letter
     $('loErr').hidden = !bad;
     if (bad) { $('loErr').textContent = T('Add your name and city: objections from named people are the ones recorded.', 'अपना नाम और शहर जोड़ें: नाम वाली आपत्तियाँ ही दर्ज होती हैं।'); bad.focus(); return false; }
-    if (!state.edited && !state.points.length && !$('loOwn').value.trim()) { $('loErr').hidden = false; $('loErr').textContent = T('Pick at least one point, or write a line of your own.', 'कम से कम एक बात चुनें, या अपनी एक पंक्ति लिखें।'); $('loMine').open = true; return false; }
     return true;
   }
   function fillCopy() {
     var l = letterLang();
-    $('loCvTo').textContent = TO; $('loCvSub').textContent = subject(l); $('loCvBody').textContent = letter().split('\n').slice(0, 2).join(' ') + ' ...';
+    $('loCvTo').textContent = TO.join(', '); $('loCvCc').textContent = CC.join(', '); $('loCvSub').textContent = subject(l); $('loCvBody').textContent = letter().split('\n').slice(0, 2).join(' ') + ' ...';
   }
   function send(way) {
     if (!ready()) return;
@@ -427,6 +435,15 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     if (way === 'copy') { showAfter(true); copy(b, T('Letter copied. Paste it into a new email.', 'पत्र कॉपी हो गया। इसे नए ईमेल में चिपकाएँ।')); return; }
     if (way === 'otherapp') way = 'app';
     var url = WAYS[way](s, b);
+    // Some mail apps and webmail cut off a very long link (a Hindi letter is
+    // long once encoded; desktop mail apps stop near 2,000 characters). Then
+    // the letter goes to the clipboard and the email opens with everything
+    // else filled in, ready to paste.
+    var limit = way === 'app' ? (isPhone ? 30000 : 1900) : 7000;
+    if (url.length > limit) {
+      copy(b, T('Letter copied. Paste it into the email that opens.', 'पत्र कॉपी हो गया। खुलने वाले ईमेल में इसे चिपकाएँ।'));
+      url = WAYS[way](s, '');
+    }
     if (way === 'app') window.location.href = url; else window.open(url, '_blank', 'noopener');
     setTimeout(function () { showAfter(false); }, 900);
   }
@@ -509,7 +526,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   }
   function paintAll() { paintChoices(); paintButtons(); paintDates(); paintCount(); paintShare(); refresh(); }
 
-  $('loTo').textContent = TO;
+  $('loToList').innerHTML = TO.map(function (a) { return '<li>' + a + '</li>'; }).join('') + CC.map(function (a) { return '<li>' + a + ' <span>(cc)</span></li>'; }).join('');
   ['loName', 'loCity', 'loOwn'].forEach(function (id) {
     $(id).addEventListener('input', function () { this.classList.remove('bad'); $('loErr').hidden = true; store.set(id, this.value); refresh(); });
     var v = store.get(id); if (v) $(id).value = v;
@@ -525,7 +542,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   document.addEventListener('click', function (e) { var b = e.target.closest('[data-way]'); if (b) send(b.dataset.way); });
   $('loYes').addEventListener('click', markSent);
   $('loNo').addEventListener('click', function () { fillCopy(); $('loCopyBox').hidden = false; });
-  document.querySelectorAll('[data-copy]').forEach(function (b) { b.addEventListener('click', function () { var k = b.dataset.copy; copy(k === 'to' ? TO : k === 'subject' ? subject(letterLang()) : letter()); }); });
+  document.querySelectorAll('[data-copy]').forEach(function (b) { b.addEventListener('click', function () { var k = b.dataset.copy; copy(k === 'to' ? TO.join(', ') : k === 'cc' ? CC.join(', ') : k === 'subject' ? subject(letterLang()) : letter()); }); });
   $('loLink').addEventListener('click', function () { copy(PAGE, T('Link copied', 'लिंक कॉपी हो गया')); });
   $('loShare').addEventListener('click', function () { navigator.share({ title: document.title, text: shareText().replace(PAGE, '').trim(), url: PAGE }).catch(function () {}); });
   $('loSnipCopy').addEventListener('click', function () { copy($('loSnippet').value); });

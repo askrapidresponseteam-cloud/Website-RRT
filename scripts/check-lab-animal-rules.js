@@ -23,16 +23,19 @@ ok((page.match(/data-lang="en"/g) || []).length === (page.match(/data-lang="hi"/
 ok(!new RegExp('[' + String.fromCharCode(0x2013, 0x2014) + ']').test(page), 'no long dashes');
 ok(!/<script[^>]+src="https?:/.test(page), 'no script from another site');
 
-// one recipient, written once
-const to = (page.match(/var TO = '([^']+)'/) || [])[1];
-ok(!!to && /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(to), 'the recipient is one valid address: ' + to);
-ok((page.split(to).length - 1) === 1, 'the address appears once in the source (everything else uses TO)');
+// the recipients, written once
+const list = (name) => [...(((page.match(new RegExp('var ' + name + ' = \\[([^\\]]*)\\]')) || [])[1]) || '').matchAll(/'([^']+)'/g)].map((m) => m[1]);
+const to = list('TO'), cc = list('CC');
+ok(to.length >= 1 && to.concat(cc).every((a) => /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(a)), 'every recipient is a valid address: ' + to.concat(cc).join(', '));
+ok(new Set(to.concat(cc)).size === to.length + cc.length, 'no address twice');
+ok(to.concat(cc).every((a) => page.split(a).length - 1 === 1), 'each address appears once in the source (everything else uses TO and CC)');
+ok(/mailto:' \+ TO\.join\(','\) \+ '\?cc='/.test(page) && (page.match(/&cc=' \+ encodeURIComponent\(CC\.join/g) || []).length === 3, 'every way to send carries the CC');
 
 // the letter: each line in both languages
 const block = (name) => (page.match(new RegExp('var ' + name + ' = \\[([\\s\\S]*?)\\n  \\];')) || [])[1] || '';
 for (const name of ['ROLES', 'POINTS']) {
   const items = block(name).split(/\n    \{ id: /).slice(1);
-  ok(items.length >= 5, name + ' lists its choices');
+  ok(items.length >= 4, name + ' lists its choices');
   for (const it of items) ok(/len: \[/.test(it) && /lhi: \[/.test(it) && /\ben: '/.test(it) && /\bhi: '/.test(it), name + ' ' + it.split("'")[1] + ' has English and Hindi');
 }
 
