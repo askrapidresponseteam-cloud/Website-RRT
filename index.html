@@ -52,6 +52,13 @@ main{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;pad
 h1{font-family:var(--sg-display);font-weight:800;font-size:clamp(30px,min(4vw,6.4vh),48px);line-height:1.08;letter-spacing:var(--sg-track-display);text-wrap:balance}
 html[lang=hi] h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;line-height:1.25}
 
+/* a time-limited campaign above the heading (shown until it closes) */
+.camp{display:flex;align-items:center;gap:10px;max-width:100%;margin:0 0 clamp(18px,3.5vh,30px);padding:10px 14px;background:var(--sg-wash);box-shadow:inset 0 0 0 1px var(--sg-wash-line);color:var(--ink);font-size:14px;font-weight:600;text-align:left;line-height:1.35}
+.camp:hover{box-shadow:inset 0 0 0 1px var(--sg-accent)}
+.camp-dot{width:8px;height:8px;border-radius:50%;background:var(--sg-accent);flex:none}
+.camp-go{flex:none;margin-left:4px;font-family:var(--sg-display);font-size:12.5px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:uppercase;color:var(--sg-stop-text);white-space:nowrap}
+html[lang=hi] .camp-go{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:14px}
+
 /* search: 56px square paper field, hairline border, ink focus */
 .search{position:relative;width:100%;margin-top:clamp(22px,4.5vh,40px);text-align:left}
 .bar{display:flex;align-items:center;gap:10px;height:var(--sg-btn-h);padding:0 7px 0 20px;border:1px solid var(--line);border-radius:0;background:var(--sg-paper);
@@ -280,6 +287,7 @@ body.lock{overflow:hidden}
 
 <main>
  <div class="inner">
+  <a class="camp" id="camp" href="/lab-animal-rules" hidden><span class="camp-dot" aria-hidden="true"></span><span data-i="camp">Draft lab animal rules: send your objection by 5 November</span><span class="camp-go" data-i="campGo">Send yours</span></a>
   <h1 data-i="h1">How can we help an animal today?</h1>
 
   <div class="search" role="search">
@@ -335,7 +343,7 @@ var PLAY="https://play.google.com/store/apps/details?id=com.rrt.sos",
 /* ---------------------------------------------------------------- UI text */
 var T={
  en:{
-  navFaq:"FAQ",
+  navFaq:"FAQ",camp:"Draft lab animal rules: send your objection by 5 November",campGo:"Send yours",
   h1:"How can we help an animal today?",
   ph:"Search SOS, feeding rights, dog pickups, vets\u2026",phS:"SOS, laws, vets, shop\u2026",
   recent:"Recent",clear:"Clear",
@@ -347,7 +355,7 @@ var T={
   android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top",resFor:"Results for",moreFor:"More searches"
  },
  hi:{
-  navFaq:"सवाल",
+  navFaq:"सवाल",camp:"प्रयोगशाला पशु नियमों का मसौदा: 5 नवंबर तक अपनी आपत्ति भेजें",campGo:"आपत्ति भेजें",
   h1:"आज किसी जानवर की मदद कैसे करें?",
   ph:"एसओएस, खिलाने का अधिकार, कुत्ते उठाना, वेट खोजें\u2026",phS:"एसओएस, कानून, वेट, शॉप\u2026",
   recent:"हाल के",clear:"हटाएँ",
@@ -412,6 +420,9 @@ var S={
  talkvet:{w:"talk vet online consultation consult chat video call doctor sick unwell vomiting diarrhoea not eating fever limping itching advice",a:[{h:"/talk-to-a-vet",dark:1,en:"Talk to a vet",hi:"वेट से बात करें"},"android","ios"],r:["sos","vets"],
   en:{k:"Online vet \u00b7 in the app",c:"Talk to a vet online",t:"Talk to a vet online",p:["Chat with a verified vet from your phone, anywhere in India. If they need to see your animal, start a video call from the same chat. You pay the vet directly by UPI; no phone numbers are shared.","Emergency? Raise an SOS instead. It reaches the nearest people in your district at once."]},
   hi:{k:"ऑनलाइन वेट \u00b7 ऐप में",c:"ऑनलाइन वेट से बात करें",t:"ऑनलाइन वेट से बात करें",p:["अपने फ़ोन से, पूरे भारत में कहीं से भी, एक सत्यापित वेट से चैट करें। अगर उन्हें आपके जानवर को देखना हो, तो उसी चैट से वीडियो कॉल शुरू करें। भुगतान सीधे वेट को UPI से; कोई फ़ोन नंबर साझा नहीं होता।","आपात स्थिति? इसके बजाय एसओएस भेजें। यह तुरंत आपके ज़िले के सबसे नज़दीकी लोगों तक पहुँचता है।"]}},
+ labrules:{w:"lab laboratory animal animals rules experiment experiments testing test research objection object oppose petition draft ccsea cpcsea 2026 monkeys dogs rabbits rats",a:[{h:"/lab-animal-rules",dark:1,en:"Send your objection",hi:"अपनी आपत्ति भेजें"}],r:["laws","report"],
+  en:{k:"Public objection \u00b7 until 5 November",c:"Object to the draft lab animal rules",t:"Object to the draft lab animal rules",p:["The draft Laboratory Animals Rules 2026 would let labs approve most of their own animal experiments, and let animals be bought from traders. The public has until 5 November 2026 to object. Add your name and city and send it from your own email in a minute."]},
+  hi:{k:"सार्वजनिक आपत्ति \u00b7 5 नवंबर तक",c:"प्रयोगशाला पशु नियमों के मसौदे पर आपत्ति",t:"प्रयोगशाला पशु नियमों के मसौदे पर आपत्ति भेजें",p:["प्रयोगशाला पशु नियम 2026 का मसौदा प्रयोगशालाओं को अपने ज़्यादातर पशु प्रयोग खुद मंज़ूर करने देगा, और पशु व्यापारियों से ख़रीदे जा सकेंगे। आपत्ति के लिए 5 नवंबर 2026 तक का समय है। अपना नाम और शहर जोड़ें और एक मिनट में अपने ईमेल से भेजें।"]}},
  vets:{w:"vet veterinarian doctor register verified consultation join",a:[{h:"/vet",dark:1,en:"Apply as a vet",hi:"वेट के रूप में आवेदन करें"}],r:["ask","roles"],
   en:{k:"For vets",t:"Join as a verified vet",p:["Register your veterinary credentials with Rapid Response. Verified vets can take consultations through the RRT network."]},
   hi:{k:"वेट के लिए",t:"सत्यापित वेट के रूप में जुड़ें",p:["रैपिड रिस्पॉन्स के साथ अपने पशु-चिकित्सा प्रमाणपत्र दर्ज करें। सत्यापित वेट RRT नेटवर्क के ज़रिए परामर्श दे सकते हैं।"]}},
@@ -599,6 +610,9 @@ function applyLang(l){
   if(serpOn)serp.innerHTML=serpHtml(serpQ,serpFocus);
   if(document.activeElement===q)render();
 }
+/* The lab animal rules objection (/lab-animal-rules): a line above the
+   heading until objections close at the end of 6 November 2026, India time. */
+(function(){var c=document.getElementById("camp");if(c&&Date.now()<Date.UTC(2026,10,7)-5.5*36e5)c.hidden=false;})();
 /* The shared header's EN | हिंदी switch (assets/rr-site.js) calls this. */
 window.setLang=applyLang;
 
