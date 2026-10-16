@@ -33,7 +33,7 @@ html[lang=hi] .lo-eyebrow{font-family:var(--sg-hindi);letter-spacing:0;font-size
 html[lang=hi] .lo h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;line-height:1.2}
 .lo-lead{font-size:clamp(17px,1.8vw,19px);line-height:1.5;color:var(--lo-mid);max-width:52ch;margin:16px 0 0}
 .lo-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.lo-chip{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0 12px;background:var(--sg-fog);color:var(--lo-mid);font-size:14px;font-weight:700}
+.lo-chip{font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0 12px;background:var(--sg-fog);color:var(--lo-mid);font-size:14px;font-weight:700}
 .lo-chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 .lo-chip.soon{background:var(--sg-hold-bg);color:var(--sg-hold-text)}
 .lo-chip.last{background:var(--sg-wash);color:var(--sg-stop-text)}
@@ -362,20 +362,18 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     var out = [];
     if (l === 'hi') {
       out.push('सेवा में', 'सचिव, पशुपालन और डेयरी विभाग, भारत सरकार', 'द्वारा: सदस्य सचिव, CCSEA', '',
-        'विषय: पशु क्रूरता निवारण (प्रयोगशाला पशुओं पर प्रयोग, प्रजनन और व्यापार का नियंत्रण और पर्यवेक्षण) नियम, 2026 का मसौदा (G.S.R. 864(E))', '',
         'महोदय/महोदया,', '',
-        '6 अक्टूबर 2026 को अधिसूचित इन मसौदा नियमों पर मेरी कड़ी आपत्ति दर्ज की जाए। मेरा अनुरोध है कि इन्हें वापस लेकर दोबारा तैयार किया जाए।');
+        '6 अक्टूबर 2026 को अधिसूचित पशु क्रूरता निवारण (प्रयोगशाला पशुओं पर प्रयोग, प्रजनन और व्यापार का नियंत्रण और पर्यवेक्षण) नियम, 2026 के मसौदे (G.S.R. 864(E)) पर मेरी कड़ी आपत्ति दर्ज की जाए। मेरा अनुरोध है कि इन्हें वापस लेकर दोबारा तैयार किया जाए।');
       if (role) out.push('', pick(role.lhi, 1));
       if (pts.length) { out.push(''); pts.forEach(function (p, i) { out.push((i + 1) + '. ' + pick(p.lhi, i + 2)); }); }
       if (own) out.push('', own);
       out.push('', 'कृपया इस आपत्ति की प्राप्ति की सूचना दें और इसे दर्ज करें।', '', 'भवदीय,', name || '[आपका नाम]', city || '[आपका शहर]');
     } else {
       out.push('To', 'The Secretary, Department of Animal Husbandry and Dairying, Government of India', 'Through: The Member Secretary, CCSEA', '',
-        'Subject: Objection to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E))', '',
         'Sir/Madam,', '',
-        pick(['I place on record my strongest objection to the draft Rules notified on 6 October 2026, and urge that they be withdrawn and redrafted.',
-              'I write to object, in the strongest terms, to the draft Rules notified on 6 October 2026. I urge that they be withdrawn and redrafted.',
-              'Please record my strong objection to the draft Rules notified on 6 October 2026. I request that they be withdrawn and redrafted.'], 0));
+        pick(['I place on record my strongest objection to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026, and urge that they be withdrawn and redrafted.',
+              'I write to object, in the strongest terms, to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026. I urge that they be withdrawn and redrafted.',
+              'Please record my strong objection to the draft Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 (G.S.R. 864(E)), notified on 6 October 2026. I request that they be withdrawn and redrafted.'], 0));
       if (role) out.push('', pick(role.len, 1));
       if (pts.length) { out.push(''); pts.forEach(function (p, i) { out.push((i + 1) + '. ' + pick(p.len, i + 2)); }); }
       if (own) out.push('', own);
@@ -459,10 +457,13 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     if (now >= CLOSES) { $('loForm').hidden = true; $('loAfter').hidden = true; $('loClosed').hidden = false; chip.className = 'lo-chip'; txt = T('Closed on 6 November 2026', '6 नवंबर 2026 को बंद'); }
     else if (now >= ASK_BY) { chip.className = 'lo-chip last'; txt = T('Last chance: send it today', 'आख़िरी मौका: आज ही भेजें'); }
     else {
-      var days = Math.ceil((ASK_BY - now) / DAY);
-      chip.className = 'lo-chip' + (days <= 3 ? ' last' : days <= 7 ? ' soon' : '');
-      txt = days <= 1 ? T('Last day: 5 November', 'आख़िरी दिन: 5 नवंबर')
-        : T(days + ' days left · last date 5 November', days + ' दिन बाक़ी · अंतिम तारीख़ 5 नवंबर');
+      // A live countdown to the end of 5 November (India time), every second.
+      var left = ASK_BY - now, d = Math.floor(left / DAY), rest = left - d * DAY;
+      var p2 = function (n) { return (n < 10 ? '0' : '') + n; };
+      var clock = p2(Math.floor(rest / 3600e3)) + ':' + p2(Math.floor(rest % 3600e3 / 60e3)) + ':' + p2(Math.floor(rest % 60e3 / 1e3));
+      chip.className = 'lo-chip' + (left <= 3 * DAY ? ' last' : left <= 7 * DAY ? ' soon' : '');
+      txt = d < 1 ? T(clock + ' left · last date today, 5 November', clock + ' बाक़ी · अंतिम तारीख़ आज, 5 नवंबर')
+        : T(d + (d === 1 ? ' day ' : ' days ') + clock + ' left · last date 5 November', d + ' दिन ' + clock + ' बाक़ी · अंतिम तारीख़ 5 नवंबर');
     }
     $('loDaysText').textContent = txt;
   }
@@ -538,7 +539,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   if (store.get('lo-sent') === '1') { $('loThanks').hidden = false; }
   paintAll();
   loadCount();
-  setInterval(paintDates, 60000);
+  setInterval(paintDates, 1000);
   window.RRTObjection = { build: build, subject: subject, ways: WAYS, to: TO, state: state, setCount: function (n) { count = n; paintCount(); } };
 })();
 </script>
