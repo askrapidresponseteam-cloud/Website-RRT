@@ -20,17 +20,19 @@ and theme between these markers. Keep them exactly as they are:
   site-wide, edit it there and run `python3 scripts/site-chrome/heal.py --force`;
   do not hand-edit one page.
 - Styles: `assets/rr-signal.css` (the theme tokens, `--sg-*`, see
-  `docs/SIGNAL-THEME.md`: light ground, red signal; linked first from every
-  rr:head block), `assets/rr-site.css` (header/footer), `assets/rr-theme.css`
-  (older content pages), `assets/shop.css` (shop). Map new styles onto the
-  `--sg-*` tokens: white ground, square corners (every radius token is 0),
-  hairlines not shadows, Archivo (`--sg-display`) for headings and button
-  labels, one red (`--sg-accent`, white text) per view for the primary action
-  (red also for errors, destructive actions and emergencies). Do not
-  reintroduce the old dark palette, Barlow/JetBrains fonts, rounded pills, the
-  yellow of the earlier theme, or a red logo square: the paw and the
-  Marcellus wordmark stay as they are, and Marcellus is only for the wordmark
-  in the header.
+  `docs/SIGNAL-THEME.md`, website section: cream ground, deep teal, lime;
+  linked first from every rr:head block), `assets/rr-site.css`
+  (header/footer), `assets/rr-theme.css` (older content pages),
+  `assets/shop.css` (shop). Map new styles onto the `--sg-*` tokens: cream
+  paper, square corners (every radius token is 0), hairlines not shadows,
+  Arial heavy headlines with tight tracking (`--sg-display`), and one lime
+  action per view (`--sg-accent` fill with `--sg-on-accent` ink text). Lime
+  is a fill, never text on cream: use `--sg-accent-text` for text and
+  `--sg-accent-line` for borders. Red (`--sg-stop`) is only for errors,
+  destructive actions and emergencies. Do not bring back the old red
+  primary, Archivo/Manrope/Marcellus, the dark palette, rounded pills or
+  the yellow of earlier themes. The paw logo and the two-line "Rapid
+  Response" wordmark come from chrome.py.
 - Never use long dashes (em or en) anywhere; use a plain hyphen.
 - Fonts are served from this site (`assets/fonts/`, `assets/rr-fonts*.css`,
   built by `scripts/fonts/build_fonts.py`); never link Google Fonts again.

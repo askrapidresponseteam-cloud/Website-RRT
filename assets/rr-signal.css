@@ -1,53 +1,55 @@
-/* Rapid Response - the theme for the app, the website and the admin: light
-   ground, red signal (2.18.0; docs/SIGNAL-THEME.md). This file defines the
-   tokens (the --sg-* names date from the earlier yellow "Signal" theme and
-   stayed so every stylesheet follows), plus the few base rules that make every
-   page share one type and shape: display type in Archivo and square corners.
-   Every other stylesheet (rr-site.css for the header and footer, rr-theme.css
-   for the older content pages, shop.css, and each page's own <style>) maps its
-   classes onto these tokens. Every page links it first, from its rr:head block.
+/* Rapid Response - the website theme (2.24.0, from the landing page the team
+   chose): a warm cream ground, deep teal ink, lime for the one primary action
+   and for highlights, heavy Arial titles with tight tracking, small uppercase
+   tracked labels, square corners, hairlines not shadows. The header and the
+   footer are deep teal with cream type. The --sg-* names date from earlier
+   themes and stay so every stylesheet follows: rr-site.css (header, footer),
+   rr-theme.css (older content pages), shop.css and each page's own <style>
+   map onto these tokens. Every page links this file first.
 
-   Rules: one red per view, two at most (the primary action and a live
-   status); white on red, never ink; tints (the red wash) are for surfaces,
-   never for type; red also marks errors, emergencies and destructive actions;
-   zero radius (round only by nature: avatars, dots); borders, not shadows. */
+   Rules: lime is a fill, never a text colour (on cream it cannot be read):
+   type on lime is teal ink. Selected labels use --sg-accent-text and
+   selected outlines --sg-accent-line. Red is only for SOS, errors and
+   destructive actions. Zero radius (round only by nature: dots, avatars). */
 
 :root{
   /* colour */
-  --sg-accent:#D81E2C;        /* signal red: the primary action, live status */
-  --sg-accent-press:#A2131B;  /* deep red: hover / pressed, links, error text */
-  --sg-on-accent:#FFFFFF;     /* white on red */
-  --sg-wash:#FDECEC;          /* red wash: selected rows and tiles, error notices */
-  --sg-wash-line:#F6D6D6;     /* border of a washed surface */
-  --sg-ink:#0D0D0F;           /* type, chrome, dark buttons */
-  --sg-ink-hover:#2A2A2C;
-  --sg-graphite:#46453F;      /* body copy */
-  --sg-slate:#6B6963;         /* secondary text, data labels */
-  --sg-muted:#8A8780;         /* placeholders, tertiary text */
-  --sg-disabled:#9C9992;
-  --sg-disabled-text:#6E6C68; /* text on a disabled fill */
-  --sg-line:#E4E2DE;          /* hairline: borders, dividers */
-  --sg-line-strong:#DDDBD6;   /* chip and small button borders */
-  --sg-fog:#EFEDEA;           /* inner hairlines, disabled and secondary fills */
-  --sg-fog-hover:#E4E2DE;
-  --sg-mist:#F5F4F2;          /* surface: inset rows, card footers */
-  --sg-paper:#FFFFFF;         /* the ground */
-  --sg-go:#12A05C;--sg-go-text:#0C7B46;--sg-go-bg:#E6F5ED;
-  --sg-hold:#E08A1E;--sg-hold-text:#9A5E06;--sg-hold-bg:#FBEEDB;
-  --sg-stop:#D81E2C;--sg-stop-hover:#A2131B;--sg-stop-text:#A2131B;--sg-stop-bg:#FDECEC;
-  --sg-link:#A2131B;
+  --sg-accent:#DDF871;        /* lime: the primary action (teal ink on it) */
+  --sg-accent-press:#EDFFA9;  /* lime, lighter: hover / pressed */
+  --sg-on-accent:#102C2C;     /* teal ink on lime */
+  --sg-accent-text:#063F42;   /* a selected label (lime cannot be text) */
+  --sg-accent-line:#102C2C;   /* a selected outline */
+  --sg-wash:#EAF5C4;          /* lime wash: selected rows and tiles, notices */
+  --sg-wash-line:#CFE48A;     /* border of a washed surface */
+  --sg-ink:#102C2C;           /* teal ink: type, chrome, dark buttons */
+  --sg-ink-hover:#1C4342;
+  --sg-graphite:#2F4644;      /* body copy */
+  --sg-slate:#546361;         /* secondary text, data labels */
+  --sg-muted:#7B8885;         /* placeholders, tertiary text */
+  --sg-disabled:#9AA29E;
+  --sg-disabled-text:#66716E; /* text on a disabled fill */
+  --sg-line:#D9D6C8;          /* hairline: borders, dividers */
+  --sg-line-strong:#C9C6B6;   /* chip and small button borders */
+  --sg-fog:#E6E3D6;           /* inner hairlines, disabled and secondary fills */
+  --sg-fog-hover:#DCD9CB;
+  --sg-mist:#EAE8DC;          /* surface: inset rows, card footers */
+  --sg-paper:#F1EFE5;         /* the ground: warm cream */
+  --sg-deep:#063F42;          /* deep teal: header, dark bands */
+  --sg-deep-2:#102F30;        /* the footer and dark panels */
+  --sg-go:#1F9A5C;--sg-go-text:#16774A;--sg-go-bg:#DDEFD9;
+  --sg-hold:#D5861E;--sg-hold-text:#8E5A07;--sg-hold-bg:#F5E6C8;
+  --sg-stop:#B42E29;--sg-stop-hover:#922420;--sg-stop-text:#9B2722;--sg-stop-bg:#F4DFD8;
+  --sg-link:#063F42;
 
-  /* type: Archivo for display, titles and button labels, Manrope for the
-     interface, IBM Plex Mono for data labels, Noto Sans Devanagari for Hindi
-     (a Hindi page puts it first) */
-  --sg-display:"Archivo","Archivo Fallback","Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --sg-sans:"Manrope","Manrope Fallback","Noto Sans Devanagari","Noto Sans Devanagari Fallback",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --sg-hindi:"Noto Sans Devanagari","Noto Sans Devanagari Fallback","Manrope","Manrope Fallback",system-ui,sans-serif;
-  --sg-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  --sg-track-display:-.04em;--sg-track-title:-.025em;--sg-track-section:-.02em;--sg-track-label:.12em;--sg-track-button:.09em;
+  /* type: Arial (Helvetica on Apple) for everything, heavy and tight for
+     titles; Noto Sans Devanagari for Hindi (a Hindi page puts it first) */
+  --sg-display:Arial,"Helvetica Neue",Helvetica,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",sans-serif;
+  --sg-sans:Arial,"Helvetica Neue",Helvetica,"Noto Sans Devanagari","Noto Sans Devanagari Fallback",sans-serif;
+  --sg-hindi:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",Arial,"Helvetica Neue",Helvetica,sans-serif;
+  --sg-mono:Arial,"Helvetica Neue",Helvetica,sans-serif;  /* labels: uppercase, tracked */
+  --sg-track-display:-.055em;--sg-track-title:-.035em;--sg-track-section:-.03em;--sg-track-label:.15em;--sg-track-button:.04em;
 
-  /* shape and depth: zero radius; hairlines, not shadows (the "shadow"
-     tokens are 1px rings, so boxes keep their size) */
+  /* shape and depth: zero radius; hairlines, not shadows */
   --sg-r-tiny:0px;--sg-rs:0px;--sg-rl:0px;--sg-rc:0px;--sg-pill:0px;
   --sg-shadow-card:0 0 0 1px var(--sg-line);
   --sg-shadow-row:0 0 0 1px var(--sg-line);
@@ -56,12 +58,13 @@
   --sg-shadow-pill:0 0 0 1px var(--sg-line-strong);
 
   /* controls */
-  --sg-btn-h:56px;--sg-btn-h-dense:48px;--sg-chip-h:38px;
-  --sg-ease:120ms ease-out;
-  --sg-focus:0 0 0 1.5px var(--sg-ink);
+  --sg-btn-h:54px;--sg-btn-h-dense:46px;--sg-chip-h:38px;
+  --sg-ease:150ms ease-out;
+  --sg-focus:0 0 0 2px var(--sg-ink);
 }
 
-/* Display type: headings in Archivo on every themed page (Hindi keeps Noto
-   Sans Devanagari, which the stack falls through to per glyph). */
-:where(html.rr-themed) :where(h1,h2,h3){font-family:var(--sg-display)}
+/* Titles: heavy Arial, tight (Hindi keeps Noto Sans Devanagari). */
+:where(html.rr-themed) :where(h1,h2,h3){font-family:var(--sg-display);font-weight:800}
 :where(html.rr-themed[lang=hi]) :where(h1,h2,h3){font-family:var(--sg-hindi)}
+html{background:var(--sg-paper)}
+::selection{background:var(--sg-accent);color:var(--sg-on-accent)}
