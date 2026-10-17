@@ -1,0 +1,122 @@
+/* rr-page.css: one page grid for every content page.
+
+   Every page lines up with the logo. The header puts the logo at
+   var(--rr-pad) from the left edge (assets/rr-site.css), so every page
+   starts its eyebrow, title, lead and content on that same line, on
+   desktop and phone, in English and Hindi. Nothing is centred except the
+   home page search hero.
+
+   The page head is one pattern everywhere:
+     .rr-ph-eye   a mono label, slate, no dot
+     .rr-ph-h1    the page title, Archivo 800, one size scale
+     .rr-ph-lead  one or two sentences under the title
+   The page body sits in .rr-page, left aligned, with one of two widths:
+     .rr-read     long reading pages and forms (760px of text)
+     .rr-wide     pages with grids and cards (1120px)
+
+   Linked last in <head> on purpose, so it settles the layout over each
+   page's own older rules. Screen only: print layouts stay as they are. */
+
+:root{
+  --rr-top:clamp(36px,5vw,72px);
+  --rr-read:760px;
+  --rr-wide:1120px;
+  --rr-gap-head:clamp(28px,3.4vw,44px);
+}
+
+.rr-toc{display:none}
+html:root body section[id]{scroll-margin-top:96px}
+
+@media screen{
+
+/* ---------------------------------------------------------- container -- */
+html:root body .rr-page{
+  box-sizing:border-box;width:100%;max-width:calc(var(--rr-w,var(--rr-read)) + 2 * var(--rr-pad));
+  margin:0;padding:var(--rr-top) var(--rr-pad) 96px;text-align:left;
+}
+html:root body .rr-page.rr-read{--rr-w:var(--rr-read)}
+html:root body .rr-page.rr-wide{--rr-w:var(--rr-wide)}
+
+/* ---------------------------------------------------------- page head -- */
+html:root body .rr-ph-eye{
+  width:auto;margin:0 0 14px;padding:0;border:0;background:none;
+  font-family:var(--sg-mono);font-size:12px;font-weight:500;line-height:1.4;
+  letter-spacing:var(--sg-track-label,.12em);text-transform:uppercase;color:var(--sg-slate);
+  text-align:left;
+}
+html:root body .rr-ph-eye .dot,html:root body .rr-ph-eye .ping{display:none}
+html:root body h1.rr-ph-h1{
+  margin:0;max-width:22ch;padding:0;text-align:left;text-transform:none;
+  font-family:var(--sg-display);font-weight:800;font-size:clamp(36px,4.4vw,56px);
+  line-height:1.04;letter-spacing:var(--sg-track-title,-.025em);color:var(--sg-ink);text-wrap:balance;
+}
+html:root body .rr-ph-lead{
+  margin:16px 0 0;max-width:60ch;padding:0;text-align:left;
+  font-family:var(--sg-sans);font-size:clamp(16px,1.5vw,18px);font-weight:500;line-height:1.55;
+  color:var(--sg-graphite);
+}
+html[lang=hi]:root body .rr-ph-eye{letter-spacing:0;font-family:var(--sg-hindi);font-size:13px}
+html[lang=hi]:root body h1.rr-ph-h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;line-height:1.2}
+html[lang=hi]:root body h1.rr-ph-h1 *{font-family:inherit}
+
+/* ------------------------------------------------- policy, vet terms -- */
+html:root body .pol-sect:first-of-type,html:root body .vt-clause:first-of-type{margin-top:var(--rr-gap-head)}
+
+/* -------------------------------------------------------- lab rules -- */
+html:root body .lo.rr-page .lo-chips{justify-content:flex-start}
+
+/* -------------------------------------------------------------- FAQ -- */
+html:root body main.page.rr-page{min-height:0;padding-top:var(--rr-top)!important}
+html:root body main.page.rr-page>.wrap{max-width:none;margin:0}
+html:root body main.page.rr-page .rr-ph-lead{margin-bottom:28px}
+
+/* ---------------------------------------------------- know the laws -- */
+html:root body #top.rr-top{padding:var(--rr-top) var(--rr-pad) 40px!important;border-bottom:0}
+html:root body #top.rr-top .crumb{display:flex}
+html:root body #top.rr-top .top-wrap{max-width:var(--rr-wide);margin:0;text-align:left}
+html:root body #top.rr-top .meta-line{justify-content:flex-start;margin:20px 0 22px}
+html:root body #top.rr-top .disclaim{margin:0 0 24px;max-width:var(--rr-read)}
+html:root body #top.rr-top .cta-strip{justify-content:flex-start;text-align:left}
+html:root body #pillbar{padding-left:0;padding-right:0}
+html:root body #pillbar .pillbar-inner{max-width:none;margin:0;padding-left:var(--rr-pad);padding-right:var(--rr-pad)}
+html:root body .rr-kl{box-sizing:border-box;max-width:calc(920px + 2 * var(--rr-pad));margin-left:0;margin-right:0;padding-left:var(--rr-pad);padding-right:var(--rr-pad)}
+html:root body .bottom-cta.rr-kl-card{box-sizing:border-box;max-width:920px;margin:0 var(--rr-pad) 60px;text-align:left}
+html:root body .bottom-cta.rr-kl-card p{margin-left:0;margin-right:0}
+
+/* ------------------------------------------------------- the record -- */
+html:root body .hero.rr-hero{align-items:flex-start;text-align:left;padding:var(--rr-top) var(--rr-pad) 40px!important}
+html:root body .hero.rr-hero>:not(.hero-media){max-width:var(--rr-wide)}
+html:root body #heroTitle.rr-ph-h1{text-transform:capitalize}
+html:root body .hero.rr-hero p{margin:0;max-width:60ch}
+html:root body .hero.rr-hero .rr-ph-lead{margin-top:16px}
+html:root body .hero.rr-hero .hero-cta{justify-content:flex-start}
+html:root body .rr-rec{box-sizing:border-box;max-width:calc(var(--maxw,1240px) + 2 * var(--rr-pad));margin-left:0;margin-right:0;padding-left:var(--rr-pad);padding-right:var(--rr-pad)}
+
+/* ------------------------------------------- on this page (rr-toc.js) -- */
+html:root body main.rr-has-toc{position:relative}
+@media (min-width:1200px){
+  html:root body main.rr-has-toc .rr-toc{
+    display:block;position:absolute;top:var(--rr-top);bottom:96px;width:240px;
+    left:calc(var(--rr-pad) + var(--rr-read) + clamp(56px,5vw,96px));
+  }
+  .rr-toc-in{position:sticky;top:104px;border-left:1px solid var(--sg-line);padding:2px 0 2px 20px}
+  .rr-toc-h{margin:0 0 10px;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label,.12em);text-transform:uppercase;color:var(--sg-slate)}
+  html[lang=hi] .rr-toc-h{font-family:var(--sg-hindi);letter-spacing:0;font-size:13px}
+  .rr-toc ol{list-style:none;margin:0;padding:0}
+  .rr-toc a{display:block;margin-left:-21px;padding:7px 0 7px 19px;border-left:2px solid transparent;
+    font-family:var(--sg-sans);font-size:14px;font-weight:500;line-height:1.35;color:var(--sg-slate);text-decoration:none}
+  .rr-toc a:hover{color:var(--sg-ink)}
+  .rr-toc a[aria-current]{color:var(--sg-ink);font-weight:700;border-left-color:var(--sg-ink)}
+  .rr-toc a:focus-visible{outline:2px solid var(--sg-ink);outline-offset:2px}
+}
+
+/* ----------------------------------------------- bag and orders -- */
+html:root body .cart-wrap.rr-page,html:root body .trk.rr-page{padding-top:26px}
+html:root body .cart-wrap.rr-page{--rr-w:880px}
+html:root body .cart-wrap.rr-page>h1,html:root body .trk.rr-page>h1{
+  margin:0 0 18px;font-family:var(--sg-display);font-weight:800;font-size:clamp(30px,3.6vw,40px);
+  line-height:1.1;letter-spacing:var(--sg-track-display,-.04em);
+}
+html:root body .cart-wrap.rr-page .state,html:root body .trk.rr-page .state{padding:28px 0;text-align:left}
+
+}
