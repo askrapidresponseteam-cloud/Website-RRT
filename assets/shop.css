@@ -529,8 +529,11 @@ html.qa-open { overflow: hidden; }
 
 @media (max-width: 760px) {
   :root { --hdr: 61px; }
-  .shopbar { gap: 8px; padding: 8px var(--pad); }
-  .shopbar-links { gap: 0; padding: 3px; }
+  /* phones: the search gets the whole row; All / Saved / Orders sit under it as tabs */
+  .shopbar { flex-wrap: wrap; gap: 0; padding: 8px var(--pad) 0; }
+  .shopbar .find { flex: 1 1 100%; }
+  .shopbar-links { width: 100%; gap: 0; padding: 0; margin-top: 4px; }
+  .shopbar-links a { flex: 1; justify-content: center; }
   .shopbar-links a { height: 34px; padding: 0 8px; font-size: 13px; }
   .find { height: 44px; padding-left: 14px; gap: 2px; }
   .find input { font-size: 16px; }
