@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#102C2C">
+<meta name="theme-color" content="#ffffff">
 <title>Rapid Response - Animal Emergency Network for India</title>
 <meta name="description" content="A peer network for everyone who shows up for animals - feeders, pet parents, fosterers, rescuers and vets. Raise an SOS to your district, know the laws, report an incident. Free, bilingual, built for India.">
 <meta name="robots" content="index,follow,max-image-preview:large">
@@ -19,17 +19,17 @@
 <meta property="og:description" content="People who show up for animals find each other. One tap reaches your whole district. Free, bilingual, built for India.">
 <meta property="og:image" content="https://rapid-response.in/assets/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css">
+<link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/archivo-latin-800.c26cda24.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css">
 <link rel="stylesheet" href="/assets/rr-signal.css">
 <link rel="stylesheet" href="/assets/rr-site.css">
-<link rel="preload" href="/assets/home-hero.webp" as="image" fetchpriority="high">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://rapid-response.in/#org","name":"Rapid Response","alternateName":"RapidResponse Labs","url":"https://rapid-response.in/","logo":"https://rapid-response.in/assets/favicon-512.png","image":"https://rapid-response.in/assets/og-cover.jpg","description":"An independent community animal-emergency peer network for India.","email":"ask@rapid-response.in","areaServed":{"@type":"Country","name":"India"},"sameAs":["https://www.instagram.com/rrtanimals"]},{"@type":"WebSite","@id":"https://rapid-response.in/#website","url":"https://rapid-response.in/","name":"Rapid Response","publisher":{"@id":"https://rapid-response.in/#org"},"inLanguage":["en-IN","hi-IN"]},{"@type":"MobileApplication","name":"Rapid Response","operatingSystem":"Android, iOS","applicationCategory":"LifestyleApplication","description":"Raise an SOS to the nearest people on the animal-welfare network in your district, or Ask the District for non-urgent help.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"publisher":{"@id":"https://rapid-response.in/#org"},"downloadUrl":["https://play.google.com/store/apps/details?id=com.rrt.sos","https://apps.apple.com/in/app/rapid-response/id6758672498"]}]}</script>
 <style>
 /* Rapid Response homepage. The header is the site's shared header
    (assets/rr-site.css) so the logo sits exactly where it does on every
    other page; this sheet styles only what is below it, in the theme
-   (assets/rr-signal.css): cream paper, deep teal, one lime action per
-   view, Arial heavy headlines with tight tracking, square corners. */
+   (assets/rr-signal.css): paper page, square search field and sheet with
+   hairlines, ink titles in Archivo, one red button with a white label
+   (Report an incident). */
 :root{
   --ink:var(--sg-ink);--mid:var(--sg-graphite);--low:var(--sg-slate);--line:var(--sg-line);--red:var(--sg-stop);
   --sans:var(--sg-sans);
@@ -37,17 +37,27 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
+html,body{height:100%}
 html{font-synthesis:none;background:var(--sg-paper)}
 body{background:var(--sg-paper);color:var(--ink);font-family:var(--sans);font-size:15px;font-weight:500;line-height:1.45;
-  -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+  -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px)}
 html[lang=hi] body{font-family:var(--sg-hindi)}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
-/* the search column */
+/* one centred column */
+main{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;padding:clamp(12px,3vh,40px) var(--pad)}
 .inner{width:100%;max-width:720px;margin:auto;text-align:center;display:flex;flex-direction:column;align-items:center}
+h1{font-family:var(--sg-display);font-weight:800;font-size:clamp(30px,min(4vw,6.4vh),48px);line-height:1.08;letter-spacing:var(--sg-track-display);text-wrap:balance}
+html[lang=hi] h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;line-height:1.25}
 
+/* a time-limited campaign above the heading (shown until it closes) */
+.camp{display:flex;align-items:center;gap:10px;max-width:100%;margin:0 0 clamp(18px,3.5vh,30px);padding:10px 14px;background:var(--sg-wash);box-shadow:inset 0 0 0 1px var(--sg-wash-line);color:var(--ink);font-size:14px;font-weight:600;text-align:left;line-height:1.35}
+.camp:hover{box-shadow:inset 0 0 0 1px var(--sg-accent)}
+.camp-dot{width:8px;height:8px;border-radius:50%;background:var(--sg-accent);flex:none}
+.camp-go{flex:none;margin-left:4px;font-family:var(--sg-display);font-size:12.5px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:uppercase;color:var(--sg-stop-text);white-space:nowrap}
+html[lang=hi] .camp-go{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:14px}
 
 /* search: 56px square paper field, hairline border, ink focus */
 .search{position:relative;width:100%;margin-top:clamp(22px,4.5vh,40px);text-align:left}
@@ -65,7 +75,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .mic:hover{background:var(--sg-fog);color:var(--ink)}
 /* listening is live: red, white icon, a pulsing red ring */
 .mic.on{color:var(--sg-on-accent);background:var(--sg-accent);animation:micpulse 1.2s ease-in-out infinite}
-@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(16,44,44,.35)}70%{box-shadow:0 0 0 12px rgba(16,44,44,0)}100%{box-shadow:0 0 0 0 rgba(16,44,44,0)}}
+@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(216,30,44,.35)}70%{box-shadow:0 0 0 12px rgba(216,30,44,0)}100%{box-shadow:0 0 0 0 rgba(216,30,44,0)}}
 .go{flex:none;width:42px;height:42px;border-radius:0;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;transition:background var(--sg-ease)}
 .go:hover{background:var(--sg-ink-hover)}
 .go svg{display:block}
@@ -106,9 +116,9 @@ html[lang=hi] .fa-q{font-family:var(--sg-hindi);letter-spacing:0}
 /* recent searches: square chips (selected = red wash, red border, red label) */
 .meta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin-top:14px;font-size:14px;color:var(--low)}
 .chip{height:var(--sg-chip-h);padding:0 16px;border:1px solid var(--sg-line-strong);border-radius:0;background:var(--sg-paper);font-size:14px;font-weight:600;color:var(--mid);transition:background var(--sg-ease)}
-.chip.on{background:var(--sg-wash);border-color:var(--sg-accent-line);color:var(--sg-accent-text);font-weight:700}
+.chip.on{background:var(--sg-wash);border-color:var(--sg-accent);color:var(--sg-accent);font-weight:700}
 .chip:hover{background:var(--sg-mist);color:var(--ink)}
-.chip.on:hover{background:var(--sg-wash);color:var(--sg-accent-text)}
+.chip.on:hover{background:var(--sg-wash);color:var(--sg-accent)}
 
 /* actions: square buttons, 48px (dense), Archivo 700 UPPERCASE, tracked.
    The dark one is the page's primary action: red with a white label; a
@@ -133,6 +143,9 @@ html[lang=hi] .btn{font-family:var(--sg-hindi);font-size:15px;font-weight:700;le
 /* results page, the way a search engine shows one: the page turns into
    results under the search field (no drawer). A result that is one of our
    answers opens in place under its + ; a page is a plain link. */
+body.serping main{justify-content:flex-start;padding-top:clamp(8px,2vh,18px)}
+body.serping .inner{margin:0 auto;text-align:left;align-items:stretch}
+body.serping :is(h1,.qrow,.learn,#recentRow){display:none}
 body.serping .search{margin-top:clamp(6px,2vh,18px)}
 .serp{width:100%;margin-top:12px;text-align:left}
 .sr-n{margin:0 0 4px;font-size:13px;color:var(--low)}
@@ -190,6 +203,12 @@ html[lang=hi] :is(.sr-r,.sr-x) .t{font-family:var(--sg-hindi);font-size:17px;let
 .sr-more a{display:inline-flex;align-items:center;height:var(--sg-chip-h);padding:0 14px;border:1px solid var(--sg-line-strong);font-size:14px;font-weight:600;color:var(--mid)}
 .sr-more a:hover{background:var(--sg-mist);color:var(--ink)}
 
+/* footer */
+footer{flex:none;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;padding:14px var(--pad);
+  background:var(--sg-paper);border-top:1px solid var(--line);font-size:13px;color:var(--low)}
+footer .links{display:flex;flex-wrap:wrap;gap:22px}
+footer .links a{color:var(--mid);font-weight:600}
+footer a:hover{color:var(--ink)}
 
 /* info sheet: a square paper sheet with a hairline edge; a bottom sheet
    with a grab handle on phones */
@@ -197,7 +216,6 @@ html[lang=hi] :is(.sr-r,.sr-x) .t{font-family:var(--sg-hindi);font-size:17px;let
 .scrim.open{opacity:1;pointer-events:auto}
 .sheet{position:fixed;top:0;right:0;bottom:0;z-index:951;width:min(560px,100%);display:flex;flex-direction:column;background:var(--sg-paper);
   border-radius:0;box-shadow:-1px 0 0 var(--sg-line);transform:translateX(105%);transition:transform .25s ease;outline:none}
-.sheet:not(.open){visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
 .sheet.open{transform:none}
 .sh-top{flex:none;display:flex;justify-content:space-between;align-items:center;height:64px;padding:env(safe-area-inset-top,0px) 20px 0 28px;border-bottom:1px solid var(--sg-fog);box-sizing:content-box}
 .sh-k{font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
@@ -222,7 +240,7 @@ html[lang=hi] .sh-body .sh-lt{font-family:var(--sg-hindi);letter-spacing:0;text-
 .sh-list a:hover b{text-decoration:none}
 .sh-rel{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
 .sh-rel .chip{display:inline-flex;align-items:center;text-align:left;height:auto;min-height:var(--sg-chip-h);padding:8px 16px}
-.sh-rel .chip[aria-current=true]{background:var(--sg-wash);border-color:var(--sg-accent-line);color:var(--sg-accent-text);font-weight:700}
+.sh-rel .chip[aria-current=true]{background:var(--sg-wash);border-color:var(--sg-accent);color:var(--sg-accent);font-weight:700}
 .sh-qa{margin-top:26px;border-top:1px solid var(--sg-fog)}
 .sh-q{position:relative;padding:22px 0 10px;border-bottom:1px solid var(--sg-fog);border-radius:0}
 .sh-q h3{margin-bottom:10px;font-family:var(--sg-display);font-size:19px;font-weight:700;letter-spacing:var(--sg-track-title);line-height:1.3;color:var(--ink);outline:none}
@@ -239,12 +257,17 @@ body.lock{overflow:hidden}
 
 @media (max-width:640px){
   body{font-size:14px}
+  main{justify-content:flex-start;padding:clamp(40px,10vh,90px) 18px 14px}
+  .inner{justify-content:flex-start}
+  h1{font-size:clamp(28px,8vw,36px)}
   .bar{height:52px;padding-left:16px}
   .bar input{font-size:16px}
   .go{width:40px;height:40px}
   .qrow{margin-top:22px;gap:8px}
   .qrow .btn{height:44px;padding:0 16px;font-size:13px}
   html[lang=hi] .qrow .btn{font-size:14px}
+  footer{flex-direction:column;align-items:center;text-align:center;padding:12px 18px}
+  footer .links{justify-content:center;gap:14px;font-size:12.5px}
   .sheet{top:auto;height:88dvh;width:100%;border-radius:0;box-shadow:var(--sg-shadow-sheet);transform:translateY(105%)}
   .sheet:before{content:"";position:absolute;top:8px;left:50%;width:40px;height:5px;margin-left:-20px;border-radius:0;background:var(--sg-line)}
   .sh-top{height:56px;padding:6px 16px 0 20px}
@@ -253,201 +276,19 @@ body.lock{overflow:hidden}
   .sh-act .btn{flex:1 1 auto}
 }
 @media (prefers-reduced-motion:reduce){.mic.on{animation:none}.sheet,.scrim{transition:none}.sh-q.hl{animation:none;background:var(--sg-wash)}}
-/* ===== The landing (2.24.0): hero over the picture, the lime strip, the
-   search band, the idea, the dark "next step" panel with tabs, three steps,
-   the lime join band and a short FAQ. While results show (body.serping)
-   only the search band and its results stay. ===== */
-body{display:block;height:auto}
-html,body{height:auto}
-.button{display:inline-flex;align-items:center;justify-content:center;gap:25px;padding:17px 25px;background:var(--sg-accent);border:1px solid var(--sg-accent);color:var(--sg-on-accent);
-  font-family:var(--sg-display);font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;transition:transform .2s,background .2s}
-.button:hover{transform:translateY(-3px);background:var(--sg-accent-press)}
-html[lang=hi] .button{font-family:var(--sg-hindi);font-size:15px;letter-spacing:0;text-transform:none}
-.label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:27px}
-html[lang=hi] .label{letter-spacing:.02em;font-size:13px;text-transform:none}
-
-/* the header sits on the picture */
-body.home:not(.serping) .rr-chrome.rr-hdr{position:absolute;left:0;right:0;background:transparent}
-
-/* hero */
-.hero{min-height:810px;height:100svh;max-height:1200px;position:relative;isolation:isolate;background:#063a3b;color:var(--sg-paper);overflow:hidden}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-3;animation:enter-image 1.8s ease both}
-.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,26,28,.5),transparent 75%),linear-gradient(0deg,rgba(0,22,24,.8),transparent 28%);z-index:-1}
-.hero-content{padding:138px 4.4% 120px;position:relative;max-width:1700px;margin:auto}
-.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:600;display:flex;align-items:center;gap:11px}
-html[lang=hi] .eyebrow{letter-spacing:.04em;font-size:13px}
-.dot{width:7px;height:7px;background:var(--sg-accent);display:inline-block;border-radius:50%;box-shadow:0 0 17px #ddf86b66}
-.hero h1{font-family:var(--sg-display);font-size:clamp(80px,10.9vw,180px);letter-spacing:-.072em;line-height:.84;font-weight:900;margin:39px 0 26px;max-width:880px;color:var(--sg-paper);animation:enter-text 1s .15s both}
-.hero h1 span{color:var(--sg-accent)}
-html[lang=hi] .hero h1{font-family:var(--sg-hindi);font-weight:800;letter-spacing:-.02em;line-height:1.05;font-size:clamp(60px,8.4vw,140px)}
-.hero-copy{font-size:16px;line-height:1.6;max-width:340px;color:rgba(241,239,229,.86)}
-.hero-actions{display:flex;align-items:center;gap:25px;margin-top:25px;flex-wrap:wrap}
-.text-link{font-size:12px;border-bottom:1px solid rgba(255,255,255,.44);padding:9px 0}
-.text-link:hover{color:var(--sg-accent);border-color:var(--sg-accent)}
-.hero-foot{position:absolute;left:4.4%;right:4.4%;bottom:28px;display:flex;justify-content:space-between;align-items:end;gap:20px;font-size:11px}
-.hero-foot p{margin:0;line-height:1.7}
-.hero-foot .note{text-align:right;max-width:240px;color:rgba(255,255,255,.63)}
-.vertical{position:absolute;right:28px;top:45%;writing-mode:vertical-rl;font-size:10px;letter-spacing:.18em}
-/* the campaign line, on the picture */
-.camp{display:inline-flex;align-items:center;gap:10px;max-width:100%;margin:0 0 26px;padding:9px 14px;background:rgba(6,46,47,.55);box-shadow:inset 0 0 0 1px rgba(221,248,113,.55);color:var(--sg-paper);font-size:13px;font-weight:600;line-height:1.35;backdrop-filter:blur(4px)}
-.camp:hover{box-shadow:inset 0 0 0 1px var(--sg-accent)}
-.camp-dot{width:8px;height:8px;border-radius:50%;background:var(--sg-accent);flex:none}
-.camp-go{flex:none;margin-left:4px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sg-accent);white-space:nowrap}
-html[lang=hi] .camp-go{letter-spacing:0;text-transform:none;font-size:13px}
-
-/* the lime strip */
-.strip{display:flex;justify-content:space-between;padding:23px 4.4%;background:var(--sg-accent);color:var(--sg-on-accent);font-size:11px;font-weight:700;letter-spacing:.09em;gap:20px}
-.strip span{display:flex;align-items:center;gap:12px}
-.strip i{font-style:normal}
-.strip b{font-size:17px}
-html[lang=hi] .strip{letter-spacing:.01em;font-size:13px}
-
-/* the search band */
-main.find{display:block;padding:80px 6% 70px;border-bottom:1px solid var(--sg-line)}
-main.find .inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
-.find-h{font-family:var(--sg-display);font-weight:800;font-size:clamp(34px,4.4vw,60px);letter-spacing:-.055em;line-height:.98;margin:0;color:var(--sg-ink);text-wrap:balance}
-html[lang=hi] .find-h{font-family:var(--sg-hindi);letter-spacing:0;line-height:1.2}
-main.find .label{margin-bottom:20px}
-
-/* sections */
-.section{padding:90px 6%}
-.section h2{font-family:var(--sg-display);font-size:clamp(40px,5.2vw,79px);letter-spacing:-.055em;line-height:.98;margin:0;font-weight:800;color:inherit}
-html[lang=hi] .section h2{font-family:var(--sg-hindi);letter-spacing:0;line-height:1.15}
-.intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end}
-.intro .body-copy{max-width:440px;font-size:17px;line-height:1.65;color:var(--sg-graphite)}
-.intro .body-copy p{margin:0 0 20px}
-.intro .body-copy a{display:inline-block;margin-top:2px;border-bottom:1px solid;padding-bottom:5px;font-size:12px;font-weight:700;color:var(--sg-ink)}
-.experience{padding-top:0}
-.experience-inner{background:var(--sg-deep-2);color:var(--sg-paper);display:grid;grid-template-columns:1fr 1fr;min-height:480px}
-.experience-left{padding:50px}
-.experience h2{font-size:48px}
-.ltabs{display:flex;gap:5px;margin:30px 0 35px;border-bottom:1px solid rgba(255,255,255,.2);flex-wrap:wrap}
-.ltabs button{background:none;border:0;color:rgba(255,255,255,.63);font-size:12px;padding:13px 14px;border-bottom:3px solid transparent;margin-bottom:-1px}
-.ltabs button:hover{color:var(--sg-paper)}
-.ltabs button[aria-selected=true]{color:var(--sg-accent);border-color:var(--sg-accent)}
-html[lang=hi] .ltabs button{font-size:14px}
-.fpanel h3{font-family:var(--sg-display);font-size:25px;font-weight:800;letter-spacing:-.03em;margin:0 0 13px;color:var(--sg-paper)}
-html[lang=hi] .fpanel h3{font-family:var(--sg-hindi);letter-spacing:0}
-.fpanel p{max-width:370px;line-height:1.7;font-size:14px;color:rgba(226,231,227,.79);margin:0}
-.fpanel small{display:block;font-size:11px;line-height:1.6;color:#a5c8bd;margin-top:25px}
-.demo{background:#1c4f4e;padding:42px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.demo:before,.demo:after{content:"";width:420px;height:420px;border:1px solid rgba(255,255,255,.075);border-radius:50%;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
-.demo:after{width:270px;height:270px}
-.demo-card{background:var(--sg-paper);padding:30px;color:var(--sg-ink);position:relative;z-index:1;box-shadow:18px 20px 0 rgba(9,43,44,.27);transform:rotate(-3deg);max-width:370px;width:100%;margin:auto}
-.demo-label{display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:700;letter-spacing:.05em}
-.badge{background:var(--sg-stop);color:#fff;padding:7px 9px}
-.demo-card h3{font-family:var(--sg-display);font-size:28px;font-weight:800;letter-spacing:-.035em;margin:25px 0 16px;color:var(--sg-ink)}
-html[lang=hi] .demo-card h3{font-family:var(--sg-hindi);letter-spacing:0;font-size:24px}
-.demo-card p{font-size:13px;line-height:1.6;margin:0}
-.demo-bottom{border-top:1px solid rgba(16,44,44,.15);margin-top:25px;padding-top:17px;font-size:11px;display:flex;justify-content:space-between}
-.demo-caption{font-size:9px;text-align:center;letter-spacing:.12em;position:relative;z-index:1;margin:26px 0 0;color:#c9e1d6}
-.steps{padding-top:0;display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
-.step{border-top:1px solid rgba(16,44,44,.27);padding-top:20px}
-.step-num{font-size:11px}
-.step h3{font-family:var(--sg-display);font-size:26px;font-weight:800;letter-spacing:-.04em;margin:22px 0 12px;color:var(--sg-ink)}
-html[lang=hi] .step h3{font-family:var(--sg-hindi);letter-spacing:0}
-.step p{font-size:14px;line-height:1.7;max-width:320px;color:var(--sg-slate);margin:0}
-.join{background:var(--sg-accent);color:var(--sg-on-accent);display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:center}
-.join h2{font-size:clamp(50px,6.5vw,96px)}
-.join p{font-size:15px;line-height:1.7;max-width:370px;margin:0}
-.store-links{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0 17px}
-.store-links a{background:var(--sg-ink);color:#fff;padding:14px 22px;display:flex;flex-direction:column;gap:3px;min-width:150px;transition:transform .2s}
-.store-links a:hover{transform:translateY(-3px)}
-.store-links small{font-size:9px;letter-spacing:.06em}
-.store-links strong{font-size:17px}
-.join .fine{font-size:11px}
-.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}
-.faq h2{font-size:48px}
-.faq details{border-bottom:1px solid rgba(16,44,44,.19);padding:22px 0}
-.faq details:first-of-type{border-top:1px solid rgba(16,44,44,.19)}
-.faq summary{cursor:pointer;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:20px;color:var(--sg-ink)}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:after{content:'+';font-size:22px;font-weight:400;line-height:1}
-.faq details[open] summary:after{content:'\2212'}
-.faq details p{font-size:14px;line-height:1.7;color:var(--sg-slate);padding-right:35px;margin:14px 0 0}
-.faq-more{display:inline-block;margin-top:24px;border-bottom:1px solid;padding-bottom:5px;font-size:12px;font-weight:700}
-
-/* results: only the search band and the results */
-body.serping :is(.hero,.strip,.section){display:none}
-body.serping main.find{padding:28px 6% 60px;border-bottom:0}
-body.serping main.find .inner{margin:0 auto;text-align:left;align-items:stretch}
-body.serping :is(.find-h,main.find .label,.qrow,.learn,#recentRow){display:none}
-
-@keyframes enter-text{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-@keyframes enter-image{from{opacity:.4;transform:scale(1.035)}to{opacity:1;transform:scale(1)}}
-@media(min-width:1700px){.hero-content{padding-top:160px}.hero-copy{font-size:19px}}
-@media(max-width:1000px){
-  .hero{min-height:740px}.hero h1{font-size:12vw}.hero-img{object-position:57% center}
-  .intro{gap:40px}.experience-left{padding:35px}.demo{padding:28px}.experience h2{font-size:39px}.ltabs button{padding:12px 9px}
-  .section{padding:65px 5%}.experience,.steps{padding-top:0}.join{gap:35px}.faq{gap:40px}
-}
-@media(max-width:650px){
-  .hero{min-height:830px;height:100svh;max-height:1000px}
-  .hero-img{object-position:66% center}
-  .hero:after{background:linear-gradient(180deg,rgba(0,36,38,.33),transparent 45%,rgba(0,36,38,.93) 88%),linear-gradient(90deg,rgba(0,50,52,.46),transparent)}
-  .hero-content{padding:98px 6% 0}
-  .eyebrow{font-size:9px;letter-spacing:.1em}
-  .hero h1{font-size:clamp(65px,17.5vw,110px);margin-top:30px;line-height:.87;letter-spacing:-.067em}
-  html[lang=hi] .hero h1{font-size:clamp(50px,13vw,90px);line-height:1.1}
-  .hero-copy{margin-top:230px;max-width:290px;font-size:14px;line-height:1.5}
-  .hero-actions{margin-top:17px;gap:22px}
-  .hero-actions .button{font-size:10px;padding:16px 17px}
-  .hero-actions .text-link{font-size:11px}
-  .hero-foot{bottom:20px;left:6%;right:6%;font-size:9px}
-  .hero-foot .note{max-width:150px;font-size:8px}
-  .vertical{display:none}
-  .camp{font-size:12px;margin-bottom:18px}
-  .strip{padding:18px 6%;font-size:8px;letter-spacing:.035em;gap:12px}
-  .strip span{gap:6px}.strip b{font-size:13px}.strip span:last-child{display:none}
-  main.find{padding:50px 6% 46px}
-  .section{padding:55px 6%}
-  .intro,.join,.faq{grid-template-columns:1fr;gap:28px}
-  .intro .body-copy{font-size:15px}
-  .section h2{font-size:44px}
-  .experience-inner{grid-template-columns:1fr}
-  .experience-left{padding:30px 24px}
-  .experience h2{font-size:37px}
-  .ltabs{margin:20px 0 25px}
-  .demo{padding:40px 30px}
-  .demo-card{padding:23px;max-width:310px}
-  .demo-card h3{font-size:25px}
-  .steps{grid-template-columns:1fr;gap:24px}
-  .step{display:grid;grid-template-columns:35px 1fr;gap:0 10px}
-  .step h3{margin:0 0 10px;font-size:23px}
-  .step p{grid-column:2;margin-top:0}
-  .join h2{font-size:54px}
-  .store-links a{min-width:140px}
-  .faq{gap:30px}
-  .faq summary{font-size:14px}
-}
-@media(prefers-reduced-motion:reduce){.hero-img,.hero h1{animation:none}.button,.store-links a{transition:none}}
 </style>
 
 </head>
-<body class="home">
+<body>
 
 <!-- rr:header -->
-<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="0 0 40 40" aria-hidden="true"><g fill="currentColor"><ellipse cx="9" cy="14" rx="4.8" ry="6.2" transform="rotate(-25 9 14)"/><ellipse cx="18" cy="8" rx="4.5" ry="6"/><ellipse cx="28" cy="10" rx="4.5" ry="6" transform="rotate(18 28 10)"/><ellipse cx="35" cy="19" rx="4.3" ry="5.7" transform="rotate(30 35 19)"/><path d="M11 27c3-4 5-10 10-10s7 6 10 10c6 9-3 12-10 8-8 4-16 0-10-8"/></g></svg><span>Rapid<br>Response</span></a><nav class="rr-nav" aria-label="Main"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div></nav></div></div>
+<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="30 42 420 420" aria-hidden="true"><g fill="#434343"><circle cx="85" cy="193" r="45"/><circle cx="177" cy="107" r="45"/><circle cx="302" cy="107" r="45"/><circle cx="395" cy="193" r="45"/><path d="M378.5 348.1C381 351.2 384.7 354.5 386.7 357.8C388.7 361.1 389.5 364.5 390.7 368C391.9 371.5 393.3 375.2 394 378.9C394.6 382.5 394.6 386.1 394.5 389.7C394.5 393.3 394.5 397 393.9 400.5C393.2 404 391.9 407.4 390.6 410.7C389.2 414 387.6 417.2 385.7 420.2C383.8 423.2 381.5 426.1 378.9 428.6C376.4 431.2 373.6 433.6 370.5 435.6C367.3 437.6 364.1 439.6 360.1 440.7C356.1 441.7 350.8 441.6 346.3 441.8C341.8 441.9 337.5 442 333.2 441.8C328.9 441.6 324.5 440.9 320.6 440.6C316.7 440.3 313.2 440.1 309.8 439.8C306.4 439.4 303.2 439.2 300.1 438.8C296.9 438.3 293.7 437.4 290.8 436.9C287.9 436.4 285.2 436 282.6 435.6C280.1 435.2 277.6 434.8 275.3 434.5C273 434.2 270.7 434 268.6 433.8C266.5 433.7 264.5 433.8 262.4 433.6C260.4 433.5 258.3 433.1 256.4 433C254.4 432.8 252.6 432.9 250.7 432.9C248.8 432.9 246.9 433 245.1 432.9C243.2 432.9 241.4 432.6 239.5 432.6C237.7 432.6 235.8 432.9 234 432.9C232.1 433 230.2 432.9 228.4 432.9C226.5 432.9 224.6 432.8 222.6 433C220.7 433.1 218.6 433.5 216.6 433.6C214.6 433.8 212.6 433.7 210.4 433.8C208.3 434 206.1 434.2 203.7 434.5C201.4 434.8 199 435.2 196.4 435.6C193.8 436 191.2 436.4 188.3 436.9C185.4 437.4 182.1 438.3 179 438.8C175.8 439.2 172.6 439.4 169.2 439.8C165.8 440.1 162.3 440.3 158.4 440.6C154.5 440.9 150.1 441.6 145.8 441.8C141.5 442 137.2 442 132.7 441.8C128.3 441.5 123.4 441.4 119.3 440.4C115.3 439.3 111.8 437.6 108.6 435.6C105.3 433.7 102.6 431.2 100.1 428.6C97.5 426.1 95.3 423.2 93.3 420.2C91.4 417.2 89.8 414 88.5 410.7C87.1 407.4 85.8 404 85.2 400.5C84.5 397 84.5 393.3 84.5 389.7C84.5 386.1 84.4 382.5 85 378.9C85.7 375.2 87.1 371.5 88.3 368C89.5 364.5 90.4 361.1 92.3 357.8C94.3 354.5 97.5 351.2 100 348.1C102.5 345.1 105.1 342.2 107.3 339.5C109.5 336.7 110.9 334 113.1 331.5C115.3 329 118.1 326.7 120.3 324.4C122.6 322.1 124.5 320 126.5 317.8C128.4 315.7 130.2 313.6 132 311.6C133.9 309.6 135.7 307.8 137.4 305.8C139.1 303.9 140.7 302 142.2 300.1C143.7 298.2 145.1 296.3 146.4 294.4C147.7 292.4 148.7 290.2 150.1 288.4C151.6 286.6 153.6 285.1 155 283.3C156.4 281.4 157.3 279.1 158.7 277.2C160.1 275.4 162.1 274 163.5 272.1C164.9 270.2 166 267.9 167.3 265.8C168.6 263.7 169.9 261.3 171.3 259.3C172.8 257.2 174.5 255.3 176.2 253.3C177.8 251.3 179.6 249.4 181.3 247.2C183 245.1 184.6 242.6 186.4 240.5C188.3 238.4 190.4 236.7 192.4 234.5C194.5 232.3 196.3 229.5 198.5 227.4C200.7 225.3 203.2 223.8 205.7 222.1C208.2 220.4 210.8 218.5 213.5 217.2C216.2 215.9 219 215.1 221.9 214.3C224.7 213.5 227.7 212.8 230.6 212.4C233.6 212.1 236.5 212.1 239.5 212.1C242.5 212.1 245.5 212.1 248.4 212.4C251.3 212.8 254.3 213.5 257.1 214.3C260 215.1 262.9 215.9 265.6 217.2C268.2 218.5 270.8 220.4 273.3 222.1C275.8 223.8 278.3 225.3 280.5 227.4C282.7 229.5 284.6 232.3 286.6 234.5C288.6 236.7 290.6 238.5 292.6 240.5C294.5 242.5 296.6 244.2 298.3 246.4C300 248.5 301.3 251.2 302.8 253.3C304.4 255.5 306.2 257.3 307.7 259.3C309.2 261.3 310.6 263.4 312 265.4C313.5 267.4 314.8 269.4 316.2 271.4C317.6 273.4 319 275.3 320.3 277.2C321.6 279.2 322.6 281.4 324 283.3C325.4 285.1 327.5 286.6 328.9 288.4C330.3 290.2 331.3 292.4 332.6 294.4C333.9 296.3 335.3 298.2 336.8 300.1C338.3 302 340 303.9 341.6 305.8C343.2 307.8 344.7 309.8 346.5 311.8C348.3 313.8 350.5 315.7 352.5 317.8C354.6 319.9 356.4 322.1 358.7 324.4C360.9 326.7 363.7 329 365.9 331.5C368.1 334 369.6 336.7 371.7 339.5C373.8 342.2 376 345.1 378.5 348.1Z"/></g></svg><span>Rapid Response</span></a><nav class="rr-nav" aria-label="Main"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div></nav></div></div>
 <!-- /rr:header -->
 
-<section class="hero" id="top" aria-label="Rapid Response">
-  <img class="hero-img" src="/assets/home-hero.webp" alt="An Indian community dog beneath a caring hand" fetchpriority="high" width="1672" height="941">
-  <div class="hero-content">
-    <a class="camp" id="camp" href="/lab-animal-rules" hidden><span class="camp-dot" aria-hidden="true"></span><span data-i="camp">Draft lab animal rules: send your objection by 5 November</span><span class="camp-go" data-i="campGo">Send yours</span></a>
-    <div class="eyebrow"><i class="dot" aria-hidden="true"></i><span data-i="eyebrow">PEOPLE. ANIMALS. ONE COMMUNITY.</span></div>
-    <h1 data-ih="hero">SHOW UP.<br>FOR <span>THEM.</span></h1>
-    <p class="hero-copy" data-ih="heroCopy">A little courage. A whole community.<br>Connect with people in your district when an animal needs a helping hand.</p>
-    <div class="hero-actions"><a class="button" href="#download"><span data-i="heroCta">BE PART OF THE RESPONSE</span> <span aria-hidden="true">&rarr;</span></a><a class="text-link" href="#how" data-i="heroHow">See how it works</a></div>
-  </div>
-  <div class="vertical" data-i="vertical">COMPASSION IS SOMETHING WE DO.</div>
-  <div class="hero-foot"><p data-ih="heroFootL">BUILT FOR THE ONES WHO CARE.<br>Available on Android &amp; iPhone.</p><p class="note" data-ih="heroFootR">A community network.<br>Every response begins with a person.</p></div>
-</section>
-<div class="strip"><span><b aria-hidden="true">+</b> <i data-i="strip1">YOUR DISTRICT. YOUR COMMUNITY.</i></span><span><b aria-hidden="true">+</b> <i data-i="strip2">FREE TO JOIN</i></span><span><b aria-hidden="true">+</b> <i data-i="strip3">ENGLISH &amp; HINDI</i></span></div>
-
-<main class="find" id="find">
+<main>
  <div class="inner">
-  <div class="label" data-i="findLabel">FIND HELP, LAWS AND ANSWERS</div>
-  <h2 class="find-h" data-i="h1">How can we help an animal today?</h2>
+  <a class="camp" id="camp" href="/lab-animal-rules" hidden><span class="camp-dot" aria-hidden="true"></span><span data-i="camp">Draft lab animal rules: send your objection by 5 November</span><span class="camp-go" data-i="campGo">Send yours</span></a>
+  <h1 data-i="h1">How can we help an animal today?</h1>
 
   <div class="search" role="search">
     <div class="bar">
@@ -480,57 +321,8 @@ body.serping :is(.find-h,main.find .label,.qrow,.learn,#recentRow){display:none}
  </div>
 </main>
 
-<section class="section intro" id="how">
-  <div><div class="label" data-i="introLabel">01 / THE IDEA IS SIMPLE</div><h2 data-ih="introH">You care.<br>So do people<br>around you.</h2></div>
-  <div class="body-copy"><p data-i="introP1">An animal needs help. You do what you can. Rapid Response helps you reach others in your district who can take the next step with you.</p><p data-i="introP2">Feeders, rescuers, neighbours. A network made stronger by each person who joins.</p><a href="/explainer" data-i="introLink">Meet the idea behind RRT &rarr;</a></div>
-</section>
-
-<section class="section experience" aria-label="Explore the network">
-  <div class="experience-inner">
-    <div class="experience-left">
-      <div class="label" data-i="expLabel">02 / FIND YOUR NEXT STEP</div>
-      <h2 data-ih="expH">Care becomes<br>action.</h2>
-      <div class="ltabs" role="tablist" aria-label="Network features">
-        <button id="tab-sos" role="tab" aria-selected="true" aria-controls="feature-panel" tabindex="0" data-tab="sos" data-i="tabSos">Raise an SOS</button>
-        <button id="tab-ask" role="tab" aria-selected="false" aria-controls="feature-panel" tabindex="-1" data-tab="ask" data-i="tabAsk">Ask the district</button>
-        <button id="tab-help" role="tab" aria-selected="false" aria-controls="feature-panel" tabindex="-1" data-tab="help" data-i="tabHelp">Lend a hand</button>
-      </div>
-      <div class="fpanel" id="feature-panel" role="tabpanel" aria-labelledby="tab-sos"><h3 id="feature-title"></h3><p id="feature-copy"></p><small id="feature-note"></small></div>
-    </div>
-    <div class="demo">
-      <div class="demo-card"><div class="demo-label"><span id="demo-badge" class="badge">SOS</span><span data-i="demoWhere">YOUR DISTRICT</span></div><h3 id="demo-title"></h3><p id="demo-copy"></p><div class="demo-bottom"><span id="demo-detail"></span><span aria-hidden="true">&rarr;</span></div></div>
-      <p class="demo-caption" data-i="demoCaption">ILLUSTRATIVE SCENARIO · NOT A LIVE ALERT</p>
-    </div>
-  </div>
-</section>
-
-<section class="section steps" aria-label="How to join">
-  <article class="step"><span class="step-num">01 /</span><h3 data-i="s1h">Get connected.</h3><p data-i="s1p">Download the app and set up your profile before an emergency happens.</p></article>
-  <article class="step"><span class="step-num">02 /</span><h3 data-i="s2h">Stay aware.</h3><p data-i="s2p">Enable the permissions needed to receive relevant alerts in your current district.</p></article>
-  <article class="step"><span class="step-num">03 /</span><h3 data-i="s3h">Do your bit.</h3><p data-i="s3p">Respond when you can help. Small contributions can make the next step possible.</p></article>
-</section>
-
-<section class="section join" id="download">
-  <div><div class="label" data-i="joinLabel">03 / IT STARTS WITH YOU</div><h2 data-ih="joinH">Be someone's<br>reason to<br>believe.</h2></div>
-  <div><p data-ih="joinP">You don't have to do everything.<br>Start by being part of the network.</p>
-    <div class="store-links"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener"><small data-i="getOn">GET IT ON</small><strong>Google Play</strong></a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener"><small data-i="dlOn">DOWNLOAD ON THE</small><strong>App Store</strong></a></div>
-    <p class="fine" data-i="joinFine">Android &amp; iPhone · English &amp; Hindi</p></div>
-</section>
-
-<section class="section faq" aria-label="Questions">
-  <div><div class="label" data-i="faqLabel">A LITTLE CLARITY</div><h2 data-ih="faqH">Before<br>you join.</h2></div>
-  <div>
-    <details><summary data-i="fq1">Is this an emergency rescue service?</summary><p data-i="fa1">Rapid Response is a peer network connecting people who can volunteer to help. It has no central control room or guaranteed dispatch. Responses depend on people available in your district.</p></details>
-    <details><summary data-i="fq2">Who can be part of the network?</summary><p data-i="fa2">Adult animal lovers, feeders, rescuers, volunteers and concerned neighbours can join. You can contribute according to your ability and availability.</p></details>
-    <details><summary data-i="fq3">Will everyone see my phone number?</summary><p data-i="fa3">Your number is not a public directory listing. It is shared with relevant responders during an active SOS. Ask the District uses private chat without showing phone numbers.</p></details>
-    <details><summary data-i="fq4">Can I raise an SOS on this website?</summary><p data-i="fa4">SOS happens in the mobile app. Download it using the links above, set up your profile and enable the required permissions so you're ready when needed.</p></details>
-    <a class="faq-more" href="/faq" data-i="faqMore">All questions &rarr;</a>
-  </div>
-</section>
-
 <!-- rr:footer -->
-<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-top"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="0 0 40 40" aria-hidden="true"><g fill="currentColor"><ellipse cx="9" cy="14" rx="4.8" ry="6.2" transform="rotate(-25 9 14)"/><ellipse cx="18" cy="8" rx="4.5" ry="6"/><ellipse cx="28" cy="10" rx="4.5" ry="6" transform="rotate(18 28 10)"/><ellipse cx="35" cy="19" rx="4.3" ry="5.7" transform="rotate(30 35 19)"/><path d="M11 27c3-4 5-10 10-10s7 6 10 10c6 9-3 12-10 8-8 4-16 0-10-8"/></g></svg><span>Rapid<br>Response</span></a><nav aria-label="Site"><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav></div><nav class="rr-ftr2" aria-label="More"><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/policy" data-rr-en="Terms &amp; Privacy" data-rr-hi="शर्तें और प्राइवेसी">Terms &amp; Privacy</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav><span class="rr-ftr-copy" data-rr-en="© 2026 RapidResponse Labs · Independent community network. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र सामुदायिक नेटवर्क। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent community network. Not affiliated with any government authority.</span></div>
-<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>
+<div class="rr-chrome rr-ftr" role="contentinfo"><nav aria-label="Site"><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav><nav class="rr-ftr2" aria-label="More"><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/policy" data-rr-en="Terms &amp; Privacy" data-rr-hi="शर्तें और प्राइवेसी">Terms &amp; Privacy</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav><span class="rr-ftr-copy" data-rr-en="© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority.</span></div>
 <!-- /rr:footer -->
 
 <div class="scrim" id="scrim"></div>
@@ -560,8 +352,7 @@ var T={
   footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",navPolicy:"Terms & Privacy",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
-  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top",resFor:"Results for",moreFor:"More searches",
-  eyebrow:"PEOPLE. ANIMALS. ONE COMMUNITY.",hero:"SHOW UP.<br>FOR <span>THEM.</span>",heroCopy:"A little courage. A whole community.<br>Connect with people in your district when an animal needs a helping hand.",heroCta:"BE PART OF THE RESPONSE",heroHow:"See how it works",vertical:"COMPASSION IS SOMETHING WE DO.",heroFootL:"BUILT FOR THE ONES WHO CARE.<br>Available on Android &amp; iPhone.",heroFootR:"A community network.<br>Every response begins with a person.",strip1:"YOUR DISTRICT. YOUR COMMUNITY.",strip2:"FREE TO JOIN",strip3:"ENGLISH & HINDI",findLabel:"FIND HELP, LAWS AND ANSWERS",introLabel:"01 / THE IDEA IS SIMPLE",introH:"You care.<br>So do people<br>around you.",introP1:"An animal needs help. You do what you can. Rapid Response helps you reach others in your district who can take the next step with you.",introP2:"Feeders, rescuers, neighbours. A network made stronger by each person who joins.",introLink:"Meet the idea behind RRT →",expLabel:"02 / FIND YOUR NEXT STEP",expH:"Care becomes<br>action.",tabSos:"Raise an SOS",tabAsk:"Ask the district",tabHelp:"Lend a hand",demoWhere:"YOUR DISTRICT",demoCaption:"ILLUSTRATIVE SCENARIO · NOT A LIVE ALERT",s1h:"Get connected.",s1p:"Download the app and set up your profile before an emergency happens.",s2h:"Stay aware.",s2p:"Enable the permissions needed to receive relevant alerts in your current district.",s3h:"Do your bit.",s3p:"Respond when you can help. Small contributions can make the next step possible.",joinLabel:"03 / IT STARTS WITH YOU",joinH:"Be someone's<br>reason to<br>believe.",joinP:"You don't have to do everything.<br>Start by being part of the network.",getOn:"GET IT ON",dlOn:"DOWNLOAD ON THE",joinFine:"Android & iPhone · English & Hindi",faqLabel:"A LITTLE CLARITY",faqH:"Before<br>you join.",fq1:"Is this an emergency rescue service?",fa1:"Rapid Response is a peer network connecting people who can volunteer to help. It has no central control room or guaranteed dispatch. Responses depend on people available in your district.",fq2:"Who can be part of the network?",fa2:"Adult animal lovers, feeders, rescuers, volunteers and concerned neighbours can join. You can contribute according to your ability and availability.",fq3:"Will everyone see my phone number?",fa3:"Your number is not a public directory listing. It is shared with relevant responders during an active SOS. Ask the District uses private chat without showing phone numbers.",fq4:"Can I raise an SOS on this website?",fa4:"SOS happens in the mobile app. Download it using the links above, set up your profile and enable the required permissions so you're ready when needed.",faqMore:"All questions →"
+  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top",resFor:"Results for",moreFor:"More searches"
  },
  hi:{
   navFaq:"सवाल",camp:"प्रयोगशाला पशु नियमों का मसौदा: 5 नवंबर तक अपनी आपत्ति भेजें",campGo:"आपत्ति भेजें",
@@ -573,8 +364,7 @@ var T={
   footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",navPolicy:"शर्तें और प्राइवेसी",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
-  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित",backTop:"ऊपर जाएँ",resFor:"इसके नतीजे:",moreFor:"और खोजें",
-  eyebrow:"लोग। जानवर। एक समुदाय।",hero:"आगे आइए।<br><span>उनके लिए।</span>",heroCopy:"थोड़ी सी हिम्मत। पूरा समुदाय।<br>जब किसी जानवर को मदद चाहिए, अपने ज़िले के लोगों से जुड़िए।",heroCta:"इस मुहिम का हिस्सा बनें",heroHow:"देखें यह कैसे काम करता है",vertical:"दया, जो हम करके दिखाते हैं।",heroFootL:"परवाह करने वालों के लिए बना।<br>एंड्रॉयड और आईफोन पर।",heroFootR:"एक सामुदायिक नेटवर्क।<br>हर मदद एक इंसान से शुरू होती है।",strip1:"आपका ज़िला। आपका समुदाय।",strip2:"जुड़ना मुफ़्त है",strip3:"हिंदी और अंग्रेज़ी",findLabel:"मदद, कानून और जवाब खोजें",introLabel:"01 / बात सीधी है",introH:"आपको परवाह है।<br>आपके आसपास<br>के लोगों को भी।",introP1:"किसी जानवर को मदद चाहिए। आप जो कर सकते हैं, करते हैं। रैपिड रिस्पॉन्स आपको अपने ज़िले के उन लोगों तक पहुँचाता है जो अगला कदम आपके साथ उठा सकें।",introP2:"खाना खिलाने वाले, रेस्क्यू करने वाले, पड़ोसी। हर नए सदस्य के साथ मज़बूत होता नेटवर्क।",introLink:"आरआरटी के पीछे का विचार →",expLabel:"02 / अपना अगला कदम चुनें",expH:"परवाह बने<br>मदद।",tabSos:"एसओएस भेजें",tabAsk:"ज़िले से पूछें",tabHelp:"हाथ बँटाएँ",demoWhere:"आपका ज़िला",demoCaption:"उदाहरण के लिए · असली अलर्ट नहीं",s1h:"जुड़ जाइए।",s1p:"आपात स्थिति से पहले ही ऐप डाउनलोड करें और अपनी प्रोफ़ाइल बना लें।",s2h:"तैयार रहिए।",s2p:"अपने मौजूदा ज़िले के ज़रूरी अलर्ट पाने के लिए अनुमतियाँ चालू करें।",s3h:"अपना हिस्सा निभाइए।",s3p:"जब मदद कर सकें, जवाब दें। छोटा सा योगदान भी अगला कदम मुमकिन बना सकता है।",joinLabel:"03 / शुरुआत आपसे",joinH:"किसी की<br>उम्मीद<br>बनिए।",joinP:"आपको सब कुछ नहीं करना है।<br>बस नेटवर्क का हिस्सा बनिए।",getOn:"डाउनलोड करें",dlOn:"डाउनलोड करें",joinFine:"एंड्रॉयड और आईफोन · हिंदी और अंग्रेज़ी",faqLabel:"थोड़ी सी जानकारी",faqH:"जुड़ने से<br>पहले।",fq1:"क्या यह आपातकालीन रेस्क्यू सेवा है?",fa1:"रैपिड रिस्पॉन्स एक आपसी नेटवर्क है जो मदद के लिए आगे आने वाले लोगों को जोड़ता है। इसमें कोई केंद्रीय कंट्रोल रूम या पक्की डिस्पैच सेवा नहीं है। मदद आपके ज़िले में मौजूद लोगों पर निर्भर करती है।",fq2:"नेटवर्क का हिस्सा कौन बन सकता है?",fa2:"वयस्क पशु प्रेमी, खाना खिलाने वाले, रेस्क्यू करने वाले, स्वयंसेवक और जागरूक पड़ोसी जुड़ सकते हैं। आप अपनी क्षमता और समय के हिसाब से योगदान दे सकते हैं।",fq3:"क्या सबको मेरा फ़ोन नंबर दिखेगा?",fa3:"आपका नंबर किसी सार्वजनिक सूची में नहीं होता। यह सिर्फ़ एक सक्रिय एसओएस के दौरान संबंधित मदद करने वालों को दिखता है। ज़िले से पूछें में प्राइवेट चैट होती है, फ़ोन नंबर नहीं दिखते।",fq4:"क्या मैं इस वेबसाइट से एसओएस भेज सकता हूँ?",fa4:"एसओएस मोबाइल ऐप से भेजा जाता है। ऊपर दिए लिंक से ऐप डाउनलोड करें, प्रोफ़ाइल बनाएँ और ज़रूरी अनुमतियाँ चालू करें ताकि ज़रूरत के वक़्त आप तैयार रहें।",faqMore:"सभी सवाल →"
+  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित",backTop:"ऊपर जाएँ",resFor:"इसके नतीजे:",moreFor:"और खोजें"
  }
 };
 
@@ -815,26 +605,14 @@ function applyLang(l){
   store.set("lang",l);store.set("rr-lang",l);
   var d=T[l];
   document.querySelectorAll("[data-i]").forEach(function(el){var v=d[el.getAttribute("data-i")];if(v!=null)el.textContent=v;});
-  document.querySelectorAll("[data-ih]").forEach(function(el){var v=d[el.getAttribute("data-ih")];if(v!=null)el.innerHTML=v;});
-  feat(curTab);
   $("q").placeholder=(window.innerWidth<=640?d.phS:d.ph);
   if(cur)openSheet(cur,true);
   if(serpOn)serp.innerHTML=serpHtml(serpQ,serpFocus);
   if(document.activeElement===q)render();
 }
-/* The lab animal rules objection (/lab-animal-rules): a line on the
-   picture until objections close at the end of 6 November 2026, India time. */
+/* The lab animal rules objection (/lab-animal-rules): a line above the
+   heading until objections close at the end of 6 November 2026, India time. */
 (function(){var c=document.getElementById("camp");if(c&&Date.now()<Date.UTC(2026,10,7)-5.5*36e5)c.hidden=false;})();
-/* "Find your next step": three tabs, the panel and the sample card follow
-   the chosen tab, in the page's language (arrows, Home and End move along). */
-var FEAT={en:{"sos": ["When it cannot wait.", "Use the app to share what is happening and alert other people in your district. Give the community the context it needs to help.", "Your phone number is visible to relevant responders only while your SOS is active.", "SOS", "An extra pair of hands can change everything.", "Share the situation. Reach people nearby. Coordinate the next step together.", "A call for community support"], "ask": ["Some needs take a conversation.", "Ask your district about a foster, a blood donor or practical local support. People nearby can answer and continue with you in a private chat.", "Ask the District does not display phone numbers.", "ASK", "A temporary home. A lasting difference.", "An example: someone nearby may be able to foster an animal while a longer-term home is found.", "Make a connection nearby"], "help": ["You may be the missing piece.", "Be part of your local network and respond when you have something useful to offer. Help within your ability, availability and experience.", "Participation is voluntary. A response or rescue is never guaranteed.", "HELP", "You do not have to do it all.", "One person sees the need. Another lends a hand. Together, the next step becomes possible.", "Start with what you can do"]},hi:{"sos": ["जब इंतज़ार न हो सके।", "ऐप से बताइए कि क्या हो रहा है और अपने ज़िले के दूसरे लोगों को अलर्ट कीजिए। समुदाय को मदद के लिए ज़रूरी जानकारी दीजिए।", "आपका फ़ोन नंबर संबंधित मदद करने वालों को सिर्फ़ तब तक दिखता है जब तक आपका एसओएस सक्रिय है।", "एसओएस", "दो और हाथ सब कुछ बदल सकते हैं।", "हालात बताइए। पास के लोगों तक पहुँचिए। अगला कदम साथ मिलकर तय कीजिए।", "समुदाय से मदद की पुकार"], "ask": ["कुछ ज़रूरतों के लिए बात करनी पड़ती है।", "फ़ॉस्टर, खून देने वाले या किसी स्थानीय मदद के लिए अपने ज़िले से पूछिए। पास के लोग जवाब देकर प्राइवेट चैट में आपसे बात आगे बढ़ा सकते हैं।", "ज़िले से पूछें में फ़ोन नंबर नहीं दिखते।", "पूछें", "कुछ दिनों का घर। हमेशा का फ़र्क।", "उदाहरण: पास का कोई व्यक्ति किसी जानवर को तब तक रख सकता है जब तक उसे स्थायी घर न मिल जाए।", "पास में किसी से जुड़िए"], "help": ["शायद आप ही वह कमी पूरी करें।", "अपने स्थानीय नेटवर्क का हिस्सा बनिए और जब आपके पास देने को कुछ काम का हो, जवाब दीजिए। अपनी क्षमता, समय और अनुभव के हिसाब से मदद कीजिए।", "जुड़ना अपनी मर्ज़ी से है। जवाब या रेस्क्यू की कोई गारंटी नहीं है।", "मदद", "आपको सब कुछ अकेले नहीं करना।", "एक व्यक्ति ज़रूरत देखता है। दूसरा हाथ बँटाता है। साथ मिलकर अगला कदम मुमकिन होता है।", "जो कर सकते हैं, वहीं से शुरू करें"]}},FEAT_IDS=["feature-title","feature-copy","feature-note","demo-badge","demo-title","demo-copy","demo-detail"],curTab="sos";
-function feat(k){curTab=k;var tl=[].slice.call(document.querySelectorAll(".ltabs [role=tab]")),f=(FEAT[lang]||FEAT.en)[k];if(!f)return;
-  tl.forEach(function(t){var on=t.getAttribute("data-tab")===k;t.setAttribute("aria-selected",String(on));t.tabIndex=on?0:-1;if(on)$("feature-panel").setAttribute("aria-labelledby",t.id);});
-  f.forEach(function(x,i){$(FEAT_IDS[i]).textContent=x;});}
-(function(){var tl=[].slice.call(document.querySelectorAll(".ltabs [role=tab]"));tl.forEach(function(b,i){
-  b.addEventListener("click",function(){feat(b.getAttribute("data-tab"));});
-  b.addEventListener("keydown",function(e){var n=i;if(e.key==="ArrowRight")n=(i+1)%tl.length;else if(e.key==="ArrowLeft")n=(i+tl.length-1)%tl.length;else if(e.key==="Home")n=0;else if(e.key==="End")n=tl.length-1;else return;
-    e.preventDefault();feat(tl[n].getAttribute("data-tab"));tl[n].focus();});});})();
 /* The shared header's EN | हिंदी switch (assets/rr-site.js) calls this. */
 window.setLang=applyLang;
 
