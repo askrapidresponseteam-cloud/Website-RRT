@@ -12,7 +12,13 @@
      .rr-ph-lead  one or two sentences under the title
    The page body sits in .rr-page, left aligned, with one of two widths:
      .rr-read     long reading pages and forms (760px of text)
-     .rr-wide     pages with grids and cards (1120px)
+     .rr-wide     pages with grids and cards (the full width, logo to button)
+   On screens 1100px and wider, reading pages split in two (.rr-split):
+     .rr-split-head  the page head and its tools (search, sections), held
+                     in view on the left, starting on the logo's line
+     .rr-split-body  the content on the right, ending on the line of the
+                     header's "Get the app" button
+   so the page fills the width the header spans. Narrower, they stack.
 
    Linked last in <head> on purpose, so it settles the layout over each
    page's own older rules. Screen only: print layouts stay as they are. */
@@ -35,7 +41,7 @@ html:root body .rr-page{
   margin:0;padding:var(--rr-top) var(--rr-pad) 96px;text-align:left;
 }
 html:root body .rr-page.rr-read{--rr-w:var(--rr-read)}
-html:root body .rr-page.rr-wide{--rr-w:var(--rr-wide)}
+html:root body .rr-page.rr-wide{max-width:none}
 
 /* ---------------------------------------------------------- page head -- */
 html:root body .rr-ph-eye{
@@ -73,7 +79,7 @@ html:root body main.page.rr-page .rr-ph-lead{margin-bottom:28px}
 /* ---------------------------------------------------- know the laws -- */
 html:root body #top.rr-top{padding:var(--rr-top) var(--rr-pad) 40px!important;border-bottom:0}
 html:root body #top.rr-top .crumb{display:flex}
-html:root body #top.rr-top .top-wrap{max-width:var(--rr-wide);margin:0;text-align:left}
+html:root body #top.rr-top .top-wrap{max-width:var(--rr-read);margin:0;text-align:left}
 html:root body #top.rr-top .meta-line{justify-content:flex-start;margin:20px 0 22px}
 html:root body #top.rr-top .disclaim{margin:0 0 24px;max-width:var(--rr-read)}
 html:root body #top.rr-top .cta-strip{justify-content:flex-start;text-align:left}
@@ -85,35 +91,74 @@ html:root body .bottom-cta.rr-kl-card p{margin-left:0;margin-right:0}
 
 /* ------------------------------------------------------- the record -- */
 html:root body .hero.rr-hero{align-items:flex-start;text-align:left;padding:var(--rr-top) var(--rr-pad) 40px!important}
-html:root body .hero.rr-hero>:not(.hero-media){max-width:var(--rr-wide)}
+html:root body .hero.rr-hero>:not(.hero-media){max-width:none}
 html:root body #heroTitle.rr-ph-h1{text-transform:capitalize}
 html:root body .hero.rr-hero p{margin:0;max-width:60ch}
 html:root body .hero.rr-hero .rr-ph-lead{margin-top:16px}
 html:root body .hero.rr-hero .hero-cta{justify-content:flex-start}
-html:root body .rr-rec{box-sizing:border-box;max-width:calc(var(--maxw,1240px) + 2 * var(--rr-pad));margin-left:0;margin-right:0;padding-left:var(--rr-pad);padding-right:var(--rr-pad)}
+html:root body .rr-hero~.prep{box-sizing:border-box;max-width:none;margin-left:0;margin-right:0;padding-left:var(--rr-pad);padding-right:var(--rr-pad)}
+html:root body .rr-rec{box-sizing:border-box;max-width:none;margin-left:0;margin-right:0;padding-left:var(--rr-pad);padding-right:var(--rr-pad)}
 
-/* ------------------------------------------- on this page (rr-toc.js) -- */
-html:root body main.rr-has-toc{position:relative}
-@media (min-width:1200px){
-  html:root body main.rr-has-toc .rr-toc{
-    display:block;position:absolute;top:var(--rr-top);bottom:96px;width:240px;
-    left:calc(var(--rr-pad) + var(--rr-read) + clamp(56px,5vw,96px));
+/* ---------------------------------------------------- the split page -- */
+html:root body .rr-split-head>:last-child{margin-bottom:0}
+@media (min-width:1100px){
+  html:root body .rr-split{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(560px,58%,880px));
+    column-gap:clamp(56px,6vw,120px);align-items:start;
   }
-  .rr-toc-in{position:sticky;top:104px;border-left:1px solid var(--sg-line);padding:2px 0 2px 20px}
+  html:root body .rr-page.rr-split,html:root body .rr-page.rr-split-host{max-width:none}
+  html:root body .rr-split-head{
+    position:sticky;top:104px;max-height:calc(100vh - 128px);overflow:auto;scrollbar-width:none;
+  }
+  html:root body .rr-split-head::-webkit-scrollbar{display:none}
+  html:root body .rr-split-body{min-width:0}
+  html:root body .rr-split-body>:first-child,
+  html:root body .rr-split-body>.pol-sect:first-of-type,
+  html:root body .rr-split-body>.vt-clause:first-of-type{margin-top:0}
+  body.pp main.rr-split{display:block}
+
+  /* on this page (rr-toc.js), under the head */
+  html:root body .rr-split-head .rr-toc{display:block;margin-top:36px}
+  .rr-toc-in{border-left:1px solid var(--sg-line);padding:2px 0 2px 20px}
   .rr-toc-h{margin:0 0 10px;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label,.12em);text-transform:uppercase;color:var(--sg-slate)}
   html[lang=hi] .rr-toc-h{font-family:var(--sg-hindi);letter-spacing:0;font-size:13px}
   .rr-toc ol{list-style:none;margin:0;padding:0}
-  .rr-toc a{display:block;margin-left:-21px;padding:7px 0 7px 19px;border-left:2px solid transparent;
+  .rr-toc a,html:root body .rr-kl-split .pill{display:block;margin-left:-21px;padding:7px 0 7px 19px;border-left:2px solid transparent;
     font-family:var(--sg-sans);font-size:14px;font-weight:500;line-height:1.35;color:var(--sg-slate);text-decoration:none}
-  .rr-toc a:hover{color:var(--sg-ink)}
-  .rr-toc a[aria-current]{color:var(--sg-ink);font-weight:700;border-left-color:var(--sg-ink)}
+  .rr-toc a:hover,html:root body .rr-kl-split .pill:hover{color:var(--sg-ink)}
+  .rr-toc a[aria-current],html:root body .rr-kl-split .pill.active{color:var(--sg-ink);font-weight:700;border-left-color:var(--sg-ink)!important}
   .rr-toc a:focus-visible{outline:2px solid var(--sg-ink);outline-offset:2px}
+
+  /* know the laws: head, search, then the sections held in view */
+  html:root body .rr-kl-split{box-sizing:border-box;padding:var(--rr-top) var(--rr-pad) 72px}
+  html:root body .rr-kl-split .rr-split-head{position:static;max-height:none;overflow:visible;align-self:stretch;display:flex;flex-direction:column}
+  html:root body .rr-kl-split #top.rr-top{padding:0!important;order:0}
+  html:root body .rr-kl-split #top.rr-top .top-wrap{max-width:none}
+  html:root body .rr-kl-split #top.rr-top .disclaim{margin-bottom:20px}
+  html:root body .rr-kl-split .controls{order:1;margin:28px 0 0}
+  html:root body .rr-kl-split .ctrl-row{flex-wrap:wrap}
+  html:root body .rr-kl-split .ctrl-row .search-wrap{flex:1 1 100%}
+  html:root body .rr-kl-split .result-line{order:2;margin:12px 0 0}
+  html:root body .rr-kl-split .rr-kl{max-width:none;padding-left:0;padding-right:0;margin:0}
+  html:root body .rr-kl-split main.rr-kl{padding-top:0}
+  html:root body .rr-kl-split #pillbar{
+    order:3;position:sticky;top:104px;margin-top:32px;padding:0;border:0;background:none;
+    -webkit-backdrop-filter:none;backdrop-filter:none;z-index:1;
+  }
+  html:root body .rr-kl-split #pillbar .pillbar-inner{
+    display:block;overflow:visible;padding:2px 0 2px 20px;border-left:1px solid var(--sg-line);
+  }
+  html:root body .rr-kl-split .pill{border-top:0!important;border-right:0!important;border-bottom:0!important;border-left-color:transparent!important;background:none!important;border-radius:0;text-transform:none;letter-spacing:0;height:auto;white-space:normal}
+  html:root body .rr-kl-split .bottom-cta.rr-kl-card{margin:24px 0 0;max-width:none}
+
+  /* bag and orders: the title on the left, the bag on the right */
+  html:root body .cart-wrap.rr-split .rr-split-head,html:root body .trk.rr-split .rr-split-head{position:static}
 }
 
 /* ----------------------------------------------- bag and orders -- */
 html:root body .cart-wrap.rr-page,html:root body .trk.rr-page{padding-top:26px}
 html:root body .cart-wrap.rr-page{--rr-w:880px}
-html:root body .cart-wrap.rr-page>h1,html:root body .trk.rr-page>h1{
+html:root body .cart-wrap.rr-page h1,html:root body .trk.rr-page h1{
   margin:0 0 18px;font-family:var(--sg-display);font-weight:800;font-size:clamp(30px,3.6vw,40px);
   line-height:1.1;letter-spacing:var(--sg-track-display,-.04em);
 }

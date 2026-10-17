@@ -1,6 +1,6 @@
 /* rr-toc.js: an "On this page" list beside long reading pages.
    A page opts in with <main data-toc>. Every section heading (section > h2)
-   in it gets an id and a link in a rail to the right of the text, shown on
+   in it gets an id and a link in a list under the page head, shown on
    wide screens only (assets/rr-page.css). The link for the section being read
    is marked as the page scrolls. Headings keep their English and Hindi
    spans, so the list follows the page language. */
@@ -43,7 +43,7 @@
     });
     inner.appendChild(list);
     nav.appendChild(inner);
-    main.appendChild(nav);
+    (main.querySelector('.rr-split-head') || main).appendChild(nav);
     main.classList.add('rr-has-toc');
 
     function mark() {
