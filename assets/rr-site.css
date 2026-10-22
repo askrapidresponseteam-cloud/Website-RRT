@@ -69,14 +69,17 @@ html[lang=hi] .rr-chrome .rr-btn{font-weight:600}
   font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--rr-bg)}
 .rr-chrome .rr-bag b[hidden]{display:none}
 
-/* footer: a plain strip, like a search engine's. Small grey links, a few
-   on the left and the legal ones on the right; on a phone, centred. */
-.rr-chrome.rr-ftr{background:var(--sg-mist,#F5F4F2);border-top:1px solid var(--rr-line);padding:0 var(--rr-pad) env(safe-area-inset-bottom,0px)}
-.rr-chrome .rr-ftr-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0 24px;min-height:52px}
-.rr-chrome.rr-ftr nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 24px;padding:14px 0}
-.rr-chrome.rr-ftr nav a{font-size:13.5px;font-weight:500;line-height:1.4;color:var(--rr-mid);transition:color .12s ease-out}
-.rr-chrome.rr-ftr nav a:hover{color:var(--rr-ink);text-decoration:underline;text-underline-offset:3px}
-html[lang=hi] .rr-chrome.rr-ftr{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--rr-sans)}
+/* footer */
+.rr-chrome.rr-ftr{border-top:1px solid var(--rr-line);background:var(--rr-bg);padding:22px var(--rr-pad) calc(22px + env(safe-area-inset-bottom,0px));
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 28px;font-size:13px;font-weight:500;color:var(--rr-low)}
+.rr-chrome.rr-ftr nav{display:flex;flex-wrap:wrap;gap:8px 20px;width:100%}
+.rr-ftr nav a{font-size:13px}
+.rr-ftr nav.rr-ftr2{margin-top:12px;gap:6px 16px}
+.rr-ftr nav.rr-ftr2 a{font-size:11.5px;font-weight:500;color:var(--rr-low,#8a8781)}
+.rr-ftr nav.rr-ftr2 a:hover{color:var(--rr-ink)}
+.rr-ftr .rr-ftr-copy{display:block;margin-top:12px;font-size:11px;color:var(--rr-low,#8a8781)}
+.rr-chrome.rr-ftr nav a{color:var(--rr-mid);font-weight:600}
+.rr-chrome.rr-ftr a:hover{color:var(--rr-ink)}
 
 /* phones */
 @media (max-width:1100px){.rr-chrome .rr-nav .rr-opt{display:none}}
@@ -94,33 +97,9 @@ html[lang=hi] .rr-chrome.rr-ftr{font-family:"Noto Sans Devanagari","Noto Sans De
 .rr-chrome .rr-btn{height:40px;padding:0 14px;font-size:12px;letter-spacing:.08em}
 .rr-chrome .rr-bag{width:40px;height:40px}
 .rr-chrome.rr-strip{font-size:10px;letter-spacing:.1em;padding:5px 12px}
+.rr-chrome.rr-ftr{font-size:12px}
 }
 @media (max-width:380px){.rr-chrome .rr-brand span{display:none}}
-/* phone menu: a Menu button in the header opens the nav links in a panel */
-.rr-chrome .rr-burger,.rr-chrome .rr-mob{display:none}
-@media (max-width:760px){
-.rr-chrome .rr-nav>.rr-lang{display:none}
-.rr-chrome .rr-burger{display:inline-flex;align-items:center;justify-content:center;flex:none;width:40px;height:40px;padding:0;border:1px solid var(--sg-line-strong,#DDDBD6);border-radius:0;background:var(--rr-bg);color:var(--rr-ink);cursor:pointer}
-.rr-chrome .rr-burger path{fill:none;stroke:currentColor;stroke-width:1.8;transition:transform .16s ease-out;transform-origin:12px 12px}
-.rr-chrome .rr-burger[aria-expanded=true] .rr-b1{transform:translateY(4px) rotate(45deg)}
-.rr-chrome .rr-burger[aria-expanded=true] .rr-b2{transform:translateY(-4px) rotate(-45deg)}
-.rr-chrome .rr-mob:not([hidden]){display:block;position:absolute;left:0;right:0;top:100%;z-index:960;background:var(--rr-bg);border-bottom:1px solid var(--rr-line);
-  padding:6px var(--rr-pad) 22px;max-height:calc(100dvh - 61px);overflow:auto;overscroll-behavior:contain;
-  box-shadow:0 0 0 100vmax rgba(13,13,15,.32);clip-path:inset(0 -100vmax -100vmax -100vmax)}
-.rr-chrome .rr-mob nav a{display:flex;align-items:center;justify-content:space-between;min-height:56px;border-bottom:1px solid var(--rr-line);
-  font-family:var(--rr-display);font-size:19px;font-weight:700;letter-spacing:-.01em;color:var(--rr-ink)}
-.rr-chrome .rr-mob nav a::after{content:"";flex:none;width:8px;height:8px;margin-right:4px;border-top:1.8px solid var(--rr-low);border-right:1.8px solid var(--rr-low);transform:rotate(45deg)}
-.rr-chrome .rr-mob nav a[aria-current=page]{box-shadow:inset 3px 0 0 var(--rr-red);padding-left:14px}
-html[lang=hi] .rr-chrome .rr-mob nav a{font-family:"Noto Sans Devanagari","Noto Sans Devanagari Fallback",var(--rr-sans);font-weight:600;letter-spacing:0}
-.rr-chrome .rr-mob-lang{display:flex;align-items:center;gap:10px;margin-top:18px}
-.rr-chrome .rr-mob-lang .rr-sep,.rr-chrome .rr-mob-lang button[aria-pressed=true]{display:inline}
-.rr-chrome .rr-mob-lang button{font-size:15px;padding:8px 2px;letter-spacing:0}
-html.rr-mob-open{overflow:hidden}
-/* the footer on a phone: the two groups centred, one above the other */
-.rr-chrome .rr-ftr-in{flex-direction:column;justify-content:center;gap:0;padding:8px 0}
-.rr-chrome.rr-ftr nav{justify-content:center;gap:4px 22px;padding:6px 0}
-}
-
 .rr-chrome .rr-nav>a.rr-bag{padding:0;border:1px solid var(--sg-line-strong,#DDDBD6)}
 .rr-chrome .rr-nav>a.rr-bag:hover{border-color:var(--rr-ink)}
 
@@ -128,7 +107,3 @@ html.rr-mob-open{overflow:hidden}
    <body> (the page sets --rr-bx to its body padding). */
 .rr-chrome.rr-hdr,.rr-chrome.rr-ftr{margin-left:calc(-1 * var(--rr-bx, 0px));margin-right:calc(-1 * var(--rr-bx, 0px))}
 @media print{.rr-chrome{display:none!important}}
-
-/* The admin closed the shop (flags.store off, assets/rr-site.js): every way
-   into it is hidden, as the app hides its shop tab. */
-html.rr-shop-off a[href="/shop"],html.rr-shop-off a[href^="/shop/"],html.rr-shop-off a[href^="/shop?"],html.rr-shop-off .rr-chrome .rr-bag{display:none!important}

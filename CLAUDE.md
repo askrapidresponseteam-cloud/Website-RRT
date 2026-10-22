@@ -31,18 +31,6 @@ and theme between these markers. Keep them exactly as they are:
   yellow of the earlier theme, or a red logo square: the paw and the
   Marcellus wordmark stay as they are, and Marcellus is only for the wordmark
   in the header.
-- Page layout: `assets/rr-page.css` (linked last from every rr:head block) is
-  the one page grid. Every page starts on the logo's line: give the page's
-  main block `rr-page rr-read` (or `rr-wide`) and its eyebrow, title and lead
-  `rr-ph-eye`, `rr-ph-h1`, `rr-ph-lead`. Reading pages split into
-  `rr-split-head` / `rr-split-body` from 1100px wide. Never centre a page in
-  its own max-width box again; only the home search is centred.
-- Phones get a Menu button in the header (links in `MOB` in chrome.py). The
-  footer is one quiet line; the main pages live in the header, not the footer.
-- The shop follows the admin's `flags.store` switch site-wide
-  (`assets/rr-site.js`): when it is off every shop link is hidden
-  (`html.rr-shop-off`) and shop pages send visitors home, as the app hides its
-  shop tab. Link to the shop with `href="/shop..."` so the switch can hide it.
 - Never use long dashes (em or en) anywhere; use a plain hyphen.
 - Fonts are served from this site (`assets/fonts/`, `assets/rr-fonts*.css`,
   built by `scripts/fonts/build_fonts.py`); never link Google Fonts again.

@@ -20,7 +20,8 @@
  *     from onclick="..." attributes and from each other's scripts. Inline
  *     event handlers are left as written.
  *   - Left as they are: the vendored libraries (assets/vendor, already
- *     minified releases), *.min.js, scripts that are already minified or
+ *     minified releases), the web app (app/, Flutter's compiled build of the
+ *     mobile app, written there by deploy.sh web), *.min.js, scripts that are already minified or
  *     obfuscated (re-minifying obfuscated code can break its self-checks),
  *     data scripts (JSON-LD, the app demo's bundle), images, fonts, video.
  *
@@ -46,6 +47,10 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', 'tools', 'scripts', '.github'
 const SKIP_FILES = new Set(['package.json', 'package-lock.json', 'vercel.json', '.vercelignore', '.gitignore', '.DS_Store']);
 const SKIP_EXT = new Set(['.md', '.py', '.pyc']);
 const VENDOR_DIR = path.join('assets', 'vendor') + path.sep;
+// The web app (rapid-response.in/app): Flutter's own build output, published
+// exactly as built. Its scripts include ES modules and WebAssembly loaders,
+// so they are neither minified again nor compile-checked as classic scripts.
+const APP_DIR = 'app' + path.sep;
 
 const TERSER = {
   compress: {},             // Terser's safe defaults (no "unsafe" transforms)
@@ -118,7 +123,8 @@ function walk(dir, out = []) {
     } else if (e.isFile()) {
       // Licence and notice files of the vendored libraries ship with them.
       const vendorDoc = rel.startsWith(VENDOR_DIR);
-      if (SKIP_FILES.has(e.name) || (!vendorDoc && SKIP_EXT.has(path.extname(e.name)))) continue;
+      const appFile = rel.startsWith(APP_DIR);
+      if (SKIP_FILES.has(e.name) || (!vendorDoc && !appFile && SKIP_EXT.has(path.extname(e.name)))) continue;
       out.push(rel);
     }
   }
@@ -164,7 +170,7 @@ async function main() {
     const raw = fs.readFileSync(src);
     before += raw.length;
     let out = raw;
-    const untouched = rel.startsWith(VENDOR_DIR) || rel.endsWith('.min.js');
+    const untouched = rel.startsWith(VENDOR_DIR) || rel.startsWith(APP_DIR) || rel.endsWith('.min.js');
     if (!untouched && ext === '.html') {
       const text = raw.toString('utf8');
       const min = await html(text, rel);
@@ -187,6 +193,7 @@ async function main() {
     const dst = path.join(OUT, rel);
     if (!fs.existsSync(dst)) { problems.push(`${rel}: missing from ${path.basename(OUT)}/`); continue; }
     const ext = path.extname(rel).toLowerCase();
+    if (rel.startsWith(APP_DIR)) continue;   // published as Flutter built it
     if (ext === '.js') {
       const p = compiles(fs.readFileSync(dst, 'utf8'), rel);
       if (p) problems.push(p);

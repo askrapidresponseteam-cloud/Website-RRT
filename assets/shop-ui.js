@@ -601,15 +601,7 @@
     cfg.subscribe(function (s) {
       if (!s.ready) return;              // stay as-is until the first read lands
       if (s.storeOpen) { open(); if (opts.onOpen) opts.onOpen(s); }
-      else {
-        // Closed by the admin (flags.store false): the shop is withdrawn from
-        // the site, as its tab is from the app, so a visit here goes home
-        // (replace: Back does not return to it). The card is only a fallback
-        // for the moment the navigation takes.
-        close(s.closedMessage);
-        if (opts.onClosed) opts.onClosed(s);
-        try { global.location.replace('/'); } catch (e) { /* stay on the card */ }
-      }
+      else { close(s.closedMessage); if (opts.onClosed) opts.onClosed(s); }
     });
   }
 

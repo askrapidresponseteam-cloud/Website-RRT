@@ -22,7 +22,6 @@
 <link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/archivo-latin-800.c26cda24.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css">
 <link rel="stylesheet" href="/assets/rr-signal.css">
 <link rel="stylesheet" href="/assets/rr-site.css">
-<script>/* rr: shop switch as last read */try{if(localStorage.getItem('rrt_store_open')==='false')document.documentElement.classList.add('rr-shop-off')}catch(e){}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://rapid-response.in/#org","name":"Rapid Response","alternateName":"RapidResponse Labs","url":"https://rapid-response.in/","logo":"https://rapid-response.in/assets/favicon-512.png","image":"https://rapid-response.in/assets/og-cover.jpg","description":"An independent community animal-emergency peer network for India.","email":"ask@rapid-response.in","areaServed":{"@type":"Country","name":"India"},"sameAs":["https://www.instagram.com/rrtanimals"]},{"@type":"WebSite","@id":"https://rapid-response.in/#website","url":"https://rapid-response.in/","name":"Rapid Response","publisher":{"@id":"https://rapid-response.in/#org"},"inLanguage":["en-IN","hi-IN"]},{"@type":"MobileApplication","name":"Rapid Response","operatingSystem":"Android, iOS","applicationCategory":"LifestyleApplication","description":"Raise an SOS to the nearest people on the animal-welfare network in your district, or Ask the District for non-urgent help.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"publisher":{"@id":"https://rapid-response.in/#org"},"downloadUrl":["https://play.google.com/store/apps/details?id=com.rrt.sos","https://apps.apple.com/in/app/rapid-response/id6758672498"]}]}</script>
 <style>
 /* Rapid Response homepage. The header is the site's shared header
@@ -146,7 +145,7 @@ html[lang=hi] .btn{font-family:var(--sg-hindi);font-size:15px;font-weight:700;le
    answers opens in place under its + ; a page is a plain link. */
 body.serping main{justify-content:flex-start;padding-top:clamp(8px,2vh,18px)}
 body.serping .inner{margin:0 auto;text-align:left;align-items:stretch}
-body.serping :is(h1,.qrow,.learn,.learn-more,#recentRow){display:none}
+body.serping :is(h1,.qrow,.learn,#recentRow){display:none}
 body.serping .search{margin-top:clamp(6px,2vh,18px)}
 .serp{width:100%;margin-top:12px;text-align:left}
 .sr-n{margin:0 0 4px;font-size:13px;color:var(--low)}
@@ -258,7 +257,7 @@ body.lock{overflow:hidden}
 
 @media (max-width:640px){
   body{font-size:14px}
-  main{justify-content:flex-start;padding:clamp(40px,12vh,120px) var(--pad) 24px}
+  main{justify-content:flex-start;padding:clamp(40px,10vh,90px) 18px 14px}
   .inner{justify-content:flex-start}
   h1{font-size:clamp(28px,8vw,36px)}
   .bar{height:52px;padding-left:16px}
@@ -277,45 +276,18 @@ body.lock{overflow:hidden}
   .sh-act .btn{flex:1 1 auto}
 }
 @media (prefers-reduced-motion:reduce){.mic.on{animation:none}.sheet,.scrim{transition:none}.sh-q.hl{animation:none;background:var(--sg-wash)}}
-
-/* the campaign: one quiet line under the button, like a search engine's
-   own notice, not a box above the heading */
-.camp{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 8px;width:auto;max-width:100%;margin:22px 0 0;padding:6px 2px;
-  background:none;box-shadow:none;font-size:14px;font-weight:500;line-height:1.45;color:var(--mid);text-align:center}
-.camp:hover{box-shadow:none;color:var(--ink)}
-.camp:hover>span[data-i=camp]{text-decoration:underline;text-underline-offset:4px}
-.camp[hidden]{display:none}
-.camp-dot{width:7px;height:7px}
-.camp-go{margin:0;font-family:var(--sg-sans);font-size:14px;font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink)}
-.camp-go::after{content:" \2192"}
-html[lang=hi] .camp-go{font-family:var(--sg-hindi);font-size:14px}
-/* one more line, only for those who want it: what Rapid Response is */
-.learn-more{margin-top:6px;text-align:center}
-.learn-more>summary{display:inline-flex;align-items:center;gap:8px;list-style:none;cursor:pointer;padding:8px 4px;font-size:14px;font-weight:600;color:var(--mid)}
-.learn-more>summary::-webkit-details-marker{display:none}
-.learn-more>summary::before{content:"+";display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;box-shadow:inset 0 0 0 1px var(--line);font-size:15px;font-weight:500;line-height:1;color:var(--ink)}
-.learn-more[open]>summary::before{content:"-"}
-.learn-more>summary:hover{color:var(--ink)}
-.learn-more>summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.learn-more .learn{margin-top:6px}
-@media (max-width:760px){
-  .inner{margin:0 auto}
-  .qrow .btn{min-width:200px}
-  .learn-more .learn{flex-direction:column;align-items:center;gap:0}
-  .learn-more .learn i{display:none}
-  .learn-more .learn button{padding:9px 6px;font-size:15px}
-}
 </style>
 
 </head>
 <body>
 
 <!-- rr:header -->
-<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="30 42 420 420" aria-hidden="true"><g fill="#434343"><circle cx="85" cy="193" r="45"/><circle cx="177" cy="107" r="45"/><circle cx="302" cy="107" r="45"/><circle cx="395" cy="193" r="45"/><path d="M378.5 348.1C381 351.2 384.7 354.5 386.7 357.8C388.7 361.1 389.5 364.5 390.7 368C391.9 371.5 393.3 375.2 394 378.9C394.6 382.5 394.6 386.1 394.5 389.7C394.5 393.3 394.5 397 393.9 400.5C393.2 404 391.9 407.4 390.6 410.7C389.2 414 387.6 417.2 385.7 420.2C383.8 423.2 381.5 426.1 378.9 428.6C376.4 431.2 373.6 433.6 370.5 435.6C367.3 437.6 364.1 439.6 360.1 440.7C356.1 441.7 350.8 441.6 346.3 441.8C341.8 441.9 337.5 442 333.2 441.8C328.9 441.6 324.5 440.9 320.6 440.6C316.7 440.3 313.2 440.1 309.8 439.8C306.4 439.4 303.2 439.2 300.1 438.8C296.9 438.3 293.7 437.4 290.8 436.9C287.9 436.4 285.2 436 282.6 435.6C280.1 435.2 277.6 434.8 275.3 434.5C273 434.2 270.7 434 268.6 433.8C266.5 433.7 264.5 433.8 262.4 433.6C260.4 433.5 258.3 433.1 256.4 433C254.4 432.8 252.6 432.9 250.7 432.9C248.8 432.9 246.9 433 245.1 432.9C243.2 432.9 241.4 432.6 239.5 432.6C237.7 432.6 235.8 432.9 234 432.9C232.1 433 230.2 432.9 228.4 432.9C226.5 432.9 224.6 432.8 222.6 433C220.7 433.1 218.6 433.5 216.6 433.6C214.6 433.8 212.6 433.7 210.4 433.8C208.3 434 206.1 434.2 203.7 434.5C201.4 434.8 199 435.2 196.4 435.6C193.8 436 191.2 436.4 188.3 436.9C185.4 437.4 182.1 438.3 179 438.8C175.8 439.2 172.6 439.4 169.2 439.8C165.8 440.1 162.3 440.3 158.4 440.6C154.5 440.9 150.1 441.6 145.8 441.8C141.5 442 137.2 442 132.7 441.8C128.3 441.5 123.4 441.4 119.3 440.4C115.3 439.3 111.8 437.6 108.6 435.6C105.3 433.7 102.6 431.2 100.1 428.6C97.5 426.1 95.3 423.2 93.3 420.2C91.4 417.2 89.8 414 88.5 410.7C87.1 407.4 85.8 404 85.2 400.5C84.5 397 84.5 393.3 84.5 389.7C84.5 386.1 84.4 382.5 85 378.9C85.7 375.2 87.1 371.5 88.3 368C89.5 364.5 90.4 361.1 92.3 357.8C94.3 354.5 97.5 351.2 100 348.1C102.5 345.1 105.1 342.2 107.3 339.5C109.5 336.7 110.9 334 113.1 331.5C115.3 329 118.1 326.7 120.3 324.4C122.6 322.1 124.5 320 126.5 317.8C128.4 315.7 130.2 313.6 132 311.6C133.9 309.6 135.7 307.8 137.4 305.8C139.1 303.9 140.7 302 142.2 300.1C143.7 298.2 145.1 296.3 146.4 294.4C147.7 292.4 148.7 290.2 150.1 288.4C151.6 286.6 153.6 285.1 155 283.3C156.4 281.4 157.3 279.1 158.7 277.2C160.1 275.4 162.1 274 163.5 272.1C164.9 270.2 166 267.9 167.3 265.8C168.6 263.7 169.9 261.3 171.3 259.3C172.8 257.2 174.5 255.3 176.2 253.3C177.8 251.3 179.6 249.4 181.3 247.2C183 245.1 184.6 242.6 186.4 240.5C188.3 238.4 190.4 236.7 192.4 234.5C194.5 232.3 196.3 229.5 198.5 227.4C200.7 225.3 203.2 223.8 205.7 222.1C208.2 220.4 210.8 218.5 213.5 217.2C216.2 215.9 219 215.1 221.9 214.3C224.7 213.5 227.7 212.8 230.6 212.4C233.6 212.1 236.5 212.1 239.5 212.1C242.5 212.1 245.5 212.1 248.4 212.4C251.3 212.8 254.3 213.5 257.1 214.3C260 215.1 262.9 215.9 265.6 217.2C268.2 218.5 270.8 220.4 273.3 222.1C275.8 223.8 278.3 225.3 280.5 227.4C282.7 229.5 284.6 232.3 286.6 234.5C288.6 236.7 290.6 238.5 292.6 240.5C294.5 242.5 296.6 244.2 298.3 246.4C300 248.5 301.3 251.2 302.8 253.3C304.4 255.5 306.2 257.3 307.7 259.3C309.2 261.3 310.6 263.4 312 265.4C313.5 267.4 314.8 269.4 316.2 271.4C317.6 273.4 319 275.3 320.3 277.2C321.6 279.2 322.6 281.4 324 283.3C325.4 285.1 327.5 286.6 328.9 288.4C330.3 290.2 331.3 292.4 332.6 294.4C333.9 296.3 335.3 298.2 336.8 300.1C338.3 302 340 303.9 341.6 305.8C343.2 307.8 344.7 309.8 346.5 311.8C348.3 313.8 350.5 315.7 352.5 317.8C354.6 319.9 356.4 322.1 358.7 324.4C360.9 326.7 363.7 329 365.9 331.5C368.1 334 369.6 336.7 371.7 339.5C373.8 342.2 376 345.1 378.5 348.1Z"/></g></svg><span>Rapid Response</span></a><nav class="rr-nav" aria-label="Main"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div><button class="rr-burger" id="rrMenuBtn" type="button" aria-controls="rrMob" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="rr-b1" d="M4 8h16"/><path class="rr-b2" d="M4 16h16"/></svg></button></nav></div><div class="rr-mob" id="rrMob" hidden><nav aria-label="Menu"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a></nav><div class="rr-lang rr-mob-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">English</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div></div></div>
+<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="30 42 420 420" aria-hidden="true"><g fill="#434343"><circle cx="85" cy="193" r="45"/><circle cx="177" cy="107" r="45"/><circle cx="302" cy="107" r="45"/><circle cx="395" cy="193" r="45"/><path d="M378.5 348.1C381 351.2 384.7 354.5 386.7 357.8C388.7 361.1 389.5 364.5 390.7 368C391.9 371.5 393.3 375.2 394 378.9C394.6 382.5 394.6 386.1 394.5 389.7C394.5 393.3 394.5 397 393.9 400.5C393.2 404 391.9 407.4 390.6 410.7C389.2 414 387.6 417.2 385.7 420.2C383.8 423.2 381.5 426.1 378.9 428.6C376.4 431.2 373.6 433.6 370.5 435.6C367.3 437.6 364.1 439.6 360.1 440.7C356.1 441.7 350.8 441.6 346.3 441.8C341.8 441.9 337.5 442 333.2 441.8C328.9 441.6 324.5 440.9 320.6 440.6C316.7 440.3 313.2 440.1 309.8 439.8C306.4 439.4 303.2 439.2 300.1 438.8C296.9 438.3 293.7 437.4 290.8 436.9C287.9 436.4 285.2 436 282.6 435.6C280.1 435.2 277.6 434.8 275.3 434.5C273 434.2 270.7 434 268.6 433.8C266.5 433.7 264.5 433.8 262.4 433.6C260.4 433.5 258.3 433.1 256.4 433C254.4 432.8 252.6 432.9 250.7 432.9C248.8 432.9 246.9 433 245.1 432.9C243.2 432.9 241.4 432.6 239.5 432.6C237.7 432.6 235.8 432.9 234 432.9C232.1 433 230.2 432.9 228.4 432.9C226.5 432.9 224.6 432.8 222.6 433C220.7 433.1 218.6 433.5 216.6 433.6C214.6 433.8 212.6 433.7 210.4 433.8C208.3 434 206.1 434.2 203.7 434.5C201.4 434.8 199 435.2 196.4 435.6C193.8 436 191.2 436.4 188.3 436.9C185.4 437.4 182.1 438.3 179 438.8C175.8 439.2 172.6 439.4 169.2 439.8C165.8 440.1 162.3 440.3 158.4 440.6C154.5 440.9 150.1 441.6 145.8 441.8C141.5 442 137.2 442 132.7 441.8C128.3 441.5 123.4 441.4 119.3 440.4C115.3 439.3 111.8 437.6 108.6 435.6C105.3 433.7 102.6 431.2 100.1 428.6C97.5 426.1 95.3 423.2 93.3 420.2C91.4 417.2 89.8 414 88.5 410.7C87.1 407.4 85.8 404 85.2 400.5C84.5 397 84.5 393.3 84.5 389.7C84.5 386.1 84.4 382.5 85 378.9C85.7 375.2 87.1 371.5 88.3 368C89.5 364.5 90.4 361.1 92.3 357.8C94.3 354.5 97.5 351.2 100 348.1C102.5 345.1 105.1 342.2 107.3 339.5C109.5 336.7 110.9 334 113.1 331.5C115.3 329 118.1 326.7 120.3 324.4C122.6 322.1 124.5 320 126.5 317.8C128.4 315.7 130.2 313.6 132 311.6C133.9 309.6 135.7 307.8 137.4 305.8C139.1 303.9 140.7 302 142.2 300.1C143.7 298.2 145.1 296.3 146.4 294.4C147.7 292.4 148.7 290.2 150.1 288.4C151.6 286.6 153.6 285.1 155 283.3C156.4 281.4 157.3 279.1 158.7 277.2C160.1 275.4 162.1 274 163.5 272.1C164.9 270.2 166 267.9 167.3 265.8C168.6 263.7 169.9 261.3 171.3 259.3C172.8 257.2 174.5 255.3 176.2 253.3C177.8 251.3 179.6 249.4 181.3 247.2C183 245.1 184.6 242.6 186.4 240.5C188.3 238.4 190.4 236.7 192.4 234.5C194.5 232.3 196.3 229.5 198.5 227.4C200.7 225.3 203.2 223.8 205.7 222.1C208.2 220.4 210.8 218.5 213.5 217.2C216.2 215.9 219 215.1 221.9 214.3C224.7 213.5 227.7 212.8 230.6 212.4C233.6 212.1 236.5 212.1 239.5 212.1C242.5 212.1 245.5 212.1 248.4 212.4C251.3 212.8 254.3 213.5 257.1 214.3C260 215.1 262.9 215.9 265.6 217.2C268.2 218.5 270.8 220.4 273.3 222.1C275.8 223.8 278.3 225.3 280.5 227.4C282.7 229.5 284.6 232.3 286.6 234.5C288.6 236.7 290.6 238.5 292.6 240.5C294.5 242.5 296.6 244.2 298.3 246.4C300 248.5 301.3 251.2 302.8 253.3C304.4 255.5 306.2 257.3 307.7 259.3C309.2 261.3 310.6 263.4 312 265.4C313.5 267.4 314.8 269.4 316.2 271.4C317.6 273.4 319 275.3 320.3 277.2C321.6 279.2 322.6 281.4 324 283.3C325.4 285.1 327.5 286.6 328.9 288.4C330.3 290.2 331.3 292.4 332.6 294.4C333.9 296.3 335.3 298.2 336.8 300.1C338.3 302 340 303.9 341.6 305.8C343.2 307.8 344.7 309.8 346.5 311.8C348.3 313.8 350.5 315.7 352.5 317.8C354.6 319.9 356.4 322.1 358.7 324.4C360.9 326.7 363.7 329 365.9 331.5C368.1 334 369.6 336.7 371.7 339.5C373.8 342.2 376 345.1 378.5 348.1Z"/></g></svg><span>Rapid Response</span></a><nav class="rr-nav" aria-label="Main"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div></nav></div></div>
 <!-- /rr:header -->
 
 <main>
  <div class="inner">
+  <a class="camp" id="camp" href="/lab-animal-rules" hidden><span class="camp-dot" aria-hidden="true"></span><span data-i="camp">Draft lab animal rules: send your objection by 5 November</span><span class="camp-go" data-i="campGo">Send yours</span></a>
   <h1 data-i="h1">How can we help an animal today?</h1>
 
   <div class="search" role="search">
@@ -338,21 +310,19 @@ html[lang=hi] .camp-go{font-family:var(--sg-hindi);font-size:14px}
 
   <div class="qrow">
     <button class="btn dark" data-sheet="sos" data-i="qSos">Raise an SOS</button>
+    <a class="btn" href="/vet" data-i="qVet">Join as a vet</a>
+    <a class="btn" href="/know-the-laws" data-i="qLaws">Know the laws</a>
+    <a class="btn" href="/shop" data-i="qShop">Shop</a>
   </div>
 
-  <a class="camp" id="camp" href="/lab-animal-rules" hidden><span class="camp-dot" aria-hidden="true"></span><span data-i="camp">Draft lab animal rules: object by 5 November</span><span class="camp-go" data-i="campGo">Send yours</span></a>
-
-  <details class="learn-more">
-   <summary><span data-i="lMore">What is Rapid Response?</span></summary>
-   <p class="learn">
+  <p class="learn">
     <button data-sheet="f1" data-i="lApp">What the app does</button><i aria-hidden="true">·</i><button data-sheet="roles" data-i="lWho">Who it's for</button><i aria-hidden="true">·</i><button data-sheet="gap" data-i="lWhy">Why it exists</button><i aria-hidden="true">·</i><button data-sheet="promises" data-i="lPro">Our promises</button>
   </p>
-  </details>
  </div>
 </main>
 
 <!-- rr:footer -->
-<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in"><nav aria-label="About"><a href="/explainer" data-rr-en="About" data-rr-hi="परिचय">About</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a></nav><nav aria-label="Legal"><a href="/policy" data-rr-en="Privacy &amp; Terms" data-rr-hi="प्राइवेसी और शर्तें">Privacy &amp; Terms</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav></div></div>
+<div class="rr-chrome rr-ftr" role="contentinfo"><nav aria-label="Site"><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav><nav class="rr-ftr2" aria-label="More"><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/policy" data-rr-en="Terms &amp; Privacy" data-rr-hi="शर्तें और प्राइवेसी">Terms &amp; Privacy</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="https://www.instagram.com/rrtanimals" data-rr-en="@rrtanimals" data-rr-hi="@rrtanimals">@rrtanimals</a></nav><span class="rr-ftr-copy" data-rr-en="© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority." data-rr-hi="© 2026 रैपिड रिस्पॉन्स लैब्स · स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।">© 2026 RapidResponse Labs · Independent. Not affiliated with any government authority.</span></div>
 <!-- /rr:footer -->
 
 <div class="scrim" id="scrim"></div>
@@ -373,25 +343,25 @@ var PLAY="https://play.google.com/store/apps/details?id=com.rrt.sos",
 /* ---------------------------------------------------------------- UI text */
 var T={
  en:{
-  navFaq:"FAQ",camp:"Draft lab animal rules: object by 5 November",campGo:"Send yours",
+  navFaq:"FAQ",camp:"Draft lab animal rules: send your objection by 5 November",campGo:"Send yours",
   h1:"How can we help an animal today?",
-  ph:"Search SOS, feeding rights, dog pickups, vets\u2026",phS:"SOS, laws, vets\u2026",
+  ph:"Search SOS, feeding rights, dog pickups, vets\u2026",phS:"SOS, laws, vets, shop\u2026",
   recent:"Recent",clear:"Clear",
   qReport:"Report an incident",qSos:"Raise an SOS",qVet:"Join as a vet",qLaws:"Know the laws",qShop:"Shop",navTalkVet:"Talk to a vet",
   kFaq:"Common question",paa:"People also ask",answer:"Answer",readAll:"Read the full answer",noHits:"No exact match for",kContact:"Contact",vListen:"Listening\u2026 speak now",vHeard:"Heard:",vNo:"Didn't catch that. Tap the mic and try again.",vBlocked:"Microphone is blocked. Allow it for this site in your browser settings, then tap the mic again.",vNoMic:"No microphone found on this device.",vNet:"Voice search needs an internet connection.",vErr:"Voice search stopped. Tap the mic to try again.",vMic:"Search by voice",vStop:"Stop listening",kAction:"Quick action",goNow:"Go",vLocal:"Listening on this device\u2026 speak now",vCloud:"Your browser turns speech into text (Google or Apple). RRT never receives your audio.",
-  footL:"India \u00b7 Free, bilingual, independent",lMore:"What is Rapid Response?",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",navPolicy:"Terms & Privacy",
+  footL:"India \u00b7 Free, bilingual, independent",lApp:"What the app does",lWho:"Who it's for",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",navPolicy:"Terms & Privacy",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
   android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top",resFor:"Results for",moreFor:"More searches"
  },
  hi:{
-  navFaq:"सवाल",camp:"प्रयोगशाला पशु नियमों का मसौदा: 5 नवंबर तक आपत्ति भेजें",campGo:"आपत्ति भेजें",
+  navFaq:"सवाल",camp:"प्रयोगशाला पशु नियमों का मसौदा: 5 नवंबर तक अपनी आपत्ति भेजें",campGo:"आपत्ति भेजें",
   h1:"आज किसी जानवर की मदद कैसे करें?",
-  ph:"एसओएस, खिलाने का अधिकार, कुत्ते उठाना, वेट खोजें\u2026",phS:"एसओएस, कानून, वेट\u2026",
+  ph:"एसओएस, खिलाने का अधिकार, कुत्ते उठाना, वेट खोजें\u2026",phS:"एसओएस, कानून, वेट, शॉप\u2026",
   recent:"हाल के",clear:"हटाएँ",
   qReport:"घटना रिपोर्ट करें",qSos:"एसओएस भेजें",qVet:"वेट बनकर जुड़ें",qLaws:"कानून जानें",qShop:"शॉप",navTalkVet:"वेट से बात करें",
   kFaq:"आम सवाल",paa:"लोग यह भी पूछते हैं",answer:"जवाब",readAll:"पूरा जवाब पढ़ें",noHits:"सटीक जवाब नहीं मिला:",kContact:"संपर्क",vListen:"सुन रहे हैं\u2026 अब बोलिए",vHeard:"सुना:",vNo:"आवाज़ नहीं पकड़ी। माइक दबाकर फिर बोलिए।",vBlocked:"माइक्रोफ़ोन बंद है। ब्राउज़र सेटिंग में इस साइट के लिए अनुमति दें, फिर माइक दबाएँ।",vNoMic:"इस डिवाइस पर माइक्रोफ़ोन नहीं मिला।",vNet:"वॉइस सर्च के लिए इंटरनेट चाहिए।",vErr:"वॉइस सर्च रुक गई। माइक दबाकर फिर कोशिश करें।",vMic:"बोलकर खोजें",vStop:"सुनना बंद करें",kAction:"तुरंत करें",goNow:"खोलें",vLocal:"इसी डिवाइस पर सुन रहे हैं\u2026 अब बोलिए",vCloud:"आपका ब्राउज़र आवाज़ को टेक्स्ट में बदलता है (Google या Apple)। RRT को आपकी आवाज़ नहीं मिलती।",
-  footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lMore:"रैपिड रिस्पॉन्स क्या है?",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",navPolicy:"शर्तें और प्राइवेसी",
+  footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lApp:"ऐप क्या करता है",lWho:"किसके लिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",navPolicy:"शर्तें और प्राइवेसी",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
   android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित",backTop:"ऊपर जाएँ",resFor:"इसके नतीजे:",moreFor:"और खोजें"
@@ -732,9 +702,7 @@ function rank(v){
   var groups=raw.map(function(w,i){return {alts:expand(w),prefix:i===raw.length-1&&!endsWord}});
   var phrase=String(v).toLowerCase().trim();
   var scored=[];
-  var noShop=document.documentElement.classList.contains('rr-shop-off');
   IDX.forEach(function(d){
-    if(noShop&&(d.id==="shop"||/^\/shop/.test(d.u||"")))return;  /* the admin closed the shop */
     var s=0,covered=0;
     groups.forEach(function(g){
       var best=0;
@@ -865,7 +833,7 @@ function pinFor(u,raw){
     case "talkvet":return {t:hi?"ऑनलाइन वेट से बात करें":"Talk to a vet online",s:hi?"ऐप में एक सत्यापित वेट से चैट करें, ज़रूरत हो तो वीडियो कॉल।":"Chat with a verified vet in the app, then video if needed.",u:"/talk-to-a-vet"};
     case "vet":return {t:(hi?"वेट खोजें ":"Find a vet ")+where,s:hi?"RRT ऐप में लोकेशन-आधारित वेट खोज 5 किमी से शुरू होकर 25 किमी तक जाती है।":"The RRT app's vet search starts within 5 km of you and widens up to 25 km.",u:"#s-f10"};
     case "helpers":return {t:(hi?"शेल्टर, रेस्क्यूअर और फोस्टर ":"Shelters, rescuers and fosters ")+where,s:hi?"ऐप में 'जिले से पूछें' पर पोस्ट करें: आपके ज़िले के फीडर, फोस्टर, वेट और रेस्क्यूअर जवाब देते हैं। किसी का नंबर सार्वजनिक नहीं होता।":"Post on Ask the District in the app: feeders, fosters, vets and rescuers in your district answer. Nobody's number is public.",u:"#s-ask"};
-    case "shop":if(document.documentElement.classList.contains("rr-shop-off"))return null;var term=u.text.replace(/\b(?:buy|order|shop|shopping|for|some|a|an|the|from rrt|online)\b/g," ").replace(/\s+/g," ").trim();
+    case "shop":var term=u.text.replace(/\b(?:buy|order|shop|shopping|for|some|a|an|the|from rrt|online)\b/g," ").replace(/\s+/g," ").trim();
       return {t:term?(hi?"शॉप में खोजें: ":"Shop: ")+term:(hi?"आरआरटी शॉप":"The RRT Shop"),s:hi?"पार्टनर स्टोर की लाइव कीमतें, पूरे भारत में डिलीवरी।":"Live prices from the partner store, delivered across India.",u:term?"/shop?q="+encodeURIComponent(term):"/shop"};
   }
   return null;
@@ -926,7 +894,6 @@ function render(){
     });
     var extra=[{t:d.lawsFor+" \u201c"+vt+"\u201d",k:"kLaw",u:"/know-the-laws",x:1},
                {t:d.shopFor+" \u201c"+vt+"\u201d",k:"kPage",u:"/shop?q="+encodeURIComponent(vt),x:1}];
-    if(document.documentElement.classList.contains("rr-shop-off"))extra.pop();  /* the admin closed the shop */
     if(!hits.length)html+='<div class="rh">'+esc(d.noHits)+' \u201c'+esc(vt)+'\u201d</div>';
     extra.forEach(function(h){var i=hits.length;hits.push(h);
       html+='<div class="r rs" role="option" id="r'+i+'" aria-selected="'+(i===sel)+'" data-i="'+i+'"><span class="t">'+esc(h.t)+'</span><span class="k">'+esc(d[h.k])+'</span></div>'});
@@ -1060,7 +1027,7 @@ function serpHtml(v,focusId){
     html+='<div class="sr-paa"><span class="sr-k">'+esc(d.paa)+'</span>'+more.map(function(id){shown[id]=1;return xHtml(id,hv,true)}).join("")+'</div>';
   }
   html+='<div class="sr-more" aria-label="'+esc(d.moreFor)+'"><a href="/know-the-laws">'+esc(d.lawsFor)+' \u201c'+esc(vt)+'\u201d</a>'+
-    (document.documentElement.classList.contains("rr-shop-off")?"":'<a href="/shop?q='+encodeURIComponent(vt)+'">'+esc(d.shopFor)+' \u201c'+esc(vt)+'\u201d</a>')+'</div>';
+    '<a href="/shop?q='+encodeURIComponent(vt)+'">'+esc(d.shopFor)+' \u201c'+esc(vt)+'\u201d</a></div>';
   return html;
 }
 function runSearch(v,focusId,push){

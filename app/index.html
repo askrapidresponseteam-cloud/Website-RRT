@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- The web app is served at rapid-response.in/app/: flutter build web
+       --base-href /app/ fills this in. -->
+  <base href="/app/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Rapid Response: raise an SOS for an animal in trouble, find a vet, ask your district for help.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex">
+
+  <!-- Added to the Home Screen it opens like an app (and, on iPhone, can get alerts). -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="RRT">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <title>Rapid Response</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #ffffff; }
+    #rrt-loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    #rrt-loading img { width: 72px; height: 72px; opacity: .9; }
+  </style>
+</head>
+<body>
+  <div id="rrt-loading" aria-hidden="true"><img src="icons/Icon-192.png" alt=""></div>
+  <!-- Browser helpers (notifications, downloads, new tabs) and the image
+       resizer that photo compression uses in a browser. -->
+  <script src="rrt_web.js"></script>
+  <script src="pica.min.js"></script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

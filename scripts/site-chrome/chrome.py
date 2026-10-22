@@ -40,52 +40,31 @@ def header(current='', shop=False):
                  '<a href="/preview" ' + t('See every screen first', 'पहले हर स्क्रीन देखें') + '</a></div></div>')
     return ('<!-- rr:header -->\n<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in">'
             f'<a class="rr-brand" href="/" aria-label="Rapid Response home">{PAW}<span>Rapid Response</span>{brand_tag}</a>'
-            f'<nav class="rr-nav" aria-label="Main">{links}{right}{BURGER}</nav></div>'
-            + mobile_menu(current, shop) + '</div>\n<!-- /rr:header -->')
+            f'<nav class="rr-nav" aria-label="Main">{links}{right}</nav></div></div>\n<!-- /rr:header -->')
 
-# Phones: the nav links do not fit beside the logo, so a Menu button opens
-# them in a panel under the header (with the language switch).
-BURGER = ('<button class="rr-burger" id="rrMenuBtn" type="button" aria-controls="rrMob" aria-expanded="false" aria-label="Menu">'
-          '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="rr-b1" d="M4 8h16"/><path class="rr-b2" d="M4 16h16"/></svg></button>')
-MOB = [
-    ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें'),
-    ('/know-the-laws', 'Know the laws', 'कानून जानें'),
-    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'),
-    ('/shop', 'Shop', 'शॉप'),
-    ('/faq', 'FAQ', 'सवाल'),
+# Two tiers: the few links most visitors want, then everything else in a
+# quieter second row, so the footer never reads as a wall of links.
+FOOT_LINKS = [
     ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
-]
-
-def mobile_menu(current='', shop=False):
-    links = ''
-    for href, en, hi in MOB:
-        cur = ' aria-current="page"' if current == href else ''
-        links += f'<a href="{href}"{cur} {t(en, hi)}</a>'
-    lang = '' if shop else ('<div class="rr-lang rr-mob-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">English</button>'
-                            '<span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div>')
-    return f'<div class="rr-mob" id="rrMob" hidden><nav aria-label="Menu">{links}</nav>{lang}</div>'
-
-# The footer is a plain strip, like a search engine's: a few small links on
-# the left and the legal ones on the right, nothing else. The main pages are
-# in the header (and the phone menu), so they are not repeated here.
-FOOT_LEFT = [
-    ('/explainer', 'About', 'परिचय'),
-    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'),
-    ('/app-guide', 'App guide', 'ऐप गाइड'),
-]
-FOOT_RIGHT = [
-    ('/policy', 'Privacy &amp; Terms', 'प्राइवेसी और शर्तें'),
-    ('/vet-terms', 'Vet terms', 'वेट शर्तें'),
+    ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें'), ('/know-the-laws', 'Know the laws', 'कानून जानें'),
+    ('/shop', 'Shop', 'शॉप'), ('/faq', 'FAQ', 'सवाल'),
     ('mailto:ask@rapid-response.in', 'Contact', 'संपर्क'),
 ]
+FOOT_MORE = [
+    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/app-guide', 'App guide', 'ऐप गाइड'),
+    ('/policy', 'Terms &amp; Privacy', 'शर्तें और प्राइवेसी'), ('/vet-terms', 'Vet terms', 'वेट शर्तें'),
+    ('https://www.instagram.com/rrtanimals', '@rrtanimals', '@rrtanimals'),
+]
 
-def footer(extra='', scripts=True):
-    left = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_LEFT)
-    right = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_RIGHT)
-    return ('<!-- rr:footer -->\n<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in">'
-            f'<nav aria-label="About">{left}</nav>' + extra + f'<nav aria-label="Legal">{right}</nav></div></div>\n'
-            + ('<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>\n' if scripts else '')
-            + '<!-- /rr:footer -->')
+def footer(extra=''):
+    links = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_LINKS)
+    more = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_MORE)
+    return ('<!-- rr:footer -->\n<div class="rr-chrome rr-ftr" role="contentinfo">'
+            f'<nav aria-label="Site">{links}</nav>'
+            + extra + f'<nav class="rr-ftr2" aria-label="More">{more}</nav>'
+            '<span class="rr-ftr-copy" ' + t('\u00a9 2026 RapidResponse Labs \u00b7 Independent. Not affiliated with any government authority.',
+                         '\u00a9 2026 रैपिड रिस्पॉन्स लैब्स \u00b7 स्वतंत्र। किसी सरकारी प्राधिकरण से संबद्ध नहीं।') + '</span>'
+            '</div>\n<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>\n<!-- /rr:footer -->')
 
 # Fonts are self-hosted (assets/fonts, @font-face rules in assets/rr-fonts*.css,
 # built by scripts/fonts/build_fonts.py, which also rewrites the hashed names
@@ -121,19 +100,12 @@ FONTS = fonts()  # index.html carries this same block in its <head> (heal.py doe
 EARLY = ("<script>/* rr: one light theme site-wide */try{['rr-mode','theme'].forEach(function(k){localStorage.setItem(k,'l')});}catch(e){}"
          "document.documentElement.classList.add('light','rr-themed');</script>")
 
-# The admin's shop switch, as this device last read it (assets/rr-site.js keeps
-# it fresh): when the shop is off its links are hidden before the first paint.
-SHOP_EARLY = ("<script>/* rr: shop switch as last read */try{if(localStorage.getItem('rrt_store_open')==='false')"
-              "document.documentElement.classList.add('rr-shop-off')}catch(e){}</script>")
-
 # Signal tokens (assets/rr-signal.css) come first; every other sheet maps onto them.
 SIGNAL = '<link rel="stylesheet" href="/assets/rr-signal.css">'
 
 def head_block(theme=True, hindi=True):
-    # rr-page.css (the one page grid and page head) comes last, over each page's own styles.
-    css = (SIGNAL + '<link rel="stylesheet" href="/assets/rr-site.css">' + ('<link rel="stylesheet" href="/assets/rr-theme.css">' if theme else '')
-           + '<link rel="stylesheet" href="/assets/rr-page.css">')
-    return '<!-- rr:head -->' + fonts(True, hindi) + css + (EARLY if theme else '') + SHOP_EARLY + '<!-- /rr:head -->'
+    css = SIGNAL + '<link rel="stylesheet" href="/assets/rr-site.css">' + ('<link rel="stylesheet" href="/assets/rr-theme.css">' if theme else '')
+    return '<!-- rr:head -->' + fonts(True, hindi) + css + (EARLY if theme else '') + '<!-- /rr:head -->'
 
 def bilingual(s):
     """True if the page's language switch works (rr-site.js hides it otherwise), so a

@@ -1,0 +1,674 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "2026.06.19b",
+  "locale": "en",
+  "updatedAt": "2026-06-19",
+  "disclaimer": "General legal information for India, not legal advice, current to June 2026. This area is under active Supreme Court and High Court monitoring and can change. For a specific case, especially before relying on this in front of authorities, consult an animal-welfare lawyer.",
+  "commonQuestions": [
+    "My society is stopping me from feeding",
+    "A false case was filed against me",
+    "They claim a dog bit or killed someone",
+    "A removal drive is happening citing the SC order",
+    "A dog has been poisoned",
+    "Police are refusing my FIR",
+    "Bouncers were hired against feeders",
+    "There is an aggressive or rabid dog"
+  ],
+  "entries": [
+    {
+      "id": "rwa-stopping-feeding",
+      "category": "rwa",
+      "title": "My society or RWA is stopping me from feeding community dogs",
+      "keywords": ["rwa", "society", "aoa", "stop feeding", "feeder", "harassment", "designated feeding", "apartment", "association", "bowls removed", "threat"],
+      "summary": "Feeding community dogs is lawful. Rule 20 of the ABC Rules 2023 makes your RWA or AOA facilitate feeding by fixing designated spots and times. They can set the where and the when, but cannot ban feeding or feeders. Threatening or harassing a feeder is itself an offence.",
+      "problem": "Residents, guards, or the RWA are stopping you feeding, removing food and water bowls, or threatening you.",
+      "law": "Feeding is protected: Article 51A(g) makes compassion a fundamental duty, and AWBI v. Nagaraja (2014) held animals have dignity under Article 21. Rule 20 of the ABC Rules 2023 makes the RWA, AOA, or local body designate feeding spots (away from children's play areas, gates, and staircases) and times, and allow designated feeders to assist the ABC programme. They may regulate where and when, not ban. Threatening or coercing a feeder is criminal intimidation under Section 351 BNS 2023; causing hurt is Section 115 BNS; cruelty to the dogs is Section 11 PCA Act 1960.",
+      "action": [
+        "Feed at a sensible spot away from gates, stairs, and play areas, and clean up after every meal.",
+        "Write to the RWA asking them to fix feeding spots and times under Rule 20, and keep a copy.",
+        "If refused or harassed, ask in writing for an Animal Welfare Committee under Rule 20(2).",
+        "Report threats or force to the police and cite Section 351 BNS."
+      ],
+      "evidence": [
+        "Photos or video of bowls being removed, ban notices, or threats.",
+        "Screenshots of RWA or WhatsApp messages.",
+        "Dates, times, and names of those involved.",
+        "Your written request and any reply."
+      ],
+      "escalation": [
+        "Animal Welfare Committee under Rule 20(2): Chief Veterinary Officer, a police representative, the District SPCA or State Board, a recognised ABC organisation, the local-authority veterinary officer, the RWA, and you; appeal to the State Board.",
+        "Police complaint for intimidation or assault.",
+        "State Animal Welfare Board and AWBI.",
+        "High Court through a lawyer if obstruction continues."
+      ],
+      "citations": ["Rule 20, ABC Rules 2023", "Section 11, PCA Act 1960", "Section 351, BNS 2023 (criminal intimidation)", "Article 51A(g), Constitution", "AWBI v. Nagaraja (2014)"]
+    },
+    {
+      "id": "rwa-ban-dogs",
+      "category": "rwa",
+      "title": "Can a housing society ban community dogs or feeders?",
+      "keywords": ["ban dogs", "society ban", "rwa ban", "prohibit feeding", "no dogs allowed", "resolution", "bye-law", "ban feeders"],
+      "summary": "No. An RWA or AOA cannot ban community dogs or feeders, or order dogs removed. The ABC Rules 2023 require feeding to be facilitated and sterilised dogs to live in their area. A society can only regulate where and when feeding happens. A resolution banning dogs or feeding has no legal force.",
+      "problem": "Your society has passed a rule or resolution banning dogs, banning feeding, or ordering removal.",
+      "law": "An RWA or AOA is a private body and cannot override central rules made under the PCA Act 1960. Under the ABC Rules 2023, community dogs are sterilised, vaccinated, and returned to the same locality (Rule 11(19)), and feeding is facilitated (Rule 20). The Bombay High Court protected feeders in Sharmila Sankar v. Union of India (2023), and the Supreme Court stayed a 2022 Nagpur order banning public feeding. A blanket ban on dogs or feeders is unenforceable.",
+      "action": [
+        "Point the RWA to Rule 20 and ask for designated spots and times instead of a ban.",
+        "Record any ban notice or resolution and object in writing.",
+        "Seek an Animal Welfare Committee under Rule 20(2) for disputes.",
+        "Keep feeding lawfully at a sensible spot."
+      ],
+      "evidence": [
+        "The resolution, notice, or circular banning dogs or feeding.",
+        "Messages threatening feeders.",
+        "Your written objection and any reply."
+      ],
+      "escalation": [
+        "Animal Welfare Committee under Rule 20(2), appealable to the State Board.",
+        "Municipal body and State Animal Welfare Board.",
+        "High Court through a lawyer."
+      ],
+      "citations": ["Rule 20, ABC Rules 2023", "Rule 11(19), ABC Rules 2023", "Sharmila Sankar v. Union of India, Bombay HC (2023)"]
+    },
+    {
+      "id": "rwa-fines",
+      "category": "rwa",
+      "title": "The RWA is fining or penalising me for feeding dogs",
+      "keywords": ["fine", "penalty", "rwa fine", "charge for feeding", "penalised feeder", "fined"],
+      "summary": "An RWA has no power to fine you for lawfully feeding community dogs. Rule 20 of the ABC Rules 2023 requires it to facilitate feeding, not punish it. Object in writing and do not be intimidated into stopping.",
+      "problem": "Your RWA or AOA is imposing fines or penalties on you for feeding community dogs.",
+      "law": "An RWA or AOA cannot override the ABC Rules 2023. Rule 20 requires it to facilitate feeding by designating spots and times; it can regulate where and when, but cannot ban feeding or punish a feeder for a lawful act. A fine imposed to stop lawful feeding has no legal basis, and using threats to enforce it can be criminal intimidation under Section 351 BNS 2023.",
+      "action": [
+        "Ask the RWA, in writing, to show the rule that authorises the fine, and point them to Rule 20.",
+        "Do not stop lawful feeding; keep feeding at the designated or a sensible spot and clean up.",
+        "Raise it for a binding decision before the Animal Welfare Committee under Rule 20(2).",
+        "If threats are used, file a police complaint citing Section 351 BNS."
+      ],
+      "evidence": ["The fine notice or demand.", "RWA messages or minutes about it.", "Your written objection.", "Proof you feed lawfully and clean up."],
+      "escalation": ["Animal Welfare Committee under Rule 20(2), appealable to the State Board.", "State Animal Welfare Board and AWBI.", "Police complaint for intimidation.", "High Court through a lawyer."],
+      "citations": ["Rule 20, ABC Rules 2023", "Section 351, BNS 2023"]
+    },
+    {
+      "id": "relocation",
+      "category": "rwa",
+      "title": "Someone is removing or relocating our community dogs",
+      "keywords": ["relocation", "relocate", "removed dogs", "picked up", "lifting dogs", "displacement", "dog catcher", "van", "dumped", "sc order"],
+      "summary": "Relocating community dogs is illegal. Under the ABC Rules 2023 only the local body or a recognised ABC organisation may catch dogs, only for sterilisation or treatment, using trained catchers, and the dog returns to the same place (Rule 11(19)). Private removal or dumping is not allowed, and if it harms dogs it is a crime.",
+      "problem": "A person, the RWA, or an unauthorised agency is catching and dumping community dogs elsewhere, or threatening to.",
+      "law": "The ABC Rules 2023 follow Catch-Neuter-Vaccinate-Return. Catching is done only by the local authority or an AWBI-recognised ABC organisation, by trained dog catchers in proper vehicles, for sterilisation or treatment, after which the dog is returned to its exact territory (Rule 11(19)); displacement is barred. The Rules prohibit wanton killing. Private relocation or dumping is contrary to the ABC Rules and Section 11 PCA Act 1960, and if it injures or kills dogs it is Section 325 BNS 2023 (up to 5 years). The Supreme Court order of 19 May 2026 gives residents, RWAs, and guards no power to catch or relocate dogs.",
+      "action": [
+        "State clearly that relocation is not permitted and only authorities may catch dogs, for sterilisation or treatment only.",
+        "Record who is catching and on whose instruction.",
+        "Call the municipal body and the recognised ABC organisation to confirm if any catching is authorised.",
+        "If unauthorised, or if dogs are dumped, file a police complaint (Section 11 PCA, and Section 325 BNS if harmed) and inform the State Board."
+      ],
+      "evidence": [
+        "Photos or video of the catching, the vehicle, and any agency marks.",
+        "Names of those catching and whose order it was.",
+        "Any RWA message directing removal.",
+        "Where the dogs were taken, if known."
+      ],
+      "escalation": [
+        "Police complaint; Zero FIR at any station if refused.",
+        "Municipal commissioner, State Animal Welfare Board, and AWBI.",
+        "Animal Welfare Committee under Rule 20(2) where the RWA is involved.",
+        "High Court through a lawyer to recover relocated dogs."
+      ],
+      "citations": ["Rule 11(19), ABC Rules 2023", "ABC Rules 2023", "Section 11, PCA Act 1960", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "poisoning",
+      "category": "cruelty",
+      "title": "A community dog has been poisoned",
+      "keywords": ["poison", "poisoned", "poisoning", "killed dogs", "baited food", "dead dog", "poison bait"],
+      "summary": "Poisoning a dog is a serious crime. Section 325 BNS 2023 carries up to 5 years, and it is cognizable, so the police must register an FIR. Anyone who ordered it, such as an RWA office-bearer or a manager, is equally liable as an abettor under Section 49 BNS. Preserve the body and bait for post-mortem.",
+      "problem": "Community dogs have been poisoned, or poisoned bait has been planted.",
+      "law": "Poisoning is mischief by poisoning under Section 325 BNS 2023 (which replaced IPC 428 and 429 from 1 July 2024 and applies to every animal), punishable up to 5 years, or fine, or both, and triable by a Magistrate of the First Class. Cruelty also attracts Section 11 PCA Act 1960. A person who instigates or orders the poisoning is punishable as an abettor under Section 49 BNS with the same punishment, and a shared plan is criminal conspiracy under Section 61 BNS. Poisoning is cognizable, so an FIR is mandatory.",
+      "action": [
+        "Rush surviving dogs to a vet immediately. Use Find a Vet in this app.",
+        "Do not clean the scene. Preserve the body and any bait for a veterinary post-mortem.",
+        "Photograph and video the body, bait, and place with date and time.",
+        "File an FIR under Section 325 BNS, and name anyone who ordered it under Section 49 BNS.",
+        "Inform your SPCA, the State Board, and a recognised animal welfare organisation."
+      ],
+      "evidence": [
+        "The body, kept for post-mortem, and the post-mortem report.",
+        "Samples or photos of the suspected bait or food.",
+        "Timestamped photos and video of the scene.",
+        "Suspects, CCTV footage, and witnesses."
+      ],
+      "escalation": [
+        "Zero FIR at any station if refused; written escalation to the SP under Section 173(4) BNSS.",
+        "A Magistrate can order investigation under Section 175(3) BNSS.",
+        "State Animal Welfare Board and AWBI.",
+        "Animal-welfare lawyer for serious or repeat poisoning."
+      ],
+      "citations": ["Section 325, BNS 2023", "Section 49, BNS 2023 (abetment)", "Section 61, BNS 2023 (conspiracy)", "Section 11, PCA Act 1960"]
+    },
+    {
+      "id": "physical-abuse",
+      "category": "cruelty",
+      "title": "A person is beating or injuring a community dog",
+      "keywords": ["beating", "abuse", "hit", "cruelty", "injured", "torture", "stick", "cruel", "kicking", "maiming"],
+      "summary": "Beating, injuring, or maiming a dog is a crime. Maiming attracts Section 325 BNS (up to 5 years); cruelty such as beating or starving attracts Section 11 PCA Act. Threats to a feeder are criminal intimidation (Section 351 BNS). Record it safely, treat the dog, and file a complaint.",
+      "problem": "Someone is beating, kicking, throwing things at, or injuring a community dog.",
+      "law": "Maiming or rendering an animal useless is Section 325 BNS 2023 (up to 5 years). Cruelty, including beating, kicking, and denying food, water, or shelter, is Section 11 PCA Act 1960. The PCA fine is small and dated, so serious injury or killing is pursued under Section 325 BNS. A person who orders the act is liable as an abettor under Section 49 BNS. Threatening a feeder is criminal intimidation under Section 351 BNS.",
+      "action": [
+        "Intervene only if it is safe; otherwise record from a distance and call for help.",
+        "Get the dog to a vet and obtain a written record of the injuries.",
+        "File a complaint or FIR citing Section 325 BNS and Section 11 PCA.",
+        "Inform your SPCA and the State Board."
+      ],
+      "evidence": [
+        "Video or photos of the act and the injuries.",
+        "The veterinary record describing the injuries.",
+        "Names of the person and any witnesses.",
+        "Any nearby CCTV footage."
+      ],
+      "escalation": [
+        "Zero FIR at any station if refused; escalate to the SP under Section 173(4) BNSS.",
+        "A Magistrate can order investigation under Section 175(3) BNSS.",
+        "State Animal Welfare Board and AWBI."
+      ],
+      "citations": ["Section 325, BNS 2023", "Section 11, PCA Act 1960", "Section 351, BNS 2023"]
+    },
+    {
+      "id": "removal-drive",
+      "category": "cruelty",
+      "title": "A removal or culling drive is being run in our area",
+      "keywords": ["removal drive", "culling", "mass pickup", "eviction of dogs", "killing drive", "municipal drive", "round up"],
+      "summary": "Mass removal or killing is not allowed. The ABC Rules 2023 bar wanton killing, and the Supreme Court allows removal only by authorities, only from listed sensitive premises, and only after a vet's assessment. A private or RWA drive, or a mob, is illegal and a crime.",
+      "problem": "A municipality, RWA, or group is rounding up or killing community dogs in a drive, often citing the Supreme Court order.",
+      "law": "The ABC Rules 2023 prohibit the wanton killing of community dogs and require sterilise-vaccinate-return. The Supreme Court order of 19 May 2026 permits removal only by authorities, only from listed sensitive premises and the public places in the AWBI SOPs, and euthanasia only of rabid, incurably ill, or demonstrably dangerous dogs after assessment by qualified veterinary experts. A blanket drive in ordinary areas, or by private parties, has no legal basis. Killing or maiming dogs is Section 325 BNS 2023; whoever orders it is an abettor under Section 49 BNS; and five or more acting together is an unlawful assembly and rioting under Sections 189 to 191 BNS, with every member liable under Section 190 BNS.",
+      "action": [
+        "Record the drive: who is doing it, on whose orders, and where.",
+        "Ask the municipal body, in writing, to show the legal basis and the veterinary assessment for any removal.",
+        "If there is no lawful basis, or dogs are being harmed, file an FIR (Section 325 BNS, with 49 and 189 to 191 as they apply).",
+        "Inform the State Animal Welfare Board, AWBI, and a recognised ABC organisation immediately."
+      ],
+      "evidence": ["Video and photos of the drive and any vehicles or agencies.", "Any order, notice, or message directing it.", "Names of those acting and those instructing.", "Where the dogs were taken."],
+      "escalation": [
+        "FIR; Zero FIR if refused, then the SP under Section 173(4) BNSS and a Magistrate under Section 175(3) BNSS.",
+        "Complaint to the municipal commissioner, State Board, and AWBI.",
+        "High Court, which monitors compliance with the Supreme Court order, against misuse or illegality.",
+        "Animal-welfare lawyer for urgent relief."
+      ],
+      "citations": ["ABC Rules 2023 (no wanton killing)", "In Re: City Hounded By Strays, 2026 INSC 506 (SC, 19 May 2026)", "Section 325, BNS 2023", "Section 49, BNS 2023", "Sections 189 to 191, BNS 2023"]
+    },
+    {
+      "id": "illegal-shelter",
+      "category": "cruelty",
+      "title": "Dogs are being lifted and dumped in a bad or illegal shelter",
+      "keywords": ["shelter", "dog pound", "lifted", "dumped", "poor conditions", "illegal shelter", "kennel", "overcrowded"],
+      "summary": "Shelters must meet proper standards, with trained staff and veterinary care, and dogs cannot be picked up at random and dumped. Poor-condition shelters and random lifting are both unlawful, and keeping animals without food, water, or care is cruelty.",
+      "problem": "Community dogs are being seized at random and held in an overcrowded or filthy shelter, or a shelter is keeping animals in cruel conditions.",
+      "law": "Under the ABC Rules 2023 and the AWBI SOPs upheld by the Supreme Court on 19 May 2026, capture is only by the local body or a recognised organisation, by trained catchers, and shelters must meet prescribed standards of capacity, feeding, sanitation, and adequate trained personnel, with veterinary oversight. Random lifting and dumping has no legal basis. Keeping animals without sufficient food, water, shelter, or care is cruelty under Section 11 PCA Act 1960; causing death or serious harm is Section 325 BNS 2023.",
+      "action": [
+        "Record the conditions and the lifting: photos, video, location, and who is running it.",
+        "Ask, in writing, under whose authority dogs were taken and to see the shelter's standards and records.",
+        "Report to the municipal body, the State Animal Welfare Board, and AWBI, and ask for an inspection.",
+        "Where animals are suffering or dying, file a complaint under Section 11 PCA and Section 325 BNS."
+      ],
+      "evidence": ["Photos and video of the conditions and the animals.", "Records of which dogs were taken and from where.", "Names of those running the shelter and who authorised the lifting.", "Any veterinary or death records."],
+      "escalation": ["Complaint and inspection request to AWBI and the State Animal Welfare Board.", "Police complaint where there is cruelty or death.", "Municipal commissioner and the monitoring High Court.", "Animal-welfare lawyer."],
+      "citations": ["ABC Rules 2023", "AWBI SOPs dated 27 November 2025", "Section 11, PCA Act 1960", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "neglect-chaining",
+      "category": "cruelty",
+      "title": "An animal is chained, confined, or denied food, water, or shelter",
+      "keywords": ["neglect", "chained", "confined", "starved", "no water", "no shelter", "tied up", "cruelty", "caged"],
+      "summary": "Denying an animal food, water, shelter, or reasonable freedom is cruelty under the PCA Act. Document it, try to get the animal water and care, and report it. Serious harm is a bigger offence under the BNS.",
+      "problem": "An owned or community animal is kept chained or caged for long hours, or denied food, water, or shelter.",
+      "law": "Beating, kicking, overloading, and denying an animal sufficient food, water, shelter, or reasonable opportunity for movement are cruelty under Section 11(1) of the PCA Act 1960, punishable with a fine or imprisonment up to three months, or both. Where neglect causes death or serious injury, it is Section 325 BNS 2023 (up to 5 years).",
+      "action": [
+        "Record the conditions with photos and video, and note how long it has continued.",
+        "If safe, provide water and inform the owner of their duty of care.",
+        "Report to the local SPCA, a recognised animal welfare organisation, and the police citing Section 11 PCA.",
+        "For an owned animal, the authorities can be asked to inspect and act."
+      ],
+      "evidence": ["Timestamped photos and video of the chaining or neglect.", "Notes on duration and the animal's condition.", "Any veterinary opinion on its health.", "Witness details."],
+      "escalation": ["SPCA and State Animal Welfare Board.", "Police complaint under Section 11 PCA, and Section 325 BNS if seriously harmed.", "Municipal or veterinary authority for inspection."],
+      "citations": ["Section 11(1), PCA Act 1960", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "abandonment",
+      "category": "cruelty",
+      "title": "A pet or animal has been abandoned",
+      "keywords": ["abandonment", "abandoned pet", "left behind", "dumped pet", "thrown out"],
+      "summary": "Abandoning an animal in a way likely to cause it suffering is an offence under the PCA Act. Get the animal to safety and a vet, and report the abandonment.",
+      "problem": "An owner has abandoned a pet or animal, leaving it unable to fend for itself.",
+      "law": "Abandoning an animal in circumstances likely to cause it suffering, for example from starvation or thirst, is an offence under Section 11(1)(i) of the PCA Act 1960. If the abandonment causes death or serious harm, it can attract Section 325 BNS 2023.",
+      "action": [
+        "Get the animal to safety, water, and a vet. Use Find a Vet in this app.",
+        "Record what you can about the abandonment and the owner.",
+        "Report to the local SPCA and a recognised animal welfare organisation.",
+        "File a complaint under Section 11 PCA where the owner can be identified."
+      ],
+      "evidence": ["Photos or video of the abandoned animal and its condition.", "Any proof of who the owner is.", "Vet record.", "Witness details."],
+      "escalation": ["SPCA and State Animal Welfare Board.", "Police complaint under Section 11 PCA.", "Help with rehoming through recognised organisations."],
+      "citations": ["Section 11(1)(i), PCA Act 1960", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "false-case-feeder",
+      "category": "falsecases",
+      "title": "A false case or complaint has been filed against me for feeding or rescuing",
+      "keywords": ["false case", "false fir", "malicious", "complaint against feeder", "harassment", "framed", "counter case", "fake complaint"],
+      "summary": "Filing a false complaint to harass you is itself a crime. Stay calm, keep all your proof, and get a lawyer. You can be defended and the FIR quashed, and you can file a counter-complaint against the person who lied to the police.",
+      "problem": "Someone has filed, or threatened to file, a false police complaint or case against you to stop you feeding or rescuing animals.",
+      "law": "Giving false information to a public servant to misuse their power against you is an offence under Section 217 BNS 2023 (up to 1 year). Falsely charging you with an offence with intent to injure is Section 248 BNS, and fabricating or planting evidence is Section 228 BNS. A false, defamatory accusation can attract Section 356 BNS (defamation). A High Court can quash a false or malicious FIR under Section 528 BNSS 2023.",
+      "action": [
+        "Do not panic or retaliate. Save every message, notice, photo, video, and witness detail that shows the truth.",
+        "Get a lawyer at once; they can seek anticipatory bail and move to quash a false FIR under Section 528 BNSS.",
+        "Give your own written account, with evidence, to the police and keep a copy.",
+        "File a counter-complaint for false information and false charge (Sections 217 and 248 BNS) and, where relevant, defamation (Section 356 BNS)."
+      ],
+      "evidence": [
+        "Proof that you feed lawfully: photos, the designated-spot arrangement, vet and sterilisation records.",
+        "The false complaint or notice, and any messages showing the motive to harass.",
+        "Names and statements of neighbours or feeders who can support you.",
+        "A clear timeline of events."
+      ],
+      "escalation": [
+        "Anticipatory bail and quashing in the High Court through your lawyer (Section 528 BNSS).",
+        "Counter-complaint to the police and, if not registered, to the SP and the Magistrate.",
+        "Complaint to the State Animal Welfare Board and AWBI about the harassment.",
+        "A civil suit for defamation or malicious prosecution if it continues."
+      ],
+      "citations": ["Section 217, BNS 2023 (false information)", "Section 248, BNS 2023 (false charge)", "Section 228, BNS 2023 (fabricating evidence)", "Section 356, BNS 2023 (defamation)", "Section 528, BNSS 2023 (quashing)"]
+    },
+    {
+      "id": "fake-aggression",
+      "category": "falsecases",
+      "title": "Neighbours are faking an aggressive dog or bite story to get a dog removed or killed",
+      "keywords": ["fake aggression", "false bite", "framed dog", "dangerous dog claim", "remove dog", "false complaint", "edited video", "newspaper", "menace", "threat to public", "chasing", "barking"],
+      "summary": "Aggression is a finding for a qualified vet and the authorities, not for neighbours to declare. A fabricated bite or aggression story to mislead the police is an offence, and so is doctoring evidence. Insist on a proper veterinary assessment before anyone touches the dog.",
+      "problem": "People are claiming a calm community dog is aggressive or has bitten someone, to justify removing, relocating, or killing it.",
+      "law": "Under the ABC Rules 2023 and the Supreme Court order of 19 May 2026, whether a dog is dangerous or rabid is decided by qualified veterinary experts and the authorities, not by residents. Giving the police a false story to make them act against the dog or its caregiver is false information under Section 217 BNS 2023; a false criminal charge is Section 248 BNS; doctoring or planting evidence such as an edited video is fabricating evidence under Section 228 BNS, and using it is Section 233 BNS. Harming the dog on a fabricated basis remains Section 325 BNS.",
+      "action": [
+        "Insist, in writing, that any claim of aggression be assessed by the municipal veterinary officer or a recognised ABC organisation before any action.",
+        "Gather proof the dog is peaceful: videos, statements from residents, its sterilisation and vaccination record.",
+        "If a bite is alleged, ask for the medical record and the real facts; do not let anyone seize or harm the dog meanwhile.",
+        "If the story is fabricated to mislead the police, file a complaint under Sections 217 and 248 BNS."
+      ],
+      "evidence": ["Videos and photos showing the dog's normal behaviour.", "Statements from multiple residents.", "Sterilisation and vaccination records.", "Any proof the bite claim or video is false or edited."],
+      "escalation": ["Demand a veterinary assessment through the municipal body and State Board.", "Police complaint for false information and false charge.", "Animal Welfare Committee under Rule 20(2) if an RWA is driving it.", "High Court through a lawyer if removal is attempted unlawfully."],
+      "citations": ["ABC Rules 2023", "In Re: City Hounded By Strays, 2026 INSC 506 (SC, 19 May 2026)", "Sections 217 and 248, BNS 2023", "Section 228, BNS 2023 (fabricating evidence)", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "bouncers-guards",
+      "category": "falsecases",
+      "title": "Bouncers or guards have been hired to remove or threaten feeders or dogs",
+      "keywords": ["bouncers", "guards", "hired", "threaten feeders", "muscle", "goons", "remove dogs", "intimidation"],
+      "summary": "Hiring people to threaten feeders or seize dogs is criminal for both the muscle and whoever hired them. Threats are criminal intimidation, force is assault, and a group of five or more can be an unlawful assembly. Lodge an FIR; the Supreme Court itself said this is a police matter.",
+      "problem": "Your society or a builder has hired bouncers, guards, or others to chase feeders away or to catch dogs.",
+      "law": "Threatening a feeder is criminal intimidation under Section 351 BNS 2023 (up to 2 years, more if the threat is of death or grievous hurt); causing hurt is Section 115 BNS; catching or harming dogs is Section 325 BNS. Whoever hires or instructs them is liable as an abettor under Section 49 BNS, with the same punishment, and a plan is criminal conspiracy under Section 61 BNS. Five or more acting together for this purpose is an unlawful assembly under Section 189 BNS, the use of force is rioting under Section 191 BNS, and every member is liable under Section 190 BNS. Hearing the stray-dog case, the Supreme Court said harassment of feeders is a crime and the remedy is to lodge an FIR.",
+      "action": [
+        "Record the bouncers or guards, who hired them, and what they did or said.",
+        "Do not confront them alone; keep other residents and feeders with you and stay safe.",
+        "File an FIR naming the people and whoever hired them (Sections 351, 115, 325, with 49 BNS).",
+        "Report to the municipal body and the State Animal Welfare Board."
+      ],
+      "evidence": ["Video and photos of the bouncers and any force used.", "Proof of who hired or instructed them, such as RWA messages or notices.", "Names and statements of witnesses.", "Any injuries, with medical records."],
+      "escalation": ["Zero FIR at any station if refused; escalate to the SP under Section 173(4) BNSS.", "A Magistrate can order investigation under Section 175(3) BNSS.", "State Animal Welfare Board and AWBI.", "High Court through a lawyer."],
+      "citations": ["Section 351, BNS 2023", "Section 115, BNS 2023", "Section 325, BNS 2023", "Section 49, BNS 2023 (abetment)", "Sections 189 to 191, BNS 2023 (unlawful assembly, rioting)"]
+    },
+    {
+      "id": "woman-feeder-harassment",
+      "category": "falsecases",
+      "title": "A woman feeder is being harassed, molested, or assaulted",
+      "keywords": ["woman feeder", "molested", "slapped", "outrage modesty", "harassment", "assault", "abused woman"],
+      "summary": "This is a serious crime. Insulting or assaulting a woman, or outraging her modesty, is punishable, and her FIR is to be recorded by a woman officer. The Supreme Court said clearly that such harassment is a crime and an FIR must be registered.",
+      "problem": "A woman who feeds or rescues animals is being abused, molested, slapped, or threatened.",
+      "law": "Assault or criminal force to a woman to outrage her modesty is an offence under Section 74 BNS 2023, and insulting her modesty by words, gestures, or acts is Section 79 BNS; causing hurt is Section 115 BNS, and threats are Section 351 BNS. Where the victim is a woman, the BNSS requires her information to be recorded by a woman officer. The Supreme Court, hearing the stray-dog case, said harassment or molestation of women feeders is a crime and the aggrieved person can set the criminal law in motion by lodging an FIR.",
+      "action": [
+        "Get to safety and seek medical help if hurt.",
+        "File an FIR; ask that it be recorded by a woman officer, citing Sections 74, 79, 115, and 351 BNS as they apply.",
+        "Preserve video, messages, and witness details.",
+        "Inform a women's helpline and the State Animal Welfare Board."
+      ],
+      "evidence": ["Video or photos of the incident.", "Medical record of any injury.", "Abusive or threatening messages.", "Names and statements of witnesses."],
+      "escalation": ["Zero FIR at any station if refused; the SP under Section 173(4) BNSS.", "A Magistrate under Section 175(3) BNSS.", "State Women's Commission and Police Complaints Authority.", "Lawyer for protection and prosecution."],
+      "citations": ["Section 74, BNS 2023 (outraging modesty)", "Section 79, BNS 2023 (insulting modesty)", "Section 115, BNS 2023", "Section 351, BNS 2023", "Section 173, BNSS 2023 (FIR by woman officer)"]
+    },
+    {
+      "id": "fir-refused",
+      "category": "fir",
+      "title": "The police are refusing to file my FIR",
+      "keywords": ["fir refused", "police refuse", "won't register", "zero fir", "no fir", "sho refusing", "jurisdiction"],
+      "summary": "For a cognizable offence the police must register an FIR. If refused: give a written complaint and keep an acknowledgement, file a Zero FIR at any station, escalate in writing to the Superintendent of Police, and if needed ask a Magistrate to order investigation.",
+      "problem": "You are reporting cruelty, poisoning, or harassment and the police refuse to register an FIR.",
+      "law": "Killing, poisoning, or maiming under Section 325 BNS is cognizable, and Section 173 BNSS 2023 requires the police to register an FIR when a cognizable offence is disclosed, including a Zero FIR irrespective of where the offence happened. If they refuse, you may write to the Superintendent of Police under Section 173(4) BNSS, and a Magistrate can order investigation under Section 175(3) BNSS on an affidavit. The Supreme Court in Lalita Kumari (2014) held FIR registration is mandatory for a cognizable offence.",
+      "action": [
+        "Put your complaint in writing, hand it over, and insist on a stamped acknowledgement or a receipt number.",
+        "Ask for a Zero FIR if jurisdiction is the reason given.",
+        "Send the written complaint by registered post or email to the SP under Section 173(4) BNSS.",
+        "If still refused, a lawyer can move the Magistrate under Section 175(3) BNSS, with an affidavit, to order registration and investigation."
+      ],
+      "evidence": [
+        "A dated copy of your complaint.",
+        "Any acknowledgement, receipt number, or written refusal.",
+        "All evidence of the underlying offence.",
+        "Names of officers and the dates you approached them."
+      ],
+      "escalation": [
+        "Superintendent of Police under Section 173(4) BNSS.",
+        "Magistrate under Section 175(3) BNSS to order investigation.",
+        "Police Complaints Authority for persistent refusal.",
+        "A lawyer and a recognised animal welfare organisation."
+      ],
+      "citations": ["Section 325, BNS 2023", "Section 173, BNSS 2023 (FIR, Zero FIR)", "Section 175(3), BNSS 2023", "Lalita Kumari v. State of U.P. (2014)"]
+    },
+    {
+      "id": "file-fir",
+      "category": "fir",
+      "title": "How to file an FIR or complaint for animal cruelty",
+      "keywords": ["file fir", "complaint", "how to report", "report cruelty", "police complaint", "fir steps", "lodge fir"],
+      "summary": "Report cruelty at the nearest police station and ask for an FIR under Section 325 BNS, with Section 11 PCA where it applies. Carry your evidence, get the dog examined by a vet, and keep a copy of the FIR. You can also involve the local SPCA and the State Animal Welfare Board.",
+      "problem": "You have witnessed cruelty, killing, or poisoning and want to report it formally.",
+      "law": "Killing, poisoning, or maiming an animal is Section 325 BNS 2023 (up to 5 years), and a wide range of cruelty is Section 11 PCA Act 1960. Whoever orders the act is liable as an abettor under Section 49 BNS. A cognizable offence must be recorded as an FIR under Section 173 BNSS 2023.",
+      "action": [
+        "Gather evidence first: photos, video, witnesses, and a vet record or post-mortem.",
+        "Go to the nearest police station and ask for an FIR under Section 325 BNS (and Section 11 PCA where it applies).",
+        "Give your complaint in writing, with date, time, place, and what happened.",
+        "Collect a free copy of the FIR with its number.",
+        "Inform your SPCA, the State Board, and a recognised animal welfare organisation."
+      ],
+      "evidence": [
+        "Timestamped photos and video of the act, the animal, and the place.",
+        "A veterinary record or post-mortem report.",
+        "Names and contact details of witnesses.",
+        "Any CCTV footage and the names of suspects."
+      ],
+      "escalation": [
+        "Zero FIR at any station if the local one refuses.",
+        "Written escalation to the SP under Section 173(4) BNSS.",
+        "Magistrate under Section 175(3) BNSS.",
+        "AWBI and the State Animal Welfare Board."
+      ],
+      "citations": ["Section 325, BNS 2023", "Section 49, BNS 2023 (abetment)", "Section 11, PCA Act 1960", "Section 173, BNSS 2023"]
+    },
+    {
+      "id": "complaint-template",
+      "category": "fir",
+      "title": "Ready-to-use complaint and FIR draft (cruelty or poisoning)",
+      "keywords": ["complaint draft", "fir template", "sample complaint", "format", "application", "ready letter", "draft"],
+      "summary": "Copy this, fill in the blanks, and hand it in at the police station or send it to the SP. Keep a stamped copy. Attach your photos, video, and any vet or post-mortem report.",
+      "problem": "You want a simple written complaint you can use to report animal cruelty or poisoning.",
+      "law": "Killing, poisoning, or maiming an animal is a cognizable offence under Section 325 BNS 2023, so the police must register an FIR under Section 173 BNSS 2023, including a Zero FIR at any station. Cruelty also attracts Section 11 PCA Act 1960.",
+      "action": [
+        "To, The Station House Officer, [police station], [place]. Date: [date].",
+        "Subject: Complaint and request to register an FIR for cruelty to animals under Section 325 BNS and Section 11 PCA Act.",
+        "Sir or Madam, I, [your name], [address], [phone], state that on [date and time] at [place], [name or description of the accused] did [describe: poisoned, beat, maimed, or killed] [number and description of the animals]. Witnesses: [names and contact]. Evidence attached: [photos, video, vet or post-mortem report, CCTV].",
+        "This is a cognizable offence. I request registration of an FIR and investigation, a stamped acknowledgement, and a free copy of the FIR. Yours faithfully, [name and signature]."
+      ],
+      "evidence": ["Timestamped photos and video.", "Vet record or post-mortem report.", "Names and contact details of witnesses.", "Any CCTV footage."],
+      "escalation": [
+        "If not registered, send the same complaint to the SP or DCP under Section 173(4) BNSS by email or registered post.",
+        "Move the Magistrate under Section 175(3) BNSS with an affidavit.",
+        "Inform the State Animal Welfare Board and AWBI.",
+        "Engage an animal-welfare lawyer."
+      ],
+      "citations": ["Section 325, BNS 2023", "Section 11, PCA Act 1960", "Section 173, BNSS 2023 (FIR, Zero FIR)", "Section 175(3), BNSS 2023"]
+    },
+    {
+      "id": "puppies-mothers",
+      "category": "community",
+      "title": "Protecting puppies and nursing mother dogs",
+      "keywords": ["puppies", "pups", "nursing mother", "lactating", "newborn", "litter", "remove puppies", "mother dog"],
+      "summary": "Very young puppies and nursing mothers are not to be caught or removed until the pups are weaned. Removing or relocating them is illegal and dangerous. Keep them safe in their spot, ensure food and water, and report any threat.",
+      "problem": "Puppies or a nursing mother dog are being threatened, or someone wants to remove or relocate them.",
+      "law": "Under the ABC Rules 2023, catching is done only by the local authority or a recognised ABC organisation, and lactating mothers and unweaned puppies are not to be caught until the pups are old enough. Removing, relocating, or harming them is contrary to the ABC Rules and Section 11 PCA Act 1960, and if harm is caused, Section 325 BNS 2023.",
+      "action": [
+        "Let the mother and pups stay where they are; do not move them.",
+        "Provide food, water, and a little shelter near their spot if needed.",
+        "If anyone tries to remove or harm them, explain it is not permitted and record it.",
+        "Call the municipal body or a recognised ABC organisation, and report any threat to the police."
+      ],
+      "evidence": ["Photos or video of any attempt to remove or harm them.", "Names of those involved and any instructions given.", "Dates, times, and the location."],
+      "escalation": ["Police complaint for any cruelty or threat (Section 11 PCA, Section 325 BNS).", "Animal Welfare Committee under Rule 20(2) where the RWA is involved.", "State Animal Welfare Board and AWBI."],
+      "citations": ["ABC Rules 2023", "Section 11, PCA Act 1960", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "aggressive-rabid",
+      "category": "safety",
+      "title": "There is an aggressive or suspected-rabid dog",
+      "keywords": ["aggressive", "rabid", "rabies", "biting", "dangerous dog", "attack", "mad dog", "foaming", "euthanasia", "chasing", "barking", "menace", "threat"],
+      "summary": "Do not let anyone catch, beat, or poison the dog. Report it to municipal animal control or a recognised ABC organisation for humane handling. If anyone is bitten, wash the wound and go to hospital at once. Only the authorities may euthanise a rabid, incurably ill, or genuinely dangerous dog, after a qualified vet assesses it, strictly under the ABC Rules and PCA Act.",
+      "problem": "A dog is aggressive, has bitten someone, or may be rabid.",
+      "law": "Aggression is usually fear, territory, pain, or illness, and the lawful response is humane handling by authorities, not private harm. The ABC Rules 2023 allow euthanasia only of incurably ill or mortally wounded dogs, and of rabid dogs, diagnosed by the Local Animal Birth Control Monitoring Committee and carried out humanely by a qualified veterinarian, not in the presence of other dogs, with signed records. The Supreme Court on 19 May 2026 allowed authorities to euthanise rabid, incurably ill, or demonstrably dangerous or aggressive dogs only after assessment by qualified veterinary experts and strictly under the PCA Act, the ABC Rules, and statutory protocols. Residents, RWAs, and guards have no such power; killing a dog otherwise is Section 325 BNS.",
+      "action": [
+        "Keep people, especially children, away, and do not corner the dog.",
+        "If anyone is bitten, wash the wound with soap and running water for about 15 minutes and go to hospital for anti-rabies treatment at once.",
+        "Report the dog to municipal animal control or a recognised ABC organisation for examination and humane handling.",
+        "Do not let anyone catch, beat, or poison it; insist that only authorities handle it."
+      ],
+      "evidence": ["Notes on the dog's behaviour, location, and any bite incident.", "Photos or video from a safe distance.", "Hospital records if a person was bitten."],
+      "escalation": ["Follow up in writing with the municipal body and the ABC organisation.", "Report any private attempt to harm or poison the dog to the police (Section 325 BNS).", "State Animal Welfare Board for humane handling."],
+      "citations": ["ABC Rules 2023 (euthanasia limited to incurably ill, mortally wounded, or rabid dogs, by a qualified veterinarian)", "In Re: City Hounded By Strays, SMW(C) 5/2025, 2026 INSC 506 (SC, 19 May 2026)", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "dog-bite-person",
+      "category": "safety",
+      "title": "A person has been bitten by a dog",
+      "keywords": ["dog bite", "bitten", "rabies shot", "anti-rabies", "wound", "first aid bite", "scratch"],
+      "summary": "Wash the wound at once and get anti-rabies treatment the same day; this is what saves lives. Do not kill or beat the dog. Keeping the dog under observation actually helps confirm whether rabies treatment must continue.",
+      "problem": "Someone has been bitten or scratched by a dog and you need to know what to do.",
+      "law": "Rabies is preventable if treated promptly, which is why the priority is medical care, not harming the dog. The dog is not to be privately killed; aggression or rabies is assessed by the authorities and a qualified veterinarian under the ABC Rules 2023, and killing a dog otherwise is Section 325 BNS 2023. The ABC framework provides for catching and examining a biting or sick dog through the local body or a recognised organisation.",
+      "action": [
+        "Wash the wound with soap and running water for about 15 minutes right away, and apply an antiseptic.",
+        "Go to a hospital or doctor the same day for anti-rabies vaccination, and follow the full schedule they give; deep or severe bites may also need rabies immunoglobulin.",
+        "Note the dog and where it stays so it can be observed; if possible, have the municipal body or a recognised organisation examine it.",
+        "Do not beat, poison, or kill the dog. Report a genuinely sick or dangerous dog to the authorities for humane handling."
+      ],
+      "evidence": ["A record of the bite: date, time, place, and the dog.", "Hospital and vaccination records.", "Notes on the dog's location and behaviour for observation."],
+      "escalation": ["Follow up with the municipal body and a recognised ABC organisation for examination of the dog.", "Report any private attempt to harm the dog to the police (Section 325 BNS).", "State Animal Welfare Board for humane handling."],
+      "citations": ["ABC Rules 2023", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "sc-position-2026",
+      "category": "community",
+      "title": "What the Supreme Court order actually allows (2025-26)",
+      "keywords": ["supreme court", "2026 judgment", "sc order", "premise dogs", "highway", "institutional", "sensitive premises", "relocation", "euthanasia", "shelter", "caretaker", "nalsar", "section 21", "article 21"],
+      "summary": "For ordinary streets and neighbourhoods the ABC Rules 2023 still apply: sterilise, vaccinate, return to the same place, and facilitate feeding. The Supreme Court order lets authorities relocate dogs to shelters only from listed sensitive premises, and only by following the law. It gives residents, RWAs, and guards no power to catch, relocate, beat, or kill any dog.",
+      "problem": "People are seizing, relocating, or harming dogs claiming the Supreme Court ordered it.",
+      "law": "In In Re: City Hounded By Strays, Kids Pay Price, SMW(C) No. 5/2025, neutral citation 2026 INSC 506 (19 May 2026), the Court held that dogs occupying sensitive or restricted premises, namely educational institutions, hospitals, sports complexes, airports, bus stands and depots, and railway stations, are not street or community dogs entitled to re-release there under Rule 7(2) and Rule 11(19) of the ABC Rules 2023, and are to be removed, sterilised, vaccinated, and kept in shelters. It upheld the AWBI Standard Operating Procedures of 27 November 2025, which extend to other high-footfall public places such as parks, religious sites, and tourist locations. It rooted public safety in Article 21 and placed compliance under all High Courts. For all other areas the standard sterilise-vaccinate-return framework and the duty to facilitate feeding continue.",
+      "action": [
+        "Passing through is not occupying. A dog seen on a road, highway, or near such a place is not a premise dog; the order targets dogs that occupy the listed premises, and authorities act there, not private persons.",
+        "Not every dog must go: the Court allowed welfare groups to keep and feed dogs within an educational campus where they formally take responsibility for any bite incident, so accountable and peaceful caretaking is an alternative to removal.",
+        "Removal is lawful only by authorities, humanely, after assessment by a qualified vet, by trained catchers in proper vehicles, to shelters of prescribed standard staffed by trained personnel, with sterilisation, vaccination, and records, per the ABC Rules and the SOPs. Without these it is unlawful.",
+        "Ordinary streets and residential areas, including gated societies, stay under the ABC Rules: sterilise, vaccinate, return, and facilitate feeding. No one may catch, relocate, beat, or kill dogs there."
+      ],
+      "evidence": [],
+      "escalation": [
+        "Report any private seizure or harm to the police (Section 325 BNS, Section 11 PCA).",
+        "Raise SOP and shelter-standard violations with the municipal body and the State Animal Welfare Board.",
+        "High Courts monitor compliance; a lawyer can approach the monitoring bench against misuse."
+      ],
+      "citations": ["In Re: City Hounded By Strays, SMW(C) 5/2025, 2026 INSC 506 (SC, 19 May 2026)", "Rule 7(2) and Rule 11(19), ABC Rules 2023", "AWBI SOPs dated 27 November 2025", "Article 21, Constitution"]
+    },
+    {
+      "id": "offences-sections",
+      "category": "cruelty",
+      "title": "Which law jails people who harm dogs or harass feeders",
+      "keywords": ["section", "punishment", "jail", "which law", "fir section", "abetment", "intimidation", "accountability", "who is liable", "sc order defence"],
+      "summary": "Quick reference. Killing, poisoning, or maiming a dog is up to 5 years. Whoever orders it is equally liable. Threatening feeders, cruelty, false cases, and mob drives are all offences. Saying it was done under the Supreme Court order is no defence.",
+      "problem": "You need the exact sections to cite against people removing, beating, or poisoning dogs, or harassing feeders.",
+      "law": "Killing, poisoning, maiming, or rendering useless any animal: Section 325 BNS 2023, up to 5 years, cognizable, Magistrate of the First Class. Whoever orders or instigates it is an abettor under Section 49 BNS with the same punishment, and a shared plan is criminal conspiracy under Section 61 BNS. Cruelty such as beating or denying food, water, or shelter: Section 11 PCA Act 1960. Threatening a feeder: criminal intimidation under Section 351 BNS (up to 2 years, or up to 7 for threats of death or grievous hurt); causing hurt: Section 115 BNS; to a woman, outraging modesty under Section 74 BNS or insulting modesty under Section 79 BNS. A false complaint: false information under Section 217 BNS and false charge under Section 248 BNS; doctored evidence: Section 228 BNS; defamation: Section 356 BNS. A mob of five or more: unlawful assembly and rioting under Sections 189 to 191 BNS, with every member liable under Section 190 BNS.",
+      "action": [
+        "Killing or poisoning: FIR under Section 325 BNS, and name whoever ordered it under Section 49 BNS.",
+        "Beating or starving: Section 11 PCA Act, with Section 325 BNS if injured.",
+        "Threats or a false case against you: Sections 351, 217, 248 BNS, all of which let you set the law in motion.",
+        "Make clear that the Supreme Court order empowers only authorities, only for sensitive premises, and only after a vet's assessment; it gives no resident, RWA, or guard any power to act."
+      ],
+      "evidence": ["Photos, video, screenshots, and timestamps.", "Names of those who acted and those who ordered it.", "Vet records or a post-mortem report.", "CCTV footage and witnesses."],
+      "escalation": ["Zero FIR if refused; SP under Section 173(4) BNSS.", "Magistrate under Section 175(3) BNSS.", "State Animal Welfare Board and AWBI.", "Animal-welfare lawyer; High Court for repeated misuse."],
+      "citations": ["Section 325, BNS 2023", "Section 49, BNS 2023 (abetment)", "Section 61, BNS 2023 (conspiracy)", "Section 351, BNS 2023", "Sections 217, 248, 228, 356, BNS 2023", "Sections 189 to 191, BNS 2023"]
+    },
+    {
+      "id": "misinformation",
+      "category": "misinfo",
+      "title": "Fake dog-attack news or a hate campaign against community dogs",
+      "keywords": ["fake news", "rumour", "misinformation", "hate", "social media", "calls to kill", "whatsapp", "viral", "false"],
+      "summary": "Do not spread it or react with abuse. Preserve the posts as evidence, report them to the platform, and report incitement to violence or cruelty to the police. Calls to poison or kill dogs can attract Section 325 with Section 49 BNS, and threats attract Section 351 BNS. Counter with facts: sterilisation, not killing, is the lawful approach.",
+      "problem": "Someone is spreading false dog-attack stories, running a hate campaign, or calling for community dogs to be removed, poisoned, or killed.",
+      "law": "Calls to kill, poison, or remove dogs can amount to abetment of an offence under Section 325 BNS 2023 read with Section 49 BNS, and threats to an individual are criminal intimidation under Section 351 BNS; content promoting enmity or public mischief may attract other BNS provisions. Sterilisation and vaccination under the ABC Rules 2023, not killing or mass removal, is the lawful method of managing community dogs.",
+      "action": [
+        "Do not delete or argue abusively. Screenshot the posts with the account name, date, time, and link.",
+        "Report the content to the platform, and where there is a call for violence, to the police and the cyber cell.",
+        "Share calm, factual information: the ABC Rules 2023, designated feeding, and how sterilisation reduces conflict.",
+        "If a specific person is threatened, advise them to file a police complaint citing Section 351 BNS."
+      ],
+      "evidence": ["Screenshots with usernames, timestamps, and links.", "Any messages calling for violence or poisoning.", "A list of where the content was posted and shared."],
+      "escalation": ["Police and cyber-cell complaint where there is incitement to violence or cruelty.", "Report to the State Animal Welfare Board and AWBI.", "A lawyer can advise on criminal intimidation or defamation where individuals are targeted."],
+      "citations": ["Section 325, BNS 2023", "Section 49, BNS 2023", "Section 351, BNS 2023", "ABC Rules 2023"]
+    },
+    {
+      "id": "killed-a-child-misinfo",
+      "category": "misinfo",
+      "title": "A viral a dog killed a child or an old man post is being used to demand killing",
+      "keywords": ["dog killed child", "viral", "fake", "old man", "panic", "demand killing", "fact check", "rumour", "attack video"],
+      "summary": "Bites and rabies are real and must be taken seriously, but the lawful answer is veterinary care, vaccination, and the ABC programme by authorities, never a mob killing dogs. Verify before sharing. Spreading a false or doctored claim can be defamation and false information, and inciting people to kill dogs is a punishable offence.",
+      "problem": "A viral or unverified claim that a dog killed or seriously hurt a child or an elderly person is being used to demand that dogs be poisoned, beaten, or removed.",
+      "law": "Dog bites and rabies are genuine public-health concerns, and the law addresses them through sterilisation, vaccination, and humane handling by the authorities under the ABC Rules 2023, not through private killing. Spreading a claim known to be false, or an edited or old, misattributed video, can be defamation under Section 356 BNS 2023, and giving the police a false report is Section 217 BNS. Inciting others to poison, beat, or kill dogs is abetment under Section 49 read with Section 325 BNS, and a crowd of five or more acting on it is an unlawful assembly and rioting under Sections 189 to 191 BNS, with every member liable under Section 190 BNS.",
+      "action": [
+        "Verify before you share or act: check the date, place, and source; many such posts are old, edited, or from elsewhere.",
+        "Do not let fear become a mob. If there is a genuine bite or a sick dog, report it to the municipal body or a recognised ABC organisation.",
+        "Counter calmly with facts: sterilisation and vaccination, not killing, is the lawful and effective method.",
+        "Report calls for violence to the platform, the cyber cell, and the police; report doctored or false claims for defamation and false information."
+      ],
+      "evidence": ["Screenshots of the post and the calls for violence, with usernames, dates, and links.", "Proof the claim or video is false, old, or misattributed.", "A record of where it was shared."],
+      "escalation": ["Police and cyber-cell complaint for incitement and false information.", "Defamation action where a person or feeders are targeted.", "Report to the State Animal Welfare Board and AWBI.", "High Court through a lawyer if a drive against dogs follows."],
+      "citations": ["ABC Rules 2023", "Section 356, BNS 2023 (defamation)", "Section 217, BNS 2023 (false information)", "Section 49 with Section 325, BNS 2023", "Sections 189 to 191, BNS 2023"]
+    },
+    {
+      "id": "media-menace-news",
+      "category": "misinfo",
+      "title": "A newspaper or local report is portraying our dogs as a menace",
+      "keywords": ["newspaper", "news", "media", "article", "press", "menace", "threat to public", "planted news", "report against dogs", "headline", "journalist", "nuisance"],
+      "summary": "A menace news item does not authorise anyone to catch, relocate, beat, or kill any dog. Treat it as pressure, not law. Answer it with facts and a right of reply, push the panchayat or municipal body for sterilisation and vaccination, which is the lawful fix, and act only if the piece turns false or calls for harm.",
+      "problem": "Someone is getting street-dog menace or dangerous-dog pieces printed to pressure authorities into removing or culling community dogs.",
+      "law": "Removal is lawful only by the authorities, only from the listed sensitive premises, and only after a qualified veterinary assessment, under the Supreme Court order of 19 May 2026 and the ABC Rules 2023; for ordinary streets and neighbourhoods the rule is still sterilise, vaccinate, return, and facilitate feeding. A news report changes none of this and gives residents, an RWA, or a paper no power to act. If a piece carries a claim known to be false, or an old or misattributed attack photo, that can be defamation under Section 356 BNS 2023; a false report to the police is Section 217 BNS; and content urging people to poison or kill dogs is abetment under Section 49 read with Section 325 BNS. The Press Council of India can take up a complaint of unfair or false reporting against a newspaper and can warn, admonish, or censure it.",
+      "action": [
+        "Do not panic. A press cutting is not an order, and no one may catch, relocate, or harm a dog because of it.",
+        "Engage the cause, not just the article: write to the Gram Panchayat or municipal body asking for sterilisation and vaccination of the area's dogs under the ABC Rules, the lawful step that actually reduces roaming and chasing.",
+        "Send a calm, factual letter to the editor with the ABC framework and the real limits of the Supreme Court order, and ask for a balanced follow-up.",
+        "If the piece is false or defamatory, or calls for dogs to be harmed, complain to the Press Council of India and, where it incites harm, to the police; preserve the cutting."
+      ],
+      "evidence": ["The cutting or clipping, with the paper's name and date.", "Proof the dogs are sterilised, vaccinated, and peaceful: ear-notch photos, records, resident statements.", "Any false claim or misused photo in the piece.", "Your letter to the editor and any reply."],
+      "escalation": ["Right of reply to the newspaper, and a complaint to the Press Council of India for unfair or false reporting.", "Representation to the Gram Panchayat or municipal commissioner and the State Animal Welfare Board for sterilisation and vaccination.", "Police and cyber-cell complaint where the content incites harm or is a false report.", "High Court through a lawyer if a removal or culling drive follows."],
+      "citations": ["In Re: City Hounded By Strays, 2026 INSC 506 (SC, 19 May 2026)", "ABC Rules 2023", "Section 356, BNS 2023 (defamation)", "Section 217, BNS 2023 (false information)", "Section 49 with Section 325, BNS 2023"]
+    },
+    {
+      "id": "natural-behaviour-not-aggression",
+      "category": "behaviour",
+      "title": "Barking, chasing vehicles, or guarding is being called aggression",
+      "keywords": ["chasing", "chase", "bike", "scooter", "bicycle", "cycle", "vehicle", "barking", "bark", "howl", "howling", "guardian", "territorial", "natural behaviour", "threat to public", "aggressive", "dangerous", "label", "provocation"],
+      "summary": "Barking at strangers, howling, and chasing bikes are normal territorial behaviour, not legal aggression. They are not grounds for removing or killing a dog. Genuine danger or rabies is a finding for a qualified vet and the authorities, never a label fixed by residents or a newspaper.",
+      "problem": "People are calling a dog's ordinary territorial behaviour, like barking, howling, or chasing vehicles, aggression and a threat to the public.",
+      "law": "Under the ABC Rules 2023 and the Supreme Court order of 19 May 2026, only a qualified veterinary expert and the authorities may assess a dog as rabid or demonstrably dangerous; ordinary behaviour does not meet that test and is not a lawful basis to remove, relocate, or kill a dog. Fixing a false aggressive or dangerous label and feeding it to the police to make them act is false information under Section 217 BNS 2023, and harming the dog on that basis is Section 325 BNS.",
+      "action": [
+        "Understand the behaviour: dogs bark and chase to guard territory and from fear of fast movement, not from malice, and most of it stops once the trigger passes.",
+        "Reduce the triggers: sterilisation lowers roaming and territorial chasing, so push for ABC in the area, and ask riders to slow down rather than speed up or kick.",
+        "Counter the label in writing: insist that any claim a dog is dangerous be assessed by the municipal veterinary officer, not declared by residents or a newspaper.",
+        "Keep proof the dog is calm day to day, and report any attempt to remove or harm it on a false aggression basis."
+      ],
+      "evidence": ["Videos showing the dog's normal, calm behaviour.", "Statements from residents who know the dog.", "Sterilisation and vaccination records.", "Any false aggressive claim, notice, or news item."],
+      "escalation": ["Demand a veterinary assessment through the municipal body before any action.", "Animal Welfare Committee under Rule 20(2) where an RWA is pushing it.", "Police complaint for a false report or any harm to the dog.", "High Court through a lawyer if removal is attempted."],
+      "citations": ["ABC Rules 2023", "In Re: City Hounded By Strays, 2026 INSC 506 (SC, 19 May 2026)", "Section 217, BNS 2023 (false information)", "Section 325, BNS 2023"]
+    },
+    {
+      "id": "barking-night",
+      "category": "behaviour",
+      "title": "Dogs are barking at night and neighbours cannot sleep",
+      "keywords": ["barking", "bark", "night", "noise", "sleep", "cannot sleep", "howling", "nuisance", "disturbance", "loud", "complaint", "nighttime", "community dog", "stray dog", "territorial", "stranger", "shadow", "guarding"],
+      "summary": "This covers community (street) dogs as much as pet dogs. Dogs almost always bark for a reason people do not notice, such as a stranger or animal moving in the dark, a shadow, or an unfamiliar sound or scent, and it is communication, not aggression. Barking is not, by law, a ground to remove, relocate, or kill a dog. The lawful and effective fix is sterilisation and vaccination, together with reducing the triggers.",
+      "problem": "Community dogs or pet dogs bark at night, residents complain it stops them sleeping, and some want the dogs removed, relocated, or silenced.",
+      "law": "Barking is natural canine behaviour, and the Animal Welfare Board of India circular dated 26 February 2015 states it cannot be cited as a ground to ban or remove dogs. This matters most for community dogs: under the ABC Rules 2023 a community dog may be picked up only for sterilisation and vaccination and must be returned to the same place (Rule 11(19)), so it cannot be taken away for barking. No law allows relocating, harming, or killing a dog because it barks; doing so is mischief by killing or maiming an animal under Section 325 BNS 2023 (up to 5 years), and cruelty under Section 11 PCA Act 1960. For an owned dog, the owner is responsible for managing the barking; abandoning the dog is itself an offence under Section 11 PCA Act.",
+      "action": [
+        "Understand the reason. Dogs bark mainly to alert and to guard their territory, and a street dog treats its lane as that territory. Their night vision, hearing, and sense of smell pick up what people cannot, so a stranger or animal moving in the dark, a shadow, or an unfamiliar sound is enough, and the barking usually stops once the trigger passes. This is recognised canine behaviour, not malice.",
+        "Push for the real fix: ask the municipal body or RWA, in writing, to sterilise and vaccinate the area's dogs. A stable, vaccinated colony is calmer, and sterilisation sharply cuts mating-season howling, roaming, the influx of new dogs, and the night fights between them.",
+        "Reduce the triggers: feed at fixed times so hunger does not drive barking, keep shared lighting steady rather than flickering, and ask residents not to chase, tease, or startle the dogs at night.",
+        "For an owned dog, ask the owner to have a vet check for pain, illness, or distress, and to not leave it alone outside at night; the dog cannot be dumped or harmed.",
+        "If a real disturbance continues, raise it with the RWA or municipal body as a civic matter to be managed reasonably, but never let anyone poison, harm, or relocate a dog over barking."
+      ],
+      "evidence": ["Notes on when and why the barking happens, such as a new guard or stranger, other animals, vehicles, lights, feeding gaps, or mating season.", "Whether the dogs are sterilised and vaccinated.", "Any written request you have made for sterilisation and vaccination.", "Any threat to harm or remove the dogs."],
+      "escalation": ["Representation to the municipal body and State Animal Welfare Board for sterilisation and vaccination.", "Animal Welfare Committee under Rule 20(2) where an RWA is pushing removal.", "Police complaint if anyone harms, poisons, or removes a dog over barking (Section 325 BNS)."],
+      "citations": ["AWBI Circular dated 26 February 2015", "Rule 11(19), ABC Rules 2023", "Section 325, BNS 2023", "Section 11, PCA Act 1960"]
+    },
+    {
+      "id": "cats-rwa-ban",
+      "category": "rwa",
+      "title": "Our society cites fear of cats to stop feeding or ban them",
+      "keywords": ["cat", "cats", "feline", "kitten", "ban cats", "fear of cats", "afraid of cats", "rwa cats", "society cats", "pet cat", "community cat", "feeding cats", "no cats"],
+      "summary": "Fear or dislike of cats is not a lawful ground to ban them or to stop feeding. A society cannot ban residents from keeping pet cats, and cannot prohibit feeding community cats. The most it may do is regulate where and when feeding happens, not forbid it.",
+      "problem": "Your RWA or AOA says residents are afraid of cats and is using that to stop community-cat feeding or to ban keeping cats.",
+      "law": "Cats are animals protected by the Prevention of Cruelty to Animals Act 1960; harming or killing one is an offence under Section 11 PCA and Section 325 BNS 2023. The Animal Welfare Board of India circular dated 26 February 2015, and the municipal guidelines that follow it, state that Residents' Welfare Associations and Apartment Owners Associations cannot ban the keeping of pet dogs or cats, and cannot stop the feeding of community animals; feeding is a fundamental duty of compassion under Article 51A(g) of the Constitution, upheld in AWBI v. Nagaraja (2014). Unease or fear is not a legal basis for a ban, and a general body cannot adopt an illegality even by a full majority, so a banning resolution is void. A society may only regulate feeding, by fixing spots and times away from children's play areas and entrances, not prohibit it. Threatening a cat owner or feeder can be criminal intimidation under Section 351 BNS.",
+      "action": [
+        "Meet the fear with a workable plan, not a fight: offer fixed feeding spots and times away from play areas, lobbies, and staircases, and keep those spots clean.",
+        "Ask the RWA, in writing, to show the law that lets it ban cats or cat feeding, and point them to the AWBI circular dated 26 February 2015; a banning resolution has no legal force.",
+        "Suggest sterilisation and vaccination of the community cats through the municipal body, which steadies their numbers and calms genuine worries.",
+        "If threatened or harassed, file a police complaint citing Section 351 BNS, and report any cruelty to a cat under Section 11 PCA and Section 325 BNS."
+      ],
+      "evidence": ["The resolution, notice, or message banning cats or cat feeding, or citing fear.", "Any threats or harassment, with dates and names.", "Proof you feed responsibly and clean up.", "Your written objection and any reply."],
+      "escalation": ["Complaint to the State Animal Welfare Board and AWBI.", "Police complaint for intimidation or any cruelty to the cats.", "Consumer or civil forum, or the cooperative-societies registrar, against an unlawful bye-law.", "A lawyer for persistent harassment."],
+      "citations": ["AWBI Circular dated 26 February 2015", "Section 11, PCA Act 1960", "Section 325, BNS 2023", "Section 351, BNS 2023 (criminal intimidation)", "Article 51A(g), Constitution; AWBI v. Nagaraja (2014)"]
+    },
+    {
+      "id": "cats-cruelty",
+      "category": "cruelty",
+      "title": "Cruelty to a cat, or harming community cats",
+      "keywords": ["cat", "cats", "feline", "kitten", "cat poisoned", "cat killed", "cat abuse", "hurt cat", "community cat", "stray cat", "kill cat"],
+      "summary": "Cats have the same legal protection as any other animal. Poisoning, beating, or killing a cat is a crime, and community cats can be fed and, like community dogs, sterilised and vaccinated but not relocated. Document it, get the cat to a vet, and file a complaint.",
+      "problem": "A cat or a community cat is being poisoned, beaten, injured, or driven away.",
+      "law": "Cats are animals under the Prevention of Cruelty to Animals Act 1960, so cruelty such as beating or starving is an offence under Section 11 PCA, and killing, poisoning, or maiming a cat is Section 325 BNS 2023 (up to 5 years), which is cognizable. Whoever orders the act is liable as an abettor under Section 49 BNS. Feeding community cats is lawful compassion under Article 51A(g) of the Constitution and AWBI v. Nagaraja (2014); welfare and municipal guidelines treat community cats like community dogs, allowing sterilisation and vaccination but not relocation. Harassing a cat feeder can be criminal intimidation under Section 351 BNS.",
+      "action": [
+        "Get the cat to a vet at once. Use Find a Vet in this app.",
+        "Preserve evidence: photos, video, and, for a suspected poisoning, the body and any bait for a post-mortem.",
+        "File a complaint or FIR citing Section 325 BNS and Section 11 PCA, and name anyone who ordered it under Section 49 BNS.",
+        "Report to your SPCA, the State Animal Welfare Board, and a recognised animal welfare organisation."
+      ],
+      "evidence": ["Timestamped photos and video of the act and the injuries.", "A veterinary record or post-mortem report.", "Samples or photos of any suspected bait.", "Names of those involved and any witnesses."],
+      "escalation": ["Zero FIR at any station if refused; the SP under Section 173(4) BNSS.", "A Magistrate can order investigation under Section 175(3) BNSS.", "State Animal Welfare Board and AWBI.", "Animal-welfare lawyer for serious or repeat cruelty."],
+      "citations": ["Section 11, PCA Act 1960", "Section 325, BNS 2023", "Section 49, BNS 2023 (abetment)", "Section 351, BNS 2023", "Article 51A(g), Constitution; AWBI v. Nagaraja (2014)"]
+    },
+    {
+      "id": "dog-behaviour",
+      "category": "behaviour",
+      "title": "Understanding dog behaviour and preventing bites",
+      "keywords": ["aggression", "fear", "territorial", "body language", "bite prevention", "coexistence", "why dogs bite", "growling", "chasing", "barking", "howling", "menace", "threat", "guardian"],
+      "summary": "Most community dogs are not dangerous. Aggression is usually fear, territory, pain, or protecting pups. Common types are fear-based, territorial, resource guarding, and maternal. Reading body language and avoiding a few common human mistakes prevents almost all bites.",
+      "problem": "You want to understand why dogs behave aggressively and how to coexist safely.",
+      "law": "",
+      "action": [
+        "Read the warning signs: a stiff body, raised hackles, hard stare, low growl, or tucked tail mean give the dog space.",
+        "Avoid the common mistakes: staring into the eyes, cornering, sudden movements, running, reaching over the head, or disturbing pups, food, or a sleeping dog.",
+        "Move slowly, turn slightly sideways, avoid direct eye contact, and let the dog approach you rather than reaching for it.",
+        "Never tease, chase, or throw things. Teach children to stay calm and still around dogs.",
+        "Feeding at fixed spots and times and getting dogs sterilised reduces tension and roaming, which lowers conflict."
+      ],
+      "evidence": [],
+      "escalation": [],
+      "citations": []
+    },
+    {
+      "id": "first-aid",
+      "category": "firstaid",
+      "title": "Emergency first-aid for an injured animal (offline reference)",
+      "keywords": ["first aid", "injured", "accident", "bleeding", "heat stroke", "dehydration", "transport", "emergency", "hit by car"],
+      "summary": "This is basic first response only and does not replace veterinary treatment. Always call a veterinarian. Keep yourself safe from bites, control bleeding with gentle pressure, keep the animal calm and warm, and get to a vet fast. Use the Find a Vet and Vet Report features in this app.",
+      "problem": "An animal is injured, hit by a vehicle, collapsed, or in distress and you need to act before reaching a vet.",
+      "law": "",
+      "action": [
+        "Stay safe: a hurt animal may bite from pain or fear. Approach slowly and sideways, and use a blanket or cloth to gently cover or lift it if needed.",
+        "Bleeding: press a clean cloth firmly on the wound to slow the bleeding. Do not pull out any object stuck in a wound.",
+        "Suspected poisoning: do not wait and do not give home remedies. Get to a vet at once and carry a sample of the suspected substance.",
+        "Heat stroke: move to shade, wet the paws, belly, and ears with room-temperature water, not ice-cold, offer drinking water, and go to a vet.",
+        "Dehydration or weakness: offer small amounts of water, keep the animal cool and calm, and seek a vet.",
+        "Transport: keep the animal flat and still on a firm surface or in a box, support the spine, minimise movement, and keep it warm."
+      ],
+      "evidence": [],
+      "escalation": [],
+      "citations": []
+    }
+  ]
+}
