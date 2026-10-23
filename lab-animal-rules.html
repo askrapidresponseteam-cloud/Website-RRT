@@ -69,6 +69,7 @@ textarea.lo-in{height:auto;min-height:96px;padding:12px 14px;font-size:15px;font
 .lo-pill{display:inline-flex;align-items:center;min-height:var(--sg-chip-h);padding:0 14px;border:1px solid var(--sg-line-strong);background:var(--sg-paper);font:inherit;font-size:14px;font-weight:600;color:var(--lo-mid);cursor:pointer}
 .lo-pill[aria-pressed=true]{background:var(--sg-wash);border-color:var(--sg-accent);color:var(--sg-stop-text)}
 .lo-checks{display:grid;gap:2px}
+.lo-k[hidden],.lo-checks[hidden]{display:none}
 .lo-checks label{display:flex;gap:12px;align-items:flex-start;padding:8px 0;font-size:15px;line-height:1.45;color:var(--lo-mid);cursor:pointer}
 .lo-checks input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--sg-accent);flex:none}
 .lo-checks b{color:var(--lo-ink)}
@@ -169,7 +170,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
       <div class="body">
         <span class="lo-k"><span data-lang="en">I am</span><span data-lang="hi">मैं</span></span>
         <div class="lo-pills" id="loRoles" role="group" aria-label="I am"></div>
-        <span class="lo-k"><span data-lang="en">My points</span><span data-lang="hi">मेरी बातें</span></span>
+        <span class="lo-k" id="loPointsK"><span data-lang="en">My points</span><span data-lang="hi">मेरी बातें</span></span>
         <div class="lo-checks" id="loPoints"></div>
         <label class="lo-k" for="loOwn"><span data-lang="en">A line in your own words</span><span data-lang="hi">अपने शब्दों में एक पंक्ति</span></label>
         <textarea class="lo-in" id="loOwn" maxlength="600" rows="3"></textarea>
@@ -315,6 +316,60 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   function T(en, hi) { return lang() === 'hi' ? hi : en; }
   var isPhone = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
 
+  // ---- the four letters ------------------------------------------------
+  // Officials who get the same email from hundreds of senders treat it as one
+  // copy. So each visit gets one of four letters at random (never the one this
+  // browser sent last), and after "Yes, I sent it" the next person on the same
+  // phone gets another. The letter shown under "Read the letter" is always the
+  // one that is sent. The first three are fixed texts (English only); the
+  // fourth is built from "Make it yours" (role, points, own words) and is the
+  // one used for a Hindi letter. The role line and the person's own words are
+  // added to every letter.
+  var LETTERS = [
+    { id: 'oversight',
+      subject: 'Objection to the Draft Animal Experimentation Rules, 2026: Demand for Immediate Withdrawal',
+      paras: [
+        'I strongly object to the proposed Prevention of Cruelty to Animals (Control and Supervision of Experiment, Breeding and Trading of Laboratory Animals) Rules, 2026 and demand their immediate withdrawal.',
+        'The Prevention of Cruelty to Animals Act, 1960, exists to prevent unnecessary pain and suffering to animals.',
+        'The Draft Rules risk undermining these safeguards by reducing the role of the central Committee in approving certain experiments and allowing Institutional Animal Ethics Committees (IAECs) to decide on them instead. These committees operate within the very establishments conducting the experiments. This raises a fundamental question: why should an institution be allowed to exercise reduced-independence oversight over experiments that it conducts itself?',
+        'Under Rule 11(3), experiments classified as mild or moderate would not be referred to the central Committee for approval. This is not merely an administrative change. Reduced independent scrutiny increases the risk of conflicts of interest, inadequate oversight and avoidable animal suffering. An experiment being classified as mild or moderate does not mean that the animal experiences no pain, distress or lasting harm.',
+        'Rules framed under the PCA Act must uphold its purpose, not weaken the protections it seeks to establish. The proposed dilution of independent oversight is a serious step backwards for animal welfare and accountability.',
+        'I demand the immediate withdrawal of the Draft Animal Experimentation Rules, 2026. These Rules must not be allowed to weaken the protection of animals under the PCA Act, 1960.',
+      ] },
+    { id: 'sourcing',
+      subject: 'Draft Animal Experimentation Rules, 2026 Must Be Withdrawn',
+      paras: [
+        'I strongly oppose the Draft Animal Experimentation Rules, 2026 and demand their immediate withdrawal.',
+        'Rule 21(2) raises serious concerns by permitting certain categories of animals to be procured from non-registered establishments or open markets under specified conditions when animals are unavailable from registered breeders or traders. This creates a troubling risk: animals may enter the laboratory system through supply chains with weaker traceability and oversight.',
+        'Where did these animals come from? Can their origins be verified? Have their health histories and movements been properly documented? Were they transported and handled humanely? These are essential questions, not minor administrative details. Without reliable traceability and effective enforcement, there is a greater risk of animals being sourced through poorly regulated channels, compromising disease surveillance and biosecurity.',
+        'The consequences extend beyond animal suffering. Poorly controlled sourcing, transport and quarantine can increase the risk of zoonotic disease transmission. At a time when emerging infectious diseases pose serious global concerns, India should not weaken safeguards that protect both animal and human health.',
+        'The PCA Act, 1960, is intended to prevent unnecessary pain and suffering. Permitting broader sourcing routes, even with stated conditions, raises serious concerns about whether animals can be adequately protected and their origins independently verified in practice.',
+        'Animals must not become invisible and untraceable once they enter the laboratory supply chain. Nor should public health be exposed to avoidable risks because adequate safeguards are not maintained.',
+        'The Draft Animal Experimentation Rules, 2026 must be withdrawn immediately. Animal welfare and public health cannot be put at risk in this manner.',
+      ] },
+    { id: 'suffering',
+      subject: 'Withdraw the Draft Animal Experimentation Rules, 2026',
+      paras: [
+        'The proposed Draft Animal Experimentation Rules, 2026 are deeply troubling, unjustifiable and a serious step backwards as a society. They must be withdrawn immediately.',
+        'Animal experimentation can subject living beings to pain, fear, distress, invasive procedures and lasting harm. This is precisely why independent oversight and clear, enforceable safeguards are essential. The Prevention of Cruelty to Animals Act, 1960, addresses the need to ensure that animals are not subjected to unnecessary pain or suffering before, during or after experiments.',
+        'The Draft Rules risk weakening these protections by reducing central scrutiny of certain experiments and shifting more decisions to institutional committees. They also raise concerns about whether important safeguards against unnecessary experiments and avoidable suffering will remain sufficiently strong and enforceable.',
+        'An experiment should never be approved merely because an institution considers it useful or convenient. The availability of alternatives, the necessity of using animals, the severity of the procedure and the suffering involved must be taken seriously. Where a suitable alternative exists, animals should not be made to suffer simply because an institution chooses to proceed with animal testing.',
+        'Animal welfare does not end when an experiment is completed. Animals may continue to experience pain, disability, distress or other lasting consequences. Their care and treatment after experimentation must be taken as seriously as the experiment itself.',
+        'These are not technicalities. They concern whether the law will meaningfully protect animals or leave them more vulnerable to institutional decisions.',
+        'The Draft Rules are unacceptable because they risk diluting safeguards intended to prevent unnecessary animal suffering.',
+        'I demand the immediate withdrawal of the Draft Animal Experimentation Rules, 2026.',
+      ] },
+    { id: 'points' },   // built by build() from ROLES and POINTS below
+  ];
+  function roll(avoid) {
+    var n = LETTERS.length, i;
+    if (avoid >= 0 && avoid < n) { i = Math.floor(Math.random() * (n - 1)); if (i >= avoid) i++; }
+    else i = Math.floor(Math.random() * n);
+    return i;
+  }
+  var tpl = roll(parseInt(store.get('lo-tpl'), 10));
+  function fixedLetter(l) { return l !== 'hi' && LETTERS[tpl].id !== 'points' ? LETTERS[tpl] : null; }
+
   // ---- the letter ---------------------------------------------------------
   // Two wordings for most lines, picked once per browser: letters from many
   // people do not arrive as one copy, and each still says the same things.
@@ -359,6 +414,8 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   var state = { role: '', points: POINTS.map(function (p) { return p.id; }), letterLang: null, edited: false };
 
   function subject(l) {
+    var f = fixedLetter(l);
+    if (f) return f.subject;
     return l === 'hi' ? 'प्रयोगशाला पशु नियम 2026 के मसौदे (G.S.R. 864(E)) पर आपत्ति'
       : 'Objection to Draft Laboratory Animals Rules 2026 (G.S.R. 864(E))';
   }
@@ -367,7 +424,14 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     var role = ROLES.filter(function (r) { return r.id === state.role; })[0];
     var pts = POINTS.filter(function (p) { return state.points.indexOf(p.id) >= 0; });
     var out = [];
-    if (l === 'hi') {
+    var f = fixedLetter(l);
+    if (f) {
+      out.push('To,', 'The Member Secretary, CCSEA', '', f.paras[0]);
+      if (role) out.push('', pick(role.len, 1));
+      f.paras.slice(1, -1).forEach(function (p) { out.push('', p); });
+      if (own) out.push('', own);
+      out.push('', f.paras[f.paras.length - 1], '', 'Regards,', name || '[Your name]', city || '[Your city]');
+    } else if (l === 'hi') {
       out.push('सेवा में', 'सचिव, पशुपालन और डेयरी विभाग, भारत सरकार', 'द्वारा: सदस्य सचिव, CCSEA', '',
         'महोदय/महोदया,', '',
         '6 अक्टूबर 2026 को अधिसूचित पशु क्रूरता निवारण (प्रयोगशाला पशुओं पर प्रयोग, प्रजनन और व्यापार का नियंत्रण और पर्यवेक्षण) नियम, 2026 के मसौदे (G.S.R. 864(E)) पर मेरी आपत्ति नीचे दिए गए कारणों से दर्ज की जाए।');
@@ -395,6 +459,9 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   function letter() { return state.edited ? $('loLetter').value : build(letterLang()); }
   function refresh() {
     if (!state.edited) $('loLetter').value = build(letterLang());
+    // "My points" only shapes the built letter, so it shows only for that one.
+    var pts = !fixedLetter(letterLang());
+    $('loPointsK').hidden = !pts; $('loPoints').hidden = !pts;
     document.querySelectorAll('.lo-seg button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.l === letterLang() ? 'true' : 'false'); });
   }
 
@@ -431,6 +498,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   function send(way) {
     if (!ready()) return;
     var s = subject(letterLang()), b = letter();
+    store.set('lo-tpl', String(tpl));   // the next visit gets a different letter
     fillCopy();
     if (way === 'copy') { showAfter(true); copy(b, T('Letter copied. Paste it into a new email.', 'पत्र कॉपी हो गया। इसे नए ईमेल में चिपकाएँ।')); return; }
     if (way === 'otherapp') way = 'app';
@@ -499,6 +567,8 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     var first = store.get('lo-sent') !== '1';
     store.set('lo-sent', '1');
     $('loAfter').hidden = true; $('loThanks').hidden = false;
+    // Sent: anyone else sending from this phone gets a different letter.
+    if (!state.edited) { tpl = roll(tpl); store.set('lo-tpl', String(tpl)); refresh(); }
     $('loThanks').scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (first && window.fetch) {
       fetch(API + '/sent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
@@ -557,7 +627,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   paintAll();
   loadCount();
   setInterval(paintDates, 1000);
-  window.RRTObjection = { build: build, subject: subject, ways: WAYS, to: TO, state: state, setCount: function (n) { count = n; paintCount(); } };
+  window.RRTObjection = { build: build, subject: subject, letters: LETTERS, letter: function (i) { if (i != null) { tpl = i; refresh(); } return tpl; }, ways: WAYS, to: TO, state: state, setCount: function (n) { count = n; paintCount(); } };
 })();
 </script>
 <!-- rr:footer -->

@@ -39,6 +39,19 @@ for (const name of ['ROLES', 'POINTS']) {
   for (const it of items) ok(/len: \[/.test(it) && /lhi: \[/.test(it) && /\ben: '/.test(it) && /\bhi: '/.test(it), name + ' ' + it.split("'")[1] + ' has English and Hindi');
 }
 
+// four letters, one picked at random, so officials do not get one copy over and over
+const letters = (page.match(/var LETTERS = \[([\s\S]*?)\n  \];/) || [])[1] || '';
+const fixed = letters.split(/\n    \{ id: '/).slice(1).filter((x) => /subject: '/.test(x));
+ok(fixed.length === 3 && /\{ id: 'points' \}/.test(letters), 'four letters: three fixed texts and the one built from "Make it yours"');
+for (const f of fixed) {
+  const subj = (f.match(/subject: '((?:[^'\\]|\\.)*)'/) || [])[1] || '';
+  const paras = (f.match(/\n        '/g) || []).length;
+  ok(subj.length > 10 && paras >= 5 && !/\[Name\]/.test(f), 'letter ' + f.split("'")[0] + ': subject and ' + paras + ' paragraphs');
+}
+ok(new Set(fixed.map((f) => (f.match(/subject: '([^']*)'/) || [])[1])).size === 3, 'every fixed letter has its own subject');
+ok(/var tpl = roll\(parseInt\(store\.get\('lo-tpl'\), 10\)\);/.test(page) && /Math\.random\(\)/.test(page.split('function roll')[1] || ''), 'the letter is picked at random, never the one this browser sent last');
+ok(/function subject\(l\) \{\n    var f = fixedLetter\(l\);/.test(page) && /var f = fixedLetter\(l\);\n    if \(f\) \{/.test(page), 'subject and body come from the same letter');
+
 // the count: same campaign, same route, same closing time as the backend
 const id = (page.match(/var CAMPAIGN = '([^']+)'/) || [])[1];
 ok(!!id && backend.includes(`'${id}': { closes_at: endOfIstDay(2026, 11, 6) }`), 'campaign ' + id + ' exists in backend campaigns.js, closing at the end of 6 November');
