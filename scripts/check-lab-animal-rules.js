@@ -65,5 +65,9 @@ ok(fs.existsSync(path.join(ROOT, 'assets', 'lab-animal-rules-qr.svg')) && page.i
 ok(home.includes('href="/lab-animal-rules"') && home.includes('Date.now()<Date.UTC(2026,10,7)-5.5*36e5'), 'home page links to it until it closes');
 ok(/labrules:\{w:"[^"]*objection/.test(home), 'home search finds it');
 
+// no count on the page: the tally is private (backend only)
+ok(!/id="loCount"/.test(page) && !/people have sent theirs/.test(page) && !/loadCount|paintCount/.test(page), 'the page shows no count');
+ok(/fetch\(API \+ '\/sent', \{ method: 'POST'/.test(page), '"Yes, I sent it" still adds one to the private tally');
+
 console.log(fails ? `lab animal rules: ${fails} failed` : 'lab animal rules: all passed');
 process.exit(fails ? 1 : 0);

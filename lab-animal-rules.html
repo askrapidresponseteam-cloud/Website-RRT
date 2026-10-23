@@ -37,7 +37,6 @@ html[lang=hi] .lo h1{font-family:var(--sg-hindi);font-weight:700;letter-spacing:
 .lo-chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 .lo-chip.soon{background:var(--sg-hold-bg);color:var(--sg-hold-text)}
 .lo-chip.last{background:var(--sg-wash);color:var(--sg-stop-text)}
-.lo-chip.go{background:var(--sg-go-bg);color:var(--sg-go-text)}
 /* the form: one card, two numbered steps */
 .lo-card{margin-top:28px;padding:clamp(20px,4vw,32px);background:var(--sg-paper);box-shadow:var(--sg-shadow-card)}
 .lo-step{display:flex;align-items:center;gap:12px;margin:0 0 14px}
@@ -147,7 +146,6 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   </p>
   <div class="lo-chips" aria-live="polite">
     <span class="lo-chip" id="loDays"><i class="dot" aria-hidden="true"></i><span id="loDaysText"></span></span>
-    <span class="lo-chip go" id="loCount" hidden><i class="dot" aria-hidden="true"></i><span id="loCountText"></span></span>
   </div>
 
   </div><div class="rr-split-body"><div class="lo-closed" id="loClosed" hidden>
@@ -198,7 +196,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
 
   <section class="lo-card next" id="loAfter" hidden aria-live="polite">
     <h3><span data-lang="en">Did your email go?</span><span data-lang="hi">क्या आपका ईमेल चला गया?</span></h3>
-    <p><span data-lang="en">Press Send in your email app first. Then tell us, so the count goes up.</span><span data-lang="hi">पहले अपने ईमेल ऐप में भेजें दबाएँ। फिर हमें बताएँ, ताकि गिनती बढ़े।</span></p>
+    <p><span data-lang="en">Press Send in your email app first. Then tell us, and we will show you how to get others to send theirs.</span><span data-lang="hi">पहले अपने ईमेल ऐप में भेजें दबाएँ। फिर हमें बताएँ, और हम बताएँगे कि दूसरों से भी कैसे भिजवाएँ।</span></p>
     <div class="lo-share">
       <button class="lo-btn dark" type="button" id="loYes"><span data-lang="en">Yes, I sent it</span><span data-lang="hi">हाँ, भेज दिया</span></button>
       <button class="lo-btn" type="button" id="loNo"><span data-lang="en">It did not open</span><span data-lang="hi">ईमेल नहीं खुला</span></button>
@@ -275,7 +273,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     </details>
     <details class="lo-more">
       <summary><span data-lang="en">What this page keeps</span><span data-lang="hi">यह पेज क्या रखता है</span></summary>
-      <div class="body"><p style="margin:0;color:var(--lo-mid)"><span data-lang="en">Nothing you type leaves your phone: your name and city only go into the email you send yourself. When you press "Yes, I sent it", one is added to the count. Nothing else is saved, and the count is what people tell us.</span><span data-lang="hi">आप जो लिखते हैं, वह आपके फ़ोन से बाहर नहीं जाता: आपका नाम और शहर सिर्फ़ उस ईमेल में जाते हैं जो आप खुद भेजते हैं। "हाँ, भेज दिया" दबाने पर गिनती में एक जुड़ता है। और कुछ सेव नहीं होता, और गिनती वही है जो लोग हमें बताते हैं।</span></p></div>
+      <div class="body"><p style="margin:0;color:var(--lo-mid)"><span data-lang="en">Nothing you type leaves your phone: your name and city only go into the email you send yourself. When you press "Yes, I sent it", we add one to a private tally of how many people sent theirs. Nothing else is saved.</span><span data-lang="hi">आप जो लिखते हैं, वह आपके फ़ोन से बाहर नहीं जाता: आपका नाम और शहर सिर्फ़ उस ईमेल में जाते हैं जो आप खुद भेजते हैं। "हाँ, भेज दिया" दबाने पर हम अपनी निजी गिनती में एक जोड़ते हैं कि कितने लोगों ने आपत्ति भेजी। और कुछ सेव नहीं होता।</span></p></div>
     </details>
   </section>
 
@@ -291,8 +289,8 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
 <script>
 /* The objection page. Everything happens on this phone: the letter is
  * built here and opened in the person's own email. The only thing sent to
- * Rapid Response is "one more person sent it" (no name, no city), to show
- * the count (backend campaigns.js). */
+ * Rapid Response is "one more person sent it" (no name, no city), kept as a
+ * private tally (backend campaigns.js). The page does not show the number. */
 (function () {
   'use strict';
   var CAMPAIGN = 'lab-rules-2026';
@@ -305,7 +303,6 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   var IST = 5.5 * 3600e3, DAY = 864e5;
   var ASK_BY = Date.UTC(2026, 10, 6) - IST;      // end of 5 November, India time
   var CLOSES = Date.UTC(2026, 10, 7) - IST;      // end of 6 November: the count closes
-  var SHOW_COUNT_FROM = 25;                      // a smaller number looks empty, so it is not shown
 
   var $ = function (id) { return document.getElementById(id); };
   var store = {
@@ -535,8 +532,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     function legacy() { var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:-1000px'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { toast(T('Select the text and copy it', 'टेक्स्ट चुनकर कॉपी करें')); } document.body.removeChild(ta); }
   }
 
-  // ---- the count and the date --------------------------------------------
-  var count = null;
+  // ---- the date and the private tally -----------------------------------
   function paintDates() {
     var now = Date.now(), chip = $('loDays'), txt;
     if (now >= CLOSES) { $('loForm').hidden = true; $('loAfter').hidden = true; $('loClosed').hidden = false; chip.className = 'lo-chip'; txt = T('Closed on 6 November 2026', '6 नवंबर 2026 को बंद'); }
@@ -552,17 +548,6 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     }
     $('loDaysText').textContent = txt;
   }
-  function fmtN(n) { try { return n.toLocaleString('en-IN'); } catch (e) { return String(n); } }
-  function paintCount() {
-    var show = count != null && count >= SHOW_COUNT_FROM;
-    $('loCount').hidden = !show;
-    if (show) $('loCountText').textContent = T(fmtN(count) + ' people have sent theirs', fmtN(count) + ' लोग अपनी आपत्ति भेज चुके हैं');
-  }
-  function loadCount() {
-    if (!window.fetch) return;
-    fetch(API, { headers: { Accept: 'application/json' } }).then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) { if (j && j.ok) { count = j.sent; paintCount(); } }).catch(function () { /* offline: the page works without it */ });
-  }
   function markSent() {
     var first = store.get('lo-sent') !== '1';
     store.set('lo-sent', '1');
@@ -572,8 +557,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     $('loThanks').scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (first && window.fetch) {
       fetch(API + '/sent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) { if (j && j.ok) { count = j.sent; paintCount(); } }).catch(function () {});
+        .catch(function () { /* offline: the email went anyway */ });
     }
   }
 
@@ -594,7 +578,7 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
     $('loRoles').innerHTML = ROLES.map(function (r) { return '<button type="button" class="lo-pill" data-role="' + r.id + '" aria-pressed="' + (state.role === r.id) + '">' + T(r.en, r.hi) + '</button>'; }).join('');
     $('loPoints').innerHTML = POINTS.map(function (p) { return '<label><input type="checkbox" data-point="' + p.id + '"' + (state.points.indexOf(p.id) >= 0 ? ' checked' : '') + '><span><b>' + T(p.en, p.hi) + '</b></span></label>'; }).join('');
   }
-  function paintAll() { paintChoices(); paintButtons(); paintDates(); paintCount(); paintShare(); refresh(); }
+  function paintAll() { paintChoices(); paintButtons(); paintDates(); paintShare(); refresh(); }
 
   $('loToList').innerHTML = TO.map(function (a) { return '<li>' + a + '</li>'; }).join('') + CC.map(function (a) { return '<li>' + a + ' <span>(cc)</span></li>'; }).join('');
   ['loName', 'loCity', 'loOwn'].forEach(function (id) {
@@ -625,9 +609,8 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   if (/[?&]lang=hi\b/.test(location.search)) document.documentElement.lang = 'hi';
   if (store.get('lo-sent') === '1') { $('loThanks').hidden = false; }
   paintAll();
-  loadCount();
   setInterval(paintDates, 1000);
-  window.RRTObjection = { build: build, subject: subject, letters: LETTERS, letter: function (i) { if (i != null) { tpl = i; refresh(); } return tpl; }, ways: WAYS, to: TO, state: state, setCount: function (n) { count = n; paintCount(); } };
+  window.RRTObjection = { build: build, subject: subject, letters: LETTERS, letter: function (i) { if (i != null) { tpl = i; refresh(); } return tpl; }, ways: WAYS, to: TO, state: state };
 })();
 </script>
 <!-- rr:footer -->
