@@ -48,15 +48,24 @@ var FALLBACK = {
   notice: ['Message from the RRT team', 'Open the app to read it']
 };
 
+// Pushes with a notification block are shown by the SDK with the backend's
+// web settings (index.js webPush: urgent, an SOS stays until tapped, one
+// notification per alert). The rest are shown here the same way.
 firebase.messaging().onBackgroundMessage(function (payload) {
   if (payload && payload.notification) return; // shown by the SDK
   var data = (payload && payload.data) || {};
-  var fb = FALLBACK[data.type] || ['SOS Alert', 'Emergency alert in your area'];
+  var type = data.type || 'sos_alert';
+  var fb = FALLBACK[type] || ['SOS Alert', 'Emergency alert in your area'];
+  var id = data.ask_id || data.conv_id || data.sender_id || '';
+  var sos = type === 'sos_alert';
   return self.registration.showNotification(data.title || fb[0], {
     body: data.body || data.message || fb[1],
     icon: '/app/icons/Icon-192.png',
     badge: '/app/icons/Icon-192.png',
-    tag: 'rrt-' + (data.type || 'sos'),
+    tag: 'rrt-' + type + (id ? '-' + String(id).slice(0, 64) : ''),
+    renotify: true,
+    requireInteraction: sos,
+    vibrate: sos ? [300, 100, 300, 100, 600] : undefined,
     data: { url: '/app/' }
   });
 });
