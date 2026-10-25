@@ -7,6 +7,12 @@
  *     flags.store            true  = the shop is open
  *                            false = the shop is withdrawn (app hides the tab)
  *     flags.store_veg_only   true  = hide products naming an animal ingredient
+ *     flags.store_simple     true  = the simplified display: browse by animal
+ *                                    and category only, sold out hidden, no
+ *                                    price sort (false = as before)
+ *     flags.store_filters    true  = the Filters display: as before, plus a
+ *                                    panel of the store's own filters (wins
+ *                                    over store_simple)
  *
  * This file makes rapid-response.in read the SAME document, so one flip in the
  * admin panel governs the app and the website together. It is deliberately
@@ -39,7 +45,7 @@
 
   // The app's compiled defaults (backend/functions/config/schema.js). Used
   // verbatim whenever Firestore has nothing to say.
-  var DEFAULTS = { storeOpen: true, vegOnly: false, closedMessage: '' };
+  var DEFAULTS = { storeOpen: true, vegOnly: false, simple: false, filters: false, closedMessage: '' };
 
   /* The veg-only switch as last read on this device (the key rrt-shop.js
    * reads too), so a shop page opens already filtered instead of showing the
@@ -53,10 +59,29 @@
     try { global.localStorage.setItem(VEG_KEY, v ? 'true' : 'false'); } catch (e) { /* private mode */ }
   }
 
+  /* The display style as last read on this device (the key rrt-shop.js reads
+   * too), so a shop page opens in the right style. */
+  var SIMPLE_KEY = 'rrt_store_simple';
+  function lastSimple() {
+    try { return global.localStorage.getItem(SIMPLE_KEY) === 'true'; } catch (e) { return DEFAULTS.simple; }
+  }
+  function rememberSimple(v) {
+    try { global.localStorage.setItem(SIMPLE_KEY, v ? 'true' : 'false'); } catch (e) { /* private mode */ }
+  }
+  var FILTERS_KEY = 'rrt_store_filters';
+  function lastFilters() {
+    try { return global.localStorage.getItem(FILTERS_KEY) === 'true'; } catch (e) { return DEFAULTS.filters; }
+  }
+  function rememberFilters(v) {
+    try { global.localStorage.setItem(FILTERS_KEY, v ? 'true' : 'false'); } catch (e) { /* private mode */ }
+  }
+
   var state = {
     ready: false,
     storeOpen: DEFAULTS.storeOpen,
     vegOnly: lastVegOnly(),
+    simple: lastSimple(),
+    filters: lastFilters(),
     closedMessage: DEFAULTS.closedMessage
   };
   var listeners = [];
@@ -72,6 +97,8 @@
       ready: state.ready,
       storeOpen: state.storeOpen,
       vegOnly: state.vegOnly,
+      simple: state.simple && !state.filters,
+      filters: state.filters,
       closedMessage: state.closedMessage
     };
   }
@@ -90,6 +117,11 @@
     state.storeOpen = field('flags.store', DEFAULTS.storeOpen);
     state.vegOnly = field('flags.store_veg_only', DEFAULTS.vegOnly);
     rememberVegOnly(state.vegOnly);
+    state.simple = field('flags.store_simple', DEFAULTS.simple);
+    rememberSimple(state.simple);
+    // Filters wins when both are on (the console sets one at a time).
+    state.filters = field('flags.store_filters', DEFAULTS.filters);
+    rememberFilters(state.filters);
     // Optional human message shown when the shop is closed. Text lives in
     // app_config/text in the app's scheme; we accept it here too if present.
     var msg = data['text.store_closed'];

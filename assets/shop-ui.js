@@ -433,6 +433,12 @@
             r = { query: r.query, collections: r.collections,
               products: r.products.filter(function (p) { return !S.rules.hideWhenVegOnly(p); }) };
           }
+          // The simplified display: no sold-out products, and no store
+          // collections to jump into (only the animal and category filters).
+          if (simpleNow()) {
+            r = { query: r.query, collections: [],
+              products: r.products.filter(function (p) { return p.available !== false; }) };
+          }
           if (!r.products.length && !r.collections.length) { suggEl.hidden = true; return; }
           var out = '';
           r.collections.slice(0, 3).forEach(function (c) {
@@ -620,6 +626,19 @@
     return cfg ? cfg.get().vegOnly === true : S.vegOnly();
   }
 
+  /** Whether the admin chose the simplified display (flags.store_simple):
+   *  the live value, or as last read on this device until it lands. */
+  function simpleNow() {
+    var cfg = global.RRTStoreConfig;
+    return cfg ? cfg.get().simple === true : (S.simpleOn() && !S.filtersOn());
+  }
+
+  /** Whether the admin chose the Filters display (flags.store_filters). */
+  function filtersNow() {
+    var cfg = global.RRTStoreConfig;
+    return cfg ? cfg.get().filters === true : S.filtersOn();
+  }
+
   /** Whether checkout may proceed right now (shop open). Buttons call this at
    *  press time so a mid-session close is respected. */
   function storeOpenNow() {
@@ -638,6 +657,8 @@
     storeGate: storeGate,
     storeOpenNow: storeOpenNow,
     vegOnlyNow: vegOnlyNow,
+    simpleNow: simpleNow,
+    filtersNow: filtersNow,
     registry: registry
   };
   /* END PUBLIC API */

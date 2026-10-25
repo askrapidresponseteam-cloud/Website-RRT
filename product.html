@@ -536,6 +536,8 @@
 
   S.recommendations(product.id).then(function (list) {
       if (U.vegOnlyNow()) list = list.filter(function (p) { return !S.rules.hideWhenVegOnly(p); });
+      // The simplified display never suggests something that cannot be bought.
+      if (U.simpleNow()) list = list.filter(function (p) { return p.available !== false; });
       $('recsH').hidden = !list.length;
       if (!list.length) { $('recs').innerHTML = ''; return; }
       $('recs').innerHTML = list.map(function (p) { return U.tile(p); }).join('');

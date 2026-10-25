@@ -871,6 +871,162 @@ function brandPageTests() {
     'the sibling search asks for the base title');
 })();
 
+/* ------------------------------------- the simplified display (store_simple) */
+
+/* What every partner store gets: shared/store-simple-cases.json, the same
+ * cases the app's test/simple_shop_test.dart runs. */
+/* The Filters display (flags.store_filters): shared/store-filters-cases.json,
+ * the same cases the app's test/store_filters_test.dart runs. */
+function filtersTests() {
+  const fs = require('fs');
+  const path = require('path');
+  const cases = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'shared', 'store-filters-cases.json'), 'utf8'));
+  const F = S.filters;
+  const M = require('./../../../scripts/simple-shop-cases.js');
+  const shop = M.shopFor('supertails');
+  const SF = shop.filters;
+  const list = cases.products.map(function (p) {
+    return { id: p.id, title: p.title, productType: p.productType, tags: p.tags, brand: p.brand, descriptionHtml: '',
+      available: p.available, cheapestVariant: { pricePaise: p.price * 100 } };
+  });
+  const norm = function (fs2) {
+    return fs2.map(function (f) {
+      if (f.kind === 'price') return { id: f.id, label: f.label, kind: 'price', min: f.min, max: f.max };
+      const o = { id: f.id, label: f.label, kind: 'list', values: f.values.map(function (v) { return { id: v.id, label: v.label, count: v.count, input: v.input }; }) };
+      if (f.availability) o.availability = true;
+      return o;
+    });
+  };
+  eq(norm(SF.basicFacets(list)), cases.basicFacets, 'filters: the basic set from what is listed');
+  cases.matches.forEach(function (m) {
+    eq(list.filter(function (p) { return SF.basicMatch(p, m.state, false); }).map(function (p) { return p.id; }), m.ids, 'filters: ' + m.name);
+    eq(list.filter(function (p) { return SF.basicMatch(p, m.state, true); }).map(function (p) { return p.id; }), m.storeIds,
+      'filters, applied by the store: ' + m.name);
+  });
+  eq(norm(F.fromShopify(cases.shopify.filters)), cases.shopify.facets, 'filters: a Shopify store\u2019s own');
+  eq(F.shopifyInputs(cases.shopify.state), cases.shopify.inputs, 'filters: what a Shopify store is asked');
+  cases.woo.forEach(function (w) { eq(S.wooFilterParams(w.state, w.minorUnit), w.params, 'filters, WooCommerce: ' + w.name); });
+  cases.chips.forEach(function (c) {
+    eq(F.count(c.state), c.count, 'filters count: ' + c.name);
+    eq(F.chips(c.state).map(function (x) { return [x.key, x.label]; }), c.chips, 'filters chips: ' + c.name);
+    if (c.afterRemove) eq(F.count(F.remove(c.state, c.afterRemove.key)), c.afterRemove.count, 'filters chip removed: ' + c.name);
+  });
+  // The link carries the choices: what comes back is what went in.
+  const st = cases.shopify.state;
+  eq(F.decode(F.encode(st)), F.clean(st), 'filters: the ?f= text round trip');
+  eq(F.encode(F.empty()), '', 'filters: nothing chosen, nothing in the link');
+  eq(F.decode('{nope'), F.empty(), 'filters: a broken link is no filters');
+  const on = F.toggle(F.empty(), { id: 'rrt.brand' }, { id: 'Drools', label: 'Drools', input: { brand: 'Drools' } }, true);
+  eq(F.count(on), 1, 'filters: a tick adds one');
+  eq(F.count(F.toggle(on, { id: 'rrt.brand' }, { id: 'Drools', label: 'Drools' }, false)), 0, 'filters: untick takes it off');
+  ok(F.hasStoreChoices(st) && !F.hasStoreChoices({ values: { 'rrt.animal': st.values['rrt.animal'] } }), 'filters: the store\u2019s own choices told apart');
+}
+
+function simpleShopTests() {
+  const fs = require('fs');
+  const path = require('path');
+  const cases = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'shared', 'store-simple-cases.json'), 'utf8'));
+  ok(cases.products.length >= 30, 'the shared animal cases are there');
+  cases.products.forEach(function (c) {
+    const p = { title: c.title, productType: c.productType || '', tags: c.tags || [] };
+    eq(S.simple.animalsOf(p), c.animals, 'animals: ' + c.title);
+    ['dog', 'cat', 'small', 'farm'].forEach(function (a) {
+      eq(S.simple.forAnimal(p, a), !c.animals.length || c.animals.indexOf(a) !== -1, 'for ' + a + ': ' + c.title);
+    });
+  });
+
+  const M = require('./../../../scripts/simple-shop-cases.js');
+  const vendors = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'shared', 'store-vendors.json'), 'utf8')).vendors;
+  eq(Object.keys(cases.stores).sort(), Object.keys(vendors).sort(), 'every partner store has its simplified filters in the cases');
+  Object.keys(vendors).forEach(function (id) {
+    const shop = M.shopFor(id);
+    const got = M.storeMatrix(shop);
+    eq(got, cases.stores[id], id + ': the filters and collections are the ones in the cases' +
+      ' (after a shelf change: node scripts/simple-shop-cases.js --write)');
+    // Whatever the store: dogs and cats, medicines and food for both, and
+    // only the store's own collections are read.
+    ok(got.animals.indexOf('dog') !== -1 && got.animals.indexOf('cat') !== -1, id + ': dogs and cats');
+    ['dog', 'cat'].forEach(function (a) {
+      ok(got.categoriesFor[a].indexOf('medicines') !== -1 && got.categoriesFor[a].indexOf('food') !== -1,
+        id + ': medicines and food for ' + a);
+    });
+    const real = {}; real[shop.vendor.catalogHandle] = 1;
+    shop.shelves.forEach(function (sh) { sh.aisles.forEach(function (a) { real[a.handle] = 1; }); });
+    Object.keys(got.sources).forEach(function (k) {
+      const h = got.sources[k];
+      ok(h.length >= 1 && h.length <= 16, id + ' ' + k + ': 1 to 16 collections');
+      ok(h.every(function (x) { return real[x] === 1; }), id + ' ' + k + ': only the store’s own collections');
+      eq(h.length, new Set(h).size, id + ' ' + k + ': each collection once');
+    });
+  });
+  const st = cases.stores;
+  eq(st.supertails.sources['|'], ['all'], 'everything for every animal: the whole catalogue');
+  eq(st.supertails.sources['medicines|'], ['pet-pharmacy'], 'an "All Medicines" aisle stands for the whole shelf');
+  eq(st.supertails.sources['food|dog'], ['dog-food'], 'dog food is the dog food shelf');
+  eq(st.supertails.sources['food|small'], ['fish-food'], 'food for small pets: the food aisles of their shelf');
+  eq(st.supertails.categoriesFor.small, ['food'], 'small pets get only the categories their aisles name');
+  eq(st.supertails.sources['grooming|dog'], ['dog-grooming'], 'an "All Dog" aisle stands for dogs on that shelf');
+  ok(st.supertails.sources['gear|cat'].indexOf('dog-collars') === -1, 'cat gear never reads dog-only aisles');
+  eq(st.justdogs.sources['gear|dog'], ['dog-accessories'], 'JustDogs: "All" accessories are its dog accessories');
+  ok(st.justdogs.sources['gear|'].indexOf('cat-toys') !== -1, 'so all gear reads every aisle, cat toys included');
+  eq(st.justdogs.sources['medicines|cat'], ['pharmacy-for-cats'], 'a "For Cats" aisle stands for cats');
+  eq(st.whiskee.sources['|dog'], ['dog-shop'], 'Whiskee: its own "All Dog" shop');
+  ok(st.whiskee.categories.indexOf('treats') === -1, 'a category the store has no shelf for is not offered');
+  ok(st.petslifestyle.animals.indexOf('farm') !== -1, 'Pets Lifestyle: farm animals, from its farm shelf');
+  ok(st.pawsandtails.categories.indexOf('vaccines') !== -1, 'Paws & Tails: vaccines, from its own shelf');
+
+  // The grid: sold out hidden, the animal filter, veg-only still applies.
+  const mk = (id, title, available, extra) => Object.assign({ id, title, tags: [], productType: '', descriptionHtml: '',
+    available, cheapestVariant: { pricePaise: id * 100 }, createdAtMs: id }, extra || {});
+  const list = [mk(1, 'Dog Shampoo', true), mk(2, 'Cat Litter Scoop', true), mk(3, 'Pet Bowl', false), mk(4, 'Pet Bowl Large', true),
+    mk(5, 'Chicken Jerky for Dogs', true)];
+  eq(S.visibleProducts(list, {}).map((p) => p.id), [1, 2, 3, 4, 5], 'current display: everything, sold out included');
+  eq(S.visibleProducts(list, { hideSoldOut: true }).map((p) => p.id), [1, 2, 4, 5], 'simplified: sold out hidden');
+  eq(S.visibleProducts(list, { hideSoldOut: true, animal: 'dog' }).map((p) => p.id), [1, 4, 5], 'dogs: dog things and things for any pet');
+  eq(S.visibleProducts(list, { hideSoldOut: true, animal: 'cat' }).map((p) => p.id), [2, 4], 'cats');
+  eq(S.visibleProducts(list, { hideSoldOut: true, animal: 'dog', vegOnly: true }).map((p) => p.id), [1, 4], 'veg-only still applies');
+  eq(S.simpleSorts, ['featured', 'newest'], 'simplified: no price sort');
+
+  // Several collections, one after the other, as one listing.
+  const node = (h, n, sold) => ({ id: 'gid://shopify/Product/' + n, handle: h + n, title: 'Item ' + n, vendor: 'B', productType: '',
+    availableForSale: !sold, publishedAt: '2026-01-01T00:00:00Z', featuredImage: null, tags: [],
+    priceRange: { minVariantPrice: { amount: '10.0' }, maxVariantPrice: { amount: '10.0' } },
+    compareAtPriceRange: { maxVariantPrice: { amount: '0' } } });
+  const cols = { a: [[node('a', 1), node('a', 2)], [node('a', 3)]], c: [[node('c', 4), node('a', 2)]] };
+  const asked = [];
+  S.__internal.setFetch(function (url, init) {
+    const body = JSON.parse((init && init.body) || '{}');
+    const v = body.variables || {};
+    asked.push(v.handle + ':' + (v.after || '-'));
+    const pages = cols[v.handle];
+    if (!pages) return gqlResponse({ collection: null });
+    const i = v.after ? Number(v.after.slice(1)) : 0;
+    return gqlResponse({ collection: { products: { pageInfo: { hasNextPage: i + 1 < pages.length, endCursor: 'p' + (i + 1) }, nodes: pages[i] } } });
+  });
+  S.__internal.resetTransport();
+  S.clearResponseCache();
+  const ids = [];
+  function readAll(after, n) {
+    return S.listingPage(['a', 'gone', 'c'], { sort: 'featured', after: after }).then(function (page) {
+      page.products.forEach(function (p) { ids.push(p.handle); });
+      ok(page.clientSort === true, 'several collections: any sort other than the stores’ own is done on the page');
+      if (page.hasMore && n < 10) return readAll(page.endCursor, n + 1);
+      return page;
+    });
+  }
+  return readAll(null, 0).then(function (last) {
+    eq(ids, ['a1', 'a2', 'a3', 'c4', 'a2'], 'every collection in turn, every page of each (repeats are dropped by the page)');
+    eq(last.hasMore, false, 'and then the listing ends');
+    ok(asked.indexOf('gone:-') !== -1, 'a collection the store removed is passed over');
+    eq(asked.filter(function (x) { return x === 'a:-'; }).length, 1, 'no collection is read from the start twice');
+    return S.listingPage(['a'], { sort: 'featured' });
+  }).then(function (one) {
+    eq(one.products.map(function (p) { return p.handle; }), ['a1', 'a2'], 'one collection: just that collection');
+    S.__internal.resetTransport();
+    S.clearResponseCache();
+  });
+}
+
 /* ------------------------------------------- revalidation (stubbed vendor) */
 
 function jsonRes(body, status) {
@@ -1129,7 +1285,7 @@ S.revalidateCart().then((r) => {
     eq(r.collections[0].handle, 'jerhigh', 'matching collections offered');
     S.__internal.resetTransport();
   });
-}).then(deliveryQuoteTests).then(hubPreviewTests).then(brandPageTests).then(vegTileTests).then(activeVendorTests).then(function () {
+}).then(deliveryQuoteTests).then(hubPreviewTests).then(brandPageTests).then(vegTileTests).then(simpleShopTests).then(filtersTests).then(activeVendorTests).then(function () {
   console.log(`\n${passed} passed, ${failed} failed.`);
   process.exit(failed ? 1 : 0);
 }).catch((e) => {

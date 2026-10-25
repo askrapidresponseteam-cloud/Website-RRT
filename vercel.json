@@ -83,12 +83,36 @@
       "destination": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/categories"
     },
     {
+      "source": "/jd-api/wp-json/wc/store/v1/products/collection-data",
+      "destination": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/collection-data"
+    },
+    {
+      "source": "/jd-api/wp-json/wc/store/v1/products/attributes",
+      "destination": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/attributes"
+    },
+    {
+      "source": "/jd-api/wp-json/wc/store/v1/products/attributes/:id(\\d+)/terms",
+      "destination": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/attributes/:id/terms"
+    },
+    {
       "source": "/wk-api/wp-json/wc/store/v1/products",
       "destination": "https://whiskeepetzone.com/wp-json/wc/store/v1/products"
     },
     {
       "source": "/wk-api/wp-json/wc/store/v1/products/categories",
       "destination": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/categories"
+    },
+    {
+      "source": "/wk-api/wp-json/wc/store/v1/products/collection-data",
+      "destination": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/collection-data"
+    },
+    {
+      "source": "/wk-api/wp-json/wc/store/v1/products/attributes",
+      "destination": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/attributes"
+    },
+    {
+      "source": "/wk-api/wp-json/wc/store/v1/products/attributes/:id(\\d+)/terms",
+      "destination": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/attributes/:id/terms"
     },
     {
       "source": "/manage",

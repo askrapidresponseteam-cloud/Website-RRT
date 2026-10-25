@@ -1111,11 +1111,16 @@
   /** What the grid shows: everything the vendor lists, sold out included (a
    *  sold-out tile says so and has no Add), as in the app; only RRT's
    *  veg-only switch takes anything away. Then the sort. Pure, so the rules
-   *  are testable without a screen. */
+   *  are testable without a screen.
+   *  The simplified display (flags.store_simple) also passes hideSoldOut,
+   *  and an animal ('dog', 'cat', 'small', 'farm') when one is chosen. */
   function visibleProducts(products, opts) {
     opts = opts || {};
     var visible = products.filter(function (p) {
-      return !(opts.vegOnly && Rules.hideWhenVegOnly(p));
+      if (opts.vegOnly && Rules.hideWhenVegOnly(p)) return false;
+      if (opts.hideSoldOut && p.available === false) return false;
+      if (opts.animal && !Simple.forAnimal(p, opts.animal)) return false;
+      return true;
     });
     switch (opts.sort) {
       case 'priceLow':
@@ -1132,6 +1137,243 @@
     return visible;
   }
 
+  /* ========================================== THE SIMPLIFIED SHOP DISPLAY */
+  /* flags.store_simple (Store page of the admin console): browsing by animal
+   * and by category only, sold-out products hidden, no price sort. Works the
+   * same for every partner store and every kind of store, because it is
+   * worked out from the store's own shelves and aisles (the descriptor every
+   * store already has) and the product words every store sends (title,
+   * product type, tags; a WooCommerce store's categories are among its tags).
+   * The words and the category list: shared/store-simple-shop.json. The app
+   * does the same (core/store/simple_shop.dart); shared/store-simple-cases.json
+   * holds what both must answer. */
+  /* rr:simple-shop GENERATED from shared/store-simple-shop.json by scripts/sync-shared.js - do not edit */
+  var SIMPLE_RULES = {"schemaVersion":1,"animals":[{"key":"dog","name":"Dogs","words":["dog","dogs","doggy","doggie","doggies","puppy","puppies","pup","pups","canine","canines","k9"],"phrases":[]},{"key":"cat","name":"Cats","words":["cat","cats","kitten","kittens","kitty","kitties","feline","felines","catnip"],"phrases":[]},{"key":"small","name":"Birds & small pets","words":["bird","birds","parrot","parrots","budgie","budgies","cockatiel","cockatiels","lovebird","lovebirds","finch","finches","canary","canaries","pigeon","pigeons","aquarium","aquariums","aquatic","goldfish","betta","guppy","guppies","turtle","turtles","tortoise","tortoises","terrapin","terrapins","hamster","hamsters","gerbil","gerbils","rabbits","bunny","bunnies","ferret","ferrets","chinchilla","chinchillas"],"phrases":["guinea pig","guinea pigs","fish food","fish feed","fish flakes","fish pellets","for fish","fish tank","small animal","small animals","small pet","small pets","rabbit food","rabbit hay","for rabbit","for rabbits"]},{"key":"farm","name":"Farm animals","words":["cattle","livestock","equine","horse","horses"],"phrases":["for cows","for cow","cow feed","cattle feed","poultry feed","for poultry","for chickens","for goats","goat feed","for sheep","for buffalo","for buffaloes","dairy animals","farm animals"]}],"aisleWords":{"dog":["dog","dogs","puppy","puppies","pup","canine"],"cat":["cat","cats","kitten","kittens","feline","litter"],"small":["bird","birds","fish","aquatic","aquarium","rabbit","rabbits","guinea","hamster","hamsters","turtle","turtles","tortoise","small"],"farm":["farm","livestock","cattle","cow","poultry","chicken","horse"]},"categories":[{"key":"medicines","name":"Medicines","shelves":["pharmacy"],"nameWords":["pharmacy","medicine","medicines"]},{"key":"vaccines","name":"Vaccines & tests","shelves":["vaccines"],"nameWords":["vaccine","vaccines"]},{"key":"supplements","name":"Supplements","shelves":["supplements"],"nameWords":["supplement","supplements","vitamins"]},{"key":"food","name":"Food","shelves":["dog-food","cat-food"],"nameWords":["food"]},{"key":"treats","name":"Treats","shelves":["treats"],"nameWords":["treat","treats"]},{"key":"grooming","name":"Grooming","shelves":["grooming"],"nameWords":["grooming"]},{"key":"gear","name":"Toys & gear","shelves":["gear"],"nameWords":["toys","gear","accessories"]}],"animalShelves":{"dog-food":"dog","cat-food":"cat","small-pets":"small","farm":"farm"},"byPetShelves":["by-pet"],"foodWords":["food","feed","seed","seeds","hay","pellet","pellets","treat","treats"]};
+  /* /rr:simple-shop */
+
+  var SIMPLE_SORTS = ['featured', 'newest'];
+
+  var Simple = (function () {
+    var R = SIMPLE_RULES;
+    var MAX_SOURCES = 16;
+    var WHOLE_REST = { medicines: 1, medicine: 1, vaccines: 1, supplements: 1, products: 1, items: 1, food: 1,
+      treats: 1, grooming: 1, gear: 1, accessories: 1 };
+
+    function words(text) {
+      return String(text == null ? '' : text).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    }
+    function tokens(text) { var w = words(text); return w ? w.split(' ') : []; }
+    function has(list, x) { return (list || []).indexOf(x) !== -1; }
+    function animalDefs() { return R.animals || []; }
+    function animalDef(key) {
+      var a = animalDefs();
+      for (var i = 0; i < a.length; i++) if (a[i].key === key) return a[i];
+      return null;
+    }
+
+    /** The animals a product names (title, product type, tags); none = for
+     *  every animal. */
+    function animalsOf(p) {
+      var parts = [p && p.title, p && p.productType].concat((p && p.tags) || []);
+      var text = ' ' + parts.map(words).filter(Boolean).join(' | ') + ' ';
+      var toks = {};
+      text.split(/[ |]+/).forEach(function (t) { if (t) toks[t] = 1; });
+      var out = [];
+      animalDefs().forEach(function (a) {
+        var hit = (a.words || []).some(function (w) { return toks[w] === 1; }) ||
+          (a.phrases || []).some(function (ph) { return text.indexOf(' ' + ph + ' ') !== -1; });
+        if (hit) out.push(a.key);
+      });
+      return out;
+    }
+    /** For this animal: it names it, or names no animal at all. */
+    function forAnimal(p, animal) {
+      if (!animal) return true;
+      var a = animalsOf(p);
+      return !a.length || has(a, animal);
+    }
+
+    /** The animals an aisle (a collection) is for, by its label and handle. */
+    function aisleAnimals(aisle) {
+      var t = tokens(aisle.label + ' ' + aisle.handle);
+      var out = [];
+      Object.keys(R.aisleWords || {}).forEach(function (k) {
+        if (R.aisleWords[k].some(function (w) { return has(t, w); })) out.push(k);
+      });
+      return out;
+    }
+    function isFoodAisle(aisle) {
+      var t = tokens(aisle.label + ' ' + aisle.handle);
+      return (R.foodWords || []).some(function (w) { return has(t, w); });
+    }
+
+    /** What one of RRT's shelves holds: { category, animal } (either can be
+     *  null), { byPet: true }, or null (left out, like a Sale shelf). */
+    function shelfRole(shelf) {
+      var key = shelf.key;
+      var cats = R.categories || [];
+      var catByKey = null;
+      for (var i = 0; i < cats.length; i++) if (has(cats[i].shelves, key)) catByKey = cats[i].key;
+      var animalByKey = (R.animalShelves || {})[key] || null;
+      if (has(R.byPetShelves, key)) return { byPet: true, category: null, animal: null };
+      if (catByKey || animalByKey) return { category: catByKey, animal: animalByKey };
+      // A store added later with shelves of its own: by the words of the name.
+      var t = tokens(shelf.name);
+      var cat = null, animal = null;
+      for (var j = 0; j < cats.length && !cat; j++) {
+        if ((cats[j].nameWords || []).some(function (w) { return has(t, w); })) cat = cats[j].key;
+      }
+      Object.keys(R.aisleWords || {}).forEach(function (k) {
+        if (!animal && R.aisleWords[k].some(function (w) { return has(t, w); })) animal = k;
+      });
+      if (cat) return { category: cat, animal: animal };
+      if (animal === 'small' || animal === 'farm') return { category: null, animal: animal };
+      return null;
+    }
+
+    function aislesOf(shelf) {
+      return (shelf.aisles || []).map(function (a) {
+        return Array.isArray(a) ? { label: a[0], handle: a[1] } : { label: a.label, handle: a.handle };
+      });
+    }
+    /** "All", "All Medicines": the whole shelf, for every animal. */
+    function wholeAisle(shelf, role) {
+      var list = aislesOf(shelf);
+      for (var i = 0; i < list.length; i++) {
+        var t = tokens(list[i].label);
+        if (t[0] !== 'all' || !t.slice(1).every(function (w) { return WHOLE_REST[w] === 1; })) continue;
+        var named = aisleAnimals(list[i]).filter(function (k) { return k !== role.animal; });
+        if (named.length !== 1) return list[i];
+      }
+      return null;
+    }
+    /** "All Dog", "For Cats": everything on the shelf for that animal. */
+    function animalWideAisle(shelf, animal) {
+      var list = aislesOf(shelf);
+      for (var i = 0; i < list.length; i++) {
+        var t = tokens(list[i].label);
+        if (t[0] !== 'all' && t[0] !== 'for') continue;
+        var named = aisleAnimals(list[i]);
+        if (named.length === 1 && named[0] === animal) return list[i];
+      }
+      return null;
+    }
+
+    function uniq(list) {
+      var seen = {}, out = [];
+      list.forEach(function (h) { if (h && !seen[h]) { seen[h] = 1; out.push(h); } });
+      return out.slice(0, MAX_SOURCES);
+    }
+
+    /** The collections to read, in order, for a category and an animal (null
+     *  = all), and whether an aisle names that animal (so the choice is a real
+     *  one for birds and small pets, not a filter over the dog range). */
+    function sourcesOf(desc, category, animal) {
+      var shelves = desc.shelves || [];
+      var out = [], explicit = false;
+      if (!category) {
+        if (!animal) return { handles: [desc.catalogHandle || 'all'], explicit: true };
+        shelves.forEach(function (sh) {
+          var role = shelfRole(sh); if (!role) return;
+          if (role.byPet) {
+            var wide = animalWideAisle(sh, animal);
+            if (wide) { out.push(wide.handle); explicit = true; }
+          }
+        });
+        if (out.length) return { handles: uniq(out), explicit: true };
+        if (animal === 'dog' || animal === 'cat') return { handles: [desc.catalogHandle || 'all'], explicit: false };
+        shelves.forEach(function (sh) {
+          var role = shelfRole(sh);
+          if (!role || role.category || role.animal !== animal) return;
+          var whole = wholeAisle(sh, role);
+          out = out.concat(whole ? [whole.handle] : aislesOf(sh).map(function (a) { return a.handle; }));
+          explicit = true;
+        });
+        return { handles: uniq(out), explicit: explicit };
+      }
+      shelves.forEach(function (sh) {
+        var role = shelfRole(sh); if (!role || role.byPet) return;
+        if (role.category === category) {
+          if (role.animal) {
+            if (animal && animal !== role.animal) return;
+            var whole = wholeAisle(sh, role);
+            out = out.concat(whole ? [whole.handle] : aislesOf(sh).map(function (a) { return a.handle; }));
+            if (animal) explicit = true;
+            return;
+          }
+          if (!animal) {
+            var w = wholeAisle(sh, role);
+            out = out.concat(w ? [w.handle] : aislesOf(sh).map(function (a) { return a.handle; }));
+            return;
+          }
+          var wide = animalWideAisle(sh, animal);
+          if (wide) { out.push(wide.handle); explicit = true; return; }
+          var w2 = wholeAisle(sh, role);
+          if (w2) { out.push(w2.handle); return; }
+          aislesOf(sh).forEach(function (a) {
+            var named = aisleAnimals(a);
+            if (!named.length || has(named, animal)) {
+              out.push(a.handle);
+              if (has(named, animal)) explicit = true;
+            }
+          });
+          return;
+        }
+        // The food aisles of a shelf for one kind of animal (small pets, farm).
+        if (category === 'food' && !role.category && role.animal && (!animal || animal === role.animal)) {
+          aislesOf(sh).forEach(function (a) {
+            if (isFoodAisle(a)) { out.push(a.handle); if (animal) explicit = true; }
+          });
+        }
+      });
+      return { handles: uniq(out), explicit: explicit };
+    }
+
+    /** The two filter rows for this store, and what each choice reads:
+     *  { animals: [{key, name}], categories: [{key, name}],
+     *    categoriesFor(animal) -> [{key, name}], sources(category, animal) -> [handles] }. */
+    function forStore(desc) {
+      var shelves = desc.shelves || [];
+      var roles = shelves.map(shelfRole);
+      var named = {};
+      shelves.forEach(function (sh, i) {
+        var role = roles[i]; if (!role) return;
+        if (role.animal) named[role.animal] = 1;
+        aislesOf(sh).forEach(function (a) { aisleAnimals(a).forEach(function (k) { if (k === 'dog' || k === 'cat') named[k] = 1; }); });
+      });
+      var animals = animalDefs().filter(function (a) {
+        if (a.key === 'dog' || a.key === 'cat') return named[a.key] === 1;
+        return roles.some(function (r) { return r && !r.category && r.animal === a.key; });
+      }).map(function (a) { return { key: a.key, name: a.name }; });
+      function categoriesFor(animal) {
+        return (R.categories || []).filter(function (c) {
+          var s = sourcesOf(desc, c.key, animal);
+          if (!s.handles.length) return false;
+          return !animal || animal === 'dog' || animal === 'cat' || s.explicit;
+        }).map(function (c) { return { key: c.key, name: c.name }; });
+      }
+      return {
+        animals: animals,
+        categories: categoriesFor(null),
+        categoriesFor: categoriesFor,
+        sources: function (category, animal) { return sourcesOf(desc, category || null, animal || null).handles; }
+      };
+    }
+
+    return {
+      animalsOf: animalsOf,
+      forAnimal: forAnimal,
+      animal: animalDef,
+      category: function (key) {
+        var c = R.categories || [];
+        for (var i = 0; i < c.length; i++) if (c[i].key === key) return { key: c[i].key, name: c[i].name };
+        return null;
+      },
+      forStore: forStore,
+      shelfRole: shelfRole
+    };
+  })();
+
   /* =============================================================== STORAGE */
   /* Same keys as the phone (store_*_v2 on device), namespaced for the web.
    * Guarded throughout: private mode or quota never breaks a page. */
@@ -1140,6 +1382,8 @@
   var SAVED_KEY = 'rrt_store_saved_v2';
   var RECEIPTS_KEY = 'rrt_store_receipts_v2';
   var VEG_KEY = 'rrt_store_veg_only';
+  var SIMPLE_KEY = 'rrt_store_simple';
+  var FILTERS_KEY = 'rrt_store_filters';
   /* v2: v1 could hold a "no tags" mark left by a passing store error (the
    * old rule went lean on any GraphQL error); starting afresh re-learns a
    * real refusal on the first query. */
@@ -1680,6 +1924,44 @@
     });
   }
 
+  /** One page of a listing that reads several collections one after the
+   *  other (the simplified display: "Treats" is every treats aisle of the
+   *  store). Same answer as collectionPage; a collection the store has
+   *  removed is passed over, and no product is listed twice (the caller drops
+   *  repeats, as it does across pages). One collection: collectionPage itself.
+   *  The cursor says which collection and where in it: "m<i>:<cursor>". */
+  function listingPage(handles, opts) {
+    opts = opts || {};
+    var list = (handles || []).filter(Boolean);
+    if (list.length <= 1) return collectionPage(list[0] || Vendor.catalogHandle, opts);
+    var at = /^m(\d+):(.*)$/.exec(String(opts.after || ''));
+    var start = at ? Number(at[1]) : 0;
+    var after = at ? (at[2] || null) : null;
+    function step(i, cursor) {
+      if (i >= list.length) return Promise.resolve({ products: [], hasMore: false, endCursor: null, missing: false, clientSort: true });
+      var next = function () { return step(i + 1, null); };
+      return collectionPage(list[i], { sort: opts.sort, after: cursor, fresh: opts.fresh }).then(function (page) {
+        if (page.missing || (!page.products.length && !page.hasMore)) return next();
+        // No cursor to go on from: this collection is done (never read its
+        // first page again).
+        var more = page.hasMore && page.products.length > 0 && page.endCursor != null && page.endCursor !== '';
+        return {
+          products: page.products,
+          hasMore: more || i + 1 < list.length,
+          endCursor: more ? 'm' + i + ':' + page.endCursor : 'm' + (i + 1) + ':',
+          missing: false,
+          // Several collections in a row are in no one order: a sort other
+          // than the stores' own is done on the page.
+          clientSort: true
+        };
+      }, function (e) {
+        if (e && e.status === 404 && !cursor) return next();
+        throw e;
+      });
+    }
+    return step(start, after);
+  }
+
   function sfCollectionPage(handle, opts) {
     opts = opts || {};
     var sort = SORT_KEYS[opts.sort || 'featured'] || SORT_KEYS.featured;
@@ -2159,6 +2441,431 @@
         });
     }).catch(function (e) {
       if (e && e.status === 404) return null;
+      throw e;
+    });
+  }
+
+  /* ================================== THE FILTERS DISPLAY (store_filters) */
+  /* flags.store_filters (Store page of the admin console, "Filters"): the
+   * shop as in the current display (shelves, aisles, every sort, sold out
+   * shown and marked), plus a Filters panel with each partner store's own
+   * filters and counts, the ones its own site shows:
+   *   - a Shopify store (Online Store or headless): the Storefront API's
+   *     filters on a collection (Search & Discovery: price, brand, pet type,
+   *     breed size, flavour, age...), applied by the store;
+   *   - a WooCommerce store: its Store API's attributes with counts
+   *     (products/collection-data), price range and stock, applied by the store;
+   *   - where a store gives none (a Shopify store's whole catalogue, a store
+   *     without filters set up): a basic set worked out here, from what is
+   *     listed: pet type, brand, veg or non-veg, price.
+   * "In stock only" is always there.
+   *
+   * A choice is kept with what the store needs to apply it ("input"), so
+   * the URL can carry the filters (?f=) and the chips can name them.
+   * State: { values: { facetId: [{ id, label, input }] }, price: { min, max } | null, inStock }. */
+  var Filters = (function () {
+    function empty() { return { values: {}, price: null, inStock: false }; }
+    function clean(st) {
+      var out = empty();
+      if (!st || typeof st !== 'object') return out;
+      if (st.values && typeof st.values === 'object') {
+        Object.keys(st.values).forEach(function (k) {
+          var list = Array.isArray(st.values[k]) ? st.values[k].filter(function (v) {
+            return v && typeof v.id === 'string' && typeof v.label === 'string';
+          }).slice(0, 30) : [];
+          if (list.length && typeof k === 'string' && k.length <= 120) out.values[k] = list;
+        });
+      }
+      var pr = st.price;
+      if (pr && typeof pr === 'object') {
+        var mn = Number(pr.min), mx = Number(pr.max);
+        var p = {};
+        if (isFinite(mn) && mn > 0) p.min = Math.round(mn);
+        if (isFinite(mx) && mx > 0) p.max = Math.round(mx);
+        if (p.min != null && p.max != null && p.min > p.max) { var t = p.min; p.min = p.max; p.max = t; }
+        if (p.min != null || p.max != null) out.price = p;
+      }
+      out.inStock = st.inStock === true;
+      return out;
+    }
+    function count(st) {
+      st = clean(st);
+      var n = st.inStock ? 1 : 0;
+      Object.keys(st.values).forEach(function (k) { n += st.values[k].length; });
+      return n + (st.price ? 1 : 0);
+    }
+    function encode(st) {
+      st = clean(st);
+      return count(st) ? JSON.stringify(st) : '';
+    }
+    function decode(text) {
+      if (!text) return empty();
+      try { return clean(JSON.parse(text)); } catch (e) { return empty(); }
+    }
+    function isBasic(id) { return /^rrt\./.test(id); }
+    function hasStoreChoices(st) {
+      return Object.keys(clean(st).values).some(function (k) { return !isBasic(k); });
+    }
+    function toggle(st, facet, value, on) {
+      st = clean(st);
+      var list = (st.values[facet.id] || []).filter(function (v) { return v.id !== value.id; });
+      if (on) list.push({ id: value.id, label: value.label, input: value.input });
+      if (list.length) st.values[facet.id] = list; else delete st.values[facet.id];
+      return st;
+    }
+
+    /** The chips above the grid: [{ key, label }] (key for remove()). */
+    function chips(st) {
+      st = clean(st);
+      var out = [];
+      if (st.inStock) out.push({ key: 'stock', label: 'In stock only' });
+      Object.keys(st.values).forEach(function (k) {
+        st.values[k].forEach(function (v) { out.push({ key: 'v|' + k + '|' + v.id, label: v.label }); });
+      });
+      if (st.price) {
+        var a = st.price.min != null ? formatPaise(st.price.min * 100) : null;
+        var b = st.price.max != null ? formatPaise(st.price.max * 100) : null;
+        out.push({ key: 'price', label: a && b ? a + ' to ' + b : (a ? 'From ' + a : 'Up to ' + b) });
+      }
+      return out;
+    }
+    function remove(st, key) {
+      st = clean(st);
+      if (key === 'stock') st.inStock = false;
+      else if (key === 'price') st.price = null;
+      else {
+        var m = /^v\|(.*)\|([^|]*)$/.exec(key);
+        if (m && st.values[m[1]]) {
+          st.values[m[1]] = st.values[m[1]].filter(function (v) { return v.id !== m[2]; });
+          if (!st.values[m[1]].length) delete st.values[m[1]];
+        }
+      }
+      return st;
+    }
+
+    /* ---- the basic set, worked out from what is listed */
+    var BASIC_BRANDS = 15;
+    function basicFacets(products) {
+      var list = products || [];
+      // Pet type as in the simplified display: a product that names no
+      // animal is for every animal. An animal is offered once something
+      // listed names it.
+      var animals = {}, namedAny = {}, brands = {}, diets = { veg: 0, non_veg: 0 }, lo = null, hi = null;
+      list.forEach(function (p) {
+        var named = Simple.animalsOf(p);
+        named.forEach(function (a) { namedAny[a] = 1; });
+        (SIMPLE_RULES.animals || []).forEach(function (a) {
+          if (!named.length || named.indexOf(a.key) !== -1) animals[a.key] = (animals[a.key] || 0) + 1;
+        });
+        var b = String(p.brand || '').trim();
+        if (b) brands[b] = (brands[b] || 0) + 1;
+        var d = Rules.diet(p);
+        if (d && (d.diet === 'veg' || d.diet === 'non_veg')) diets[d.diet]++;
+        var cv = p.cheapestVariant;
+        if (cv && typeof cv.pricePaise === 'number') {
+          if (lo == null || cv.pricePaise < lo) lo = cv.pricePaise;
+          if (hi == null || cv.pricePaise > hi) hi = cv.pricePaise;
+        }
+      });
+      var facets = [];
+      var animalValues = (SIMPLE_RULES.animals || []).filter(function (a) { return namedAny[a.key] === 1; })
+        .map(function (a) { return { id: a.key, label: a.name, count: animals[a.key], input: { animal: a.key } }; });
+      if (animalValues.length) facets.push({ id: 'rrt.animal', label: 'Pet type', kind: 'list', values: animalValues });
+      var brandValues = Object.keys(brands).sort(function (x, y) { return brands[y] - brands[x] || (x < y ? -1 : 1); })
+        .slice(0, BASIC_BRANDS).sort(function (x, y) { return x.toLowerCase() < y.toLowerCase() ? -1 : 1; })
+        .map(function (b) { return { id: b, label: b, count: brands[b], input: { brand: b } }; });
+      if (brandValues.length > 1) facets.push({ id: 'rrt.brand', label: 'Brand', kind: 'list', values: brandValues });
+      var dietValues = [];
+      if (diets.veg) dietValues.push({ id: 'veg', label: 'Veg', count: diets.veg, input: { diet: 'veg' } });
+      if (diets.non_veg) dietValues.push({ id: 'non_veg', label: 'Non-veg', count: diets.non_veg, input: { diet: 'non_veg' } });
+      if (dietValues.length) facets.push({ id: 'rrt.diet', label: 'Veg or non-veg', kind: 'list', values: dietValues });
+      if (lo != null && hi != null && hi > lo) {
+        facets.push({ id: 'rrt.price', label: 'Price', kind: 'price', min: Math.floor(lo / 100), max: Math.ceil(hi / 100) });
+      }
+      return facets;
+    }
+    /** Whether a product passes the basic choices (OR within one filter,
+     *  AND across filters), the price and "in stock only". [storeMode]: the
+     *  store applied the choices and the price; only "in stock only" is
+     *  checked here (a Shopify store is not asked for it). */
+    function basicMatch(p, st, storeMode) {
+      st = clean(st);
+      if (st.inStock && p.available === false) return false;
+      if (storeMode) return true;
+      var ok = true;
+      Object.keys(st.values).forEach(function (k) {
+        if (!ok || !isBasic(k)) return;
+        var vals = st.values[k];
+        if (k === 'rrt.animal') {
+          ok = vals.some(function (v) { return Simple.forAnimal(p, v.id); });
+        } else if (k === 'rrt.brand') {
+          var b = String(p.brand || '').trim();
+          ok = vals.some(function (v) { return v.id === b; });
+        } else if (k === 'rrt.diet') {
+          var d = Rules.diet(p);
+          ok = vals.some(function (v) { return d && v.id === d.diet; });
+        }
+      });
+      if (ok && st.price) {
+        var cv = p.cheapestVariant;
+        var rupees = cv && typeof cv.pricePaise === 'number' ? cv.pricePaise / 100 : null;
+        if (rupees != null) {
+          if (st.price.min != null && rupees < st.price.min) ok = false;
+          if (st.price.max != null && rupees > st.price.max) ok = false;
+        }
+      }
+      return ok;
+    }
+
+    /* ---- a Shopify store's own filters (Storefront API) */
+    function fromShopify(list) {
+      var facets = [];
+      (Array.isArray(list) ? list : []).forEach(function (f) {
+        if (!f || typeof f.id !== 'string' || !Array.isArray(f.values)) return;
+        if (f.type === 'PRICE_RANGE') {
+          var range = null;
+          try { range = JSON.parse(f.values[0] && f.values[0].input).price; } catch (e) { range = null; }
+          if (range && isFinite(Number(range.max))) {
+            facets.push({ id: f.id, label: f.label || 'Price', kind: 'price',
+              min: Math.floor(Number(range.min) || 0), max: Math.ceil(Number(range.max)) });
+          }
+          return;
+        }
+        var values = f.values.filter(function (v) { return v && typeof v.input === 'string' && (v.count == null || v.count > 0); })
+          .map(function (v) {
+            var input = null;
+            try { input = JSON.parse(v.input); } catch (e) { input = null; }
+            return input ? { id: String(v.id), label: String(v.label || ''), count: typeof v.count === 'number' ? v.count : null, input: input } : null;
+          }).filter(Boolean);
+        if (values.length) {
+          facets.push({ id: f.id, label: f.label || '', kind: 'list', values: values,
+            availability: /availability/i.test(f.id) });
+        }
+      });
+      return facets;
+    }
+    /** The Storefront API's ProductFilter list for the store's own choices. */
+    function shopifyInputs(st) {
+      st = clean(st);
+      var out = [];
+      Object.keys(st.values).forEach(function (k) {
+        if (isBasic(k)) return;
+        st.values[k].forEach(function (v) { if (v.input && typeof v.input === 'object') out.push(v.input); });
+      });
+      if (st.price) {
+        var price = {};
+        if (st.price.min != null) price.min = st.price.min;
+        if (st.price.max != null) price.max = st.price.max;
+        out.push({ price: price });
+      }
+      return out;
+    }
+
+    return {
+      empty: empty, clean: clean, count: count, encode: encode, decode: decode, toggle: toggle,
+      chips: chips, remove: remove, basicFacets: basicFacets, basicMatch: basicMatch,
+      fromShopify: fromShopify, shopifyInputs: shopifyInputs, hasStoreChoices: hasStoreChoices, isBasic: isBasic
+    };
+  })();
+
+  /** One page of a listing in the Filters display. Same answer as
+   *  collectionPage, plus:
+   *    facets  the filters to offer (the store's own, or [] for the basic set)
+   *    mode    'store' (the store applies the choices) or 'basic' (the page
+   *            applies them: Filters.basicMatch, and its facets come from
+   *            Filters.basicFacets over what is listed)
+   *  opts: { sort, after, state }. */
+  function filteredPage(handle, opts) {
+    opts = opts || {};
+    var st = Filters.clean(opts.state);
+    function basic(page) {
+      page.facets = []; page.mode = 'basic';
+      return page;
+    }
+    if (IS_WOO) return wooFilteredPage(handle, opts, st);
+    // The whole catalogue has no collection to ask for filters (the API's
+    // "all" handle can be someone else's collection, see catalogPage).
+    if (handle === Vendor.catalogHandle) return collectionPage(handle, opts).then(basic);
+    if (!IS_HEADLESS && (transport() === 'feeds' || /^fp:/.test(String(opts.after || '')))) {
+      return collectionPage(handle, opts).then(basic);
+    }
+    if (opts.after && /^b:/.test(String(opts.after))) {
+      // A listing that started without the store's filters goes on that way.
+      return collectionPage(handle, { sort: opts.sort, after: String(opts.after).slice(2) || null }).then(function (page) {
+        page = basic(page);
+        if (page.endCursor) page.endCursor = 'b:' + page.endCursor;
+        return page;
+      });
+    }
+    return sfFilteredPage(handle, opts, st).then(function (page) {
+      if (!page.missing && !page.facets.length && !opts.after && !Filters.hasStoreChoices(st)) page.mode = 'basic';
+      return page;
+    }).catch(function (e) {
+      if (e && e.status === 404) throw e;
+      if (opts.after) throw e;
+      // The store refused its filters (or the API is down): the basic set,
+      // on the listing as the current display reads it.
+      return collectionPage(handle, { sort: opts.sort }).then(function (page) {
+        page = basic(page);
+        if (page.endCursor) page.endCursor = 'b:' + page.endCursor;
+        return page;
+      });
+    });
+  }
+
+  function sfFilteredPage(handle, opts, st) {
+    var sort = SORT_KEYS[opts.sort || 'featured'] || SORT_KEYS.featured;
+    var filters = Filters.shopifyInputs(st);
+    var query = function (F) { return (
+      'query RrtFiltered($handle: String!, $after: String, $sortKey: ProductCollectionSortKeys, $reverse: Boolean, $filters: [ProductFilter!]) {' +
+      ' collection(handle: $handle) {' +
+      '  products(first: ' + PAGE_SIZE + ', after: $after, sortKey: $sortKey, reverse: $reverse, filters: $filters) {' +
+      '   filters { id label type values { id label count input } }' +
+      '   pageInfo { hasNextPage endCursor }' +
+      '   nodes { ' + F + ' }' +
+      '  }' +
+      ' }' +
+      '}'); };
+    var cacheKey = 'fcol|' + handle + '|' + (opts.sort || 'featured') + '|' + JSON.stringify(filters) + '|' + (opts.after || '');
+    return gqlTiles(query, {
+      handle: handle, after: opts.after || null, sortKey: sort.key, reverse: sort.reverse, filters: filters
+    }, { cacheKey: cacheKey, fresh: opts.fresh }).then(function (data) {
+      var col = data && data.collection;
+      if (!col) return { products: [], hasMore: false, endCursor: null, missing: true, clientSort: false, facets: [], mode: 'store' };
+      var conn = col.products || {};
+      var info = conn.pageInfo || {};
+      return {
+        products: (conn.nodes || []).map(productFromGraphTile).filter(Boolean),
+        hasMore: info.hasNextPage === true,
+        endCursor: info.endCursor || null,
+        missing: false,
+        clientSort: false,
+        facets: Filters.fromShopify(conn.filters),
+        mode: 'store'
+      };
+    });
+  }
+
+  /* ---- a WooCommerce store's own filters (Store API) */
+  var wooAttrsPromise = null;
+  /** The store's global attributes (Brand, Size, Flavour...), once per tab. */
+  function wooAttributes() {
+    if (wooAttrsPromise) return wooAttrsPromise;
+    wooAttrsPromise = wooGet('/products/attributes', {}).then(function (body) {
+      return (Array.isArray(body) ? body : []).filter(function (a) {
+        return a && typeof a.id === 'number' && typeof a.taxonomy === 'string' && /^pa_[a-z0-9_-]+$/.test(a.taxonomy) && a.name;
+      }).slice(0, 8).map(function (a) { return { id: a.id, name: wooText(a.name), taxonomy: a.taxonomy }; });
+    });
+    wooAttrsPromise.catch(function () { wooAttrsPromise = null; });
+    return wooAttrsPromise;
+  }
+  var wooTermsCache = {};
+  function wooTerms(attrId) {
+    if (wooTermsCache[attrId]) return wooTermsCache[attrId];
+    var all = [];
+    function page(n) {
+      return wooGet('/products/attributes/' + attrId + '/terms', { per_page: '100', page: String(n) }).then(function (body) {
+        var list = Array.isArray(body) ? body : [];
+        list.forEach(function (t) { if (t && typeof t.id === 'number' && t.name) all.push({ id: t.id, name: wooText(t.name) }); });
+        if (list.length >= 100 && n < 5) return page(n + 1);
+        return all;
+      });
+    }
+    wooTermsCache[attrId] = page(1);
+    wooTermsCache[attrId].catch(function () { delete wooTermsCache[attrId]; });
+    return wooTermsCache[attrId];
+  }
+  /** The Store API's own query for the choices (the same for products and
+   *  for collection-data). Attributes: OR within one, AND across. */
+  function wooFilterParams(st, minorUnit) {
+    var q = {};
+    var i = 0;
+    Object.keys(st.values).forEach(function (k) {
+      if (Filters.isBasic(k)) return;
+      var terms = st.values[k].map(function (v) { return v.input && v.input.term; }).filter(function (t) { return typeof t === 'number'; });
+      var tax = st.values[k][0] && st.values[k][0].input && st.values[k][0].input.attribute;
+      if (!terms.length || typeof tax !== 'string') return;
+      q['attributes[' + i + '][attribute]'] = tax;
+      q['attributes[' + i + '][operator]'] = 'in';
+      terms.forEach(function (t, j) { q['attributes[' + i + '][term_id][' + j + ']'] = String(t); });
+      i++;
+    });
+    if (i > 1) q.attribute_relation = 'and';
+    var unit = Math.pow(10, typeof minorUnit === 'number' ? minorUnit : 0);
+    if (st.price && st.price.min != null) q.min_price = String(Math.round(st.price.min * unit));
+    if (st.price && st.price.max != null) q.max_price = String(Math.round(st.price.max * unit));
+    if (st.inStock) q['stock_status[0]'] = 'instock';
+    return q;
+  }
+  var wooMinorUnit = 0;
+  function wooFacets(handle, st) {
+    return wooAttributes().then(function (attrs) {
+      var q = { calculate_price_range: 'true', calculate_stock_status_counts: 'true' };
+      if (handle !== Vendor.catalogHandle) q.category = handle;
+      attrs.forEach(function (a, i) {
+        q['calculate_attribute_counts[' + i + '][taxonomy]'] = a.taxonomy;
+        q['calculate_attribute_counts[' + i + '][query_type]'] = 'or';
+      });
+      var f = wooFilterParams(st, wooMinorUnit);
+      Object.keys(f).forEach(function (k) { q[k] = f[k]; });
+      return wooGet('/products/collection-data', q).then(function (data) {
+        data = data || {};
+        var counts = {};
+        (Array.isArray(data.attribute_counts) ? data.attribute_counts : []).forEach(function (c) {
+          if (c && typeof c.term === 'number' && typeof c.count === 'number') counts[c.term] = c.count;
+        });
+        return Promise.all(attrs.map(function (a) {
+          return wooTerms(a.id).then(function (terms) { return { a: a, terms: terms }; }, function () { return { a: a, terms: [] }; });
+        })).then(function (list) {
+          var facets = [];
+          list.forEach(function (x) {
+            var values = x.terms.filter(function (t) { return counts[t.id] > 0; }).map(function (t) {
+              return { id: String(t.id), label: t.name, count: counts[t.id], input: { attribute: x.a.taxonomy, term: t.id } };
+            });
+            if (values.length) facets.push({ id: 'woo.' + x.a.taxonomy, label: x.a.name, kind: 'list', values: values });
+          });
+          var pr = data.price_range;
+          if (pr && pr.max_price != null) {
+            var mu = typeof pr.currency_minor_unit === 'number' ? pr.currency_minor_unit : 0;
+            wooMinorUnit = mu;
+            var div = Math.pow(10, mu);
+            var lo = Math.floor(Number(pr.min_price) / div), hi = Math.ceil(Number(pr.max_price) / div);
+            if (isFinite(lo) && isFinite(hi) && hi > lo) facets.push({ id: 'woo.price', label: 'Price', kind: 'price', min: lo, max: hi });
+          }
+          return facets;
+        });
+      });
+    });
+  }
+  function wooFilteredPage(handle, opts, st) {
+    var n = wooPageNum(opts.after);
+    var size = PAGE_SIZE;
+    var sort = WOO_SORT[opts.sort || 'featured'] || WOO_SORT.featured;
+    var q = { per_page: String(size), page: String(n), orderby: sort.orderby, order: sort.order };
+    if (handle !== Vendor.catalogHandle) q.category = handle;
+    else if (!opts.sort || opts.sort === 'featured') { q.orderby = 'popularity'; q.order = 'desc'; }
+    var f = wooFilterParams(st, wooMinorUnit);
+    Object.keys(f).forEach(function (k) { q[k] = f[k]; });
+    var facetsP = n === 1 ? wooFacets(handle, st).catch(function () { return null; }) : Promise.resolve(null);
+    var productsP = wooGet('/products', q, { fresh: opts.fresh });
+    return Promise.all([productsP, facetsP]).then(function (r) {
+      var raw = Array.isArray(r[0]) ? r[0] : [];
+      var facets = r[1] || [];
+      return {
+        products: raw.map(productFromWoo).filter(Boolean),
+        hasMore: raw.length >= size,
+        endCursor: 'wp:' + (n + 1),
+        missing: false,
+        clientSort: false,
+        facets: facets,
+        // Without its counts the store's filters cannot be offered: the
+        // basic set instead (choices made from it are applied here).
+        mode: facets.length || Filters.hasStoreChoices(st) ? 'store' : 'basic'
+      };
+    }).catch(function (e) {
+      if (e && (e.status === 404 || e.status === 400)) {
+        return { products: [], hasMore: false, endCursor: null, missing: true, clientSort: false, facets: [], mode: 'store' };
+      }
       throw e;
     });
   }
@@ -3116,6 +3823,10 @@
    * flashing the full range until the live read lands. */
   function vegOnly() { return readJson(local, VEG_KEY, false) === true; }
   function setVegOnly(v) { writeJson(local, VEG_KEY, v === true); }
+  /** The simplified display, as last read on this device (rrt-store-config.js keeps it). */
+  function simpleOn() { return readJson(local, SIMPLE_KEY, false) === true; }
+  /** The Filters display, as last read on this device (rrt-store-config.js keeps it). */
+  function filtersOn() { return readJson(local, FILTERS_KEY, false) === true; }
 
   function escapeHtml(s) {
     return String(s == null ? '' : s)
@@ -3139,9 +3850,18 @@
     decodeEntities: decodeHtmlEntities,
     descriptionBlocks: descriptionBlocks,
     sorts: SORTS,
+    simpleSorts: SIMPLE_SORTS,
     sortLabels: SORT_LABELS,
     visibleProducts: visibleProducts,
     collectionPage: collectionPage,
+    listingPage: listingPage,
+    simple: Simple,
+    simpleShop: Simple.forStore({ shelves: SHELVES, catalogHandle: Vendor.catalogHandle }),
+    simpleOn: simpleOn,
+    filters: Filters,
+    filteredPage: filteredPage,
+    wooFilterParams: function (st, minorUnit) { return wooFilterParams(Filters.clean(st), minorUnit); },
+    filtersOn: filtersOn,
     previewCollection: previewCollection,
     previewFace: previewFace,
     brandPage: brandPage,

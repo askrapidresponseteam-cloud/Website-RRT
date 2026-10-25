@@ -220,7 +220,9 @@ for (const [name, text] of [['shop.css', cssOnly], ['rrt-shop.js', sdk], ['shop-
         if (mine.some((r) => /collections|suggest|recommendations|\/products\//.test(r))) problems.push(`${base}: a headless store has no feeds to forward`);
       } else if (d.platform === 'woocommerce') {
         const api = d.woo && d.woo.api;
-        for (const ep of ['/products', '/products/categories']) {
+        // The products and categories, and (the Filters display) the
+        // store's own filters: its attributes, their terms, and the counts.
+        for (const ep of ['/products', '/products/categories', '/products/collection-data', '/products/attributes', '/products/attributes/:id(\\d+)/terms']) {
           if (!rewrites.includes(base + api + ep)) problems.push(`vercel.json rewrite missing: ${base}${api}${ep}`);
         }
         if (mine.some((r) => /cart|checkout|:path\*/.test(r))) problems.push(`${base}: only product and category reads may be forwarded`);

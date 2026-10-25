@@ -63,6 +63,7 @@
   </div>
   <div class="controls">
     <span class="count" id="count" aria-live="polite"></span>
+    <button class="filters-btn" id="filtersBtn" type="button" aria-haspopup="dialog" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="16" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="10" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Filters</span><b id="filtersN" hidden></b></button>
     <select class="sort" id="sort" aria-label="Sort products"></select>
   </div>
 </section>
@@ -70,6 +71,8 @@
 <div class="category-bar" id="shelfBar" role="group" aria-label="Shelves"><a href="/shop" aria-pressed="true">All</a><a href="/shop?shelf=pharmacy">Pharmacy</a><a href="/shop?shelf=supplements">Supplements</a><a href="/shop?shelf=dog-food">Dog Food</a><a href="/shop?shelf=cat-food">Cat Food</a><a href="/shop?shelf=treats">Treats</a><a href="/shop?shelf=grooming">Grooming</a><a href="/shop?shelf=gear">Toys & Gear</a><a href="/shop?shelf=small-pets">Birds, Fish & Small Pets</a></div>
 <div class="category-bar aisle-bar" id="aisleBar" role="group" aria-label="Aisles" hidden></div>
 <div class="category-bar brand-bar" id="brandBar" role="group" aria-label="Brands"><span class="lbl">Brands</span><a href="/shop?b=Royal%20Canin">Royal Canin</a><a href="/shop?b=Pedigree">Pedigree</a><a href="/shop?b=Drools">Drools</a><a href="/shop?b=Farmina">Farmina</a><a href="/shop?b=Whiskas">Whiskas</a><a href="/shop?b=Sheba">Sheba</a><a href="/shop?b=Henlo">Henlo</a><a href="/shop?b=Felix">Felix</a><a href="/shop?b=Supercoat">Supercoat</a><a href="/shop?b=Beaphar">Beaphar</a></div>
+
+<div class="active-filters" id="activeFilters" hidden></div>
 
 <div class="notice" id="notice" hidden></div>
 
@@ -122,6 +125,39 @@
   var hub = !searching && !brandParam && !shelf && !aisle;
   var handle = (searching || brandParam) ? null : (hub ? S.vendor.catalogHandle : aisle);
 
+  /* The simplified display (the admin's flags.store_simple, as last read on
+   * this device; a change reloads the page): browse by animal and category
+   * only (?for=dog&show=medicines), sold out hidden, no price sort. Worked out
+   * from this store's own shelves (RRTShop.simpleShop), so every partner
+   * store gets it. An old shelf or aisle link lands on its animal and
+   * category. */
+  var simple = U.simpleNow();
+  var SM = S.simpleShop;
+  /* The Filters display (the admin's flags.store_filters): the shop as in
+   * the current display, plus a Filters panel with the partner store's own
+   * filters and counts (RRTShop.filteredPage), or a basic set where the store
+   * has none. The choices ride in the URL (?f=), so back and a shared link
+   * keep them. Not on search or brand pages. */
+  var filtersStyle = !simple && U.filtersNow();
+  var filtering = filtersStyle && !searching && !brandParam;
+  var fstate = filtering ? S.filters.decode(params.get('f')) : S.filters.empty();
+  var pet = null, show = null, handles = null;
+  if (simple && !searching && !brandParam) {
+    var role = shelf ? S.simple.shelfRole(shelf) : null;
+    pet = (params.get('for') || '').trim() || (role && role.animal) || null;
+    show = (params.get('show') || '').trim() || (role && role.category) || null;
+    if (!SM.animals.some(function (a) { return a.key === pet; })) pet = null;
+    if (!SM.categoriesFor(pet).some(function (c) { return c.key === show; })) show = null;
+    handles = SM.sources(show, pet);
+    shelf = null; aisle = ''; hub = !pet && !show;
+    handle = handles[0] || S.vendor.catalogHandle;
+  }
+  function simpleTitle() {
+    var a = pet ? S.simple.animal(pet) : null, c = show ? S.simple.category(show) : null;
+    if (c && a) return c.name + ' for ' + a.name.toLowerCase();
+    return c ? c.name : (a ? a.name : 'The RRT Shop');
+  }
+
   function aisleLabel() {
     if (shelf) {
       for (var i = 0; i < shelf.aisles.length; i++) {
@@ -142,6 +178,12 @@
     document.title = brandParam + ' \u00b7 The RRT Shop';
     $('pageTitle').textContent = brandParam;
     $('pageCopy').textContent = 'Everything the seller lists under this brand, at live prices.';
+  } else if (simple) {
+    if (!hub) {
+      document.title = simpleTitle() + ' \u00b7 The RRT Shop';
+      $('pageTitle').textContent = simpleTitle();
+      $('pageCopy').textContent = 'In stock now at the partner store, at live prices.';
+    }
   } else if (shelf) {
     document.title = shelf.name + ' · The RRT Shop';
     $('pageTitle').textContent = shelf.name;
@@ -154,10 +196,37 @@
   // The header already says Shop: the big title only appears when it names
   // something (a search, brand, shelf or aisle). On the main page it stays
   // for screen readers and search engines.
-  if (searching || brandParam || shelf || aisle) $('pageTitle').classList.remove('vh');
+  if (searching || brandParam || shelf || aisle || (simple && !hub)) $('pageTitle').classList.remove('vh');
 
   /* ------------------------------------------------ shelf and brand chips */
 
+  function simpleHref(forKey, showKey) {
+    var qs = [];
+    if (forKey) qs.push('for=' + encodeURIComponent(forKey));
+    if (showKey) qs.push('show=' + encodeURIComponent(showKey));
+    return '/shop' + (qs.length ? '?' + qs.join('&') : '');
+  }
+  if (simple) {
+    // Two rows: the animal, then the category (only those this store has
+    // for that animal). A category that the next animal lacks is dropped.
+    var petBar = $('shelfBar');
+    petBar.setAttribute('aria-label', 'Animals');
+    petBar.innerHTML = '<a class="category" href="' + simpleHref(null, show) + '" aria-pressed="' + (!pet ? 'true' : 'false') + '">All pets</a>' +
+      SM.animals.map(function (a) {
+        var keep = SM.categoriesFor(a.key).some(function (c) { return c.key === show; });
+        return '<a class="category" href="' + simpleHref(a.key, keep ? show : null) + '" aria-pressed="' +
+          (pet === a.key ? 'true' : 'false') + '">' + esc(a.name) + '</a>';
+      }).join('');
+    var catBar = $('aisleBar');
+    catBar.hidden = false;
+    catBar.setAttribute('aria-label', 'Categories');
+    catBar.innerHTML = '<a class="category" href="' + simpleHref(pet, null) + '" aria-pressed="' + (!show ? 'true' : 'false') + '">All products</a>' +
+      SM.categoriesFor(pet).map(function (c) {
+        return '<a class="category" href="' + simpleHref(pet, c.key) + '" aria-pressed="' +
+          (show === c.key ? 'true' : 'false') + '">' + esc(c.name) + '</a>';
+      }).join('');
+    $('brandBar').hidden = true;
+  } else {
   var html = '<a class="category" href="/shop" aria-pressed="' + (hub ? 'true' : 'false') + '">All</a>';
   S.shelves.forEach(function (s) {
     var on = shelf && shelf.key === s.key;
@@ -165,6 +234,8 @@
       ' aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(s.name) + '</a>';
   });
   $('shelfBar').innerHTML = html;
+  }
+  if (simple && (searching || brandParam)) $('brandBar').hidden = true;
 
   if (shelf) {
     var bar = $('aisleBar');
@@ -179,18 +250,25 @@
   /* ------------------------------------------------------------- controls */
 
   var sortSel = $('sort');
-  S.sorts.forEach(function (key) {
+  (simple ? S.simpleSorts : S.sorts).forEach(function (key) {
     var o = document.createElement('option');
     o.value = key;
     o.textContent = { featured: 'Sort: featured', newest: 'Sort: newest', priceLow: 'Sort: price low', priceHigh: 'Sort: price high' }[key];
     sortSel.appendChild(o);
   });
 
-  var state = { sort: 'featured', products: [], cursor: null, hasMore: false, loading: false, total: null, autoFills: 0, drawn: [] };
+  var state = { sort: 'featured', products: [], cursor: null, hasMore: false, loading: false, total: null, autoFills: 0, drawn: [],
+    facets: [], mode: 'store', facetsRead: false };
   // Veg-only can leave a page of 24 with few or none to show: keep reading
   // (up to this many pages in a row) until there is a screenful or the
   // listing ends, instead of showing a near-empty grid.
+  // The simplified display thins pages too (sold out, the animal), and fills the same way.
   var VEG_FILL_TARGET = 12, VEG_FILL_MAX_PAGES = 30;
+  function thinned() {
+    if (cfgVegOnly || simple) return true;
+    // The basic filters, and "in stock only" on a Shopify store, are applied on the page.
+    return filtering && (state.mode === 'basic' ? S.filters.count(fstate) > 0 : fstate.inStock);
+  }
 
   sortSel.addEventListener('change', function () {
     state.sort = sortSel.value;
@@ -199,7 +277,7 @@
 
   // Brand chips follow the active partner store's own brand list.
   (function () {
-    var bar = $('brandBar'); if (!bar || !S.vendor.brands || !S.vendor.brands.length) return;
+    var bar = $('brandBar'); if (!bar || simple || !S.vendor.brands || !S.vendor.brands.length) return;
     bar.innerHTML = '<span class="lbl">Brands</span>' + S.vendor.brands.map(function (b) {
       return '<a href="/shop?b=' + encodeURIComponent(b) + '">' + esc(b) + '</a>';
     }).join('');
@@ -222,6 +300,18 @@
   if (window.RRTStoreConfig) {
     window.RRTStoreConfig.subscribe(function (sc) {
       if (!sc.ready) return;
+      // The admin changed the display style: the page is laid out for one
+      // style, so it opens again in the other (once; the new value is kept).
+      if (sc.simple !== simple || (sc.filters === true) !== filtersStyle) {
+        try {
+          // Never in a loop: at most one reload every ten seconds.
+          var last = Number(sessionStorage.getItem('rrt_store_simple_reload') || 0);
+          if (Date.now() - last < 10000) return;
+          sessionStorage.setItem('rrt_store_simple_reload', String(Date.now()));
+        } catch (e) { return; }
+        location.reload();
+        return;
+      }
       if (sc.vegOnly !== cfgVegOnly) {
         cfgVegOnly = sc.vegOnly;
         S.setVegOnly(cfgVegOnly);
@@ -241,6 +331,8 @@
   function fetchPage(after) {
     if (searching) return S.searchAll(q, { after: after });
     if (brandParam) return S.brandPage(brandParam, { sort: state.sort, after: after });
+    if (handles) return S.listingPage(handles, { sort: state.sort, after: after });
+    if (filtering) return S.filteredPage(handle, { sort: state.sort, after: after, state: fstate });
     return S.collectionPage(handle, { sort: state.sort, after: after });
   }
 
@@ -284,7 +376,7 @@
     if (!state.hasMore || state.loading || state.paused || !nearEnd()) return;
     // Bounded like the veg-only fill: a listing that hides almost everything
     // never walks the whole store by itself (Load more still works).
-    if (cfgVegOnly && state.products.length >= VEG_FILL_MAX_PAGES * 24) return;
+    if (thinned() && state.products.length >= VEG_FILL_MAX_PAGES * 24) return;
     loadNext();
   }
 
@@ -292,6 +384,7 @@
     gen++; ahead = null;
     state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
     state.clientSort = false; state.autoFills = 0; state.loading = false; state.drawn = []; state.paused = false;
+    state.facetsRead = false;
     $('more').textContent = 'Load more';
     $('grid').innerHTML = skeletons(8);
     $('state').hidden = true; $('foot').hidden = true;
@@ -319,6 +412,13 @@
         seen[p.id] = true;
         return true;
       }));
+      // The Filters display: what to offer comes with the listing's first page.
+      if (filtering && !state.cursor && !state.facetsRead) {
+        state.facetsRead = true;
+        state.facets = page.facets || [];
+        state.mode = page.mode || 'store';
+        paintFilters();
+      }
       state.cursor = page.endCursor;
       state.hasMore = page.hasMore;
       if (page.clientSort) state.clientSort = true;
@@ -367,12 +467,18 @@
   function render() {
     var visible = S.visibleProducts(state.products, {
       vegOnly: cfgVegOnly,
+      hideSoldOut: simple,
+      animal: pet,
       // Server-sorted pages arrive in order; feed pages sort here, the
       // way the app sorts a shelf it loaded whole.
       sort: state.clientSort ? state.sort : 'featured'
     });
+    if (filtering) {
+      visible = visible.filter(function (p) { return S.filters.basicMatch(p, fstate, state.mode === 'store'); });
+      if (state.mode === 'basic') paintFilters();
+    }
     $('grid').setAttribute('aria-busy', 'false');
-    var filling = cfgVegOnly && state.hasMore && visible.length < VEG_FILL_TARGET &&
+    var filling = thinned() && state.hasMore && visible.length < VEG_FILL_TARGET &&
       state.autoFills < VEG_FILL_MAX_PAGES;
     if (!visible.length && !state.hasMore && cfgVegOnly && state.products.length) {
       showState('No vegetarian products here.',
@@ -380,7 +486,17 @@
       return;
     }
     if (!visible.length && !state.hasMore) {
-      if (searching) {
+      if (filtering && S.filters.count(fstate)) {
+        showState('Nothing matches these filters.',
+          'Take a filter off, or clear them all.', false);
+        var clear = document.createElement('p');
+        clear.innerHTML = '<button class="btn-line" type="button">Clear filters</button>';
+        clear.querySelector('button').addEventListener('click', function () { applyFilters(S.filters.empty()); });
+        $('state').appendChild(clear);
+      } else if (simple && !searching && !brandParam) {
+        showState('Nothing in stock here right now.',
+          'Try another animal or category, or search the whole range.', false);
+      } else if (searching) {
         showState('Nothing matched \u201c' + esc(q) + '\u201d.',
           'Try fewer words, or a brand name.', false);
       } else {
@@ -392,7 +508,7 @@
     $('state').hidden = true;
     draw(visible, filling);
     $('count').textContent = filling
-      ? 'Finding vegetarian products\u2026 ' + visible.length + ' so far'
+      ? (cfgVegOnly ? 'Finding vegetarian products\u2026 ' : 'Finding more products\u2026 ') + visible.length + ' so far'
       : visible.length + (state.hasMore ? '+' : '') + (cfgVegOnly ? ' vegetarian' : '') +
         (visible.length === 1 ? ' product' : ' products');
     $('foot').hidden = false;
@@ -425,6 +541,159 @@
     }
     state.drawn = ids;
   }
+
+  /* ------------------------------------------------- the Filters panel */
+
+  function facetsNow() {
+    if (!filtering) return [];
+    if (state.mode === 'basic') return S.filters.basicFacets(state.products);
+    return state.facets || [];
+  }
+  /** The button (with how many are chosen) and the chips above the grid. */
+  function paintFilters() {
+    if (!filtering) return;
+    var btn = $('filtersBtn'), n = S.filters.count(fstate);
+    btn.hidden = false;
+    $('filtersN').hidden = !n;
+    $('filtersN').textContent = n ? String(n) : '';
+    btn.setAttribute('aria-label', n ? 'Filters, ' + n + ' chosen' : 'Filters');
+    var chips = S.filters.chips(fstate);
+    var bar = $('activeFilters');
+    bar.hidden = !chips.length;
+    bar.innerHTML = chips.map(function (c) {
+      return '<button type="button" data-k="' + esc(c.key) + '" aria-label="Remove ' + esc(c.label) + '">' + esc(c.label) +
+        ' <span aria-hidden="true">\u00d7</span></button>';
+    }).join('') + (chips.length > 1 ? '<button type="button" class="clear" data-k="*">Clear all</button>' : '');
+  }
+  $('activeFilters').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-k]'); if (!b) return;
+    var k = b.getAttribute('data-k');
+    applyFilters(k === '*' ? S.filters.empty() : S.filters.remove(fstate, k));
+  });
+
+  /** New choices: into the URL (back keeps them), then the listing again. */
+  function applyFilters(next) {
+    fstate = S.filters.clean(next);
+    var u = new URL(location.href);
+    var enc = S.filters.encode(fstate);
+    if (enc) u.searchParams.set('f', enc); else u.searchParams.delete('f');
+    try { history.replaceState(null, '', u.pathname + u.search); } catch (e) { /* file:// */ }
+    paintFilters();
+    resetAndLoad();
+  }
+
+  var fp = null, draft = null;
+  function panel() {
+    if (fp) return fp;
+    var dlg = document.createElement('dialog');
+    dlg.className = 'fp';
+    dlg.setAttribute('aria-labelledby', 'fpTitle');
+    dlg.innerHTML =
+      '<div class="fp-head"><h2 id="fpTitle">Filters</h2>' +
+      '<button type="button" class="qa-x fp-x" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" fill="none"/></svg></button></div>' +
+      '<div class="fp-body"></div>' +
+      '<div class="fp-foot"><button type="button" class="btn-line fp-clear">Clear all</button><button type="button" class="btn-solid fp-apply">Show products</button></div>';
+    document.body.appendChild(dlg);
+    dlg.querySelector('.fp-x').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('close', function () { document.documentElement.classList.remove('fp-open'); $('filtersBtn').focus(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.querySelector('.fp-clear').addEventListener('click', function () { draft = S.filters.empty(); paintPanel(); });
+    dlg.querySelector('.fp-apply').addEventListener('click', function () {
+      readPrice();
+      dlg.close();
+      applyFilters(draft);
+    });
+    dlg.querySelector('.fp-body').addEventListener('change', function (e) {
+      var t = e.target;
+      if (t.name === 'stock') { draft.inStock = t.checked; return; }
+      var f = t.getAttribute('data-f'), v = t.getAttribute('data-v');
+      if (!f) return;
+      var facet = facetsNow().filter(function (x) { return x.id === f; })[0];
+      var value = facet && facet.values.filter(function (x) { return x.id === v; })[0];
+      if (!value) { // a choice no longer on offer (counts changed): its stored copy
+        value = (draft.values[f] || []).filter(function (x) { return x.id === v; })[0];
+        facet = { id: f };
+      }
+      if (value) draft = S.filters.toggle(draft, facet, value, t.checked);
+    });
+    dlg.querySelector('.fp-body').addEventListener('click', function (e) {
+      var h = e.target.closest('.fp-h');
+      if (h) {
+        var open = h.getAttribute('aria-expanded') !== 'true';
+        h.setAttribute('aria-expanded', open ? 'true' : 'false');
+        h.querySelector('.pm').textContent = open ? '-' : '+';
+        h.nextElementSibling.hidden = !open;
+        return;
+      }
+      var more = e.target.closest('.fp-more');
+      if (more) {
+        Array.prototype.forEach.call(more.parentNode.querySelectorAll('.fp-v[hidden]'), function (x) { x.hidden = false; });
+        more.remove();
+      }
+    });
+    fp = dlg;
+    return fp;
+  }
+  function readPrice() {
+    var body = fp && fp.querySelector('.fp-body');
+    var a = body && body.querySelector('input[name=pmin]'), b = body && body.querySelector('input[name=pmax]');
+    if (!a || !b) return;
+    var mn = Number(a.value), mx = Number(b.value);
+    var pr = {};
+    if (a.value !== '' && isFinite(mn) && mn > 0) pr.min = mn;
+    if (b.value !== '' && isFinite(mx) && mx > 0) pr.max = mx;
+    draft.price = (pr.min != null || pr.max != null) ? pr : null;
+  }
+  var SHOWN = 8;
+  function paintPanel() {
+    var facets = facetsNow();
+    var exact = state.mode !== 'basic' || !state.hasMore;
+    var chosen = function (f, v) { return (draft.values[f] || []).some(function (x) { return x.id === v; }); };
+    var html = '<label class="fp-stock"><input type="checkbox" name="stock"' + (draft.inStock ? ' checked' : '') + '><span>In stock only</span></label>';
+    var openCount = 0;
+    facets.forEach(function (f, i) {
+      if (f.availability) return; // "In stock only" above says it
+      var open = openCount < 2 || (draft.values[f.id] || []).length > 0 || (f.kind === 'price' && draft.price);
+      if (open) openCount++;
+      html += '<section class="fp-sec"><button type="button" class="fp-h" aria-expanded="' + (open ? 'true' : 'false') + '">' +
+        esc(f.label) + '<span class="pm" aria-hidden="true">' + (open ? '-' : '+') + '</span></button>' +
+        '<div class="fp-vals"' + (open ? '' : ' hidden') + '>';
+      if (f.kind === 'price') {
+        var pr = draft.price || {};
+        html += '<div class="fp-price"><label>Min \u20b9<input type="number" inputmode="numeric" min="0" name="pmin" placeholder="' + esc(f.min) + '" value="' + (pr.min != null ? esc(pr.min) : '') + '"></label>' +
+          '<label>Max \u20b9<input type="number" inputmode="numeric" min="0" name="pmax" placeholder="' + esc(f.max) + '" value="' + (pr.max != null ? esc(pr.max) : '') + '"></label></div>';
+      } else {
+        // A choice made earlier that this listing no longer counts stays ticked.
+        var values = f.values.slice();
+        (draft.values[f.id] || []).forEach(function (c) {
+          if (!values.some(function (v) { return v.id === c.id; })) values.unshift({ id: c.id, label: c.label, count: null, input: c.input });
+        });
+        values.forEach(function (v, j) {
+          html += '<label class="fp-v"' + (j >= SHOWN && !chosen(f.id, v.id) ? ' hidden' : '') + '><input type="checkbox" data-f="' + esc(f.id) + '" data-v="' + esc(v.id) + '"' +
+            (chosen(f.id, v.id) ? ' checked' : '') + '><span>' + esc(v.label) + '</span>' +
+            (exact && v.count != null ? '<span class="n">' + esc(v.count) + '</span>' : '') + '</label>';
+        });
+        if (values.length > SHOWN) html += '<button type="button" class="fp-more">Show ' + (values.length - SHOWN) + ' more</button>';
+      }
+      html += '</div></section>';
+    });
+    if (!facets.length) {
+      html += '<p class="fp-note">' + (state.loading ? 'Reading the filters\u2026' : 'The partner store has no other filters for this shelf.') + '</p>';
+    } else if (!exact) {
+      html += '<p class="fp-note">Worked out from what is listed so far.</p>';
+    }
+    fp.querySelector('.fp-body').innerHTML = html;
+  }
+  $('filtersBtn').addEventListener('click', function () {
+    var dlg = panel();
+    draft = S.filters.clean(fstate);
+    paintPanel();
+    document.documentElement.classList.add('fp-open');
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    var first = dlg.querySelector('.fp-body input, .fp-body button');
+    if (first) first.focus();
+  });
+  if (filtering) paintFilters();
 
   $('more').addEventListener('click', loadNext);
 
