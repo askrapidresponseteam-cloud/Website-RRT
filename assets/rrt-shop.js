@@ -1105,8 +1105,25 @@
 
   /* ============================================== VISIBLE PRODUCTS (BROWSE) */
 
-  var SORTS = ['featured', 'newest', 'priceLow', 'priceHigh'];
-  var SORT_LABELS = { featured: 'FEATURED', newest: 'NEWEST', priceLow: 'PRICE LOW', priceHigh: 'PRICE HIGH' };
+  var SORTS = ['featured', 'newest', 'priceLow', 'priceHigh', 'discount'];
+  var SORT_LABELS = { featured: 'FEATURED', newest: 'NEWEST', priceLow: 'PRICE LOW', priceHigh: 'PRICE HIGH',
+    discount: 'HIGHEST DISCOUNT' };
+
+  /** The discount a tile shows (its cheapest variant on sale, as "40% off"),
+   *  as a fraction; 0 for a sold-out product (its tile says sold out). The
+   *  "highest discount" sort orders by it, as the app does. */
+  function discountOf(p) {
+    if (!p || p.available === false) return 0;
+    var cv = p.cheapestVariant;
+    if (!cv || !cv.compareAtPaise || !(cv.compareAtPaise > cv.pricePaise)) return 0;
+    return (cv.compareAtPaise - cv.pricePaise) / cv.compareAtPaise;
+  }
+
+  /** The order to ask the store for: no store sorts by discount, so that
+   *  sort reads the store's own order and sorts here, over the whole
+   *  listing (read up to SORT_WHOLE_PAGES pages first, as the app does). */
+  function storeOrder(sort) { return sort === 'discount' ? 'featured' : (sort || 'featured'); }
+  var SORT_WHOLE_PAGES = 12;
 
   /** What the grid shows: everything the vendor lists, sold out included (a
    *  sold-out tile says so and has no Add), as in the app; only RRT's
@@ -1133,6 +1150,14 @@
         // Products the feed did not date sort last, keeping relative order.
         visible.sort(function (a, b) { return (b.createdAtMs || 0) - (a.createdAtMs || 0); });
         break;
+      case 'discount': {
+        // Biggest saving first, then the rest; sold out last. Equal ones keep
+        // the store's order (stable, whatever the browser's sort).
+        var keyed = visible.map(function (p, i) { return { p: p, i: i, d: p.available === false ? -1 : discountOf(p) }; });
+        keyed.sort(function (a, b) { return (b.d - a.d) || (a.i - b.i); });
+        visible = keyed.map(function (k) { return k.p; });
+        break;
+      }
     }
     return visible;
   }
@@ -3852,6 +3877,9 @@
     sorts: SORTS,
     simpleSorts: SIMPLE_SORTS,
     sortLabels: SORT_LABELS,
+    discountOf: discountOf,
+    storeOrder: storeOrder,
+    sortWholePages: SORT_WHOLE_PAGES,
     visibleProducts: visibleProducts,
     collectionPage: collectionPage,
     listingPage: listingPage,

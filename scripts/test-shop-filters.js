@@ -122,7 +122,7 @@ async function openShop(browser, store, style, query, viewport) {
       const body = JSON.parse(req.postData() || '{}');
       const v = body.variables || {}; const q = String(body.query || '');
       if (/RrtFiltered/.test(q)) {
-        asked.push({ kind: 'filtered', h: v.handle, filters: v.filters || [] });
+        asked.push({ kind: 'filtered', h: v.handle, filters: v.filters || [], sortKey: v.sortKey });
         const list = shopifyApply(catalogue(v.handle), v.filters);
         return json({ data: { collection: { products: { filters: shopifyFilters(list),
           pageInfo: { hasNextPage: false, endCursor: 'c2' }, nodes: list.map(gqlNode) } } } });
@@ -239,7 +239,7 @@ async function show(page) {
     let asked;
     ({ page, asked } = await openShop(browser, st.id, 'filters', st.shelf));
     v = await look(page);
-    check(v.button && v.sorts.join() === 'featured,newest,priceLow,priceHigh', tag + ' filters: the button, and every sort');
+    check(v.button && v.sorts.join() === 'featured,newest,priceLow,priceHigh,discount', tag + ' filters: the button, and every sort');
     check(v.tiles.some((t) => /Sold out/i.test(t)), tag + ' filters: sold out still shown, marked');
     v = await openPanel(page);
     if (process.env.SHOTS) { await page.waitForTimeout(400); await page.screenshot({ path: path.join(process.env.SHOTS, st.id + '-filters-panel.png') }); }
@@ -276,6 +276,15 @@ async function show(page) {
     await page.fill('dialog.fp input[name=pmax]', '300');
     v = await show(page);
     check(v.tiles.length > 0 && v.tiles.length < 10 && v.chips.some((c) => /Up to/.test(c)), tag + ' filters: price ' + v.tiles.length);
+    // Highest discount: the same listing (the store's own order), sorted here.
+    const before = v.tiles.length, n = asked.length;
+    await page.selectOption('#sort', 'discount');
+    await page.waitForTimeout(700);
+    v = await look(page);
+    const again = asked.slice(n).filter((a) => a.kind === 'filtered' || a.kind === 'woo');
+    check(v.tiles.length === before && v.chips.some((c) => /Up to/.test(c)) &&
+      again.every((a) => (a.kind === 'filtered' ? a.sortKey === 'COLLECTION_DEFAULT' : !/orderby=price/.test(a.q))),
+      tag + ' filters: highest discount keeps the choices, asks the store for its own order (' + again.length + ' asked)');
     await page.close();
 
     // The landing: the basic set, from what is listed.

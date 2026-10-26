@@ -253,11 +253,13 @@
   (simple ? S.simpleSorts : S.sorts).forEach(function (key) {
     var o = document.createElement('option');
     o.value = key;
-    o.textContent = { featured: 'Sort: featured', newest: 'Sort: newest', priceLow: 'Sort: price low', priceHigh: 'Sort: price high' }[key];
+    o.textContent = { featured: 'Sort: featured', newest: 'Sort: newest', priceLow: 'Sort: price low', priceHigh: 'Sort: price high',
+      discount: 'Sort: highest discount' }[key];
     sortSel.appendChild(o);
   });
 
   var state = { sort: 'featured', products: [], cursor: null, hasMore: false, loading: false, total: null, autoFills: 0, drawn: [],
+    pagesRead: 0,
     facets: [], mode: 'store', facetsRead: false };
   // Veg-only can leave a page of 24 with few or none to show: keep reading
   // (up to this many pages in a row) until there is a screenful or the
@@ -271,9 +273,18 @@
   }
 
   sortSel.addEventListener('change', function () {
+    var before = state.sort;
     state.sort = sortSel.value;
-    if (state.clientSort) render(); else resetAndLoad();
+    // Pages already in the order the new sort starts from (feed pages, or the
+    // store's own order for "highest discount", which is sorted here) are
+    // just put in order; any other order is asked of the store afresh.
+    if (state.clientSort || S.storeOrder(before) === S.storeOrder(state.sort)) render(); else resetAndLoad();
   });
+  /** "Highest discount" is sorted here, so it reads the listing whole first
+   *  (up to S.sortWholePages pages), as the app does for its sorts. */
+  function gathering() {
+    return state.sort === 'discount' && state.hasMore && !state.paused && state.pagesRead < S.sortWholePages;
+  }
 
   // Brand chips follow the active partner store's own brand list.
   (function () {
@@ -330,10 +341,11 @@
 
   function fetchPage(after) {
     if (searching) return S.searchAll(q, { after: after });
-    if (brandParam) return S.brandPage(brandParam, { sort: state.sort, after: after });
-    if (handles) return S.listingPage(handles, { sort: state.sort, after: after });
-    if (filtering) return S.filteredPage(handle, { sort: state.sort, after: after, state: fstate });
-    return S.collectionPage(handle, { sort: state.sort, after: after });
+    var order = S.storeOrder(state.sort);
+    if (brandParam) return S.brandPage(brandParam, { sort: order, after: after });
+    if (handles) return S.listingPage(handles, { sort: order, after: after });
+    if (filtering) return S.filteredPage(handle, { sort: order, after: after, state: fstate });
+    return S.collectionPage(handle, { sort: order, after: after });
   }
 
   /* Seamless paging (as in the app):
@@ -384,7 +396,7 @@
     gen++; ahead = null;
     state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
     state.clientSort = false; state.autoFills = 0; state.loading = false; state.drawn = []; state.paused = false;
-    state.facetsRead = false;
+    state.facetsRead = false; state.pagesRead = 0;
     $('more').textContent = 'Load more';
     $('grid').innerHTML = skeletons(8);
     $('state').hidden = true; $('foot').hidden = true;
@@ -421,6 +433,7 @@
       }
       state.cursor = page.endCursor;
       state.hasMore = page.hasMore;
+      state.pagesRead = (state.pagesRead || 0) + 1;
       if (page.clientSort) state.clientSort = true;
       if (typeof page.total === 'number') state.total = page.total;
       if (page.missing) {
@@ -470,8 +483,9 @@
       hideSoldOut: simple,
       animal: pet,
       // Server-sorted pages arrive in order; feed pages sort here, the
-      // way the app sorts a shelf it loaded whole.
-      sort: state.clientSort ? state.sort : 'featured'
+      // way the app sorts a shelf it loaded whole ("highest discount" too:
+      // no store sorts by it).
+      sort: (state.clientSort || state.sort === 'discount') ? state.sort : 'featured'
     });
     if (filtering) {
       visible = visible.filter(function (p) { return S.filters.basicMatch(p, fstate, state.mode === 'store'); });
@@ -506,17 +520,22 @@
       return;
     }
     $('state').hidden = true;
-    draw(visible, filling);
-    $('count').textContent = filling
+    var sorting = !filling && gathering();
+    draw(visible, filling || sorting);
+    $('count').textContent = sorting
+      ? 'Sorting by highest discount\u2026 ' + state.products.length + ' read so far'
+      : filling
       ? (cfgVegOnly ? 'Finding vegetarian products\u2026 ' : 'Finding more products\u2026 ') + visible.length + ' so far'
       : visible.length + (state.hasMore ? '+' : '') + (cfgVegOnly ? ' vegetarian' : '') +
         (visible.length === 1 ? ' product' : ' products');
     $('foot').hidden = false;
     $('more').disabled = false;
-    $('more').hidden = !state.hasMore;
+    $('more').hidden = !state.hasMore || sorting;
     $('done').hidden = state.hasMore;
     if (filling) {
       state.autoFills++;
+      setTimeout(loadNext, 0);
+    } else if (sorting) {
       setTimeout(loadNext, 0);
     }
   }

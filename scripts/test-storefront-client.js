@@ -307,7 +307,8 @@ function tileWith(price, opts) {
     id: opts.id || price, handle: 'h' + price, title: opts.title || 'P' + price,
     brand: '', productType: '', tags: [], descriptionHtml: '',
     images: [], options: [],
-    variants: [{ id: 0, title: 'Default Title', optionValues: [], pricePaise: price, available: opts.available !== false }],
+    variants: [{ id: 0, title: 'Default Title', optionValues: [], pricePaise: price, available: opts.available !== false,
+      compareAtPaise: opts.compareAt || null }],
     partial: true, createdAtMs: opts.createdAtMs || null
   });
 }
@@ -317,6 +318,22 @@ eq(S.visibleProducts(listing, { sort: 'priceLow' }).map((p) => p.cheapestVariant
 eq(S.visibleProducts(listing, { sort: 'priceHigh' })[0].cheapestVariant.pricePaise, 300, 'sort price high');
 eq(S.visibleProducts(listing, { sort: 'featured' }).length, 4, 'everything listed is shown, sold out included');
 eq(S.visibleProducts(listing, { sort: 'newest' })[0].createdAtMs, 5, 'newest first; undated keep order after');
+// Highest discount: the % off the tile shows, biggest first, then the rest,
+// sold out last (its tile shows no discount); equal ones keep the store's
+// order. The same cases as the app's store_models_test.
+const onSale = [
+  tileWith(100, { id: 4, compareAt: 400, available: false }), tileWith(100, { id: 1 }),
+  tileWith(100, { id: 2, compareAt: 200 }), tileWith(100, { id: 3, compareAt: 125 }),
+  tileWith(300, { id: 5, compareAt: 600 }), tileWith(90, { id: 6, compareAt: 100 })
+];
+eq(S.visibleProducts(onSale, { sort: 'discount' }).map((p) => p.id), [2, 5, 3, 6, 1, 4], 'sort highest discount, sold out last');
+eq(S.visibleProducts(onSale, { sort: 'featured' }).map((p) => p.id), [4, 1, 2, 3, 5, 6], 'featured keeps the store order');
+eq(S.discountOf(onSale[2]), 0.5, 'the discount a tile shows');
+eq(S.discountOf(onSale[0]), 0, 'sold out: no discount to show');
+eq(S.sorts, ['featured', 'newest', 'priceLow', 'priceHigh', 'discount'], 'the current display offers highest discount');
+eq(S.simpleSorts, ['featured', 'newest'], 'the simplified display does not');
+eq(S.storeOrder('discount'), 'featured', 'no store sorts by discount: its own order, sorted here');
+eq(S.storeOrder('priceLow'), 'priceLow', 'other sorts are the store\u2019s');
 
 /* ---------------------------------------------------------------- shelves */
 

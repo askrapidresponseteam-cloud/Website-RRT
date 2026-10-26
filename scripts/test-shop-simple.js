@@ -6,8 +6,9 @@
  * Paws & Tails (Shopify behind its own front end: the API on its own site) and
  * JustDogs (WooCommerce: the Store API).
  *
- *   Current      exactly as before: shelves, aisles, brands, four sorts, sold
- *                out products listed and marked;
+ *   Current      shelves, aisles, brands, every sort (highest discount too:
+ *                the whole listing read, then the biggest % off first, sold
+ *                out last), sold out products listed and marked;
  *   Simplified   an animal row and a category row only, no brands or aisles,
  *                no price sort, nothing sold out; an animal and a category
  *                read the store's own collections for them, one after the
@@ -58,8 +59,16 @@ function items(handle, page) {
   const size = handle === 'all' ? 24 : 6;
   return titlesFor(handle + (page > 1 ? '-p' + page : ''), size).map((title, i) => ({
     id: idOf(handle + '|' + page + '|' + i), handle: (handle + '-' + page + '-' + i).replace(/[^a-z0-9-]/g, ''), title,
-    soldOut: i === 0, tags: [], type: ''
+    soldOut: i === 0, tags: [], type: '', compareAt: compareAtFor(page, i)
   }));
+}
+/* Some products on sale (price 100 each): the biggest discount (75% off) is
+ * on the second page, and a sold-out product with 80% off on the first. */
+function compareAtFor(page, i) {
+  if (i === 0) return 500;
+  if (page === 2 && i === 7) return 400;
+  if (i % 4 === 1) return 100 + 10 * ((i % 10) + 1);
+  return 0;
 }
 const PAGES = { all: 2 };
 const pagesOf = (h) => PAGES[h] || 1;
@@ -67,17 +76,18 @@ const pagesOf = (h) => PAGES[h] || 1;
 function feedJson(list) {
   return { products: list.map((p) => ({ id: p.id, handle: p.handle, title: p.title, vendor: 'Brand', product_type: p.type,
     tags: p.tags, images: [], options: [{ name: 'Title', position: 1, values: ['Default Title'] }],
-    variants: [{ id: p.id * 10, title: 'Default Title', option1: 'Default Title', price: '100.00', available: !p.soldOut }] })) };
+    variants: [{ id: p.id * 10, title: 'Default Title', option1: 'Default Title', price: '100.00', available: !p.soldOut,
+      compare_at_price: p.compareAt ? p.compareAt + '.00' : null }] })) };
 }
 function gqlNode(p) {
   return { id: 'gid://shopify/Product/' + p.id, handle: p.handle, title: p.title, vendor: 'Brand', productType: p.type,
     availableForSale: !p.soldOut, publishedAt: '2026-01-01T00:00:00Z', featuredImage: null, tags: p.tags,
     priceRange: { minVariantPrice: { amount: '100.0' }, maxVariantPrice: { amount: '100.0' } },
-    compareAtPriceRange: { maxVariantPrice: { amount: '0' } } };
+    compareAtPriceRange: { maxVariantPrice: { amount: p.compareAt ? p.compareAt + '.0' : '0' } } };
 }
 function wooJson(p) {
   return { id: p.id, name: p.title, slug: p.handle, type: 'simple', parent: 0, description: '', short_description: '',
-    prices: { price: '100', regular_price: '100', sale_price: '100', price_range: null, currency_code: 'INR', currency_minor_unit: 0 },
+    prices: { price: '100', regular_price: String(p.compareAt || 100), sale_price: '100', price_range: null, currency_code: 'INR', currency_minor_unit: 0 },
     images: [], categories: [], tags: [], attributes: [], variations: [], is_purchasable: true, is_in_stock: !p.soldOut,
     add_to_cart: { url: '?add-to-cart=' + p.id, maximum: 9999 } };
 }
@@ -197,10 +207,21 @@ async function look(page) {
     // Current: exactly as before.
     let { page } = await openShop(browser, st.id, false, '');
     let v = await look(page);
-    check(v.sorts.join() === 'featured,newest,priceLow,priceHigh', tag + ' current: all four sorts');
+    check(v.sorts.join() === 'featured,newest,priceLow,priceHigh,discount', tag + ' current: every sort, highest discount too');
     check(v.shelves && v.shelves[0] === 'All' && v.shelves.length > 4 && !v.shelves.includes('Dogs'), tag + ' current: the shelf row');
     check(v.tiles.some((t) => /Sold out/i.test(t)), tag + ' current: sold-out products listed, marked sold out');
     check(st.id === 'justdogs' || st.id === 'pawsandtails' || (v.brands && v.brands.length > 0), tag + ' current: brands as before');
+    // Highest discount: the whole listing (both pages) read, then sorted.
+    await page.selectOption('#sort', 'discount');
+    await page.waitForFunction(() => !/Sorting/.test(document.getElementById('count').textContent) &&
+      document.querySelectorAll('#grid > :not(.skel-tile)').length >= 40, null, { timeout: 15000 });
+    await page.waitForTimeout(300);
+    v = await look(page);
+    const offs = v.tiles.map((t) => (/Sold out/i.test(t) ? -1 : Number((/(\d+)% off/.exec(t) || [0, 0])[1])));
+    check(v.tiles.length === 48, tag + ' discount: the whole listing read (' + v.tiles.length + ' of 48)');
+    check(offs[0] === 75, tag + ' discount: the biggest discount first, from the second page (' + offs.slice(0, 6).join(',') + ')');
+    check(offs.every((x, i) => i === 0 || x <= offs[i - 1]), tag + ' discount: biggest first, sold out last');
+    check(offs.filter((x) => x > 0).length >= 10, tag + ' discount: ' + offs.filter((x) => x > 0).length + ' on sale');
     await page.close();
     ({ page } = await openShop(browser, st.id, false, '?shelf=pharmacy'));
     v = await look(page);
