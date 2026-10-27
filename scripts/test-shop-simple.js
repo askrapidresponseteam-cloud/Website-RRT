@@ -211,6 +211,21 @@ async function look(page) {
     check(v.shelves && v.shelves[0] === 'All' && v.shelves.length > 4 && !v.shelves.includes('Dogs'), tag + ' current: the shelf row');
     check(v.tiles.some((t) => /Sold out/i.test(t)), tag + ' current: sold-out products listed, marked sold out');
     check(st.id === 'justdogs' || st.id === 'pawsandtails' || (v.brands && v.brands.length > 0), tag + ' current: brands as before');
+    // In stock only: a switch beside the sort; sold out gone, kept on reload.
+    const stock = async () => page.evaluate(() => ({ shown: !document.getElementById('stockBtn').hidden, on: document.getElementById('stockOnly').checked }));
+    check((await stock()).shown && !(await stock()).on, tag + ' current: an "In stock only" switch, off');
+    await page.click('#stockBtn');
+    await page.waitForTimeout(600);
+    v = await look(page);
+    check(v.tiles.length > 0 && !v.tiles.some((t) => /Sold out/i.test(t)), tag + ' current: in stock only hides what is sold out (' + v.tiles.length + ')');
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(1200);
+    v = await look(page);
+    check((await stock()).on && !v.tiles.some((t) => /Sold out/i.test(t)), tag + ' current: and stays on after a reload');
+    await page.click('#stockBtn');
+    await page.waitForTimeout(600);
+    v = await look(page);
+    check(!(await stock()).on && v.tiles.some((t) => /Sold out/i.test(t)), tag + ' current: off again, sold out back');
     // Highest discount: the whole listing (both pages) read, then sorted.
     await page.selectOption('#sort', 'discount');
     await page.waitForFunction(() => !/Sorting/.test(document.getElementById('count').textContent) &&
@@ -232,6 +247,7 @@ async function look(page) {
     ({ page } = await openShop(browser, st.id, true, ''));
     v = await look(page);
     check(v.sorts.join() === 'featured,newest', tag + ' simplified: no price sort');
+    check(await page.evaluate(() => document.getElementById('stockBtn').hidden), tag + ' simplified: no "In stock only" switch (nothing sold out is shown)');
     check(v.shelves && v.shelves[0] === 'All pets' && v.shelves.includes('Dogs') && v.shelves.includes('Cats'), tag + ' simplified: the animal row ' + JSON.stringify(v.shelves));
     check(v.aisles && v.aisles[0] === 'All products' && v.aisles.includes('Medicines') && v.aisles.includes('Food'), tag + ' simplified: the category row ' + JSON.stringify(v.aisles));
     check(v.brands === null, tag + ' simplified: no brands');

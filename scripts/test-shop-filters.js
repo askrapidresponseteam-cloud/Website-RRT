@@ -240,6 +240,7 @@ async function show(page) {
     ({ page, asked } = await openShop(browser, st.id, 'filters', st.shelf));
     v = await look(page);
     check(v.button && v.sorts.join() === 'featured,newest,priceLow,priceHigh,discount', tag + ' filters: the button, and every sort');
+    check(await page.evaluate(() => document.getElementById('stockBtn').hidden), tag + ' filters: "In stock only" is in the panel, not twice');
     check(v.tiles.some((t) => /Sold out/i.test(t)), tag + ' filters: sold out still shown, marked');
     v = await openPanel(page);
     if (process.env.SHOTS) { await page.waitForTimeout(400); await page.screenshot({ path: path.join(process.env.SHOTS, st.id + '-filters-panel.png') }); }

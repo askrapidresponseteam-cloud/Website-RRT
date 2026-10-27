@@ -212,6 +212,17 @@ button { font: inherit; color: inherit; }
   background-position: calc(100% - 19px) 16px, calc(100% - 14px) 16px; background-size: 5px 5px; background-repeat: no-repeat;
 }
 .sort:hover { background-color: var(--mist); }
+/* "In stock only" (the current display): a tick box the size of the sort. */
+.stock-btn {
+  height: 38px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px;
+  border: 1px solid var(--line-strong); border-radius: 0; background: var(--paper);
+  font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; white-space: nowrap; user-select: none;
+}
+.stock-btn[hidden] { display: none; }
+.stock-btn:hover { background: var(--mist); }
+.stock-btn input { width: 18px; height: 18px; margin: 0; accent-color: var(--signal); cursor: pointer; }
+.stock-btn:has(input:checked) { border-color: var(--signal); background: var(--wash); }
+.stock-btn:focus-within { border-color: var(--ink); }
 .sort:focus-visible { border-color: var(--ink); }
 
 /* Shelf and aisle chips: one scrollable row each, never wrapping into a
@@ -618,6 +629,9 @@ html.fp-open { overflow: hidden; }
   .sugg { right: auto; width: calc(100vw - 32px); }
   .shop-intro { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px var(--pad) 10px; }
   .controls { width: 100%; justify-content: space-between; }
+  /* The count on its own line; the switch, Filters and the sort share the next. */
+  .controls .count { flex: 1 1 100%; }
+  .controls .sort { flex: 1 1 0; min-width: 0; }
   .category-bar { padding-left: var(--pad); padding-right: var(--pad); }
   .product-grid { padding-left: var(--pad); padding-right: var(--pad); }
   .notice, .disclosure { margin-left: var(--pad); margin-right: var(--pad); }

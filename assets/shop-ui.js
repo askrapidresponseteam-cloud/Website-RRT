@@ -639,6 +639,13 @@
     return cfg ? cfg.get().filters === true : S.filtersOn();
   }
 
+  /** The shopper's "In stock only" switch (the current display's, beside the
+   *  sort on /shop; remembered on this device). */
+  function stockOnlyNow() {
+    if (simpleNow() || filtersNow()) return false;
+    try { return global.localStorage.getItem('rrt_shop_in_stock') === '1'; } catch (e) { return false; }
+  }
+
   /** Whether checkout may proceed right now (shop open). Buttons call this at
    *  press time so a mid-session close is respected. */
   function storeOpenNow() {
@@ -659,6 +666,7 @@
     vegOnlyNow: vegOnlyNow,
     simpleNow: simpleNow,
     filtersNow: filtersNow,
+    stockOnlyNow: stockOnlyNow,
     registry: registry
   };
   /* END PUBLIC API */

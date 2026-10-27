@@ -64,6 +64,7 @@
   <div class="controls">
     <span class="count" id="count" aria-live="polite"></span>
     <button class="filters-btn" id="filtersBtn" type="button" aria-haspopup="dialog" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="16" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="10" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Filters</span><b id="filtersN" hidden></b></button>
+    <label class="stock-btn" id="stockBtn" hidden><input type="checkbox" id="stockOnly"><span>In stock only</span></label>
     <select class="sort" id="sort" aria-label="Sort products"></select>
   </div>
 </section>
@@ -266,8 +267,22 @@
   // listing ends, instead of showing a near-empty grid.
   // The simplified display thins pages too (sold out, the animal), and fills the same way.
   var VEG_FILL_TARGET = 12, VEG_FILL_MAX_PAGES = 30;
+  // "In stock only": a switch in the current display (the simplified one
+  // never shows sold out; the Filters one has it in its panel). Remembered on
+  // this device; a page it thins reads on, as veg-only does.
+  var stockShown = !simple && !filtersStyle;
+  var stockOnly = false;
+  try { stockOnly = stockShown && localStorage.getItem('rrt_shop_in_stock') === '1'; } catch (e) { stockOnly = false; }
+  $('stockBtn').hidden = !stockShown;
+  $('stockOnly').checked = stockOnly;
+  $('stockOnly').addEventListener('change', function () {
+    stockOnly = $('stockOnly').checked;
+    try { localStorage.setItem('rrt_shop_in_stock', stockOnly ? '1' : '0'); } catch (e) { /* private window */ }
+    state.autoFills = 0;
+    if (started) { render(); requestAnimationFrame(maybeMore); }
+  });
   function thinned() {
-    if (cfgVegOnly || simple) return true;
+    if (cfgVegOnly || simple || stockOnly) return true;
     // The basic filters, and "in stock only" on a Shopify store, are applied on the page.
     return filtering && (state.mode === 'basic' ? S.filters.count(fstate) > 0 : fstate.inStock);
   }
@@ -480,7 +495,7 @@
   function render() {
     var visible = S.visibleProducts(state.products, {
       vegOnly: cfgVegOnly,
-      hideSoldOut: simple,
+      hideSoldOut: simple || stockOnly,
       animal: pet,
       // Server-sorted pages arrive in order; feed pages sort here, the
       // way the app sorts a shelf it loaded whole ("highest discount" too:
@@ -494,6 +509,15 @@
     $('grid').setAttribute('aria-busy', 'false');
     var filling = thinned() && state.hasMore && visible.length < VEG_FILL_TARGET &&
       state.autoFills < VEG_FILL_MAX_PAGES;
+    // "In stock only" emptied it (what is there is sold out): say so, and undo.
+    if (!visible.length && !state.hasMore && stockOnly && S.visibleProducts(state.products, { vegOnly: cfgVegOnly }).length) {
+      showState('Nothing in stock here right now.', 'Everything listed here is sold out.', false);
+      var showAll = document.createElement('p');
+      showAll.innerHTML = '<button class="btn-line" type="button">Show sold out too</button>';
+      showAll.querySelector('button').addEventListener('click', function () { $('stockOnly').checked = false; $('stockOnly').dispatchEvent(new Event('change')); });
+      $('state').appendChild(showAll);
+      return;
+    }
     if (!visible.length && !state.hasMore && cfgVegOnly && state.products.length) {
       showState('No vegetarian products here.',
         'The shop is showing vegetarian products only. Try another shelf, or search the whole range.', false);
@@ -510,6 +534,7 @@
       } else if (simple && !searching && !brandParam) {
         showState('Nothing in stock here right now.',
           'Try another animal or category, or search the whole range.', false);
+
       } else if (searching) {
         showState('Nothing matched \u201c' + esc(q) + '\u201d.',
           'Try fewer words, or a brand name.', false);
