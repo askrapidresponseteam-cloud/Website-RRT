@@ -581,9 +581,13 @@ html[lang=hi] .lo-card h3{font-family:var(--sg-hindi);font-weight:700;letter-spa
   function paintAll() { paintChoices(); paintButtons(); paintDates(); paintShare(); refresh(); }
 
   $('loToList').innerHTML = TO.map(function (a) { return '<li>' + a + '</li>'; }).join('') + CC.map(function (a) { return '<li>' + a + ' <span>(cc)</span></li>'; }).join('');
+  // Every opening of the page starts empty: whoever opens it (a refresh, the
+  // link shared on, the next person on the same phone) types their own name
+  // and city. Nothing typed is kept, and what older versions kept is removed.
   ['loName', 'loCity', 'loOwn'].forEach(function (id) {
-    $(id).addEventListener('input', function () { this.classList.remove('bad'); $('loErr').hidden = true; store.set(id, this.value); refresh(); });
-    var v = store.get(id); if (v) $(id).value = v;
+    $(id).addEventListener('input', function () { this.classList.remove('bad'); $('loErr').hidden = true; refresh(); });
+    $(id).value = '';
+    try { localStorage.removeItem(id); } catch (e) { /* private mode */ }
   });
   $('loName').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('loCity').focus(); } });
   $('loCity').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); this.blur(); } });

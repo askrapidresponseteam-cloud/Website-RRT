@@ -237,6 +237,19 @@ async function look(page) {
     check(offs[0] === 75, tag + ' discount: the biggest discount first, from the second page (' + offs.slice(0, 6).join(',') + ')');
     check(offs.every((x, i) => i === 0 || x <= offs[i - 1]), tag + ' discount: biggest first, sold out last');
     check(offs.filter((x) => x > 0).length >= 10, tag + ' discount: ' + offs.filter((x) => x > 0).length + ' on sale');
+    // Back from a product: the same sort, the same list, the same place.
+    await page.evaluate(() => window.scrollTo(0, 900));
+    await page.waitForTimeout(200);
+    const was = await page.evaluate(() => ({ y: window.scrollY, first: document.querySelector('#grid > :not(.skel-tile)').textContent }));
+    await page.evaluate(() => document.querySelector('#grid a[href^="/shop/p/"]').click());
+    await page.waitForURL('**/shop/p/**', { timeout: 10000 });
+    await page.goBack({ waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => document.querySelectorAll('#grid > :not(.skel-tile)').length > 0, null, { timeout: 15000 });
+    await page.waitForTimeout(700);
+    const now = await page.evaluate(() => ({ y: window.scrollY, sort: document.getElementById('sort').value,
+      n: document.querySelectorAll('#grid > :not(.skel-tile)').length, first: document.querySelector('#grid > :not(.skel-tile)').textContent }));
+    check(now.sort === 'discount' && now.n === 48 && now.first === was.first && Math.abs(now.y - was.y) <= 30,
+      tag + ' back from a product: the same sort, list and place (' + now.sort + ', ' + now.n + ', ' + now.y + ')');
     await page.close();
     ({ page } = await openShop(browser, st.id, false, '?shelf=pharmacy'));
     v = await look(page);

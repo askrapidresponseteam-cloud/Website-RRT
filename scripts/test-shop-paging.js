@@ -7,6 +7,9 @@
  *   - new tiles are added below; the ones on screen are never redrawn;
  *   - everything the store lists is shown: sold-out items (as sold out) and
  *     items the store tags to hide on its own site;
+ *   - no "Load more" button while pages come as you scroll ("Loading more");
+ *   - back from a product: the same list at the same place, nothing read again
+ *     from the start; a fresh visit starts at the top;
  *   - a later page that fails keeps what is on screen and offers to try again.
  *
  * Run: node scripts/test-shop-paging.js
@@ -116,10 +119,14 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
 
   await page.evaluate(() => { const t = document.querySelector('#grid > :not(.skel-tile)'); t.dataset.mark = 'first'; });
   // Scroll steadily like a thumb; never jump to the very bottom.
-  let waitedAtBottom = 0;
+  let waitedAtBottom = 0, buttonShown = 0, loadingShown = 0;
   for (let i = 0; i < 80; i++) {
     await page.mouse.wheel(0, 500);
     await page.waitForTimeout(60);
+    const foot = await page.evaluate(() => ({ button: !document.getElementById('more').hidden,
+      loading: !document.getElementById('loadingMore').hidden }));
+    if (foot.button) buttonShown++;
+    if (foot.loading) loadingShown++;
     const atBottom = await page.evaluate(() => {
       const f = document.getElementById('foot'); const busy = document.getElementById('grid').getAttribute('aria-busy') === 'true';
       return f && !f.hidden && f.getBoundingClientRect().top < innerHeight && busy;
@@ -135,6 +142,62 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
   kept ? pass('tiles already on screen were kept (appended, not redrawn)') : fail('grid was redrawn');
   const per = {}; calls.forEach((c) => { per[c.p] = (per[c.p] || 0) + 1; });
   Object.values(per).every((v) => v === 1) ? pass('each page asked for once: ' + JSON.stringify(per)) : fail('repeat reads ' + JSON.stringify(per));
+  buttonShown === 0 ? pass('no "Load more" button while scrolling') : fail('"Load more" shown ' + buttonShown + ' times');
+  loadingShown > 0 ? pass('"Loading more" shown instead (' + loadingShown + ' looks)') : fail('no loading sign at the bottom');
+
+  // Back from a product: the same list, at the same place.
+  await page.evaluate(() => window.scrollTo(0, 2600));
+  await page.waitForTimeout(300);
+  const at = await page.evaluate(() => {
+    const y = window.scrollY;
+    const link = Array.prototype.find.call(document.querySelectorAll('#grid a[href^="/shop/p/"]'), (a) => a.getBoundingClientRect().top > 80);
+    window.__wasHere = 1;
+    return { y, href: link.getAttribute('href'), n: document.querySelectorAll('#grid > :not(.skel-tile)').length };
+  });
+  calls.length = 0;
+  await page.evaluate((h) => document.querySelector('#grid a[href="' + h + '"]').click(), at.href); // a tap where it is (no scrolling to it first)
+  await page.waitForURL('**' + at.href, { timeout: 10000 });
+  await page.waitForTimeout(500);
+  await page.goBack({ waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => document.querySelectorAll('#grid > :not(.skel-tile)').length > 0, null, { timeout: 15000 });
+  await page.waitForTimeout(800);
+  const back = await page.evaluate(() => ({ y: window.scrollY, n: document.querySelectorAll('#grid > :not(.skel-tile)').length,
+    fresh: !window.__wasHere, done: !document.getElementById('done').hidden }));
+  (back.n === at.n && Math.abs(back.y - at.y) <= 30)
+    ? pass('back from a product: the same ' + back.n + ' products, at the same place (' + back.y + ' of ' + at.y + ')' + (back.fresh ? '' : ' [the browser kept the page]'))
+    : fail('after back: ' + JSON.stringify(back) + ' wanted ' + JSON.stringify(at));
+  !calls.some((c) => c.p === 1) ? pass('nothing read again from the start') : fail('read again: ' + JSON.stringify(calls.map((c) => c.p)));
+  back.done ? pass('and it still knows it has everything') : fail('the end of the list was forgotten');
+  // A fresh visit starts at the top.
+  calls.length = 0;
+  await page.goto(BASE + '/shop', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => document.querySelectorAll('#grid > :not(.skel-tile)').length > 0, null, { timeout: 15000 });
+  await page.waitForTimeout(400);
+  const fresh = await page.evaluate(() => ({ y: window.scrollY, n: document.querySelectorAll('#grid > :not(.skel-tile)').length }));
+  (fresh.y === 0 && fresh.n === SIZE) ? pass('a fresh visit starts at the top, with the first page') : fail('fresh visit: ' + JSON.stringify(fresh));
+
+  // Back part-way down a listing that has more: it carries on paging from there.
+  await page.evaluate(() => { try { sessionStorage.clear(); } catch (e) {} });
+  await page.goto(BASE + '/shop', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => document.querySelectorAll('#grid > :not(.skel-tile)').length > 0, null, { timeout: 15000 });
+  for (let i = 0; i < 4; i++) { await page.mouse.wheel(0, 500); await page.waitForTimeout(250); }
+  await page.waitForTimeout(800);
+  const mid = await page.evaluate(() => { const anchor = () => { const t = Array.prototype.find.call(document.querySelectorAll('#grid > :not(.skel-tile)'), (el) => el.getBoundingClientRect().bottom > 120); const a = t && t.querySelector('a[href^="/shop/p/"]'); return t ? { href: a ? a.getAttribute('href') : '', top: Math.round(t.getBoundingClientRect().top) } : null; }; return { y: window.scrollY, at: anchor(), n: document.querySelectorAll('#grid > :not(.skel-tile)').length,
+    href: Array.prototype.find.call(document.querySelectorAll('#grid a[href^="/shop/p/"]'), (a) => a.getBoundingClientRect().top > 80).getAttribute('href') }; });
+  await page.evaluate((h) => document.querySelector('#grid a[href="' + h + '"]').click(), mid.href);
+  await page.waitForURL('**' + mid.href, { timeout: 10000 });
+  await page.goBack({ waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => document.querySelectorAll('#grid > :not(.skel-tile)').length > 0, null, { timeout: 15000 });
+  await page.waitForTimeout(600);
+  const midBack = await page.evaluate(() => { const anchor = () => { const t = Array.prototype.find.call(document.querySelectorAll('#grid > :not(.skel-tile)'), (el) => el.getBoundingClientRect().bottom > 120); const a = t && t.querySelector('a[href^="/shop/p/"]'); return t ? { href: a ? a.getAttribute('href') : '', top: Math.round(t.getBoundingClientRect().top) } : null; }; return { y: window.scrollY, at: anchor(), n: document.querySelectorAll('#grid > :not(.skel-tile)').length }; });
+  // The same products in the same place on screen (the page above them may settle a little).
+  (midBack.n >= mid.n && midBack.at && mid.at && midBack.at.href === mid.at.href && Math.abs(midBack.at.top - mid.at.top) <= 30 && mid.n < SIZE * PAGES)
+    ? pass('back part-way down: ' + midBack.n + ' products at the same place (' + midBack.y + ')') : fail('part-way back: ' + JSON.stringify([mid, midBack]));
+  for (let i = 0; i < 80; i++) {
+    await page.mouse.wheel(0, 500); await page.waitForTimeout(60);
+    if (await page.evaluate(() => !document.getElementById('done').hidden)) break;
+  }
+  (await tiles()) === SIZE * PAGES ? pass('and scrolling on reads the rest') : fail('after coming back, scrolling on: ' + (await tiles()));
 
   // A later page that fails keeps what is on screen.
   failPage = 3; calls.length = 0;

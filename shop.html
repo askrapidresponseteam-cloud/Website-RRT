@@ -80,7 +80,8 @@
 <main class="product-grid" id="grid" aria-busy="true" aria-live="polite"></main>
 <div class="state" id="state" hidden></div>
 <div class="grid-foot" id="foot" hidden>
-  <button class="btn-line" id="more" type="button">Load more</button>
+  <span class="loading-more" id="loadingMore" hidden><i aria-hidden="true"></i>Loading more</span>
+  <button class="btn-line" id="more" type="button" hidden>Load more</button>
   <span class="done" id="done" hidden>That's everything on this shelf</span>
 </div>
 
@@ -399,11 +400,12 @@
     if (foot.hidden) return false;
     return foot.getBoundingClientRect().top - (window.innerHeight || 800) < aheadPx();
   }
+  // Bounded like the veg-only fill: a listing that hides almost everything
+  // never walks the whole store by itself; past that, a button asks.
+  function capped() { return thinned() && state.products.length >= VEG_FILL_MAX_PAGES * 24; }
   function maybeMore() {
     if (!state.hasMore || state.loading || state.paused || !nearEnd()) return;
-    // Bounded like the veg-only fill: a listing that hides almost everything
-    // never walks the whole store by itself (Load more still works).
-    if (thinned() && state.products.length >= VEG_FILL_MAX_PAGES * 24) return;
+    if (capped()) return;
     loadNext();
   }
 
@@ -412,7 +414,7 @@
     state.products = []; state.cursor = null; state.hasMore = false; state.total = null;
     state.clientSort = false; state.autoFills = 0; state.loading = false; state.drawn = []; state.paused = false;
     state.facetsRead = false; state.pagesRead = 0;
-    $('more').textContent = 'Load more';
+    $('more').textContent = 'Load more'; $('more').hidden = true;
     $('grid').innerHTML = skeletons(8);
     $('state').hidden = true; $('foot').hidden = true;
     loadNext();
@@ -470,6 +472,7 @@
         $('grid').setAttribute('aria-busy', 'false');
         $('more').disabled = false;
         $('more').hidden = false;
+        $('loadingMore').hidden = true;
         $('more').textContent = 'Could not load more. Try again';
         return;
       }
@@ -554,8 +557,13 @@
       : visible.length + (state.hasMore ? '+' : '') + (cfgVegOnly ? ' vegetarian' : '') +
         (visible.length === 1 ? ' product' : ' products');
     $('foot').hidden = false;
+    // More comes as you scroll (no button); a button only when a page failed
+    // (it says so) or a thinned listing has read as far as it reads by itself.
+    var stuck = state.hasMore && !sorting && (state.paused || capped());
     $('more').disabled = false;
-    $('more').hidden = !state.hasMore || sorting;
+    if (stuck && !state.paused) $('more').textContent = 'Show more';
+    $('more').hidden = !stuck;
+    $('loadingMore').hidden = !state.hasMore || stuck;
     $('done').hidden = state.hasMore;
     if (filling) {
       state.autoFills++;
@@ -741,6 +749,76 @@
 
   $('more').addEventListener('click', loadNext);
 
+  /* Back from a product: the list as it was, where it was. The page keeps
+   * what it has read (products, where the next page starts, the sort, the
+   * scroll) in this tab's sessionStorage when it is left, and a "back" to the
+   * same address within 30 minutes puts it back instead of starting over.
+   * (Where the browser keeps the whole page in its back-forward cache, it
+   * simply shows it as it was.) */
+  var BACK_KEY = 'rrt_shop_back', BACK_MS = 30 * 60 * 1000;
+  try { history.scrollRestoration = 'manual'; } catch (e) { /* old browser */ }
+  function backUrl() { return location.pathname + location.search; }
+  function readBack() {
+    try { var all = JSON.parse(sessionStorage.getItem(BACK_KEY) || '{}'); return all && typeof all === 'object' ? all : {}; }
+    catch (e) { return {}; }
+  }
+  function saveBack() {
+    if (!started || !state.products.length || !$('state').hidden) return;
+    var snap = { v: 1, at: Date.now(), vendor: S.vendor.id, simple: simple, filters: filtersStyle, veg: cfgVegOnly,
+      sort: state.sort, cursor: state.cursor, hasMore: state.hasMore, clientSort: state.clientSort,
+      pagesRead: state.pagesRead || 0, total: state.total, facets: state.facets || [], mode: state.mode, facetsRead: !!state.facetsRead,
+      y: Math.round(window.scrollY || window.pageYOffset || 0), products: state.products };
+    var all = readBack();
+    all[backUrl()] = snap;
+    // Keep the newest three listings.
+    Object.keys(all).sort(function (a, b) { return all[b].at - all[a].at; }).slice(3).forEach(function (k) { delete all[k]; });
+    try { sessionStorage.setItem(BACK_KEY, JSON.stringify(all)); }
+    catch (e) {
+      // Too big for the tab's storage: keep this listing alone, or nothing.
+      try { var one = {}; one[backUrl()] = snap; sessionStorage.setItem(BACK_KEY, JSON.stringify(one)); }
+      catch (e2) { try { sessionStorage.removeItem(BACK_KEY); } catch (e3) { /* none */ } }
+    }
+  }
+  window.addEventListener('pagehide', saveBack);
+  function cameBack() {
+    try {
+      var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+      if (nav) return nav.type === 'back_forward';
+      return performance.navigation && performance.navigation.type === 2;
+    } catch (e) { return false; }
+  }
+  function restoreBack() {
+    if (!cameBack()) return false;
+    var snap = readBack()[backUrl()];
+    if (!snap || snap.v !== 1 || !(Date.now() - snap.at < BACK_MS)) return false;
+    if (snap.vendor !== S.vendor.id || snap.simple !== simple || snap.filters !== filtersStyle || snap.veg !== cfgVegOnly) return false;
+    var products = S.restoreProducts(snap.products);
+    if (!products.length) return false;
+    var sorts = simple ? S.simpleSorts : S.sorts;
+    state.sort = sorts.indexOf(snap.sort) !== -1 ? snap.sort : 'featured';
+    sortSel.value = state.sort;
+    state.products = products;
+    state.cursor = snap.cursor; state.hasMore = !!snap.hasMore; state.clientSort = !!snap.clientSort;
+    state.pagesRead = snap.pagesRead || 0; state.total = typeof snap.total === 'number' ? snap.total : null;
+    state.facets = Array.isArray(snap.facets) ? snap.facets : []; state.mode = snap.mode || 'store'; state.facetsRead = !!snap.facetsRead;
+    started = true;
+    if (filtering && state.facetsRead) paintFilters();
+    render();
+    var y = Number(snap.y) || 0;
+    var put = function () { if (Math.abs((window.scrollY || 0) - y) > 2) window.scrollTo(0, y); };
+    requestAnimationFrame(function () {
+      put();
+      readAhead();
+      requestAnimationFrame(maybeMore);
+      // Once fonts and pictures settle, once more (unless the reader has moved on).
+      var moved = false; var mark = function () { moved = true; };
+      window.addEventListener('wheel', mark, { passive: true, once: true });
+      window.addEventListener('touchstart', mark, { passive: true, once: true });
+      setTimeout(function () { if (!moved) put(); }, 350);
+    });
+    return true;
+  }
+
   // Page as you scroll, like the phone: the button stays as the fallback.
   var queued = false;
   function onScroll() {
@@ -751,7 +829,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
 
-  loadNext();
+  if (!restoreBack()) loadNext();
 
 })();
 </script><!-- rr:footer -->

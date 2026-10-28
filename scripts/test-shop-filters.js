@@ -261,6 +261,14 @@ async function show(page) {
     await page.waitForTimeout(900);
     v = await look(page);
     check(v.chips.some((c) => /^Drools/.test(c)) && v.tiles.every((t) => /Dog thing/.test(t)), tag + ' filters: kept on reload');
+    // Back from a product: the choices and the list as they were.
+    await page.evaluate(() => document.querySelector('#grid a[href^="/shop/p/"]').click());
+    await page.waitForURL('**/shop/p/**', { timeout: 10000 });
+    await page.goBack({ waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(900);
+    const bk = await look(page);
+    check(bk.chips.some((c) => /^Drools/.test(c)) && bk.chosen === 1 && bk.tiles.length === v.tiles.length && bk.tiles.every((t) => /Dog thing/.test(t)),
+      tag + ' filters: back from a product, the choices and the list as they were');
     // In stock only.
     v = await openPanel(page);
     await page.click('dialog.fp input[name=stock]');

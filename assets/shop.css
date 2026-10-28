@@ -349,6 +349,14 @@ button { font: inherit; color: inherit; }
 
 .grid-foot { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 0 50px; }
 .grid-foot .done { font-size: 14px; color: var(--text-low); }
+/* More comes as you scroll: a quiet "Loading more", not a button. */
+.loading-more { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); }
+.loading-more[hidden] { display: none; }
+.loading-more i { width: 14px; height: 14px; border: 2px solid var(--line-strong); border-top-color: var(--ink); border-radius: 50%;
+  animation: lm-spin .8s linear infinite; }
+@keyframes lm-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .loading-more i { animation: none; } }
 
 .state { padding: 60px var(--pad); text-align: center; }
 .state p { margin: 0 0 14px; font-size: 17px; font-weight: 600; }

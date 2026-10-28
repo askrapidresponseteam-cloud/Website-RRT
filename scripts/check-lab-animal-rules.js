@@ -52,6 +52,13 @@ ok(new Set(fixed.map((f) => (f.match(/subject: '([^']*)'/) || [])[1])).size === 
 ok(/var tpl = roll\(parseInt\(store\.get\('lo-tpl'\), 10\)\);/.test(page) && /Math\.random\(\)/.test(page.split('function roll')[1] || ''), 'the letter is picked at random, never the one this browser sent last');
 ok(/function subject\(l\) \{\n    var f = fixedLetter\(l\);/.test(page) && /var f = fixedLetter\(l\);\n    if \(f\) \{/.test(page), 'subject and body come from the same letter');
 
+// each opening starts empty: nothing typed is kept or brought back
+const wiring = (page.match(/\['loName', 'loCity', 'loOwn'\]\.forEach\(function \(id\) \{([\s\S]*?)\n  \}\);/) || [])[1] || '';
+ok(wiring.includes("$(id).value = '';") && wiring.includes('localStorage.removeItem(id)') && !/store\.(get|set)\(id/.test(wiring),
+  'name, city and own words start empty on every opening (not saved, old saved ones removed)');
+ok(!/store\.(get|set)\('lo(Name|City|Own)'/.test(page), 'nothing else keeps them');
+ok(/var PAGE = 'https:\/\/rapid-response\.in\/lab-animal-rules';/.test(page) && !/PAGE \+ '\?/.test(page), 'the shared link carries nothing of what was typed');
+
 // the count: same campaign, same route, same closing time as the backend
 const id = (page.match(/var CAMPAIGN = '([^']+)'/) || [])[1];
 ok(!!id && backend.includes(`'${id}': { closes_at: endOfIstDay(2026, 11, 6) }`), 'campaign ' + id + ' exists in backend campaigns.js, closing at the end of 6 November');

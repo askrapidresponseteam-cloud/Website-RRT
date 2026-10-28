@@ -3867,6 +3867,15 @@
     shelfByKey: shelfByKey,
     shelfForAisle: shelfForAisle,
     money: formatPaise,
+    /** Products saved as JSON (the shop page keeps its list for the back
+     *  button) made whole again; anything that is not one is left out. */
+    restoreProducts: function (list) {
+      return (Array.isArray(list) ? list : []).filter(function (p) {
+        return p && typeof p === 'object' && typeof p.handle === 'string' && p.id != null &&
+          Array.isArray(p.variants) && p.variants.length > 0 && Array.isArray(p.images) && Array.isArray(p.options) &&
+          p.variants.every(function (v) { return v && typeof v.pricePaise === 'number' && Array.isArray(v.optionValues); });
+      }).map(function (p) { return wrapProduct(p); });
+    },
     paiseFromDecimal: paiseFromDecimal,
     paiseFromSubunits: paiseFromSubunits,
     imageUrl: absoluteImageUrl,
