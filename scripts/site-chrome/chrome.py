@@ -54,6 +54,7 @@ MOB = [
     ('/shop', 'Shop', 'शॉप'),
     ('/faq', 'FAQ', 'सवाल'),
     ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
+    ('/network', 'The network', 'नेटवर्क'),
 ]
 
 def mobile_menu(current='', shop=False):
@@ -72,6 +73,7 @@ FOOT_LEFT = [
     ('/explainer', 'About', 'परिचय'),
     ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'),
     ('/app-guide', 'App guide', 'ऐप गाइड'),
+    ('/network', 'The network', 'नेटवर्क'),
 ]
 FOOT_RIGHT = [
     ('/policy', 'Privacy &amp; Terms', 'प्राइवेसी और शर्तें'),

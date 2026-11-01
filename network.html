@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
+<meta content="#FFFFFF" name="theme-color">
+<title>The network - Rapid Response</title>
+<link href="/assets/favicon.svg" rel="icon" type="image/svg+xml">
+<link href="/assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+<link href="/assets/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="https://rapid-response.in/network" rel="canonical">
+<meta content="How big the Rapid Response network is: people helping animals in every district across India, on a map. District totals only." name="description">
+<meta content="The network - Rapid Response" property="og:title">
+<meta content="People helping animals, district by district, across India." property="og:description">
+<meta content="https://rapid-response.in/network" property="og:url">
+<meta content="https://rapid-response.in/assets/og-cover.jpg" property="og:image">
+<meta content="website" property="og:type">
+<link rel="stylesheet" href="/assets/vendor/leaflet-1.9.4/leaflet.css">
+<link rel="preload" href="/assets/network/india-districts.json" as="fetch" type="application/json" crossorigin>
+<style>
+/* The network (rapid-response.in/network): how many people there are in each
+   district and in all of India, on a map of India's districts. Page styles
+   only; the header and footer are the shared site chrome (assets/rr-site.css),
+   the tokens assets/rr-signal.css. Figures: GET /public/network (backend
+   public_network.js), district totals only. The map: Leaflet (vendored) over
+   assets/network/india-districts.json (scripts/build-network-map.js); no map
+   tiles, so no other server is asked for anything. */
+*,*:before,*:after{box-sizing:border-box}
+html,body{margin:0;background:var(--sg-paper);color:var(--sg-ink)}
+body{font-family:var(--sg-sans);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:16px;font-weight:500}
+html[lang=hi] body{font-family:var(--sg-hindi)}
+[data-lang]{display:none}
+html[lang=en] [data-lang=en],html[lang=hi] [data-lang=hi]{display:revert}
+button,input,select{font:inherit;color:inherit}
+
+.nw{display:grid;row-gap:22px}
+.nw-head{grid-area:head;min-width:0}
+.nw-fig{grid-area:fig;min-width:0}
+.nw-tools{grid-area:tools;min-width:0}
+.nw-mapbox{grid-area:map;min-width:0}
+.nw h1 em{font-style:normal;color:var(--sg-accent)}
+.nw .rr-ph-lead{text-wrap:pretty}
+
+/* the figure: all of India, or the district chosen */
+.nw-detail{border-top:1px solid var(--sg-line);padding-top:16px}
+.nw-detail h2{margin:0;font-family:var(--sg-display);font-weight:800;font-size:18px;letter-spacing:var(--sg-track-title);line-height:1.25;overflow-wrap:anywhere}
+html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0}
+.nw-num{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:6px 0 4px;min-height:52px}
+.nw-num strong{font-family:var(--sg-display);font-weight:800;font-size:clamp(40px,4.4vw,56px);line-height:1;letter-spacing:var(--sg-track-display);color:var(--sg-accent);font-variant-numeric:tabular-nums}
+.nw-num span{font-size:14px;color:var(--sg-slate)}
+.nw-num .nw-wait{display:block;width:150px;height:44px;background:var(--sg-mist)}
+.nw-sub{margin:0;font-size:14px;color:var(--sg-graphite);overflow-wrap:anywhere}
+.nw-all{margin:10px 0 0;padding:0;border:0;background:none;cursor:pointer;font-size:13px;font-weight:700;color:var(--sg-link);text-decoration:underline;text-underline-offset:2px}
+
+.nw-status{display:flex;align-items:center;gap:8px;margin:16px 0 0;font-size:12px;color:var(--sg-slate)}
+.nw-status i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--sg-disabled)}
+.nw-status.live i{background:var(--sg-go)}
+.nw-status button{padding:0;border:0;background:none;cursor:pointer;font-size:12px;font-weight:700;color:var(--sg-link);text-decoration:underline;text-underline-offset:2px}
+
+.nw-find{display:block;margin:0}
+.nw-find input,.nw-pick{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--sg-line-strong);border-radius:0;background:var(--sg-paper);font-size:14px}
+.nw-find input:focus,.nw-pick:focus{outline:none;box-shadow:var(--sg-focus)}
+.nw-pick{display:none}
+
+.nw-list{margin-top:6px}
+.nw-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:11px 4px;border:0;border-bottom:1px solid var(--sg-fog);background:none;text-align:left;cursor:pointer}
+.nw-row:hover,.nw-row[aria-pressed=true]{background:var(--sg-mist)}
+.nw-row:focus-visible{outline:none;box-shadow:var(--sg-focus)}
+.nw-row span{min-width:0;font-size:14px;font-weight:600;overflow-wrap:anywhere}
+.nw-row small{display:block;margin-top:2px;font-size:12px;font-weight:500;color:var(--sg-slate)}
+.nw-row strong{flex:none;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.nw-empty{padding:14px 0;font-size:14px;color:var(--sg-slate)}
+.nw-pager{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;color:var(--sg-slate)}
+.nw-pager button{min-height:34px;padding:6px 14px;border:1px solid var(--sg-line-strong);background:var(--sg-paper);cursor:pointer;font-size:12px;font-weight:600}
+.nw-pager button:disabled{opacity:.35;cursor:default}
+.nw-note{margin:16px 0 0;font-size:12px;line-height:1.5;color:var(--sg-slate)}
+
+/* the map: India's districts, a red dot per person, the district picked
+   highlighted */
+.nw-mapbox{position:relative}
+.nw-map{position:relative;width:100%;height:clamp(460px,calc(100svh - 72px - var(--rr-top) - 48px),860px);background:#FBFBFA;box-shadow:inset 0 0 0 1px var(--sg-line);z-index:0}
+.nw-map.leaflet-container{background:#FBFBFA;font-family:var(--sg-sans)}
+.nw-map .leaflet-control-zoom{border:0;box-shadow:0 0 0 1px var(--sg-line-strong);border-radius:0}
+.nw-map .leaflet-control-zoom a{border-radius:0!important;color:var(--sg-ink);width:34px;height:34px;line-height:32px}
+.nw-map .leaflet-control-attribution{font-family:var(--sg-mono);font-size:10px;background:rgba(255,255,255,.85);color:var(--sg-slate)}
+.nw-map .leaflet-control-attribution a{color:var(--sg-slate)}
+.nw-map .leaflet-tooltip{border-radius:0;border:0;box-shadow:0 0 0 1px var(--sg-line-strong);font-family:var(--sg-sans);font-size:13px;font-weight:600;color:var(--sg-ink);padding:6px 9px}
+.nw-map .leaflet-tooltip small{display:block;font-weight:500;color:var(--sg-slate);font-size:12px}
+.nw-legend{position:absolute;left:12px;bottom:12px;z-index:500;display:flex;align-items:center;gap:8px;max-width:calc(100% - 24px);margin:0;padding:6px 10px;background:rgba(255,255,255,.92);box-shadow:0 0 0 1px var(--sg-line);font-size:12px;color:var(--sg-graphite);pointer-events:none}
+.nw-legend i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--sg-accent)}
+.nw-legend[hidden],.nw-mapbox[hidden]{display:none}
+
+@media (min-width:900px){
+  .nw{grid-template-columns:minmax(300px,480px) minmax(0,1fr);grid-template-rows:auto auto 1fr;grid-template-areas:"head map" "fig map" "tools map";column-gap:clamp(32px,5vw,88px);align-items:start}
+  .nw-mapbox{position:sticky;top:96px}
+}
+@media (max-width:899px){
+  .nw{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "fig" "map" "tools";row-gap:18px}
+  .nw-map{height:min(112vw,520px)}
+}
+@media (max-width:640px){
+  .nw-num{min-height:40px}
+  .nw-num strong{font-size:40px}
+  .nw-find,.nw-list,.nw-pager{display:none}
+  .nw-pick{display:block;font-size:14px}
+  .nw-legend{left:8px;bottom:30px;font-size:11px;padding:5px 8px}
+  .nw-note{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<!-- rr:head --><link rel="preload" href="/assets/fonts/marcellus-latin-400.8a539799.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-500.19874318.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/archivo-latin-800.c26cda24.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-sans-devanagari-devanagari-400.f86f14cb.woff2" as="font" type="font/woff2" crossorigin><script>/* rr: Hindi fonts before first paint */try{if((localStorage.getItem('lang')||localStorage.getItem('rr-lang'))==='hi')['noto-sans-devanagari-latin-400.1ea6a2f0.woff2','noto-sans-devanagari-latin-500.18745d03.woff2','noto-sans-devanagari-devanagari-500.c9e45ff2.woff2','noto-sans-devanagari-devanagari-600.fcfcaacd.woff2'].forEach(function(f){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='/assets/fonts/'+f;document.head.appendChild(l)})}catch(e){}</script><link rel="stylesheet" href="/assets/rr-fonts.css"><link rel="stylesheet" href="/assets/rr-fonts-devanagari.css"><link rel="stylesheet" href="/assets/rr-signal.css"><link rel="stylesheet" href="/assets/rr-site.css"><link rel="stylesheet" href="/assets/rr-page.css"><script>/* rr: shop switch as last read */try{if(localStorage.getItem('rrt_store_open')==='false')document.documentElement.classList.add('rr-shop-off')}catch(e){}</script><!-- /rr:head -->
+</head>
+<body>
+<!-- rr:header -->
+<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="30 42 420 420" aria-hidden="true"><g fill="#434343"><circle cx="85" cy="193" r="45"/><circle cx="177" cy="107" r="45"/><circle cx="302" cy="107" r="45"/><circle cx="395" cy="193" r="45"/><path d="M378.5 348.1C381 351.2 384.7 354.5 386.7 357.8C388.7 361.1 389.5 364.5 390.7 368C391.9 371.5 393.3 375.2 394 378.9C394.6 382.5 394.6 386.1 394.5 389.7C394.5 393.3 394.5 397 393.9 400.5C393.2 404 391.9 407.4 390.6 410.7C389.2 414 387.6 417.2 385.7 420.2C383.8 423.2 381.5 426.1 378.9 428.6C376.4 431.2 373.6 433.6 370.5 435.6C367.3 437.6 364.1 439.6 360.1 440.7C356.1 441.7 350.8 441.6 346.3 441.8C341.8 441.9 337.5 442 333.2 441.8C328.9 441.6 324.5 440.9 320.6 440.6C316.7 440.3 313.2 440.1 309.8 439.8C306.4 439.4 303.2 439.2 300.1 438.8C296.9 438.3 293.7 437.4 290.8 436.9C287.9 436.4 285.2 436 282.6 435.6C280.1 435.2 277.6 434.8 275.3 434.5C273 434.2 270.7 434 268.6 433.8C266.5 433.7 264.5 433.8 262.4 433.6C260.4 433.5 258.3 433.1 256.4 433C254.4 432.8 252.6 432.9 250.7 432.9C248.8 432.9 246.9 433 245.1 432.9C243.2 432.9 241.4 432.6 239.5 432.6C237.7 432.6 235.8 432.9 234 432.9C232.1 433 230.2 432.9 228.4 432.9C226.5 432.9 224.6 432.8 222.6 433C220.7 433.1 218.6 433.5 216.6 433.6C214.6 433.8 212.6 433.7 210.4 433.8C208.3 434 206.1 434.2 203.7 434.5C201.4 434.8 199 435.2 196.4 435.6C193.8 436 191.2 436.4 188.3 436.9C185.4 437.4 182.1 438.3 179 438.8C175.8 439.2 172.6 439.4 169.2 439.8C165.8 440.1 162.3 440.3 158.4 440.6C154.5 440.9 150.1 441.6 145.8 441.8C141.5 442 137.2 442 132.7 441.8C128.3 441.5 123.4 441.4 119.3 440.4C115.3 439.3 111.8 437.6 108.6 435.6C105.3 433.7 102.6 431.2 100.1 428.6C97.5 426.1 95.3 423.2 93.3 420.2C91.4 417.2 89.8 414 88.5 410.7C87.1 407.4 85.8 404 85.2 400.5C84.5 397 84.5 393.3 84.5 389.7C84.5 386.1 84.4 382.5 85 378.9C85.7 375.2 87.1 371.5 88.3 368C89.5 364.5 90.4 361.1 92.3 357.8C94.3 354.5 97.5 351.2 100 348.1C102.5 345.1 105.1 342.2 107.3 339.5C109.5 336.7 110.9 334 113.1 331.5C115.3 329 118.1 326.7 120.3 324.4C122.6 322.1 124.5 320 126.5 317.8C128.4 315.7 130.2 313.6 132 311.6C133.9 309.6 135.7 307.8 137.4 305.8C139.1 303.9 140.7 302 142.2 300.1C143.7 298.2 145.1 296.3 146.4 294.4C147.7 292.4 148.7 290.2 150.1 288.4C151.6 286.6 153.6 285.1 155 283.3C156.4 281.4 157.3 279.1 158.7 277.2C160.1 275.4 162.1 274 163.5 272.1C164.9 270.2 166 267.9 167.3 265.8C168.6 263.7 169.9 261.3 171.3 259.3C172.8 257.2 174.5 255.3 176.2 253.3C177.8 251.3 179.6 249.4 181.3 247.2C183 245.1 184.6 242.6 186.4 240.5C188.3 238.4 190.4 236.7 192.4 234.5C194.5 232.3 196.3 229.5 198.5 227.4C200.7 225.3 203.2 223.8 205.7 222.1C208.2 220.4 210.8 218.5 213.5 217.2C216.2 215.9 219 215.1 221.9 214.3C224.7 213.5 227.7 212.8 230.6 212.4C233.6 212.1 236.5 212.1 239.5 212.1C242.5 212.1 245.5 212.1 248.4 212.4C251.3 212.8 254.3 213.5 257.1 214.3C260 215.1 262.9 215.9 265.6 217.2C268.2 218.5 270.8 220.4 273.3 222.1C275.8 223.8 278.3 225.3 280.5 227.4C282.7 229.5 284.6 232.3 286.6 234.5C288.6 236.7 290.6 238.5 292.6 240.5C294.5 242.5 296.6 244.2 298.3 246.4C300 248.5 301.3 251.2 302.8 253.3C304.4 255.5 306.2 257.3 307.7 259.3C309.2 261.3 310.6 263.4 312 265.4C313.5 267.4 314.8 269.4 316.2 271.4C317.6 273.4 319 275.3 320.3 277.2C321.6 279.2 322.6 281.4 324 283.3C325.4 285.1 327.5 286.6 328.9 288.4C330.3 290.2 331.3 292.4 332.6 294.4C333.9 296.3 335.3 298.2 336.8 300.1C338.3 302 340 303.9 341.6 305.8C343.2 307.8 344.7 309.8 346.5 311.8C348.3 313.8 350.5 315.7 352.5 317.8C354.6 319.9 356.4 322.1 358.7 324.4C360.9 326.7 363.7 329 365.9 331.5C368.1 334 369.6 336.7 371.7 339.5C373.8 342.2 376 345.1 378.5 348.1Z"/></g></svg><span>Rapid Response</span></a><nav class="rr-nav" aria-label="Main"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div><button class="rr-burger" id="rrMenuBtn" type="button" aria-controls="rrMob" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="rr-b1" d="M4 8h16"/><path class="rr-b2" d="M4 16h16"/></svg></button></nav></div><div class="rr-mob" id="rrMob" hidden><nav aria-label="Menu"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/network" aria-current="page" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a></nav><div class="rr-lang rr-mob-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">English</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div></div></div>
+<!-- /rr:header -->
+<main class="nw rr-page rr-wide" id="nw">
+  <div class="nw-head">
+    <p class="rr-ph-eye"><span data-lang="en">Our community, across India</span><span data-lang="hi">पूरे भारत में हमारा समुदाय</span></p>
+    <h1 class="rr-ph-h1"><span data-lang="en">People helping animals.<br><em>District by district.</em></span><span data-lang="hi">जानवरों की मदद करते लोग।<br><em>ज़िला दर ज़िला।</em></span></h1>
+    <p class="rr-ph-lead"><span data-lang="en">People coming together for animals. See how big the Rapid Response network is, across India and in your district.</span><span data-lang="hi">जानवरों के लिए साथ आते लोग। देखिए रैपिड रिस्पॉन्स नेटवर्क पूरे भारत में और आपके ज़िले में कितना बड़ा है।</span></p>
+  </div>
+
+  <div class="nw-fig">
+    <section class="nw-detail" aria-live="polite">
+      <h2 id="nwPlace"></h2>
+      <div class="nw-num" id="nwNum"><i class="nw-wait" aria-hidden="true"></i></div>
+      <p class="nw-sub" id="nwSub"></p>
+      <button class="nw-all" id="nwAll" type="button" hidden></button>
+    </section>
+    <p class="nw-status" id="nwStatus" role="status"><i aria-hidden="true"></i><span></span></p>
+  </div>
+
+  <div class="nw-mapbox" id="nwMapBox">
+    <div class="nw-map" id="nwMap" role="region" aria-label="Map of India's districts: a red dot for each person"></div>
+    <p class="nw-legend" id="nwLegend" hidden><i aria-hidden="true"></i><span id="nwLegendT"></span></p>
+  </div>
+
+  <div class="nw-tools">
+    <label class="nw-find"><input id="nwSearch" type="search" autocomplete="off" enterkeyhint="search"></label>
+    <select class="nw-pick" id="nwPick"></select>
+    <div class="nw-list" id="nwList"></div>
+    <div class="nw-pager"><button id="nwPrev" type="button" disabled></button><span id="nwPage"></span><button id="nwNext" type="button" disabled></button></div>
+    <p class="nw-note"><span data-lang="en">District totals only. Each dot is a person, placed at random inside their district, never where they live. Names, phone numbers and locations are never shown. A number with + means at least that many.</span><span data-lang="hi">सिर्फ़ ज़िलों के कुल आँकड़े। हर बिंदु एक व्यक्ति है, जिसे उसके ज़िले के अंदर किसी भी जगह रखा गया है, उसके घर पर कभी नहीं। नाम, फ़ोन नंबर और लोकेशन कभी नहीं दिखाए जाते। + वाले आँकड़े का मतलब है कम से कम इतने।</span></p>
+  </div>
+</main>
+<script src="/assets/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script>
+/* The network: figures from GET /public/network (backend public_network.js),
+ * district totals only, and a map of India's districts with a red dot for
+ * each person. A dot is placed at random inside its district (the same place
+ * on every visit), never where anyone is. Nothing is sent from this page. */
+(function () {
+  'use strict';
+  var API = 'https://asia-south1-rrt-new-backend.cloudfunctions.net/api/public/network';
+  var MAP_DATA = '/assets/network/india-districts.json';
+  var PER_PAGE = 3;
+  var MAX_DOTS = 6000;
+  var $ = function (id) { return document.getElementById(id); };
+  var data = null, rows = [], picked = '', page = 0, failed = false, anim = 0;
+  var geo = null, map = null, distLayer = null, dotLayer = null, shapes = {}, india = null, dotsPer = 1;
+
+  function lang() { return document.documentElement.lang === 'hi' ? 'hi' : 'en'; }
+  function T(en, hi) { return lang() === 'hi' ? hi : en; }
+  function num(n, approx) { return Number(n).toLocaleString('en-IN') + (approx ? '+' : ''); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function when(ms) {
+    var d = new Date(ms), now = new Date();
+    var t = d.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
+    if (d.toDateString() === now.toDateString()) return t;
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) + ', ' + t;
+  }
+  function rowOf(key) { for (var i = 0; i < rows.length; i++) if (rows[i].key === key) return rows[i]; return null; }
+  /* A district picked on the map may have nobody yet: its name from the map. */
+  function placeOf(key) {
+    var r = rowOf(key);
+    if (r) return r;
+    var s = shapes[key];
+    if (!s) return null;
+    var p = s.layers[0].feature.properties;
+    return { key: key, name: p.n, state: p.s, people: 0, approx: false };
+  }
+
+  function status(text, live, retry) {
+    var s = $('nwStatus');
+    s.classList.toggle('live', !!live);
+    s.querySelector('span').textContent = text;
+    var b = s.querySelector('button');
+    if (retry && !b) { b = document.createElement('button'); b.type = 'button'; b.onclick = load; s.appendChild(b); }
+    if (b) { b.hidden = !retry; b.textContent = T('Try again', 'फिर कोशिश करें'); }
+  }
+
+  /* The big figure: all of India, or the district picked. Counts up once. */
+  function figure(n, approx, unit, animate) {
+    cancelAnimationFrame(anim);
+    var box = $('nwNum'), strong = box.querySelector('strong'), label = box.querySelector('span');
+    if (!strong || !label) {
+      strong = document.createElement('strong'); label = document.createElement('span');
+      box.replaceChildren(strong, label);
+    }
+    label.textContent = unit;
+    var still = !animate || !window.matchMedia || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var start = performance.now();
+    (function tick(t) {
+      var p = still ? 1 : Math.min(((t || start) - start) / 700, 1);
+      strong.textContent = num(Math.round(n * (1 - Math.pow(1 - p, 3))), approx && p === 1);
+      if (p < 1) anim = requestAnimationFrame(tick);
+    })(start);
+  }
+
+  function showDetail(animate) {
+    var r = picked ? placeOf(picked) : null;
+    $('nwAll').hidden = !r;
+    $('nwAll').textContent = T('← All of India', '← पूरा भारत');
+    if (!data) {
+      $('nwPlace').textContent = T('All of India', 'पूरा भारत');
+      if (failed) $('nwNum').replaceChildren();
+      $('nwSub').textContent = failed ? '' : T('Counting the network…', 'नेटवर्क गिना जा रहा है…');
+      return;
+    }
+    var unit = T('people', 'लोग');
+    if (r) {
+      $('nwPlace').textContent = r.name;
+      $('nwSub').textContent = r.people ? (r.state || '') : (r.state ? r.state + '. ' : '') + T('Nobody here yet. Be the first.', 'यहाँ अभी कोई नहीं। पहले आप बनिए।');
+      figure(r.people, r.approx, unit, animate);
+    } else {
+      $('nwPlace').textContent = T('All of India', 'पूरा भारत');
+      $('nwSub').textContent = rows.length
+        ? T('in ' + num(data.districts) + (data.districts === 1 ? ' district' : ' districts') + (data.states ? ' across ' + num(data.states) + (data.states === 1 ? ' state' : ' states') : '') + '. Choose a district to see its people.',
+            (data.states ? num(data.states) + ' राज्यों के ' : '') + num(data.districts) + ' ज़िलों में। किसी ज़िले को चुनें और देखें वहाँ कितने लोग हैं।')
+        : T('Counting starts as people join. Be the first in your district.', 'लोगों के जुड़ने के साथ गिनती शुरू होती है। अपने ज़िले में पहले बनिए।');
+      figure(data.people, data.approx, unit, animate);
+    }
+  }
+
+  function pick(key, fromMap) {
+    picked = key || '';
+    renderList();
+    showDetail(true);
+    highlight(!fromMap);
+  }
+
+  function renderList() {
+    var q = $('nwSearch').value.trim().toLowerCase();
+    var shown = rows.filter(function (r) { return !q || (r.name + ' ' + r.state).toLowerCase().indexOf(q) >= 0; });
+    var pages = Math.max(1, Math.ceil(shown.length / PER_PAGE));
+    page = Math.max(0, Math.min(page, pages - 1));
+    var list = $('nwList');
+    list.replaceChildren();
+    shown.slice(page * PER_PAGE, (page + 1) * PER_PAGE).forEach(function (r) {
+      var b = document.createElement('button'), name = document.createElement('span'), sub = document.createElement('small'), n = document.createElement('strong');
+      b.type = 'button'; b.className = 'nw-row';
+      b.setAttribute('aria-pressed', String(r.key === picked));
+      name.textContent = r.name;
+      sub.textContent = r.state || '';
+      if (r.state) name.appendChild(sub);
+      n.textContent = num(r.people, r.approx);
+      b.append(name, n);
+      b.onclick = function () { pick(r.key === picked ? '' : r.key); };
+      list.appendChild(b);
+    });
+    if (!shown.length && data) {
+      var e = document.createElement('div');
+      e.className = 'nw-empty';
+      e.textContent = rows.length ? T('No district matches that.', 'ऐसा कोई ज़िला नहीं मिला।') : T('No districts yet.', 'अभी कोई ज़िला नहीं।');
+      list.appendChild(e);
+    }
+    $('nwPrev').disabled = page === 0;
+    $('nwNext').disabled = (page + 1) * PER_PAGE >= shown.length;
+    $('nwPrev').textContent = T('Previous', 'पिछले');
+    $('nwNext').textContent = T('Next', 'अगले');
+    $('nwPage').textContent = shown.length
+      ? T((page * PER_PAGE + 1) + '-' + Math.min((page + 1) * PER_PAGE, shown.length) + ' of ' + num(shown.length) + (shown.length === 1 ? ' district' : ' districts'),
+          num(shown.length) + ' में से ' + (page * PER_PAGE + 1) + '-' + Math.min((page + 1) * PER_PAGE, shown.length))
+      : T('Districts', 'ज़िले');
+
+    var sel = $('nwPick');
+    sel.replaceChildren(new Option(picked ? T('All of India', 'पूरा भारत') : T('Choose a district', 'ज़िला चुनें'), ''));
+    rows.forEach(function (r) { sel.add(new Option(r.name + ' · ' + num(r.people, r.approx), r.key)); });
+    if (picked && !rowOf(picked)) { var p = placeOf(picked); if (p) sel.add(new Option(p.name + ' · 0', picked)); }
+    sel.value = picked;
+  }
+
+  /* ---- the map ----------------------------------------------------------- */
+  var STYLE = {
+    none: { color: '#DDDBD6', weight: 0.6, fillColor: '#F2F1EE', fillOpacity: 1 },
+    some: { color: '#DDDBD6', weight: 0.6, fillColor: '#FCEEEE', fillOpacity: 1 },
+    picked: { color: '#D81E2C', weight: 2.2, fillColor: '#F9D9DB', fillOpacity: 1 },
+  };
+  function styleFor(key) { return key === picked ? STYLE.picked : (rowOf(key) ? STYLE.some : STYLE.none); }
+
+  function buildMap() {
+    if (!geo || !window.L || map) return;
+    var canvas = L.canvas({ padding: 0.4 });
+    map = L.map('nwMap', {
+      renderer: canvas, preferCanvas: true, zoomSnap: 0.25, zoomDelta: 0.5, minZoom: 3, maxZoom: 10,
+      scrollWheelZoom: false, dragging: !L.Browser.mobile, tap: false, attributionControl: true,
+    });
+    map.attributionControl.setPrefix(false);
+    map.attributionControl.addAttribution('Census of India 2011 districts · <a href="https://leafletjs.com" rel="noopener">Leaflet</a>');
+    distLayer = L.geoJSON(geo.districts, {
+      renderer: canvas,
+      style: function (f) { return styleFor(f.properties.k); },
+      onEachFeature: function (f, layer) {
+        var k = f.properties.k;
+        (shapes[k] = shapes[k] || { layers: [] }).layers.push(layer);
+        layer.bindTooltip(function () {
+          var r = placeOf(k) || { name: f.properties.n, state: f.properties.s, people: 0 };
+          return '<b>' + esc(r.name) + '</b><small>' + esc(num(r.people, r.approx) + ' ' + T('people', 'लोग') + (r.state ? ' · ' + r.state : '')) + '</small>';
+        }, { sticky: true, direction: 'top', offset: [0, -6], opacity: 1 });
+        layer.on('click', function () { pick(k === picked ? '' : k, true); });
+        layer.on('mouseover', function () { if (k !== picked) layer.setStyle({ weight: 1.4, color: '#6B6963' }); });
+        layer.on('mouseout', function () { layer.setStyle(styleFor(k)); });
+      },
+    }).addTo(map);
+    L.geoJSON(geo.states, { renderer: canvas, interactive: false, style: { color: '#A9A69F', weight: 1, fill: false } }).addTo(map);
+    india = distLayer.getBounds();
+    map.fitBounds(india, { padding: [8, 8] });
+    map.setMinZoom(Math.max(3, map.getZoom() - 0.5));
+    map.setMaxBounds(india.pad(0.3));
+    dotLayer = L.layerGroup().addTo(map);
+    map.on('zoomend', sizeDots);
+    window.__nwMap = map;   // for scripts/test-network.js
+    drawDots();
+  }
+
+  /* The same random places on every visit: a generator seeded by the district. */
+  function seeded(key) {
+    var h = 2166136261;
+    for (var i = 0; i < key.length; i++) { h ^= key.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return function () {
+      h = (h + 0x6D2B79F5) | 0;
+      var t = h;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function outerRings(layer) {
+    var g = layer.feature.geometry, out = [];
+    (g.type === 'Polygon' ? [g.coordinates] : g.coordinates).forEach(function (poly) { if (poly[0] && poly[0].length > 3) out.push(poly[0]); });
+    return out;
+  }
+  function inside(x, y, ring) {
+    var c = false;
+    for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      var xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+      if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+    }
+    return c;
+  }
+  function area(ring) {
+    var a = 0;
+    for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) a += (ring[j][0] + ring[i][0]) * (ring[j][1] - ring[i][1]);
+    return Math.abs(a / 2);
+  }
+  function dotsIn(key, count) {
+    var s = shapes[key];
+    if (!s) return [];
+    var polys = [];
+    s.layers.forEach(function (l) {
+      outerRings(l).forEach(function (r) {
+        var b = [Infinity, Infinity, -Infinity, -Infinity];
+        r.forEach(function (p) { b[0] = Math.min(b[0], p[0]); b[1] = Math.min(b[1], p[1]); b[2] = Math.max(b[2], p[0]); b[3] = Math.max(b[3], p[1]); });
+        polys.push({ ring: r, box: b, area: area(r) });
+      });
+    });
+    var total = polys.reduce(function (t, p) { return t + p.area; }, 0);
+    if (!total) return [];
+    var rnd = seeded(key), out = [];
+    for (var n = 0; n < count; n++) {
+      var w = rnd() * total, poly = polys[polys.length - 1];
+      for (var i = 0; i < polys.length; i++) { w -= polys[i].area; if (w <= 0) { poly = polys[i]; break; } }
+      var b = poly.box;
+      for (var tries = 0; tries < 80; tries++) {
+        var x = b[0] + rnd() * (b[2] - b[0]), y = b[1] + rnd() * (b[3] - b[1]);
+        if (inside(x, y, poly.ring)) { out.push([y, x]); break; }
+      }
+    }
+    return out;
+  }
+  /* Small and light when all of India is in view (so a busy district reads
+     as many dots, not one blot), larger closer in. */
+  function dotStyle() {
+    var z = map ? map.getZoom() : 4.5;
+    return { radius: Math.max(1.2, Math.min(3.4, 1.2 + (z - 4.5) * 0.55)), fillOpacity: z < 6 ? 0.6 : 0.82 };
+  }
+  function sizeDots() {
+    if (!dotLayer) return;
+    var st = dotStyle();
+    dotLayer.eachLayer(function (d) { d.setRadius(st.radius); d.setStyle({ fillOpacity: st.fillOpacity }); });
+  }
+  function drawDots() {
+    if (!map || !dotLayer || !data) return;
+    dotLayer.clearLayers();
+    var sum = rows.reduce(function (t, r) { return t + r.people; }, 0);
+    dotsPer = Math.max(1, Math.ceil(sum / MAX_DOTS));
+    var drawn = 0, st = dotStyle();
+    rows.forEach(function (r) {
+      dotsIn(r.key, Math.max(1, Math.round(r.people / dotsPer))).forEach(function (ll) {
+        L.circleMarker(ll, { radius: st.radius, stroke: false, fillColor: '#D81E2C', fillOpacity: st.fillOpacity, interactive: false }).addTo(dotLayer);
+        drawn++;
+      });
+    });
+    $('nwMap').setAttribute('data-dots', String(drawn));
+    legend();
+  }
+  function legend() {
+    if (!map || !data || !rows.length) { $('nwLegend').hidden = true; return; }
+    $('nwLegend').hidden = false;
+    $('nwLegendT').textContent = dotsPer === 1
+      ? T('One dot, one person, somewhere in their district', 'एक बिंदु, एक व्यक्ति, उसके ज़िले में कहीं')
+      : T('One dot, about ' + num(dotsPer) + ' people', 'एक बिंदु, लगभग ' + num(dotsPer) + ' लोग');
+  }
+  function highlight(move) {
+    if (!distLayer) return;
+    distLayer.eachLayer(function (l) { l.setStyle(styleFor(l.feature.properties.k)); });
+    var s = picked && shapes[picked];
+    if (s) {
+      s.layers.forEach(function (l) { l.bringToFront(); });
+      if (move) {
+        var b = L.latLngBounds([]);
+        s.layers.forEach(function (l) { b.extend(l.getBounds()); });
+        map.flyToBounds(b, { padding: [40, 40], maxZoom: 8, duration: 0.6 });
+      }
+    } else if (move && india) {
+      map.flyToBounds(india, { padding: [8, 8], duration: 0.6 });
+    }
+    if (dotLayer) dotLayer.eachLayer(function (d) { d.bringToFront(); });
+    $('nwMap').setAttribute('data-picked', picked);
+  }
+
+  function paint() {
+    $('nwSearch').placeholder = T('Find your district', 'अपना ज़िला खोजें');
+    $('nwSearch').setAttribute('aria-label', T('Find your district', 'अपना ज़िला खोजें'));
+    $('nwPick').setAttribute('aria-label', T('Choose a district', 'ज़िला चुनें'));
+    $('nwMap').setAttribute('aria-label', T("Map of India's districts: a red dot for each person", 'भारत के ज़िलों का नक्शा: हर व्यक्ति के लिए एक लाल बिंदु'));
+    renderList();
+    showDetail(false);
+    legend();
+    if (data) status(T('Updated at ', '') + when(data.updated_at) + T('', ' पर अपडेट'), true);
+    else if (failed) status(navigator.onLine === false ? T('You are offline.', 'आप ऑफ़लाइन हैं।') : T('The numbers could not be loaded.', 'आँकड़े लोड नहीं हो सके।'), false, true);
+    else status(T('Loading the latest numbers', 'ताज़ा आँकड़े आ रहे हैं'), false);
+  }
+
+  function clean(d) {
+    if (!d || d.ok !== true || !Number.isSafeInteger(d.people) || d.people < 0 || !Array.isArray(d.list)) return null;
+    var list = d.list.filter(function (r) {
+      return r && typeof r.key === 'string' && typeof r.name === 'string' && r.name && Number.isSafeInteger(r.people) && r.people > 0;
+    }).map(function (r) { return { key: r.key, name: r.name, state: typeof r.state === 'string' ? r.state : '', people: r.people, approx: r.approx === true }; });
+    return { people: d.people, approx: d.approx === true, districts: list.length, states: Number(d.states) || 0, list: list, updated_at: Number(d.updated_at) || Date.now() };
+  }
+
+  function load() {
+    failed = false;
+    paint();
+    var ctl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 12000);
+    fetch(API, { signal: ctl ? ctl.signal : undefined, credentials: 'omit' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (d) {
+        clearTimeout(timer);
+        var c = clean(d);
+        if (!c) throw new Error('bad data');
+        data = c; rows = c.list;
+        if (picked && !placeOf(picked)) picked = '';
+        paint();
+        showDetail(true);
+        highlight(false);
+        drawDots();
+      })
+      .catch(function () { clearTimeout(timer); if (!data) failed = true; paint(); });
+  }
+  function loadMap() {
+    if (!window.L) { $('nwMapBox').hidden = true; return; }
+    fetch(MAP_DATA, { credentials: 'omit' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (g) {
+        if (!g || !g.districts || !g.states) throw new Error('bad map');
+        geo = g;
+        buildMap();
+        highlight(false);
+        legend();
+      })
+      .catch(function () { $('nwMapBox').hidden = true; });
+  }
+
+  $('nwSearch').addEventListener('input', function () { page = 0; renderList(); });
+  $('nwPrev').onclick = function () { page--; renderList(); };
+  $('nwNext').onclick = function () { page++; renderList(); };
+  $('nwPick').onchange = function (e) { pick(e.target.value); };
+  $('nwAll').onclick = function () { pick(''); };
+  window.addEventListener('offline', function () { if (data) status(T('Offline. The numbers may be out of date.', 'ऑफ़लाइन। आँकड़े पुराने हो सकते हैं।'), false); });
+  window.addEventListener('online', function () { if (failed) load(); else paint(); });
+
+  /* The shared header's EN | हिंदी switch (assets/rr-site.js) calls this. */
+  window.setLang = function (l) { document.documentElement.lang = l === 'hi' ? 'hi' : 'en'; paint(); };
+  try { var l = localStorage.getItem('lang') || localStorage.getItem('rr-lang'); if (l === 'hi') document.documentElement.lang = 'hi'; } catch (e) { /* private mode */ }
+  if (/[?&]lang=hi\b/.test(location.search)) document.documentElement.lang = 'hi';
+  loadMap();
+  load();
+})();
+</script>
+<!-- rr:footer -->
+<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in"><nav aria-label="About"><a href="/explainer" data-rr-en="About" data-rr-hi="परिचय">About</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/network" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a></nav><nav aria-label="Legal"><a href="/policy" data-rr-en="Privacy &amp; Terms" data-rr-hi="प्राइवेसी और शर्तें">Privacy &amp; Terms</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav></div></div>
+<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>
+<!-- /rr:footer -->
+</body>
+</html>
