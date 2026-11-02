@@ -12,7 +12,11 @@
  *     a district picked by clicking it; no map server is asked for anything;
  *   - Hindi; a phone (a picker beside the map instead of the list);
  *   - a failed load says so and can be tried again; an empty network;
- *   - the homepage line, the footer and phone menu link;
+ *   - today's line asking people to join: a different one on every visit,
+ *     every number in it true, a Join today button to this phone's store;
+ *   - West (a district in Delhi and in Sikkim) drawn in Delhi; a district
+ *     made after 2011 (Medchal Malkajgiri) drawn in the one it came from;
+ *   - the homepage line (rotating too), the footer and phone menu link;
  *   - the page only reads: one GET, nothing sent.
  *
  * Run: node scripts/test-network.js   (SHOTS=dir saves screenshots)
@@ -39,6 +43,12 @@ const ANSWER = PN.view({
   built_at: NOW - 40 * 60e3,
 });
 const EMPTY = PN.view({ districts: {}, states: {}, built_at: NOW });
+const DELHI = PN.view({ districts: { west: 40, medchal_malkajgiri: 26 }, states: { west: { name: 'Delhi' }, medchal_malkajgiri: { name: 'Telangana' } }, built_at: NOW });
+/* Every number a line may say: the total, the number of districts, a
+   district's count, or one more than it. */
+const TRUE_NUMBERS = new Set(['1,500+', '4']);
+ANSWER.list.forEach((r) => { TRUE_NUMBERS.add(r.people.toLocaleString('en-IN') + (r.approx ? '+' : '')); if (!r.approx) TRUE_NUMBERS.add((r.people + 1).toLocaleString('en-IN')); });
+const numbersIn = (t) => (t.match(/\d[\d,]*\+?/g) || []);
 
 // The map has every district the app and backend can name.
 {
@@ -83,7 +93,7 @@ async function open(browser, size, opts = {}) {
     if (u === API) {
       calls.push(r.request().method());
       if (mode === 'fail') return r.fulfill({ status: 500, contentType: 'application/json', body: '{"error":"internal"}', headers: { 'access-control-allow-origin': '*' } });
-      return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(mode === 'empty' ? EMPTY : ANSWER), headers: { 'access-control-allow-origin': '*' } });
+      return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(mode === 'empty' ? EMPTY : mode === 'delhi' ? DELHI : ANSWER), headers: { 'access-control-allow-origin': '*' } });
     }
     if (u.startsWith(BASE)) return r.continue();
     foreign.push(u);
@@ -151,6 +161,15 @@ async function open(browser, size, opts = {}) {
     check(m.leaflet, 'the map of India\'s districts is drawn');
     check(m.dots === 1200 + 250 + 48, 'a red dot per person in each district on the map (' + m.dots + '; the one district not on it has none)');
     check(m.legend === 'One dot, one person, somewhere in their district', 'the legend says what a dot is');
+    const join = await page.evaluate(() => ({ shown: !document.getElementById('nwJoin').hidden, k: document.getElementById('nwJoinK').textContent,
+      line: document.getElementById('nwJoinLine').textContent, i: document.getElementById('nwJoin').getAttribute('data-line'),
+      a: [document.getElementById('nwJoinA').textContent, document.getElementById('nwJoinA').href],
+      b: [document.getElementById('nwJoinB').hidden, document.getElementById('nwJoinB').textContent, document.getElementById('nwJoinB').href],
+      small: document.getElementById('nwJoinSmall').textContent }));
+    check(join.shown && join.k === 'Today' && join.line.length > 10 && !/undefined|null|NaN/.test(join.line), 'today\'s line asking people to join (' + join.line + ')');
+    check(numbersIn(join.line).every((x) => TRUE_NUMBERS.has(x)), 'every number in it is true (' + numbersIn(join.line).join(', ') + ')');
+    check(join.a[0] === 'Join on Android' && /play\.google\.com/.test(join.a[1]) && !join.b[0] && join.b[1] === 'iPhone' && /apps\.apple\.com/.test(join.b[2]), 'on a computer: both stores');
+    check(/at least one kind of help/.test(join.small), 'join if you can help, as RRT asks');
     check(m.bottom <= m.vh + 1 && m.h >= 460, 'the map fills the screen beside the figures (' + Math.round(m.h) + 'px)');
     check(m.over <= 0, 'nothing wider than the screen');
     if (shots) await page.screenshot({ path: path.join(shots, 'network-desktop.png') });
@@ -193,6 +212,7 @@ async function open(browser, size, opts = {}) {
     await page.waitForTimeout(400);
     check(/जानवरों की मदद करते लोग/.test(await text(page, 'h1')) && /लोग$/.test(await text(page, '#nwNum')) && await text(page, '#nwPlace') === 'पूरा भारत', 'Hindi');
     check(/2 राज्यों के 4 ज़िलों में/.test(await text(page, '#nwSub')) && /पर अपडेट$/.test(await text(page, '#nwStatus')), 'Hindi: districts, states, when (' + await text(page, '#nwSub').then((s) => s.slice(0, 30)) + ')');
+    check(/[\u0900-\u097F]/.test(await text(page, '#nwJoinLine')) && await text(page, '#nwJoinK') === 'आज', 'today\'s line in Hindi');
     if (shots) await page.screenshot({ path: path.join(shots, 'network-desktop-hi.png') });
     check(calls.length === 1 && calls[0] === 'GET', 'one GET, nothing sent (' + calls.join(',') + ')');
     // (Every page reads the shop switch, assets/rr-site.js; nothing else may go out.)
@@ -233,12 +253,61 @@ async function open(browser, size, opts = {}) {
     await ctx.close();
   }
 
+  // ---- today's line: a different one each visit; a forced one; Delhi -----------
+  {
+    const r = await open(browser, { width: 1280, height: 800 });
+    const seen = [];
+    let allTrue = true;
+    for (let v = 0; v < 6; v++) {
+      await r.page.goto(BASE + '/network', { waitUntil: 'domcontentloaded' });
+      await r.page.waitForFunction(() => !document.getElementById('nwJoin').hidden, null, { timeout: 8000 });
+      const x = await r.page.evaluate(() => [document.getElementById('nwJoin').getAttribute('data-line'), document.getElementById('nwJoinLine').textContent]);
+      seen.push(x[0]);
+      if (!numbersIn(x[1]).every((n) => TRUE_NUMBERS.has(n))) { allTrue = false; console.log('     untrue: ' + x[1]); }
+    }
+    check(seen.every((x, i) => i === 0 || x !== seen[i - 1]) && new Set(seen).size >= 3, 'a different line on every visit (' + seen.join(',') + ')');
+    check(allTrue, 'and every number in every one is true');
+    await r.page.goto(BASE + '/network?join=0', { waitUntil: 'domcontentloaded' });
+    await r.page.waitForFunction(() => !document.getElementById('nwJoin').hidden, null, { timeout: 8000 });
+    check(await text(r.page, '#nwJoinLine') === '1,500+ people already said yes. The next yes could be yours.', 'a line can be shown on purpose (?join=0)');
+    await r.ctx.close();
+
+    const p = await open(browser, { width: 390, height: 844 }, { ua: 'Mozilla/5.0 (Linux; Android 14; SM-A146B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36' });
+    await p.page.goto(BASE + '/network', { waitUntil: 'domcontentloaded' });
+    await p.page.waitForFunction(() => !document.getElementById('nwJoin').hidden, null, { timeout: 8000 });
+    const pj = await p.page.evaluate(() => [document.getElementById('nwJoinA').textContent, document.getElementById('nwJoinA').href, document.getElementById('nwJoinB').hidden]);
+    check(pj[0] === 'Join today' && /play\.google\.com/.test(pj[1]) && pj[2], 'on an Android phone: one Join today button, to Google Play');
+    if (shots) await p.page.screenshot({ path: path.join(shots, 'network-phone-join.png') });
+    await p.ctx.close();
+
+    const dl = await open(browser, { width: 1280, height: 800 }, { mode: 'delhi' });
+    await dl.page.goto(BASE + '/network', { waitUntil: 'domcontentloaded' });
+    await dl.page.waitForFunction(() => Number(document.getElementById('nwMap').getAttribute('data-dots')) > 0, null, { timeout: 8000 });
+    const where = await dl.page.evaluate(() => {
+      const dots = []; window.__nwMap.eachLayer((l) => { if (l instanceof L.CircleMarker) dots.push(l.getLatLng()); });
+      const inDelhi = dots.filter((d) => d.lat > 28.3 && d.lat < 29 && d.lng > 76.7 && d.lng < 77.5).length;
+      const nearHyd = dots.filter((d) => d.lat > 16.6 && d.lat < 18.0 && d.lng > 77.0 && d.lng < 79.2).length;
+      return { all: dots.length, inDelhi, nearHyd };
+    });
+    check(where.all === 66 && where.inDelhi === 40, 'West is drawn in Delhi, not Sikkim (' + where.inDelhi + ' of 40)');
+    check(where.nearHyd === 26, 'Medchal Malkajgiri (made in 2016) is drawn in Rangareddy, the district it came from');
+    await dl.page.selectOption('#nwPick', 'medchal_malkajgiri').catch(() => {});
+    await dl.page.fill('#nwSearch', 'medchal');
+    await dl.page.click('.nw-row');
+    await dl.page.waitForTimeout(1100);
+    const c = await dl.page.evaluate(() => window.__nwMap.getCenter());
+    check(await text(dl.page, '#nwPlace') === 'Medchal Malkajgiri' && Math.abs(c.lat - 17.3) < 0.8 && Math.abs(c.lng - 78.2) < 0.9, 'picking it shows it there');
+    check(dl.errors.length === 0, 'no script errors ' + JSON.stringify(dl.errors));
+    await dl.ctx.close();
+  }
+
   // ---- a failed load, then trying again; an empty network --------------------
   {
     const t = await open(browser, { width: 1280, height: 800 }, { mode: 'fail' });
     await t.page.goto(BASE + '/network', { waitUntil: 'domcontentloaded' });
     await t.page.waitForFunction(() => /could not be loaded/.test(document.getElementById('nwStatus').textContent), null, { timeout: 8000 });
     check(await t.page.isVisible('#nwStatus button') && !(await t.page.$('#nwNum strong')), 'a failed load says so, with no figure');
+    check(await t.page.isVisible('#nwJoin') && !/\d/.test(await text(t.page, '#nwJoinLine')), 'today\'s line is still there, one without figures (' + await text(t.page, '#nwJoinLine') + ')');
     t.setMode('ok');
     await t.page.click('#nwStatus button');
     await t.page.waitForFunction(() => /1,500\+/.test(document.getElementById('nwNum').textContent), null, { timeout: 8000 });
@@ -256,7 +325,7 @@ async function open(browser, size, opts = {}) {
   // ---- the homepage line -----------------------------------------------------
   {
     const h = await open(browser, { width: 1280, height: 800 });
-    await h.page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+    await h.page.goto(BASE + '/?join=0', { waitUntil: 'domcontentloaded' });
     await h.page.waitForSelector('#net:not([hidden])', { timeout: 8000 });
     check(await text(h.page, '#net') === '1,500+ people in 4 districts so far See the network', 'homepage: how many so far, a link to the network (' + await text(h.page, '#net') + ')');
     check(await h.page.$eval('#net', (a) => a.getAttribute('href')) === '/network', 'homepage: it goes to /network');
@@ -264,6 +333,17 @@ async function open(browser, size, opts = {}) {
     await h.page.waitForTimeout(300);
     check(await text(h.page, '#net') === 'अब तक 4 ज़िलों में 1,500+ लोग नेटवर्क देखें', 'homepage: Hindi (' + await text(h.page, '#net') + ')');
     if (shots) await h.page.screenshot({ path: path.join(shots, 'network-home.png') });
+    const lines = [];
+    let homeTrue = true;
+    for (let v = 0; v < 4; v++) {
+      await h.page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+      await h.page.waitForSelector('#net:not([hidden])', { timeout: 8000 });
+      lines.push(await h.page.$eval('#net', (a) => a.getAttribute('data-line')));
+      const t = await h.page.$eval('#netT', (e) => e.textContent);
+      if (!numbersIn(t).every((x) => TRUE_NUMBERS.has(x))) { homeTrue = false; console.log('     untrue: ' + t); }
+    }
+    check(lines.every((x, i) => i === 0 || x !== lines[i - 1]), 'homepage: a different line on every visit (' + lines.join(',') + '), every number true');
+    check(homeTrue, 'homepage: every number in every line is true');
     check(h.errors.length === 0, 'homepage: no script errors ' + JSON.stringify(h.errors));
     await h.ctx.close();
     const hf = await open(browser, { width: 1280, height: 800 }, { mode: 'fail' });

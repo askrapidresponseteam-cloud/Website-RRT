@@ -35,6 +35,7 @@ button,input,select{font:inherit;color:inherit}
 .nw-head{grid-area:head;min-width:0}
 .nw-fig{grid-area:fig;min-width:0}
 .nw-tools{grid-area:tools;min-width:0}
+.nw-join{grid-area:join;min-width:0}
 .nw-mapbox{grid-area:map;min-width:0}
 .nw h1 em{font-style:normal;color:var(--sg-accent)}
 .nw .rr-ph-lead{text-wrap:pretty}
@@ -86,14 +87,33 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
 .nw-map .leaflet-tooltip small{display:block;font-weight:500;color:var(--sg-slate);font-size:12px}
 .nw-legend{position:absolute;left:12px;bottom:12px;z-index:500;display:flex;align-items:center;gap:8px;max-width:calc(100% - 24px);margin:0;padding:6px 10px;background:rgba(255,255,255,.92);box-shadow:0 0 0 1px var(--sg-line);font-size:12px;color:var(--sg-graphite);pointer-events:none}
 .nw-legend i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--sg-accent)}
-.nw-legend[hidden],.nw-mapbox[hidden]{display:none}
+.nw-legend[hidden],.nw-mapbox[hidden],.nw-join[hidden]{display:none}
+
+/* today's line: a different one on every visit (assets/rr-join.js), then the
+   way in */
+.nw-join{border-top:1px solid var(--sg-line);padding-top:18px}
+.nw-join-k{margin:0 0 8px;font-family:var(--sg-mono);font-size:11px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--sg-accent)}
+html[lang=hi] .nw-join-k{font-family:var(--sg-hindi);letter-spacing:0;font-size:13px}
+.nw-join-line{margin:0;font-family:var(--sg-display);font-weight:800;font-size:clamp(22px,2.2vw,30px);line-height:1.14;letter-spacing:var(--sg-track-title);color:var(--sg-ink);text-wrap:balance;overflow-wrap:anywhere}
+html[lang=hi] .nw-join-line{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0;line-height:1.35}
+.nw-join:not([hidden]) .nw-join-line{animation:nwIn .45s ease-out both}
+@keyframes nwIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.nw-join-go{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.nw-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;background:var(--sg-ink);color:#fff;text-decoration:none;font-family:var(--sg-display);font-weight:700;font-size:13px;letter-spacing:var(--sg-track-button);text-transform:uppercase}
+html[lang=hi] .nw-btn{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:15px}
+.nw-btn:hover{background:var(--sg-ink-hover)}
+.nw-btn.alt{background:var(--sg-paper);color:var(--sg-ink);box-shadow:inset 0 0 0 1.5px var(--sg-ink)}
+.nw-btn.alt:hover{background:var(--sg-mist)}
+.nw-btn[hidden]{display:none}
+.nw-btn:focus-visible{outline:2px solid var(--sg-ink);outline-offset:2px}
+.nw-join-small{margin:10px 0 0;font-size:12px;color:var(--sg-slate)}
 
 @media (min-width:900px){
-  .nw{grid-template-columns:minmax(300px,480px) minmax(0,1fr);grid-template-rows:auto auto 1fr;grid-template-areas:"head map" "fig map" "tools map";column-gap:clamp(32px,5vw,88px);align-items:start}
+  .nw{grid-template-columns:minmax(300px,480px) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;grid-template-areas:"head map" "fig map" "join map" "tools map";column-gap:clamp(32px,5vw,88px);align-items:start}
   .nw-mapbox{position:sticky;top:96px}
 }
 @media (max-width:899px){
-  .nw{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "fig" "map" "tools";row-gap:18px}
+  .nw{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "fig" "join" "map" "tools";row-gap:18px}
   .nw-map{height:min(112vw,520px)}
 }
 @media (max-width:640px){
@@ -129,6 +149,13 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     <p class="nw-status" id="nwStatus" role="status"><i aria-hidden="true"></i><span></span></p>
   </div>
 
+  <div class="nw-join" id="nwJoin" hidden>
+    <p class="nw-join-k" id="nwJoinK"></p>
+    <p class="nw-join-line" id="nwJoinLine"></p>
+    <div class="nw-join-go"><a class="nw-btn" id="nwJoinA" href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener"></a><a class="nw-btn alt" id="nwJoinB" href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener"></a></div>
+    <p class="nw-join-small" id="nwJoinSmall"></p>
+  </div>
+
   <div class="nw-mapbox" id="nwMapBox">
     <div class="nw-map" id="nwMap" role="region" aria-label="Map of India's districts: a red dot for each person"></div>
     <p class="nw-legend" id="nwLegend" hidden><i aria-hidden="true"></i><span id="nwLegendT"></span></p>
@@ -143,6 +170,7 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
   </div>
 </main>
 <script src="/assets/vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="/assets/rr-join.js"></script>
 <script>
 /* The network: figures from GET /public/network (backend public_network.js),
  * district totals only, and a map of India's districts with a red dot for
@@ -156,7 +184,10 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
   var MAX_DOTS = 6000;
   var $ = function (id) { return document.getElementById(id); };
   var data = null, rows = [], picked = '', page = 0, failed = false, anim = 0;
-  var geo = null, map = null, distLayer = null, dotLayer = null, shapes = {}, india = null, dotsPer = 1;
+  var geo = null, map = null, distLayer = null, dotLayer = null, shapes = {}, layerById = {}, india = null, dotsPer = 1;
+  var PLAY = 'https://play.google.com/store/apps/details?id=com.rrt.sos';
+  var IOS = 'https://apps.apple.com/in/app/rapid-response/id6758672498';
+  var joinLine = null;
 
   function lang() { return document.documentElement.lang === 'hi' ? 'hi' : 'en'; }
   function T(en, hi) { return lang() === 'hi' ? hi : en; }
@@ -169,14 +200,16 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) + ', ' + t;
   }
   function rowOf(key) { for (var i = 0; i < rows.length; i++) if (rows[i].key === key) return rows[i]; return null; }
-  /* A district picked on the map may have nobody yet: its name from the map. */
+  /* A district picked on the map may have nobody yet ("@" and its map id):
+     its name and state from the map. */
   function placeOf(key) {
     var r = rowOf(key);
     if (r) return r;
-    var s = shapes[key];
-    if (!s) return null;
-    var p = s.layers[0].feature.properties;
-    return { key: key, name: p.n, state: p.s, people: 0, approx: false };
+    if (key && key.charAt(0) === '@') {
+      var l = layerById[key.slice(1)];
+      if (l) return { key: key, name: l.feature.properties.n, state: l.feature.properties.s, people: 0, approx: false, layer: l };
+    }
+    return null;
   }
 
   function status(text, live, retry) {
@@ -285,7 +318,29 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     some: { color: '#DDDBD6', weight: 0.6, fillColor: '#FCEEEE', fillOpacity: 1 },
     picked: { color: '#D81E2C', weight: 2.2, fillColor: '#F9D9DB', fillOpacity: 1 },
   };
-  function styleFor(key) { return key === picked ? STYLE.picked : (rowOf(key) ? STYLE.some : STYLE.none); }
+  /* Where a district's people are drawn: its Census district (`m`: a
+     renamed one is the same district, one made after 2011 is drawn in the
+     one it came from), in its own state where the name is in two (West:
+     Delhi and Sikkim). */
+  function layersFor(r) {
+    if (!r) return [];
+    if (r.layer) return [r.layer];
+    var s = r.m && shapes[r.m];
+    if (!s) return [];
+    var same = r.state ? s.layers.filter(function (l) { return l.feature.properties.s === r.state; }) : [];
+    return same.length ? same : s.layers;
+  }
+  function pickedLayers() { return picked ? layersFor(placeOf(picked)) : []; }
+  /* Which districts of the list each shape on the map shows. */
+  function linkRows() {
+    if (!distLayer) return;
+    distLayer.eachLayer(function (l) { l._nwRows = []; });
+    rows.forEach(function (r) { layersFor(r).forEach(function (l) { l._nwRows.push(r); }); });
+  }
+  function styleFor(layer) {
+    if (pickedLayers().indexOf(layer) >= 0) return STYLE.picked;
+    return layer._nwRows && layer._nwRows.length ? STYLE.some : STYLE.none;
+  }
 
   function buildMap() {
     if (!geo || !window.L || map) return;
@@ -298,17 +353,24 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     map.attributionControl.addAttribution('Census of India 2011 districts · <a href="https://leafletjs.com" rel="noopener">Leaflet</a>');
     distLayer = L.geoJSON(geo.districts, {
       renderer: canvas,
-      style: function (f) { return styleFor(f.properties.k); },
+      style: function () { return STYLE.none; },
       onEachFeature: function (f, layer) {
         var k = f.properties.k;
         (shapes[k] = shapes[k] || { layers: [] }).layers.push(layer);
+        layerById[L.stamp(layer)] = layer;
         layer.bindTooltip(function () {
-          var r = placeOf(k) || { name: f.properties.n, state: f.properties.s, people: 0 };
-          return '<b>' + esc(r.name) + '</b><small>' + esc(num(r.people, r.approx) + ' ' + T('people', 'लोग') + (r.state ? ' · ' + r.state : '')) + '</small>';
+          var rs = layer._nwRows || [], p = f.properties;
+          var line = function (name, n, approx, st) { return '<b>' + esc(name) + '</b><small>' + esc(num(n, approx) + ' ' + T('people', 'लोग') + (st ? ' · ' + st : '')) + '</small>'; };
+          return rs.length ? rs.map(function (r) { return line(r.name, r.people, r.approx, r.state); }).join('') : line(p.n, 0, false, p.s);
         }, { sticky: true, direction: 'top', offset: [0, -6], opacity: 1 });
-        layer.on('click', function () { pick(k === picked ? '' : k, true); });
-        layer.on('mouseover', function () { if (k !== picked) layer.setStyle({ weight: 1.4, color: '#6B6963' }); });
-        layer.on('mouseout', function () { layer.setStyle(styleFor(k)); });
+        layer.on('click', function () {
+          var rs = layer._nwRows || [];
+          var own = rs.filter(function (r) { return r.key === k; })[0] || rs[0];
+          var id = own ? own.key : '@' + L.stamp(layer);
+          pick(id === picked ? '' : id, true);
+        });
+        layer.on('mouseover', function () { if (pickedLayers().indexOf(layer) < 0) layer.setStyle({ weight: 1.4, color: '#6B6963' }); });
+        layer.on('mouseout', function () { layer.setStyle(styleFor(layer)); });
       },
     }).addTo(map);
     L.geoJSON(geo.states, { renderer: canvas, interactive: false, style: { color: '#A9A69F', weight: 1, fill: false } }).addTo(map);
@@ -319,6 +381,7 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     dotLayer = L.layerGroup().addTo(map);
     map.on('zoomend', sizeDots);
     window.__nwMap = map;   // for scripts/test-network.js
+    linkRows();
     drawDots();
   }
 
@@ -352,11 +415,11 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) a += (ring[j][0] + ring[i][0]) * (ring[j][1] - ring[i][1]);
     return Math.abs(a / 2);
   }
-  function dotsIn(key, count) {
-    var s = shapes[key];
-    if (!s) return [];
+  function dotsIn(row, count) {
+    var ls = layersFor(row);
+    if (!ls.length) return [];
     var polys = [];
-    s.layers.forEach(function (l) {
+    ls.forEach(function (l) {
       outerRings(l).forEach(function (r) {
         var b = [Infinity, Infinity, -Infinity, -Infinity];
         r.forEach(function (p) { b[0] = Math.min(b[0], p[0]); b[1] = Math.min(b[1], p[1]); b[2] = Math.max(b[2], p[0]); b[3] = Math.max(b[3], p[1]); });
@@ -365,7 +428,7 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     });
     var total = polys.reduce(function (t, p) { return t + p.area; }, 0);
     if (!total) return [];
-    var rnd = seeded(key), out = [];
+    var rnd = seeded(row.key), out = [];
     for (var n = 0; n < count; n++) {
       var w = rnd() * total, poly = polys[polys.length - 1];
       for (var i = 0; i < polys.length; i++) { w -= polys[i].area; if (w <= 0) { poly = polys[i]; break; } }
@@ -395,7 +458,7 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     dotsPer = Math.max(1, Math.ceil(sum / MAX_DOTS));
     var drawn = 0, st = dotStyle();
     rows.forEach(function (r) {
-      dotsIn(r.key, Math.max(1, Math.round(r.people / dotsPer))).forEach(function (ll) {
+      dotsIn(r, Math.max(1, Math.round(r.people / dotsPer))).forEach(function (ll) {
         L.circleMarker(ll, { radius: st.radius, stroke: false, fillColor: '#D81E2C', fillOpacity: st.fillOpacity, interactive: false }).addTo(dotLayer);
         drawn++;
       });
@@ -412,13 +475,13 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
   }
   function highlight(move) {
     if (!distLayer) return;
-    distLayer.eachLayer(function (l) { l.setStyle(styleFor(l.feature.properties.k)); });
-    var s = picked && shapes[picked];
-    if (s) {
-      s.layers.forEach(function (l) { l.bringToFront(); });
+    distLayer.eachLayer(function (l) { l.setStyle(styleFor(l)); });
+    var ls = pickedLayers();
+    if (ls.length) {
+      ls.forEach(function (l) { l.bringToFront(); });
       if (move) {
         var b = L.latLngBounds([]);
-        s.layers.forEach(function (l) { b.extend(l.getBounds()); });
+        ls.forEach(function (l) { b.extend(l.getBounds()); });
         map.flyToBounds(b, { padding: [40, 40], maxZoom: 8, duration: 0.6 });
       }
     } else if (move && india) {
@@ -426,6 +489,28 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     }
     if (dotLayer) dotLayer.eachLayer(function (d) { d.bringToFront(); });
     $('nwMap').setAttribute('data-picked', picked);
+  }
+
+  /* Today's line: picked once per visit (rr-join.js), redrawn in the other
+     language when it is switched. The button goes to this phone's store. */
+  function renderJoin() {
+    if (!joinLine) return;
+    var ua = navigator.userAgent || '', and = /Android/i.test(ua), ios = /iPhone|iPad|iPod/i.test(ua);
+    $('nwJoinK').textContent = T('Today', 'आज');
+    $('nwJoinLine').textContent = lang() === 'hi' ? joinLine.hi : joinLine.en;
+    var a = $('nwJoinA'), b = $('nwJoinB');
+    a.href = ios ? IOS : PLAY;
+    a.textContent = and || ios ? T('Join today', 'आज ही जुड़िए') : T('Join on Android', 'एंड्रॉयड पर जुड़िए');
+    b.hidden = and || ios;
+    b.textContent = T('iPhone', 'आईफ़ोन');
+    $('nwJoinSmall').textContent = T('Free. Join if you can offer at least one kind of help.', 'मुफ़्त। जुड़िए, अगर आप कम से कम एक तरह की मदद दे सकते हैं।');
+    $('nwJoin').hidden = false;
+  }
+  function chooseJoin(d) {
+    if (joinLine || !window.RRTJoin) return;
+    joinLine = window.RRTJoin.pick('long', d);
+    $('nwJoin').setAttribute('data-line', joinLine ? String(joinLine.i) : '');
+    renderJoin();
   }
 
   function paint() {
@@ -436,6 +521,7 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     renderList();
     showDetail(false);
     legend();
+    renderJoin();
     if (data) status(T('Updated at ', '') + when(data.updated_at) + T('', ' पर अपडेट'), true);
     else if (failed) status(navigator.onLine === false ? T('You are offline.', 'आप ऑफ़लाइन हैं।') : T('The numbers could not be loaded.', 'आँकड़े लोड नहीं हो सके।'), false, true);
     else status(T('Loading the latest numbers', 'ताज़ा आँकड़े आ रहे हैं'), false);
@@ -445,7 +531,7 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
     if (!d || d.ok !== true || !Number.isSafeInteger(d.people) || d.people < 0 || !Array.isArray(d.list)) return null;
     var list = d.list.filter(function (r) {
       return r && typeof r.key === 'string' && typeof r.name === 'string' && r.name && Number.isSafeInteger(r.people) && r.people > 0;
-    }).map(function (r) { return { key: r.key, name: r.name, state: typeof r.state === 'string' ? r.state : '', people: r.people, approx: r.approx === true }; });
+    }).map(function (r) { return { key: r.key, name: r.name, state: typeof r.state === 'string' ? r.state : '', people: r.people, approx: r.approx === true, m: typeof r.m === 'string' ? r.m : r.key }; });
     return { people: d.people, approx: d.approx === true, districts: list.length, states: Number(d.states) || 0, list: list, updated_at: Number(d.updated_at) || Date.now() };
   }
 
@@ -462,12 +548,14 @@ html[lang=hi] .nw-detail h2{font-family:var(--sg-hindi);font-weight:700;letter-s
         if (!c) throw new Error('bad data');
         data = c; rows = c.list;
         if (picked && !placeOf(picked)) picked = '';
+        chooseJoin(data);
+        linkRows();
         paint();
         showDetail(true);
         highlight(false);
         drawDots();
       })
-      .catch(function () { clearTimeout(timer); if (!data) failed = true; paint(); });
+      .catch(function () { clearTimeout(timer); if (!data) failed = true; paint(); chooseJoin(null); });
   }
   function loadMap() {
     if (!window.L) { $('nwMapBox').hidden = true; return; }

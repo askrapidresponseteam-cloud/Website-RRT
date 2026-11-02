@@ -365,6 +365,7 @@ html[lang=hi] .camp-go{font-family:var(--sg-hindi);font-size:14px}
   </details>
  </div>
 </main>
+<script src="/assets/rr-join.js" defer></script>
 
 <!-- rr:footer -->
 <div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in"><nav aria-label="About"><a href="/explainer" data-rr-en="About" data-rr-hi="परिचय">About</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/network" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a></nav><nav aria-label="Legal"><a href="/policy" data-rr-en="Privacy &amp; Terms" data-rr-hi="प्राइवेसी और शर्तें">Privacy &amp; Terms</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav></div></div>
@@ -675,19 +676,21 @@ function applyLang(l){
 /* The lab animal rules objection (/lab-animal-rules): a line above the
    heading until objections close at the end of 6 November 2026, India time. */
 (function(){var c=document.getElementById("camp");if(c&&Date.now()<Date.UTC(2026,10,7)-5.5*36e5)c.hidden=false;})();
-/* The network (/network): one quiet line with how many people there are so
-   far (backend public_network.js, district totals only). Hidden until the
-   figures arrive, and if they never do. */
+/* The network (/network): one quiet line asking people to join, a different
+   one on every visit (assets/rr-join.js), built from the live figures
+   (backend public_network.js; nothing made up). Hidden until the figures
+   arrive, and if they never do. */
 (function(){
-  var n=document.getElementById("net"),d=null;
+  var n=document.getElementById("net"),d=null,line=null;
   if(!n||!window.fetch)return;
   function fmt(x){return Number(x).toLocaleString("en-IN")}
   function paintNet(){
     if(!d)return;
-    var p=fmt(d.people)+(d.approx?"+":""),k=fmt(d.districts);
-    document.getElementById("netT").textContent=document.documentElement.lang==="hi"
+    if(!line&&window.RRTJoin){line=window.RRTJoin.pick("short",d);if(line)n.setAttribute("data-line",String(line.i));}
+    var hi=document.documentElement.lang==="hi",p=fmt(d.people)+(d.approx?"+":""),k=fmt(d.districts);
+    document.getElementById("netT").textContent=line?(hi?line.hi:line.en):(hi
       ?"अब तक "+k+" ज़िलों में "+p+" लोग"
-      :p+(d.people===1?" person":" people")+" in "+k+(d.districts===1?" district":" districts")+" so far";
+      :p+(d.people===1?" person":" people")+" in "+k+(d.districts===1?" district":" districts")+" so far");
     n.hidden=false;
   }
   setTimeout(function(){

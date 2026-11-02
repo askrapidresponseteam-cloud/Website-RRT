@@ -15,7 +15,7 @@
  *   npm i --no-save mapshaper@0.6     (once, anywhere; not a site dependency)
  *   node scripts/build-network-map.js [path/to/node_modules/mapshaper]
  *
- * Output: { districts: GeoJSON (k key, n name, s state), states: GeoJSON (s) }.
+ * Output: { districts: GeoJSON (k key, n name, s today's state), states: GeoJSON (s) }.
  * scripts/test-network.js checks that every district key is in it.
  */
 'use strict';
@@ -27,6 +27,11 @@ const ROOT = path.join(__dirname, '..', '..', '..');
 const SRC = path.join(ROOT, 'backend', 'functions', 'assets', 'dists11.geojson');
 const OUT = path.join(__dirname, '..', 'assets', 'network', 'india-districts.json');
 const { districtKey } = require(path.join(ROOT, 'backend', 'functions', 'lib', 'district_geo.js'));
+// Today's states (Telangana, Ladakh; Census spellings fixed), one English name,
+// exactly as GET /public/network names them, so a name that is a district in
+// two states (West: Delhi and Sikkim) is drawn in the right one.
+const { stateFromCensus } = require(path.join(ROOT, 'backend', 'functions', 'public_network.js'));
+const STATES = require(path.join(ROOT, 'backend', 'functions', 'india-states.js'));
 
 let mapshaper;
 try { mapshaper = require(process.argv[2] || 'mapshaper'); } catch (e) {
@@ -39,7 +44,10 @@ try { mapshaper = require(process.argv[2] || 'mapshaper'); } catch (e) {
   gj.features = gj.features.filter((f) => f && f.geometry && f.properties && f.properties.DISTRICT).map((f) => ({
     type: 'Feature',
     geometry: f.geometry,
-    properties: { k: districtKey(f.properties.DISTRICT), n: String(f.properties.DISTRICT).trim(), s: String(f.properties.ST_NM || '').trim() },
+    properties: (() => {
+      const k = districtKey(f.properties.DISTRICT);
+      return { k, n: String(f.properties.DISTRICT).trim(), s: stateFromCensus(k, f.properties.ST_NM, STATES) };
+    })(),
   }));
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'rrt-map-'));
   const input = path.join(tmp, 'in.json');
