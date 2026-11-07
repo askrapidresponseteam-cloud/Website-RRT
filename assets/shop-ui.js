@@ -630,14 +630,20 @@
    *  the live value, or as last read on this device until it lands. */
   function simpleNow() {
     var cfg = global.RRTStoreConfig;
+    if (S.liveOn && S.liveOn()) return false;
     return cfg ? cfg.get().simple === true : (S.simpleOn() && !S.filtersOn());
   }
 
   /** Whether the admin chose the Filters display (flags.store_filters). */
   function filtersNow() {
     var cfg = global.RRTStoreConfig;
+    if (S.liveOn && S.liveOn()) return false;
     return cfg ? cfg.get().filters === true : S.filtersOn();
   }
+
+  /** Whether the Supertails display is showing (flags.store_live, and this store has its own
+   *  menu): the store's own shelves, as on its own site. Read at page load, like the others. */
+  function liveNow() { return !!(S.liveOn && S.liveOn()); }
 
   /** The shopper's "In stock only" switch (the current display's, beside the
    *  sort on /shop; remembered on this device). */
@@ -666,6 +672,7 @@
     vegOnlyNow: vegOnlyNow,
     simpleNow: simpleNow,
     filtersNow: filtersNow,
+    liveNow: liveNow,
     stockOnlyNow: stockOnlyNow,
     registry: registry
   };

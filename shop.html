@@ -101,6 +101,7 @@
 <div class="toast" id="toast" hidden role="status"></div>
 
 <script src="/assets/rrt-store-vendors.js"></script>
+<script src="/assets/rrt-store-live.js"></script>
 <script src="/assets/rrt-shop.js"></script>
 <script src="/assets/shop-ui.js"></script>
 <script src="/assets/rrt-shop-visits.js"></script>
@@ -135,6 +136,10 @@
    * store gets it. An old shelf or aisle link lands on its animal and
    * category. */
   var simple = U.simpleNow();
+  /* The Supertails display (the admin's flags.store_live): the shelves and aisles are the
+   * store's own menu, as on its own site (RRTShop swaps them in), the listing is the store's own
+   * order, and there is no RRT brand row. Everything else is the current display. */
+  var live = U.liveNow();
   var SM = S.simpleShop;
   /* The Filters display (the admin's flags.store_filters): the shop as in
    * the current display, plus a Filters panel with the partner store's own
@@ -190,7 +195,8 @@
   } else if (shelf) {
     document.title = shelf.name + ' · The RRT Shop';
     $('pageTitle').textContent = shelf.name;
-    $('pageCopy').textContent = 'One of the ten RRT shelves. Pick an aisle below, or browse the lot.';
+    $('pageCopy').textContent = live ? 'As on ' + (S.vendor.displayName || 'the partner store') + '\u2019s own site, at live prices. Pick a section below, or browse the lot.'
+      : 'One of the ten RRT shelves. Pick an aisle below, or browse the lot.';
   } else if (aisle) {
     document.title = aisleLabel() + ' · The RRT Shop';
     $('pageTitle').textContent = aisleLabel();
@@ -305,7 +311,8 @@
 
   // Brand chips follow the active partner store's own brand list.
   (function () {
-    var bar = $('brandBar'); if (!bar || simple || !S.vendor.brands || !S.vendor.brands.length) return;
+    var bar = $('brandBar'); if (live && bar) bar.hidden = true;
+    if (!bar || simple || live || !S.vendor.brands || !S.vendor.brands.length) return;
     bar.innerHTML = '<span class="lbl">Brands</span>' + S.vendor.brands.map(function (b) {
       return '<a href="/shop?b=' + encodeURIComponent(b) + '">' + esc(b) + '</a>';
     }).join('');
@@ -330,7 +337,9 @@
       if (!sc.ready) return;
       // The admin changed the display style: the page is laid out for one
       // style, so it opens again in the other (once; the new value is kept).
-      if (sc.simple !== simple || (sc.filters === true) !== filtersStyle) {
+      // (the Supertails display follows the store this page runs on: a store without its own menu keeps the current one)
+      var liveWanted = sc.live === true && !!(window.RRT_STORE_LIVE && window.RRT_STORE_LIVE.stores && window.RRT_STORE_LIVE.stores[S.vendor.key || S.vendor.id]);
+      if ((!live && sc.simple !== simple) || (!live && (sc.filters === true) !== filtersStyle) || liveWanted !== live) {
         try {
           // Never in a loop: at most one reload every ten seconds.
           var last = Number(sessionStorage.getItem('rrt_store_simple_reload') || 0);

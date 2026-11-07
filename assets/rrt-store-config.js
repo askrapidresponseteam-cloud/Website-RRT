@@ -13,6 +13,10 @@
  *     flags.store_filters    true  = the Filters display: as before, plus a
  *                                    panel of the store's own filters (wins
  *                                    over store_simple)
+ *     flags.store_live       true  = the Supertails display: the store's own
+ *                                    menu and order, as on its own site (wins
+ *                                    over both; app_config/store_live holds
+ *                                    the menu the backend read from the site)
  *
  * This file makes rapid-response.in read the SAME document, so one flip in the
  * admin panel governs the app and the website together. It is deliberately
@@ -45,7 +49,7 @@
 
   // The app's compiled defaults (backend/functions/config/schema.js). Used
   // verbatim whenever Firestore has nothing to say.
-  var DEFAULTS = { storeOpen: true, vegOnly: false, simple: false, filters: false, closedMessage: '' };
+  var DEFAULTS = { storeOpen: true, vegOnly: false, simple: false, filters: false, live: false, closedMessage: '' };
 
   /* The veg-only switch as last read on this device (the key rrt-shop.js
    * reads too), so a shop page opens already filtered instead of showing the
@@ -76,7 +80,16 @@
     try { global.localStorage.setItem(FILTERS_KEY, v ? 'true' : 'false'); } catch (e) { /* private mode */ }
   }
 
+  var LIVE_KEY = 'rrt_store_live';
+  function lastLive() {
+    try { return global.localStorage.getItem(LIVE_KEY) === 'true'; } catch (e) { return DEFAULTS.live; }
+  }
+  function rememberLive(v) {
+    try { global.localStorage.setItem(LIVE_KEY, v ? 'true' : 'false'); } catch (e) { /* private mode */ }
+  }
+
   var state = {
+    live: lastLive(),
     ready: false,
     storeOpen: DEFAULTS.storeOpen,
     vegOnly: lastVegOnly(),
@@ -97,8 +110,9 @@
       ready: state.ready,
       storeOpen: state.storeOpen,
       vegOnly: state.vegOnly,
-      simple: state.simple && !state.filters,
-      filters: state.filters,
+      simple: state.simple && !state.filters && !state.live,
+      filters: state.filters && !state.live,
+      live: state.live,
       closedMessage: state.closedMessage
     };
   }
@@ -122,6 +136,9 @@
     // Filters wins when both are on (the console sets one at a time).
     state.filters = field('flags.store_filters', DEFAULTS.filters);
     rememberFilters(state.filters);
+    // The Supertails display wins over both (the console sets one style at a time).
+    state.live = field('flags.store_live', DEFAULTS.live);
+    rememberLive(state.live);
     // Optional human message shown when the shop is closed. Text lives in
     // app_config/text in the app's scheme; we accept it here too if present.
     var msg = data['text.store_closed'];
@@ -180,6 +197,17 @@
         global.location.reload();
       }
     }, function () { /* offline or blocked: keep the stored or bundled store */ });
+
+    // The partner store's own menu, as the backend last read it from the store's site
+    // (store_live.js). Kept for rrt-shop.js, which reads it at load; the Supertails display
+    // uses it (else the saved copy in rrt-store-live.js).
+    db.collection('app_config').doc('store_live').onSnapshot(function (snap) {
+      var d = snap && snap.exists ? snap.data() : null;
+      if (!d || d.schemaVersion !== 1 || typeof d.store !== 'string' || !Array.isArray(d.shelves) || !d.shelves.length) return;
+      try {
+        global.localStorage.setItem('rrt_store_live_menu', JSON.stringify({ store: d.store, source: d.source, read_at: d.read_at || null, shelves: d.shelves }));
+      } catch (e) { /* private mode: the saved copy keeps working */ }
+    }, function () { /* offline or blocked: keep the stored or saved menu */ });
 
     var ref = db.collection('app_config').doc('flags');
     // Live subscription: an admin flip reaches open web pages within seconds,

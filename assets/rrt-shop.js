@@ -205,6 +205,32 @@
     return s;
   });
 
+  /* The Supertails display (flags.store_live, as last read on this device): the store's own
+   * menu instead of RRT's shelves, so the shop lists exactly what that site lists, in its order.
+   * The menu the backend last read from the store's site (rrt-store-config.js keeps it), else the
+   * saved copy (rrt-store-live.js). Only for a store that has one; any other keeps RRT's shelves. */
+  var LIVE = (function () {
+    var on = false, menu = null;
+    try { on = global.localStorage.getItem('rrt_store_live') === 'true'; } catch (e) { on = false; }
+    if (!on) return null;
+    try {
+      var pub = JSON.parse(global.localStorage.getItem('rrt_store_live_menu') || 'null');
+      if (pub && pub.store === DESCRIPTOR.id && Array.isArray(pub.shelves) && pub.shelves.length) menu = { source: pub.source || 'live', readAt: pub.read_at || null, shelves: pub.shelves };
+    } catch (e) { menu = null; }
+    var saved = global.RRT_STORE_LIVE && global.RRT_STORE_LIVE.stores && global.RRT_STORE_LIVE.stores[DESCRIPTOR.id];
+    if (!menu && saved) menu = { source: 'saved', readAt: null, shelves: saved.shelves };
+    if (!menu) return null;
+    var shelves = [];
+    menu.shelves.forEach(function (s) {
+      if (!s || typeof s.key !== 'string' || typeof s.name !== 'string' || !Array.isArray(s.aisles)) return;
+      var aisles = s.aisles.map(function (a) { return Array.isArray(a) ? { label: a[0], handle: a[1] } : { label: a && a.label, handle: a && a.handle }; })
+        .filter(function (a) { return typeof a.label === 'string' && /^[a-z0-9][a-z0-9-]*$/.test(String(a.handle)); });
+      if (aisles.length) shelves.push({ key: s.key, name: s.name, aisles: aisles, preview: aisles.slice(0, 3).map(function (a) { return a.label; }).join(' \u00b7 ') });
+    });
+    return shelves.length ? { source: menu.source, readAt: menu.readAt, shelves: shelves } : null;
+  })();
+  if (LIVE) SHELVES = LIVE.shelves;
+
   function shelfByKey(key) {
     for (var i = 0; i < SHELVES.length; i++) if (SHELVES[i].key === key) return SHELVES[i];
     return null;
@@ -3849,9 +3875,11 @@
   function vegOnly() { return readJson(local, VEG_KEY, false) === true; }
   function setVegOnly(v) { writeJson(local, VEG_KEY, v === true); }
   /** The simplified display, as last read on this device (rrt-store-config.js keeps it). */
-  function simpleOn() { return readJson(local, SIMPLE_KEY, false) === true; }
+  function simpleOn() { return !LIVE && readJson(local, SIMPLE_KEY, false) === true; }
   /** The Filters display, as last read on this device (rrt-store-config.js keeps it). */
-  function filtersOn() { return readJson(local, FILTERS_KEY, false) === true; }
+  function filtersOn() { return !LIVE && readJson(local, FILTERS_KEY, false) === true; }
+  /** The Supertails display: on, and this store has its own menu to show. */
+  function liveOn() { return !!LIVE; }
 
   function escapeHtml(s) {
     return String(s == null ? '' : s)
@@ -3899,6 +3927,8 @@
     filteredPage: filteredPage,
     wooFilterParams: function (st, minorUnit) { return wooFilterParams(Filters.clean(st), minorUnit); },
     filtersOn: filtersOn,
+    liveOn: liveOn,
+    liveMenu: LIVE ? { source: LIVE.source, readAt: LIVE.readAt } : null,
     previewCollection: previewCollection,
     previewFace: previewFace,
     brandPage: brandPage,
