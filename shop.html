@@ -290,7 +290,7 @@
     if (started) { render(); requestAnimationFrame(maybeMore); }
   });
   function thinned() {
-    if (cfgVegOnly || simple || stockOnly) return true;
+    if (cfgVegOnly || simple || stockOnly || live) return true;
     // The basic filters, and "in stock only" on a Shopify store, are applied on the page.
     return filtering && (state.mode === 'basic' ? S.filters.count(fstate) > 0 : fstate.inStock);
   }
@@ -510,6 +510,8 @@
       vegOnly: cfgVegOnly,
       hideSoldOut: simple || stockOnly,
       animal: pet,
+      // the Supertails display: no near-Rs 0 items, no clinic or service items
+      live: live,
       // Server-sorted pages arrive in order; feed pages sort here, the
       // way the app sorts a shelf it loaded whole ("highest discount" too:
       // no store sorts by it).

@@ -439,6 +439,12 @@
             r = { query: r.query, collections: [],
               products: r.products.filter(function (p) { return p.available !== false; }) };
           }
+          // The Supertails display: no near-Rs 0 items and no clinic or service items or sections.
+          if (liveNow()) {
+            r = { query: r.query,
+              collections: r.collections.filter(function (c) { return !/\b(clinic|consult\w*|appointment\w*|diagnostic\w*|gift ?card|vet visit|home visit)\b/i.test(String(c.title || '') + ' ' + String(c.handle || '').replace(/-/g, ' ')); }),
+              products: r.products.filter(function (p) { return !S.liveExcluded(p); }) };
+          }
           if (!r.products.length && !r.collections.length) { suggEl.hidden = true; return; }
           var out = '';
           r.collections.slice(0, 3).forEach(function (c) {

@@ -220,15 +220,41 @@
     var saved = global.RRT_STORE_LIVE && global.RRT_STORE_LIVE.stores && global.RRT_STORE_LIVE.stores[DESCRIPTOR.id];
     if (!menu && saved) menu = { source: 'saved', readAt: null, shelves: saved.shelves };
     if (!menu) return null;
+    var exclude = liveExcluder(saved && saved.exclude);
     var shelves = [];
     menu.shelves.forEach(function (s) {
       if (!s || typeof s.key !== 'string' || typeof s.name !== 'string' || !Array.isArray(s.aisles)) return;
       var aisles = s.aisles.map(function (a) { return Array.isArray(a) ? { label: a[0], handle: a[1] } : { label: a && a.label, handle: a && a.handle }; })
-        .filter(function (a) { return typeof a.label === 'string' && /^[a-z0-9][a-z0-9-]*$/.test(String(a.handle)); });
+        .filter(function (a) { return typeof a.label === 'string' && /^[a-z0-9][a-z0-9-]*$/.test(String(a.handle)) && !exclude.section(a.label, a.handle); });
       if (aisles.length) shelves.push({ key: s.key, name: s.name, aisles: aisles, preview: aisles.slice(0, 3).map(function (a) { return a.label; }).join(' \u00b7 ') });
     });
-    return shelves.length ? { source: menu.source, readAt: menu.readAt, shelves: shelves } : null;
+    return shelves.length ? { source: menu.source, readAt: menu.readAt, shelves: shelves, exclude: exclude } : null;
   })();
+  /* What the Supertails display never shows (shared/store-live-menus.json, "exclude"): products
+   * priced at or under minPriceInr (free gifts, Rs 0 or Rs 1 add-ons) and clinic or service items
+   * (consultations, appointments, at-home visits, grooming sessions, diagnostics, gift cards),
+   * matched as whole words in the title, type, brand and tags; menu sections named for them too. */
+  function liveExcluder(rules) {
+    var r = rules || {};
+    var norm = function (x) { return ' ' + String(x == null ? '' : x).toLowerCase().replace(/[^a-z0-9+]+/g, ' ').trim() + ' '; };
+    var terms = (r.words || []).concat(r.phrases || []).map(norm).filter(function (t) { return t.trim(); });
+    var types = (r.types || []).map(function (t) { return norm(t).trim(); });
+    var brands = (r.brands || []).map(function (t) { return norm(t).trim(); });
+    var minPaise = Math.max(0, Number(r.minPriceInr) || 0) * 100;
+    var hasTerm = function (text) { var t = norm(text); for (var i = 0; i < terms.length; i++) if (t.indexOf(terms[i]) >= 0) return true; return false; };
+    return {
+      product: function (p) {
+        if (!p) return true;
+        var cheapest = p.cheapestVariant && typeof p.cheapestVariant.pricePaise === 'number' ? p.cheapestVariant.pricePaise : null;
+        if (minPaise && cheapest != null && cheapest <= minPaise) return true;
+        if (types.indexOf(norm(p.productType).trim()) >= 0 || brands.indexOf(norm(p.brand).trim()) >= 0) return true;
+        return hasTerm([p.title, p.productType, p.brand].concat(Array.isArray(p.tags) ? p.tags : []).join(' | '));
+      },
+      section: function (label, handle) { return hasTerm(label) || hasTerm(String(handle || '').replace(/-/g, ' ')); }
+    };
+  }
+  /** Whether the Supertails display leaves this product out (false when the display is off). */
+  function liveExcluded(p) { return !!(LIVE && LIVE.exclude.product(p)); }
   if (LIVE) SHELVES = LIVE.shelves;
 
   function shelfByKey(key) {
@@ -1162,6 +1188,7 @@
     var visible = products.filter(function (p) {
       if (opts.vegOnly && Rules.hideWhenVegOnly(p)) return false;
       if (opts.hideSoldOut && p.available === false) return false;
+      if (opts.live && liveExcluded(p)) return false;
       if (opts.animal && !Simple.forAnimal(p, opts.animal)) return false;
       return true;
     });
@@ -3928,6 +3955,7 @@
     wooFilterParams: function (st, minorUnit) { return wooFilterParams(Filters.clean(st), minorUnit); },
     filtersOn: filtersOn,
     liveOn: liveOn,
+    liveExcluded: liveExcluded,
     liveMenu: LIVE ? { source: LIVE.source, readAt: LIVE.readAt } : null,
     previewCollection: previewCollection,
     previewFace: previewFace,

@@ -66,11 +66,26 @@ const ids = {};
 function idOf(key) { if (!ids[key]) ids[key] = nextId++; return ids[key]; }
 function items(handle, page) {
   const size = handle === 'all' ? 24 : 6;
-  return titlesFor(handle + (page > 1 ? '-p' + page : ''), size).map((title, i) => ({
+  const list = titlesFor(handle + (page > 1 ? '-p' + page : ''), size).map((title, i) => ({
     id: idOf(handle + '|' + page + '|' + i), handle: (handle + '-' + page + '-' + i).replace(/[^a-z0-9-]/g, ''), title,
     soldOut: i === 0, tags: [], type: '', compareAt: compareAtFor(page, i)
   }));
+  // What the store also lists that the Supertails display must never show: near-Rs 0 items and
+  // clinic or service items (by title, by type, by brand).
+  if (page === 1) EXTRAS.forEach((x, i) => list.push(Object.assign({ id: idOf(handle + '|x|' + i), handle: (handle + '-x-' + i).replace(/[^a-z0-9-]/g, ''),
+    soldOut: false, tags: [], type: '', compareAt: 0 }, x)));
+  return list;
 }
+const EXTRAS = [
+  { title: 'Free Gift Treat Pouch', price: 0 },
+  { title: 'Chew Toy Add-on', price: 1 },
+  { title: 'Bone Bite Mini', price: 9 },
+  { title: 'Vet Consultation at Supertails Clinic', price: 499 },
+  { title: 'Full Body Grooming Session', price: 899, type: 'Service' },
+  { title: 'Health Checkup Package', price: 1299, brand: 'Supertails Clinic' },
+  { title: 'Digital Gift Card', price: 500 }
+];
+const EXTRA_RE = /Free Gift|Chew Toy Add-on|Bone Bite Mini|Consultation|Grooming Session|Health Checkup|Gift Card/;
 /* Some products on sale (price 100 each): the biggest discount (75% off) is
  * on the second page, and a sold-out product with 80% off on the first. */
 function compareAtFor(page, i) {
@@ -85,15 +100,15 @@ const sortsAsked = [];
 const pagesOf = (h) => PAGES[h] || 1;
 
 function feedJson(list) {
-  return { products: list.map((p) => ({ id: p.id, handle: p.handle, title: p.title, vendor: 'Brand', product_type: p.type,
+  return { products: list.map((p) => ({ id: p.id, handle: p.handle, title: p.title, vendor: p.brand || 'Brand', product_type: p.type,
     tags: p.tags, images: [], options: [{ name: 'Title', position: 1, values: ['Default Title'] }],
-    variants: [{ id: p.id * 10, title: 'Default Title', option1: 'Default Title', price: '100.00', available: !p.soldOut,
+    variants: [{ id: p.id * 10, title: 'Default Title', option1: 'Default Title', price: (p.price != null ? p.price : 100) + '.00', available: !p.soldOut,
       compare_at_price: p.compareAt ? p.compareAt + '.00' : null }] })) };
 }
 function gqlNode(p) {
-  return { id: 'gid://shopify/Product/' + p.id, handle: p.handle, title: p.title, vendor: 'Brand', productType: p.type,
+  return { id: 'gid://shopify/Product/' + p.id, handle: p.handle, title: p.title, vendor: p.brand || 'Brand', productType: p.type,
     availableForSale: !p.soldOut, publishedAt: '2026-01-01T00:00:00Z', featuredImage: null, tags: p.tags,
-    priceRange: { minVariantPrice: { amount: '100.0' }, maxVariantPrice: { amount: '100.0' } },
+    priceRange: { minVariantPrice: { amount: (p.price != null ? p.price : 100) + '.0' }, maxVariantPrice: { amount: (p.price != null ? p.price : 100) + '.0' } },
     compareAtPriceRange: { maxVariantPrice: { amount: p.compareAt ? p.compareAt + '.0' : '0' } } };
 }
 function wooJson(p) {
@@ -223,6 +238,27 @@ async function look(page) {
   check(v.brands === null || v.brands.length === 0, 'supertails: no RRT brand row');
   check(v.tiles.some((t) => /Sold out/i.test(t)), 'supertails: sold-out products listed and marked, as on its site');
   check(v.sorts[0] === 'featured', 'supertails: the store’s own order first');
+  check(v.tiles.length > 0 && !v.tiles.some((t) => EXTRA_RE.test(t)), 'supertails: no near-Rs 0 items and no clinic or service items (' + v.tiles.filter((t) => EXTRA_RE.test(t)).length + ' shown)');
+  await page.close();
+
+  ({ page } = await openShop(browser, 'supertails', true, '?q=consultation'));
+  v = await look(page);
+  check(!v.tiles.some((t) => EXTRA_RE.test(t)), 'supertails: search leaves them out too');
+  await page.close();
+
+  ({ page } = await openShop(browser, 'supertails', true, ''));
+  const one = await page.evaluate(() => {
+    const S = window.RRTShop;
+    const mk = (title, price, extra) => Object.assign({ title, productType: '', brand: 'Brand', tags: [], cheapestVariant: { pricePaise: price * 100 } }, extra || {});
+    return {
+      free: S.liveExcluded(mk('Free Gift', 0)), ten: S.liveExcluded(mk('Treat', 10)), eleven: S.liveExcluded(mk('Treat', 11)),
+      grooming: S.liveExcluded(mk('Dog Grooming Shampoo 200ml', 349)), clinic: S.liveExcluded(mk('Kitten Vaccination Package', 1499)),
+      type: S.liveExcluded(mk('Spa Day', 799, { productType: 'Services' })), tag: S.liveExcluded(mk('Ear Check', 299, { tags: ['Clinic'] }))
+    };
+  });
+  check(one.free && one.ten && !one.eleven, 'supertails: Rs 10 or less is left out, Rs 11 shows (' + JSON.stringify(one) + ')');
+  check(!one.grooming, 'supertails: grooming products stay (only grooming sessions go)');
+  check(one.clinic && one.type && one.tag, 'supertails: clinic items go by their title, their type or their tags');
   await page.close();
 
   ({ page, asked } = await openShop(browser, 'supertails', true, '?shelf=dogs'));
@@ -256,6 +292,7 @@ async function look(page) {
   ({ page } = await openShop(browser, 'supertails', false, ''));
   v = await look(page);
   check(v.shelves && v.shelves.includes('Pharmacy') && v.shelves.includes('Dog Food') && v.brands && v.brands.length > 0, 'supertails, display off: RRT’s shelves and brands as before');
+  check(v.tiles.some((t) => EXTRA_RE.test(t)), 'supertails, display off: the other displays list as before (unchanged)');
   await page.close();
 
   await browser.close();
