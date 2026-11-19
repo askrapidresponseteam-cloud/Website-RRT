@@ -7,6 +7,10 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/r/:code",
+      "destination": "/invite"
+    },
+    {
       "source": "/st-api/collections/:handle/products.json",
       "destination": "https://supertails.com/collections/:handle/products.json"
     },
