@@ -5,5 +5,15 @@ Disallow: /report/manage
 Disallow: /shop/cart
 Disallow: /shop/saved
 Disallow: /shop/track
+Disallow: /cart
+Disallow: /saved
+Disallow: /track
+Disallow: /st-api/
+Disallow: /pl-api/
+Disallow: /huft-api/
+Disallow: /zg-api/
+Disallow: /pt-api/
+Disallow: /jd-api/
+Disallow: /wk-api/
 
 Sitemap: https://rapid-response.in/sitemap.xml

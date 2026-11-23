@@ -18,7 +18,11 @@ function file(p){
 }
 http.createServer((req,res)=>{
   const u=new URL(req.url,'http://x');let p=u.pathname;
-  for(const r of cfg.redirects||[]){if(match(r.source,p)){res.writeHead(r.permanent?308:307,{Location:r.destination});return res.end();}}
+  // A rule with "has" applies only when every condition holds (host is the one
+  // Vercel rule here: www.rapid-response.in -> rapid-response.in).
+  const host=(req.headers.host||'').split(':')[0];
+  const hasOk=(r)=>(r.has||[]).every(c=>c.type!=='host'||c.value===host);
+  for(const r of cfg.redirects||[]){if(hasOk(r)&&match(r.source,p)){res.writeHead(r.permanent?308:307,{Location:r.destination});return res.end();}}
   if(p.endsWith('.html')){res.writeHead(308,{Location:p.slice(0,-5)||'/'});return res.end();}
   let f=file(p);
   if(!f){for(const r of cfg.rewrites||[]){if(r.destination.startsWith('http'))continue;if(match(r.source,p)){f=file(r.destination);break;}}}

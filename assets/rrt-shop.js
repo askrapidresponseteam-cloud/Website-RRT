@@ -3251,6 +3251,68 @@
     return Vendor.accountUrl;
   }
 
+  /* ============================================================ ORDER LINK */
+  /* RRT never sees the store's orders, so the store's order number and the
+   * link from its emails (order status or courier tracking) come from the
+   * buyer: copied from the store's email onto the receipt, so one receipt
+   * carries both numbers and a way to track the parcel. Kept in this
+   * browser only, like the receipt itself.
+   * Same rules as the app (StoreOrderLink.parse); the cases both must pass
+   * are in shared/store-order-link-cases.json. */
+  var ORDER_NUMBER_RE = /^[A-Za-z0-9][A-Za-z0-9_\/-]{1,39}$/;
+  var ORDER_LINK_RE = /^https:\/\/[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(?::\d{1,5})?(?:[\/?#][^\s<>"']*)?$/;
+
+  /** { ok, number, url, error } from what the buyer typed or pasted. Both
+   *  empty is ok and means "clear". error is 'number' or 'link'. */
+  function parseOrderLink(numberText, linkText) {
+    var n = String(numberText == null ? '' : numberText).trim()
+      .replace(/^order\b\s*(?:no\.?|number|id)?\s*[:#]?\s*/i, '')
+      .replace(/^#\s*/, '');
+    if (n && !ORDER_NUMBER_RE.test(n)) return { ok: false, number: null, url: null, error: 'number' };
+    var l = String(linkText == null ? '' : linkText).trim();
+    var url = null;
+    if (l) {
+      // The first web address in what was pasted (an email line works too),
+      // without trailing punctuation; http is taken as https.
+      var m = /https?:\/\/[^\s<>"']+/i.exec(l);
+      var u = m ? m[0].replace(/[).,;:!?\]]+$/, '') : '';
+      u = u ? 'https://' + u.replace(/^https?:\/\//i, '') : '';
+      if (!u || u.length > 2000 || !ORDER_LINK_RE.test(u)) return { ok: false, number: null, url: null, error: 'link' };
+      url = u;
+    }
+    return { ok: true, number: n || null, url: url, error: null };
+  }
+
+  /** Save the store's order number and/or link on a receipt. Both empty
+   *  clears them. A receipt with either is shown as placed: the buyer has
+   *  the store's own confirmation in hand. */
+  function setOrderLink(id, numberText, linkText) {
+    var p = parseOrderLink(numberText, linkText);
+    if (!p.ok) return p;
+    var found = null;
+    var all = receipts().map(function (r) {
+      if (r.id !== id) return r;
+      found = r;
+      r.vendorOrderNumber = p.number;
+      r.statusUrl = p.url;
+      r.linkedByBuyer = !!(p.number || p.url);
+      r.status = r.linkedByBuyer ? 'placed' : 'handed';
+      return r;
+    });
+    if (!found) return { ok: false, number: null, url: null, error: 'missing' };
+    writeJson(local, RECEIPTS_KEY, all);
+    emit('rrt:receipts', { id: id });
+    return { ok: true, number: p.number, url: p.url, error: null, order: found };
+  }
+
+  /** The store a receipt was placed with, by name (receipts outlive a
+   *  switch of the active store). */
+  function receiptVendorName(order) {
+    var reg = global.RRT_STORE_VENDORS && global.RRT_STORE_VENDORS.vendors;
+    var v = order && reg && reg[order.vendor];
+    return (v && v.displayName) || Vendor.displayName;
+  }
+
   /* ============================================================== CHECKOUT */
 
   var RRT_REF_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -3983,6 +4045,9 @@
     receipt: receipt,
     receiptDateLabel: receiptDateLabel,
     orderStatusUrl: orderStatusUrl,
+    parseOrderLink: parseOrderLink,
+    setOrderLink: setOrderLink,
+    receiptVendorName: receiptVendorName,
     newRrtRef: newRrtRef,
     checkoutUrl: checkoutUrl,
     beginCheckout: beginCheckout,

@@ -31,12 +31,12 @@
           font-size: 34px; line-height: 1.1; margin: 0 0 18px; color: var(--ink); }
 .order { background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); margin-bottom: 12px; overflow: hidden; }
 .order > summary { list-style: none; cursor: pointer; padding: 16px 20px;
-                   display: flex; align-items: center; gap: 14px; }
+                   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
 .order > summary::-webkit-details-marker { display: none; }
 .order > summary:hover { background: var(--mist); }
 .order .when { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--ink); }
 .order .n { font-size: 14px; color: var(--text-low); }
-.order .chip { margin-left: auto; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 0;
+.order .chip { margin-left: auto; display: inline-flex; align-items: center; min-height: 28px; padding: 4px 12px; border-radius: 0; white-space: nowrap;
                font-size: 13px; font-weight: 700; background: var(--fog); color: var(--graphite); }
 .order .chip.placed { background: var(--go-bg); color: var(--go); }
 .order .body { border-top: 1px solid var(--line-soft); padding: 8px 20px 18px; }
@@ -53,6 +53,30 @@
 /* the uppercase label runs wider: a little smaller, so it still sits beside
    the reference on a phone */
 .o-meta .btn-line { padding: 0 22px; font-size: 13px; }
+.o-ids { display: grid; gap: 6px; min-width: 0; }
+.o-ids .ref { overflow-wrap: anywhere; }
+.o-ids .vend { color: var(--ink); }
+/* + Add the store's order number: under the order, closed until wanted */
+.o-link { margin-top: 14px; border-top: 1px solid var(--line-soft); }
+.o-link > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+                    padding: 14px 0 6px; font-size: 14px; font-weight: 600; color: var(--link); }
+.o-link > summary::-webkit-details-marker { display: none; }
+.o-link > summary .pm { display: inline-block; font-size: 18px; line-height: 1; transition: transform var(--ease); }
+.o-link[open] > summary .pm { transform: rotate(45deg); }
+.o-link form { display: grid; gap: 16px; padding: 10px 0 4px; }
+.o-link .hint { font-size: 13px; color: var(--text-low); line-height: 1.55; margin: 0; max-width: 60ch; }
+.o-link .df { display: grid; gap: 8px; }
+.o-link .df > span { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); }
+.o-link .df input { font: inherit; font-size: 16px; font-weight: 500; color: var(--text); background: var(--paper); border: 1px solid var(--line);
+  height: 52px; padding: 0 16px; border-radius: 0; outline: none; width: 100%; min-width: 0; transition: border-color var(--ease), box-shadow var(--ease); }
+.o-link .df input::placeholder { color: var(--muted); }
+.o-link .df input:focus { border-color: var(--ink); box-shadow: inset 0 0 0 .5px var(--ink); }
+.o-link .df.bad input { border-color: var(--stop); }
+.o-link .err { font-size: 13px; font-weight: 600; color: var(--stop-text); line-height: 1.5; margin: 0; }
+.o-link .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.o-link .acts .btn-line { padding: 0 22px; font-size: 13px; }
+.o-link .rm { background: none; border: 0; padding: 8px 0; font: inherit; font-size: 14px; font-weight: 600; color: var(--text-mid);
+              text-decoration: underline; cursor: pointer; }
 .help { margin-top: 26px; padding: 20px 22px; background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); }
 .help h2 { font-family: var(--display); font-weight: 800; letter-spacing: var(--track-title); font-size: 20px; margin: 0 0 8px; }
 .help p { font-size: 15px; color: var(--text-mid); line-height: 1.6; max-width: 60ch; margin: 0 0 8px; }
@@ -150,18 +174,48 @@
       $('telLink').textContent = 'Call the seller (' + S.vendor.supportPhoneLabel + ')'; }
   }
   $('mailLink').href = 'mailto:' + S.vendor.supportEmail;
+  // A dot only between the links that are shown (a store with no shipping
+  // policy would otherwise start the line with one).
+  (function () {
+    var p = $('mailLink').parentNode;
+    var shown = Array.prototype.filter.call(p.querySelectorAll('a'), function (a) { return !a.hidden; });
+    p.textContent = '';
+    shown.forEach(function (a, i) { if (i) p.appendChild(document.createTextNode(' \u00b7 ')); p.appendChild(a); });
+  })();
 
 
-  function render() {
+  function linkForm(o) {
+    var name = S.receiptVendorName(o);
+    var linked = !!(o.vendorOrderNumber || o.statusUrl);
+    return '<details class="o-link">' +
+      '<summary><span class="pm" aria-hidden="true">+</span>' +
+        (linked ? 'Change ' : 'Add ') + esc(name) + ' order number</summary>' +
+      '<form data-id="' + esc(o.id) + '" novalidate>' +
+        '<p class="hint">Copy these from the ' + esc(name) + ' confirmation email or SMS. Either one is enough. ' +
+          'They stay in this browser, next to ' + esc(o.rrtRef || 'the RRT reference') + '.</p>' +
+        '<label class="df"><span>' + esc(name) + ' order number</span>' +
+          '<input name="num" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="60" placeholder="For example 104552" value="' +
+          esc(o.vendorOrderNumber || '') + '"></label>' +
+        '<label class="df"><span>Tracking or order link</span>' +
+          '<input name="url" type="url" inputmode="url" autocomplete="off" spellcheck="false" maxlength="2100" placeholder="Paste the link from their email" value="' +
+          esc(o.statusUrl || '') + '"></label>' +
+        '<p class="err" role="alert" hidden></p>' +
+        '<div class="acts"><button class="btn-line" type="submit">Save</button>' +
+          (linked ? '<button class="rm" type="button" data-rm="1">Remove</button>' : '') + '</div>' +
+      '</form></details>';
+  }
+
+  function render(openId) {
     var all = S.receipts();
     $('empty').hidden = all.length > 0;
     $('list').innerHTML = all.map(function (o, i) {
       var placed = o.status === 'placed';
       var count = o.lines.reduce(function (a, l) { return a + l.qty; }, 0);
-      return '<details class="order"' + (i === 0 ? ' open' : '') + '>' +
+      var open = openId ? o.id === openId : i === 0;
+      return '<details class="order" data-order="' + esc(o.id) + '"' + (open ? ' open' : '') + '>' +
         '<summary>' +
         '<span class="when">' + esc(S.receiptDateLabel(o.createdAt)) + '</span>' +
-        '<span class="n">' + count + ' item' + (count === 1 ? '' : 's') + ' \u00b7 ' +
+        '<span class="n">' + count + ' item' + (count === 1 ? '' : 's') + ' · ' +
           esc(S.money(o.subtotalPaise)) + '</span>' +
         '<span class="chip' + (placed ? ' placed' : '') + '">' +
           (placed ? 'Placed' : 'Sent to checkout') + '</span>' +
@@ -170,17 +224,51 @@
         o.lines.map(function (l) {
           return '<div class="o-line">' +
             (l.image ? '<img src="' + esc(S.sizedImage(l.image, 100)) + '" alt="">' : '') +
-            '<span>' + esc(l.title) + (l.variant_title ? ' \u00b7 ' + esc(l.variant_title) : '') +
-            ' <span class="q">\u00d7 ' + l.qty + '</span></span>' +
+            '<span>' + esc(l.title) + (l.variant_title ? ' · ' + esc(l.variant_title) : '') +
+            ' <span class="q">× ' + l.qty + '</span></span>' +
             '<span class="amt">' + esc(S.money(l.unit_price * l.qty)) + '</span></div>';
         }).join('') +
         '<div class="o-meta">' +
-        '<span class="ref">' + esc(o.rrtRef) + '</span>' +
-        '<a class="btn-line" href="' + esc(S.orderStatusUrl(o)) + '" target="_blank" rel="noopener">View order status</a>' +
-        '</div></div></details>';
+        '<div class="o-ids"><span class="ref">' + esc(o.rrtRef) + '</span>' +
+          (o.vendorOrderNumber ? '<span class="ref vend">' + esc(S.receiptVendorName(o).toUpperCase()) + ' #' + esc(o.vendorOrderNumber) + '</span>' : '') +
+        '</div>' +
+        '<a class="btn-line" href="' + esc(S.orderStatusUrl(o)) + '" target="_blank" rel="noopener">' +
+          (o.statusUrl ? 'Track order' : 'View order status') + '</a>' +
+        '</div>' + linkForm(o) + '</div></details>';
     }).join('');
   }
   render();
+
+  var ERRORS = {
+    number: 'That does not look like an order number. Copy it from their email, for example #104552.',
+    link: 'Paste the full link from their email. It starts with https://'
+  };
+  function saveLink(form, num, url) {
+    var id = form.getAttribute('data-id');
+    var r = S.setOrderLink(id, num, url);
+    var err = form.querySelector('.err');
+    form.querySelectorAll('.df').forEach(function (f) { f.classList.remove('bad'); });
+    if (!r.ok) {
+      err.textContent = ERRORS[r.error] || 'Could not save. Try again.';
+      err.hidden = false;
+      var bad = form.querySelector(r.error === 'link' ? 'input[name=url]' : 'input[name=num]');
+      if (bad) { bad.closest('.df').classList.add('bad'); bad.focus(); }
+      return;
+    }
+    render(id);
+    U.toast(r.number || r.url ? 'Saved on this order' : 'Removed from this order');
+  }
+  $('list').addEventListener('submit', function (e) {
+    var form = e.target.closest('.o-link form');
+    if (!form) return;
+    e.preventDefault();
+    saveLink(form, form.elements.num.value, form.elements.url.value);
+  });
+  $('list').addEventListener('click', function (e) {
+    var rm = e.target.closest('[data-rm]');
+    if (!rm) return;
+    saveLink(rm.closest('form'), '', '');
+  });
 
   $('wipe').addEventListener('click', function () {
     if (!confirm('Delete the bag, saved items and receipts stored in this browser? Orders already with the seller are unaffected.')) return;

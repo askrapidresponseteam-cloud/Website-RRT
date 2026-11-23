@@ -13,7 +13,7 @@ const ok = (c, m) => { console.log((c ? '  ok    ' : '  FAIL  ') + m); if (!c) f
 
 const page = read('talk-to-a-vet.html');
 ok(['<!-- rr:head -->', '<!-- rr:header -->', '<!-- rr:footer -->'].every((m) => page.includes(m)), 'page carries the shared site chrome');
-ok(/<title>Talk to a vet online - Rapid Response<\/title>/.test(page), 'title');
+ok(/<title>Talk to a Vet Online in India - Rapid Response<\/title>/.test(page), 'title');
 ok(page.includes('rel="canonical"') && page.includes('https://rapid-response.in/talk-to-a-vet'), 'canonical URL');
 ok((page.match(/data-lang="en"/g) || []).length === (page.match(/data-lang="hi"/g) || []).length, 'every English line has a Hindi line');
 ok(page.includes('/vetConsult/consult/public-status'), 'live status comes from the vet platform (same count as the app)');

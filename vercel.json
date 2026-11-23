@@ -149,6 +149,15 @@
   ],
   "headers": [
     {
+      "source": "/app-demo",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
       "source": "/:path*",
       "headers": [
         {
@@ -353,9 +362,20 @@
   ],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.rapid-response.in"
+        }
+      ],
+      "destination": "https://rapid-response.in/:path*",
+      "permanent": true
+    },
+    {
       "source": "/report",
       "destination": "/",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/about",
