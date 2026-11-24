@@ -15,7 +15,7 @@ import os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-from chrome import install, header, footer, strip_blocks, fonts, SIGNAL, SHOP_EARLY  # noqa: E402
+from chrome import install, header, footer, strip_blocks, fonts, SIGNAL, SHOP_EARLY, BLUE, APP  # noqa: E402
 
 # page -> current nav item (pages with their own complete design are not listed:
 # index.html is self-contained, app-demo.html is the phone mockup, about and
@@ -50,8 +50,8 @@ def heal_shop(s, cur, page):
     s = re.sub(r'<link rel="preconnect" href="https://fonts\.(googleapis|gstatic)\.com"[^>]*>\n?', '', s)  # fonts are self-hosted
     s = s.replace('<link rel="stylesheet" href="/assets/shop.css">',
                   '<!-- rr:head -->' + fonts(devanagari=False) + SIGNAL +
-                  '<link rel="stylesheet" href="/assets/rr-site.css"><script src="/assets/rr-voice.js"></script>' + SHOP_EARLY + '<!-- /rr:head -->\n'
-                  '<link rel="stylesheet" href="/assets/shop.css">', 1)
+                  '<link rel="stylesheet" href="/assets/rr-site.css"><script src="/assets/rr-voice.js"></script>' + SHOP_EARLY + APP + '<!-- /rr:head -->\n'
+                  '<link rel="stylesheet" href="/assets/shop.css"><!-- rr:blue -->' + BLUE + '<!-- /rr:blue -->', 1)
     bar = SHOPBAR
     for k in ('shop', 'saved', 'track'):
         bar = bar.replace('__%s__' % k, ' aria-current="page"' if k == cur else '')

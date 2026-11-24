@@ -64,7 +64,7 @@ html[lang=hi] .gives button{font-size:14px}
 .camp{display:flex;align-items:center;gap:10px;max-width:100%;margin:0 0 clamp(18px,3.5vh,30px);padding:10px 14px;background:var(--sg-wash);box-shadow:inset 0 0 0 1px var(--sg-wash-line);color:var(--ink);font-size:14px;font-weight:600;text-align:left;line-height:1.35}
 .camp:hover{box-shadow:inset 0 0 0 1px var(--sg-accent)}
 .camp-dot{width:8px;height:8px;border-radius:50%;background:var(--sg-accent);flex:none}
-.camp-go{flex:none;margin-left:4px;font-family:var(--sg-display);font-size:12.5px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:uppercase;color:var(--sg-stop-text);white-space:nowrap}
+.camp-go{flex:none;margin-left:4px;font-family:var(--sg-display);font-size:12.5px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:none;color:var(--sg-stop-text);white-space:nowrap}
 html[lang=hi] .camp-go{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:14px}
 
 /* search: 56px square paper field, hairline border, ink focus */
@@ -95,12 +95,12 @@ html[lang=hi] .camp-go{font-family:var(--sg-hindi);letter-spacing:0;text-transfo
   padding:6px 0 10px;background:var(--sg-paper);border:1px solid var(--line);border-top-color:var(--sg-fog);border-radius:0;box-shadow:none}
 .results.open{display:block}
 .results b{font-weight:700;color:inherit}
-.rh{padding:12px 22px 4px;font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.rh{padding:12px 22px 4px;font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:none;color:var(--low)}
 .r{display:flex;align-items:baseline;gap:14px;padding:10px 22px;cursor:pointer}
 .r+.r,.fa+.r{border-top:1px solid var(--sg-fog)}
 .r[aria-selected=true],.r:hover{background:var(--sg-mist)}
 .r .t{flex:1;min-width:0;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.r .k{flex:none;font-family:var(--sg-mono);font-size:11px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.r .k{flex:none;font-family:var(--sg-mono);font-size:11px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:none;color:var(--low)}
 .r.rr{display:block;padding:12px 22px}
 .r.rr .c{display:block;margin-bottom:2px;font-size:12.5px;color:var(--low);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .r.rr .t{display:block;font-family:var(--sg-display);font-size:17px;font-weight:700;letter-spacing:var(--sg-track-title);line-height:1.3;color:var(--ink);white-space:normal}
@@ -111,7 +111,7 @@ html[lang=hi] .r.rr .t{font-family:var(--sg-hindi);font-size:16px;letter-spacing
 .fa[aria-selected=true],.fa:hover{background:var(--sg-fog);border-color:transparent}
 .fa.pin{background:var(--sg-wash);border-color:var(--sg-wash-line)}
 .fa.pin[aria-selected=true],.fa.pin:hover{background:var(--sg-wash);border-color:var(--ink)}
-.fa-k{font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.fa-k{font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:none;color:var(--low)}
 .fa.pin .fa-k{color:var(--ink)}
 .fa-q{margin:4px 0 6px;font-family:var(--sg-display);font-size:17px;font-weight:700;letter-spacing:var(--sg-track-title);color:var(--ink)}
 html[lang=hi] .fa-q{font-family:var(--sg-hindi);letter-spacing:0}
@@ -133,7 +133,7 @@ html[lang=hi] .fa-q{font-family:var(--sg-hindi);letter-spacing:0}
    second dark one (in the sheet) is ink. The rest are outline: paper with
    a 1.5px ink ring (inset, so the box keeps its size). */
 .btn{display:inline-flex;align-items:center;justify-content:center;height:var(--sg-btn-h-dense);padding:0 22px;border:0;border-radius:0;
-  background:var(--sg-paper);box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink);font-family:var(--sg-display);font-size:13px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:uppercase;white-space:nowrap;
+  background:var(--sg-paper);box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink);font-family:var(--sg-display);font-size:13px;font-weight:700;letter-spacing:var(--sg-track-button);text-transform:none;white-space:nowrap;
   transition:background var(--sg-ease),transform var(--sg-ease)}
 .btn:hover{background:var(--sg-mist)}
 .btn:active{transform:scale(.985)}
@@ -157,7 +157,7 @@ body.serping :is(h1,.pact,.qrow,.learn,.learn-more,#recentRow){display:none}
 body.serping .search{margin-top:clamp(6px,2vh,18px)}
 .serp{width:100%;margin-top:12px;text-align:left}
 .sr-n{margin:0 0 4px;font-size:13px;color:var(--low)}
-.sr-k{display:block;font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.sr-k{display:block;font-family:var(--sg-mono);font-size:11.5px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:none;color:var(--low)}
 html[lang=hi] .sr-k{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:12.5px}
 .sr-box{margin:10px 0 6px;padding:16px 18px;background:var(--sg-mist)}
 .sr-box.pin{background:var(--sg-wash);box-shadow:inset 0 0 0 1px var(--sg-wash-line)}
@@ -171,7 +171,7 @@ a.sr-box:hover .sr-go{text-decoration:underline;text-underline-offset:3px}
 .sr-body p.em{font-weight:700;color:var(--ink)}
 .sr-body .sh-ul{margin:4px 0 10px 20px;font-size:15.5px}
 .sr-body .sh-ul li{margin:4px 0}
-.sr-body .sh-lt{margin:14px 0 6px;font-family:var(--sg-mono);font-size:11.5px;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.sr-body .sh-lt{margin:14px 0 6px;font-family:var(--sg-mono);font-size:11.5px;letter-spacing:var(--sg-track-label);text-transform:none;color:var(--low)}
 .sr-body .sh-list b{font-size:15.5px}
 .sr-body .sh-list span{font-size:14px}
 .sr-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
@@ -226,7 +226,7 @@ footer a:hover{color:var(--ink)}
   border-radius:0;box-shadow:-1px 0 0 var(--sg-line);transform:translateX(105%);transition:transform .25s ease;outline:none}
 .sheet.open{transform:none}
 .sh-top{flex:none;display:flex;justify-content:space-between;align-items:center;height:64px;padding:env(safe-area-inset-top,0px) 20px 0 28px;border-bottom:1px solid var(--sg-fog);box-sizing:content-box}
-.sh-k{font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.sh-k{font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:none;color:var(--low)}
 html[lang=hi] .sh-k{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:13px}
 .sh-x{width:36px;height:36px;border-radius:0;background:var(--sg-paper);box-shadow:inset 0 0 0 1.5px var(--sg-line-strong);color:var(--mid);font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:box-shadow var(--sg-ease)}
 .sh-x:hover{box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink)}
@@ -235,7 +235,7 @@ html[lang=hi] .sh-k{font-family:var(--sg-hindi);letter-spacing:0;text-transform:
 html[lang=hi] .sh-body h2{font-family:var(--sg-hindi);font-weight:700;letter-spacing:0}
 .sh-body p{max-width:52ch;margin-bottom:12px;font-size:17px;line-height:1.55;color:var(--mid)}
 .sh-body p.em{font-weight:700;color:var(--ink)}
-.sh-body .sh-lt{margin:22px 0 6px;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:uppercase;color:var(--low)}
+.sh-body .sh-lt{margin:22px 0 6px;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label);text-transform:none;color:var(--low)}
 html[lang=hi] .sh-body .sh-lt{font-family:var(--sg-hindi);letter-spacing:0;text-transform:none;font-size:13px}
 .sh-ul{max-width:52ch;margin:4px 0 14px 20px;font-size:17px;color:var(--mid)}
 .sh-ul li{margin:6px 0;line-height:1.5}
@@ -320,46 +320,163 @@ html[lang=hi] .camp-go{font-family:var(--sg-hindi);font-size:14px}
   .learn-more .learn button{padding:9px 6px;font-size:15px}
 }
 </style>
+<style id="rr-home-blue">
+/* The blue home page (24 Nov 2026): the cobalt opening with the search, the
+   help members offer and the SOS; then the two ways the site helps every
+   day; then what Rapid Response is, for those who want it. */
+html,body{height:auto}
+body{display:block;font-weight:500}
+main{display:block;padding:0}
 
+.rr-home .inner{max-width:680px;margin:0;text-align:left;align-items:flex-start}
+.rr-home h1,html:root body .rr-home h1{font-size:clamp(34px,4.6vw,62px);line-height:1;letter-spacing:-.045em;color:#fff;max-width:15ch}
+html[lang=hi] .rr-home h1,html:root[lang=hi] body .rr-home h1{font-size:clamp(28px,3.8vw,48px)!important;line-height:1.25;letter-spacing:0}
+.rr-home .pact{margin-top:18px;max-width:600px}
+.rr-home .pact-lead{color:#DDE5FF;font-size:17px;line-height:1.6}
+.rr-home .gives{justify-content:flex-start;gap:8px;margin-top:14px}
+.rr-home .gives button{height:36px;padding:0 14px;border:0;border-radius:999px;background:rgba(255,255,255,.14);color:#fff;font-size:14px;font-weight:600;transition:background .12s}
+.rr-home .gives button:hover{background:rgba(255,255,255,.24)}
+.rr-home .search{margin-top:26px;max-width:640px}
+.rr-home .bar{height:60px;padding:0 7px 0 20px;border:0;border-radius:16px;background:#fff;box-shadow:none}
+.rr-home .bar:hover{border:0}
+.rr-home .bar:focus-within,.rr-home .bar.listening{border:0;box-shadow:0 0 0 4px #F6B43C99}
+.rr-home .search:has(.results.open) .bar{border-radius:16px 16px 0 0}
+.rr-home .sico{color:var(--sg-ink)}
+.rr-home .mic,.rr-home .go{border-radius:12px;width:46px;height:46px}
+.rr-home .go{background:var(--sg-ink)}
+.rr-home .go:hover{background:var(--rr-cobalt-deep)}
+.rr-home .mic.on{background:#B3261E;color:#fff}
+.rr-home .results{border:0;border-radius:0 0 16px 16px;box-shadow:0 18px 40px -16px rgba(5,12,45,.55);color:var(--sg-ink)}
+.rr-home .vmsg{color:#DDE5FF;text-align:left}
+.rr-home .meta{justify-content:flex-start;color:#DDE5FF}
+.rr-home .meta .chip{border:0;border-radius:999px;background:rgba(255,255,255,.14);color:#fff}
+.rr-home .qrow{justify-content:flex-start;align-items:center;gap:12px 20px;margin-top:24px}
+.rr-home .qrow .rr-gold{min-width:200px;height:auto;min-height:54px;font-size:17px;padding:0 24px}
+.rr-web-sos{color:#fff!important;font-weight:700;font-size:15.5px}
+.rr-home-art{display:block;justify-self:end}
+.rr-home-art img{display:block}
+
+.rr-home-below{max-width:1440px;margin:0 auto;padding:clamp(28px,5vw,64px) var(--rr-pad) clamp(40px,6vw,88px)}
+.rr-home-below .camp.net{margin:0 0 8px;justify-content:flex-start}
+.rr-home-below .camp{justify-content:flex-start;text-align:left;margin:0}
+.rr-feats{margin-top:clamp(16px,3vw,32px)}
+.rr-feats h2{font-size:clamp(28px,3.4vw,46px);font-weight:800;letter-spacing:-.035em;line-height:1.08;margin:0 0 22px}
+html[lang=hi] .rr-feats h2{font-weight:700;letter-spacing:0;line-height:1.3}
+.rr-feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,28px)}
+.rr-feat{display:flex;flex-direction:column;border:1px solid var(--sg-line);border-radius:20px;overflow:hidden;background:#fff;transition:border-color .15s}
+.rr-feat:hover{border-color:var(--sg-line-strong)}
+.rr-feat img{width:100%;aspect-ratio:3/2;object-fit:cover;background:#E4ECFF}
+.rr-feat-b{display:flex;flex-direction:column;gap:8px;padding:20px 22px 24px}
+.rr-feat-b strong{font-family:var(--sg-display);font-weight:700;font-size:22px;letter-spacing:-.02em;line-height:1.2}
+html[lang=hi] .rr-feat-b strong{font-family:var(--sg-hindi);letter-spacing:0}
+.rr-feat-b span{color:var(--sg-slate);font-size:16px;line-height:1.55}
+.rr-feat-b em{font-style:normal;align-self:flex-start;margin-top:8px;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:12px;background:var(--rr-gold);color:var(--sg-ink);font-weight:700;font-size:15px}
+.rr-feat:hover .rr-feat-b em{background:var(--rr-gold-hi)}
+html.rr-shop-off .rr-feat-grid{grid-template-columns:1fr}
+.rr-home-below .learn-more{margin-top:clamp(28px,4vw,48px);text-align:left;padding:18px 20px;border-radius:16px;background:var(--sg-mist)}
+.rr-home-below .learn-more>summary{font-size:16px;color:var(--sg-ink)}
+.rr-home-below .learn-more>summary::before{border-radius:8px;box-shadow:inset 0 0 0 1.5px var(--sg-ink);width:24px;height:24px}
+.rr-home-below .learn-what{margin:10px 0 0;text-align:left;max-width:70ch;font-size:15.5px}
+.rr-home-below .learn{justify-content:flex-start}
+.rr-home-below .learn button{color:var(--rr-cobalt);font-weight:700}
+
+/* searching: the band shrinks to the field, the results take the page */
+body.serping .rr-home{padding-bottom:56px}
+body.serping .rr-home .rr-band-grid{grid-template-columns:minmax(0,1fr)}
+body.serping :is(.rr-home-art,.rr-feats){display:none}
+body.serping .rr-home .inner{max-width:760px}
+.serp{max-width:760px}
+.sr-box,.fa{border-radius:14px}
+.sr-plus{border-radius:8px}
+
+/* the home's info sheet, in the blue site's shapes */
+.sheet{border-radius:22px 0 0 22px}
+.sh-x{border-radius:10px}
+.sh-list a,.sh-list div{border-radius:12px}
+.chip,.sh-rel .chip{border-radius:999px}
+.btn{border-radius:12px;font-family:var(--sg-sans);text-transform:none;letter-spacing:0;font-size:15px}
+.btn.dark{background:var(--rr-gold);color:var(--sg-ink)}
+.btn.dark:hover,.btn.dark:active{background:var(--rr-gold-hi)}
+.btn.dark~.btn.dark{background:var(--sg-ink);color:#fff}
+.sh-k,.rh,.fa-k,.sr-k,.sh-body .sh-lt,.r .k{font-family:var(--sg-sans);font-weight:700;letter-spacing:.02em;text-transform:none;font-size:13px;color:var(--rr-cobalt)}
+
+@media (max-width:899px){
+  .rr-home .inner{max-width:none}
+  .rr-home-art{justify-self:center;width:100%;max-width:520px}
+  .rr-feat-grid{grid-template-columns:1fr}
+  .sheet{border-radius:22px 22px 0 0;height:min(88dvh,calc(100dvh - 64px))}
+}
+@media (max-width:640px){
+  main{padding:0}
+  html:root body .rr-home h1{font-size:clamp(32px,9.4vw,42px)}
+  .rr-home .pact-lead{font-size:16px}
+  .rr-home .gives button{height:34px;font-size:13.5px;padding:0 12px}
+  .rr-home .bar{height:56px;padding-left:16px}
+  .rr-home .qrow{flex-direction:column;align-items:stretch;align-self:stretch;width:100%}
+  .rr-home .qrow .rr-gold{width:100%}
+  .rr-web-sos{text-align:center}
+}
+</style>
+<!-- rr:blue --><link rel="preload" href="/assets/fonts/bricolage-800.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/rr-blue.css"><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/app/*"}}]},"eagerness":"moderate"}]}</script><!-- /rr:blue -->
 </head>
 <body>
 
 <!-- rr:header -->
-<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="30 42 420 420" aria-hidden="true"><g fill="#434343"><circle cx="85" cy="193" r="45"/><circle cx="177" cy="107" r="45"/><circle cx="302" cy="107" r="45"/><circle cx="395" cy="193" r="45"/><path d="M378.5 348.1C381 351.2 384.7 354.5 386.7 357.8C388.7 361.1 389.5 364.5 390.7 368C391.9 371.5 393.3 375.2 394 378.9C394.6 382.5 394.6 386.1 394.5 389.7C394.5 393.3 394.5 397 393.9 400.5C393.2 404 391.9 407.4 390.6 410.7C389.2 414 387.6 417.2 385.7 420.2C383.8 423.2 381.5 426.1 378.9 428.6C376.4 431.2 373.6 433.6 370.5 435.6C367.3 437.6 364.1 439.6 360.1 440.7C356.1 441.7 350.8 441.6 346.3 441.8C341.8 441.9 337.5 442 333.2 441.8C328.9 441.6 324.5 440.9 320.6 440.6C316.7 440.3 313.2 440.1 309.8 439.8C306.4 439.4 303.2 439.2 300.1 438.8C296.9 438.3 293.7 437.4 290.8 436.9C287.9 436.4 285.2 436 282.6 435.6C280.1 435.2 277.6 434.8 275.3 434.5C273 434.2 270.7 434 268.6 433.8C266.5 433.7 264.5 433.8 262.4 433.6C260.4 433.5 258.3 433.1 256.4 433C254.4 432.8 252.6 432.9 250.7 432.9C248.8 432.9 246.9 433 245.1 432.9C243.2 432.9 241.4 432.6 239.5 432.6C237.7 432.6 235.8 432.9 234 432.9C232.1 433 230.2 432.9 228.4 432.9C226.5 432.9 224.6 432.8 222.6 433C220.7 433.1 218.6 433.5 216.6 433.6C214.6 433.8 212.6 433.7 210.4 433.8C208.3 434 206.1 434.2 203.7 434.5C201.4 434.8 199 435.2 196.4 435.6C193.8 436 191.2 436.4 188.3 436.9C185.4 437.4 182.1 438.3 179 438.8C175.8 439.2 172.6 439.4 169.2 439.8C165.8 440.1 162.3 440.3 158.4 440.6C154.5 440.9 150.1 441.6 145.8 441.8C141.5 442 137.2 442 132.7 441.8C128.3 441.5 123.4 441.4 119.3 440.4C115.3 439.3 111.8 437.6 108.6 435.6C105.3 433.7 102.6 431.2 100.1 428.6C97.5 426.1 95.3 423.2 93.3 420.2C91.4 417.2 89.8 414 88.5 410.7C87.1 407.4 85.8 404 85.2 400.5C84.5 397 84.5 393.3 84.5 389.7C84.5 386.1 84.4 382.5 85 378.9C85.7 375.2 87.1 371.5 88.3 368C89.5 364.5 90.4 361.1 92.3 357.8C94.3 354.5 97.5 351.2 100 348.1C102.5 345.1 105.1 342.2 107.3 339.5C109.5 336.7 110.9 334 113.1 331.5C115.3 329 118.1 326.7 120.3 324.4C122.6 322.1 124.5 320 126.5 317.8C128.4 315.7 130.2 313.6 132 311.6C133.9 309.6 135.7 307.8 137.4 305.8C139.1 303.9 140.7 302 142.2 300.1C143.7 298.2 145.1 296.3 146.4 294.4C147.7 292.4 148.7 290.2 150.1 288.4C151.6 286.6 153.6 285.1 155 283.3C156.4 281.4 157.3 279.1 158.7 277.2C160.1 275.4 162.1 274 163.5 272.1C164.9 270.2 166 267.9 167.3 265.8C168.6 263.7 169.9 261.3 171.3 259.3C172.8 257.2 174.5 255.3 176.2 253.3C177.8 251.3 179.6 249.4 181.3 247.2C183 245.1 184.6 242.6 186.4 240.5C188.3 238.4 190.4 236.7 192.4 234.5C194.5 232.3 196.3 229.5 198.5 227.4C200.7 225.3 203.2 223.8 205.7 222.1C208.2 220.4 210.8 218.5 213.5 217.2C216.2 215.9 219 215.1 221.9 214.3C224.7 213.5 227.7 212.8 230.6 212.4C233.6 212.1 236.5 212.1 239.5 212.1C242.5 212.1 245.5 212.1 248.4 212.4C251.3 212.8 254.3 213.5 257.1 214.3C260 215.1 262.9 215.9 265.6 217.2C268.2 218.5 270.8 220.4 273.3 222.1C275.8 223.8 278.3 225.3 280.5 227.4C282.7 229.5 284.6 232.3 286.6 234.5C288.6 236.7 290.6 238.5 292.6 240.5C294.5 242.5 296.6 244.2 298.3 246.4C300 248.5 301.3 251.2 302.8 253.3C304.4 255.5 306.2 257.3 307.7 259.3C309.2 261.3 310.6 263.4 312 265.4C313.5 267.4 314.8 269.4 316.2 271.4C317.6 273.4 319 275.3 320.3 277.2C321.6 279.2 322.6 281.4 324 283.3C325.4 285.1 327.5 286.6 328.9 288.4C330.3 290.2 331.3 292.4 332.6 294.4C333.9 296.3 335.3 298.2 336.8 300.1C338.3 302 340 303.9 341.6 305.8C343.2 307.8 344.7 309.8 346.5 311.8C348.3 313.8 350.5 315.7 352.5 317.8C354.6 319.9 356.4 322.1 358.7 324.4C360.9 326.7 363.7 329 365.9 331.5C368.1 334 369.6 336.7 371.7 339.5C373.8 342.2 376 345.1 378.5 348.1Z"/></g></svg><span>Rapid Response</span></a><nav class="rr-nav" aria-label="Main"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div><button class="rr-burger" id="rrMenuBtn" type="button" aria-controls="rrMob" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="rr-b1" d="M4 8h16"/><path class="rr-b2" d="M4 16h16"/></svg></button></nav></div><div class="rr-mob" id="rrMob" hidden><nav aria-label="Menu"><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/faq" data-rr-en="FAQ" data-rr-hi="सवाल">FAQ</a><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/network" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a></nav><div class="rr-lang rr-mob-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">English</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div></div></div>
+<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in"><a class="rr-brand" href="/" aria-label="Rapid Response home"><svg class="rr-mark" viewBox="30 42 420 420" aria-hidden="true"><g fill="#434343"><circle cx="85" cy="193" r="45"/><circle cx="177" cy="107" r="45"/><circle cx="302" cy="107" r="45"/><circle cx="395" cy="193" r="45"/><path d="M378.5 348.1C381 351.2 384.7 354.5 386.7 357.8C388.7 361.1 389.5 364.5 390.7 368C391.9 371.5 393.3 375.2 394 378.9C394.6 382.5 394.6 386.1 394.5 389.7C394.5 393.3 394.5 397 393.9 400.5C393.2 404 391.9 407.4 390.6 410.7C389.2 414 387.6 417.2 385.7 420.2C383.8 423.2 381.5 426.1 378.9 428.6C376.4 431.2 373.6 433.6 370.5 435.6C367.3 437.6 364.1 439.6 360.1 440.7C356.1 441.7 350.8 441.6 346.3 441.8C341.8 441.9 337.5 442 333.2 441.8C328.9 441.6 324.5 440.9 320.6 440.6C316.7 440.3 313.2 440.1 309.8 439.8C306.4 439.4 303.2 439.2 300.1 438.8C296.9 438.3 293.7 437.4 290.8 436.9C287.9 436.4 285.2 436 282.6 435.6C280.1 435.2 277.6 434.8 275.3 434.5C273 434.2 270.7 434 268.6 433.8C266.5 433.7 264.5 433.8 262.4 433.6C260.4 433.5 258.3 433.1 256.4 433C254.4 432.8 252.6 432.9 250.7 432.9C248.8 432.9 246.9 433 245.1 432.9C243.2 432.9 241.4 432.6 239.5 432.6C237.7 432.6 235.8 432.9 234 432.9C232.1 433 230.2 432.9 228.4 432.9C226.5 432.9 224.6 432.8 222.6 433C220.7 433.1 218.6 433.5 216.6 433.6C214.6 433.8 212.6 433.7 210.4 433.8C208.3 434 206.1 434.2 203.7 434.5C201.4 434.8 199 435.2 196.4 435.6C193.8 436 191.2 436.4 188.3 436.9C185.4 437.4 182.1 438.3 179 438.8C175.8 439.2 172.6 439.4 169.2 439.8C165.8 440.1 162.3 440.3 158.4 440.6C154.5 440.9 150.1 441.6 145.8 441.8C141.5 442 137.2 442 132.7 441.8C128.3 441.5 123.4 441.4 119.3 440.4C115.3 439.3 111.8 437.6 108.6 435.6C105.3 433.7 102.6 431.2 100.1 428.6C97.5 426.1 95.3 423.2 93.3 420.2C91.4 417.2 89.8 414 88.5 410.7C87.1 407.4 85.8 404 85.2 400.5C84.5 397 84.5 393.3 84.5 389.7C84.5 386.1 84.4 382.5 85 378.9C85.7 375.2 87.1 371.5 88.3 368C89.5 364.5 90.4 361.1 92.3 357.8C94.3 354.5 97.5 351.2 100 348.1C102.5 345.1 105.1 342.2 107.3 339.5C109.5 336.7 110.9 334 113.1 331.5C115.3 329 118.1 326.7 120.3 324.4C122.6 322.1 124.5 320 126.5 317.8C128.4 315.7 130.2 313.6 132 311.6C133.9 309.6 135.7 307.8 137.4 305.8C139.1 303.9 140.7 302 142.2 300.1C143.7 298.2 145.1 296.3 146.4 294.4C147.7 292.4 148.7 290.2 150.1 288.4C151.6 286.6 153.6 285.1 155 283.3C156.4 281.4 157.3 279.1 158.7 277.2C160.1 275.4 162.1 274 163.5 272.1C164.9 270.2 166 267.9 167.3 265.8C168.6 263.7 169.9 261.3 171.3 259.3C172.8 257.2 174.5 255.3 176.2 253.3C177.8 251.3 179.6 249.4 181.3 247.2C183 245.1 184.6 242.6 186.4 240.5C188.3 238.4 190.4 236.7 192.4 234.5C194.5 232.3 196.3 229.5 198.5 227.4C200.7 225.3 203.2 223.8 205.7 222.1C208.2 220.4 210.8 218.5 213.5 217.2C216.2 215.9 219 215.1 221.9 214.3C224.7 213.5 227.7 212.8 230.6 212.4C233.6 212.1 236.5 212.1 239.5 212.1C242.5 212.1 245.5 212.1 248.4 212.4C251.3 212.8 254.3 213.5 257.1 214.3C260 215.1 262.9 215.9 265.6 217.2C268.2 218.5 270.8 220.4 273.3 222.1C275.8 223.8 278.3 225.3 280.5 227.4C282.7 229.5 284.6 232.3 286.6 234.5C288.6 236.7 290.6 238.5 292.6 240.5C294.5 242.5 296.6 244.2 298.3 246.4C300 248.5 301.3 251.2 302.8 253.3C304.4 255.5 306.2 257.3 307.7 259.3C309.2 261.3 310.6 263.4 312 265.4C313.5 267.4 314.8 269.4 316.2 271.4C317.6 273.4 319 275.3 320.3 277.2C321.6 279.2 322.6 281.4 324 283.3C325.4 285.1 327.5 286.6 328.9 288.4C330.3 290.2 331.3 292.4 332.6 294.4C333.9 296.3 335.3 298.2 336.8 300.1C338.3 302 340 303.9 341.6 305.8C343.2 307.8 344.7 309.8 346.5 311.8C348.3 313.8 350.5 315.7 352.5 317.8C354.6 319.9 356.4 322.1 358.7 324.4C360.9 326.7 363.7 329 365.9 331.5C368.1 334 369.6 336.7 371.7 339.5C373.8 342.2 376 345.1 378.5 348.1Z"/></g></svg><span>rapid<br>response</span></a><nav class="rr-nav" aria-label="Main"><a href="/shop" class="rr-opt" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="Help" data-rr-hi="मदद">Help</a><div class="rr-more"><button class="rr-more-btn" type="button" aria-expanded="false" aria-controls="rrMore"><span data-rr-en="More" data-rr-hi="और">More</span><svg viewBox="0 0 12 12" width="12" height="12" fill="none" aria-hidden="true"><path d="M2 4.5 6 8.5l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="rr-more-panel" id="rrMore"><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/preview" data-rr-en="Try the app" data-rr-hi="ऐप आज़माएँ">Try the app</a><a href="/network" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a><a href="/vet" data-rr-en="For vets" data-rr-hi="वेट के लिए">For vets</a></div></div></nav><div class="rr-right"><div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" data-rr-en="Get the app" data-rr-hi="ऐप पाएँ">Get the app</button><div class="rr-menu" id="rrAppMenu"><a href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Android - Google Play</a><a href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">iPhone - App Store</a><a href="/preview" data-rr-en="See every screen first" data-rr-hi="पहले हर स्क्रीन देखें">See every screen first</a></div></div></div></div></div><div class="rr-chrome rr-app"><div class="rr-mob" id="rrMob" hidden><div class="rr-sheet-grip" aria-hidden="true"></div><nav aria-label="Menu"><a href="/faq" data-rr-en="Help and questions" data-rr-hi="मदद और सवाल">Help and questions</a><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/preview" data-rr-en="Try the app" data-rr-hi="ऐप आज़माएँ">Try the app</a><a href="/network" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/policy" data-rr-en="Privacy &amp; Terms" data-rr-hi="प्राइवेसी और शर्तें">Privacy &amp; Terms</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav><div class="rr-lang rr-mob-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">English</button><span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div><div class="rr-mob-app"><a class="rr-btn" href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Google Play</a><a class="rr-btn rr-ghost" href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">App Store</a></div></div><div class="rr-scrim" aria-hidden="true"></div><nav class="rr-tabs" aria-label="Sections"><a href="/" aria-current="page"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10.5 12 4l8.5 6.5V20a1 1 0 0 1-1 1h-5v-6h-5v6h-5a1 1 0 0 1-1-1z"/></svg><span data-rr-en="Home" data-rr-hi="होम">Home</span></a><a href="/shop" class="rr-opt"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span data-rr-en="Shop" data-rr-hi="शॉप">Shop</span></a><a href="/talk-to-a-vet"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v5a5 5 0 0 0 10 0V3"/><path d="M11 13v3a4 4 0 0 0 8 0v-2"/><circle cx="19" cy="12" r="2"/></svg><span data-rr-en="Vet" data-rr-hi="वेट">Vet</span></a><a href="/know-the-laws"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z"/></svg><span data-rr-en="Laws" data-rr-hi="कानून">Laws</span></a><button class="rr-tab-more" id="rrMenuBtn" type="button" aria-controls="rrMob" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg><span data-rr-en="More" data-rr-hi="और">More</span></button></nav></div>
 <!-- /rr:header -->
 
 <main>
- <div class="inner">
-  <h1 data-i="h1">Rescue animals together, with people in your district.</h1>
-  <div class="pact">
-   <p class="pact-lead" data-i="pact">Not a helpline, and not a place to report a problem and move on. Nobody can help every time, but everyone who joins offers at least one kind of help:</p>
-   <ul class="gives" id="gives" aria-label="Ways members help"><!-- rr:help-offers GENERATED from shared/help-offers.json by scripts/sync-shared.js - do not edit --><li><button type="button" data-sheet="roles" title="A car, bike or auto to get an animal to a vet.">Transport</button></li><li><button type="button" data-sheet="roles" title="Paying for treatment, medicine or a ride.">Funds</button></li><li><button type="button" data-sheet="roles" title="Going to the spot, and catching or lifting an animal safely.">Ground rescue</button></li><li><button type="button" data-sheet="roles" title="A vet, or trained in animal first aid.">Vet help</button></li><li><button type="button" data-sheet="roles" title="A safe space, and time to look after an animal.">Shelter or care for a few days</button></li><li><button type="button" data-sheet="roles" title="A lawyer, or someone who knows the animal laws well.">Legal help</button></li><li><button type="button" data-sheet="roles" title="Being there when a feeder or caretaker is threatened.">Standing with the aggrieved</button></li><li><button type="button" data-sheet="roles" title="People you know who will act. Not numbers of NGOs or animal lovers who are already overwhelmed.">The right contacts</button></li><!-- /rr:help-offers --></ul>
-  </div>
-
-  <div class="search" role="search">
-    <div class="bar">
+ <section class="rr-band rr-home" aria-labelledby="homeH1">
+  <div class="rr-band-grid">
+   <div class="inner">
+    <h1 id="homeH1" data-i="h1">Rescue animals together, with people in your district.</h1>
+    <div class="pact">
+     <p class="pact-lead" data-i="pact">Not a helpline, and not a place to report a problem and move on. Nobody can help every time, but everyone who joins offers at least one kind of help:</p>
+     <ul class="gives" id="gives" aria-label="Ways members help"><!-- rr:help-offers GENERATED from shared/help-offers.json by scripts/sync-shared.js - do not edit --><li><button type="button" data-sheet="roles" title="A car, bike or auto to get an animal to a vet.">Transport</button></li><li><button type="button" data-sheet="roles" title="Paying for treatment, medicine or a ride.">Funds</button></li><li><button type="button" data-sheet="roles" title="Going to the spot, and catching or lifting an animal safely.">Ground rescue</button></li><li><button type="button" data-sheet="roles" title="A vet, or trained in animal first aid.">Vet help</button></li><li><button type="button" data-sheet="roles" title="A safe space, and time to look after an animal.">Shelter or care for a few days</button></li><li><button type="button" data-sheet="roles" title="A lawyer, or someone who knows the animal laws well.">Legal help</button></li><li><button type="button" data-sheet="roles" title="Being there when a feeder or caretaker is threatened.">Standing with the aggrieved</button></li><li><button type="button" data-sheet="roles" title="People you know who will act. Not numbers of NGOs or animal lovers who are already overwhelmed.">The right contacts</button></li><!-- /rr:help-offers --></ul>
+    </div>
+    <div class="search" role="search">
+      <div class="bar">
       <svg class="sico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       <input id="q" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list" aria-label="Search Rapid Response">
       <button class="mic" id="mic" type="button" aria-label="Search by voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="go" id="go" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
-    <div class="results" id="results" role="listbox"></div>
+      <div class="results" id="results" role="listbox"></div>
+    </div>
+    <p class="vmsg" id="vmsg" role="status" aria-live="polite" hidden></p>
+    <div class="meta" id="recentRow" hidden>
+      <span data-i="recent">Recent</span>
+      <span id="recent" style="display:contents"></span>
+      <button class="chip" id="clear" data-i="clear">Clear</button>
+    </div>
+    <div class="qrow">
+      <button class="btn rr-gold rr-sos" data-sheet="sos" data-i="qSos">Raise an SOS</button>
+      <a class="rr-web-sos" href="/app" data-i="qWeb">No app? Raise it in your browser</a>
+    </div>
+   </div>
+   <picture class="rr-home-art"><source media="(max-width:899px)" srcset="/assets/rr-community-blue-640.webp"><img class="rr-band-art" src="/assets/rr-community-blue-1080.webp" alt="Two people walking with a community dog and cat, cut from blue paper" width="1080" height="720" fetchpriority="high"></picture>
   </div>
-  <p class="vmsg" id="vmsg" role="status" aria-live="polite" hidden></p>
+ </section>
+
+ <div class="rr-home-below">
   <section class="serp" id="serp" aria-label="Search results" hidden></section>
-
-  <div class="meta" id="recentRow" hidden>
-    <span data-i="recent">Recent</span>
-    <span id="recent" style="display:contents"></span>
-    <button class="chip" id="clear" data-i="clear">Clear</button>
-  </div>
-
-  <div class="qrow">
-    <button class="btn dark" data-sheet="sos" data-i="qSos">Raise an SOS</button>
-  </div>
 
   <a class="camp net" id="net" href="/network" hidden><span id="netT"></span><span class="camp-go" data-i="netGo">See the network</span></a>
   <a class="camp" id="camp" href="/lab-animal-rules" hidden><span class="camp-dot" aria-hidden="true"></span><span data-i="camp">Draft lab animal rules: object by 5 November</span><span class="camp-go" data-i="campGo">Send yours</span></a>
+
+  <section class="rr-feats" aria-labelledby="featH">
+   <h2 id="featH" data-i="featH">Care comes in many forms.</h2>
+   <div class="rr-feat-grid">
+    <a class="rr-feat rr-opt" href="/shop">
+     <img src="/assets/rr-shop-blue-640.webp" alt="" width="640" height="427" loading="lazy">
+     <span class="rr-feat-b"><strong data-i="fShopT">The everyday good stuff</strong><span data-i="fShopP">Food, treats, medicine and toys from a partner store, at its own prices.</span><em data-i="fShopGo">Shop essentials</em></span>
+    </a>
+    <a class="rr-feat" href="/talk-to-a-vet">
+     <img src="/assets/rr-vet-blue-640.webp" alt="" width="640" height="427" loading="lazy">
+     <span class="rr-feat-b"><strong data-i="fVetT">A little expert help</strong><span data-i="fVetP">Chat with a verified vet, and switch to video when they need a closer look.</span><em data-i="fVetGo">Talk to a vet</em></span>
+    </a>
+   </div>
+  </section>
 
   <details class="learn-more">
    <summary><span data-i="lMore">What is Rapid Response?</span></summary>
@@ -373,7 +490,8 @@ html[lang=hi] .camp-go{font-family:var(--sg-hindi);font-size:14px}
 <script src="/assets/rr-join.js" defer></script>
 
 <!-- rr:footer -->
-<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in"><nav aria-label="About"><a href="/explainer" data-rr-en="About" data-rr-hi="परिचय">About</a><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/network" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a></nav><nav aria-label="Legal"><a href="/policy" data-rr-en="Privacy &amp; Terms" data-rr-hi="प्राइवेसी और शर्तें">Privacy &amp; Terms</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav></div></div>
+<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in"><div class="rr-ftr-cta"><div><p class="rr-ftr-h" data-rr-en="There is a place for your kind of kindness." data-rr-hi="आपकी तरह की दयालुता के लिए यहाँ जगह है।">There is a place for your kind of kindness.</p><p data-rr-en="Join the people in your district on the Rapid Response app. Free, with no ads." data-rr-hi="अपने ज़िले के लोगों से Rapid Response ऐप पर जुड़ें। मुफ़्त, बिना विज्ञापन।">Join the people in your district on the Rapid Response app. Free, with no ads.</p></div><div class="rr-stores"><a class="rr-btn" href="https://play.google.com/store/apps/details?id=com.rrt.sos" rel="noopener">Google Play</a><a class="rr-btn rr-ghost" href="https://apps.apple.com/in/app/rapid-response/id6758672498" rel="noopener">App Store</a></div></div><div class="rr-ftr-grid"><div class="rr-ftr-brand"><a class="rr-ftr-wm" href="/">rapid<br>response</a><p data-rr-en="People helping each other help animals." data-rr-hi="जानवरों की मदद में एक-दूसरे का साथ।">People helping each other help animals.</p><a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a></div><div><h2 data-rr-en="Explore" data-rr-hi="देखें">Explore</h2><a href="/explainer" data-rr-en="The app, explained" data-rr-hi="ऐप, आसान शब्दों में">The app, explained</a><a href="/app-guide" data-rr-en="App guide" data-rr-hi="ऐप गाइड">App guide</a><a href="/preview" data-rr-en="Try the app" data-rr-hi="ऐप आज़माएँ">Try the app</a><a href="/network" data-rr-en="The network" data-rr-hi="नेटवर्क">The network</a></div><div><h2 data-rr-en="Help and care" data-rr-hi="मदद और देखभाल">Help and care</h2><a href="/talk-to-a-vet" data-rr-en="Talk to a vet" data-rr-hi="वेट से बात करें">Talk to a vet</a><a href="/vet" data-rr-en="Join as a vet" data-rr-hi="वेट बनकर जुड़ें">Join as a vet</a><a href="/know-the-laws" data-rr-en="Know the laws" data-rr-hi="कानून जानें">Know the laws</a><a href="/faq" data-rr-en="Questions and answers" data-rr-hi="सवाल और जवाब">Questions and answers</a></div><div class="rr-opt"><h2 data-rr-en="Shop" data-rr-hi="शॉप">Shop</h2><a href="/shop" data-rr-en="Shop" data-rr-hi="शॉप">Shop</a><a href="/shop/saved" data-rr-en="Saved" data-rr-hi="सहेजे गए">Saved</a><a href="/shop/cart" data-rr-en="Your bag" data-rr-hi="आपका बैग">Your bag</a><a href="/shop/track" data-rr-en="Your orders" data-rr-hi="आपके ऑर्डर">Your orders</a></div></div><div class="rr-ftr-end"><span data-rr-en="Rapid Response. An independent community initiative." data-rr-hi="Rapid Response. एक स्वतंत्र सामुदायिक पहल।">Rapid Response. An independent community initiative.</span><nav aria-label="Legal"><a href="/policy" data-rr-en="Privacy &amp; Terms" data-rr-hi="प्राइवेसी और शर्तें">Privacy &amp; Terms</a><a href="/vet-terms" data-rr-en="Vet terms" data-rr-hi="वेट शर्तें">Vet terms</a><a href="mailto:ask@rapid-response.in" data-rr-en="Contact" data-rr-hi="संपर्क">Contact</a></nav></div></div></div>
+<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>
 <!-- /rr:footer -->
 
 <div class="scrim" id="scrim"></div>
@@ -394,7 +512,7 @@ var PLAY="https://play.google.com/store/apps/details?id=com.rrt.sos",
 /* ---------------------------------------------------------------- UI text */
 var T={
  en:{
-  navFaq:"FAQ",camp:"Draft lab animal rules: object by 5 November",campGo:"Send yours",netGo:"See the network",
+  navFaq:"FAQ",qWeb:"No app? Raise it in your browser",featH:"Care comes in many forms.",fShopT:"The everyday good stuff",fShopP:"Food, treats, medicine and toys from a partner store, at its own prices.",fShopGo:"Shop essentials",fVetT:"A little expert help",fVetP:"Chat with a verified vet, and switch to video when they need a closer look.",fVetGo:"Talk to a vet",camp:"Draft lab animal rules: object by 5 November",campGo:"Send yours",netGo:"See the network",
   h1:"Rescue animals together, with people in your district.",
   pact:"Not a helpline, and not a place to report a problem and move on. Nobody can help every time, but everyone who joins offers at least one kind of help:",gives:"Ways members help",
   ph:"Search SOS, feeding rights, dog pickups, vets\u2026",phS:"SOS, laws, vets\u2026",
@@ -404,10 +522,10 @@ var T={
   footL:"India \u00b7 Free, bilingual, independent",lMore:"What is Rapid Response?",lWhat:"Rapid Response (RRT) is a free animal rescue app and peer to peer network for India, organised by district. If you are with an injured or sick animal, raise an SOS: the nearest members in your district see what you lack, such as transport, funds, a vet or a foster. For anything that is not urgent, like a blood donor, a trusted clinic or a foster for a trip, Ask the District. Phone numbers stay private, and everyone who joins offers at least one kind of help.",lApp:"What the app does",lWho:"Who should join",lWhy:"Why it exists",lPro:"Our promises",navVet:"For vets",navGuide:"App guide",navContact:"Contact",navPolicy:"Terms & Privacy",
   lawsFor:"Search the laws for",shopFor:"Search the shop for",explore:"Explore",
   kInfo:"Info",kLaw:"Law",kPage:"Page",kApp:"App",
-  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",related:"Related",backTop:"Back to the top",resFor:"Results for",moreFor:"More searches"
+  android:"Get it on Android",ios:"Get it on iPhone",guide:"See every screen",web:"Raise it in your browser, no download",related:"Related",backTop:"Back to the top",resFor:"Results for",moreFor:"More searches"
  },
  hi:{
-  navFaq:"सवाल",camp:"प्रयोगशाला पशु नियमों का मसौदा: 5 नवंबर तक आपत्ति भेजें",campGo:"आपत्ति भेजें",netGo:"नेटवर्क देखें",
+  navFaq:"सवाल",qWeb:"ऐप नहीं है? ब्राउज़र में भेजें",featH:"देखभाल के कई रूप।",fShopT:"रोज़ की ज़रूरी चीज़ें",fShopP:"पार्टनर स्टोर से खाना, ट्रीट, दवाइयाँ और खिलौने, उसी की कीमतों पर।",fShopGo:"ज़रूरी चीज़ें खरीदें",fVetT:"थोड़ी विशेषज्ञ मदद",fVetP:"सत्यापित वेट से चैट करें, और ज़रूरत हो तो वीडियो पर जाएँ।",fVetGo:"वेट से बात करें",camp:"प्रयोगशाला पशु नियमों का मसौदा: 5 नवंबर तक आपत्ति भेजें",campGo:"आपत्ति भेजें",netGo:"नेटवर्क देखें",
   h1:"अपने ज़िले के लोगों के साथ मिलकर जानवरों को बचाएँ।",
   pact:"यह हेल्पलाइन नहीं है, न समस्या बताकर आगे बढ़ जाने की जगह। हर बार कोई मदद नहीं कर पाता, पर जो भी जुड़ता है, वह कम से कम एक तरह की मदद देता है:",gives:"सदस्य कैसे मदद करते हैं",
   ph:"एसओएस, खिलाने का अधिकार, कुत्ते उठाना, वेट खोजें\u2026",phS:"एसओएस, कानून, वेट\u2026",
@@ -417,7 +535,7 @@ var T={
   footL:"भारत \u00b7 मुफ़्त, द्विभाषी, स्वतंत्र",lMore:"रैपिड रिस्पॉन्स क्या है?",lWhat:"रैपिड रिस्पॉन्स (RRT) भारत के लिए एक मुफ़्त पशु बचाव ऐप और ज़िले के हिसाब से बना आपसी नेटवर्क है। अगर आप किसी घायल या बीमार जानवर के साथ हैं, तो एसओएस भेजें: आपके ज़िले के सबसे नज़दीकी सदस्य देखते हैं कि आपको क्या चाहिए, जैसे गाड़ी, पैसे, वेट या फोस्टर। जो ज़रूरी न हो, जैसे ब्लड डोनर, भरोसेमंद क्लिनिक या कुछ दिनों के लिए फोस्टर, उसके लिए जिले से पूछें। फ़ोन नंबर निजी रहते हैं, और जुड़ने वाला हर व्यक्ति कम से कम एक तरह की मदद देता है।",lApp:"ऐप क्या करता है",lWho:"किसे जुड़ना चाहिए",lWhy:"क्यों",lPro:"हमारे वादे",navVet:"वेट के लिए",navGuide:"ऐप गाइड",navContact:"संपर्क",navPolicy:"शर्तें और प्राइवेसी",
   lawsFor:"कानूनों में खोजें",shopFor:"शॉप में खोजें",explore:"देखें",
   kInfo:"जानकारी",kLaw:"कानून",kPage:"पेज",kApp:"ऐप",
-  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",related:"संबंधित",backTop:"ऊपर जाएँ",resFor:"इसके नतीजे:",moreFor:"और खोजें"
+  android:"एंड्रॉयड पर पाएँ",ios:"आईफोन पर पाएँ",guide:"हर स्क्रीन देखें",web:"ब्राउज़र में भेजें, बिना डाउनलोड",related:"संबंधित",backTop:"ऊपर जाएँ",resFor:"इसके नतीजे:",moreFor:"और खोजें"
  }
 };
 
@@ -451,10 +569,11 @@ var secCount={};LAWS.forEach(function(q){secCount[q[1]]=(secCount[q[1]]||0)+1});
 var A={
  android:{h:PLAY,k:"android",dark:1},
  ios:{h:IOS,k:"ios",dark:1},
- guide:{h:"/preview",k:"guide"}
+ guide:{h:"/preview",k:"guide"},
+ web:{h:"/app",k:"web",dark:1}
 };
 var S={
- sos:{w:"sos emergency injured hit accident bleeding attack van hospital urgent now transport ride",a:["android","ios","guide"],r:["roles","ask"],
+ sos:{w:"sos emergency injured hit accident bleeding attack van hospital urgent now transport ride",a:["web","android","ios","guide"],r:["roles","ask"],
   en:{k:"For members on the spot",c:"Raise an SOS",t:"SOS",p:["For an emergency you are at, right now. You stay with the animal and do what you can; the SOS asks the nearest members for what you lack: a ride, a vet, funds, a place for a few days, legal help or people to stand with you.","It is not a way to report an animal and move on. Nobody is sent in your place."],
       lt:"Tap SOS when you are there and need",l:[["A ride to a vet","An injured dog is with you, and you have no transport."],["A vet's help","You are with the animal and need a vet now."],["People with you","A crowd is threatening you while you feed."],["Witnesses, fast","Dogs are being pushed into a van in front of you."]]},
   hi:{k:"मौके पर मौजूद सदस्यों के लिए",c:"एसओएस भेजें",t:"एसओएस",p:["उस इमरजेंसी के लिए जहाँ आप अभी मौजूद हैं। आप जानवर के साथ रहें और जो कर सकें करें; एसओएस सबसे नज़दीकी सदस्यों से वह माँगता है जो आपके पास नहीं: गाड़ी, वेट, पैसे, कुछ दिन रखने की जगह, कानूनी मदद या साथ खड़े होने वाले लोग।","यह किसी जानवर की रिपोर्ट करके आगे बढ़ जाने का तरीका नहीं है। आपकी जगह कोई नहीं भेजा जाता।"],

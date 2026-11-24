@@ -19,26 +19,34 @@ and theme between these markers. Keep them exactly as they are:
 - Header/footer markup lives in `scripts/site-chrome/chrome.py`. To change it
   site-wide, edit it there and run `python3 scripts/site-chrome/heal.py --force`;
   do not hand-edit one page.
-- Styles: `assets/rr-signal.css` (the theme tokens, `--sg-*`, see
-  `docs/SIGNAL-THEME.md`: light ground, red signal; linked first from every
-  rr:head block), `assets/rr-site.css` (header/footer), `assets/rr-theme.css`
-  (older content pages), `assets/shop.css` (shop). Map new styles onto the
-  `--sg-*` tokens: white ground, square corners (every radius token is 0),
-  hairlines not shadows, Archivo (`--sg-display`) for headings and button
-  labels, one red (`--sg-accent`, white text) per view for the primary action
-  (red also for errors, destructive actions and emergencies). Do not
-  reintroduce the old dark palette, Barlow/JetBrains fonts, rounded pills, the
-  yellow of the earlier theme, or a red logo square: the paw and the
-  Marcellus wordmark stay as they are, and Marcellus is only for the wordmark
-  in the header.
+- Styles: the blue site (24 Nov 2026). `assets/rr-blue.css` is linked LAST on
+  every page (inside rr:head, and in a `<!-- rr:blue -->` block after
+  shop.css on shop pages): it re-points the shared `--sg-*` tokens
+  (`assets/rr-signal.css`) to the blue palette and settles what they do not
+  reach. `assets/rr-site.css` is the header, the phone tab bar and sheet, and
+  the footer. Look: cobalt (#1D3FC4) page openings (`.rr-band`, built by
+  `scripts/site-chrome/band.py`) with a torn-paper edge, white and pale blue
+  (#E4ECFF) sections, an indigo (#0E1A44) footer, marigold (#F6B43C, ink
+  text) for the one main action on a view, blue for links, red (#B3261E) only
+  for an SOS, errors and removing things. Headings in Bricolage, the interface
+  in Manrope, Hindi in Noto Sans Devanagari. Rounded corners (12px controls,
+  16-20px cards, pills for chips), sentence case, no mono labels.
+  Flat: no tilted, 3D, lifted or shadowed tiles and buttons (owner, 24 Nov
+  2026). Illustrations are `assets/rr-*-blue-{640,1080}.webp`.
+- Phones (899px and narrower) work like an app: a compact top bar, a tab bar
+  at the bottom (Home, Shop, Vet, Laws, More; Shop hides when the shop is
+  off), the rest of the site in a sheet that slides up from More, and pages
+  fetched before the tap lands (speculation rules, prefetch only). Keep content clear of the tab bar
+  (body padding-bottom is set for it) and anything fixed at the bottom above
+  it (`var(--rr-tabs-h)`).
 - Page layout: `assets/rr-page.css` (linked last from every rr:head block) is
   the one page grid. Every page starts on the logo's line: give the page's
   main block `rr-page rr-read` (or `rr-wide`) and its eyebrow, title and lead
   `rr-ph-eye`, `rr-ph-h1`, `rr-ph-lead`. Reading pages split into
-  `rr-split-head` / `rr-split-body` from 1100px wide. Never centre a page in
-  its own max-width box again; only the home search is centred.
-- Phones get a Menu button in the header (links in `MOB` in chrome.py). The
-  footer is one quiet line; the main pages live in the header, not the footer.
+  `rr-split-head` / `rr-split-body` from 1100px wide. The eyebrow, title and
+  lead then move into the cobalt band (`scripts/site-chrome/band.py`).
+- Phones get the tab bar and the More sheet (links in `MOB` in chrome.py).
+  The footer is the indigo close with the stores and the site's sections.
 - The shop follows the admin's `flags.store` switch site-wide
   (`assets/rr-site.js`): when it is off every shop link is hidden
   (`html.rr-shop-off`) and shop pages send visitors home, as the app hides its

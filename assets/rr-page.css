@@ -47,7 +47,7 @@ html:root body .rr-page.rr-wide{max-width:none}
 html:root body .rr-ph-eye{
   width:auto;margin:0 0 14px;padding:0;border:0;background:none;
   font-family:var(--sg-mono);font-size:12px;font-weight:500;line-height:1.4;
-  letter-spacing:var(--sg-track-label,.12em);text-transform:uppercase;color:var(--sg-slate);
+  letter-spacing:var(--sg-track-label,.12em);text-transform:none;color:var(--sg-slate);
   text-align:left;
 }
 html:root body .rr-ph-eye .dot,html:root body .rr-ph-eye .ping{display:none}
@@ -120,7 +120,7 @@ html:root body .rr-split-head>:last-child{margin-bottom:0}
   /* on this page (rr-toc.js), under the head */
   html:root body .rr-split-head .rr-toc{display:block;margin-top:36px}
   .rr-toc-in{border-left:1px solid var(--sg-line);padding:2px 0 2px 20px}
-  .rr-toc-h{margin:0 0 10px;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label,.12em);text-transform:uppercase;color:var(--sg-slate)}
+  .rr-toc-h{margin:0 0 10px;font-family:var(--sg-mono);font-size:12px;font-weight:500;letter-spacing:var(--sg-track-label,.12em);text-transform:none;color:var(--sg-slate)}
   html[lang=hi] .rr-toc-h{font-family:var(--sg-hindi);letter-spacing:0;font-size:13px}
   .rr-toc ol{list-style:none;margin:0;padding:0}
   .rr-toc a,html:root body .rr-kl-split .pill{display:block;margin-left:-21px;padding:7px 0 7px 19px;border-left:2px solid transparent;

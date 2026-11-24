@@ -181,7 +181,7 @@ button { font: inherit; color: inherit; }
 .sugg a:hover, .sugg a:focus { background: var(--mist); outline: none; }
 .sugg img { width: 44px; height: 44px; object-fit: contain; background: var(--paper); border: 1px solid var(--line); padding: 3px; flex: none; border-radius: 0; }
 .sugg .s-price { margin-left: auto; font-family: var(--display); font-size: 14px; font-weight: 700; white-space: nowrap; }
-.sugg .s-shelf { color: var(--text-low); font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; }
+.sugg .s-shelf { color: var(--text-low); font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing:.01em; text-transform:none; }
 
 .sold-note {
   padding: 9px var(--pad); font-size: 13px; color: var(--text-low);
@@ -203,7 +203,7 @@ button { font: inherit; color: inherit; }
 .shop-title.vh + .shop-copy { margin-top: 0; }
 .shop-copy { margin: 8px 0 0; color: var(--text-mid); font-size: 16px; max-width: 62ch; }
 .controls { display: flex; align-items: center; gap: 12px; flex: none; }
-.count { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); white-space: nowrap; }
+.count { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing:.01em; text-transform:none; color: var(--text-low); white-space: nowrap; }
 .sort {
   height: 38px; border: 1px solid var(--line-strong); border-radius: 0; background-color: var(--paper); padding: 0 36px 0 16px;
   font: inherit; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer;
@@ -244,7 +244,7 @@ button { font: inherit; color: inherit; }
 .aisle-bar { padding-top: 0; }
 .aisle-bar a { height: 34px; font-size: 13.5px; }
 .brand-bar { padding-top: 0; }
-.brand-bar .lbl { flex: none; align-self: center; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); margin-right: 4px; }
+.brand-bar .lbl { flex: none; align-self: center; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing:.01em; text-transform:none; color: var(--text-low); margin-right: 4px; }
 .brand-bar a { height: 34px; border-color: transparent; background: var(--fog); font-size: 13.5px; }
 .brand-bar a:hover { background: var(--fog-h); }
 .brand-bar a[aria-pressed=true]:hover { background: var(--wash); }
@@ -304,7 +304,7 @@ button { font: inherit; color: inherit; }
 .p-heart:hover { color: var(--ink); }
 .p-heart[aria-pressed=true] { background: var(--ink); color: #fff; box-shadow: none; }
 .product-info { padding: 10px 6px 0; display: flex; flex-direction: column; gap: 3px; flex: 1; }
-.product-brand { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); }
+.product-brand { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing:.01em; text-transform:none; color: var(--text-low); }
 .product-name {
   margin: 0; font-size: 15px; font-weight: 600; line-height: 1.35; color: var(--text);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em;
@@ -320,7 +320,7 @@ button { font: inherit; color: inherit; }
 .p-act { margin: 10px 4px 0; height: 40px; }
 .add {
   width: 100%; height: 40px; border: 0; border-radius: 0; background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink); color: var(--ink); cursor: pointer;
-  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform:none;
   transition: background var(--ease), transform var(--ease);
 }
 .add:hover { background: var(--mist); }
@@ -333,11 +333,11 @@ button { font: inherit; color: inherit; }
 .step button:hover { background: var(--ink-h); }
 .step span {
   flex: 1; display: flex; align-items: center; justify-content: center;
-  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform:none;
 }
 .in-bag {
   display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 0; background: var(--ink); color: #fff;
-  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase; text-decoration: none;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform:none; text-decoration: none;
 }
 
 .skel-tile { background: var(--paper); border-radius: 0; box-shadow: var(--shadow-card); padding: 8px 8px 14px; }
@@ -351,7 +351,7 @@ button { font: inherit; color: inherit; }
 .grid-foot .done { font-size: 14px; color: var(--text-low); }
 /* More comes as you scroll: a quiet "Loading more", not a button. */
 .loading-more { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; font-weight: 500;
-  letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); }
+  letter-spacing:.01em; text-transform:none; color: var(--text-low); }
 .loading-more[hidden] { display: none; }
 .loading-more i { width: 14px; height: 14px; border: 2px solid var(--line-strong); border-top-color: var(--ink); border-radius: 50%;
   animation: lm-spin .8s linear infinite; }
@@ -372,7 +372,7 @@ button { font: inherit; color: inherit; }
 
 .btn-solid, .btn-line {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px; padding: 0 26px;
-  font: inherit; font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+  font: inherit; font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: var(--track-button); text-transform:none;
   cursor: pointer; text-decoration: none; border: 0; border-radius: 0;
   transition: background var(--ease), box-shadow var(--ease), transform var(--ease);
 }
@@ -403,7 +403,7 @@ html[lang=hi] :is(.btn-solid, .btn-line) { font-family: var(--hindi); font-size:
 .bagbar .bb-t b { font-family: var(--display); font-size: 16px; font-weight: 800; color: #fff; }
 .bagbar a {
   flex: none; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 0; text-decoration: none;
-  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform: uppercase;
+  font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: var(--track-button); text-transform:none;
   transition: background var(--ease);
 }
 .bagbar .bb-view { color: #fff; background: #ffffff1f; }
@@ -477,7 +477,7 @@ html.qa-open { overflow: hidden; }
 .qa-shot { width: 88px; height: 88px; background: var(--plate); display: grid; place-items: center; overflow: hidden; }
 .qa-shot img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .qa-id { min-width: 0; padding-top: 2px; }
-.qa-brand { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); margin-bottom: 4px; }
+.qa-brand { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing:.01em; text-transform:none; color: var(--text-low); margin-bottom: 4px; }
 .qa-title {
   margin: 0; font-family: var(--sans); font-size: 16px; font-weight: 600; line-height: 1.35; color: var(--ink);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -492,15 +492,15 @@ html.qa-open { overflow: hidden; }
 
 .qa-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .qa-tags .tag {
-  font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing:.01em; text-transform:none;
   padding: 4px 8px; background: var(--fog); color: var(--graphite);
 }
 .qa-tags .tag.veg { background: var(--paper); color: var(--go); box-shadow: inset 0 0 0 1.5px var(--go); }
 
 .qa-opts { display: flex; flex-direction: column; gap: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
 .qa-opt h3 {
-  margin: 0 0 10px; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .09em;
-  text-transform: uppercase; color: var(--text-low);
+  margin: 0 0 10px; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing:.01em;
+  text-transform:none; color: var(--text-low);
 }
 .qa-opt h3 b { color: var(--ink); font-weight: 600; }
 .qa .opt-vals { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -601,7 +601,7 @@ html.fp-open { overflow: hidden; }
   color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
 }
 .fp-price { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.fp-price label { display: flex; flex-direction: column; gap: 6px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--text-low); }
+.fp-price label { display: flex; flex-direction: column; gap: 6px; font-family: var(--mono); font-size: 11.5px; letter-spacing:.01em; text-transform:none; color: var(--text-low); }
 .fp-price input {
   height: 42px; width: 100%; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 0; background: var(--paper);
   font-family: var(--sans); font-size: 16px; color: var(--ink); letter-spacing: 0; text-transform: none;

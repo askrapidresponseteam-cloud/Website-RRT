@@ -10,51 +10,89 @@ IOS = 'https://apps.apple.com/in/app/rapid-response/id6758672498'
 def t(en, hi):
     return f'data-rr-en="{en}" data-rr-hi="{hi}">{en}'
 
+# The blue site (24 Nov 2026): a cobalt and white look with marigold
+# actions, the wordmark in Bricolage, and on phones the shape of an app: a
+# compact top bar, a tab bar at the bottom (Home, Shop, Vet, Laws, More) and
+# the rest of the site in a sheet that slides up from it.
 NAV = [
-    ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें', ''),
-    ('/know-the-laws', 'Know the laws', 'कानून जानें', ''),
-    ('/faq', 'FAQ', 'सवाल', ''),
     ('/shop', 'Shop', 'शॉप', 'rr-opt'),
+    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें', ''),
+    ('/know-the-laws', 'Know the laws', 'कानून जानें', ''),
+    ('/faq', 'Help', 'मदद', ''),
 ]
+MORE = [
+    ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
+    ('/app-guide', 'App guide', 'ऐप गाइड'),
+    ('/preview', 'Try the app', 'ऐप आज़माएँ'),
+    ('/network', 'The network', 'नेटवर्क'),
+    ('/vet', 'For vets', 'वेट के लिए'),
+]
+CHEV = ('<svg viewBox="0 0 12 12" width="12" height="12" fill="none" aria-hidden="true"><path d="M2 4.5 6 8.5l4-4" '
+        'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+BAG = ('<a class="rr-bag" href="/shop/cart" aria-label="Bag">'
+       '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'
+       '<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>'
+       '<b id="bagCount" hidden>0</b></a>')
 
 def header(current='', shop=False):
     links = ''
     for href, en, hi, cls in NAV:
-        cur = ' aria-current="page"' if current == href else ''
+        cur = ' aria-current="page"' if current == href or (shop and href == '/shop') else ''
         c = f' class="{cls}"' if cls else ''
         links += f'<a href="{href}"{c}{cur} {t(en, hi)}</a>'
+    more = ''.join(f'<a href="{h}"{" aria-current=" + chr(34) + "page" + chr(34) if current == h else ""} {t(en, hi)}</a>' for h, en, hi in MORE)
+    links += ('<div class="rr-more"><button class="rr-more-btn" type="button" aria-expanded="false" aria-controls="rrMore">'
+              '<span ' + t('More', 'और') + '</span>' + CHEV + '</button>'
+              f'<div class="rr-more-panel" id="rrMore">{more}</div></div>')
     brand_tag = '<small>Shop</small>' if shop else ''
-    right = ''
-    if shop:
-        right = ('<a class="rr-bag" href="/shop/cart" aria-label="Bag">'
-                 '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">'
-                 '<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>'
-                 '<b id="bagCount" hidden>0</b></a>')
-    else:
-        right = ('<div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button>'
-                 '<span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div>'
-                 '<div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" '
-                 + t('Get the app', 'ऐप पाएँ') + '</button>'
-                 f'<div class="rr-menu" id="rrAppMenu"><a href="{PLAY}" rel="noopener">Android - Google Play</a>'
-                 f'<a href="{IOS}" rel="noopener">iPhone - App Store</a>'
-                 '<a href="/preview" ' + t('See every screen first', 'पहले हर स्क्रीन देखें') + '</a></div></div>')
+    lang = ('<div class="rr-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button>'
+            '<span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div>')
+    app = ('<div class="rr-cta"><button class="rr-btn rr-dark" id="rrAppBtn" aria-haspopup="true" aria-expanded="false" '
+           + t('Get the app', 'ऐप पाएँ') + '</button>'
+           f'<div class="rr-menu" id="rrAppMenu"><a href="{PLAY}" rel="noopener">Android - Google Play</a>'
+           f'<a href="{IOS}" rel="noopener">iPhone - App Store</a>'
+           '<a href="/preview" ' + t('See every screen first', 'पहले हर स्क्रीन देखें') + '</a></div></div>')
+    right = (BAG if shop else lang) + app
     return ('<!-- rr:header -->\n<div class="rr-chrome rr-hdr" role="banner"><div class="rr-hdr-in">'
-            f'<a class="rr-brand" href="/" aria-label="Rapid Response home">{PAW}<span>Rapid Response</span>{brand_tag}</a>'
-            f'<nav class="rr-nav" aria-label="Main">{links}{right}{BURGER}</nav></div>'
-            + mobile_menu(current, shop) + '</div>\n<!-- /rr:header -->')
+            f'<a class="rr-brand" href="/" aria-label="Rapid Response home">{PAW}<span>rapid<br>response</span>{brand_tag}</a>'
+            f'<nav class="rr-nav" aria-label="Main">{links}</nav><div class="rr-right">{right}</div></div>'
+            # the tab bar and sheet sit beside the header, not in it: the
+            # header's blur would hold them to the header's own box
+            + '</div><div class="rr-chrome rr-app">' + mobile_menu(current, shop) + tabbar(current, shop) + '</div>\n<!-- /rr:header -->')
 
-# Phones: the nav links do not fit beside the logo, so a Menu button opens
-# them in a panel under the header (with the language switch).
-BURGER = ('<button class="rr-burger" id="rrMenuBtn" type="button" aria-controls="rrMob" aria-expanded="false" aria-label="Menu">'
-          '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="rr-b1" d="M4 8h16"/><path class="rr-b2" d="M4 16h16"/></svg></button>')
+# Phones: the tab bar. Its More button opens the sheet (the phone menu); the
+# tab for the page in view is lit by assets/rr-site.js from the address.
+def _ic(d):
+    return ('<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{d}</svg>')
+TABS = [
+    ('/', 'Home', 'होम', '', _ic('<path d="M3.5 10.5 12 4l8.5 6.5V20a1 1 0 0 1-1 1h-5v-6h-5v6h-5a1 1 0 0 1-1-1z"/>')),
+    ('/shop', 'Shop', 'शॉप', 'rr-opt', _ic('<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>')),
+    ('/talk-to-a-vet', 'Vet', 'वेट', '', _ic('<path d="M6 3v5a5 5 0 0 0 10 0V3"/><path d="M11 13v3a4 4 0 0 0 8 0v-2"/><circle cx="19" cy="12" r="2"/>')),
+    ('/know-the-laws', 'Laws', 'कानून', '', _ic('<path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z"/>')),
+]
+MORE_IC = _ic('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>')
+
+def tabbar(current='', shop=False):
+    tabs = ''
+    for href, en, hi, cls, icon in TABS:
+        on = current == href or (shop and href == '/shop')
+        c = f' class="{cls}"' if cls else ''
+        tabs += f'<a href="{href}"{c}{" aria-current=" + chr(34) + "page" + chr(34) if on else ""}>{icon}<span {t(en, hi)}</span></a>'
+    tabs += (f'<button class="rr-tab-more" id="rrMenuBtn" type="button" aria-controls="rrMob" aria-expanded="false" aria-label="Menu">'
+             f'{MORE_IC}<span ' + t('More', 'और') + '</span></button>')
+    return f'<nav class="rr-tabs" aria-label="Sections">{tabs}</nav>'
+
 MOB = [
-    ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें'),
-    ('/know-the-laws', 'Know the laws', 'कानून जानें'),
-    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'),
-    ('/shop', 'Shop', 'शॉप'),
-    ('/faq', 'FAQ', 'सवाल'),
+    ('/faq', 'Help and questions', 'मदद और सवाल'),
     ('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'),
+    ('/app-guide', 'App guide', 'ऐप गाइड'),
+    ('/preview', 'Try the app', 'ऐप आज़माएँ'),
     ('/network', 'The network', 'नेटवर्क'),
+    ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें'),
+    ('/policy', 'Privacy &amp; Terms', 'प्राइवेसी और शर्तें'),
+    ('/vet-terms', 'Vet terms', 'वेट शर्तें'),
+    ('mailto:ask@rapid-response.in', 'Contact', 'संपर्क'),
 ]
 
 def mobile_menu(current='', shop=False):
@@ -64,16 +102,20 @@ def mobile_menu(current='', shop=False):
         links += f'<a href="{href}"{cur} {t(en, hi)}</a>'
     lang = '' if shop else ('<div class="rr-lang rr-mob-lang" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">English</button>'
                             '<span class="rr-sep">|</span><button data-l="hi" aria-pressed="false">हिंदी</button></div>')
-    return f'<div class="rr-mob" id="rrMob" hidden><nav aria-label="Menu">{links}</nav>{lang}</div>'
+    stores = (f'<div class="rr-mob-app"><a class="rr-btn" href="{PLAY}" rel="noopener">Google Play</a>'
+              f'<a class="rr-btn rr-ghost" href="{IOS}" rel="noopener">App Store</a></div>')
+    return (f'<div class="rr-mob" id="rrMob" hidden><div class="rr-sheet-grip" aria-hidden="true"></div>'
+            f'<nav aria-label="Menu">{links}</nav>{lang}{stores}</div><div class="rr-scrim" aria-hidden="true"></div>')
 
-# The footer is a plain strip, like a search engine's: a few small links on
-# the left and the legal ones on the right, nothing else. The main pages are
-# in the header (and the phone menu), so they are not repeated here.
-FOOT_LEFT = [
-    ('/explainer', 'About', 'परिचय'),
-    ('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'),
-    ('/app-guide', 'App guide', 'ऐप गाइड'),
-    ('/network', 'The network', 'नेटवर्क'),
+# The footer: an indigo close to every page, with the app's two stores, the
+# site's sections in three short columns, and the legal line.
+FOOT_COLS = [
+    (('Explore', 'देखें'), [('/explainer', 'The app, explained', 'ऐप, आसान शब्दों में'), ('/app-guide', 'App guide', 'ऐप गाइड'),
+                            ('/preview', 'Try the app', 'ऐप आज़माएँ'), ('/network', 'The network', 'नेटवर्क')]),
+    (('Help and care', 'मदद और देखभाल'), [('/talk-to-a-vet', 'Talk to a vet', 'वेट से बात करें'), ('/vet', 'Join as a vet', 'वेट बनकर जुड़ें'),
+                                        ('/know-the-laws', 'Know the laws', 'कानून जानें'), ('/faq', 'Questions and answers', 'सवाल और जवाब')]),
+    (('Shop', 'शॉप'), [('/shop', 'Shop', 'शॉप'), ('/shop/saved', 'Saved', 'सहेजे गए'), ('/shop/cart', 'Your bag', 'आपका बैग'),
+                       ('/shop/track', 'Your orders', 'आपके ऑर्डर')]),
 ]
 FOOT_RIGHT = [
     ('/policy', 'Privacy &amp; Terms', 'प्राइवेसी और शर्तें'),
@@ -82,10 +124,19 @@ FOOT_RIGHT = [
 ]
 
 def footer(extra='', scripts=True):
-    left = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_LEFT)
+    cols = ''
+    for (en, hi), links in FOOT_COLS:
+        shopcol = ' class="rr-opt"' if en == 'Shop' else ''
+        cols += f'<div{shopcol}><h2 {t(en, hi)}</h2>' + ''.join(f'<a href="{h}" {t(e, x)}</a>' for h, e, x in links) + '</div>'
     right = ''.join(f'<a href="{h}" {t(en, hi)}</a>' for h, en, hi in FOOT_RIGHT)
-    return ('<!-- rr:footer -->\n<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in">'
-            f'<nav aria-label="About">{left}</nav>' + extra + f'<nav aria-label="Legal">{right}</nav></div></div>\n'
+    cta = ('<div class="rr-ftr-cta"><div><p class="rr-ftr-h" ' + t('There is a place for your kind of kindness.', 'आपकी तरह की दयालुता के लिए यहाँ जगह है।') + '</p>'
+           '<p ' + t('Join the people in your district on the Rapid Response app. Free, with no ads.', 'अपने ज़िले के लोगों से Rapid Response ऐप पर जुड़ें। मुफ़्त, बिना विज्ञापन।') + '</p></div>'
+           f'<div class="rr-stores"><a class="rr-btn" href="{PLAY}" rel="noopener">Google Play</a><a class="rr-btn rr-ghost" href="{IOS}" rel="noopener">App Store</a></div></div>')
+    return ('<!-- rr:footer -->\n<div class="rr-chrome rr-ftr" role="contentinfo"><div class="rr-ftr-in">' + cta
+            + '<div class="rr-ftr-grid"><div class="rr-ftr-brand"><a class="rr-ftr-wm" href="/">rapid<br>response</a>'
+            '<p ' + t('People helping each other help animals.', 'जानवरों की मदद में एक-दूसरे का साथ।') + '</p>'
+            '<a href="mailto:ask@rapid-response.in">ask@rapid-response.in</a></div>' + cols + '</div>'
+            + extra + f'<div class="rr-ftr-end"><span ' + t('Rapid Response. An independent community initiative.', 'Rapid Response. एक स्वतंत्र सामुदायिक पहल।') + f'</span><nav aria-label="Legal">{right}</nav></div></div></div>\n'
             + ('<script src="/assets/rr-site.js" defer></script><script src="/assets/rr-center.js" defer></script>\n' if scripts else '')
             + '<!-- /rr:footer -->')
 
@@ -131,11 +182,19 @@ SHOP_EARLY = ("<script>/* rr: shop switch as last read */try{if(localStorage.get
 # Signal tokens (assets/rr-signal.css) come first; every other sheet maps onto them.
 SIGNAL = '<link rel="stylesheet" href="/assets/rr-signal.css">'
 
+# The blue site (assets/rr-blue.css) is linked last, over every other sheet.
+# APP: pages open like an app's screens: the next page is fetched while a
+# finger is still on the link (speculation rules; prefetch only, never a
+# hidden run of a page's scripts).
+BLUE = ('<link rel="preload" href="/assets/fonts/bricolage-800.woff2" as="font" type="font/woff2" crossorigin>'
+        '<link rel="stylesheet" href="/assets/rr-blue.css">')
+APP = ('<script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/app/*"}}]},"eagerness":"moderate"}]}</script>')
+
 def head_block(theme=True, hindi=True):
     # rr-page.css (the one page grid and page head) comes last, over each page's own styles.
     css = (SIGNAL + '<link rel="stylesheet" href="/assets/rr-site.css">' + ('<link rel="stylesheet" href="/assets/rr-theme.css">' if theme else '')
-           + '<link rel="stylesheet" href="/assets/rr-page.css">')
-    return '<!-- rr:head -->' + fonts(True, hindi) + css + (EARLY if theme else '') + SHOP_EARLY + '<!-- /rr:head -->'
+           + '<link rel="stylesheet" href="/assets/rr-page.css">' + BLUE)
+    return '<!-- rr:head -->' + fonts(True, hindi) + css + (EARLY if theme else '') + SHOP_EARLY + APP + '<!-- /rr:head -->'
 
 def bilingual(s):
     """True if the page's language switch works (rr-site.js hides it otherwise), so a
@@ -144,7 +203,7 @@ def bilingual(s):
 
 def strip_blocks(s):
     """Remove every installed block (and the one newline install() adds after it)."""
-    for tag in ('head', 'header', 'footer'):
+    for tag in ('head', 'header', 'footer', 'blue'):
         s = re.sub(r'<!-- rr:%s -->.*?<!-- /rr:%s -->\n?' % (tag, tag), '', s, flags=re.S)
     return s
 

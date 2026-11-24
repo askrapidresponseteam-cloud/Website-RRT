@@ -71,7 +71,49 @@
         if (!mob.hidden && !mob.contains(e.target) && !mb.contains(e.target)) setMob(false);
       });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !mob.hidden) { setMob(false); mb.focus(); } });
-      window.addEventListener('resize', function () { if (window.innerWidth > 760 && !mob.hidden) setMob(false); });
+      window.addEventListener('resize', function () { if (window.innerWidth > 899 && !mob.hidden) setMob(false); });
+      var scrim = document.querySelector('.rr-chrome .rr-scrim');
+      if (scrim) scrim.addEventListener('click', function () { setMob(false); });
+      /* a pull down on the sheet's top closes it, as an app's sheet does */
+      var y0 = null;
+      mob.addEventListener('touchstart', function (e) { y0 = mob.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true });
+      mob.addEventListener('touchmove', function (e) {
+        if (y0 === null) return;
+        var dy = e.touches[0].clientY - y0;
+        if (dy > 70) { y0 = null; setMob(false); }
+      }, { passive: true });
+    }
+
+    /* Desktop: the More menu in the header. */
+    var moreBtn = document.querySelector('.rr-chrome .rr-more-btn'), morePanel = document.getElementById('rrMore');
+    if (moreBtn && morePanel) {
+      var setMore = function (open) { morePanel.classList.toggle('rr-open', open); moreBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+      moreBtn.addEventListener('click', function (e) { e.stopPropagation(); setMore(!morePanel.classList.contains('rr-open')); });
+      document.addEventListener('click', function (e) { if (!morePanel.contains(e.target)) setMore(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMore(false); });
+    }
+
+    /* Phones: the tab for the page in view is lit, whatever the page passed. */
+    var path = location.pathname.replace(/\.html$/, '').replace(/\/index$/, '/') || '/';
+    document.querySelectorAll('.rr-chrome .rr-tabs>a').forEach(function (a) {
+      var h = a.getAttribute('href');
+      var on = h === '/' ? path === '/' : (path === h || path.indexOf(h + '/') === 0 || (h === '/talk-to-a-vet' && path === '/vet'));
+      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+
+    /* Pages open like an app's screens: where the browser does not fetch
+       the next page ahead (speculation rules, in rr:head), the page a finger
+       lands on is fetched while it is still down. */
+    if (!(HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules'))) {
+      var warmed2 = {};
+      var ahead = function (e) {
+        var a = e.target.closest && e.target.closest('a[href]');
+        if (!a || a.origin !== location.origin || a.pathname === location.pathname || /^\/app(\/|$)/.test(a.pathname) || warmed2[a.pathname]) return;
+        warmed2[a.pathname] = 1;
+        var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname; document.head.appendChild(l);
+      };
+      document.addEventListener('touchstart', ahead, { passive: true, capture: true });
+      document.addEventListener('pointerenter', ahead, { passive: true, capture: true });
     }
     if (window.MutationObserver) {
       new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
