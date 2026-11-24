@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-require('child_process').execFileSync(process.execPath, [require('path').join(__dirname, '..', 'scripts', 'check-domain-redirects.js')], { stdio: 'inherit' });
+{ const v = require('../vercel.json'); const bad = (v.redirects || []).filter((r) => (r.has || []).some((h) => h.type === 'host')); if (bad.length) { console.error('FAIL: vercel.json must not redirect between rapid-response.in and www (Vercel Domains does that; a rule here loops every stylesheet and image):', JSON.stringify(bad)); process.exit(1); } }
 /**
  * Build rapid-response.in for Vercel: every public file is copied into dist/,
  * with HTML, CSS and JavaScript minified. Vercel runs this (vercel.json:
