@@ -253,11 +253,17 @@ async function look(page) {
     return {
       free: S.liveExcluded(mk('Free Gift', 0)), ten: S.liveExcluded(mk('Treat', 10)), eleven: S.liveExcluded(mk('Treat', 11)),
       grooming: S.liveExcluded(mk('Dog Grooming Shampoo 200ml', 349)), clinic: S.liveExcluded(mk('Kitten Vaccination Package', 1499)),
-      type: S.liveExcluded(mk('Spa Day', 799, { productType: 'Services' })), tag: S.liveExcluded(mk('Ear Check', 299, { tags: ['Clinic'] }))
+      type: S.liveExcluded(mk('Spa Day', 799, { productType: 'Services' })), tag: S.liveExcluded(mk('Ear Check', 299, { tags: ['Clinic'] })),
+      // What Supertails hides on its own site (its st-hide and findify-remove tags), any case.
+      stHide: S.liveExcluded(mk('Drools VET PRO Renal Adult Wet Food for Dogs', 450, { tags: ['Veg', 'st-hide'] })),
+      findify: S.liveExcluded(mk('Natural Remedies Treat O Clock Mutton Treats', 99, { tags: ['FINDIFY-REMOVE'] })),
+      plain: S.liveExcluded(mk('Pedigree Chicken and Liver Chunks in Gravy', 2952, { tags: ['Non-Veg', 'Offline'] }))
     };
   });
   check(one.free && one.ten && !one.eleven, 'supertails: Rs 10 or less is left out, Rs 11 shows (' + JSON.stringify(one) + ')');
   check(!one.grooming, 'supertails: grooming products stay (only grooming sessions go)');
+  check(one.stHide && one.findify, 'supertails: listings the store hides on its own site are left out (st-hide, findify-remove)');
+  check(!one.plain, 'supertails: an ordinary product with other tags shows');
   check(one.clinic && one.type && one.tag, 'supertails: clinic items go by their title, their type or their tags');
   await page.close();
 

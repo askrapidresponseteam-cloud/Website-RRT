@@ -205,7 +205,11 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => document.querySelectorAll('#grid > :not(.skel-tile)').length > 0, null, { timeout: 15000 });
   for (let i = 0; i < 40; i++) { await page.mouse.wheel(0, 500); await page.waitForTimeout(60); }
-  await page.waitForTimeout(1500);
+  // A failing page is asked again (twice, on each door: assets/rrt-shop.js
+  // withRetries) before the list gives up on it, so wait for the outcome.
+  await page.waitForFunction(() => { const m = document.getElementById('more'); return m && !m.hidden && /Try again/.test(m.textContent); },
+    null, { timeout: 20000 }).catch(() => {});
+  await page.waitForTimeout(300);
   const state = await page.evaluate(() => ({ tiles: document.querySelectorAll('#grid > :not(.skel-tile)').length,
     more: document.getElementById('more').textContent, moreHidden: document.getElementById('more').hidden,
     stateShown: !document.getElementById('state').hidden }));

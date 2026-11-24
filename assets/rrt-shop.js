@@ -230,7 +230,8 @@
     });
     return shelves.length ? { source: menu.source, readAt: menu.readAt, shelves: shelves, exclude: exclude } : null;
   })();
-  /* What the Supertails display never shows (shared/store-live-menus.json, "exclude"): products
+  /* What the Supertails display never shows (shared/store-live-menus.json, "exclude"): listings
+   * the store hides on its own site (hideTags: Supertails' st-hide and findify-remove), products
    * priced at or under minPriceInr (free gifts, Rs 0 or Rs 1 add-ons) and clinic or service items
    * (consultations, appointments, at-home visits, grooming sessions, diagnostics, gift cards),
    * matched as whole words in the title, type, brand and tags; menu sections named for them too. */
@@ -241,10 +242,13 @@
     var types = (r.types || []).map(function (t) { return norm(t).trim(); });
     var brands = (r.brands || []).map(function (t) { return norm(t).trim(); });
     var minPaise = Math.max(0, Number(r.minPriceInr) || 0) * 100;
+    var hideTags = (r.hideTags || []).map(function (t) { return String(t).trim().toLowerCase(); });
     var hasTerm = function (text) { var t = norm(text); for (var i = 0; i < terms.length; i++) if (t.indexOf(terms[i]) >= 0) return true; return false; };
     return {
       product: function (p) {
         if (!p) return true;
+        var tags = Array.isArray(p.tags) ? p.tags : [];
+        for (var k = 0; k < tags.length; k++) if (hideTags.indexOf(String(tags[k]).trim().toLowerCase()) >= 0) return true;
         var cheapest = p.cheapestVariant && typeof p.cheapestVariant.pricePaise === 'number' ? p.cheapestVariant.pricePaise : null;
         if (minPaise && cheapest != null && cheapest <= minPaise) return true;
         if (types.indexOf(norm(p.productType).trim()) >= 0 || brands.indexOf(norm(p.brand).trim()) >= 0) return true;
@@ -1580,8 +1584,49 @@
 
   var fetchImpl = function () { return global.fetch.apply(global, arguments); };
 
-  /** GET/POST [url], expect JSON, with the app's timeout and error copy. */
+  /* Retries, the app's rule (storefront_resilience.dart): what passes - "too
+   * many" (429), Shopify's bot screen (430), 408, 5xx, 520-524, no answer in
+   * time, a challenge page in place of JSON - is asked again twice, after
+   * 0.6 s and 1.2 s (plus jitter), or the store's own Retry-After up to 4 s.
+   * A real answer (404, a GraphQL error) is final. Only then does a read
+   * fall over to its other door, as before. */
+  var RETRY_WAITS_MS = [600, 1200];
+  var MAX_RETRY_WAIT_MS = 4000;
+  var sleepImpl = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+  function retryable(e) {
+    if (!e || !e.storefront) return false;
+    if (e.retry) return true;
+    var s = e.status;
+    return s === 408 || s === 429 || s === 430 || s === 500 || s === 502 || s === 503 || s === 504 ||
+      (typeof s === 'number' && s >= 520 && s <= 524);
+  }
+
+  function retryAfterMs(res) {
+    var raw = res && res.headers && typeof res.headers.get === 'function' ? res.headers.get('retry-after') : null;
+    var secs = parseInt(raw, 10);
+    return isNaN(secs) || secs < 0 ? null : secs * 1000;
+  }
+
+  function withRetries(run) {
+    function attempt(n) {
+      return run().catch(function (e) {
+        if (n >= RETRY_WAITS_MS.length || !retryable(e)) throw e;
+        var wait = e.retryAfterMs != null
+          ? Math.min(e.retryAfterMs, MAX_RETRY_WAIT_MS)
+          : RETRY_WAITS_MS[n] + Math.floor(Math.random() * 250);
+        return sleepImpl(wait).then(function () { return attempt(n + 1); });
+      });
+    }
+    return attempt(0);
+  }
+
+  /** GET/POST [url], expect JSON, with the app's timeout, retries and error copy. */
   function fetchJson(url, init) {
+    return withRetries(function () { return fetchJsonOnce(url, init); });
+  }
+
+  function fetchJsonOnce(url, init) {
     var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = setTimeout(function () { if (controller) controller.abort(); }, TIMEOUT_MS);
     init = init || {};
@@ -1590,7 +1635,9 @@
       clearTimeout(timer);
       if (res.status === 404) throw StorefrontError('Not found', 404);
       if (res.status === 429 || res.status === 430) {
-        throw StorefrontError('The store is busy right now. Try again in a moment.', res.status);
+        var busy = StorefrontError('The store is busy right now. Try again in a moment.', res.status);
+        busy.retryAfterMs = retryAfterMs(res);
+        throw busy;
       }
       if (res.status !== 200) {
         throw StorefrontError('The store could not load this right now (' + res.status + ').', res.status);
@@ -1598,13 +1645,17 @@
       return res.json().catch(function () {
         // Their storefront answered with a page, not data - usually a bot
         // challenge or maintenance screen in front of the JSON.
-        throw StorefrontError('The store sent something unexpected. Try again shortly.');
+        var odd = StorefrontError('The store sent something unexpected. Try again shortly.');
+        odd.retry = true;
+        throw odd;
       });
     }).catch(function (e) {
       clearTimeout(timer);
       if (e && e.storefront) throw e;
       if (e && e.name === 'AbortError') {
-        throw StorefrontError('The store is taking too long to answer. Try again.');
+        var slow = StorefrontError('The store is taking too long to answer. Try again.');
+        slow.retry = true;
+        throw slow;
       }
       throw StorefrontError('Could not reach the store. Check your internet and try again.');
     });
@@ -1657,6 +1708,10 @@
       if (hit !== undefined) return Promise.resolve(hit);
     }
 
+    return withRetries(function () { return gqlOnce(query, variables, cacheKey); });
+  }
+
+  function gqlOnce(query, variables, cacheKey) {
     var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = setTimeout(function () { if (controller) controller.abort(); }, TIMEOUT_MS);
 
@@ -1668,7 +1723,9 @@
     }).then(function (res) {
       clearTimeout(timer);
       if (res.status === 429 || res.status === 430) {
-        throw StorefrontError('The store is busy right now. Try again in a moment.', res.status);
+        var busy = StorefrontError('The store is busy right now. Try again in a moment.', res.status);
+        busy.retryAfterMs = retryAfterMs(res);
+        throw busy;
       }
       if (res.status === 404) throw StorefrontError('Not found', 404);
       if (res.status !== 200) {
@@ -1677,7 +1734,9 @@
       return res.json().catch(function () {
         // Their storefront answered with a page, not data - usually a bot
         // challenge or maintenance screen in front of the JSON.
-        throw StorefrontError('The store sent something unexpected. Try again shortly.');
+        var odd = StorefrontError('The store sent something unexpected. Try again shortly.');
+        odd.retry = true;
+        throw odd;
       });
     }).then(function (body) {
       if (!body || typeof body !== 'object') {
@@ -1695,7 +1754,9 @@
       clearTimeout(timer);
       if (e && e.storefront) throw e;
       if (e && e.name === 'AbortError') {
-        throw StorefrontError('The store is taking too long to answer. Try again.');
+        var slow = StorefrontError('The store is taking too long to answer. Try again.');
+        slow.retry = true;
+        throw slow;
       }
       throw StorefrontError('Could not reach the store. Check your internet and try again.');
     });
@@ -4083,6 +4144,7 @@
     transport: transport,
     resetTransport: function () { try { session.removeItem(TRANSPORT_KEY); } catch (e) { /* ignore */ } },
     setFetch: function (fn) { fetchImpl = fn; },
+    setSleep: function (fn) { sleepImpl = fn; },
     setWooStepMs: function (ms) { WOO_STEP_MS = ms; },
     productFromWoo: productFromWoo,
     productFromWooFull: productFromWooFull,
