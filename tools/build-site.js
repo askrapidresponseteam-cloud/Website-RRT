@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+require('child_process').execFileSync(process.execPath, [require('path').join(__dirname, '..', 'scripts', 'check-domain-redirects.js')], { stdio: 'inherit' });
 /**
  * Build rapid-response.in for Vercel: every public file is copied into dist/,
  * with HTML, CSS and JavaScript minified. Vercel runs this (vercel.json:
