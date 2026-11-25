@@ -74,7 +74,7 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
       sos: (document.querySelector('.qrow .btn') || {}).textContent,
       overflow: document.documentElement.scrollWidth - window.innerWidth,
     }));
-    check(v.h1 === 'Rescue animals together, with people in your district.', name + ': the heading says to rescue animals together, with people in your district');
+    check(v.h1 === 'Good humans. Greater together.', name + ': the heading says Good humans. Greater together.');
     check(/Not a helpline, and not a place to report a problem and move on/.test(v.lead) && /Nobody can help every time/.test(v.lead) && /at least one kind of help/.test(v.lead),
       name + ': the line under it: not a helpline, not report and move on, at least one kind of help');
     check(JSON.stringify(v.chips) === JSON.stringify(OFFERS.map((o) => o.en)), name + ': a chip for every way of helping, in order (' + v.chips.length + ')');
@@ -113,7 +113,7 @@ process.on('exit', () => { try { server.kill(); } catch (e) { /* gone */ } });
       chips: [...document.querySelectorAll('#gives button')].map((b) => b.textContent),
       overflow: document.documentElement.scrollWidth - window.innerWidth,
     }));
-    check(h.h1 === 'अपने ज़िले के लोगों के साथ मिलकर जानवरों को बचाएँ।' && /हेल्पलाइन नहीं/.test(h.lead), name + ': Hindi heading and line');
+    check(h.h1 === 'अच्छे लोग। साथ मिलकर और बेहतर।' && /हेल्पलाइन नहीं/.test(h.lead), name + ': Hindi heading and line');
     check(JSON.stringify(h.chips) === JSON.stringify(OFFERS.map((o) => o.hi)), name + ': Hindi chips');
     check(h.overflow <= 0, name + ': Hindi fits too (' + h.overflow + 'px)');
     if (process.env.SHOTS) await page.screenshot({ path: path.join(process.env.SHOTS, 'home-hi-' + name + '.png') });
