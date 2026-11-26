@@ -1,0 +1,12 @@
+{
+  "name": "rrt-web-functions",
+  "private": true,
+  "description": "webStoreProxy: forwards the shop's partner-store paths for rapid-response.in on Firebase Hosting. Routes come from vercel.json via tools/firebase-config.js.",
+  "main": "index.js",
+  "engines": { "node": "22" },
+  "scripts": { "test": "node proxy.test.js" },
+  "dependencies": {
+    "firebase-admin": "14.5.1",
+    "firebase-functions": "7.4.0"
+  }
+}

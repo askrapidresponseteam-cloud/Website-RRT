@@ -5,3 +5,5 @@ CLAUDE.md
 .github
 node_modules
 dist
+functions-web
+.firebase

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "rrt-new-backend"
+  },
+  "targets": {
+    "rrt-new-backend": {
+      "hosting": {
+        "web": [
+          "rapid-response-in"
+        ]
+      }
+    }
+  }
+}

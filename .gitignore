@@ -2,3 +2,7 @@ __pycache__/
 # npm run build output and its dependencies (Vercel builds its own)
 node_modules/
 dist/
+# Firebase CLI cache and logs
+.firebase/
+firebase-debug.log
+*-debug.log

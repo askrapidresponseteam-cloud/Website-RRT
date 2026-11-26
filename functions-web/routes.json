@@ -1,0 +1,251 @@
+{
+  "region": "asia-south1",
+  "functionId": "webStoreProxy",
+  "proxies": [
+    {
+      "prefix": "/st-api",
+      "re": "^/collections/([^/]+)/products\\.json$",
+      "dest": "https://supertails.com/collections/$1/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/st-api",
+      "re": "^/products/([^/]+\\.js)$",
+      "dest": "https://supertails.com/products/$1",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/st-api",
+      "re": "^/search/suggest\\.json$",
+      "dest": "https://supertails.com/search/suggest.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/st-api",
+      "re": "^/recommendations/products\\.json$",
+      "dest": "https://supertails.com/recommendations/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/pl-api",
+      "re": "^/collections/([^/]+)/products\\.json$",
+      "dest": "https://www.pets-lifestyle.com/collections/$1/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/pl-api",
+      "re": "^/products/([^/]+\\.js)$",
+      "dest": "https://www.pets-lifestyle.com/products/$1",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/pl-api",
+      "re": "^/search/suggest\\.json$",
+      "dest": "https://www.pets-lifestyle.com/search/suggest.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/pl-api",
+      "re": "^/recommendations/products\\.json$",
+      "dest": "https://www.pets-lifestyle.com/recommendations/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/huft-api",
+      "re": "^/collections/([^/]+)/products\\.json$",
+      "dest": "https://headsupfortails.com/collections/$1/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/huft-api",
+      "re": "^/products/([^/]+\\.js)$",
+      "dest": "https://headsupfortails.com/products/$1",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/huft-api",
+      "re": "^/search/suggest\\.json$",
+      "dest": "https://headsupfortails.com/search/suggest.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/huft-api",
+      "re": "^/recommendations/products\\.json$",
+      "dest": "https://headsupfortails.com/recommendations/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/zg-api",
+      "re": "^/collections/([^/]+)/products\\.json$",
+      "dest": "https://zigly.com/collections/$1/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/zg-api",
+      "re": "^/products/([^/]+\\.js)$",
+      "dest": "https://zigly.com/products/$1",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/zg-api",
+      "re": "^/search/suggest\\.json$",
+      "dest": "https://zigly.com/search/suggest.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/zg-api",
+      "re": "^/recommendations/products\\.json$",
+      "dest": "https://zigly.com/recommendations/products.json",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/pt-api",
+      "re": "^/api/(\\d{4}-\\d{2})/graphql\\.json$",
+      "dest": "https://pawsandtails24.com/api/$1/graphql.json",
+      "methods": [
+        "GET",
+        "HEAD",
+        "POST",
+        "OPTIONS"
+      ]
+    },
+    {
+      "prefix": "/jd-api",
+      "re": "^/wp-json/wc/store/v1/products$",
+      "dest": "https://www.justdogsstore.com/wp-json/wc/store/v1/products",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/jd-api",
+      "re": "^/wp-json/wc/store/v1/products/categories$",
+      "dest": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/categories",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/jd-api",
+      "re": "^/wp-json/wc/store/v1/products/collection-data$",
+      "dest": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/collection-data",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/jd-api",
+      "re": "^/wp-json/wc/store/v1/products/attributes$",
+      "dest": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/attributes",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/jd-api",
+      "re": "^/wp-json/wc/store/v1/products/attributes/(\\d+)/terms$",
+      "dest": "https://www.justdogsstore.com/wp-json/wc/store/v1/products/attributes/$1/terms",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/wk-api",
+      "re": "^/wp-json/wc/store/v1/products$",
+      "dest": "https://whiskeepetzone.com/wp-json/wc/store/v1/products",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/wk-api",
+      "re": "^/wp-json/wc/store/v1/products/categories$",
+      "dest": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/categories",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/wk-api",
+      "re": "^/wp-json/wc/store/v1/products/collection-data$",
+      "dest": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/collection-data",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/wk-api",
+      "re": "^/wp-json/wc/store/v1/products/attributes$",
+      "dest": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/attributes",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    },
+    {
+      "prefix": "/wk-api",
+      "re": "^/wp-json/wc/store/v1/products/attributes/(\\d+)/terms$",
+      "dest": "https://whiskeepetzone.com/wp-json/wc/store/v1/products/attributes/$1/terms",
+      "methods": [
+        "GET",
+        "HEAD"
+      ]
+    }
+  ]
+}

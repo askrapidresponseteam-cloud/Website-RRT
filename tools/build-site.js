@@ -41,11 +41,18 @@ const CleanCSS = require('clean-css');
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, process.env.RRT_WEB_OUT || 'dist');
+// Firebase Hosting: firebase.json and the store proxy's routes are generated from
+// vercel.json. If someone edits vercel.json and forgets to regenerate, stop here
+// (Vercel does not upload functions-web/, so this only runs where it exists).
+if (fs.existsSync(path.join(ROOT, 'functions-web'))) {
+  require('child_process').execFileSync(process.execPath, [path.join(__dirname, 'firebase-config.js'), '--check'], { stdio: 'inherit' });
+}
 
 // Never published: tooling, tests, notes for editors, dependencies.
 // (.vercelignore keeps most of these out of the upload as well.)
-const SKIP_DIRS = new Set(['node_modules', 'dist', 'tools', 'scripts', '.github', '.git', '.vercel', '__pycache__']);
-const SKIP_FILES = new Set(['package.json', 'package-lock.json', 'vercel.json', '.vercelignore', '.gitignore', '.DS_Store']);
+// functions-web/ is the store proxy's server code (Firebase): never served.
+const SKIP_DIRS = new Set(['node_modules', 'dist', 'tools', 'scripts', '.github', '.git', '.vercel', '.firebase', 'functions-web', '__pycache__']);
+const SKIP_FILES = new Set(['package.json', 'package-lock.json', 'vercel.json', '.vercelignore', '.gitignore', '.DS_Store', 'firebase.json', '.firebaserc', 'firebase-debug.log']);
 const SKIP_EXT = new Set(['.md', '.py', '.pyc']);
 const VENDOR_DIR = path.join('assets', 'vendor') + path.sep;
 // The web app (rapid-response.in/app): Flutter's own build output, published
